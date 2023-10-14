@@ -48,9 +48,6 @@ func NewSoftwareLicense(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
-	if isZero(args.Category) {
-		args.Category = pulumi.String("Item")
-	}
 	var resource SoftwareLicense
 	err := ctx.RegisterResource("onepassword:index:SoftwareLicense", name, args, &resource, opts...)
 	if err != nil {
@@ -83,7 +80,6 @@ func (SoftwareLicenseState) ElementType() reflect.Type {
 }
 
 type softwareLicenseArgs struct {
-	Category   string                     `pulumi:"category"`
 	Customer   *softwarelicense.Customer  `pulumi:"customer"`
 	Fields     []Field                    `pulumi:"fields"`
 	LicenseKey *string                    `pulumi:"licenseKey"`
@@ -102,7 +98,6 @@ type softwareLicenseArgs struct {
 
 // The set of arguments for constructing a SoftwareLicense resource.
 type SoftwareLicenseArgs struct {
-	Category   pulumi.StringInput
 	Customer   softwarelicense.CustomerPtrInput
 	Fields     FieldArrayInput
 	LicenseKey pulumi.StringPtrInput

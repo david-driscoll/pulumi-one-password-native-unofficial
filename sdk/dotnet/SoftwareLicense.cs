@@ -111,9 +111,6 @@ namespace Pulumi.Onepassword
 
     public sealed class SoftwareLicenseArgs : Pulumi.ResourceArgs
     {
-        [Input("category", required: true)]
-        public InputUnion<Pulumi.Onepassword.Category, string> Category { get; set; } = null!;
-
         [Input("customer")]
         public Input<Pulumi.Onepassword.SoftwareLicense.Inputs.CustomerArgs>? Customer { get; set; }
 
@@ -174,7 +171,6 @@ namespace Pulumi.Onepassword
 
         public SoftwareLicenseArgs()
         {
-            Category = "Item";
         }
     }
 }

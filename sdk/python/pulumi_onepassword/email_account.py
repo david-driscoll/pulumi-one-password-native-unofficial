@@ -17,7 +17,6 @@ __all__ = ['EmailAccountArgs', 'EmailAccount']
 @pulumi.input_type
 class EmailAccountArgs:
     def __init__(__self__, *,
-                 category: pulumi.Input[Union['Category', str]],
                  title: pulumi.Input[str],
                  vault: pulumi.Input[str],
                  auth_method: Optional[pulumi.Input[str]] = None,
@@ -39,9 +38,6 @@ class EmailAccountArgs:
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         """
-        if category is None:
-            category = 'Item'
-        pulumi.set(__self__, "category", category)
         pulumi.set(__self__, "title", title)
         pulumi.set(__self__, "vault", vault)
         if auth_method is not None:
@@ -70,15 +66,6 @@ class EmailAccountArgs:
             pulumi.set(__self__, "type", type)
         if username is not None:
             pulumi.set(__self__, "username", username)
-
-    @property
-    @pulumi.getter
-    def category(self) -> pulumi.Input[Union['Category', str]]:
-        return pulumi.get(self, "category")
-
-    @category.setter
-    def category(self, value: pulumi.Input[Union['Category', str]]):
-        pulumi.set(self, "category", value)
 
     @property
     @pulumi.getter
@@ -231,7 +218,6 @@ class EmailAccount(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  auth_method: Optional[pulumi.Input[str]] = None,
-                 category: Optional[pulumi.Input[Union['Category', str]]] = None,
                  contact_information: Optional[pulumi.Input[pulumi.InputType['_emailaccount.ContactInformationArgs']]] = None,
                  fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
@@ -279,7 +265,6 @@ class EmailAccount(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  auth_method: Optional[pulumi.Input[str]] = None,
-                 category: Optional[pulumi.Input[Union['Category', str]]] = None,
                  contact_information: Optional[pulumi.Input[pulumi.InputType['_emailaccount.ContactInformationArgs']]] = None,
                  fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
@@ -307,11 +292,6 @@ class EmailAccount(pulumi.CustomResource):
             __props__ = EmailAccountArgs.__new__(EmailAccountArgs)
 
             __props__.__dict__["auth_method"] = auth_method
-            if category is None:
-                category = 'Item'
-            if category is None and not opts.urn:
-                raise TypeError("Missing required property 'category'")
-            __props__.__dict__["category"] = category
             __props__.__dict__["contact_information"] = contact_information
             __props__.__dict__["fields"] = fields
             __props__.__dict__["notes"] = notes
@@ -330,6 +310,7 @@ class EmailAccount(pulumi.CustomResource):
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
+            __props__.__dict__["category"] = None
             __props__.__dict__["id"] = None
             __props__.__dict__["uuid"] = None
         super(EmailAccount, __self__).__init__(

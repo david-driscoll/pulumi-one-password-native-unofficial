@@ -129,9 +129,6 @@ namespace Pulumi.Onepassword
 
     public sealed class PassportArgs : Pulumi.ResourceArgs
     {
-        [Input("category", required: true)]
-        public InputUnion<Pulumi.Onepassword.Category, string> Category { get; set; } = null!;
-
         [Input("dateOfBirth")]
         public Input<string>? DateOfBirth { get; set; }
 
@@ -210,7 +207,6 @@ namespace Pulumi.Onepassword
 
         public PassportArgs()
         {
-            Category = "Item";
         }
     }
 }

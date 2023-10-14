@@ -132,9 +132,6 @@ namespace Pulumi.Onepassword
         [Input("address")]
         public Input<string>? Address { get; set; }
 
-        [Input("category", required: true)]
-        public InputUnion<Pulumi.Onepassword.Category, string> Category { get; set; } = null!;
-
         [Input("conditionsRestrictions")]
         public Input<string>? ConditionsRestrictions { get; set; }
 
@@ -210,7 +207,6 @@ namespace Pulumi.Onepassword
 
         public DriverLicenseArgs()
         {
-            Category = "Item";
         }
     }
 }

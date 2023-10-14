@@ -50,9 +50,6 @@ func NewWirelessRouter(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
-	if isZero(args.Category) {
-		args.Category = pulumi.String("Item")
-	}
 	var resource WirelessRouter
 	err := ctx.RegisterResource("onepassword:index:WirelessRouter", name, args, &resource, opts...)
 	if err != nil {
@@ -89,7 +86,6 @@ type wirelessRouterArgs struct {
 	AttachedStoragePassword *string   `pulumi:"attachedStoragePassword"`
 	BaseStationName         *string   `pulumi:"baseStationName"`
 	BaseStationPassword     *string   `pulumi:"baseStationPassword"`
-	Category                string    `pulumi:"category"`
 	Fields                  []Field   `pulumi:"fields"`
 	NetworkName             *string   `pulumi:"networkName"`
 	Notes                   *string   `pulumi:"notes"`
@@ -111,7 +107,6 @@ type WirelessRouterArgs struct {
 	AttachedStoragePassword pulumi.StringPtrInput
 	BaseStationName         pulumi.StringPtrInput
 	BaseStationPassword     pulumi.StringPtrInput
-	Category                pulumi.StringInput
 	Fields                  FieldArrayInput
 	NetworkName             pulumi.StringPtrInput
 	Notes                   pulumi.StringPtrInput

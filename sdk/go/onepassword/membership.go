@@ -50,9 +50,6 @@ func NewMembership(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
-	if isZero(args.Category) {
-		args.Category = pulumi.String("Item")
-	}
 	var resource Membership
 	err := ctx.RegisterResource("onepassword:index:Membership", name, args, &resource, opts...)
 	if err != nil {
@@ -85,7 +82,6 @@ func (MembershipState) ElementType() reflect.Type {
 }
 
 type membershipArgs struct {
-	Category    string    `pulumi:"category"`
 	ExpiryDate  *string   `pulumi:"expiryDate"`
 	Fields      []Field   `pulumi:"fields"`
 	Group       *string   `pulumi:"group"`
@@ -107,7 +103,6 @@ type membershipArgs struct {
 
 // The set of arguments for constructing a Membership resource.
 type MembershipArgs struct {
-	Category    pulumi.StringInput
 	ExpiryDate  pulumi.StringPtrInput
 	Fields      FieldArrayInput
 	Group       pulumi.StringPtrInput

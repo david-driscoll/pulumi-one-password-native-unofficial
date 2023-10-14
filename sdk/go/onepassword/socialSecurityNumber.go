@@ -44,9 +44,6 @@ func NewSocialSecurityNumber(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
-	if isZero(args.Category) {
-		args.Category = pulumi.String("Item")
-	}
 	var resource SocialSecurityNumber
 	err := ctx.RegisterResource("onepassword:index:SocialSecurityNumber", name, args, &resource, opts...)
 	if err != nil {
@@ -79,7 +76,6 @@ func (SocialSecurityNumberState) ElementType() reflect.Type {
 }
 
 type socialSecurityNumberArgs struct {
-	Category string    `pulumi:"category"`
 	Fields   []Field   `pulumi:"fields"`
 	Name     *string   `pulumi:"name"`
 	Notes    *string   `pulumi:"notes"`
@@ -95,7 +91,6 @@ type socialSecurityNumberArgs struct {
 
 // The set of arguments for constructing a SocialSecurityNumber resource.
 type SocialSecurityNumberArgs struct {
-	Category pulumi.StringInput
 	Fields   FieldArrayInput
 	Name     pulumi.StringPtrInput
 	Notes    pulumi.StringPtrInput

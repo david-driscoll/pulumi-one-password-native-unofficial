@@ -33,7 +33,7 @@ export class OutdoorLicense extends pulumi.CustomResource {
     }
 
     public readonly approvedWildlife!: pulumi.Output<string | undefined>;
-    public readonly category!: pulumi.Output<enums.Category | string>;
+    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
     public readonly country!: pulumi.Output<string | undefined>;
     public readonly expires!: pulumi.Output<string | undefined>;
     public readonly fields!: pulumi.Output<outputs.GetField[] | undefined>;
@@ -72,9 +72,6 @@ export class OutdoorLicense extends pulumi.CustomResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
-            if ((!args || args.category === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'category'");
-            }
             if ((!args || args.title === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'title'");
             }
@@ -82,7 +79,6 @@ export class OutdoorLicense extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vault'");
             }
             resourceInputs["approvedWildlife"] = args ? args.approvedWildlife : undefined;
-            resourceInputs["category"] = (args ? args.category : undefined) ?? "Item";
             resourceInputs["country"] = args ? args.country : undefined;
             resourceInputs["expires"] = args ? args.expires : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
@@ -95,6 +91,7 @@ export class OutdoorLicense extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["validFrom"] = args ? args.validFrom : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -125,7 +122,6 @@ export class OutdoorLicense extends pulumi.CustomResource {
  */
 export interface OutdoorLicenseArgs {
     approvedWildlife?: pulumi.Input<string>;
-    category: pulumi.Input<enums.Category | string>;
     country?: pulumi.Input<string>;
     expires?: pulumi.Input<string>;
     fields?: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;

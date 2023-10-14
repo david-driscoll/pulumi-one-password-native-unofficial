@@ -111,9 +111,6 @@ namespace Pulumi.Onepassword
 
     public sealed class RewardProgramArgs : Pulumi.ResourceArgs
     {
-        [Input("category", required: true)]
-        public InputUnion<Pulumi.Onepassword.Category, string> Category { get; set; } = null!;
-
         [Input("companyName")]
         public Input<string>? CompanyName { get; set; }
 
@@ -174,7 +171,6 @@ namespace Pulumi.Onepassword
 
         public RewardProgramArgs()
         {
-            Category = "Item";
         }
     }
 }

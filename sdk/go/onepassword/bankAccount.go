@@ -52,9 +52,6 @@ func NewBankAccount(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
-	if isZero(args.Category) {
-		args.Category = pulumi.String("Item")
-	}
 	var resource BankAccount
 	err := ctx.RegisterResource("onepassword:index:BankAccount", name, args, &resource, opts...)
 	if err != nil {
@@ -90,7 +87,6 @@ type bankAccountArgs struct {
 	AccountNumber     *string                        `pulumi:"accountNumber"`
 	BankName          *string                        `pulumi:"bankName"`
 	BranchInformation *bankaccount.BranchInformation `pulumi:"branchInformation"`
-	Category          string                         `pulumi:"category"`
 	Fields            []Field                        `pulumi:"fields"`
 	Iban              *string                        `pulumi:"iban"`
 	NameOnAccount     *string                        `pulumi:"nameOnAccount"`
@@ -113,7 +109,6 @@ type BankAccountArgs struct {
 	AccountNumber     pulumi.StringPtrInput
 	BankName          pulumi.StringPtrInput
 	BranchInformation bankaccount.BranchInformationPtrInput
-	Category          pulumi.StringInput
 	Fields            FieldArrayInput
 	Iban              pulumi.StringPtrInput
 	NameOnAccount     pulumi.StringPtrInput

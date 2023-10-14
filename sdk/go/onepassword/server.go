@@ -48,9 +48,6 @@ func NewServer(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
-	if isZero(args.Category) {
-		args.Category = pulumi.String("Item")
-	}
 	var resource Server
 	err := ctx.RegisterResource("onepassword:index:Server", name, args, &resource, opts...)
 	if err != nil {
@@ -84,7 +81,6 @@ func (ServerState) ElementType() reflect.Type {
 
 type serverArgs struct {
 	AdminConsole    *server.AdminConsole    `pulumi:"adminConsole"`
-	Category        string                  `pulumi:"category"`
 	Fields          []Field                 `pulumi:"fields"`
 	HostingProvider *server.HostingProvider `pulumi:"hostingProvider"`
 	Notes           *string                 `pulumi:"notes"`
@@ -103,7 +99,6 @@ type serverArgs struct {
 // The set of arguments for constructing a Server resource.
 type ServerArgs struct {
 	AdminConsole    server.AdminConsolePtrInput
-	Category        pulumi.StringInput
 	Fields          FieldArrayInput
 	HostingProvider server.HostingProviderPtrInput
 	Notes           pulumi.StringPtrInput

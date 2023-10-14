@@ -43,9 +43,6 @@ func NewSSHKey(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
-	if isZero(args.Category) {
-		args.Category = pulumi.String("Item")
-	}
 	var resource SSHKey
 	err := ctx.RegisterResource("onepassword:index:SSHKey", name, args, &resource, opts...)
 	if err != nil {
@@ -78,7 +75,6 @@ func (SSHKeyState) ElementType() reflect.Type {
 }
 
 type sshkeyArgs struct {
-	Category   string    `pulumi:"category"`
 	Fields     []Field   `pulumi:"fields"`
 	Notes      *string   `pulumi:"notes"`
 	PrivateKey *string   `pulumi:"privateKey"`
@@ -93,7 +89,6 @@ type sshkeyArgs struct {
 
 // The set of arguments for constructing a SSHKey resource.
 type SSHKeyArgs struct {
-	Category   pulumi.StringInput
 	Fields     FieldArrayInput
 	Notes      pulumi.StringPtrInput
 	PrivateKey pulumi.StringPtrInput

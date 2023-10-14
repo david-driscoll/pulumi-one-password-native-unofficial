@@ -13,6 +13,7 @@ export const Category = {
     EmailAccount: "Email Account",
     Identity: "Identity",
     Item: "Item",
+    Item: "Item",
     Login: "Login",
     MedicalRecord: "Medical Record",
     Membership: "Membership",

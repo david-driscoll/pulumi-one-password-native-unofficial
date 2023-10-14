@@ -16,7 +16,6 @@ __all__ = ['MembershipArgs', 'Membership']
 @pulumi.input_type
 class MembershipArgs:
     def __init__(__self__, *,
-                 category: pulumi.Input[Union['Category', str]],
                  title: pulumi.Input[str],
                  vault: pulumi.Input[str],
                  expiry_date: Optional[pulumi.Input[str]] = None,
@@ -37,9 +36,6 @@ class MembershipArgs:
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         """
-        if category is None:
-            category = 'Item'
-        pulumi.set(__self__, "category", category)
         pulumi.set(__self__, "title", title)
         pulumi.set(__self__, "vault", vault)
         if expiry_date is not None:
@@ -66,15 +62,6 @@ class MembershipArgs:
             pulumi.set(__self__, "telephone", telephone)
         if website is not None:
             pulumi.set(__self__, "website", website)
-
-    @property
-    @pulumi.getter
-    def category(self) -> pulumi.Input[Union['Category', str]]:
-        return pulumi.get(self, "category")
-
-    @category.setter
-    def category(self, value: pulumi.Input[Union['Category', str]]):
-        pulumi.set(self, "category", value)
 
     @property
     @pulumi.getter
@@ -217,7 +204,6 @@ class Membership(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 category: Optional[pulumi.Input[Union['Category', str]]] = None,
                  expiry_date: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  group: Optional[pulumi.Input[str]] = None,
@@ -264,7 +250,6 @@ class Membership(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 category: Optional[pulumi.Input[Union['Category', str]]] = None,
                  expiry_date: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  group: Optional[pulumi.Input[str]] = None,
@@ -291,11 +276,6 @@ class Membership(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = MembershipArgs.__new__(MembershipArgs)
 
-            if category is None:
-                category = 'Item'
-            if category is None and not opts.urn:
-                raise TypeError("Missing required property 'category'")
-            __props__.__dict__["category"] = category
             __props__.__dict__["expiry_date"] = expiry_date
             __props__.__dict__["fields"] = fields
             __props__.__dict__["group"] = group
@@ -314,6 +294,7 @@ class Membership(pulumi.CustomResource):
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
             __props__.__dict__["website"] = website
+            __props__.__dict__["category"] = None
             __props__.__dict__["id"] = None
             __props__.__dict__["uuid"] = None
         super(Membership, __self__).__init__(

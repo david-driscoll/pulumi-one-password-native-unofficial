@@ -33,7 +33,7 @@ export class DriverLicense extends pulumi.CustomResource {
     }
 
     public readonly address!: pulumi.Output<string | undefined>;
-    public readonly category!: pulumi.Output<enums.Category | string>;
+    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
     public readonly conditionsRestrictions!: pulumi.Output<string | undefined>;
     public readonly country!: pulumi.Output<string | undefined>;
     public readonly dateOfBirth!: pulumi.Output<string | undefined>;
@@ -76,9 +76,6 @@ export class DriverLicense extends pulumi.CustomResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
-            if ((!args || args.category === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'category'");
-            }
             if ((!args || args.title === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'title'");
             }
@@ -86,7 +83,6 @@ export class DriverLicense extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vault'");
             }
             resourceInputs["address"] = args ? args.address : undefined;
-            resourceInputs["category"] = (args ? args.category : undefined) ?? "Item";
             resourceInputs["conditionsRestrictions"] = args ? args.conditionsRestrictions : undefined;
             resourceInputs["country"] = args ? args.country : undefined;
             resourceInputs["dateOfBirth"] = args ? args.dateOfBirth : undefined;
@@ -103,6 +99,7 @@ export class DriverLicense extends pulumi.CustomResource {
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -137,7 +134,6 @@ export class DriverLicense extends pulumi.CustomResource {
  */
 export interface DriverLicenseArgs {
     address?: pulumi.Input<string>;
-    category: pulumi.Input<enums.Category | string>;
     conditionsRestrictions?: pulumi.Input<string>;
     country?: pulumi.Input<string>;
     dateOfBirth?: pulumi.Input<string>;

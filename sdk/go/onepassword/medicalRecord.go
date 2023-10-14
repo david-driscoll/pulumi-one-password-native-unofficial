@@ -49,9 +49,6 @@ func NewMedicalRecord(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
-	if isZero(args.Category) {
-		args.Category = pulumi.String("Item")
-	}
 	var resource MedicalRecord
 	err := ctx.RegisterResource("onepassword:index:MedicalRecord", name, args, &resource, opts...)
 	if err != nil {
@@ -84,7 +81,6 @@ func (MedicalRecordState) ElementType() reflect.Type {
 }
 
 type medicalRecordArgs struct {
-	Category               string                    `pulumi:"category"`
 	Date                   *string                   `pulumi:"date"`
 	Fields                 []Field                   `pulumi:"fields"`
 	HealthcareProfessional *string                   `pulumi:"healthcareProfessional"`
@@ -104,7 +100,6 @@ type medicalRecordArgs struct {
 
 // The set of arguments for constructing a MedicalRecord resource.
 type MedicalRecordArgs struct {
-	Category               pulumi.StringInput
 	Date                   pulumi.StringPtrInput
 	Fields                 FieldArrayInput
 	HealthcareProfessional pulumi.StringPtrInput

@@ -99,9 +99,6 @@ namespace Pulumi.Onepassword
 
     public sealed class SSHKeyArgs : Pulumi.ResourceArgs
     {
-        [Input("category", required: true)]
-        public InputUnion<Pulumi.Onepassword.Category, string> Category { get; set; } = null!;
-
         [Input("fields")]
         private InputList<Inputs.FieldArgs>? _fields;
         public InputList<Inputs.FieldArgs> Fields
@@ -150,7 +147,6 @@ namespace Pulumi.Onepassword
 
         public SSHKeyArgs()
         {
-            Category = "Item";
         }
     }
 }

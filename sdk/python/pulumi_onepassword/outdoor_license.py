@@ -16,7 +16,6 @@ __all__ = ['OutdoorLicenseArgs', 'OutdoorLicense']
 @pulumi.input_type
 class OutdoorLicenseArgs:
     def __init__(__self__, *,
-                 category: pulumi.Input[Union['Category', str]],
                  title: pulumi.Input[str],
                  vault: pulumi.Input[str],
                  approved_wildlife: Optional[pulumi.Input[str]] = None,
@@ -36,9 +35,6 @@ class OutdoorLicenseArgs:
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         """
-        if category is None:
-            category = 'Item'
-        pulumi.set(__self__, "category", category)
         pulumi.set(__self__, "title", title)
         pulumi.set(__self__, "vault", vault)
         if approved_wildlife is not None:
@@ -63,15 +59,6 @@ class OutdoorLicenseArgs:
             pulumi.set(__self__, "tags", tags)
         if valid_from is not None:
             pulumi.set(__self__, "valid_from", valid_from)
-
-    @property
-    @pulumi.getter
-    def category(self) -> pulumi.Input[Union['Category', str]]:
-        return pulumi.get(self, "category")
-
-    @category.setter
-    def category(self, value: pulumi.Input[Union['Category', str]]):
-        pulumi.set(self, "category", value)
 
     @property
     @pulumi.getter
@@ -206,7 +193,6 @@ class OutdoorLicense(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  approved_wildlife: Optional[pulumi.Input[str]] = None,
-                 category: Optional[pulumi.Input[Union['Category', str]]] = None,
                  country: Optional[pulumi.Input[str]] = None,
                  expires: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
@@ -252,7 +238,6 @@ class OutdoorLicense(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  approved_wildlife: Optional[pulumi.Input[str]] = None,
-                 category: Optional[pulumi.Input[Union['Category', str]]] = None,
                  country: Optional[pulumi.Input[str]] = None,
                  expires: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
@@ -278,11 +263,6 @@ class OutdoorLicense(pulumi.CustomResource):
             __props__ = OutdoorLicenseArgs.__new__(OutdoorLicenseArgs)
 
             __props__.__dict__["approved_wildlife"] = approved_wildlife
-            if category is None:
-                category = 'Item'
-            if category is None and not opts.urn:
-                raise TypeError("Missing required property 'category'")
-            __props__.__dict__["category"] = category
             __props__.__dict__["country"] = country
             __props__.__dict__["expires"] = expires
             __props__.__dict__["fields"] = fields
@@ -299,6 +279,7 @@ class OutdoorLicense(pulumi.CustomResource):
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
+            __props__.__dict__["category"] = None
             __props__.__dict__["id"] = None
             __props__.__dict__["uuid"] = None
         super(OutdoorLicense, __self__).__init__(

@@ -33,7 +33,7 @@ export class EmailAccount extends pulumi.CustomResource {
     }
 
     public readonly authMethod!: pulumi.Output<string | undefined>;
-    public readonly category!: pulumi.Output<enums.Category | string>;
+    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
     public readonly contactInformation!: pulumi.Output<outputs.emailAccount.ContactInformation | undefined>;
     public readonly fields!: pulumi.Output<outputs.GetField[] | undefined>;
     public /*out*/ readonly id!: pulumi.Output<string>;
@@ -74,9 +74,6 @@ export class EmailAccount extends pulumi.CustomResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
-            if ((!args || args.category === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'category'");
-            }
             if ((!args || args.title === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'title'");
             }
@@ -84,7 +81,6 @@ export class EmailAccount extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vault'");
             }
             resourceInputs["authMethod"] = args ? args.authMethod : undefined;
-            resourceInputs["category"] = (args ? args.category : undefined) ?? "Item";
             resourceInputs["contactInformation"] = args ? args.contactInformation : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
@@ -99,6 +95,7 @@ export class EmailAccount extends pulumi.CustomResource {
             resourceInputs["type"] = args ? args.type : undefined;
             resourceInputs["username"] = args ? args.username : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -131,7 +128,6 @@ export class EmailAccount extends pulumi.CustomResource {
  */
 export interface EmailAccountArgs {
     authMethod?: pulumi.Input<string>;
-    category: pulumi.Input<enums.Category | string>;
     contactInformation?: pulumi.Input<inputs.emailAccount.ContactInformationArgs>;
     fields?: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;
     notes?: pulumi.Input<string>;

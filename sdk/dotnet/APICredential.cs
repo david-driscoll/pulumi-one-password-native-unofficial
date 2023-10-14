@@ -117,9 +117,6 @@ namespace Pulumi.Onepassword
 
     public sealed class APICredentialArgs : Pulumi.ResourceArgs
     {
-        [Input("category", required: true)]
-        public InputUnion<Pulumi.Onepassword.Category, string> Category { get; set; } = null!;
-
         [Input("credential")]
         public Input<string>? Credential { get; set; }
 
@@ -186,7 +183,6 @@ namespace Pulumi.Onepassword
 
         public APICredentialArgs()
         {
-            Category = "Item";
         }
     }
 }

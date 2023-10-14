@@ -13,7 +13,33 @@ export * from "./database";
 export * from "./document";
 export * from "./driverLicense";
 export * from "./emailAccount";
+export * from "./getAPICredential";
+export * from "./getBankAccount";
+export * from "./getCreditCard";
+export * from "./getCryptoWallet";
+export * from "./getDatabase";
+export * from "./getDocument";
+export * from "./getDriverLicense";
+export * from "./getEmailAccount";
+export * from "./getIdentity";
+export * from "./getItem";
+export * from "./getLogin";
+export * from "./getMedicalRecord";
+export * from "./getMembership";
+export * from "./getOutdoorLicense";
+export * from "./getPassport";
+export * from "./getPassword";
+export * from "./getRewardProgram";
+export * from "./getSSHKey";
+export * from "./getSecretReference";
+export * from "./getSecureNote";
+export * from "./getServer";
+export * from "./getSocialSecurityNumber";
+export * from "./getSoftwareLicense";
+export * from "./getVault";
+export * from "./getWirelessRouter";
 export * from "./identity";
+export * from "./item";
 export * from "./login";
 export * from "./medicalRecord";
 export * from "./membership";
@@ -49,6 +75,7 @@ import { Document } from "./document";
 import { DriverLicense } from "./driverLicense";
 import { EmailAccount } from "./emailAccount";
 import { Identity } from "./identity";
+import { Item } from "./item";
 import { Login } from "./login";
 import { MedicalRecord } from "./medicalRecord";
 import { Membership } from "./membership";
@@ -85,6 +112,8 @@ const _module = {
                 return new EmailAccount(name, <any>undefined, { urn })
             case "onepassword:index:Identity":
                 return new Identity(name, <any>undefined, { urn })
+            case "onepassword:index:Item":
+                return new Item(name, <any>undefined, { urn })
             case "onepassword:index:Login":
                 return new Login(name, <any>undefined, { urn })
             case "onepassword:index:MedicalRecord":

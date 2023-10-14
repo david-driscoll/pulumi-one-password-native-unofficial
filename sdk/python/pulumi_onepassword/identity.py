@@ -17,7 +17,6 @@ __all__ = ['IdentityArgs', 'Identity']
 @pulumi.input_type
 class IdentityArgs:
     def __init__(__self__, *,
-                 category: pulumi.Input[Union['Category', str]],
                  title: pulumi.Input[str],
                  vault: pulumi.Input[str],
                  address: Optional[pulumi.Input['_identity.AddressArgs']] = None,
@@ -33,9 +32,6 @@ class IdentityArgs:
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         """
-        if category is None:
-            category = 'Item'
-        pulumi.set(__self__, "category", category)
         pulumi.set(__self__, "title", title)
         pulumi.set(__self__, "vault", vault)
         if address is not None:
@@ -52,15 +48,6 @@ class IdentityArgs:
             pulumi.set(__self__, "sections", sections)
         if tags is not None:
             pulumi.set(__self__, "tags", tags)
-
-    @property
-    @pulumi.getter
-    def category(self) -> pulumi.Input[Union['Category', str]]:
-        return pulumi.get(self, "category")
-
-    @category.setter
-    def category(self, value: pulumi.Input[Union['Category', str]]):
-        pulumi.set(self, "category", value)
 
     @property
     @pulumi.getter
@@ -159,7 +146,6 @@ class Identity(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  address: Optional[pulumi.Input[pulumi.InputType['_identity.AddressArgs']]] = None,
-                 category: Optional[pulumi.Input[Union['Category', str]]] = None,
                  fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  identification: Optional[pulumi.Input[pulumi.InputType['_identity.IdentificationArgs']]] = None,
                  internet_details: Optional[pulumi.Input[pulumi.InputType['_identity.InternetDetailsArgs']]] = None,
@@ -201,7 +187,6 @@ class Identity(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  address: Optional[pulumi.Input[pulumi.InputType['_identity.AddressArgs']]] = None,
-                 category: Optional[pulumi.Input[Union['Category', str]]] = None,
                  fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  identification: Optional[pulumi.Input[pulumi.InputType['_identity.IdentificationArgs']]] = None,
                  internet_details: Optional[pulumi.Input[pulumi.InputType['_identity.InternetDetailsArgs']]] = None,
@@ -223,11 +208,6 @@ class Identity(pulumi.CustomResource):
             __props__ = IdentityArgs.__new__(IdentityArgs)
 
             __props__.__dict__["address"] = address
-            if category is None:
-                category = 'Item'
-            if category is None and not opts.urn:
-                raise TypeError("Missing required property 'category'")
-            __props__.__dict__["category"] = category
             __props__.__dict__["fields"] = fields
             __props__.__dict__["identification"] = identification
             __props__.__dict__["internet_details"] = internet_details
@@ -240,6 +220,7 @@ class Identity(pulumi.CustomResource):
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
+            __props__.__dict__["category"] = None
             __props__.__dict__["id"] = None
             __props__.__dict__["uuid"] = None
         super(Identity, __self__).__init__(

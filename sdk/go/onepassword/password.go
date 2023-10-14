@@ -43,9 +43,6 @@ func NewPassword(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
-	if isZero(args.Category) {
-		args.Category = pulumi.String("Item")
-	}
 	if args.Password != nil {
 		args.Password = pulumi.ToSecret(args.Password).(pulumi.StringPtrOutput)
 	}
@@ -85,7 +82,6 @@ func (PasswordState) ElementType() reflect.Type {
 }
 
 type passwordArgs struct {
-	Category string    `pulumi:"category"`
 	Fields   []Field   `pulumi:"fields"`
 	Notes    *string   `pulumi:"notes"`
 	Password *string   `pulumi:"password"`
@@ -100,7 +96,6 @@ type passwordArgs struct {
 
 // The set of arguments for constructing a Password resource.
 type PasswordArgs struct {
-	Category pulumi.StringInput
 	Fields   FieldArrayInput
 	Notes    pulumi.StringPtrInput
 	Password pulumi.StringPtrInput

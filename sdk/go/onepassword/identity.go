@@ -46,9 +46,6 @@ func NewIdentity(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
-	if isZero(args.Category) {
-		args.Category = pulumi.String("Item")
-	}
 	var resource Identity
 	err := ctx.RegisterResource("onepassword:index:Identity", name, args, &resource, opts...)
 	if err != nil {
@@ -82,7 +79,6 @@ func (IdentityState) ElementType() reflect.Type {
 
 type identityArgs struct {
 	Address         *identity.Address         `pulumi:"address"`
-	Category        string                    `pulumi:"category"`
 	Fields          []Field                   `pulumi:"fields"`
 	Identification  *identity.Identification  `pulumi:"identification"`
 	InternetDetails *identity.InternetDetails `pulumi:"internetDetails"`
@@ -99,7 +95,6 @@ type identityArgs struct {
 // The set of arguments for constructing a Identity resource.
 type IdentityArgs struct {
 	Address         identity.AddressPtrInput
-	Category        pulumi.StringInput
 	Fields          FieldArrayInput
 	Identification  identity.IdentificationPtrInput
 	InternetDetails identity.InternetDetailsPtrInput

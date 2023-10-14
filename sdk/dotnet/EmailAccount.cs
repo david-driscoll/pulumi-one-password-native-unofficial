@@ -126,9 +126,6 @@ namespace Pulumi.Onepassword
         [Input("authMethod")]
         public Input<string>? AuthMethod { get; set; }
 
-        [Input("category", required: true)]
-        public InputUnion<Pulumi.Onepassword.Category, string> Category { get; set; } = null!;
-
         [Input("contactInformation")]
         public Input<Pulumi.Onepassword.EmailAccount.Inputs.ContactInformationArgs>? ContactInformation { get; set; }
 
@@ -198,7 +195,6 @@ namespace Pulumi.Onepassword
 
         public EmailAccountArgs()
         {
-            Category = "Item";
         }
     }
 }

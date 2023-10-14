@@ -49,9 +49,6 @@ func NewOutdoorLicense(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
-	if isZero(args.Category) {
-		args.Category = pulumi.String("Item")
-	}
 	var resource OutdoorLicense
 	err := ctx.RegisterResource("onepassword:index:OutdoorLicense", name, args, &resource, opts...)
 	if err != nil {
@@ -85,7 +82,6 @@ func (OutdoorLicenseState) ElementType() reflect.Type {
 
 type outdoorLicenseArgs struct {
 	ApprovedWildlife *string   `pulumi:"approvedWildlife"`
-	Category         string    `pulumi:"category"`
 	Country          *string   `pulumi:"country"`
 	Expires          *string   `pulumi:"expires"`
 	Fields           []Field   `pulumi:"fields"`
@@ -106,7 +102,6 @@ type outdoorLicenseArgs struct {
 // The set of arguments for constructing a OutdoorLicense resource.
 type OutdoorLicenseArgs struct {
 	ApprovedWildlife pulumi.StringPtrInput
-	Category         pulumi.StringInput
 	Country          pulumi.StringPtrInput
 	Expires          pulumi.StringPtrInput
 	Fields           FieldArrayInput

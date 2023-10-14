@@ -34,7 +34,7 @@ export class CreditCard extends pulumi.CustomResource {
 
     public readonly additionalDetails!: pulumi.Output<outputs.creditCard.AdditionalDetails | undefined>;
     public readonly cardholderName!: pulumi.Output<string | undefined>;
-    public readonly category!: pulumi.Output<enums.Category | string>;
+    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
     public readonly contactInformation!: pulumi.Output<outputs.creditCard.ContactInformation | undefined>;
     public readonly expiryDate!: pulumi.Output<string | undefined>;
     public readonly fields!: pulumi.Output<outputs.GetField[] | undefined>;
@@ -73,9 +73,6 @@ export class CreditCard extends pulumi.CustomResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
-            if ((!args || args.category === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'category'");
-            }
             if ((!args || args.title === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'title'");
             }
@@ -84,7 +81,6 @@ export class CreditCard extends pulumi.CustomResource {
             }
             resourceInputs["additionalDetails"] = args ? args.additionalDetails : undefined;
             resourceInputs["cardholderName"] = args ? args.cardholderName : undefined;
-            resourceInputs["category"] = (args ? args.category : undefined) ?? "Item";
             resourceInputs["contactInformation"] = args ? args.contactInformation : undefined;
             resourceInputs["expiryDate"] = args ? args.expiryDate : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
@@ -97,6 +93,7 @@ export class CreditCard extends pulumi.CustomResource {
             resourceInputs["validFrom"] = args ? args.validFrom : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["verificationNumber"] = args ? args.verificationNumber : undefined;
+            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -129,7 +126,6 @@ export class CreditCard extends pulumi.CustomResource {
 export interface CreditCardArgs {
     additionalDetails?: pulumi.Input<inputs.creditCard.AdditionalDetailsArgs>;
     cardholderName?: pulumi.Input<string>;
-    category: pulumi.Input<enums.Category | string>;
     contactInformation?: pulumi.Input<inputs.creditCard.ContactInformationArgs>;
     expiryDate?: pulumi.Input<string>;
     fields?: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;

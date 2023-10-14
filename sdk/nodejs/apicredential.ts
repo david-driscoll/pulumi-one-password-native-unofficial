@@ -32,7 +32,7 @@ export class APICredential extends pulumi.CustomResource {
         return obj['__pulumiType'] === APICredential.__pulumiType;
     }
 
-    public readonly category!: pulumi.Output<enums.Category | string>;
+    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
     public readonly credential!: pulumi.Output<string | undefined>;
     public readonly expires!: pulumi.Output<string | undefined>;
     public readonly fields!: pulumi.Output<outputs.GetField[] | undefined>;
@@ -72,16 +72,12 @@ export class APICredential extends pulumi.CustomResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
-            if ((!args || args.category === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'category'");
-            }
             if ((!args || args.title === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'title'");
             }
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
-            resourceInputs["category"] = (args ? args.category : undefined) ?? "Item";
             resourceInputs["credential"] = args ? args.credential : undefined;
             resourceInputs["expires"] = args ? args.expires : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
@@ -95,6 +91,7 @@ export class APICredential extends pulumi.CustomResource {
             resourceInputs["username"] = args ? args.username : undefined;
             resourceInputs["validFrom"] = args ? args.validFrom : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -124,7 +121,6 @@ export class APICredential extends pulumi.CustomResource {
  * The set of arguments for constructing a APICredential resource.
  */
 export interface APICredentialArgs {
-    category: pulumi.Input<enums.Category | string>;
     credential?: pulumi.Input<string>;
     expires?: pulumi.Input<string>;
     fields?: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;

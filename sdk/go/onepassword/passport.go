@@ -53,9 +53,6 @@ func NewPassport(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
-	if isZero(args.Category) {
-		args.Category = pulumi.String("Item")
-	}
 	var resource Passport
 	err := ctx.RegisterResource("onepassword:index:Passport", name, args, &resource, opts...)
 	if err != nil {
@@ -88,7 +85,6 @@ func (PassportState) ElementType() reflect.Type {
 }
 
 type passportArgs struct {
-	Category         string    `pulumi:"category"`
 	DateOfBirth      *string   `pulumi:"dateOfBirth"`
 	ExpiryDate       *string   `pulumi:"expiryDate"`
 	Fields           []Field   `pulumi:"fields"`
@@ -113,7 +109,6 @@ type passportArgs struct {
 
 // The set of arguments for constructing a Passport resource.
 type PassportArgs struct {
-	Category         pulumi.StringInput
 	DateOfBirth      pulumi.StringPtrInput
 	ExpiryDate       pulumi.StringPtrInput
 	Fields           FieldArrayInput

@@ -49,9 +49,6 @@ func NewAPICredential(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
-	if isZero(args.Category) {
-		args.Category = pulumi.String("Item")
-	}
 	var resource APICredential
 	err := ctx.RegisterResource("onepassword:index:APICredential", name, args, &resource, opts...)
 	if err != nil {
@@ -84,7 +81,6 @@ func (APICredentialState) ElementType() reflect.Type {
 }
 
 type apicredentialArgs struct {
-	Category   string    `pulumi:"category"`
 	Credential *string   `pulumi:"credential"`
 	Expires    *string   `pulumi:"expires"`
 	Fields     []Field   `pulumi:"fields"`
@@ -105,7 +101,6 @@ type apicredentialArgs struct {
 
 // The set of arguments for constructing a APICredential resource.
 type APICredentialArgs struct {
-	Category   pulumi.StringInput
 	Credential pulumi.StringPtrInput
 	Expires    pulumi.StringPtrInput
 	Fields     FieldArrayInput

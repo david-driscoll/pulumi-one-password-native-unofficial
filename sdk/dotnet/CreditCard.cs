@@ -126,9 +126,6 @@ namespace Pulumi.Onepassword
         [Input("cardholderName")]
         public Input<string>? CardholderName { get; set; }
 
-        [Input("category", required: true)]
-        public InputUnion<Pulumi.Onepassword.Category, string> Category { get; set; } = null!;
-
         [Input("contactInformation")]
         public Input<Pulumi.Onepassword.CreditCard.Inputs.ContactInformationArgs>? ContactInformation { get; set; }
 
@@ -192,7 +189,6 @@ namespace Pulumi.Onepassword
 
         public CreditCardArgs()
         {
-            Category = "Item";
         }
     }
 }

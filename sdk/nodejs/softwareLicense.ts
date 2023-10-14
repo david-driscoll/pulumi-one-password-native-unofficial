@@ -32,7 +32,7 @@ export class SoftwareLicense extends pulumi.CustomResource {
         return obj['__pulumiType'] === SoftwareLicense.__pulumiType;
     }
 
-    public readonly category!: pulumi.Output<enums.Category | string>;
+    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
     public readonly customer!: pulumi.Output<outputs.softwareLicense.Customer | undefined>;
     public readonly fields!: pulumi.Output<outputs.GetField[] | undefined>;
     public /*out*/ readonly id!: pulumi.Output<string>;
@@ -70,16 +70,12 @@ export class SoftwareLicense extends pulumi.CustomResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
-            if ((!args || args.category === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'category'");
-            }
             if ((!args || args.title === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'title'");
             }
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
-            resourceInputs["category"] = (args ? args.category : undefined) ?? "Item";
             resourceInputs["customer"] = args ? args.customer : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["licenseKey"] = args ? args.licenseKey : undefined;
@@ -91,6 +87,7 @@ export class SoftwareLicense extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["version"] = args ? args.version : undefined;
+            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -118,7 +115,6 @@ export class SoftwareLicense extends pulumi.CustomResource {
  * The set of arguments for constructing a SoftwareLicense resource.
  */
 export interface SoftwareLicenseArgs {
-    category: pulumi.Input<enums.Category | string>;
     customer?: pulumi.Input<inputs.softwareLicense.CustomerArgs>;
     fields?: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;
     licenseKey?: pulumi.Input<string>;

@@ -17,7 +17,6 @@ __all__ = ['RewardProgramArgs', 'RewardProgram']
 @pulumi.input_type
 class RewardProgramArgs:
     def __init__(__self__, *,
-                 category: pulumi.Input[Union['Category', str]],
                  title: pulumi.Input[str],
                  vault: pulumi.Input[str],
                  company_name: Optional[pulumi.Input[str]] = None,
@@ -35,9 +34,6 @@ class RewardProgramArgs:
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         """
-        if category is None:
-            category = 'Item'
-        pulumi.set(__self__, "category", category)
         pulumi.set(__self__, "title", title)
         pulumi.set(__self__, "vault", vault)
         if company_name is not None:
@@ -58,15 +54,6 @@ class RewardProgramArgs:
             pulumi.set(__self__, "sections", sections)
         if tags is not None:
             pulumi.set(__self__, "tags", tags)
-
-    @property
-    @pulumi.getter
-    def category(self) -> pulumi.Input[Union['Category', str]]:
-        return pulumi.get(self, "category")
-
-    @category.setter
-    def category(self, value: pulumi.Input[Union['Category', str]]):
-        pulumi.set(self, "category", value)
 
     @property
     @pulumi.getter
@@ -182,7 +169,6 @@ class RewardProgram(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 category: Optional[pulumi.Input[Union['Category', str]]] = None,
                  company_name: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  member_id: Optional[pulumi.Input[str]] = None,
@@ -226,7 +212,6 @@ class RewardProgram(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 category: Optional[pulumi.Input[Union['Category', str]]] = None,
                  company_name: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  member_id: Optional[pulumi.Input[str]] = None,
@@ -250,11 +235,6 @@ class RewardProgram(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = RewardProgramArgs.__new__(RewardProgramArgs)
 
-            if category is None:
-                category = 'Item'
-            if category is None and not opts.urn:
-                raise TypeError("Missing required property 'category'")
-            __props__.__dict__["category"] = category
             __props__.__dict__["company_name"] = company_name
             __props__.__dict__["fields"] = fields
             __props__.__dict__["member_id"] = member_id
@@ -270,6 +250,7 @@ class RewardProgram(pulumi.CustomResource):
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
+            __props__.__dict__["category"] = None
             __props__.__dict__["id"] = None
             __props__.__dict__["uuid"] = None
         super(RewardProgram, __self__).__init__(

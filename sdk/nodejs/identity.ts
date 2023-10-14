@@ -33,7 +33,7 @@ export class Identity extends pulumi.CustomResource {
     }
 
     public readonly address!: pulumi.Output<outputs.identity.Address | undefined>;
-    public readonly category!: pulumi.Output<enums.Category | string>;
+    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
     public readonly fields!: pulumi.Output<outputs.GetField[] | undefined>;
     public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly identification!: pulumi.Output<outputs.identity.Identification | undefined>;
@@ -68,9 +68,6 @@ export class Identity extends pulumi.CustomResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
-            if ((!args || args.category === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'category'");
-            }
             if ((!args || args.title === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'title'");
             }
@@ -78,7 +75,6 @@ export class Identity extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vault'");
             }
             resourceInputs["address"] = args ? args.address : undefined;
-            resourceInputs["category"] = (args ? args.category : undefined) ?? "Item";
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["identification"] = args ? args.identification : undefined;
             resourceInputs["internetDetails"] = args ? args.internetDetails : undefined;
@@ -87,6 +83,7 @@ export class Identity extends pulumi.CustomResource {
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -113,7 +110,6 @@ export class Identity extends pulumi.CustomResource {
  */
 export interface IdentityArgs {
     address?: pulumi.Input<inputs.identity.AddressArgs>;
-    category: pulumi.Input<enums.Category | string>;
     fields?: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;
     identification?: pulumi.Input<inputs.identity.IdentificationArgs>;
     internetDetails?: pulumi.Input<inputs.identity.InternetDetailsArgs>;

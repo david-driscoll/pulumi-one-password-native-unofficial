@@ -16,7 +16,6 @@ __all__ = ['WirelessRouterArgs', 'WirelessRouter']
 @pulumi.input_type
 class WirelessRouterArgs:
     def __init__(__self__, *,
-                 category: pulumi.Input[Union['Category', str]],
                  title: pulumi.Input[str],
                  vault: pulumi.Input[str],
                  air_port_id: Optional[pulumi.Input[str]] = None,
@@ -37,9 +36,6 @@ class WirelessRouterArgs:
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         """
-        if category is None:
-            category = 'Item'
-        pulumi.set(__self__, "category", category)
         pulumi.set(__self__, "title", title)
         pulumi.set(__self__, "vault", vault)
         if air_port_id is not None:
@@ -66,15 +62,6 @@ class WirelessRouterArgs:
             pulumi.set(__self__, "wireless_network_password", wireless_network_password)
         if wireless_security is not None:
             pulumi.set(__self__, "wireless_security", wireless_security)
-
-    @property
-    @pulumi.getter
-    def category(self) -> pulumi.Input[Union['Category', str]]:
-        return pulumi.get(self, "category")
-
-    @category.setter
-    def category(self, value: pulumi.Input[Union['Category', str]]):
-        pulumi.set(self, "category", value)
 
     @property
     @pulumi.getter
@@ -221,7 +208,6 @@ class WirelessRouter(pulumi.CustomResource):
                  attached_storage_password: Optional[pulumi.Input[str]] = None,
                  base_station_name: Optional[pulumi.Input[str]] = None,
                  base_station_password: Optional[pulumi.Input[str]] = None,
-                 category: Optional[pulumi.Input[Union['Category', str]]] = None,
                  fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  network_name: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
@@ -268,7 +254,6 @@ class WirelessRouter(pulumi.CustomResource):
                  attached_storage_password: Optional[pulumi.Input[str]] = None,
                  base_station_name: Optional[pulumi.Input[str]] = None,
                  base_station_password: Optional[pulumi.Input[str]] = None,
-                 category: Optional[pulumi.Input[Union['Category', str]]] = None,
                  fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  network_name: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
@@ -295,11 +280,6 @@ class WirelessRouter(pulumi.CustomResource):
             __props__.__dict__["attached_storage_password"] = attached_storage_password
             __props__.__dict__["base_station_name"] = base_station_name
             __props__.__dict__["base_station_password"] = base_station_password
-            if category is None:
-                category = 'Item'
-            if category is None and not opts.urn:
-                raise TypeError("Missing required property 'category'")
-            __props__.__dict__["category"] = category
             __props__.__dict__["fields"] = fields
             __props__.__dict__["network_name"] = network_name
             __props__.__dict__["notes"] = notes
@@ -314,6 +294,7 @@ class WirelessRouter(pulumi.CustomResource):
             __props__.__dict__["vault"] = vault
             __props__.__dict__["wireless_network_password"] = wireless_network_password
             __props__.__dict__["wireless_security"] = wireless_security
+            __props__.__dict__["category"] = None
             __props__.__dict__["id"] = None
             __props__.__dict__["uuid"] = None
         super(WirelessRouter, __self__).__init__(

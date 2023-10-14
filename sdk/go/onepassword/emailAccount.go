@@ -52,9 +52,6 @@ func NewEmailAccount(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
-	if isZero(args.Category) {
-		args.Category = pulumi.String("Item")
-	}
 	var resource EmailAccount
 	err := ctx.RegisterResource("onepassword:index:EmailAccount", name, args, &resource, opts...)
 	if err != nil {
@@ -88,7 +85,6 @@ func (EmailAccountState) ElementType() reflect.Type {
 
 type emailAccountArgs struct {
 	AuthMethod         *string                          `pulumi:"authMethod"`
-	Category           string                           `pulumi:"category"`
 	ContactInformation *emailaccount.ContactInformation `pulumi:"contactInformation"`
 	Fields             []Field                          `pulumi:"fields"`
 	Notes              *string                          `pulumi:"notes"`
@@ -111,7 +107,6 @@ type emailAccountArgs struct {
 // The set of arguments for constructing a EmailAccount resource.
 type EmailAccountArgs struct {
 	AuthMethod         pulumi.StringPtrInput
-	Category           pulumi.StringInput
 	ContactInformation emailaccount.ContactInformationPtrInput
 	Fields             FieldArrayInput
 	Notes              pulumi.StringPtrInput

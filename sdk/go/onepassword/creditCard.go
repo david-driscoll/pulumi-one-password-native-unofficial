@@ -51,9 +51,6 @@ func NewCreditCard(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
-	if isZero(args.Category) {
-		args.Category = pulumi.String("Item")
-	}
 	var resource CreditCard
 	err := ctx.RegisterResource("onepassword:index:CreditCard", name, args, &resource, opts...)
 	if err != nil {
@@ -88,7 +85,6 @@ func (CreditCardState) ElementType() reflect.Type {
 type creditCardArgs struct {
 	AdditionalDetails  *creditcard.AdditionalDetails  `pulumi:"additionalDetails"`
 	CardholderName     *string                        `pulumi:"cardholderName"`
-	Category           string                         `pulumi:"category"`
 	ContactInformation *creditcard.ContactInformation `pulumi:"contactInformation"`
 	ExpiryDate         *string                        `pulumi:"expiryDate"`
 	Fields             []Field                        `pulumi:"fields"`
@@ -110,7 +106,6 @@ type creditCardArgs struct {
 type CreditCardArgs struct {
 	AdditionalDetails  creditcard.AdditionalDetailsPtrInput
 	CardholderName     pulumi.StringPtrInput
-	Category           pulumi.StringInput
 	ContactInformation creditcard.ContactInformationPtrInput
 	ExpiryDate         pulumi.StringPtrInput
 	Fields             FieldArrayInput

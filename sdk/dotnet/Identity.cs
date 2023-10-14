@@ -108,9 +108,6 @@ namespace Pulumi.Onepassword
         [Input("address")]
         public Input<Pulumi.Onepassword.Identity.Inputs.AddressArgs>? Address { get; set; }
 
-        [Input("category", required: true)]
-        public InputUnion<Pulumi.Onepassword.Category, string> Category { get; set; } = null!;
-
         [Input("fields")]
         private InputList<Inputs.FieldArgs>? _fields;
         public InputList<Inputs.FieldArgs> Fields
@@ -162,7 +159,6 @@ namespace Pulumi.Onepassword
 
         public IdentityArgs()
         {
-            Category = "Item";
         }
     }
 }

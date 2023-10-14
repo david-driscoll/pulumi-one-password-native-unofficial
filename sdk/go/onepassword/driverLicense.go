@@ -53,9 +53,6 @@ func NewDriverLicense(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
-	if isZero(args.Category) {
-		args.Category = pulumi.String("Item")
-	}
 	var resource DriverLicense
 	err := ctx.RegisterResource("onepassword:index:DriverLicense", name, args, &resource, opts...)
 	if err != nil {
@@ -89,7 +86,6 @@ func (DriverLicenseState) ElementType() reflect.Type {
 
 type driverLicenseArgs struct {
 	Address                *string   `pulumi:"address"`
-	Category               string    `pulumi:"category"`
 	ConditionsRestrictions *string   `pulumi:"conditionsRestrictions"`
 	Country                *string   `pulumi:"country"`
 	DateOfBirth            *string   `pulumi:"dateOfBirth"`
@@ -114,7 +110,6 @@ type driverLicenseArgs struct {
 // The set of arguments for constructing a DriverLicense resource.
 type DriverLicenseArgs struct {
 	Address                pulumi.StringPtrInput
-	Category               pulumi.StringInput
 	ConditionsRestrictions pulumi.StringPtrInput
 	Country                pulumi.StringPtrInput
 	DateOfBirth            pulumi.StringPtrInput

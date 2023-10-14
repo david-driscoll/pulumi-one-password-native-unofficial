@@ -1,11 +1,96 @@
 import { Field, GenericField, ItemTemplate, NotesField, OtpField, PasswordField, Section, UsernameField, item } from "@1password/op-js"
 import { readFileSync, writeFileSync } from 'fs';
-import { camelCase, uniq, orderBy } from 'lodash'
+import { camelCase, uniq, orderBy, cloneDeep } from 'lodash'
 
-const templates = item.template.list();
+const templates = item.template.list().concat({
+    name: 'Item',
+    uuid: "-1"
+});
 const schema = JSON.parse(readFileSync('./schema.json').toString('ascii'));
 
-const allTemplates = orderBy(templates.map(z => camelCase(z.name)[0].toUpperCase() + camelCase(z.name).substring(1)).concat('Item'));
+const allTemplates = orderBy(templates.map(z => camelCase(z.name)[0].toUpperCase() + camelCase(z.name).substring(1)));
+
+// TODOS: Document
+
+schema.functions = {
+    "onepassword:index:GetItem": {
+        "description": "Use this data source to get details of an item by its vault uuid and either the title or the uuid of the item.",
+        type: "object",
+        inputs: {
+            properties: {
+                "title": {
+                    "type": "string",
+                    "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
+                },
+                "uuid": {
+                    "type": "string",
+                    "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
+                },
+                "vault": {
+                    "type": "string",
+                    "description": "The UUID of the vault the item is in.\n"
+                }
+            },
+            required: ['vault']
+        },
+        outputs: applyDefaultOutputProperties({
+            properties: {}
+        })
+    },
+    "onepassword:index:GetVault": {
+        "description": "Use this data source to get details of a vault by either its name or uuid.\n",
+        inputs: {
+            properties: {
+                "vault": {
+                    "type": "string",
+                    "description": "The vault to get information of.  Can be either the name or the UUID.\n"
+                }
+            },
+            required: ['vault']
+        },
+        outputs: {
+            properties: {
+                "description": {
+                    "type": "string",
+                    "description": "The description of the vault.\n"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the vault to retrieve. This field will be populated with the name of the vault if the vault it looked up by its UUID.\n"
+                },
+                "uuid": {
+                    "type": "string",
+                    "description": "The UUID of the vault to retrieve. This field will be populated with the UUID of the vault if the vault it looked up by its name.\n"
+                }
+            }
+        }
+    },
+    "onepassword:index:GetSecretReference": {
+        inputs: {
+            properties: {
+                "reference": {
+                    "type": "string",
+                    "description": "The 1Password secret reference path to the item.  eg: op://vault/item/[section]/field \n"
+                },
+            },
+            required: ['reference']
+        },
+        outputs: {
+            "properties": {
+                "value": {
+                    "type": "string",
+                    "secret": true
+                }
+            },
+            "description": "The resolved reference value"
+        }
+    }
+}
+
+
 
 schema.types = {
     "onepassword:index:Category": {
@@ -125,16 +210,17 @@ schema.types = {
 for (const template of templates) {
     console.log(template.name)
 
-    const templateSchema = item.template.get(template.name as any) as any as ItemTemplate
+    const templateSchema = template.name === 'Item' ? { fields: [] } : item.template.get(template.name as any) as any as ItemTemplate
     const resourceName = `onepassword:index:${template.name.replace(/ /g, '')}`
 
     const currentResource = schema.resources[resourceName] ??= {
         "isComponent": false,
     };
+
     currentResource.isComponent = false;
     currentResource.inputProperties ??= {};
     currentResource.requiredInputs ??= [];
-    currentResource.requiredInputs = uniq(currentResource.requiredInputs.concat('title', 'vault', 'category'));
+    currentResource.requiredInputs = uniq(currentResource.requiredInputs.concat('title', 'vault'));
     currentResource.properties ??= {};
     currentResource.required ??= [];
     currentResource.required = uniq(currentResource.required.concat('tags', 'id', 'uuid', 'title', 'vault', 'category'));
@@ -163,60 +249,31 @@ for (const template of templates) {
         "description": "The UUID of the vault the item is in.\n",
         "willReplaceOnChanges": true
     };
-    currentResource.inputProperties['category'] = {
-        "oneOf": [
-            {
-                "$ref": "#/types/onepassword:index:Category"
+
+    applyDefaultOutputProperties(currentResource);
+
+    const functionName = `onepassword:index:Get${template.name.replace(/ /g, '')}`
+    const currentFunction = schema.functions[functionName] ??= {};
+    currentFunction.inputs = {
+        "properties": {
+            "title": {
+                "type": "string",
+                "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
             },
-            {
-                "type": "string"
+            "uuid": {
+                "type": "string",
+                "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
+            },
+            "vault": {
+                "type": "string",
+                "description": "The UUID of the vault the item is in.\n"
             }
-        ],
-        "willReplaceOnChanges": true,
-        default: 'Item'
-    };
-
-
-    currentResource.properties['id'] = {
-        "type": "string"
-    };
-    currentResource.properties['uuid'] = {
-        "type": "string",
-        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
-    };
-    currentResource.properties['title'] = {
-        "type": "string",
-        "description": "The title of the item.\n"
-    };
-    currentResource.properties['vault'] = {
-        "type": "string",
-        "description": "The UUID of the vault the item is in.\n"
-    };
-    currentResource.properties['sections'] = {
-        "type": "array",
-        "items": { "$ref": "#/types/onepassword:index:GetSection" }
-    };
-    currentResource.properties['fields'] = {
-        "type": "array",
-        "items": { "$ref": "#/types/onepassword:index:GetField" }
-    };
-    currentResource.properties['tags'] = {
-        type: 'array',
-        items: {
-            type: 'string'
         },
-        "description": "An array of strings of the tags assigned to the item.\n"
-    }
-    currentResource.properties['category'] = {
-        "oneOf": [
-            {
-                "$ref": "#/types/onepassword:index:Category"
-            },
-            {
-                "type": "string"
-            }
+        "required": [
+            "vault"
         ]
     };
+    currentFunction.outputs = applyDefaultOutputProperties({ properties: {} });
 
     const sections = templateSchema.fields
         .filter(z => !!z.section)
@@ -224,6 +281,7 @@ for (const template of templates) {
             schema.types[getSectionKey(template.name, v.section!)] = o[getSectionKey(template.name, v.section!)] = { "type": "object", "properties": {} };
             currentResource.inputProperties[camelCase(v.section!.label ?? v.section!.id)] = { '$ref': `#/types/${getSectionKey(template.name, v.section!)}` };
             currentResource.properties[camelCase(v.section!.label ?? v.section!.id)] = { '$ref': `#/types/${getSectionKey(template.name, v.section!)}` };
+            currentFunction.outputs.properties[camelCase(v.section!.label ?? v.section!.id)] = { '$ref': `#/types/${getSectionKey(template.name, v.section!)}` };
             return o;
         }, {} as Record<string, any>);
 
@@ -252,15 +310,32 @@ for (const template of templates) {
                 type: fieldInfo.type,
                 secret: fieldInfo.secret,
             }
+            currentFunction.outputs.properties[fieldInfo.name] = {
+                type: fieldInfo.type,
+                secret: fieldInfo.secret,
+            }
             if (fieldInfo.default) {
                 currentResource.inputProperties[fieldInfo.name].default = fieldInfo.default
                 currentResource.properties[fieldInfo.name].default = fieldInfo.default
+                currentFunction.outputs.properties[fieldInfo.name].default = fieldInfo.default
             }
         }
     }
 
-    // console.log(JSON.stringify(templateSchema, null, 4))
 }
+
+schema.resources[`onepassword:index:Item`].inputProperties['category'] = {
+    "oneOf": [
+        {
+            "$ref": "#/types/onepassword:index:Category"
+        },
+        {
+            "type": "string"
+        }
+    ],
+    "willReplaceOnChanges": true,
+    default: 'Item'
+};
 
 
 console.log()
@@ -366,4 +441,51 @@ function getFieldType(field: Field) {
     }
 
     return fieldData;
+}
+
+function applyDefaultOutputProperties(item: any) {
+    Object.assign(item.properties, {
+        ['id']: {
+            "type": "string"
+        },
+        ['uuid']: {
+            "type": "string",
+            "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
+        },
+        ['title']: {
+            "type": "string",
+            "description": "The title of the item.\n"
+        },
+        ['vault']: {
+            "type": "string",
+            "description": "The UUID of the vault the item is in.\n"
+        },
+        ['sections']: {
+            "type": "array",
+            "items": { "$ref": "#/types/onepassword:index:GetSection" }
+        },
+        ['fields']: {
+            "type": "array",
+            "items": { "$ref": "#/types/onepassword:index:GetField" }
+        },
+        ['tags']: {
+            type: 'array',
+            items: {
+                type: 'string'
+            },
+            "description": "An array of strings of the tags assigned to the item.\n"
+        },
+        ['category']: {
+            "oneOf": [
+                {
+                    "$ref": "#/types/onepassword:index:Category"
+                },
+                {
+                    "type": "string"
+                }
+            ]
+        }
+
+    });
+    return item
 }

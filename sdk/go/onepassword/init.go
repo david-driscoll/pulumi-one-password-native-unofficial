@@ -38,6 +38,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &EmailAccount{}
 	case "onepassword:index:Identity":
 		r = &Identity{}
+	case "onepassword:index:Item":
+		r = &Item{}
 	case "onepassword:index:Login":
 		r = &Login{}
 	case "onepassword:index:MedicalRecord":

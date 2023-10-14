@@ -32,7 +32,7 @@ export class Passport extends pulumi.CustomResource {
         return obj['__pulumiType'] === Passport.__pulumiType;
     }
 
-    public readonly category!: pulumi.Output<enums.Category | string>;
+    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
     public readonly dateOfBirth!: pulumi.Output<string | undefined>;
     public readonly expiryDate!: pulumi.Output<string | undefined>;
     public readonly fields!: pulumi.Output<outputs.GetField[] | undefined>;
@@ -76,16 +76,12 @@ export class Passport extends pulumi.CustomResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
-            if ((!args || args.category === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'category'");
-            }
             if ((!args || args.title === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'title'");
             }
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
-            resourceInputs["category"] = (args ? args.category : undefined) ?? "Item";
             resourceInputs["dateOfBirth"] = args ? args.dateOfBirth : undefined;
             resourceInputs["expiryDate"] = args ? args.expiryDate : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
@@ -103,6 +99,7 @@ export class Passport extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["type"] = args ? args.type : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -136,7 +133,6 @@ export class Passport extends pulumi.CustomResource {
  * The set of arguments for constructing a Passport resource.
  */
 export interface PassportArgs {
-    category: pulumi.Input<enums.Category | string>;
     dateOfBirth?: pulumi.Input<string>;
     expiryDate?: pulumi.Input<string>;
     fields?: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;

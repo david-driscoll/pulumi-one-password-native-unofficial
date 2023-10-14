@@ -120,9 +120,6 @@ namespace Pulumi.Onepassword
         [Input("approvedWildlife")]
         public Input<string>? ApprovedWildlife { get; set; }
 
-        [Input("category", required: true)]
-        public InputUnion<Pulumi.Onepassword.Category, string> Category { get; set; } = null!;
-
         [Input("country")]
         public Input<string>? Country { get; set; }
 
@@ -186,7 +183,6 @@ namespace Pulumi.Onepassword
 
         public OutdoorLicenseArgs()
         {
-            Category = "Item";
         }
     }
 }

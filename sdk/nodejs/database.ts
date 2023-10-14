@@ -33,7 +33,7 @@ export class Database extends pulumi.CustomResource {
     }
 
     public readonly alias!: pulumi.Output<string | undefined>;
-    public readonly category!: pulumi.Output<enums.Category | string>;
+    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
     public readonly connectionOptions!: pulumi.Output<string | undefined>;
     public readonly database!: pulumi.Output<string | undefined>;
     public readonly fields!: pulumi.Output<outputs.GetField[] | undefined>;
@@ -74,9 +74,6 @@ export class Database extends pulumi.CustomResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
-            if ((!args || args.category === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'category'");
-            }
             if ((!args || args.title === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'title'");
             }
@@ -84,7 +81,6 @@ export class Database extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vault'");
             }
             resourceInputs["alias"] = args ? args.alias : undefined;
-            resourceInputs["category"] = (args ? args.category : undefined) ?? "Item";
             resourceInputs["connectionOptions"] = args ? args.connectionOptions : undefined;
             resourceInputs["database"] = args ? args.database : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
@@ -99,6 +95,7 @@ export class Database extends pulumi.CustomResource {
             resourceInputs["type"] = args ? args.type : undefined;
             resourceInputs["username"] = args ? args.username : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -131,7 +128,6 @@ export class Database extends pulumi.CustomResource {
  */
 export interface DatabaseArgs {
     alias?: pulumi.Input<string>;
-    category: pulumi.Input<enums.Category | string>;
     connectionOptions?: pulumi.Input<string>;
     database?: pulumi.Input<string>;
     fields?: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;

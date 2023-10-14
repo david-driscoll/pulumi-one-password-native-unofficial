@@ -48,9 +48,6 @@ func NewRewardProgram(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
-	if isZero(args.Category) {
-		args.Category = pulumi.String("Item")
-	}
 	var resource RewardProgram
 	err := ctx.RegisterResource("onepassword:index:RewardProgram", name, args, &resource, opts...)
 	if err != nil {
@@ -83,7 +80,6 @@ func (RewardProgramState) ElementType() reflect.Type {
 }
 
 type rewardProgramArgs struct {
-	Category        string                         `pulumi:"category"`
 	CompanyName     *string                        `pulumi:"companyName"`
 	Fields          []Field                        `pulumi:"fields"`
 	MemberId        *string                        `pulumi:"memberId"`
@@ -102,7 +98,6 @@ type rewardProgramArgs struct {
 
 // The set of arguments for constructing a RewardProgram resource.
 type RewardProgramArgs struct {
-	Category        pulumi.StringInput
 	CompanyName     pulumi.StringPtrInput
 	Fields          FieldArrayInput
 	MemberId        pulumi.StringPtrInput

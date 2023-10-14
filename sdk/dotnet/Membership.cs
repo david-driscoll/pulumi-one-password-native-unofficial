@@ -120,9 +120,6 @@ namespace Pulumi.Onepassword
 
     public sealed class MembershipArgs : Pulumi.ResourceArgs
     {
-        [Input("category", required: true)]
-        public InputUnion<Pulumi.Onepassword.Category, string> Category { get; set; } = null!;
-
         [Input("expiryDate")]
         public Input<string>? ExpiryDate { get; set; }
 
@@ -192,7 +189,6 @@ namespace Pulumi.Onepassword
 
         public MembershipArgs()
         {
-            Category = "Item";
         }
     }
 }

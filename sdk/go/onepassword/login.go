@@ -44,9 +44,6 @@ func NewLogin(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
-	if isZero(args.Category) {
-		args.Category = pulumi.String("Item")
-	}
 	if args.Password != nil {
 		args.Password = pulumi.ToSecret(args.Password).(pulumi.StringPtrOutput)
 	}
@@ -86,7 +83,6 @@ func (LoginState) ElementType() reflect.Type {
 }
 
 type loginArgs struct {
-	Category string    `pulumi:"category"`
 	Fields   []Field   `pulumi:"fields"`
 	Notes    *string   `pulumi:"notes"`
 	Password *string   `pulumi:"password"`
@@ -102,7 +98,6 @@ type loginArgs struct {
 
 // The set of arguments for constructing a Login resource.
 type LoginArgs struct {
-	Category pulumi.StringInput
 	Fields   FieldArrayInput
 	Notes    pulumi.StringPtrInput
 	Password pulumi.StringPtrInput

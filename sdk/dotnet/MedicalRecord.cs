@@ -114,9 +114,6 @@ namespace Pulumi.Onepassword
 
     public sealed class MedicalRecordArgs : Pulumi.ResourceArgs
     {
-        [Input("category", required: true)]
-        public InputUnion<Pulumi.Onepassword.Category, string> Category { get; set; } = null!;
-
         [Input("date")]
         public Input<string>? Date { get; set; }
 
@@ -180,7 +177,6 @@ namespace Pulumi.Onepassword
 
         public MedicalRecordArgs()
         {
-            Category = "Item";
         }
     }
 }

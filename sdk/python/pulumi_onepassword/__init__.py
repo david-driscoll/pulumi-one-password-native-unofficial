@@ -14,7 +14,33 @@ from .database import *
 from .document import *
 from .driver_license import *
 from .email_account import *
+from .get_api_credential import *
+from .get_bank_account import *
+from .get_credit_card import *
+from .get_crypto_wallet import *
+from .get_database import *
+from .get_document import *
+from .get_driver_license import *
+from .get_email_account import *
+from .get_identity import *
+from .get_item import *
+from .get_login import *
+from .get_medical_record import *
+from .get_membership import *
+from .get_outdoor_license import *
+from .get_passport import *
+from .get_password import *
+from .get_reward_program import *
+from .get_secret_reference import *
+from .get_secure_note import *
+from .get_server import *
+from .get_social_security_number import *
+from .get_software_license import *
+from .get_ssh_key import *
+from .get_vault import *
+from .get_wireless_router import *
 from .identity import *
+from .item import *
 from .login import *
 from .medical_record import *
 from .membership import *
@@ -80,6 +106,7 @@ _utilities.register(
    "onepassword:index:DriverLicense": "DriverLicense",
    "onepassword:index:EmailAccount": "EmailAccount",
    "onepassword:index:Identity": "Identity",
+   "onepassword:index:Item": "Item",
    "onepassword:index:Login": "Login",
    "onepassword:index:MedicalRecord": "MedicalRecord",
    "onepassword:index:Membership": "Membership",

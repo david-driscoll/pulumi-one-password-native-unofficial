@@ -51,9 +51,6 @@ func NewDatabase(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
-	if isZero(args.Category) {
-		args.Category = pulumi.String("Item")
-	}
 	var resource Database
 	err := ctx.RegisterResource("onepassword:index:Database", name, args, &resource, opts...)
 	if err != nil {
@@ -87,7 +84,6 @@ func (DatabaseState) ElementType() reflect.Type {
 
 type databaseArgs struct {
 	Alias             *string   `pulumi:"alias"`
-	Category          string    `pulumi:"category"`
 	ConnectionOptions *string   `pulumi:"connectionOptions"`
 	Database          *string   `pulumi:"database"`
 	Fields            []Field   `pulumi:"fields"`
@@ -110,7 +106,6 @@ type databaseArgs struct {
 // The set of arguments for constructing a Database resource.
 type DatabaseArgs struct {
 	Alias             pulumi.StringPtrInput
-	Category          pulumi.StringInput
 	ConnectionOptions pulumi.StringPtrInput
 	Database          pulumi.StringPtrInput
 	Fields            FieldArrayInput

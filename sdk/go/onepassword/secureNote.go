@@ -42,9 +42,6 @@ func NewSecureNote(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
-	if isZero(args.Category) {
-		args.Category = pulumi.String("Item")
-	}
 	var resource SecureNote
 	err := ctx.RegisterResource("onepassword:index:SecureNote", name, args, &resource, opts...)
 	if err != nil {
@@ -77,7 +74,6 @@ func (SecureNoteState) ElementType() reflect.Type {
 }
 
 type secureNoteArgs struct {
-	Category string    `pulumi:"category"`
 	Fields   []Field   `pulumi:"fields"`
 	Notes    *string   `pulumi:"notes"`
 	Sections []Section `pulumi:"sections"`
@@ -91,7 +87,6 @@ type secureNoteArgs struct {
 
 // The set of arguments for constructing a SecureNote resource.
 type SecureNoteArgs struct {
-	Category pulumi.StringInput
 	Fields   FieldArrayInput
 	Notes    pulumi.StringPtrInput
 	Sections SectionArrayInput

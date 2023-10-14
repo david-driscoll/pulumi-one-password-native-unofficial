@@ -42,9 +42,6 @@ func NewDocument(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
-	if isZero(args.Category) {
-		args.Category = pulumi.String("Item")
-	}
 	var resource Document
 	err := ctx.RegisterResource("onepassword:index:Document", name, args, &resource, opts...)
 	if err != nil {
@@ -77,7 +74,6 @@ func (DocumentState) ElementType() reflect.Type {
 }
 
 type documentArgs struct {
-	Category string    `pulumi:"category"`
 	Fields   []Field   `pulumi:"fields"`
 	Notes    *string   `pulumi:"notes"`
 	Sections []Section `pulumi:"sections"`
@@ -91,7 +87,6 @@ type documentArgs struct {
 
 // The set of arguments for constructing a Document resource.
 type DocumentArgs struct {
-	Category pulumi.StringInput
 	Fields   FieldArrayInput
 	Notes    pulumi.StringPtrInput
 	Sections SectionArrayInput

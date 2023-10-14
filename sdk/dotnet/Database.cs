@@ -126,9 +126,6 @@ namespace Pulumi.Onepassword
         [Input("alias")]
         public Input<string>? Alias { get; set; }
 
-        [Input("category", required: true)]
-        public InputUnion<Pulumi.Onepassword.Category, string> Category { get; set; } = null!;
-
         [Input("connectionOptions")]
         public Input<string>? ConnectionOptions { get; set; }
 
@@ -198,7 +195,6 @@ namespace Pulumi.Onepassword
 
         public DatabaseArgs()
         {
-            Category = "Item";
         }
     }
 }

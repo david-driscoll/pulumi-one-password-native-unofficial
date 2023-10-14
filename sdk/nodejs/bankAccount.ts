@@ -35,7 +35,7 @@ export class BankAccount extends pulumi.CustomResource {
     public readonly accountNumber!: pulumi.Output<string | undefined>;
     public readonly bankName!: pulumi.Output<string | undefined>;
     public readonly branchInformation!: pulumi.Output<outputs.bankAccount.BranchInformation | undefined>;
-    public readonly category!: pulumi.Output<enums.Category | string>;
+    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
     public readonly fields!: pulumi.Output<outputs.GetField[] | undefined>;
     public readonly iban!: pulumi.Output<string | undefined>;
     public /*out*/ readonly id!: pulumi.Output<string>;
@@ -74,9 +74,6 @@ export class BankAccount extends pulumi.CustomResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
-            if ((!args || args.category === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'category'");
-            }
             if ((!args || args.title === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'title'");
             }
@@ -86,7 +83,6 @@ export class BankAccount extends pulumi.CustomResource {
             resourceInputs["accountNumber"] = args ? args.accountNumber : undefined;
             resourceInputs["bankName"] = args ? args.bankName : undefined;
             resourceInputs["branchInformation"] = args ? args.branchInformation : undefined;
-            resourceInputs["category"] = (args ? args.category : undefined) ?? "Item";
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["iban"] = args ? args.iban : undefined;
             resourceInputs["nameOnAccount"] = args ? args.nameOnAccount : undefined;
@@ -99,6 +95,7 @@ export class BankAccount extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["type"] = args ? args.type : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -133,7 +130,6 @@ export interface BankAccountArgs {
     accountNumber?: pulumi.Input<string>;
     bankName?: pulumi.Input<string>;
     branchInformation?: pulumi.Input<inputs.bankAccount.BranchInformationArgs>;
-    category: pulumi.Input<enums.Category | string>;
     fields?: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;
     iban?: pulumi.Input<string>;
     nameOnAccount?: pulumi.Input<string>;
