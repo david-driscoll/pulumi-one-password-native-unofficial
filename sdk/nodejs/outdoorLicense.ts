@@ -2,6 +2,7 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import { input as inputs, output as outputs, enums } from "./types";
 import * as utilities from "./utilities";
 
 export class OutdoorLicense extends pulumi.CustomResource {
@@ -31,6 +32,34 @@ export class OutdoorLicense extends pulumi.CustomResource {
         return obj['__pulumiType'] === OutdoorLicense.__pulumiType;
     }
 
+    public readonly approvedWildlife!: pulumi.Output<string | undefined>;
+    public readonly category!: pulumi.Output<enums.Category | string>;
+    public readonly country!: pulumi.Output<string | undefined>;
+    public readonly expires!: pulumi.Output<string | undefined>;
+    public readonly fields!: pulumi.Output<outputs.GetField[] | undefined>;
+    public readonly fullName!: pulumi.Output<string | undefined>;
+    public /*out*/ readonly id!: pulumi.Output<string>;
+    public readonly maximumQuota!: pulumi.Output<string | undefined>;
+    public readonly notes!: pulumi.Output<string | undefined>;
+    public readonly sections!: pulumi.Output<outputs.GetSection[] | undefined>;
+    public readonly state!: pulumi.Output<string | undefined>;
+    /**
+     * An array of strings of the tags assigned to the item.
+     */
+    public readonly tags!: pulumi.Output<string[]>;
+    /**
+     * The title of the item.
+     */
+    public readonly title!: pulumi.Output<string>;
+    /**
+     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+     */
+    public /*out*/ readonly uuid!: pulumi.Output<string>;
+    public readonly validFrom!: pulumi.Output<string | undefined>;
+    /**
+     * The UUID of the vault the item is in.
+     */
+    public readonly vault!: pulumi.Output<string>;
 
     /**
      * Create a OutdoorLicense resource with the given unique name, arguments, and options.
@@ -39,19 +68,52 @@ export class OutdoorLicense extends pulumi.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args?: OutdoorLicenseArgs, opts?: pulumi.CustomResourceOptions) {
+    constructor(name: string, args: OutdoorLicenseArgs, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
+            if ((!args || args.category === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'category'");
+            }
+            if ((!args || args.title === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'title'");
+            }
+            if ((!args || args.vault === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'vault'");
+            }
             resourceInputs["approvedWildlife"] = args ? args.approvedWildlife : undefined;
+            resourceInputs["category"] = (args ? args.category : undefined) ?? "Item";
             resourceInputs["country"] = args ? args.country : undefined;
             resourceInputs["expires"] = args ? args.expires : undefined;
+            resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["fullName"] = args ? args.fullName : undefined;
             resourceInputs["maximumQuota"] = args ? args.maximumQuota : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
+            resourceInputs["sections"] = args ? args.sections : undefined;
             resourceInputs["state"] = args ? args.state : undefined;
+            resourceInputs["tags"] = args ? args.tags : undefined;
+            resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["validFrom"] = args ? args.validFrom : undefined;
+            resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["id"] = undefined /*out*/;
+            resourceInputs["uuid"] = undefined /*out*/;
         } else {
+            resourceInputs["approvedWildlife"] = undefined /*out*/;
+            resourceInputs["category"] = undefined /*out*/;
+            resourceInputs["country"] = undefined /*out*/;
+            resourceInputs["expires"] = undefined /*out*/;
+            resourceInputs["fields"] = undefined /*out*/;
+            resourceInputs["fullName"] = undefined /*out*/;
+            resourceInputs["id"] = undefined /*out*/;
+            resourceInputs["maximumQuota"] = undefined /*out*/;
+            resourceInputs["notes"] = undefined /*out*/;
+            resourceInputs["sections"] = undefined /*out*/;
+            resourceInputs["state"] = undefined /*out*/;
+            resourceInputs["tags"] = undefined /*out*/;
+            resourceInputs["title"] = undefined /*out*/;
+            resourceInputs["uuid"] = undefined /*out*/;
+            resourceInputs["validFrom"] = undefined /*out*/;
+            resourceInputs["vault"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(OutdoorLicense.__pulumiType, name, resourceInputs, opts);
@@ -63,11 +125,26 @@ export class OutdoorLicense extends pulumi.CustomResource {
  */
 export interface OutdoorLicenseArgs {
     approvedWildlife?: pulumi.Input<string>;
+    category: pulumi.Input<enums.Category | string>;
     country?: pulumi.Input<string>;
     expires?: pulumi.Input<string>;
+    fields?: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;
     fullName?: pulumi.Input<string>;
     maximumQuota?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
+    sections?: pulumi.Input<pulumi.Input<inputs.SectionArgs>[]>;
     state?: pulumi.Input<string>;
+    /**
+     * An array of strings of the tags assigned to the item.
+     */
+    tags?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
+     */
+    title: pulumi.Input<string>;
     validFrom?: pulumi.Input<string>;
+    /**
+     * The UUID of the vault the item is in.
+     */
+    vault: pulumi.Input<string>;
 }

@@ -7,24 +7,42 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
+from . import creditcard as _creditcard
+from . import outputs
+from ._enums import *
+from ._inputs import *
 
 __all__ = ['CreditCardArgs', 'CreditCard']
 
 @pulumi.input_type
 class CreditCardArgs:
     def __init__(__self__, *,
-                 additional_details: Optional[Any] = None,
+                 category: pulumi.Input[Union['Category', str]],
+                 title: pulumi.Input[str],
+                 vault: pulumi.Input[str],
+                 additional_details: Optional[pulumi.Input['_creditcard.AdditionalDetailsArgs']] = None,
                  cardholder_name: Optional[pulumi.Input[str]] = None,
-                 contact_information: Optional[Any] = None,
+                 contact_information: Optional[pulumi.Input['_creditcard.ContactInformationArgs']] = None,
                  expiry_date: Optional[pulumi.Input[str]] = None,
+                 fields: Optional[pulumi.Input[Sequence[pulumi.Input['FieldArgs']]]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  number: Optional[pulumi.Input[str]] = None,
+                 sections: Optional[pulumi.Input[Sequence[pulumi.Input['SectionArgs']]]] = None,
+                 tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  type: Optional[pulumi.Input[str]] = None,
                  valid_from: Optional[pulumi.Input[str]] = None,
                  verification_number: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a CreditCard resource.
+        :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
+        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         """
+        if category is None:
+            category = 'Item'
+        pulumi.set(__self__, "category", category)
+        pulumi.set(__self__, "title", title)
+        pulumi.set(__self__, "vault", vault)
         if additional_details is not None:
             pulumi.set(__self__, "additional_details", additional_details)
         if cardholder_name is not None:
@@ -33,10 +51,16 @@ class CreditCardArgs:
             pulumi.set(__self__, "contact_information", contact_information)
         if expiry_date is not None:
             pulumi.set(__self__, "expiry_date", expiry_date)
+        if fields is not None:
+            pulumi.set(__self__, "fields", fields)
         if notes is not None:
             pulumi.set(__self__, "notes", notes)
         if number is not None:
             pulumi.set(__self__, "number", number)
+        if sections is not None:
+            pulumi.set(__self__, "sections", sections)
+        if tags is not None:
+            pulumi.set(__self__, "tags", tags)
         if type is not None:
             pulumi.set(__self__, "type", type)
         if valid_from is not None:
@@ -45,12 +69,45 @@ class CreditCardArgs:
             pulumi.set(__self__, "verification_number", verification_number)
 
     @property
+    @pulumi.getter
+    def category(self) -> pulumi.Input[Union['Category', str]]:
+        return pulumi.get(self, "category")
+
+    @category.setter
+    def category(self, value: pulumi.Input[Union['Category', str]]):
+        pulumi.set(self, "category", value)
+
+    @property
+    @pulumi.getter
+    def title(self) -> pulumi.Input[str]:
+        """
+        The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
+        """
+        return pulumi.get(self, "title")
+
+    @title.setter
+    def title(self, value: pulumi.Input[str]):
+        pulumi.set(self, "title", value)
+
+    @property
+    @pulumi.getter
+    def vault(self) -> pulumi.Input[str]:
+        """
+        The UUID of the vault the item is in.
+        """
+        return pulumi.get(self, "vault")
+
+    @vault.setter
+    def vault(self, value: pulumi.Input[str]):
+        pulumi.set(self, "vault", value)
+
+    @property
     @pulumi.getter(name="additionalDetails")
-    def additional_details(self) -> Optional[Any]:
+    def additional_details(self) -> Optional[pulumi.Input['_creditcard.AdditionalDetailsArgs']]:
         return pulumi.get(self, "additional_details")
 
     @additional_details.setter
-    def additional_details(self, value: Optional[Any]):
+    def additional_details(self, value: Optional[pulumi.Input['_creditcard.AdditionalDetailsArgs']]):
         pulumi.set(self, "additional_details", value)
 
     @property
@@ -64,11 +121,11 @@ class CreditCardArgs:
 
     @property
     @pulumi.getter(name="contactInformation")
-    def contact_information(self) -> Optional[Any]:
+    def contact_information(self) -> Optional[pulumi.Input['_creditcard.ContactInformationArgs']]:
         return pulumi.get(self, "contact_information")
 
     @contact_information.setter
-    def contact_information(self, value: Optional[Any]):
+    def contact_information(self, value: Optional[pulumi.Input['_creditcard.ContactInformationArgs']]):
         pulumi.set(self, "contact_information", value)
 
     @property
@@ -79,6 +136,15 @@ class CreditCardArgs:
     @expiry_date.setter
     def expiry_date(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "expiry_date", value)
+
+    @property
+    @pulumi.getter
+    def fields(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['FieldArgs']]]]:
+        return pulumi.get(self, "fields")
+
+    @fields.setter
+    def fields(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['FieldArgs']]]]):
+        pulumi.set(self, "fields", value)
 
     @property
     @pulumi.getter
@@ -97,6 +163,27 @@ class CreditCardArgs:
     @number.setter
     def number(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "number", value)
+
+    @property
+    @pulumi.getter
+    def sections(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SectionArgs']]]]:
+        return pulumi.get(self, "sections")
+
+    @sections.setter
+    def sections(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SectionArgs']]]]):
+        pulumi.set(self, "sections", value)
+
+    @property
+    @pulumi.getter
+    def tags(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        An array of strings of the tags assigned to the item.
+        """
+        return pulumi.get(self, "tags")
+
+    @tags.setter
+    def tags(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "tags", value)
 
     @property
     @pulumi.getter
@@ -131,26 +218,35 @@ class CreditCard(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 additional_details: Optional[Any] = None,
+                 additional_details: Optional[pulumi.Input[pulumi.InputType['_creditcard.AdditionalDetailsArgs']]] = None,
                  cardholder_name: Optional[pulumi.Input[str]] = None,
-                 contact_information: Optional[Any] = None,
+                 category: Optional[pulumi.Input[Union['Category', str]]] = None,
+                 contact_information: Optional[pulumi.Input[pulumi.InputType['_creditcard.ContactInformationArgs']]] = None,
                  expiry_date: Optional[pulumi.Input[str]] = None,
+                 fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  number: Optional[pulumi.Input[str]] = None,
+                 sections: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
+                 tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 title: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None,
                  valid_from: Optional[pulumi.Input[str]] = None,
+                 vault: Optional[pulumi.Input[str]] = None,
                  verification_number: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
         Create a CreditCard resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
+        :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
+        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         """
         ...
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: Optional[CreditCardArgs] = None,
+                 args: CreditCardArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create a CreditCard resource with the given unique name, props, and options.
@@ -169,14 +265,20 @@ class CreditCard(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 additional_details: Optional[Any] = None,
+                 additional_details: Optional[pulumi.Input[pulumi.InputType['_creditcard.AdditionalDetailsArgs']]] = None,
                  cardholder_name: Optional[pulumi.Input[str]] = None,
-                 contact_information: Optional[Any] = None,
+                 category: Optional[pulumi.Input[Union['Category', str]]] = None,
+                 contact_information: Optional[pulumi.Input[pulumi.InputType['_creditcard.ContactInformationArgs']]] = None,
                  expiry_date: Optional[pulumi.Input[str]] = None,
+                 fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  number: Optional[pulumi.Input[str]] = None,
+                 sections: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
+                 tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 title: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None,
                  valid_from: Optional[pulumi.Input[str]] = None,
+                 vault: Optional[pulumi.Input[str]] = None,
                  verification_number: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         if opts is None:
@@ -192,13 +294,29 @@ class CreditCard(pulumi.CustomResource):
 
             __props__.__dict__["additional_details"] = additional_details
             __props__.__dict__["cardholder_name"] = cardholder_name
+            if category is None:
+                category = 'Item'
+            if category is None and not opts.urn:
+                raise TypeError("Missing required property 'category'")
+            __props__.__dict__["category"] = category
             __props__.__dict__["contact_information"] = contact_information
             __props__.__dict__["expiry_date"] = expiry_date
+            __props__.__dict__["fields"] = fields
             __props__.__dict__["notes"] = notes
             __props__.__dict__["number"] = number
+            __props__.__dict__["sections"] = sections
+            __props__.__dict__["tags"] = tags
+            if title is None and not opts.urn:
+                raise TypeError("Missing required property 'title'")
+            __props__.__dict__["title"] = title
             __props__.__dict__["type"] = type
             __props__.__dict__["valid_from"] = valid_from
+            if vault is None and not opts.urn:
+                raise TypeError("Missing required property 'vault'")
+            __props__.__dict__["vault"] = vault
             __props__.__dict__["verification_number"] = verification_number
+            __props__.__dict__["id"] = None
+            __props__.__dict__["uuid"] = None
         super(CreditCard, __self__).__init__(
             'onepassword:index:CreditCard',
             resource_name,
@@ -221,5 +339,119 @@ class CreditCard(pulumi.CustomResource):
 
         __props__ = CreditCardArgs.__new__(CreditCardArgs)
 
+        __props__.__dict__["additional_details"] = None
+        __props__.__dict__["cardholder_name"] = None
+        __props__.__dict__["category"] = None
+        __props__.__dict__["contact_information"] = None
+        __props__.__dict__["expiry_date"] = None
+        __props__.__dict__["fields"] = None
+        __props__.__dict__["id"] = None
+        __props__.__dict__["notes"] = None
+        __props__.__dict__["number"] = None
+        __props__.__dict__["sections"] = None
+        __props__.__dict__["tags"] = None
+        __props__.__dict__["title"] = None
+        __props__.__dict__["type"] = None
+        __props__.__dict__["uuid"] = None
+        __props__.__dict__["valid_from"] = None
+        __props__.__dict__["vault"] = None
+        __props__.__dict__["verification_number"] = None
         return CreditCard(resource_name, opts=opts, __props__=__props__)
+
+    @property
+    @pulumi.getter(name="additionalDetails")
+    def additional_details(self) -> pulumi.Output[Optional['_creditcard.outputs.AdditionalDetails']]:
+        return pulumi.get(self, "additional_details")
+
+    @property
+    @pulumi.getter(name="cardholderName")
+    def cardholder_name(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "cardholder_name")
+
+    @property
+    @pulumi.getter
+    def category(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "category")
+
+    @property
+    @pulumi.getter(name="contactInformation")
+    def contact_information(self) -> pulumi.Output[Optional['_creditcard.outputs.ContactInformation']]:
+        return pulumi.get(self, "contact_information")
+
+    @property
+    @pulumi.getter(name="expiryDate")
+    def expiry_date(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "expiry_date")
+
+    @property
+    @pulumi.getter
+    def fields(self) -> pulumi.Output[Optional[Sequence['outputs.GetField']]]:
+        return pulumi.get(self, "fields")
+
+    @property
+    @pulumi.getter
+    def id(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "id")
+
+    @property
+    @pulumi.getter
+    def notes(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "notes")
+
+    @property
+    @pulumi.getter
+    def number(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "number")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> pulumi.Output[Optional[Sequence['outputs.GetSection']]]:
+        return pulumi.get(self, "sections")
+
+    @property
+    @pulumi.getter
+    def tags(self) -> pulumi.Output[Sequence[str]]:
+        """
+        An array of strings of the tags assigned to the item.
+        """
+        return pulumi.get(self, "tags")
+
+    @property
+    @pulumi.getter
+    def title(self) -> pulumi.Output[str]:
+        """
+        The title of the item.
+        """
+        return pulumi.get(self, "title")
+
+    @property
+    @pulumi.getter
+    def type(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "type")
+
+    @property
+    @pulumi.getter
+    def uuid(self) -> pulumi.Output[str]:
+        """
+        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        """
+        return pulumi.get(self, "uuid")
+
+    @property
+    @pulumi.getter(name="validFrom")
+    def valid_from(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "valid_from")
+
+    @property
+    @pulumi.getter
+    def vault(self) -> pulumi.Output[str]:
+        """
+        The UUID of the vault the item is in.
+        """
+        return pulumi.get(self, "vault")
+
+    @property
+    @pulumi.getter(name="verificationNumber")
+    def verification_number(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "verification_number")
 

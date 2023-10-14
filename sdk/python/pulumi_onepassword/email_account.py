@@ -7,45 +7,102 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
+from . import emailaccount as _emailaccount
+from . import outputs
+from ._enums import *
+from ._inputs import *
 
 __all__ = ['EmailAccountArgs', 'EmailAccount']
 
 @pulumi.input_type
 class EmailAccountArgs:
     def __init__(__self__, *,
+                 category: pulumi.Input[Union['Category', str]],
+                 title: pulumi.Input[str],
+                 vault: pulumi.Input[str],
                  auth_method: Optional[pulumi.Input[str]] = None,
-                 contact_information: Optional[Any] = None,
+                 contact_information: Optional[pulumi.Input['_emailaccount.ContactInformationArgs']] = None,
+                 fields: Optional[pulumi.Input[Sequence[pulumi.Input['FieldArgs']]]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  password: Optional[pulumi.Input[str]] = None,
                  port_number: Optional[pulumi.Input[str]] = None,
+                 sections: Optional[pulumi.Input[Sequence[pulumi.Input['SectionArgs']]]] = None,
                  security: Optional[pulumi.Input[str]] = None,
                  server: Optional[pulumi.Input[str]] = None,
-                 smtp: Optional[Any] = None,
+                 smtp: Optional[pulumi.Input['_emailaccount.SmtpArgs']] = None,
+                 tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  type: Optional[pulumi.Input[str]] = None,
                  username: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a EmailAccount resource.
+        :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
+        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         """
+        if category is None:
+            category = 'Item'
+        pulumi.set(__self__, "category", category)
+        pulumi.set(__self__, "title", title)
+        pulumi.set(__self__, "vault", vault)
         if auth_method is not None:
             pulumi.set(__self__, "auth_method", auth_method)
         if contact_information is not None:
             pulumi.set(__self__, "contact_information", contact_information)
+        if fields is not None:
+            pulumi.set(__self__, "fields", fields)
         if notes is not None:
             pulumi.set(__self__, "notes", notes)
         if password is not None:
             pulumi.set(__self__, "password", password)
         if port_number is not None:
             pulumi.set(__self__, "port_number", port_number)
+        if sections is not None:
+            pulumi.set(__self__, "sections", sections)
         if security is not None:
             pulumi.set(__self__, "security", security)
         if server is not None:
             pulumi.set(__self__, "server", server)
         if smtp is not None:
             pulumi.set(__self__, "smtp", smtp)
+        if tags is not None:
+            pulumi.set(__self__, "tags", tags)
         if type is not None:
             pulumi.set(__self__, "type", type)
         if username is not None:
             pulumi.set(__self__, "username", username)
+
+    @property
+    @pulumi.getter
+    def category(self) -> pulumi.Input[Union['Category', str]]:
+        return pulumi.get(self, "category")
+
+    @category.setter
+    def category(self, value: pulumi.Input[Union['Category', str]]):
+        pulumi.set(self, "category", value)
+
+    @property
+    @pulumi.getter
+    def title(self) -> pulumi.Input[str]:
+        """
+        The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
+        """
+        return pulumi.get(self, "title")
+
+    @title.setter
+    def title(self, value: pulumi.Input[str]):
+        pulumi.set(self, "title", value)
+
+    @property
+    @pulumi.getter
+    def vault(self) -> pulumi.Input[str]:
+        """
+        The UUID of the vault the item is in.
+        """
+        return pulumi.get(self, "vault")
+
+    @vault.setter
+    def vault(self, value: pulumi.Input[str]):
+        pulumi.set(self, "vault", value)
 
     @property
     @pulumi.getter(name="authMethod")
@@ -58,12 +115,21 @@ class EmailAccountArgs:
 
     @property
     @pulumi.getter(name="contactInformation")
-    def contact_information(self) -> Optional[Any]:
+    def contact_information(self) -> Optional[pulumi.Input['_emailaccount.ContactInformationArgs']]:
         return pulumi.get(self, "contact_information")
 
     @contact_information.setter
-    def contact_information(self, value: Optional[Any]):
+    def contact_information(self, value: Optional[pulumi.Input['_emailaccount.ContactInformationArgs']]):
         pulumi.set(self, "contact_information", value)
+
+    @property
+    @pulumi.getter
+    def fields(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['FieldArgs']]]]:
+        return pulumi.get(self, "fields")
+
+    @fields.setter
+    def fields(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['FieldArgs']]]]):
+        pulumi.set(self, "fields", value)
 
     @property
     @pulumi.getter
@@ -94,6 +160,15 @@ class EmailAccountArgs:
 
     @property
     @pulumi.getter
+    def sections(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SectionArgs']]]]:
+        return pulumi.get(self, "sections")
+
+    @sections.setter
+    def sections(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SectionArgs']]]]):
+        pulumi.set(self, "sections", value)
+
+    @property
+    @pulumi.getter
     def security(self) -> Optional[pulumi.Input[str]]:
         return pulumi.get(self, "security")
 
@@ -112,12 +187,24 @@ class EmailAccountArgs:
 
     @property
     @pulumi.getter
-    def smtp(self) -> Optional[Any]:
+    def smtp(self) -> Optional[pulumi.Input['_emailaccount.SmtpArgs']]:
         return pulumi.get(self, "smtp")
 
     @smtp.setter
-    def smtp(self, value: Optional[Any]):
+    def smtp(self, value: Optional[pulumi.Input['_emailaccount.SmtpArgs']]):
         pulumi.set(self, "smtp", value)
+
+    @property
+    @pulumi.getter
+    def tags(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        An array of strings of the tags assigned to the item.
+        """
+        return pulumi.get(self, "tags")
+
+    @tags.setter
+    def tags(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "tags", value)
 
     @property
     @pulumi.getter
@@ -144,26 +231,35 @@ class EmailAccount(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  auth_method: Optional[pulumi.Input[str]] = None,
-                 contact_information: Optional[Any] = None,
+                 category: Optional[pulumi.Input[Union['Category', str]]] = None,
+                 contact_information: Optional[pulumi.Input[pulumi.InputType['_emailaccount.ContactInformationArgs']]] = None,
+                 fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  password: Optional[pulumi.Input[str]] = None,
                  port_number: Optional[pulumi.Input[str]] = None,
+                 sections: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  security: Optional[pulumi.Input[str]] = None,
                  server: Optional[pulumi.Input[str]] = None,
-                 smtp: Optional[Any] = None,
+                 smtp: Optional[pulumi.Input[pulumi.InputType['_emailaccount.SmtpArgs']]] = None,
+                 tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 title: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None,
                  username: Optional[pulumi.Input[str]] = None,
+                 vault: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
         Create a EmailAccount resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
+        :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
+        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         """
         ...
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: Optional[EmailAccountArgs] = None,
+                 args: EmailAccountArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create a EmailAccount resource with the given unique name, props, and options.
@@ -183,15 +279,21 @@ class EmailAccount(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  auth_method: Optional[pulumi.Input[str]] = None,
-                 contact_information: Optional[Any] = None,
+                 category: Optional[pulumi.Input[Union['Category', str]]] = None,
+                 contact_information: Optional[pulumi.Input[pulumi.InputType['_emailaccount.ContactInformationArgs']]] = None,
+                 fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  password: Optional[pulumi.Input[str]] = None,
                  port_number: Optional[pulumi.Input[str]] = None,
+                 sections: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  security: Optional[pulumi.Input[str]] = None,
                  server: Optional[pulumi.Input[str]] = None,
-                 smtp: Optional[Any] = None,
+                 smtp: Optional[pulumi.Input[pulumi.InputType['_emailaccount.SmtpArgs']]] = None,
+                 tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 title: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None,
                  username: Optional[pulumi.Input[str]] = None,
+                 vault: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         if opts is None:
             opts = pulumi.ResourceOptions()
@@ -205,15 +307,31 @@ class EmailAccount(pulumi.CustomResource):
             __props__ = EmailAccountArgs.__new__(EmailAccountArgs)
 
             __props__.__dict__["auth_method"] = auth_method
+            if category is None:
+                category = 'Item'
+            if category is None and not opts.urn:
+                raise TypeError("Missing required property 'category'")
+            __props__.__dict__["category"] = category
             __props__.__dict__["contact_information"] = contact_information
+            __props__.__dict__["fields"] = fields
             __props__.__dict__["notes"] = notes
             __props__.__dict__["password"] = password
             __props__.__dict__["port_number"] = port_number
+            __props__.__dict__["sections"] = sections
             __props__.__dict__["security"] = security
             __props__.__dict__["server"] = server
             __props__.__dict__["smtp"] = smtp
+            __props__.__dict__["tags"] = tags
+            if title is None and not opts.urn:
+                raise TypeError("Missing required property 'title'")
+            __props__.__dict__["title"] = title
             __props__.__dict__["type"] = type
             __props__.__dict__["username"] = username
+            if vault is None and not opts.urn:
+                raise TypeError("Missing required property 'vault'")
+            __props__.__dict__["vault"] = vault
+            __props__.__dict__["id"] = None
+            __props__.__dict__["uuid"] = None
         super(EmailAccount, __self__).__init__(
             'onepassword:index:EmailAccount',
             resource_name,
@@ -236,5 +354,125 @@ class EmailAccount(pulumi.CustomResource):
 
         __props__ = EmailAccountArgs.__new__(EmailAccountArgs)
 
+        __props__.__dict__["auth_method"] = None
+        __props__.__dict__["category"] = None
+        __props__.__dict__["contact_information"] = None
+        __props__.__dict__["fields"] = None
+        __props__.__dict__["id"] = None
+        __props__.__dict__["notes"] = None
+        __props__.__dict__["password"] = None
+        __props__.__dict__["port_number"] = None
+        __props__.__dict__["sections"] = None
+        __props__.__dict__["security"] = None
+        __props__.__dict__["server"] = None
+        __props__.__dict__["smtp"] = None
+        __props__.__dict__["tags"] = None
+        __props__.__dict__["title"] = None
+        __props__.__dict__["type"] = None
+        __props__.__dict__["username"] = None
+        __props__.__dict__["uuid"] = None
+        __props__.__dict__["vault"] = None
         return EmailAccount(resource_name, opts=opts, __props__=__props__)
+
+    @property
+    @pulumi.getter(name="authMethod")
+    def auth_method(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "auth_method")
+
+    @property
+    @pulumi.getter
+    def category(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "category")
+
+    @property
+    @pulumi.getter(name="contactInformation")
+    def contact_information(self) -> pulumi.Output[Optional['_emailaccount.outputs.ContactInformation']]:
+        return pulumi.get(self, "contact_information")
+
+    @property
+    @pulumi.getter
+    def fields(self) -> pulumi.Output[Optional[Sequence['outputs.GetField']]]:
+        return pulumi.get(self, "fields")
+
+    @property
+    @pulumi.getter
+    def id(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "id")
+
+    @property
+    @pulumi.getter
+    def notes(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "notes")
+
+    @property
+    @pulumi.getter
+    def password(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "password")
+
+    @property
+    @pulumi.getter(name="portNumber")
+    def port_number(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "port_number")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> pulumi.Output[Optional[Sequence['outputs.GetSection']]]:
+        return pulumi.get(self, "sections")
+
+    @property
+    @pulumi.getter
+    def security(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "security")
+
+    @property
+    @pulumi.getter
+    def server(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "server")
+
+    @property
+    @pulumi.getter
+    def smtp(self) -> pulumi.Output[Optional['_emailaccount.outputs.Smtp']]:
+        return pulumi.get(self, "smtp")
+
+    @property
+    @pulumi.getter
+    def tags(self) -> pulumi.Output[Sequence[str]]:
+        """
+        An array of strings of the tags assigned to the item.
+        """
+        return pulumi.get(self, "tags")
+
+    @property
+    @pulumi.getter
+    def title(self) -> pulumi.Output[str]:
+        """
+        The title of the item.
+        """
+        return pulumi.get(self, "title")
+
+    @property
+    @pulumi.getter
+    def type(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "type")
+
+    @property
+    @pulumi.getter
+    def username(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "username")
+
+    @property
+    @pulumi.getter
+    def uuid(self) -> pulumi.Output[str]:
+        """
+        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        """
+        return pulumi.get(self, "uuid")
+
+    @property
+    @pulumi.getter
+    def vault(self) -> pulumi.Output[str]:
+        """
+        The UUID of the vault the item is in.
+        """
+        return pulumi.get(self, "vault")
 

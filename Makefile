@@ -10,7 +10,7 @@ VERSION_PATH    := provider/pkg/version.Version
 WORKING_DIR     := $(shell pwd)
 SCHEMA_PATH     := ${WORKING_DIR}/schema.json
 
-generate:: gen_go_sdk gen_dotnet_sdk gen_nodejs_sdk gen_python_sdk
+generate:: update_template gen_go_sdk gen_dotnet_sdk gen_nodejs_sdk gen_python_sdk
 
 build:: build_provider build_dotnet_sdk build_nodejs_sdk build_python_sdk
 
@@ -50,6 +50,9 @@ dist:: build_provider
 	tar --gzip -cf ./dist/pulumi-resource-${PACK}-v${VERSION}-darwin-arm64.tar.gz README.md LICENSE -C bin/darwin-arm64/ .
 	tar --gzip -cf ./dist/pulumi-resource-${PACK}-v${VERSION}-windows-amd64.tar.gz README.md LICENSE -C bin/windows-amd64/ .
 
+
+update_template::
+	yarn run ts-node update-template.ts
 # Go SDK
 
 gen_go_sdk::

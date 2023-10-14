@@ -7,23 +7,43 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
+from . import outputs
+from . import rewardprogram as _rewardprogram
+from ._enums import *
+from ._inputs import *
 
 __all__ = ['RewardProgramArgs', 'RewardProgram']
 
 @pulumi.input_type
 class RewardProgramArgs:
     def __init__(__self__, *,
+                 category: pulumi.Input[Union['Category', str]],
+                 title: pulumi.Input[str],
+                 vault: pulumi.Input[str],
                  company_name: Optional[pulumi.Input[str]] = None,
+                 fields: Optional[pulumi.Input[Sequence[pulumi.Input['FieldArgs']]]] = None,
                  member_id: Optional[pulumi.Input[str]] = None,
                  member_name: Optional[pulumi.Input[str]] = None,
-                 more_information: Optional[Any] = None,
+                 more_information: Optional[pulumi.Input['_rewardprogram.MoreInformationArgs']] = None,
                  notes: Optional[pulumi.Input[str]] = None,
-                 pin: Optional[pulumi.Input[str]] = None):
+                 pin: Optional[pulumi.Input[str]] = None,
+                 sections: Optional[pulumi.Input[Sequence[pulumi.Input['SectionArgs']]]] = None,
+                 tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
         """
         The set of arguments for constructing a RewardProgram resource.
+        :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
+        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         """
+        if category is None:
+            category = 'Item'
+        pulumi.set(__self__, "category", category)
+        pulumi.set(__self__, "title", title)
+        pulumi.set(__self__, "vault", vault)
         if company_name is not None:
             pulumi.set(__self__, "company_name", company_name)
+        if fields is not None:
+            pulumi.set(__self__, "fields", fields)
         if member_id is not None:
             pulumi.set(__self__, "member_id", member_id)
         if member_name is not None:
@@ -34,6 +54,43 @@ class RewardProgramArgs:
             pulumi.set(__self__, "notes", notes)
         if pin is not None:
             pulumi.set(__self__, "pin", pin)
+        if sections is not None:
+            pulumi.set(__self__, "sections", sections)
+        if tags is not None:
+            pulumi.set(__self__, "tags", tags)
+
+    @property
+    @pulumi.getter
+    def category(self) -> pulumi.Input[Union['Category', str]]:
+        return pulumi.get(self, "category")
+
+    @category.setter
+    def category(self, value: pulumi.Input[Union['Category', str]]):
+        pulumi.set(self, "category", value)
+
+    @property
+    @pulumi.getter
+    def title(self) -> pulumi.Input[str]:
+        """
+        The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
+        """
+        return pulumi.get(self, "title")
+
+    @title.setter
+    def title(self, value: pulumi.Input[str]):
+        pulumi.set(self, "title", value)
+
+    @property
+    @pulumi.getter
+    def vault(self) -> pulumi.Input[str]:
+        """
+        The UUID of the vault the item is in.
+        """
+        return pulumi.get(self, "vault")
+
+    @vault.setter
+    def vault(self, value: pulumi.Input[str]):
+        pulumi.set(self, "vault", value)
 
     @property
     @pulumi.getter(name="companyName")
@@ -43,6 +100,15 @@ class RewardProgramArgs:
     @company_name.setter
     def company_name(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "company_name", value)
+
+    @property
+    @pulumi.getter
+    def fields(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['FieldArgs']]]]:
+        return pulumi.get(self, "fields")
+
+    @fields.setter
+    def fields(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['FieldArgs']]]]):
+        pulumi.set(self, "fields", value)
 
     @property
     @pulumi.getter(name="memberId")
@@ -64,11 +130,11 @@ class RewardProgramArgs:
 
     @property
     @pulumi.getter(name="moreInformation")
-    def more_information(self) -> Optional[Any]:
+    def more_information(self) -> Optional[pulumi.Input['_rewardprogram.MoreInformationArgs']]:
         return pulumi.get(self, "more_information")
 
     @more_information.setter
-    def more_information(self, value: Optional[Any]):
+    def more_information(self, value: Optional[pulumi.Input['_rewardprogram.MoreInformationArgs']]):
         pulumi.set(self, "more_information", value)
 
     @property
@@ -89,29 +155,59 @@ class RewardProgramArgs:
     def pin(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "pin", value)
 
+    @property
+    @pulumi.getter
+    def sections(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SectionArgs']]]]:
+        return pulumi.get(self, "sections")
+
+    @sections.setter
+    def sections(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SectionArgs']]]]):
+        pulumi.set(self, "sections", value)
+
+    @property
+    @pulumi.getter
+    def tags(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        An array of strings of the tags assigned to the item.
+        """
+        return pulumi.get(self, "tags")
+
+    @tags.setter
+    def tags(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "tags", value)
+
 
 class RewardProgram(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 category: Optional[pulumi.Input[Union['Category', str]]] = None,
                  company_name: Optional[pulumi.Input[str]] = None,
+                 fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  member_id: Optional[pulumi.Input[str]] = None,
                  member_name: Optional[pulumi.Input[str]] = None,
-                 more_information: Optional[Any] = None,
+                 more_information: Optional[pulumi.Input[pulumi.InputType['_rewardprogram.MoreInformationArgs']]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  pin: Optional[pulumi.Input[str]] = None,
+                 sections: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
+                 tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 title: Optional[pulumi.Input[str]] = None,
+                 vault: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
         Create a RewardProgram resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
+        :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
+        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         """
         ...
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: Optional[RewardProgramArgs] = None,
+                 args: RewardProgramArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create a RewardProgram resource with the given unique name, props, and options.
@@ -130,12 +226,18 @@ class RewardProgram(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 category: Optional[pulumi.Input[Union['Category', str]]] = None,
                  company_name: Optional[pulumi.Input[str]] = None,
+                 fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  member_id: Optional[pulumi.Input[str]] = None,
                  member_name: Optional[pulumi.Input[str]] = None,
-                 more_information: Optional[Any] = None,
+                 more_information: Optional[pulumi.Input[pulumi.InputType['_rewardprogram.MoreInformationArgs']]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  pin: Optional[pulumi.Input[str]] = None,
+                 sections: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
+                 tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 title: Optional[pulumi.Input[str]] = None,
+                 vault: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         if opts is None:
             opts = pulumi.ResourceOptions()
@@ -148,12 +250,28 @@ class RewardProgram(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = RewardProgramArgs.__new__(RewardProgramArgs)
 
+            if category is None:
+                category = 'Item'
+            if category is None and not opts.urn:
+                raise TypeError("Missing required property 'category'")
+            __props__.__dict__["category"] = category
             __props__.__dict__["company_name"] = company_name
+            __props__.__dict__["fields"] = fields
             __props__.__dict__["member_id"] = member_id
             __props__.__dict__["member_name"] = member_name
             __props__.__dict__["more_information"] = more_information
             __props__.__dict__["notes"] = notes
             __props__.__dict__["pin"] = pin
+            __props__.__dict__["sections"] = sections
+            __props__.__dict__["tags"] = tags
+            if title is None and not opts.urn:
+                raise TypeError("Missing required property 'title'")
+            __props__.__dict__["title"] = title
+            if vault is None and not opts.urn:
+                raise TypeError("Missing required property 'vault'")
+            __props__.__dict__["vault"] = vault
+            __props__.__dict__["id"] = None
+            __props__.__dict__["uuid"] = None
         super(RewardProgram, __self__).__init__(
             'onepassword:index:RewardProgram',
             resource_name,
@@ -176,5 +294,101 @@ class RewardProgram(pulumi.CustomResource):
 
         __props__ = RewardProgramArgs.__new__(RewardProgramArgs)
 
+        __props__.__dict__["category"] = None
+        __props__.__dict__["company_name"] = None
+        __props__.__dict__["fields"] = None
+        __props__.__dict__["id"] = None
+        __props__.__dict__["member_id"] = None
+        __props__.__dict__["member_name"] = None
+        __props__.__dict__["more_information"] = None
+        __props__.__dict__["notes"] = None
+        __props__.__dict__["pin"] = None
+        __props__.__dict__["sections"] = None
+        __props__.__dict__["tags"] = None
+        __props__.__dict__["title"] = None
+        __props__.__dict__["uuid"] = None
+        __props__.__dict__["vault"] = None
         return RewardProgram(resource_name, opts=opts, __props__=__props__)
+
+    @property
+    @pulumi.getter
+    def category(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "category")
+
+    @property
+    @pulumi.getter(name="companyName")
+    def company_name(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "company_name")
+
+    @property
+    @pulumi.getter
+    def fields(self) -> pulumi.Output[Optional[Sequence['outputs.GetField']]]:
+        return pulumi.get(self, "fields")
+
+    @property
+    @pulumi.getter
+    def id(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "id")
+
+    @property
+    @pulumi.getter(name="memberId")
+    def member_id(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "member_id")
+
+    @property
+    @pulumi.getter(name="memberName")
+    def member_name(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "member_name")
+
+    @property
+    @pulumi.getter(name="moreInformation")
+    def more_information(self) -> pulumi.Output[Optional['_rewardprogram.outputs.MoreInformation']]:
+        return pulumi.get(self, "more_information")
+
+    @property
+    @pulumi.getter
+    def notes(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "notes")
+
+    @property
+    @pulumi.getter
+    def pin(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "pin")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> pulumi.Output[Optional[Sequence['outputs.GetSection']]]:
+        return pulumi.get(self, "sections")
+
+    @property
+    @pulumi.getter
+    def tags(self) -> pulumi.Output[Sequence[str]]:
+        """
+        An array of strings of the tags assigned to the item.
+        """
+        return pulumi.get(self, "tags")
+
+    @property
+    @pulumi.getter
+    def title(self) -> pulumi.Output[str]:
+        """
+        The title of the item.
+        """
+        return pulumi.get(self, "title")
+
+    @property
+    @pulumi.getter
+    def uuid(self) -> pulumi.Output[str]:
+        """
+        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        """
+        return pulumi.get(self, "uuid")
+
+    @property
+    @pulumi.getter
+    def vault(self) -> pulumi.Output[str]:
+        """
+        The UUID of the vault the item is in.
+        """
+        return pulumi.get(self, "vault")
 

@@ -7,27 +7,44 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
+from . import outputs
+from ._enums import *
+from ._inputs import *
 
 __all__ = ['DriverLicenseArgs', 'DriverLicense']
 
 @pulumi.input_type
 class DriverLicenseArgs:
     def __init__(__self__, *,
+                 category: pulumi.Input[Union['Category', str]],
+                 title: pulumi.Input[str],
+                 vault: pulumi.Input[str],
                  address: Optional[pulumi.Input[str]] = None,
                  conditions_restrictions: Optional[pulumi.Input[str]] = None,
                  country: Optional[pulumi.Input[str]] = None,
                  date_of_birth: Optional[pulumi.Input[str]] = None,
                  expiry_date: Optional[pulumi.Input[str]] = None,
+                 fields: Optional[pulumi.Input[Sequence[pulumi.Input['FieldArgs']]]] = None,
                  full_name: Optional[pulumi.Input[str]] = None,
                  gender: Optional[pulumi.Input[str]] = None,
                  height: Optional[pulumi.Input[str]] = None,
                  license_class: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  number: Optional[pulumi.Input[str]] = None,
-                 state: Optional[pulumi.Input[str]] = None):
+                 sections: Optional[pulumi.Input[Sequence[pulumi.Input['SectionArgs']]]] = None,
+                 state: Optional[pulumi.Input[str]] = None,
+                 tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
         """
         The set of arguments for constructing a DriverLicense resource.
+        :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
+        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         """
+        if category is None:
+            category = 'Item'
+        pulumi.set(__self__, "category", category)
+        pulumi.set(__self__, "title", title)
+        pulumi.set(__self__, "vault", vault)
         if address is not None:
             pulumi.set(__self__, "address", address)
         if conditions_restrictions is not None:
@@ -38,6 +55,8 @@ class DriverLicenseArgs:
             pulumi.set(__self__, "date_of_birth", date_of_birth)
         if expiry_date is not None:
             pulumi.set(__self__, "expiry_date", expiry_date)
+        if fields is not None:
+            pulumi.set(__self__, "fields", fields)
         if full_name is not None:
             pulumi.set(__self__, "full_name", full_name)
         if gender is not None:
@@ -50,8 +69,45 @@ class DriverLicenseArgs:
             pulumi.set(__self__, "notes", notes)
         if number is not None:
             pulumi.set(__self__, "number", number)
+        if sections is not None:
+            pulumi.set(__self__, "sections", sections)
         if state is not None:
             pulumi.set(__self__, "state", state)
+        if tags is not None:
+            pulumi.set(__self__, "tags", tags)
+
+    @property
+    @pulumi.getter
+    def category(self) -> pulumi.Input[Union['Category', str]]:
+        return pulumi.get(self, "category")
+
+    @category.setter
+    def category(self, value: pulumi.Input[Union['Category', str]]):
+        pulumi.set(self, "category", value)
+
+    @property
+    @pulumi.getter
+    def title(self) -> pulumi.Input[str]:
+        """
+        The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
+        """
+        return pulumi.get(self, "title")
+
+    @title.setter
+    def title(self, value: pulumi.Input[str]):
+        pulumi.set(self, "title", value)
+
+    @property
+    @pulumi.getter
+    def vault(self) -> pulumi.Input[str]:
+        """
+        The UUID of the vault the item is in.
+        """
+        return pulumi.get(self, "vault")
+
+    @vault.setter
+    def vault(self, value: pulumi.Input[str]):
+        pulumi.set(self, "vault", value)
 
     @property
     @pulumi.getter
@@ -97,6 +153,15 @@ class DriverLicenseArgs:
     @expiry_date.setter
     def expiry_date(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "expiry_date", value)
+
+    @property
+    @pulumi.getter
+    def fields(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['FieldArgs']]]]:
+        return pulumi.get(self, "fields")
+
+    @fields.setter
+    def fields(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['FieldArgs']]]]):
+        pulumi.set(self, "fields", value)
 
     @property
     @pulumi.getter(name="fullName")
@@ -154,12 +219,33 @@ class DriverLicenseArgs:
 
     @property
     @pulumi.getter
+    def sections(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SectionArgs']]]]:
+        return pulumi.get(self, "sections")
+
+    @sections.setter
+    def sections(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SectionArgs']]]]):
+        pulumi.set(self, "sections", value)
+
+    @property
+    @pulumi.getter
     def state(self) -> Optional[pulumi.Input[str]]:
         return pulumi.get(self, "state")
 
     @state.setter
     def state(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "state", value)
+
+    @property
+    @pulumi.getter
+    def tags(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        An array of strings of the tags assigned to the item.
+        """
+        return pulumi.get(self, "tags")
+
+    @tags.setter
+    def tags(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "tags", value)
 
 
 class DriverLicense(pulumi.CustomResource):
@@ -168,28 +254,37 @@ class DriverLicense(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  address: Optional[pulumi.Input[str]] = None,
+                 category: Optional[pulumi.Input[Union['Category', str]]] = None,
                  conditions_restrictions: Optional[pulumi.Input[str]] = None,
                  country: Optional[pulumi.Input[str]] = None,
                  date_of_birth: Optional[pulumi.Input[str]] = None,
                  expiry_date: Optional[pulumi.Input[str]] = None,
+                 fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  full_name: Optional[pulumi.Input[str]] = None,
                  gender: Optional[pulumi.Input[str]] = None,
                  height: Optional[pulumi.Input[str]] = None,
                  license_class: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  number: Optional[pulumi.Input[str]] = None,
+                 sections: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  state: Optional[pulumi.Input[str]] = None,
+                 tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 title: Optional[pulumi.Input[str]] = None,
+                 vault: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
         Create a DriverLicense resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
+        :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
+        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         """
         ...
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: Optional[DriverLicenseArgs] = None,
+                 args: DriverLicenseArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create a DriverLicense resource with the given unique name, props, and options.
@@ -209,17 +304,23 @@ class DriverLicense(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  address: Optional[pulumi.Input[str]] = None,
+                 category: Optional[pulumi.Input[Union['Category', str]]] = None,
                  conditions_restrictions: Optional[pulumi.Input[str]] = None,
                  country: Optional[pulumi.Input[str]] = None,
                  date_of_birth: Optional[pulumi.Input[str]] = None,
                  expiry_date: Optional[pulumi.Input[str]] = None,
+                 fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  full_name: Optional[pulumi.Input[str]] = None,
                  gender: Optional[pulumi.Input[str]] = None,
                  height: Optional[pulumi.Input[str]] = None,
                  license_class: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  number: Optional[pulumi.Input[str]] = None,
+                 sections: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  state: Optional[pulumi.Input[str]] = None,
+                 tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 title: Optional[pulumi.Input[str]] = None,
+                 vault: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         if opts is None:
             opts = pulumi.ResourceOptions()
@@ -233,17 +334,33 @@ class DriverLicense(pulumi.CustomResource):
             __props__ = DriverLicenseArgs.__new__(DriverLicenseArgs)
 
             __props__.__dict__["address"] = address
+            if category is None:
+                category = 'Item'
+            if category is None and not opts.urn:
+                raise TypeError("Missing required property 'category'")
+            __props__.__dict__["category"] = category
             __props__.__dict__["conditions_restrictions"] = conditions_restrictions
             __props__.__dict__["country"] = country
             __props__.__dict__["date_of_birth"] = date_of_birth
             __props__.__dict__["expiry_date"] = expiry_date
+            __props__.__dict__["fields"] = fields
             __props__.__dict__["full_name"] = full_name
             __props__.__dict__["gender"] = gender
             __props__.__dict__["height"] = height
             __props__.__dict__["license_class"] = license_class
             __props__.__dict__["notes"] = notes
             __props__.__dict__["number"] = number
+            __props__.__dict__["sections"] = sections
             __props__.__dict__["state"] = state
+            __props__.__dict__["tags"] = tags
+            if title is None and not opts.urn:
+                raise TypeError("Missing required property 'title'")
+            __props__.__dict__["title"] = title
+            if vault is None and not opts.urn:
+                raise TypeError("Missing required property 'vault'")
+            __props__.__dict__["vault"] = vault
+            __props__.__dict__["id"] = None
+            __props__.__dict__["uuid"] = None
         super(DriverLicense, __self__).__init__(
             'onepassword:index:DriverLicense',
             resource_name,
@@ -266,5 +383,137 @@ class DriverLicense(pulumi.CustomResource):
 
         __props__ = DriverLicenseArgs.__new__(DriverLicenseArgs)
 
+        __props__.__dict__["address"] = None
+        __props__.__dict__["category"] = None
+        __props__.__dict__["conditions_restrictions"] = None
+        __props__.__dict__["country"] = None
+        __props__.__dict__["date_of_birth"] = None
+        __props__.__dict__["expiry_date"] = None
+        __props__.__dict__["fields"] = None
+        __props__.__dict__["full_name"] = None
+        __props__.__dict__["gender"] = None
+        __props__.__dict__["height"] = None
+        __props__.__dict__["id"] = None
+        __props__.__dict__["license_class"] = None
+        __props__.__dict__["notes"] = None
+        __props__.__dict__["number"] = None
+        __props__.__dict__["sections"] = None
+        __props__.__dict__["state"] = None
+        __props__.__dict__["tags"] = None
+        __props__.__dict__["title"] = None
+        __props__.__dict__["uuid"] = None
+        __props__.__dict__["vault"] = None
         return DriverLicense(resource_name, opts=opts, __props__=__props__)
+
+    @property
+    @pulumi.getter
+    def address(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "address")
+
+    @property
+    @pulumi.getter
+    def category(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "category")
+
+    @property
+    @pulumi.getter(name="conditionsRestrictions")
+    def conditions_restrictions(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "conditions_restrictions")
+
+    @property
+    @pulumi.getter
+    def country(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "country")
+
+    @property
+    @pulumi.getter(name="dateOfBirth")
+    def date_of_birth(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "date_of_birth")
+
+    @property
+    @pulumi.getter(name="expiryDate")
+    def expiry_date(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "expiry_date")
+
+    @property
+    @pulumi.getter
+    def fields(self) -> pulumi.Output[Optional[Sequence['outputs.GetField']]]:
+        return pulumi.get(self, "fields")
+
+    @property
+    @pulumi.getter(name="fullName")
+    def full_name(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "full_name")
+
+    @property
+    @pulumi.getter
+    def gender(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "gender")
+
+    @property
+    @pulumi.getter
+    def height(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "height")
+
+    @property
+    @pulumi.getter
+    def id(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "id")
+
+    @property
+    @pulumi.getter(name="licenseClass")
+    def license_class(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "license_class")
+
+    @property
+    @pulumi.getter
+    def notes(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "notes")
+
+    @property
+    @pulumi.getter
+    def number(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "number")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> pulumi.Output[Optional[Sequence['outputs.GetSection']]]:
+        return pulumi.get(self, "sections")
+
+    @property
+    @pulumi.getter
+    def state(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "state")
+
+    @property
+    @pulumi.getter
+    def tags(self) -> pulumi.Output[Sequence[str]]:
+        """
+        An array of strings of the tags assigned to the item.
+        """
+        return pulumi.get(self, "tags")
+
+    @property
+    @pulumi.getter
+    def title(self) -> pulumi.Output[str]:
+        """
+        The title of the item.
+        """
+        return pulumi.get(self, "title")
+
+    @property
+    @pulumi.getter
+    def uuid(self) -> pulumi.Output[str]:
+        """
+        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        """
+        return pulumi.get(self, "uuid")
+
+    @property
+    @pulumi.getter
+    def vault(self) -> pulumi.Output[str]:
+        """
+        The UUID of the vault the item is in.
+        """
+        return pulumi.get(self, "vault")
 

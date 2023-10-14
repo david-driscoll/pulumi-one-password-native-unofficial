@@ -2,6 +2,7 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import { input as inputs, output as outputs, enums } from "./types";
 import * as utilities from "./utilities";
 
 export class Passport extends pulumi.CustomResource {
@@ -31,6 +32,38 @@ export class Passport extends pulumi.CustomResource {
         return obj['__pulumiType'] === Passport.__pulumiType;
     }
 
+    public readonly category!: pulumi.Output<enums.Category | string>;
+    public readonly dateOfBirth!: pulumi.Output<string | undefined>;
+    public readonly expiryDate!: pulumi.Output<string | undefined>;
+    public readonly fields!: pulumi.Output<outputs.GetField[] | undefined>;
+    public readonly fullName!: pulumi.Output<string | undefined>;
+    public readonly gender!: pulumi.Output<string | undefined>;
+    public /*out*/ readonly id!: pulumi.Output<string>;
+    public readonly issuedOn!: pulumi.Output<string | undefined>;
+    public readonly issuingAuthority!: pulumi.Output<string | undefined>;
+    public readonly issuingCountry!: pulumi.Output<string | undefined>;
+    public readonly nationality!: pulumi.Output<string | undefined>;
+    public readonly notes!: pulumi.Output<string | undefined>;
+    public readonly number!: pulumi.Output<string | undefined>;
+    public readonly placeOfBirth!: pulumi.Output<string | undefined>;
+    public readonly sections!: pulumi.Output<outputs.GetSection[] | undefined>;
+    /**
+     * An array of strings of the tags assigned to the item.
+     */
+    public readonly tags!: pulumi.Output<string[]>;
+    /**
+     * The title of the item.
+     */
+    public readonly title!: pulumi.Output<string>;
+    public readonly type!: pulumi.Output<string | undefined>;
+    /**
+     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+     */
+    public /*out*/ readonly uuid!: pulumi.Output<string>;
+    /**
+     * The UUID of the vault the item is in.
+     */
+    public readonly vault!: pulumi.Output<string>;
 
     /**
      * Create a Passport resource with the given unique name, arguments, and options.
@@ -39,12 +72,23 @@ export class Passport extends pulumi.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args?: PassportArgs, opts?: pulumi.CustomResourceOptions) {
+    constructor(name: string, args: PassportArgs, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
+            if ((!args || args.category === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'category'");
+            }
+            if ((!args || args.title === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'title'");
+            }
+            if ((!args || args.vault === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'vault'");
+            }
+            resourceInputs["category"] = (args ? args.category : undefined) ?? "Item";
             resourceInputs["dateOfBirth"] = args ? args.dateOfBirth : undefined;
             resourceInputs["expiryDate"] = args ? args.expiryDate : undefined;
+            resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["fullName"] = args ? args.fullName : undefined;
             resourceInputs["gender"] = args ? args.gender : undefined;
             resourceInputs["issuedOn"] = args ? args.issuedOn : undefined;
@@ -54,8 +98,34 @@ export class Passport extends pulumi.CustomResource {
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["number"] = args ? args.number : undefined;
             resourceInputs["placeOfBirth"] = args ? args.placeOfBirth : undefined;
+            resourceInputs["sections"] = args ? args.sections : undefined;
+            resourceInputs["tags"] = args ? args.tags : undefined;
+            resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["type"] = args ? args.type : undefined;
+            resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["id"] = undefined /*out*/;
+            resourceInputs["uuid"] = undefined /*out*/;
         } else {
+            resourceInputs["category"] = undefined /*out*/;
+            resourceInputs["dateOfBirth"] = undefined /*out*/;
+            resourceInputs["expiryDate"] = undefined /*out*/;
+            resourceInputs["fields"] = undefined /*out*/;
+            resourceInputs["fullName"] = undefined /*out*/;
+            resourceInputs["gender"] = undefined /*out*/;
+            resourceInputs["id"] = undefined /*out*/;
+            resourceInputs["issuedOn"] = undefined /*out*/;
+            resourceInputs["issuingAuthority"] = undefined /*out*/;
+            resourceInputs["issuingCountry"] = undefined /*out*/;
+            resourceInputs["nationality"] = undefined /*out*/;
+            resourceInputs["notes"] = undefined /*out*/;
+            resourceInputs["number"] = undefined /*out*/;
+            resourceInputs["placeOfBirth"] = undefined /*out*/;
+            resourceInputs["sections"] = undefined /*out*/;
+            resourceInputs["tags"] = undefined /*out*/;
+            resourceInputs["title"] = undefined /*out*/;
+            resourceInputs["type"] = undefined /*out*/;
+            resourceInputs["uuid"] = undefined /*out*/;
+            resourceInputs["vault"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(Passport.__pulumiType, name, resourceInputs, opts);
@@ -66,8 +136,10 @@ export class Passport extends pulumi.CustomResource {
  * The set of arguments for constructing a Passport resource.
  */
 export interface PassportArgs {
+    category: pulumi.Input<enums.Category | string>;
     dateOfBirth?: pulumi.Input<string>;
     expiryDate?: pulumi.Input<string>;
+    fields?: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;
     fullName?: pulumi.Input<string>;
     gender?: pulumi.Input<string>;
     issuedOn?: pulumi.Input<string>;
@@ -77,5 +149,18 @@ export interface PassportArgs {
     notes?: pulumi.Input<string>;
     number?: pulumi.Input<string>;
     placeOfBirth?: pulumi.Input<string>;
+    sections?: pulumi.Input<pulumi.Input<inputs.SectionArgs>[]>;
+    /**
+     * An array of strings of the tags assigned to the item.
+     */
+    tags?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
+     */
+    title: pulumi.Input<string>;
     type?: pulumi.Input<string>;
+    /**
+     * The UUID of the vault the item is in.
+     */
+    vault: pulumi.Input<string>;
 }

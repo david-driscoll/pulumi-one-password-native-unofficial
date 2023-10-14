@@ -12,6 +12,67 @@ namespace Pulumi.Onepassword
     [OnepasswordResourceType("onepassword:index:APICredential")]
     public partial class APICredential : Pulumi.CustomResource
     {
+        [Output("category")]
+        public Output<string> Category { get; private set; } = null!;
+
+        [Output("credential")]
+        public Output<string?> Credential { get; private set; } = null!;
+
+        [Output("expires")]
+        public Output<string?> Expires { get; private set; } = null!;
+
+        [Output("fields")]
+        public Output<ImmutableArray<Outputs.GetField>> Fields { get; private set; } = null!;
+
+        [Output("filename")]
+        public Output<string?> Filename { get; private set; } = null!;
+
+        [Output("hostname")]
+        public Output<string?> Hostname { get; private set; } = null!;
+
+        [Output("id")]
+        public Output<string> Id { get; private set; } = null!;
+
+        [Output("notes")]
+        public Output<string?> Notes { get; private set; } = null!;
+
+        [Output("sections")]
+        public Output<ImmutableArray<Outputs.GetSection>> Sections { get; private set; } = null!;
+
+        /// <summary>
+        /// An array of strings of the tags assigned to the item.
+        /// </summary>
+        [Output("tags")]
+        public Output<ImmutableArray<string>> Tags { get; private set; } = null!;
+
+        /// <summary>
+        /// The title of the item.
+        /// </summary>
+        [Output("title")]
+        public Output<string> Title { get; private set; } = null!;
+
+        [Output("type")]
+        public Output<string?> Type { get; private set; } = null!;
+
+        [Output("username")]
+        public Output<string?> Username { get; private set; } = null!;
+
+        /// <summary>
+        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        /// </summary>
+        [Output("uuid")]
+        public Output<string> Uuid { get; private set; } = null!;
+
+        [Output("validFrom")]
+        public Output<string?> ValidFrom { get; private set; } = null!;
+
+        /// <summary>
+        /// The UUID of the vault the item is in.
+        /// </summary>
+        [Output("vault")]
+        public Output<string> Vault { get; private set; } = null!;
+
+
         /// <summary>
         /// Create a APICredential resource with the given unique name, arguments, and options.
         /// </summary>
@@ -19,7 +80,7 @@ namespace Pulumi.Onepassword
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public APICredential(string name, APICredentialArgs? args = null, CustomResourceOptions? options = null)
+        public APICredential(string name, APICredentialArgs args, CustomResourceOptions? options = null)
             : base("onepassword:index:APICredential", name, args ?? new APICredentialArgs(), MakeResourceOptions(options, ""))
         {
         }
@@ -56,11 +117,22 @@ namespace Pulumi.Onepassword
 
     public sealed class APICredentialArgs : Pulumi.ResourceArgs
     {
+        [Input("category", required: true)]
+        public InputUnion<Pulumi.Onepassword.Category, string> Category { get; set; } = null!;
+
         [Input("credential")]
         public Input<string>? Credential { get; set; }
 
         [Input("expires")]
         public Input<string>? Expires { get; set; }
+
+        [Input("fields")]
+        private InputList<Inputs.FieldArgs>? _fields;
+        public InputList<Inputs.FieldArgs> Fields
+        {
+            get => _fields ?? (_fields = new InputList<Inputs.FieldArgs>());
+            set => _fields = value;
+        }
 
         [Input("filename")]
         public Input<string>? Filename { get; set; }
@@ -71,6 +143,32 @@ namespace Pulumi.Onepassword
         [Input("notes")]
         public Input<string>? Notes { get; set; }
 
+        [Input("sections")]
+        private InputList<Inputs.SectionArgs>? _sections;
+        public InputList<Inputs.SectionArgs> Sections
+        {
+            get => _sections ?? (_sections = new InputList<Inputs.SectionArgs>());
+            set => _sections = value;
+        }
+
+        [Input("tags")]
+        private InputList<string>? _tags;
+
+        /// <summary>
+        /// An array of strings of the tags assigned to the item.
+        /// </summary>
+        public InputList<string> Tags
+        {
+            get => _tags ?? (_tags = new InputList<string>());
+            set => _tags = value;
+        }
+
+        /// <summary>
+        /// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
+        /// </summary>
+        [Input("title", required: true)]
+        public Input<string> Title { get; set; } = null!;
+
         [Input("type")]
         public Input<string>? Type { get; set; }
 
@@ -80,8 +178,15 @@ namespace Pulumi.Onepassword
         [Input("validFrom")]
         public Input<string>? ValidFrom { get; set; }
 
+        /// <summary>
+        /// The UUID of the vault the item is in.
+        /// </summary>
+        [Input("vault", required: true)]
+        public Input<string> Vault { get; set; } = null!;
+
         public APICredentialArgs()
         {
+            Category = "Item";
         }
     }
 }

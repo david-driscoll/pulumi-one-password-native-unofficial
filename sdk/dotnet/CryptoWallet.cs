@@ -12,6 +12,55 @@ namespace Pulumi.Onepassword
     [OnepasswordResourceType("onepassword:index:CryptoWallet")]
     public partial class CryptoWallet : Pulumi.CustomResource
     {
+        [Output("category")]
+        public Output<string> Category { get; private set; } = null!;
+
+        [Output("fields")]
+        public Output<ImmutableArray<Outputs.GetField>> Fields { get; private set; } = null!;
+
+        [Output("id")]
+        public Output<string> Id { get; private set; } = null!;
+
+        [Output("notes")]
+        public Output<string?> Notes { get; private set; } = null!;
+
+        [Output("password")]
+        public Output<string?> Password { get; private set; } = null!;
+
+        [Output("recoveryPhrase")]
+        public Output<string?> RecoveryPhrase { get; private set; } = null!;
+
+        [Output("sections")]
+        public Output<ImmutableArray<Outputs.GetSection>> Sections { get; private set; } = null!;
+
+        /// <summary>
+        /// An array of strings of the tags assigned to the item.
+        /// </summary>
+        [Output("tags")]
+        public Output<ImmutableArray<string>> Tags { get; private set; } = null!;
+
+        /// <summary>
+        /// The title of the item.
+        /// </summary>
+        [Output("title")]
+        public Output<string> Title { get; private set; } = null!;
+
+        /// <summary>
+        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        /// </summary>
+        [Output("uuid")]
+        public Output<string> Uuid { get; private set; } = null!;
+
+        /// <summary>
+        /// The UUID of the vault the item is in.
+        /// </summary>
+        [Output("vault")]
+        public Output<string> Vault { get; private set; } = null!;
+
+        [Output("wallet")]
+        public Output<Pulumi.Onepassword.CryptoWallet.Outputs.Wallet?> Wallet { get; private set; } = null!;
+
+
         /// <summary>
         /// Create a CryptoWallet resource with the given unique name, arguments, and options.
         /// </summary>
@@ -19,7 +68,7 @@ namespace Pulumi.Onepassword
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public CryptoWallet(string name, CryptoWalletArgs? args = null, CustomResourceOptions? options = null)
+        public CryptoWallet(string name, CryptoWalletArgs args, CustomResourceOptions? options = null)
             : base("onepassword:index:CryptoWallet", name, args ?? new CryptoWalletArgs(), MakeResourceOptions(options, ""))
         {
         }
@@ -56,6 +105,17 @@ namespace Pulumi.Onepassword
 
     public sealed class CryptoWalletArgs : Pulumi.ResourceArgs
     {
+        [Input("category", required: true)]
+        public InputUnion<Pulumi.Onepassword.Category, string> Category { get; set; } = null!;
+
+        [Input("fields")]
+        private InputList<Inputs.FieldArgs>? _fields;
+        public InputList<Inputs.FieldArgs> Fields
+        {
+            get => _fields ?? (_fields = new InputList<Inputs.FieldArgs>());
+            set => _fields = value;
+        }
+
         [Input("notes")]
         public Input<string>? Notes { get; set; }
 
@@ -65,11 +125,44 @@ namespace Pulumi.Onepassword
         [Input("recoveryPhrase")]
         public Input<string>? RecoveryPhrase { get; set; }
 
+        [Input("sections")]
+        private InputList<Inputs.SectionArgs>? _sections;
+        public InputList<Inputs.SectionArgs> Sections
+        {
+            get => _sections ?? (_sections = new InputList<Inputs.SectionArgs>());
+            set => _sections = value;
+        }
+
+        [Input("tags")]
+        private InputList<string>? _tags;
+
+        /// <summary>
+        /// An array of strings of the tags assigned to the item.
+        /// </summary>
+        public InputList<string> Tags
+        {
+            get => _tags ?? (_tags = new InputList<string>());
+            set => _tags = value;
+        }
+
+        /// <summary>
+        /// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
+        /// </summary>
+        [Input("title", required: true)]
+        public Input<string> Title { get; set; } = null!;
+
+        /// <summary>
+        /// The UUID of the vault the item is in.
+        /// </summary>
+        [Input("vault", required: true)]
+        public Input<string> Vault { get; set; } = null!;
+
         [Input("wallet")]
-        public Input<Pulumi.CryptoWallet.Section.Inputs.Wallet>? Wallet { get; set; }
+        public Input<Pulumi.Onepassword.CryptoWallet.Inputs.WalletArgs>? Wallet { get; set; }
 
         public CryptoWalletArgs()
         {
+            Category = "Item";
         }
     }
 }

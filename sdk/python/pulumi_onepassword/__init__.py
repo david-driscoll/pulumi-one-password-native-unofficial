@@ -5,6 +5,7 @@
 from . import _utilities
 import typing
 # Export this package's modules as members:
+from ._enums import *
 from .api_credential import *
 from .bank_account import *
 from .credit_card import *
@@ -28,6 +29,40 @@ from .social_security_number import *
 from .software_license import *
 from .ssh_key import *
 from .wireless_router import *
+from ._inputs import *
+from . import outputs
+
+# Make subpackages available:
+if typing.TYPE_CHECKING:
+    import pulumi_onepassword.bankaccount as __bankaccount
+    bankaccount = __bankaccount
+    import pulumi_onepassword.creditcard as __creditcard
+    creditcard = __creditcard
+    import pulumi_onepassword.cryptowallet as __cryptowallet
+    cryptowallet = __cryptowallet
+    import pulumi_onepassword.emailaccount as __emailaccount
+    emailaccount = __emailaccount
+    import pulumi_onepassword.identity as __identity
+    identity = __identity
+    import pulumi_onepassword.medicalrecord as __medicalrecord
+    medicalrecord = __medicalrecord
+    import pulumi_onepassword.rewardprogram as __rewardprogram
+    rewardprogram = __rewardprogram
+    import pulumi_onepassword.server as __server
+    server = __server
+    import pulumi_onepassword.softwarelicense as __softwarelicense
+    softwarelicense = __softwarelicense
+else:
+    bankaccount = _utilities.lazy_import('pulumi_onepassword.bankaccount')
+    creditcard = _utilities.lazy_import('pulumi_onepassword.creditcard')
+    cryptowallet = _utilities.lazy_import('pulumi_onepassword.cryptowallet')
+    emailaccount = _utilities.lazy_import('pulumi_onepassword.emailaccount')
+    identity = _utilities.lazy_import('pulumi_onepassword.identity')
+    medicalrecord = _utilities.lazy_import('pulumi_onepassword.medicalrecord')
+    rewardprogram = _utilities.lazy_import('pulumi_onepassword.rewardprogram')
+    server = _utilities.lazy_import('pulumi_onepassword.server')
+    softwarelicense = _utilities.lazy_import('pulumi_onepassword.softwarelicense')
+
 _utilities.register(
     resource_modules="""
 [

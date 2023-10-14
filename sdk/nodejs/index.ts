@@ -29,6 +29,16 @@ export * from "./softwareLicense";
 export * from "./sshkey";
 export * from "./wirelessRouter";
 
+// Export enums:
+export * from "./types/enums";
+
+// Export sub-modules:
+import * as types from "./types";
+
+export {
+    types,
+};
+
 // Import resources to register:
 import { APICredential } from "./apicredential";
 import { BankAccount } from "./bankAccount";

@@ -2,9 +2,8 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import { input as inputs, output as outputs, enums } from "./types";
 import * as utilities from "./utilities";
-
-import {ContactInformation, Smtp} from "section";
 
 export class EmailAccount extends pulumi.CustomResource {
     /**
@@ -33,6 +32,36 @@ export class EmailAccount extends pulumi.CustomResource {
         return obj['__pulumiType'] === EmailAccount.__pulumiType;
     }
 
+    public readonly authMethod!: pulumi.Output<string | undefined>;
+    public readonly category!: pulumi.Output<enums.Category | string>;
+    public readonly contactInformation!: pulumi.Output<outputs.emailAccount.ContactInformation | undefined>;
+    public readonly fields!: pulumi.Output<outputs.GetField[] | undefined>;
+    public /*out*/ readonly id!: pulumi.Output<string>;
+    public readonly notes!: pulumi.Output<string | undefined>;
+    public readonly password!: pulumi.Output<string | undefined>;
+    public readonly portNumber!: pulumi.Output<string | undefined>;
+    public readonly sections!: pulumi.Output<outputs.GetSection[] | undefined>;
+    public readonly security!: pulumi.Output<string | undefined>;
+    public readonly server!: pulumi.Output<string | undefined>;
+    public readonly smtp!: pulumi.Output<outputs.emailAccount.Smtp | undefined>;
+    /**
+     * An array of strings of the tags assigned to the item.
+     */
+    public readonly tags!: pulumi.Output<string[]>;
+    /**
+     * The title of the item.
+     */
+    public readonly title!: pulumi.Output<string>;
+    public readonly type!: pulumi.Output<string | undefined>;
+    public readonly username!: pulumi.Output<string | undefined>;
+    /**
+     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+     */
+    public /*out*/ readonly uuid!: pulumi.Output<string>;
+    /**
+     * The UUID of the vault the item is in.
+     */
+    public readonly vault!: pulumi.Output<string>;
 
     /**
      * Create a EmailAccount resource with the given unique name, arguments, and options.
@@ -41,21 +70,56 @@ export class EmailAccount extends pulumi.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args?: EmailAccountArgs, opts?: pulumi.CustomResourceOptions) {
+    constructor(name: string, args: EmailAccountArgs, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
+            if ((!args || args.category === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'category'");
+            }
+            if ((!args || args.title === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'title'");
+            }
+            if ((!args || args.vault === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'vault'");
+            }
             resourceInputs["authMethod"] = args ? args.authMethod : undefined;
+            resourceInputs["category"] = (args ? args.category : undefined) ?? "Item";
             resourceInputs["contactInformation"] = args ? args.contactInformation : undefined;
+            resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["password"] = args ? args.password : undefined;
             resourceInputs["portNumber"] = args ? args.portNumber : undefined;
+            resourceInputs["sections"] = args ? args.sections : undefined;
             resourceInputs["security"] = args ? args.security : undefined;
             resourceInputs["server"] = args ? args.server : undefined;
             resourceInputs["smtp"] = args ? args.smtp : undefined;
+            resourceInputs["tags"] = args ? args.tags : undefined;
+            resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["type"] = args ? args.type : undefined;
             resourceInputs["username"] = args ? args.username : undefined;
+            resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["id"] = undefined /*out*/;
+            resourceInputs["uuid"] = undefined /*out*/;
         } else {
+            resourceInputs["authMethod"] = undefined /*out*/;
+            resourceInputs["category"] = undefined /*out*/;
+            resourceInputs["contactInformation"] = undefined /*out*/;
+            resourceInputs["fields"] = undefined /*out*/;
+            resourceInputs["id"] = undefined /*out*/;
+            resourceInputs["notes"] = undefined /*out*/;
+            resourceInputs["password"] = undefined /*out*/;
+            resourceInputs["portNumber"] = undefined /*out*/;
+            resourceInputs["sections"] = undefined /*out*/;
+            resourceInputs["security"] = undefined /*out*/;
+            resourceInputs["server"] = undefined /*out*/;
+            resourceInputs["smtp"] = undefined /*out*/;
+            resourceInputs["tags"] = undefined /*out*/;
+            resourceInputs["title"] = undefined /*out*/;
+            resourceInputs["type"] = undefined /*out*/;
+            resourceInputs["username"] = undefined /*out*/;
+            resourceInputs["uuid"] = undefined /*out*/;
+            resourceInputs["vault"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(EmailAccount.__pulumiType, name, resourceInputs, opts);
@@ -67,13 +131,28 @@ export class EmailAccount extends pulumi.CustomResource {
  */
 export interface EmailAccountArgs {
     authMethod?: pulumi.Input<string>;
-    contactInformation?: pulumi.Input<ContactInformation>;
+    category: pulumi.Input<enums.Category | string>;
+    contactInformation?: pulumi.Input<inputs.emailAccount.ContactInformationArgs>;
+    fields?: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;
     notes?: pulumi.Input<string>;
     password?: pulumi.Input<string>;
     portNumber?: pulumi.Input<string>;
+    sections?: pulumi.Input<pulumi.Input<inputs.SectionArgs>[]>;
     security?: pulumi.Input<string>;
     server?: pulumi.Input<string>;
-    smtp?: pulumi.Input<Smtp>;
+    smtp?: pulumi.Input<inputs.emailAccount.SmtpArgs>;
+    /**
+     * An array of strings of the tags assigned to the item.
+     */
+    tags?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
+     */
+    title: pulumi.Input<string>;
     type?: pulumi.Input<string>;
     username?: pulumi.Input<string>;
+    /**
+     * The UUID of the vault the item is in.
+     */
+    vault: pulumi.Input<string>;
 }
