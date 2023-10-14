@@ -13,8 +13,30 @@
         "strict": true
     },
     "files": [
+        "apicredential.ts",
+        "bankAccount.ts",
+        "creditCard.ts",
+        "cryptoWallet.ts",
+        "database.ts",
+        "document.ts",
+        "driverLicense.ts",
+        "emailAccount.ts",
+        "identity.ts",
         "index.ts",
+        "login.ts",
+        "medicalRecord.ts",
+        "membership.ts",
+        "outdoorLicense.ts",
+        "passport.ts",
+        "password.ts",
         "provider.ts",
-        "utilities.ts"
+        "rewardProgram.ts",
+        "secureNote.ts",
+        "server.ts",
+        "socialSecurityNumber.ts",
+        "softwareLicense.ts",
+        "sshkey.ts",
+        "utilities.ts",
+        "wirelessRouter.ts"
     ]
 }

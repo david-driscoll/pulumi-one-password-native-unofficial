@@ -19,6 +19,18 @@ for (const template of templates) {
     currentResource.requiredInputs ??= [];
     currentResource.properties ??= {};
     currentResource.required ??= [];
+    currentResource.inputProperties['tags'] = {
+        type: 'array',
+        items: {
+            type: 'string'
+        }
+    }
+    currentResource.properties['tags'] = {
+        type: 'array',
+        items: {
+            type: 'string'
+        }
+    }
 
     const sections = templateSchema.fields
         .filter(z => !!z.section)
@@ -40,10 +52,17 @@ for (const template of templates) {
                 type: fieldInfo.type,
                 secret: fieldInfo.secret,
             }
+            if (fieldInfo.default) {
+                sectionProperties[camelCase(field.label ?? field.id)].default = fieldInfo.default
+            }
+
         } else {
             currentResource.inputProperties[camelCase(field.label ?? field.id)] = {
                 type: fieldInfo.type,
                 secret: fieldInfo.secret,
+            }
+            if (fieldInfo.default) {
+                currentResource.inputProperties[camelCase(field.label ?? field.id)].default = fieldInfo.default
             }
         }
     }

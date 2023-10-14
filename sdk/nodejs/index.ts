@@ -5,7 +5,108 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
 // Export members:
+export * from "./apicredential";
+export * from "./bankAccount";
+export * from "./creditCard";
+export * from "./cryptoWallet";
+export * from "./database";
+export * from "./document";
+export * from "./driverLicense";
+export * from "./emailAccount";
+export * from "./identity";
+export * from "./login";
+export * from "./medicalRecord";
+export * from "./membership";
+export * from "./outdoorLicense";
+export * from "./passport";
+export * from "./password";
 export * from "./provider";
+export * from "./rewardProgram";
+export * from "./secureNote";
+export * from "./server";
+export * from "./socialSecurityNumber";
+export * from "./softwareLicense";
+export * from "./sshkey";
+export * from "./wirelessRouter";
+
+// Import resources to register:
+import { APICredential } from "./apicredential";
+import { BankAccount } from "./bankAccount";
+import { CreditCard } from "./creditCard";
+import { CryptoWallet } from "./cryptoWallet";
+import { Database } from "./database";
+import { Document } from "./document";
+import { DriverLicense } from "./driverLicense";
+import { EmailAccount } from "./emailAccount";
+import { Identity } from "./identity";
+import { Login } from "./login";
+import { MedicalRecord } from "./medicalRecord";
+import { Membership } from "./membership";
+import { OutdoorLicense } from "./outdoorLicense";
+import { Passport } from "./passport";
+import { Password } from "./password";
+import { RewardProgram } from "./rewardProgram";
+import { SSHKey } from "./sshkey";
+import { SecureNote } from "./secureNote";
+import { Server } from "./server";
+import { SocialSecurityNumber } from "./socialSecurityNumber";
+import { SoftwareLicense } from "./softwareLicense";
+import { WirelessRouter } from "./wirelessRouter";
+
+const _module = {
+    version: utilities.getVersion(),
+    construct: (name: string, type: string, urn: string): pulumi.Resource => {
+        switch (type) {
+            case "onepassword:index:APICredential":
+                return new APICredential(name, <any>undefined, { urn })
+            case "onepassword:index:BankAccount":
+                return new BankAccount(name, <any>undefined, { urn })
+            case "onepassword:index:CreditCard":
+                return new CreditCard(name, <any>undefined, { urn })
+            case "onepassword:index:CryptoWallet":
+                return new CryptoWallet(name, <any>undefined, { urn })
+            case "onepassword:index:Database":
+                return new Database(name, <any>undefined, { urn })
+            case "onepassword:index:Document":
+                return new Document(name, <any>undefined, { urn })
+            case "onepassword:index:DriverLicense":
+                return new DriverLicense(name, <any>undefined, { urn })
+            case "onepassword:index:EmailAccount":
+                return new EmailAccount(name, <any>undefined, { urn })
+            case "onepassword:index:Identity":
+                return new Identity(name, <any>undefined, { urn })
+            case "onepassword:index:Login":
+                return new Login(name, <any>undefined, { urn })
+            case "onepassword:index:MedicalRecord":
+                return new MedicalRecord(name, <any>undefined, { urn })
+            case "onepassword:index:Membership":
+                return new Membership(name, <any>undefined, { urn })
+            case "onepassword:index:OutdoorLicense":
+                return new OutdoorLicense(name, <any>undefined, { urn })
+            case "onepassword:index:Passport":
+                return new Passport(name, <any>undefined, { urn })
+            case "onepassword:index:Password":
+                return new Password(name, <any>undefined, { urn })
+            case "onepassword:index:RewardProgram":
+                return new RewardProgram(name, <any>undefined, { urn })
+            case "onepassword:index:SSHKey":
+                return new SSHKey(name, <any>undefined, { urn })
+            case "onepassword:index:SecureNote":
+                return new SecureNote(name, <any>undefined, { urn })
+            case "onepassword:index:Server":
+                return new Server(name, <any>undefined, { urn })
+            case "onepassword:index:SocialSecurityNumber":
+                return new SocialSecurityNumber(name, <any>undefined, { urn })
+            case "onepassword:index:SoftwareLicense":
+                return new SoftwareLicense(name, <any>undefined, { urn })
+            case "onepassword:index:WirelessRouter":
+                return new WirelessRouter(name, <any>undefined, { urn })
+            default:
+                throw new Error(`unknown resource type ${type}`);
+        }
+    },
+};
+pulumi.runtime.registerResourceModule("onepassword", "index", _module)
 
 import { Provider } from "./provider";
 

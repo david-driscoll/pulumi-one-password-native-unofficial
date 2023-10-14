@@ -5,10 +5,62 @@
 from . import _utilities
 import typing
 # Export this package's modules as members:
+from .api_credential import *
+from .bank_account import *
+from .credit_card import *
+from .crypto_wallet import *
+from .database import *
+from .document import *
+from .driver_license import *
+from .email_account import *
+from .identity import *
+from .login import *
+from .medical_record import *
+from .membership import *
+from .outdoor_license import *
+from .passport import *
+from .password import *
 from .provider import *
+from .reward_program import *
+from .secure_note import *
+from .server import *
+from .social_security_number import *
+from .software_license import *
+from .ssh_key import *
+from .wireless_router import *
 _utilities.register(
     resource_modules="""
-[]
+[
+ {
+  "pkg": "onepassword",
+  "mod": "index",
+  "fqn": "pulumi_onepassword",
+  "classes": {
+   "onepassword:index:APICredential": "APICredential",
+   "onepassword:index:BankAccount": "BankAccount",
+   "onepassword:index:CreditCard": "CreditCard",
+   "onepassword:index:CryptoWallet": "CryptoWallet",
+   "onepassword:index:Database": "Database",
+   "onepassword:index:Document": "Document",
+   "onepassword:index:DriverLicense": "DriverLicense",
+   "onepassword:index:EmailAccount": "EmailAccount",
+   "onepassword:index:Identity": "Identity",
+   "onepassword:index:Login": "Login",
+   "onepassword:index:MedicalRecord": "MedicalRecord",
+   "onepassword:index:Membership": "Membership",
+   "onepassword:index:OutdoorLicense": "OutdoorLicense",
+   "onepassword:index:Passport": "Passport",
+   "onepassword:index:Password": "Password",
+   "onepassword:index:RewardProgram": "RewardProgram",
+   "onepassword:index:SSHKey": "SSHKey",
+   "onepassword:index:SecureNote": "SecureNote",
+   "onepassword:index:Server": "Server",
+   "onepassword:index:SocialSecurityNumber": "SocialSecurityNumber",
+   "onepassword:index:SoftwareLicense": "SoftwareLicense",
+   "onepassword:index:WirelessRouter": "WirelessRouter"
+  }
+ }
+]
 """,
     resource_packages="""
 [
