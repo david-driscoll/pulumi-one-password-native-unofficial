@@ -1,6 +1,13 @@
 {
   "devDependencies": {
+    "@types/lodash": "^4.14.199",
     "@vercel/ncc": "^0.28.6",
-    "nexe": "^4.0.0-beta.18"
+    "nexe": "^4.0.0-beta.18",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@1password/op-js": "^0.1.11",
+    "lodash": "^4.17.21"
   }
 }

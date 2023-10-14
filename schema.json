@@ -1,50 +1,749 @@
 {
-    "name": "xyz",
+    "name": "onepassword",
     "resources": {
-        "xyz:index:StaticPage": {
-            "isComponent": true,
+        "onepassword:index:EmailAccount": {
+            "isComponent": false,
             "inputProperties": {
-                "indexContent": {
-                    "type": "string",
-                    "description": "The HTML content for index.html."
-                }
-            },
-            "requiredInputs": [
-                "indexContent"
-            ],
-            "properties": {
-                "bucket": {
-                    "$ref": "/aws/v4.0.0/schema.json#/resources/aws:s3%2Fbucket:Bucket",
-                    "description": "The bucket resource."
+                "smtp": {
+                    "$ref": "#/types/emailAccount:section:smtp"
                 },
-                "websiteUrl": {
+                "contactInformation": {
+                    "$ref": "#/types/emailAccount:section:contactInformation"
+                },
+                "notes": {
                     "type": "string",
-                    "description": "The website URL."
+                    "secret": false
+                },
+                "type": {
+                    "type": "string",
+                    "secret": false
+                },
+                "username": {
+                    "type": "string",
+                    "secret": false
+                },
+                "server": {
+                    "type": "string",
+                    "secret": false
+                },
+                "portNumber": {
+                    "type": "string",
+                    "secret": false
+                },
+                "password": {
+                    "type": "string",
+                    "secret": false
+                },
+                "security": {
+                    "type": "string",
+                    "secret": false
+                },
+                "authMethod": {
+                    "type": "string",
+                    "secret": false
                 }
             },
-            "required": [
-                "bucket",
-                "websiteUrl"
-            ]
+            "requiredInputs": [],
+            "properties": {},
+            "required": []
+        },
+        "onepassword:index:RewardProgram": {
+            "isComponent": false,
+            "inputProperties": {
+                "moreInformation": {
+                    "$ref": "#/types/rewardProgram:section:moreInformation"
+                },
+                "notes": {
+                    "type": "string",
+                    "secret": false
+                },
+                "companyName": {
+                    "type": "string",
+                    "secret": false
+                },
+                "memberName": {
+                    "type": "string",
+                    "secret": false
+                },
+                "memberId": {
+                    "type": "string",
+                    "secret": false
+                },
+                "pin": {
+                    "type": "string",
+                    "secret": false
+                }
+            },
+            "requiredInputs": [],
+            "properties": {},
+            "required": []
+        },
+        "onepassword:index:WirelessRouter": {
+            "isComponent": false,
+            "inputProperties": {
+                "notes": {
+                    "type": "string",
+                    "secret": false
+                },
+                "baseStationName": {
+                    "type": "string",
+                    "secret": false
+                },
+                "baseStationPassword": {
+                    "type": "string",
+                    "secret": false
+                },
+                "serverIpAddress": {
+                    "type": "string",
+                    "secret": false
+                },
+                "airPortId": {
+                    "type": "string",
+                    "secret": false
+                },
+                "networkName": {
+                    "type": "string",
+                    "secret": false
+                },
+                "wirelessSecurity": {
+                    "type": "string",
+                    "secret": false
+                },
+                "wirelessNetworkPassword": {
+                    "type": "string",
+                    "secret": false
+                },
+                "attachedStoragePassword": {
+                    "type": "string",
+                    "secret": false
+                }
+            },
+            "requiredInputs": [],
+            "properties": {},
+            "required": []
+        },
+        "onepassword:index:SecureNote": {
+            "isComponent": false,
+            "inputProperties": {
+                "notes": {
+                    "type": "string",
+                    "secret": false
+                }
+            },
+            "requiredInputs": [],
+            "properties": {},
+            "required": []
+        },
+        "onepassword:index:SoftwareLicense": {
+            "isComponent": false,
+            "inputProperties": {
+                "customer": {
+                    "$ref": "#/types/softwareLicense:section:customer"
+                },
+                "publisher": {
+                    "$ref": "#/types/softwareLicense:section:publisher"
+                },
+                "order": {
+                    "$ref": "#/types/softwareLicense:section:order"
+                },
+                "notes": {
+                    "type": "string",
+                    "secret": false
+                },
+                "version": {
+                    "type": "string",
+                    "secret": false
+                },
+                "licenseKey": {
+                    "type": "string",
+                    "secret": false
+                }
+            },
+            "requiredInputs": [],
+            "properties": {},
+            "required": []
+        },
+        "onepassword:index:BankAccount": {
+            "isComponent": false,
+            "inputProperties": {
+                "branchInformation": {
+                    "$ref": "#/types/bankAccount:section:branchInformation"
+                },
+                "notes": {
+                    "type": "string",
+                    "secret": false
+                },
+                "bankName": {
+                    "type": "string",
+                    "secret": false
+                },
+                "nameOnAccount": {
+                    "type": "string",
+                    "secret": false
+                },
+                "type": {
+                    "type": "string",
+                    "secret": false
+                },
+                "routingNumber": {
+                    "type": "string",
+                    "secret": false
+                },
+                "accountNumber": {
+                    "type": "string",
+                    "secret": false
+                },
+                "swift": {
+                    "type": "string",
+                    "secret": false
+                },
+                "iban": {
+                    "type": "string",
+                    "secret": false
+                },
+                "pin": {
+                    "type": "string",
+                    "secret": false
+                }
+            },
+            "requiredInputs": [],
+            "properties": {},
+            "required": []
+        },
+        "onepassword:index:Database": {
+            "isComponent": false,
+            "inputProperties": {
+                "notes": {
+                    "type": "string",
+                    "secret": false
+                },
+                "type": {
+                    "type": "string",
+                    "secret": false
+                },
+                "server": {
+                    "type": "string",
+                    "secret": false
+                },
+                "port": {
+                    "type": "string",
+                    "secret": false
+                },
+                "database": {
+                    "type": "string",
+                    "secret": false
+                },
+                "username": {
+                    "type": "string",
+                    "secret": false
+                },
+                "password": {
+                    "type": "string",
+                    "secret": false
+                },
+                "sid": {
+                    "type": "string",
+                    "secret": false
+                },
+                "alias": {
+                    "type": "string",
+                    "secret": false
+                },
+                "connectionOptions": {
+                    "type": "string",
+                    "secret": false
+                }
+            },
+            "requiredInputs": [],
+            "properties": {},
+            "required": []
+        },
+        "onepassword:index:Document": {
+            "isComponent": false,
+            "inputProperties": {
+                "notes": {
+                    "type": "string",
+                    "secret": false
+                }
+            },
+            "requiredInputs": [],
+            "properties": {},
+            "required": []
+        },
+        "onepassword:index:Server": {
+            "isComponent": false,
+            "inputProperties": {
+                "adminConsole": {
+                    "$ref": "#/types/server:section:adminConsole"
+                },
+                "hostingProvider": {
+                    "$ref": "#/types/server:section:hostingProvider"
+                },
+                "notes": {
+                    "type": "string",
+                    "secret": false
+                },
+                "url": {
+                    "type": "string",
+                    "secret": false
+                },
+                "username": {
+                    "type": "string",
+                    "secret": false
+                },
+                "password": {
+                    "type": "string",
+                    "secret": false
+                }
+            },
+            "requiredInputs": [],
+            "properties": {},
+            "required": []
+        },
+        "onepassword:index:APICredential": {
+            "isComponent": false,
+            "inputProperties": {
+                "notes": {
+                    "type": "string",
+                    "secret": false
+                },
+                "username": {
+                    "type": "string",
+                    "secret": false
+                },
+                "credential": {
+                    "type": "string",
+                    "secret": false
+                },
+                "type": {
+                    "type": "string",
+                    "secret": false
+                },
+                "filename": {
+                    "type": "string",
+                    "secret": false
+                },
+                "validFrom": {
+                    "type": "string",
+                    "secret": false
+                },
+                "expires": {
+                    "type": "string",
+                    "secret": false
+                },
+                "hostname": {
+                    "type": "string",
+                    "secret": false
+                }
+            },
+            "requiredInputs": [],
+            "properties": {},
+            "required": []
+        },
+        "onepassword:index:CryptoWallet": {
+            "isComponent": false,
+            "inputProperties": {
+                "wallet": {
+                    "$ref": "#/types/cryptoWallet:section:wallet"
+                },
+                "notes": {
+                    "type": "string",
+                    "secret": false
+                },
+                "recoveryPhrase": {
+                    "type": "string",
+                    "secret": false
+                },
+                "password": {
+                    "type": "string",
+                    "secret": false
+                }
+            },
+            "requiredInputs": [],
+            "properties": {},
+            "required": []
+        },
+        "onepassword:index:OutdoorLicense": {
+            "isComponent": false,
+            "inputProperties": {
+                "notes": {
+                    "type": "string",
+                    "secret": false
+                },
+                "fullName": {
+                    "type": "string",
+                    "secret": false
+                },
+                "validFrom": {
+                    "type": "string",
+                    "secret": false
+                },
+                "expires": {
+                    "type": "string",
+                    "secret": false
+                },
+                "approvedWildlife": {
+                    "type": "string",
+                    "secret": false
+                },
+                "maximumQuota": {
+                    "type": "string",
+                    "secret": false
+                },
+                "state": {
+                    "type": "string",
+                    "secret": false
+                },
+                "country": {
+                    "type": "string",
+                    "secret": false
+                }
+            },
+            "requiredInputs": [],
+            "properties": {},
+            "required": []
+        },
+        "onepassword:index:Login": {
+            "isComponent": false,
+            "inputProperties": {
+                "username": {
+                    "type": "string",
+                    "secret": false
+                },
+                "password": {
+                    "type": "string",
+                    "secret": true
+                },
+                "notes": {
+                    "type": "string",
+                    "secret": false
+                }
+            },
+            "requiredInputs": [],
+            "properties": {},
+            "required": []
+        },
+        "onepassword:index:MedicalRecord": {
+            "isComponent": false,
+            "inputProperties": {
+                "medication": {
+                    "$ref": "#/types/medicalRecord:section:medication"
+                },
+                "notes": {
+                    "type": "string",
+                    "secret": false
+                },
+                "date": {
+                    "type": "string",
+                    "secret": false
+                },
+                "location": {
+                    "type": "string",
+                    "secret": false
+                },
+                "healthcareProfessional": {
+                    "type": "string",
+                    "secret": false
+                },
+                "patient": {
+                    "type": "string",
+                    "secret": false
+                },
+                "reasonForVisit": {
+                    "type": "string",
+                    "secret": false
+                }
+            },
+            "requiredInputs": [],
+            "properties": {},
+            "required": []
+        },
+        "onepassword:index:Membership": {
+            "isComponent": false,
+            "inputProperties": {
+                "notes": {
+                    "type": "string",
+                    "secret": false
+                },
+                "group": {
+                    "type": "string",
+                    "secret": false
+                },
+                "website": {
+                    "type": "string",
+                    "secret": false
+                },
+                "telephone": {
+                    "type": "string",
+                    "secret": false
+                },
+                "memberName": {
+                    "type": "string",
+                    "secret": false
+                },
+                "memberSince": {
+                    "type": "string",
+                    "secret": false
+                },
+                "expiryDate": {
+                    "type": "string",
+                    "secret": false
+                },
+                "memberId": {
+                    "type": "string",
+                    "secret": false
+                },
+                "pin": {
+                    "type": "string",
+                    "secret": false
+                }
+            },
+            "requiredInputs": [],
+            "properties": {},
+            "required": []
+        },
+        "onepassword:index:SocialSecurityNumber": {
+            "isComponent": false,
+            "inputProperties": {
+                "notes": {
+                    "type": "string",
+                    "secret": false
+                },
+                "name": {
+                    "type": "string",
+                    "secret": false
+                },
+                "number": {
+                    "type": "string",
+                    "secret": false
+                }
+            },
+            "requiredInputs": [],
+            "properties": {},
+            "required": []
+        },
+        "onepassword:index:SSHKey": {
+            "isComponent": false,
+            "inputProperties": {
+                "notes": {
+                    "type": "string",
+                    "secret": false
+                },
+                "privateKey": {
+                    "type": "string",
+                    "secret": false
+                }
+            },
+            "requiredInputs": [],
+            "properties": {},
+            "required": []
+        },
+        "onepassword:index:CreditCard": {
+            "isComponent": false,
+            "inputProperties": {
+                "contactInformation": {
+                    "$ref": "#/types/creditCard:section:contactInformation"
+                },
+                "additionalDetails": {
+                    "$ref": "#/types/creditCard:section:additionalDetails"
+                },
+                "notes": {
+                    "type": "string",
+                    "secret": false
+                },
+                "cardholderName": {
+                    "type": "string",
+                    "secret": false
+                },
+                "type": {
+                    "type": "string",
+                    "secret": false
+                },
+                "number": {
+                    "type": "string",
+                    "secret": false
+                },
+                "verificationNumber": {
+                    "type": "string",
+                    "secret": false
+                },
+                "expiryDate": {
+                    "type": "string",
+                    "secret": false
+                },
+                "validFrom": {
+                    "type": "string",
+                    "secret": false
+                }
+            },
+            "requiredInputs": [],
+            "properties": {},
+            "required": []
+        },
+        "onepassword:index:DriverLicense": {
+            "isComponent": false,
+            "inputProperties": {
+                "notes": {
+                    "type": "string",
+                    "secret": false
+                },
+                "fullName": {
+                    "type": "string",
+                    "secret": false
+                },
+                "address": {
+                    "type": "string",
+                    "secret": false
+                },
+                "dateOfBirth": {
+                    "type": "string",
+                    "secret": false
+                },
+                "gender": {
+                    "type": "string",
+                    "secret": false
+                },
+                "height": {
+                    "type": "string",
+                    "secret": false
+                },
+                "number": {
+                    "type": "string",
+                    "secret": false
+                },
+                "licenseClass": {
+                    "type": "string",
+                    "secret": false
+                },
+                "conditionsRestrictions": {
+                    "type": "string",
+                    "secret": false
+                },
+                "state": {
+                    "type": "string",
+                    "secret": false
+                },
+                "country": {
+                    "type": "string",
+                    "secret": false
+                },
+                "expiryDate": {
+                    "type": "string",
+                    "secret": false
+                }
+            },
+            "requiredInputs": [],
+            "properties": {},
+            "required": []
+        },
+        "onepassword:index:Identity": {
+            "isComponent": false,
+            "inputProperties": {
+                "identification": {
+                    "$ref": "#/types/identity:section:identification"
+                },
+                "address": {
+                    "$ref": "#/types/identity:section:address"
+                },
+                "internetDetails": {
+                    "$ref": "#/types/identity:section:internetDetails"
+                },
+                "notes": {
+                    "type": "string",
+                    "secret": false
+                }
+            },
+            "requiredInputs": [],
+            "properties": {},
+            "required": []
+        },
+        "onepassword:index:Passport": {
+            "isComponent": false,
+            "inputProperties": {
+                "notes": {
+                    "type": "string",
+                    "secret": false
+                },
+                "type": {
+                    "type": "string",
+                    "secret": false
+                },
+                "issuingCountry": {
+                    "type": "string",
+                    "secret": false
+                },
+                "number": {
+                    "type": "string",
+                    "secret": false
+                },
+                "fullName": {
+                    "type": "string",
+                    "secret": false
+                },
+                "gender": {
+                    "type": "string",
+                    "secret": false
+                },
+                "nationality": {
+                    "type": "string",
+                    "secret": false
+                },
+                "issuingAuthority": {
+                    "type": "string",
+                    "secret": false
+                },
+                "dateOfBirth": {
+                    "type": "string",
+                    "secret": false
+                },
+                "placeOfBirth": {
+                    "type": "string",
+                    "secret": false
+                },
+                "issuedOn": {
+                    "type": "string",
+                    "secret": false
+                },
+                "expiryDate": {
+                    "type": "string",
+                    "secret": false
+                }
+            },
+            "requiredInputs": [],
+            "properties": {},
+            "required": []
+        },
+        "onepassword:index:Password": {
+            "isComponent": false,
+            "inputProperties": {
+                "password": {
+                    "type": "string",
+                    "secret": true
+                },
+                "notes": {
+                    "type": "string",
+                    "secret": false
+                }
+            },
+            "requiredInputs": [],
+            "properties": {},
+            "required": []
         }
     },
     "language": {
         "csharp": {
             "packageReferences": {
-                "Pulumi": "3.*",
-                "Pulumi.Aws": "5.*"
+                "Pulumi": "3.*"
             },
             "respectSchemaVersion": true
         },
         "go": {
             "generateResourceContainerTypes": true,
-            "importBasePath": "github.com/pulumi/pulumi-xyz/sdk/go/xyz",
+            "importBasePath": "github.com/pulumi/pulumi-onepassword/sdk/go/onepassword",
             "respectSchemaVersion": true
         },
         "nodejs": {
-            "dependencies": {
-                "@pulumi/aws": "^5.0.0"
-            },
+            "dependencies": {},
             "devDependencies": {
                 "typescript": "^3.7.0"
             },
@@ -52,8 +751,7 @@
         },
         "python": {
             "requires": {
-                "pulumi": ">=3.0.0,<4.0.0",
-                "pulumi-aws": ">=5.0.0,<6.0.0"
+                "pulumi": ">=3.0.0,<4.0.0"
             },
             "respectSchemaVersion": true
         }
