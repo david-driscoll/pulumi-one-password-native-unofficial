@@ -9,12 +9,12 @@ from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 
 __all__ = [
-    'ContactInformationArgs',
-    'SmtpArgs',
+    'ContactInformationSectionArgs',
+    'SmtpSectionArgs',
 ]
 
 @pulumi.input_type
-class ContactInformationArgs:
+class ContactInformationSectionArgs:
     def __init__(__self__, *,
                  phone_local: Optional[pulumi.Input[str]] = None,
                  phone_toll_free: Optional[pulumi.Input[str]] = None,
@@ -67,7 +67,7 @@ class ContactInformationArgs:
 
 
 @pulumi.input_type
-class SmtpArgs:
+class SmtpSectionArgs:
     def __init__(__self__, *,
                  auth_method: Optional[pulumi.Input[str]] = None,
                  password: Optional[pulumi.Input[str]] = None,

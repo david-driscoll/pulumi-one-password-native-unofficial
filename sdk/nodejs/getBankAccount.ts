@@ -36,7 +36,7 @@ export interface GetBankAccountArgs {
 export interface GetBankAccountResult {
     readonly accountNumber?: string;
     readonly bankName?: string;
-    readonly branchInformation?: outputs.bankAccount.BranchInformation;
+    readonly branchInformation?: outputs.bankAccount.BranchInformationSection;
     readonly category?: enums.Category | string;
     readonly fields?: outputs.GetField[];
     readonly iban?: string;

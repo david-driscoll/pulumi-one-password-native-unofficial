@@ -30,7 +30,6 @@ namespace Pulumi.Onepassword
         public static Category EmailAccount { get; } = new Category("Email Account");
         public static Category Identity { get; } = new Category("Identity");
         public static Category Item { get; } = new Category("Item");
-        public static Category Item { get; } = new Category("Item");
         public static Category Login { get; } = new Category("Login");
         public static Category MedicalRecord { get; } = new Category("Medical Record");
         public static Category Membership { get; } = new Category("Membership");

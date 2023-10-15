@@ -40,7 +40,7 @@ export interface GetMedicalRecordResult {
     readonly healthcareProfessional?: string;
     readonly id?: string;
     readonly location?: string;
-    readonly medication?: outputs.medicalRecord.Medication;
+    readonly medication?: outputs.medicalRecord.MedicationSection;
     readonly notes?: string;
     readonly patient?: string;
     readonly reasonForVisit?: string;

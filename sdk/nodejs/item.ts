@@ -35,7 +35,6 @@ export class Item extends pulumi.CustomResource {
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly fields!: pulumi.Output<outputs.GetField[] | undefined>;
     public /*out*/ readonly id!: pulumi.Output<string>;
-    public readonly notes!: pulumi.Output<string | undefined>;
     public readonly sections!: pulumi.Output<outputs.GetSection[] | undefined>;
     /**
      * An array of strings of the tags assigned to the item.
@@ -73,7 +72,6 @@ export class Item extends pulumi.CustomResource {
             }
             resourceInputs["category"] = (args ? args.category : undefined) ?? "Item";
             resourceInputs["fields"] = args ? args.fields : undefined;
-            resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
@@ -84,7 +82,6 @@ export class Item extends pulumi.CustomResource {
             resourceInputs["category"] = undefined /*out*/;
             resourceInputs["fields"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
-            resourceInputs["notes"] = undefined /*out*/;
             resourceInputs["sections"] = undefined /*out*/;
             resourceInputs["tags"] = undefined /*out*/;
             resourceInputs["title"] = undefined /*out*/;
@@ -102,7 +99,6 @@ export class Item extends pulumi.CustomResource {
 export interface ItemArgs {
     category?: pulumi.Input<enums.Category | string>;
     fields?: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;
-    notes?: pulumi.Input<string>;
     sections?: pulumi.Input<pulumi.Input<inputs.SectionArgs>[]>;
     /**
      * An array of strings of the tags assigned to the item.

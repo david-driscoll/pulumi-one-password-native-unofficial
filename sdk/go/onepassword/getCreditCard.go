@@ -11,8 +11,8 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-func LookupCreditCard(ctx *pulumi.Context, args *LookupCreditCardArgs, opts ...pulumi.InvokeOption) (*LookupCreditCardResult, error) {
-	var rv LookupCreditCardResult
+func GetCreditCard(ctx *pulumi.Context, args *GetCreditCardArgs, opts ...pulumi.InvokeOption) (*GetCreditCardResult, error) {
+	var rv GetCreditCardResult
 	err := ctx.Invoke("onepassword:index:GetCreditCard", args, &rv, opts...)
 	if err != nil {
 		return nil, err
@@ -20,7 +20,7 @@ func LookupCreditCard(ctx *pulumi.Context, args *LookupCreditCardArgs, opts ...p
 	return &rv, nil
 }
 
-type LookupCreditCardArgs struct {
+type GetCreditCardArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -29,17 +29,17 @@ type LookupCreditCardArgs struct {
 	Vault string `pulumi:"vault"`
 }
 
-type LookupCreditCardResult struct {
-	AdditionalDetails  *creditcard.AdditionalDetails  `pulumi:"additionalDetails"`
-	CardholderName     *string                        `pulumi:"cardholderName"`
-	Category           *string                        `pulumi:"category"`
-	ContactInformation *creditcard.ContactInformation `pulumi:"contactInformation"`
-	ExpiryDate         *string                        `pulumi:"expiryDate"`
-	Fields             []GetField                     `pulumi:"fields"`
-	Id                 *string                        `pulumi:"id"`
-	Notes              *string                        `pulumi:"notes"`
-	Number             *string                        `pulumi:"number"`
-	Sections           []GetSection                   `pulumi:"sections"`
+type GetCreditCardResult struct {
+	AdditionalDetails  *creditcard.AdditionalDetailsSection  `pulumi:"additionalDetails"`
+	CardholderName     *string                               `pulumi:"cardholderName"`
+	Category           *string                               `pulumi:"category"`
+	ContactInformation *creditcard.ContactInformationSection `pulumi:"contactInformation"`
+	ExpiryDate         *string                               `pulumi:"expiryDate"`
+	Fields             []GetField                            `pulumi:"fields"`
+	Id                 *string                               `pulumi:"id"`
+	Notes              *string                               `pulumi:"notes"`
+	Number             *string                               `pulumi:"number"`
+	Sections           []GetSection                          `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -53,20 +53,20 @@ type LookupCreditCardResult struct {
 	VerificationNumber *string `pulumi:"verificationNumber"`
 }
 
-func LookupCreditCardOutput(ctx *pulumi.Context, args LookupCreditCardOutputArgs, opts ...pulumi.InvokeOption) LookupCreditCardResultOutput {
+func GetCreditCardOutput(ctx *pulumi.Context, args GetCreditCardOutputArgs, opts ...pulumi.InvokeOption) GetCreditCardResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupCreditCardResult, error) {
-			args := v.(LookupCreditCardArgs)
-			r, err := LookupCreditCard(ctx, &args, opts...)
-			var s LookupCreditCardResult
+		ApplyT(func(v interface{}) (GetCreditCardResult, error) {
+			args := v.(GetCreditCardArgs)
+			r, err := GetCreditCard(ctx, &args, opts...)
+			var s GetCreditCardResult
 			if r != nil {
 				s = *r
 			}
 			return s, err
-		}).(LookupCreditCardResultOutput)
+		}).(GetCreditCardResultOutput)
 }
 
-type LookupCreditCardOutputArgs struct {
+type GetCreditCardOutputArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -75,96 +75,96 @@ type LookupCreditCardOutputArgs struct {
 	Vault pulumi.StringInput `pulumi:"vault"`
 }
 
-func (LookupCreditCardOutputArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupCreditCardArgs)(nil)).Elem()
+func (GetCreditCardOutputArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetCreditCardArgs)(nil)).Elem()
 }
 
-type LookupCreditCardResultOutput struct{ *pulumi.OutputState }
+type GetCreditCardResultOutput struct{ *pulumi.OutputState }
 
-func (LookupCreditCardResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupCreditCardResult)(nil)).Elem()
+func (GetCreditCardResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetCreditCardResult)(nil)).Elem()
 }
 
-func (o LookupCreditCardResultOutput) ToLookupCreditCardResultOutput() LookupCreditCardResultOutput {
+func (o GetCreditCardResultOutput) ToGetCreditCardResultOutput() GetCreditCardResultOutput {
 	return o
 }
 
-func (o LookupCreditCardResultOutput) ToLookupCreditCardResultOutputWithContext(ctx context.Context) LookupCreditCardResultOutput {
+func (o GetCreditCardResultOutput) ToGetCreditCardResultOutputWithContext(ctx context.Context) GetCreditCardResultOutput {
 	return o
 }
 
-func (o LookupCreditCardResultOutput) AdditionalDetails() creditcard.AdditionalDetailsPtrOutput {
-	return o.ApplyT(func(v LookupCreditCardResult) *creditcard.AdditionalDetails { return v.AdditionalDetails }).(creditcard.AdditionalDetailsPtrOutput)
+func (o GetCreditCardResultOutput) AdditionalDetails() creditcard.AdditionalDetailsSectionPtrOutput {
+	return o.ApplyT(func(v GetCreditCardResult) *creditcard.AdditionalDetailsSection { return v.AdditionalDetails }).(creditcard.AdditionalDetailsSectionPtrOutput)
 }
 
-func (o LookupCreditCardResultOutput) CardholderName() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupCreditCardResult) *string { return v.CardholderName }).(pulumi.StringPtrOutput)
+func (o GetCreditCardResultOutput) CardholderName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetCreditCardResult) *string { return v.CardholderName }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupCreditCardResultOutput) Category() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupCreditCardResult) *string { return v.Category }).(pulumi.StringPtrOutput)
+func (o GetCreditCardResultOutput) Category() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetCreditCardResult) *string { return v.Category }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupCreditCardResultOutput) ContactInformation() creditcard.ContactInformationPtrOutput {
-	return o.ApplyT(func(v LookupCreditCardResult) *creditcard.ContactInformation { return v.ContactInformation }).(creditcard.ContactInformationPtrOutput)
+func (o GetCreditCardResultOutput) ContactInformation() creditcard.ContactInformationSectionPtrOutput {
+	return o.ApplyT(func(v GetCreditCardResult) *creditcard.ContactInformationSection { return v.ContactInformation }).(creditcard.ContactInformationSectionPtrOutput)
 }
 
-func (o LookupCreditCardResultOutput) ExpiryDate() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupCreditCardResult) *string { return v.ExpiryDate }).(pulumi.StringPtrOutput)
+func (o GetCreditCardResultOutput) ExpiryDate() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetCreditCardResult) *string { return v.ExpiryDate }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupCreditCardResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v LookupCreditCardResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetCreditCardResultOutput) Fields() GetFieldArrayOutput {
+	return o.ApplyT(func(v GetCreditCardResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
 }
 
-func (o LookupCreditCardResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupCreditCardResult) *string { return v.Id }).(pulumi.StringPtrOutput)
+func (o GetCreditCardResultOutput) Id() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetCreditCardResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupCreditCardResultOutput) Notes() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupCreditCardResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
+func (o GetCreditCardResultOutput) Notes() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetCreditCardResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupCreditCardResultOutput) Number() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupCreditCardResult) *string { return v.Number }).(pulumi.StringPtrOutput)
+func (o GetCreditCardResultOutput) Number() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetCreditCardResult) *string { return v.Number }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupCreditCardResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v LookupCreditCardResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetCreditCardResultOutput) Sections() GetSectionArrayOutput {
+	return o.ApplyT(func(v GetCreditCardResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
 }
 
 // An array of strings of the tags assigned to the item.
-func (o LookupCreditCardResultOutput) Tags() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v LookupCreditCardResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
+func (o GetCreditCardResultOutput) Tags() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetCreditCardResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
 }
 
 // The title of the item.
-func (o LookupCreditCardResultOutput) Title() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupCreditCardResult) *string { return v.Title }).(pulumi.StringPtrOutput)
+func (o GetCreditCardResultOutput) Title() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetCreditCardResult) *string { return v.Title }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupCreditCardResultOutput) Type() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupCreditCardResult) *string { return v.Type }).(pulumi.StringPtrOutput)
+func (o GetCreditCardResultOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetCreditCardResult) *string { return v.Type }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o LookupCreditCardResultOutput) Uuid() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupCreditCardResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
+func (o GetCreditCardResultOutput) Uuid() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetCreditCardResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupCreditCardResultOutput) ValidFrom() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupCreditCardResult) *string { return v.ValidFrom }).(pulumi.StringPtrOutput)
+func (o GetCreditCardResultOutput) ValidFrom() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetCreditCardResult) *string { return v.ValidFrom }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the vault the item is in.
-func (o LookupCreditCardResultOutput) Vault() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupCreditCardResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
+func (o GetCreditCardResultOutput) Vault() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetCreditCardResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupCreditCardResultOutput) VerificationNumber() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupCreditCardResult) *string { return v.VerificationNumber }).(pulumi.StringPtrOutput)
+func (o GetCreditCardResultOutput) VerificationNumber() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetCreditCardResult) *string { return v.VerificationNumber }).(pulumi.StringPtrOutput)
 }
 
 func init() {
-	pulumi.RegisterOutputType(LookupCreditCardResultOutput{})
+	pulumi.RegisterOutputType(GetCreditCardResultOutput{})
 }

@@ -40,7 +40,7 @@ export interface GetRewardProgramResult {
     readonly id?: string;
     readonly memberId?: string;
     readonly memberName?: string;
-    readonly moreInformation?: outputs.rewardProgram.MoreInformation;
+    readonly moreInformation?: outputs.rewardProgram.MoreInformationSection;
     readonly notes?: string;
     readonly pin?: string;
     readonly sections?: outputs.GetSection[];

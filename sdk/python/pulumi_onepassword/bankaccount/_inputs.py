@@ -9,11 +9,11 @@ from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 
 __all__ = [
-    'BranchInformationArgs',
+    'BranchInformationSectionArgs',
 ]
 
 @pulumi.input_type
-class BranchInformationArgs:
+class BranchInformationSectionArgs:
     def __init__(__self__, *,
                  address: Optional[pulumi.Input[str]] = None,
                  phone: Optional[pulumi.Input[str]] = None):

@@ -60,7 +60,7 @@ class GetIdentityResult:
 
     @property
     @pulumi.getter
-    def address(self) -> Optional['_identity.outputs.Address']:
+    def address(self) -> Optional['_identity.outputs.AddressSection']:
         return pulumi.get(self, "address")
 
     @property
@@ -80,12 +80,12 @@ class GetIdentityResult:
 
     @property
     @pulumi.getter
-    def identification(self) -> Optional['_identity.outputs.Identification']:
+    def identification(self) -> Optional['_identity.outputs.IdentificationSection']:
         return pulumi.get(self, "identification")
 
     @property
     @pulumi.getter(name="internetDetails")
-    def internet_details(self) -> Optional['_identity.outputs.InternetDetails']:
+    def internet_details(self) -> Optional['_identity.outputs.InternetDetailsSection']:
         return pulumi.get(self, "internet_details")
 
     @property

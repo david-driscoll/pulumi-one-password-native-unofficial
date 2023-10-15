@@ -34,10 +34,10 @@ export interface GetServerArgs {
 }
 
 export interface GetServerResult {
-    readonly adminConsole?: outputs.server.AdminConsole;
+    readonly adminConsole?: outputs.server.AdminConsoleSection;
     readonly category?: enums.Category | string;
     readonly fields?: outputs.GetField[];
-    readonly hostingProvider?: outputs.server.HostingProvider;
+    readonly hostingProvider?: outputs.server.HostingProviderSection;
     readonly id?: string;
     readonly notes?: string;
     readonly password?: string;

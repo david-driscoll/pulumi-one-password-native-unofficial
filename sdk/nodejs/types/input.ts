@@ -26,14 +26,14 @@ export interface SectionArgs {
     label: pulumi.Input<string>;
 }
 export namespace bankAccount {
-    export interface BranchInformationArgs {
+    export interface BranchInformationSectionArgs {
         address?: pulumi.Input<string>;
         phone?: pulumi.Input<string>;
     }
 }
 
 export namespace creditCard {
-    export interface AdditionalDetailsArgs {
+    export interface AdditionalDetailsSectionArgs {
         cashWithdrawalLimit?: pulumi.Input<string>;
         creditLimit?: pulumi.Input<string>;
         interestRate?: pulumi.Input<string>;
@@ -41,7 +41,7 @@ export namespace creditCard {
         pin?: pulumi.Input<string>;
     }
 
-    export interface ContactInformationArgs {
+    export interface ContactInformationSectionArgs {
         issuingBank?: pulumi.Input<string>;
         phoneIntl?: pulumi.Input<string>;
         phoneLocal?: pulumi.Input<string>;
@@ -51,20 +51,20 @@ export namespace creditCard {
 }
 
 export namespace cryptoWallet {
-    export interface WalletArgs {
+    export interface WalletSectionArgs {
         walletAddress?: pulumi.Input<string>;
     }
 }
 
 export namespace emailAccount {
-    export interface ContactInformationArgs {
+    export interface ContactInformationSectionArgs {
         phoneLocal?: pulumi.Input<string>;
         phoneTollFree?: pulumi.Input<string>;
         provider?: pulumi.Input<string>;
         providersWebsite?: pulumi.Input<string>;
     }
 
-    export interface SmtpArgs {
+    export interface SmtpSectionArgs {
         authMethod?: pulumi.Input<string>;
         password?: pulumi.Input<string>;
         portNumber?: pulumi.Input<string>;
@@ -75,7 +75,7 @@ export namespace emailAccount {
 }
 
 export namespace identity {
-    export interface AddressArgs {
+    export interface AddressSectionArgs {
         address?: pulumi.Input<string>;
         business?: pulumi.Input<string>;
         cell?: pulumi.Input<string>;
@@ -83,7 +83,7 @@ export namespace identity {
         home?: pulumi.Input<string>;
     }
 
-    export interface IdentificationArgs {
+    export interface IdentificationSectionArgs {
         birthDate?: pulumi.Input<string>;
         company?: pulumi.Input<string>;
         department?: pulumi.Input<string>;
@@ -95,7 +95,7 @@ export namespace identity {
         occupation?: pulumi.Input<string>;
     }
 
-    export interface InternetDetailsArgs {
+    export interface InternetDetailsSectionArgs {
         aolAim?: pulumi.Input<string>;
         email?: pulumi.Input<string>;
         forumSignature?: pulumi.Input<string>;
@@ -111,7 +111,7 @@ export namespace identity {
 }
 
 export namespace medicalRecord {
-    export interface MedicationArgs {
+    export interface MedicationSectionArgs {
         dosage?: pulumi.Input<string>;
         medication?: pulumi.Input<string>;
         medicationNotes?: pulumi.Input<string>;
@@ -119,7 +119,7 @@ export namespace medicalRecord {
 }
 
 export namespace rewardProgram {
-    export interface MoreInformationArgs {
+    export interface MoreInformationSectionArgs {
         customerServicePhone?: pulumi.Input<string>;
         memberIdAdditional?: pulumi.Input<string>;
         memberSince?: pulumi.Input<string>;
@@ -129,13 +129,13 @@ export namespace rewardProgram {
 }
 
 export namespace server {
-    export interface AdminConsoleArgs {
+    export interface AdminConsoleSectionArgs {
         adminConsoleUrl?: pulumi.Input<string>;
         adminConsoleUsername?: pulumi.Input<string>;
         consolePassword?: pulumi.Input<string>;
     }
 
-    export interface HostingProviderArgs {
+    export interface HostingProviderSectionArgs {
         name?: pulumi.Input<string>;
         supportPhone?: pulumi.Input<string>;
         supportUrl?: pulumi.Input<string>;
@@ -144,19 +144,19 @@ export namespace server {
 }
 
 export namespace softwareLicense {
-    export interface CustomerArgs {
+    export interface CustomerSectionArgs {
         company?: pulumi.Input<string>;
         licensedTo?: pulumi.Input<string>;
         registeredEmail?: pulumi.Input<string>;
     }
 
-    export interface OrderArgs {
+    export interface OrderSectionArgs {
         orderNumber?: pulumi.Input<string>;
         orderTotal?: pulumi.Input<string>;
         purchaseDate?: pulumi.Input<string>;
     }
 
-    export interface PublisherArgs {
+    export interface PublisherSectionArgs {
         downloadPage?: pulumi.Input<string>;
         publisher?: pulumi.Input<string>;
         retailPrice?: pulumi.Input<string>;

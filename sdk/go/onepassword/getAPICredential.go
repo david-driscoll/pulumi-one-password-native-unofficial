@@ -10,8 +10,8 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-func LookupAPICredential(ctx *pulumi.Context, args *LookupAPICredentialArgs, opts ...pulumi.InvokeOption) (*LookupAPICredentialResult, error) {
-	var rv LookupAPICredentialResult
+func GetAPICredential(ctx *pulumi.Context, args *GetAPICredentialArgs, opts ...pulumi.InvokeOption) (*GetAPICredentialResult, error) {
+	var rv GetAPICredentialResult
 	err := ctx.Invoke("onepassword:index:GetAPICredential", args, &rv, opts...)
 	if err != nil {
 		return nil, err
@@ -19,7 +19,7 @@ func LookupAPICredential(ctx *pulumi.Context, args *LookupAPICredentialArgs, opt
 	return &rv, nil
 }
 
-type LookupAPICredentialArgs struct {
+type GetAPICredentialArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -28,7 +28,7 @@ type LookupAPICredentialArgs struct {
 	Vault string `pulumi:"vault"`
 }
 
-type LookupAPICredentialResult struct {
+type GetAPICredentialResult struct {
 	Category   *string      `pulumi:"category"`
 	Credential *string      `pulumi:"credential"`
 	Expires    *string      `pulumi:"expires"`
@@ -51,20 +51,20 @@ type LookupAPICredentialResult struct {
 	Vault *string `pulumi:"vault"`
 }
 
-func LookupAPICredentialOutput(ctx *pulumi.Context, args LookupAPICredentialOutputArgs, opts ...pulumi.InvokeOption) LookupAPICredentialResultOutput {
+func GetAPICredentialOutput(ctx *pulumi.Context, args GetAPICredentialOutputArgs, opts ...pulumi.InvokeOption) GetAPICredentialResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupAPICredentialResult, error) {
-			args := v.(LookupAPICredentialArgs)
-			r, err := LookupAPICredential(ctx, &args, opts...)
-			var s LookupAPICredentialResult
+		ApplyT(func(v interface{}) (GetAPICredentialResult, error) {
+			args := v.(GetAPICredentialArgs)
+			r, err := GetAPICredential(ctx, &args, opts...)
+			var s GetAPICredentialResult
 			if r != nil {
 				s = *r
 			}
 			return s, err
-		}).(LookupAPICredentialResultOutput)
+		}).(GetAPICredentialResultOutput)
 }
 
-type LookupAPICredentialOutputArgs struct {
+type GetAPICredentialOutputArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -73,92 +73,92 @@ type LookupAPICredentialOutputArgs struct {
 	Vault pulumi.StringInput `pulumi:"vault"`
 }
 
-func (LookupAPICredentialOutputArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupAPICredentialArgs)(nil)).Elem()
+func (GetAPICredentialOutputArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetAPICredentialArgs)(nil)).Elem()
 }
 
-type LookupAPICredentialResultOutput struct{ *pulumi.OutputState }
+type GetAPICredentialResultOutput struct{ *pulumi.OutputState }
 
-func (LookupAPICredentialResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupAPICredentialResult)(nil)).Elem()
+func (GetAPICredentialResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetAPICredentialResult)(nil)).Elem()
 }
 
-func (o LookupAPICredentialResultOutput) ToLookupAPICredentialResultOutput() LookupAPICredentialResultOutput {
+func (o GetAPICredentialResultOutput) ToGetAPICredentialResultOutput() GetAPICredentialResultOutput {
 	return o
 }
 
-func (o LookupAPICredentialResultOutput) ToLookupAPICredentialResultOutputWithContext(ctx context.Context) LookupAPICredentialResultOutput {
+func (o GetAPICredentialResultOutput) ToGetAPICredentialResultOutputWithContext(ctx context.Context) GetAPICredentialResultOutput {
 	return o
 }
 
-func (o LookupAPICredentialResultOutput) Category() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupAPICredentialResult) *string { return v.Category }).(pulumi.StringPtrOutput)
+func (o GetAPICredentialResultOutput) Category() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetAPICredentialResult) *string { return v.Category }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupAPICredentialResultOutput) Credential() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupAPICredentialResult) *string { return v.Credential }).(pulumi.StringPtrOutput)
+func (o GetAPICredentialResultOutput) Credential() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetAPICredentialResult) *string { return v.Credential }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupAPICredentialResultOutput) Expires() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupAPICredentialResult) *string { return v.Expires }).(pulumi.StringPtrOutput)
+func (o GetAPICredentialResultOutput) Expires() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetAPICredentialResult) *string { return v.Expires }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupAPICredentialResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v LookupAPICredentialResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetAPICredentialResultOutput) Fields() GetFieldArrayOutput {
+	return o.ApplyT(func(v GetAPICredentialResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
 }
 
-func (o LookupAPICredentialResultOutput) Filename() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupAPICredentialResult) *string { return v.Filename }).(pulumi.StringPtrOutput)
+func (o GetAPICredentialResultOutput) Filename() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetAPICredentialResult) *string { return v.Filename }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupAPICredentialResultOutput) Hostname() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupAPICredentialResult) *string { return v.Hostname }).(pulumi.StringPtrOutput)
+func (o GetAPICredentialResultOutput) Hostname() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetAPICredentialResult) *string { return v.Hostname }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupAPICredentialResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupAPICredentialResult) *string { return v.Id }).(pulumi.StringPtrOutput)
+func (o GetAPICredentialResultOutput) Id() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetAPICredentialResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupAPICredentialResultOutput) Notes() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupAPICredentialResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
+func (o GetAPICredentialResultOutput) Notes() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetAPICredentialResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupAPICredentialResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v LookupAPICredentialResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetAPICredentialResultOutput) Sections() GetSectionArrayOutput {
+	return o.ApplyT(func(v GetAPICredentialResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
 }
 
 // An array of strings of the tags assigned to the item.
-func (o LookupAPICredentialResultOutput) Tags() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v LookupAPICredentialResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
+func (o GetAPICredentialResultOutput) Tags() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetAPICredentialResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
 }
 
 // The title of the item.
-func (o LookupAPICredentialResultOutput) Title() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupAPICredentialResult) *string { return v.Title }).(pulumi.StringPtrOutput)
+func (o GetAPICredentialResultOutput) Title() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetAPICredentialResult) *string { return v.Title }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupAPICredentialResultOutput) Type() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupAPICredentialResult) *string { return v.Type }).(pulumi.StringPtrOutput)
+func (o GetAPICredentialResultOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetAPICredentialResult) *string { return v.Type }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupAPICredentialResultOutput) Username() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupAPICredentialResult) *string { return v.Username }).(pulumi.StringPtrOutput)
+func (o GetAPICredentialResultOutput) Username() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetAPICredentialResult) *string { return v.Username }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o LookupAPICredentialResultOutput) Uuid() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupAPICredentialResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
+func (o GetAPICredentialResultOutput) Uuid() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetAPICredentialResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupAPICredentialResultOutput) ValidFrom() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupAPICredentialResult) *string { return v.ValidFrom }).(pulumi.StringPtrOutput)
+func (o GetAPICredentialResultOutput) ValidFrom() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetAPICredentialResult) *string { return v.ValidFrom }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the vault the item is in.
-func (o LookupAPICredentialResultOutput) Vault() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupAPICredentialResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
+func (o GetAPICredentialResultOutput) Vault() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetAPICredentialResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
 }
 
 func init() {
-	pulumi.RegisterOutputType(LookupAPICredentialResultOutput{})
+	pulumi.RegisterOutputType(GetAPICredentialResultOutput{})
 }

@@ -96,7 +96,7 @@ namespace Pulumi.Onepassword
         /// The UUID of the vault the item is in.
         /// </summary>
         public readonly string? Vault;
-        public readonly Pulumi.Onepassword.CryptoWallet.Outputs.Wallet? Wallet;
+        public readonly Pulumi.Onepassword.CryptoWallet.Outputs.WalletSection? Wallet;
 
         [OutputConstructor]
         private GetCryptoWalletResult(
@@ -122,7 +122,7 @@ namespace Pulumi.Onepassword
 
             string? vault,
 
-            Pulumi.Onepassword.CryptoWallet.Outputs.Wallet? wallet)
+            Pulumi.Onepassword.CryptoWallet.Outputs.WalletSection? wallet)
         {
             Category = category;
             Fields = fields;

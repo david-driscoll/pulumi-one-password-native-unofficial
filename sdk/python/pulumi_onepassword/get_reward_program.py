@@ -96,7 +96,7 @@ class GetRewardProgramResult:
 
     @property
     @pulumi.getter(name="moreInformation")
-    def more_information(self) -> Optional['_rewardprogram.outputs.MoreInformation']:
+    def more_information(self) -> Optional['_rewardprogram.outputs.MoreInformationSection']:
         return pulumi.get(self, "more_information")
 
     @property

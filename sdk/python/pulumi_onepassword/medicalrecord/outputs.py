@@ -9,11 +9,11 @@ from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 
 __all__ = [
-    'Medication',
+    'MedicationSection',
 ]
 
 @pulumi.output_type
-class Medication(dict):
+class MedicationSection(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
@@ -21,14 +21,14 @@ class Medication(dict):
             suggest = "medication_notes"
 
         if suggest:
-            pulumi.log.warn(f"Key '{key}' not found in Medication. Access the value via the '{suggest}' property getter instead.")
+            pulumi.log.warn(f"Key '{key}' not found in MedicationSection. Access the value via the '{suggest}' property getter instead.")
 
     def __getitem__(self, key: str) -> Any:
-        Medication.__key_warning(key)
+        MedicationSection.__key_warning(key)
         return super().__getitem__(key)
 
     def get(self, key: str, default = None) -> Any:
-        Medication.__key_warning(key)
+        MedicationSection.__key_warning(key)
         return super().get(key, default)
 
     def __init__(__self__, *,

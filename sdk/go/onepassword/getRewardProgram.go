@@ -11,8 +11,8 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-func LookupRewardProgram(ctx *pulumi.Context, args *LookupRewardProgramArgs, opts ...pulumi.InvokeOption) (*LookupRewardProgramResult, error) {
-	var rv LookupRewardProgramResult
+func GetRewardProgram(ctx *pulumi.Context, args *GetRewardProgramArgs, opts ...pulumi.InvokeOption) (*GetRewardProgramResult, error) {
+	var rv GetRewardProgramResult
 	err := ctx.Invoke("onepassword:index:GetRewardProgram", args, &rv, opts...)
 	if err != nil {
 		return nil, err
@@ -20,7 +20,7 @@ func LookupRewardProgram(ctx *pulumi.Context, args *LookupRewardProgramArgs, opt
 	return &rv, nil
 }
 
-type LookupRewardProgramArgs struct {
+type GetRewardProgramArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -29,17 +29,17 @@ type LookupRewardProgramArgs struct {
 	Vault string `pulumi:"vault"`
 }
 
-type LookupRewardProgramResult struct {
-	Category        *string                        `pulumi:"category"`
-	CompanyName     *string                        `pulumi:"companyName"`
-	Fields          []GetField                     `pulumi:"fields"`
-	Id              *string                        `pulumi:"id"`
-	MemberId        *string                        `pulumi:"memberId"`
-	MemberName      *string                        `pulumi:"memberName"`
-	MoreInformation *rewardprogram.MoreInformation `pulumi:"moreInformation"`
-	Notes           *string                        `pulumi:"notes"`
-	Pin             *string                        `pulumi:"pin"`
-	Sections        []GetSection                   `pulumi:"sections"`
+type GetRewardProgramResult struct {
+	Category        *string                               `pulumi:"category"`
+	CompanyName     *string                               `pulumi:"companyName"`
+	Fields          []GetField                            `pulumi:"fields"`
+	Id              *string                               `pulumi:"id"`
+	MemberId        *string                               `pulumi:"memberId"`
+	MemberName      *string                               `pulumi:"memberName"`
+	MoreInformation *rewardprogram.MoreInformationSection `pulumi:"moreInformation"`
+	Notes           *string                               `pulumi:"notes"`
+	Pin             *string                               `pulumi:"pin"`
+	Sections        []GetSection                          `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -50,20 +50,20 @@ type LookupRewardProgramResult struct {
 	Vault *string `pulumi:"vault"`
 }
 
-func LookupRewardProgramOutput(ctx *pulumi.Context, args LookupRewardProgramOutputArgs, opts ...pulumi.InvokeOption) LookupRewardProgramResultOutput {
+func GetRewardProgramOutput(ctx *pulumi.Context, args GetRewardProgramOutputArgs, opts ...pulumi.InvokeOption) GetRewardProgramResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupRewardProgramResult, error) {
-			args := v.(LookupRewardProgramArgs)
-			r, err := LookupRewardProgram(ctx, &args, opts...)
-			var s LookupRewardProgramResult
+		ApplyT(func(v interface{}) (GetRewardProgramResult, error) {
+			args := v.(GetRewardProgramArgs)
+			r, err := GetRewardProgram(ctx, &args, opts...)
+			var s GetRewardProgramResult
 			if r != nil {
 				s = *r
 			}
 			return s, err
-		}).(LookupRewardProgramResultOutput)
+		}).(GetRewardProgramResultOutput)
 }
 
-type LookupRewardProgramOutputArgs struct {
+type GetRewardProgramOutputArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -72,84 +72,84 @@ type LookupRewardProgramOutputArgs struct {
 	Vault pulumi.StringInput `pulumi:"vault"`
 }
 
-func (LookupRewardProgramOutputArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupRewardProgramArgs)(nil)).Elem()
+func (GetRewardProgramOutputArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetRewardProgramArgs)(nil)).Elem()
 }
 
-type LookupRewardProgramResultOutput struct{ *pulumi.OutputState }
+type GetRewardProgramResultOutput struct{ *pulumi.OutputState }
 
-func (LookupRewardProgramResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupRewardProgramResult)(nil)).Elem()
+func (GetRewardProgramResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetRewardProgramResult)(nil)).Elem()
 }
 
-func (o LookupRewardProgramResultOutput) ToLookupRewardProgramResultOutput() LookupRewardProgramResultOutput {
+func (o GetRewardProgramResultOutput) ToGetRewardProgramResultOutput() GetRewardProgramResultOutput {
 	return o
 }
 
-func (o LookupRewardProgramResultOutput) ToLookupRewardProgramResultOutputWithContext(ctx context.Context) LookupRewardProgramResultOutput {
+func (o GetRewardProgramResultOutput) ToGetRewardProgramResultOutputWithContext(ctx context.Context) GetRewardProgramResultOutput {
 	return o
 }
 
-func (o LookupRewardProgramResultOutput) Category() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupRewardProgramResult) *string { return v.Category }).(pulumi.StringPtrOutput)
+func (o GetRewardProgramResultOutput) Category() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetRewardProgramResult) *string { return v.Category }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupRewardProgramResultOutput) CompanyName() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupRewardProgramResult) *string { return v.CompanyName }).(pulumi.StringPtrOutput)
+func (o GetRewardProgramResultOutput) CompanyName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetRewardProgramResult) *string { return v.CompanyName }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupRewardProgramResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v LookupRewardProgramResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetRewardProgramResultOutput) Fields() GetFieldArrayOutput {
+	return o.ApplyT(func(v GetRewardProgramResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
 }
 
-func (o LookupRewardProgramResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupRewardProgramResult) *string { return v.Id }).(pulumi.StringPtrOutput)
+func (o GetRewardProgramResultOutput) Id() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetRewardProgramResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupRewardProgramResultOutput) MemberId() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupRewardProgramResult) *string { return v.MemberId }).(pulumi.StringPtrOutput)
+func (o GetRewardProgramResultOutput) MemberId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetRewardProgramResult) *string { return v.MemberId }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupRewardProgramResultOutput) MemberName() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupRewardProgramResult) *string { return v.MemberName }).(pulumi.StringPtrOutput)
+func (o GetRewardProgramResultOutput) MemberName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetRewardProgramResult) *string { return v.MemberName }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupRewardProgramResultOutput) MoreInformation() rewardprogram.MoreInformationPtrOutput {
-	return o.ApplyT(func(v LookupRewardProgramResult) *rewardprogram.MoreInformation { return v.MoreInformation }).(rewardprogram.MoreInformationPtrOutput)
+func (o GetRewardProgramResultOutput) MoreInformation() rewardprogram.MoreInformationSectionPtrOutput {
+	return o.ApplyT(func(v GetRewardProgramResult) *rewardprogram.MoreInformationSection { return v.MoreInformation }).(rewardprogram.MoreInformationSectionPtrOutput)
 }
 
-func (o LookupRewardProgramResultOutput) Notes() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupRewardProgramResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
+func (o GetRewardProgramResultOutput) Notes() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetRewardProgramResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupRewardProgramResultOutput) Pin() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupRewardProgramResult) *string { return v.Pin }).(pulumi.StringPtrOutput)
+func (o GetRewardProgramResultOutput) Pin() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetRewardProgramResult) *string { return v.Pin }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupRewardProgramResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v LookupRewardProgramResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetRewardProgramResultOutput) Sections() GetSectionArrayOutput {
+	return o.ApplyT(func(v GetRewardProgramResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
 }
 
 // An array of strings of the tags assigned to the item.
-func (o LookupRewardProgramResultOutput) Tags() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v LookupRewardProgramResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
+func (o GetRewardProgramResultOutput) Tags() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetRewardProgramResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
 }
 
 // The title of the item.
-func (o LookupRewardProgramResultOutput) Title() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupRewardProgramResult) *string { return v.Title }).(pulumi.StringPtrOutput)
+func (o GetRewardProgramResultOutput) Title() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetRewardProgramResult) *string { return v.Title }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o LookupRewardProgramResultOutput) Uuid() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupRewardProgramResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
+func (o GetRewardProgramResultOutput) Uuid() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetRewardProgramResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the vault the item is in.
-func (o LookupRewardProgramResultOutput) Vault() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupRewardProgramResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
+func (o GetRewardProgramResultOutput) Vault() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetRewardProgramResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
 }
 
 func init() {
-	pulumi.RegisterOutputType(LookupRewardProgramResultOutput{})
+	pulumi.RegisterOutputType(GetRewardProgramResultOutput{})
 }

@@ -10,8 +10,8 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-func LookupPassword(ctx *pulumi.Context, args *LookupPasswordArgs, opts ...pulumi.InvokeOption) (*LookupPasswordResult, error) {
-	var rv LookupPasswordResult
+func GetPassword(ctx *pulumi.Context, args *GetPasswordArgs, opts ...pulumi.InvokeOption) (*GetPasswordResult, error) {
+	var rv GetPasswordResult
 	err := ctx.Invoke("onepassword:index:GetPassword", args, &rv, opts...)
 	if err != nil {
 		return nil, err
@@ -19,7 +19,7 @@ func LookupPassword(ctx *pulumi.Context, args *LookupPasswordArgs, opts ...pulum
 	return &rv, nil
 }
 
-type LookupPasswordArgs struct {
+type GetPasswordArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -28,7 +28,7 @@ type LookupPasswordArgs struct {
 	Vault string `pulumi:"vault"`
 }
 
-type LookupPasswordResult struct {
+type GetPasswordResult struct {
 	Category *string      `pulumi:"category"`
 	Fields   []GetField   `pulumi:"fields"`
 	Id       *string      `pulumi:"id"`
@@ -45,20 +45,20 @@ type LookupPasswordResult struct {
 	Vault *string `pulumi:"vault"`
 }
 
-func LookupPasswordOutput(ctx *pulumi.Context, args LookupPasswordOutputArgs, opts ...pulumi.InvokeOption) LookupPasswordResultOutput {
+func GetPasswordOutput(ctx *pulumi.Context, args GetPasswordOutputArgs, opts ...pulumi.InvokeOption) GetPasswordResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupPasswordResult, error) {
-			args := v.(LookupPasswordArgs)
-			r, err := LookupPassword(ctx, &args, opts...)
-			var s LookupPasswordResult
+		ApplyT(func(v interface{}) (GetPasswordResult, error) {
+			args := v.(GetPasswordArgs)
+			r, err := GetPassword(ctx, &args, opts...)
+			var s GetPasswordResult
 			if r != nil {
 				s = *r
 			}
 			return s, err
-		}).(LookupPasswordResultOutput)
+		}).(GetPasswordResultOutput)
 }
 
-type LookupPasswordOutputArgs struct {
+type GetPasswordOutputArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -67,68 +67,68 @@ type LookupPasswordOutputArgs struct {
 	Vault pulumi.StringInput `pulumi:"vault"`
 }
 
-func (LookupPasswordOutputArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupPasswordArgs)(nil)).Elem()
+func (GetPasswordOutputArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetPasswordArgs)(nil)).Elem()
 }
 
-type LookupPasswordResultOutput struct{ *pulumi.OutputState }
+type GetPasswordResultOutput struct{ *pulumi.OutputState }
 
-func (LookupPasswordResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupPasswordResult)(nil)).Elem()
+func (GetPasswordResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetPasswordResult)(nil)).Elem()
 }
 
-func (o LookupPasswordResultOutput) ToLookupPasswordResultOutput() LookupPasswordResultOutput {
+func (o GetPasswordResultOutput) ToGetPasswordResultOutput() GetPasswordResultOutput {
 	return o
 }
 
-func (o LookupPasswordResultOutput) ToLookupPasswordResultOutputWithContext(ctx context.Context) LookupPasswordResultOutput {
+func (o GetPasswordResultOutput) ToGetPasswordResultOutputWithContext(ctx context.Context) GetPasswordResultOutput {
 	return o
 }
 
-func (o LookupPasswordResultOutput) Category() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupPasswordResult) *string { return v.Category }).(pulumi.StringPtrOutput)
+func (o GetPasswordResultOutput) Category() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetPasswordResult) *string { return v.Category }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupPasswordResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v LookupPasswordResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetPasswordResultOutput) Fields() GetFieldArrayOutput {
+	return o.ApplyT(func(v GetPasswordResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
 }
 
-func (o LookupPasswordResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupPasswordResult) *string { return v.Id }).(pulumi.StringPtrOutput)
+func (o GetPasswordResultOutput) Id() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetPasswordResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupPasswordResultOutput) Notes() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupPasswordResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
+func (o GetPasswordResultOutput) Notes() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetPasswordResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupPasswordResultOutput) Password() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupPasswordResult) *string { return v.Password }).(pulumi.StringPtrOutput)
+func (o GetPasswordResultOutput) Password() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetPasswordResult) *string { return v.Password }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupPasswordResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v LookupPasswordResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetPasswordResultOutput) Sections() GetSectionArrayOutput {
+	return o.ApplyT(func(v GetPasswordResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
 }
 
 // An array of strings of the tags assigned to the item.
-func (o LookupPasswordResultOutput) Tags() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v LookupPasswordResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
+func (o GetPasswordResultOutput) Tags() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetPasswordResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
 }
 
 // The title of the item.
-func (o LookupPasswordResultOutput) Title() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupPasswordResult) *string { return v.Title }).(pulumi.StringPtrOutput)
+func (o GetPasswordResultOutput) Title() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetPasswordResult) *string { return v.Title }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o LookupPasswordResultOutput) Uuid() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupPasswordResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
+func (o GetPasswordResultOutput) Uuid() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetPasswordResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the vault the item is in.
-func (o LookupPasswordResultOutput) Vault() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupPasswordResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
+func (o GetPasswordResultOutput) Vault() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetPasswordResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
 }
 
 func init() {
-	pulumi.RegisterOutputType(LookupPasswordResultOutput{})
+	pulumi.RegisterOutputType(GetPasswordResultOutput{})
 }

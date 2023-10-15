@@ -9,11 +9,11 @@ from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 
 __all__ = [
-    'MedicationArgs',
+    'MedicationSectionArgs',
 ]
 
 @pulumi.input_type
-class MedicationArgs:
+class MedicationSectionArgs:
     def __init__(__self__, *,
                  dosage: Optional[pulumi.Input[str]] = None,
                  medication: Optional[pulumi.Input[str]] = None,

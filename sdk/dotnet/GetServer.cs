@@ -73,10 +73,10 @@ namespace Pulumi.Onepassword
     [OutputType]
     public sealed class GetServerResult
     {
-        public readonly Pulumi.Onepassword.Server.Outputs.AdminConsole? AdminConsole;
+        public readonly Pulumi.Onepassword.Server.Outputs.AdminConsoleSection? AdminConsole;
         public readonly string? Category;
         public readonly ImmutableArray<Outputs.GetField> Fields;
-        public readonly Pulumi.Onepassword.Server.Outputs.HostingProvider? HostingProvider;
+        public readonly Pulumi.Onepassword.Server.Outputs.HostingProviderSection? HostingProvider;
         public readonly string? Id;
         public readonly string? Notes;
         public readonly string? Password;
@@ -102,13 +102,13 @@ namespace Pulumi.Onepassword
 
         [OutputConstructor]
         private GetServerResult(
-            Pulumi.Onepassword.Server.Outputs.AdminConsole? adminConsole,
+            Pulumi.Onepassword.Server.Outputs.AdminConsoleSection? adminConsole,
 
             string? category,
 
             ImmutableArray<Outputs.GetField> fields,
 
-            Pulumi.Onepassword.Server.Outputs.HostingProvider? hostingProvider,
+            Pulumi.Onepassword.Server.Outputs.HostingProviderSection? hostingProvider,
 
             string? id,
 

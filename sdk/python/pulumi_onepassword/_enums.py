@@ -24,7 +24,6 @@ class Category(str, Enum):
     EMAIL_ACCOUNT = "Email Account"
     IDENTITY = "Identity"
     ITEM = "Item"
-    ITEM = "Item"
     LOGIN = "Login"
     MEDICAL_RECORD = "Medical Record"
     MEMBERSHIP = "Membership"

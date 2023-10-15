@@ -14,11 +14,10 @@ import (
 type Item struct {
 	pulumi.CustomResourceState
 
-	Category pulumi.StringOutput    `pulumi:"category"`
-	Fields   GetFieldArrayOutput    `pulumi:"fields"`
-	Id       pulumi.StringOutput    `pulumi:"id"`
-	Notes    pulumi.StringPtrOutput `pulumi:"notes"`
-	Sections GetSectionArrayOutput  `pulumi:"sections"`
+	Category pulumi.StringOutput   `pulumi:"category"`
+	Fields   GetFieldArrayOutput   `pulumi:"fields"`
+	Id       pulumi.StringOutput   `pulumi:"id"`
+	Sections GetSectionArrayOutput `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -79,7 +78,6 @@ func (ItemState) ElementType() reflect.Type {
 type itemArgs struct {
 	Category *string   `pulumi:"category"`
 	Fields   []Field   `pulumi:"fields"`
-	Notes    *string   `pulumi:"notes"`
 	Sections []Section `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
@@ -93,7 +91,6 @@ type itemArgs struct {
 type ItemArgs struct {
 	Category pulumi.StringPtrInput
 	Fields   FieldArrayInput
-	Notes    pulumi.StringPtrInput
 	Sections SectionArrayInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput

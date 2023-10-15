@@ -71,7 +71,7 @@ class GetSoftwareLicenseResult:
 
     @property
     @pulumi.getter
-    def customer(self) -> Optional['_softwarelicense.outputs.Customer']:
+    def customer(self) -> Optional['_softwarelicense.outputs.CustomerSection']:
         return pulumi.get(self, "customer")
 
     @property
@@ -96,12 +96,12 @@ class GetSoftwareLicenseResult:
 
     @property
     @pulumi.getter
-    def order(self) -> Optional['_softwarelicense.outputs.Order']:
+    def order(self) -> Optional['_softwarelicense.outputs.OrderSection']:
         return pulumi.get(self, "order")
 
     @property
     @pulumi.getter
-    def publisher(self) -> Optional['_softwarelicense.outputs.Publisher']:
+    def publisher(self) -> Optional['_softwarelicense.outputs.PublisherSection']:
         return pulumi.get(self, "publisher")
 
     @property

@@ -10,144 +10,144 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-type Customer struct {
+type CustomerSection struct {
 	Company         *string `pulumi:"company"`
 	LicensedTo      *string `pulumi:"licensedTo"`
 	RegisteredEmail *string `pulumi:"registeredEmail"`
 }
 
-// CustomerInput is an input type that accepts CustomerArgs and CustomerOutput values.
-// You can construct a concrete instance of `CustomerInput` via:
+// CustomerSectionInput is an input type that accepts CustomerSectionArgs and CustomerSectionOutput values.
+// You can construct a concrete instance of `CustomerSectionInput` via:
 //
-//	CustomerArgs{...}
-type CustomerInput interface {
+//	CustomerSectionArgs{...}
+type CustomerSectionInput interface {
 	pulumi.Input
 
-	ToCustomerOutput() CustomerOutput
-	ToCustomerOutputWithContext(context.Context) CustomerOutput
+	ToCustomerSectionOutput() CustomerSectionOutput
+	ToCustomerSectionOutputWithContext(context.Context) CustomerSectionOutput
 }
 
-type CustomerArgs struct {
+type CustomerSectionArgs struct {
 	Company         pulumi.StringPtrInput `pulumi:"company"`
 	LicensedTo      pulumi.StringPtrInput `pulumi:"licensedTo"`
 	RegisteredEmail pulumi.StringPtrInput `pulumi:"registeredEmail"`
 }
 
-func (CustomerArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*Customer)(nil)).Elem()
+func (CustomerSectionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CustomerSection)(nil)).Elem()
 }
 
-func (i CustomerArgs) ToCustomerOutput() CustomerOutput {
-	return i.ToCustomerOutputWithContext(context.Background())
+func (i CustomerSectionArgs) ToCustomerSectionOutput() CustomerSectionOutput {
+	return i.ToCustomerSectionOutputWithContext(context.Background())
 }
 
-func (i CustomerArgs) ToCustomerOutputWithContext(ctx context.Context) CustomerOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(CustomerOutput)
+func (i CustomerSectionArgs) ToCustomerSectionOutputWithContext(ctx context.Context) CustomerSectionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CustomerSectionOutput)
 }
 
-func (i CustomerArgs) ToCustomerPtrOutput() CustomerPtrOutput {
-	return i.ToCustomerPtrOutputWithContext(context.Background())
+func (i CustomerSectionArgs) ToCustomerSectionPtrOutput() CustomerSectionPtrOutput {
+	return i.ToCustomerSectionPtrOutputWithContext(context.Background())
 }
 
-func (i CustomerArgs) ToCustomerPtrOutputWithContext(ctx context.Context) CustomerPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(CustomerOutput).ToCustomerPtrOutputWithContext(ctx)
+func (i CustomerSectionArgs) ToCustomerSectionPtrOutputWithContext(ctx context.Context) CustomerSectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CustomerSectionOutput).ToCustomerSectionPtrOutputWithContext(ctx)
 }
 
-// CustomerPtrInput is an input type that accepts CustomerArgs, CustomerPtr and CustomerPtrOutput values.
-// You can construct a concrete instance of `CustomerPtrInput` via:
+// CustomerSectionPtrInput is an input type that accepts CustomerSectionArgs, CustomerSectionPtr and CustomerSectionPtrOutput values.
+// You can construct a concrete instance of `CustomerSectionPtrInput` via:
 //
-//	        CustomerArgs{...}
+//	        CustomerSectionArgs{...}
 //
 //	or:
 //
 //	        nil
-type CustomerPtrInput interface {
+type CustomerSectionPtrInput interface {
 	pulumi.Input
 
-	ToCustomerPtrOutput() CustomerPtrOutput
-	ToCustomerPtrOutputWithContext(context.Context) CustomerPtrOutput
+	ToCustomerSectionPtrOutput() CustomerSectionPtrOutput
+	ToCustomerSectionPtrOutputWithContext(context.Context) CustomerSectionPtrOutput
 }
 
-type customerPtrType CustomerArgs
+type customerSectionPtrType CustomerSectionArgs
 
-func CustomerPtr(v *CustomerArgs) CustomerPtrInput {
-	return (*customerPtrType)(v)
+func CustomerSectionPtr(v *CustomerSectionArgs) CustomerSectionPtrInput {
+	return (*customerSectionPtrType)(v)
 }
 
-func (*customerPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**Customer)(nil)).Elem()
+func (*customerSectionPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CustomerSection)(nil)).Elem()
 }
 
-func (i *customerPtrType) ToCustomerPtrOutput() CustomerPtrOutput {
-	return i.ToCustomerPtrOutputWithContext(context.Background())
+func (i *customerSectionPtrType) ToCustomerSectionPtrOutput() CustomerSectionPtrOutput {
+	return i.ToCustomerSectionPtrOutputWithContext(context.Background())
 }
 
-func (i *customerPtrType) ToCustomerPtrOutputWithContext(ctx context.Context) CustomerPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(CustomerPtrOutput)
+func (i *customerSectionPtrType) ToCustomerSectionPtrOutputWithContext(ctx context.Context) CustomerSectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CustomerSectionPtrOutput)
 }
 
-type CustomerOutput struct{ *pulumi.OutputState }
+type CustomerSectionOutput struct{ *pulumi.OutputState }
 
-func (CustomerOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*Customer)(nil)).Elem()
+func (CustomerSectionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CustomerSection)(nil)).Elem()
 }
 
-func (o CustomerOutput) ToCustomerOutput() CustomerOutput {
+func (o CustomerSectionOutput) ToCustomerSectionOutput() CustomerSectionOutput {
 	return o
 }
 
-func (o CustomerOutput) ToCustomerOutputWithContext(ctx context.Context) CustomerOutput {
+func (o CustomerSectionOutput) ToCustomerSectionOutputWithContext(ctx context.Context) CustomerSectionOutput {
 	return o
 }
 
-func (o CustomerOutput) ToCustomerPtrOutput() CustomerPtrOutput {
-	return o.ToCustomerPtrOutputWithContext(context.Background())
+func (o CustomerSectionOutput) ToCustomerSectionPtrOutput() CustomerSectionPtrOutput {
+	return o.ToCustomerSectionPtrOutputWithContext(context.Background())
 }
 
-func (o CustomerOutput) ToCustomerPtrOutputWithContext(ctx context.Context) CustomerPtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, v Customer) *Customer {
+func (o CustomerSectionOutput) ToCustomerSectionPtrOutputWithContext(ctx context.Context) CustomerSectionPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v CustomerSection) *CustomerSection {
 		return &v
-	}).(CustomerPtrOutput)
+	}).(CustomerSectionPtrOutput)
 }
 
-func (o CustomerOutput) Company() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v Customer) *string { return v.Company }).(pulumi.StringPtrOutput)
+func (o CustomerSectionOutput) Company() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CustomerSection) *string { return v.Company }).(pulumi.StringPtrOutput)
 }
 
-func (o CustomerOutput) LicensedTo() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v Customer) *string { return v.LicensedTo }).(pulumi.StringPtrOutput)
+func (o CustomerSectionOutput) LicensedTo() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CustomerSection) *string { return v.LicensedTo }).(pulumi.StringPtrOutput)
 }
 
-func (o CustomerOutput) RegisteredEmail() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v Customer) *string { return v.RegisteredEmail }).(pulumi.StringPtrOutput)
+func (o CustomerSectionOutput) RegisteredEmail() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CustomerSection) *string { return v.RegisteredEmail }).(pulumi.StringPtrOutput)
 }
 
-type CustomerPtrOutput struct{ *pulumi.OutputState }
+type CustomerSectionPtrOutput struct{ *pulumi.OutputState }
 
-func (CustomerPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**Customer)(nil)).Elem()
+func (CustomerSectionPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CustomerSection)(nil)).Elem()
 }
 
-func (o CustomerPtrOutput) ToCustomerPtrOutput() CustomerPtrOutput {
+func (o CustomerSectionPtrOutput) ToCustomerSectionPtrOutput() CustomerSectionPtrOutput {
 	return o
 }
 
-func (o CustomerPtrOutput) ToCustomerPtrOutputWithContext(ctx context.Context) CustomerPtrOutput {
+func (o CustomerSectionPtrOutput) ToCustomerSectionPtrOutputWithContext(ctx context.Context) CustomerSectionPtrOutput {
 	return o
 }
 
-func (o CustomerPtrOutput) Elem() CustomerOutput {
-	return o.ApplyT(func(v *Customer) Customer {
+func (o CustomerSectionPtrOutput) Elem() CustomerSectionOutput {
+	return o.ApplyT(func(v *CustomerSection) CustomerSection {
 		if v != nil {
 			return *v
 		}
-		var ret Customer
+		var ret CustomerSection
 		return ret
-	}).(CustomerOutput)
+	}).(CustomerSectionOutput)
 }
 
-func (o CustomerPtrOutput) Company() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Customer) *string {
+func (o CustomerSectionPtrOutput) Company() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CustomerSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -155,8 +155,8 @@ func (o CustomerPtrOutput) Company() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o CustomerPtrOutput) LicensedTo() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Customer) *string {
+func (o CustomerSectionPtrOutput) LicensedTo() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CustomerSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -164,8 +164,8 @@ func (o CustomerPtrOutput) LicensedTo() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o CustomerPtrOutput) RegisteredEmail() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Customer) *string {
+func (o CustomerSectionPtrOutput) RegisteredEmail() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CustomerSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -173,144 +173,144 @@ func (o CustomerPtrOutput) RegisteredEmail() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-type Order struct {
+type OrderSection struct {
 	OrderNumber  *string `pulumi:"orderNumber"`
 	OrderTotal   *string `pulumi:"orderTotal"`
 	PurchaseDate *string `pulumi:"purchaseDate"`
 }
 
-// OrderInput is an input type that accepts OrderArgs and OrderOutput values.
-// You can construct a concrete instance of `OrderInput` via:
+// OrderSectionInput is an input type that accepts OrderSectionArgs and OrderSectionOutput values.
+// You can construct a concrete instance of `OrderSectionInput` via:
 //
-//	OrderArgs{...}
-type OrderInput interface {
+//	OrderSectionArgs{...}
+type OrderSectionInput interface {
 	pulumi.Input
 
-	ToOrderOutput() OrderOutput
-	ToOrderOutputWithContext(context.Context) OrderOutput
+	ToOrderSectionOutput() OrderSectionOutput
+	ToOrderSectionOutputWithContext(context.Context) OrderSectionOutput
 }
 
-type OrderArgs struct {
+type OrderSectionArgs struct {
 	OrderNumber  pulumi.StringPtrInput `pulumi:"orderNumber"`
 	OrderTotal   pulumi.StringPtrInput `pulumi:"orderTotal"`
 	PurchaseDate pulumi.StringPtrInput `pulumi:"purchaseDate"`
 }
 
-func (OrderArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*Order)(nil)).Elem()
+func (OrderSectionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*OrderSection)(nil)).Elem()
 }
 
-func (i OrderArgs) ToOrderOutput() OrderOutput {
-	return i.ToOrderOutputWithContext(context.Background())
+func (i OrderSectionArgs) ToOrderSectionOutput() OrderSectionOutput {
+	return i.ToOrderSectionOutputWithContext(context.Background())
 }
 
-func (i OrderArgs) ToOrderOutputWithContext(ctx context.Context) OrderOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(OrderOutput)
+func (i OrderSectionArgs) ToOrderSectionOutputWithContext(ctx context.Context) OrderSectionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrderSectionOutput)
 }
 
-func (i OrderArgs) ToOrderPtrOutput() OrderPtrOutput {
-	return i.ToOrderPtrOutputWithContext(context.Background())
+func (i OrderSectionArgs) ToOrderSectionPtrOutput() OrderSectionPtrOutput {
+	return i.ToOrderSectionPtrOutputWithContext(context.Background())
 }
 
-func (i OrderArgs) ToOrderPtrOutputWithContext(ctx context.Context) OrderPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(OrderOutput).ToOrderPtrOutputWithContext(ctx)
+func (i OrderSectionArgs) ToOrderSectionPtrOutputWithContext(ctx context.Context) OrderSectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrderSectionOutput).ToOrderSectionPtrOutputWithContext(ctx)
 }
 
-// OrderPtrInput is an input type that accepts OrderArgs, OrderPtr and OrderPtrOutput values.
-// You can construct a concrete instance of `OrderPtrInput` via:
+// OrderSectionPtrInput is an input type that accepts OrderSectionArgs, OrderSectionPtr and OrderSectionPtrOutput values.
+// You can construct a concrete instance of `OrderSectionPtrInput` via:
 //
-//	        OrderArgs{...}
+//	        OrderSectionArgs{...}
 //
 //	or:
 //
 //	        nil
-type OrderPtrInput interface {
+type OrderSectionPtrInput interface {
 	pulumi.Input
 
-	ToOrderPtrOutput() OrderPtrOutput
-	ToOrderPtrOutputWithContext(context.Context) OrderPtrOutput
+	ToOrderSectionPtrOutput() OrderSectionPtrOutput
+	ToOrderSectionPtrOutputWithContext(context.Context) OrderSectionPtrOutput
 }
 
-type orderPtrType OrderArgs
+type orderSectionPtrType OrderSectionArgs
 
-func OrderPtr(v *OrderArgs) OrderPtrInput {
-	return (*orderPtrType)(v)
+func OrderSectionPtr(v *OrderSectionArgs) OrderSectionPtrInput {
+	return (*orderSectionPtrType)(v)
 }
 
-func (*orderPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**Order)(nil)).Elem()
+func (*orderSectionPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**OrderSection)(nil)).Elem()
 }
 
-func (i *orderPtrType) ToOrderPtrOutput() OrderPtrOutput {
-	return i.ToOrderPtrOutputWithContext(context.Background())
+func (i *orderSectionPtrType) ToOrderSectionPtrOutput() OrderSectionPtrOutput {
+	return i.ToOrderSectionPtrOutputWithContext(context.Background())
 }
 
-func (i *orderPtrType) ToOrderPtrOutputWithContext(ctx context.Context) OrderPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(OrderPtrOutput)
+func (i *orderSectionPtrType) ToOrderSectionPtrOutputWithContext(ctx context.Context) OrderSectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrderSectionPtrOutput)
 }
 
-type OrderOutput struct{ *pulumi.OutputState }
+type OrderSectionOutput struct{ *pulumi.OutputState }
 
-func (OrderOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*Order)(nil)).Elem()
+func (OrderSectionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*OrderSection)(nil)).Elem()
 }
 
-func (o OrderOutput) ToOrderOutput() OrderOutput {
+func (o OrderSectionOutput) ToOrderSectionOutput() OrderSectionOutput {
 	return o
 }
 
-func (o OrderOutput) ToOrderOutputWithContext(ctx context.Context) OrderOutput {
+func (o OrderSectionOutput) ToOrderSectionOutputWithContext(ctx context.Context) OrderSectionOutput {
 	return o
 }
 
-func (o OrderOutput) ToOrderPtrOutput() OrderPtrOutput {
-	return o.ToOrderPtrOutputWithContext(context.Background())
+func (o OrderSectionOutput) ToOrderSectionPtrOutput() OrderSectionPtrOutput {
+	return o.ToOrderSectionPtrOutputWithContext(context.Background())
 }
 
-func (o OrderOutput) ToOrderPtrOutputWithContext(ctx context.Context) OrderPtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, v Order) *Order {
+func (o OrderSectionOutput) ToOrderSectionPtrOutputWithContext(ctx context.Context) OrderSectionPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v OrderSection) *OrderSection {
 		return &v
-	}).(OrderPtrOutput)
+	}).(OrderSectionPtrOutput)
 }
 
-func (o OrderOutput) OrderNumber() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v Order) *string { return v.OrderNumber }).(pulumi.StringPtrOutput)
+func (o OrderSectionOutput) OrderNumber() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v OrderSection) *string { return v.OrderNumber }).(pulumi.StringPtrOutput)
 }
 
-func (o OrderOutput) OrderTotal() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v Order) *string { return v.OrderTotal }).(pulumi.StringPtrOutput)
+func (o OrderSectionOutput) OrderTotal() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v OrderSection) *string { return v.OrderTotal }).(pulumi.StringPtrOutput)
 }
 
-func (o OrderOutput) PurchaseDate() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v Order) *string { return v.PurchaseDate }).(pulumi.StringPtrOutput)
+func (o OrderSectionOutput) PurchaseDate() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v OrderSection) *string { return v.PurchaseDate }).(pulumi.StringPtrOutput)
 }
 
-type OrderPtrOutput struct{ *pulumi.OutputState }
+type OrderSectionPtrOutput struct{ *pulumi.OutputState }
 
-func (OrderPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**Order)(nil)).Elem()
+func (OrderSectionPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**OrderSection)(nil)).Elem()
 }
 
-func (o OrderPtrOutput) ToOrderPtrOutput() OrderPtrOutput {
+func (o OrderSectionPtrOutput) ToOrderSectionPtrOutput() OrderSectionPtrOutput {
 	return o
 }
 
-func (o OrderPtrOutput) ToOrderPtrOutputWithContext(ctx context.Context) OrderPtrOutput {
+func (o OrderSectionPtrOutput) ToOrderSectionPtrOutputWithContext(ctx context.Context) OrderSectionPtrOutput {
 	return o
 }
 
-func (o OrderPtrOutput) Elem() OrderOutput {
-	return o.ApplyT(func(v *Order) Order {
+func (o OrderSectionPtrOutput) Elem() OrderSectionOutput {
+	return o.ApplyT(func(v *OrderSection) OrderSection {
 		if v != nil {
 			return *v
 		}
-		var ret Order
+		var ret OrderSection
 		return ret
-	}).(OrderOutput)
+	}).(OrderSectionOutput)
 }
 
-func (o OrderPtrOutput) OrderNumber() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Order) *string {
+func (o OrderSectionPtrOutput) OrderNumber() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *OrderSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -318,8 +318,8 @@ func (o OrderPtrOutput) OrderNumber() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o OrderPtrOutput) OrderTotal() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Order) *string {
+func (o OrderSectionPtrOutput) OrderTotal() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *OrderSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -327,8 +327,8 @@ func (o OrderPtrOutput) OrderTotal() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o OrderPtrOutput) PurchaseDate() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Order) *string {
+func (o OrderSectionPtrOutput) PurchaseDate() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *OrderSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -336,7 +336,7 @@ func (o OrderPtrOutput) PurchaseDate() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-type Publisher struct {
+type PublisherSection struct {
 	DownloadPage *string `pulumi:"downloadPage"`
 	Publisher    *string `pulumi:"publisher"`
 	RetailPrice  *string `pulumi:"retailPrice"`
@@ -344,18 +344,18 @@ type Publisher struct {
 	Website      *string `pulumi:"website"`
 }
 
-// PublisherInput is an input type that accepts PublisherArgs and PublisherOutput values.
-// You can construct a concrete instance of `PublisherInput` via:
+// PublisherSectionInput is an input type that accepts PublisherSectionArgs and PublisherSectionOutput values.
+// You can construct a concrete instance of `PublisherSectionInput` via:
 //
-//	PublisherArgs{...}
-type PublisherInput interface {
+//	PublisherSectionArgs{...}
+type PublisherSectionInput interface {
 	pulumi.Input
 
-	ToPublisherOutput() PublisherOutput
-	ToPublisherOutputWithContext(context.Context) PublisherOutput
+	ToPublisherSectionOutput() PublisherSectionOutput
+	ToPublisherSectionOutputWithContext(context.Context) PublisherSectionOutput
 }
 
-type PublisherArgs struct {
+type PublisherSectionArgs struct {
 	DownloadPage pulumi.StringPtrInput `pulumi:"downloadPage"`
 	Publisher    pulumi.StringPtrInput `pulumi:"publisher"`
 	RetailPrice  pulumi.StringPtrInput `pulumi:"retailPrice"`
@@ -363,129 +363,129 @@ type PublisherArgs struct {
 	Website      pulumi.StringPtrInput `pulumi:"website"`
 }
 
-func (PublisherArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*Publisher)(nil)).Elem()
+func (PublisherSectionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*PublisherSection)(nil)).Elem()
 }
 
-func (i PublisherArgs) ToPublisherOutput() PublisherOutput {
-	return i.ToPublisherOutputWithContext(context.Background())
+func (i PublisherSectionArgs) ToPublisherSectionOutput() PublisherSectionOutput {
+	return i.ToPublisherSectionOutputWithContext(context.Background())
 }
 
-func (i PublisherArgs) ToPublisherOutputWithContext(ctx context.Context) PublisherOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(PublisherOutput)
+func (i PublisherSectionArgs) ToPublisherSectionOutputWithContext(ctx context.Context) PublisherSectionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(PublisherSectionOutput)
 }
 
-func (i PublisherArgs) ToPublisherPtrOutput() PublisherPtrOutput {
-	return i.ToPublisherPtrOutputWithContext(context.Background())
+func (i PublisherSectionArgs) ToPublisherSectionPtrOutput() PublisherSectionPtrOutput {
+	return i.ToPublisherSectionPtrOutputWithContext(context.Background())
 }
 
-func (i PublisherArgs) ToPublisherPtrOutputWithContext(ctx context.Context) PublisherPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(PublisherOutput).ToPublisherPtrOutputWithContext(ctx)
+func (i PublisherSectionArgs) ToPublisherSectionPtrOutputWithContext(ctx context.Context) PublisherSectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(PublisherSectionOutput).ToPublisherSectionPtrOutputWithContext(ctx)
 }
 
-// PublisherPtrInput is an input type that accepts PublisherArgs, PublisherPtr and PublisherPtrOutput values.
-// You can construct a concrete instance of `PublisherPtrInput` via:
+// PublisherSectionPtrInput is an input type that accepts PublisherSectionArgs, PublisherSectionPtr and PublisherSectionPtrOutput values.
+// You can construct a concrete instance of `PublisherSectionPtrInput` via:
 //
-//	        PublisherArgs{...}
+//	        PublisherSectionArgs{...}
 //
 //	or:
 //
 //	        nil
-type PublisherPtrInput interface {
+type PublisherSectionPtrInput interface {
 	pulumi.Input
 
-	ToPublisherPtrOutput() PublisherPtrOutput
-	ToPublisherPtrOutputWithContext(context.Context) PublisherPtrOutput
+	ToPublisherSectionPtrOutput() PublisherSectionPtrOutput
+	ToPublisherSectionPtrOutputWithContext(context.Context) PublisherSectionPtrOutput
 }
 
-type publisherPtrType PublisherArgs
+type publisherSectionPtrType PublisherSectionArgs
 
-func PublisherPtr(v *PublisherArgs) PublisherPtrInput {
-	return (*publisherPtrType)(v)
+func PublisherSectionPtr(v *PublisherSectionArgs) PublisherSectionPtrInput {
+	return (*publisherSectionPtrType)(v)
 }
 
-func (*publisherPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**Publisher)(nil)).Elem()
+func (*publisherSectionPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**PublisherSection)(nil)).Elem()
 }
 
-func (i *publisherPtrType) ToPublisherPtrOutput() PublisherPtrOutput {
-	return i.ToPublisherPtrOutputWithContext(context.Background())
+func (i *publisherSectionPtrType) ToPublisherSectionPtrOutput() PublisherSectionPtrOutput {
+	return i.ToPublisherSectionPtrOutputWithContext(context.Background())
 }
 
-func (i *publisherPtrType) ToPublisherPtrOutputWithContext(ctx context.Context) PublisherPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(PublisherPtrOutput)
+func (i *publisherSectionPtrType) ToPublisherSectionPtrOutputWithContext(ctx context.Context) PublisherSectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(PublisherSectionPtrOutput)
 }
 
-type PublisherOutput struct{ *pulumi.OutputState }
+type PublisherSectionOutput struct{ *pulumi.OutputState }
 
-func (PublisherOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*Publisher)(nil)).Elem()
+func (PublisherSectionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*PublisherSection)(nil)).Elem()
 }
 
-func (o PublisherOutput) ToPublisherOutput() PublisherOutput {
+func (o PublisherSectionOutput) ToPublisherSectionOutput() PublisherSectionOutput {
 	return o
 }
 
-func (o PublisherOutput) ToPublisherOutputWithContext(ctx context.Context) PublisherOutput {
+func (o PublisherSectionOutput) ToPublisherSectionOutputWithContext(ctx context.Context) PublisherSectionOutput {
 	return o
 }
 
-func (o PublisherOutput) ToPublisherPtrOutput() PublisherPtrOutput {
-	return o.ToPublisherPtrOutputWithContext(context.Background())
+func (o PublisherSectionOutput) ToPublisherSectionPtrOutput() PublisherSectionPtrOutput {
+	return o.ToPublisherSectionPtrOutputWithContext(context.Background())
 }
 
-func (o PublisherOutput) ToPublisherPtrOutputWithContext(ctx context.Context) PublisherPtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, v Publisher) *Publisher {
+func (o PublisherSectionOutput) ToPublisherSectionPtrOutputWithContext(ctx context.Context) PublisherSectionPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v PublisherSection) *PublisherSection {
 		return &v
-	}).(PublisherPtrOutput)
+	}).(PublisherSectionPtrOutput)
 }
 
-func (o PublisherOutput) DownloadPage() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v Publisher) *string { return v.DownloadPage }).(pulumi.StringPtrOutput)
+func (o PublisherSectionOutput) DownloadPage() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v PublisherSection) *string { return v.DownloadPage }).(pulumi.StringPtrOutput)
 }
 
-func (o PublisherOutput) Publisher() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v Publisher) *string { return v.Publisher }).(pulumi.StringPtrOutput)
+func (o PublisherSectionOutput) Publisher() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v PublisherSection) *string { return v.Publisher }).(pulumi.StringPtrOutput)
 }
 
-func (o PublisherOutput) RetailPrice() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v Publisher) *string { return v.RetailPrice }).(pulumi.StringPtrOutput)
+func (o PublisherSectionOutput) RetailPrice() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v PublisherSection) *string { return v.RetailPrice }).(pulumi.StringPtrOutput)
 }
 
-func (o PublisherOutput) SupportEmail() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v Publisher) *string { return v.SupportEmail }).(pulumi.StringPtrOutput)
+func (o PublisherSectionOutput) SupportEmail() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v PublisherSection) *string { return v.SupportEmail }).(pulumi.StringPtrOutput)
 }
 
-func (o PublisherOutput) Website() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v Publisher) *string { return v.Website }).(pulumi.StringPtrOutput)
+func (o PublisherSectionOutput) Website() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v PublisherSection) *string { return v.Website }).(pulumi.StringPtrOutput)
 }
 
-type PublisherPtrOutput struct{ *pulumi.OutputState }
+type PublisherSectionPtrOutput struct{ *pulumi.OutputState }
 
-func (PublisherPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**Publisher)(nil)).Elem()
+func (PublisherSectionPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**PublisherSection)(nil)).Elem()
 }
 
-func (o PublisherPtrOutput) ToPublisherPtrOutput() PublisherPtrOutput {
+func (o PublisherSectionPtrOutput) ToPublisherSectionPtrOutput() PublisherSectionPtrOutput {
 	return o
 }
 
-func (o PublisherPtrOutput) ToPublisherPtrOutputWithContext(ctx context.Context) PublisherPtrOutput {
+func (o PublisherSectionPtrOutput) ToPublisherSectionPtrOutputWithContext(ctx context.Context) PublisherSectionPtrOutput {
 	return o
 }
 
-func (o PublisherPtrOutput) Elem() PublisherOutput {
-	return o.ApplyT(func(v *Publisher) Publisher {
+func (o PublisherSectionPtrOutput) Elem() PublisherSectionOutput {
+	return o.ApplyT(func(v *PublisherSection) PublisherSection {
 		if v != nil {
 			return *v
 		}
-		var ret Publisher
+		var ret PublisherSection
 		return ret
-	}).(PublisherOutput)
+	}).(PublisherSectionOutput)
 }
 
-func (o PublisherPtrOutput) DownloadPage() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Publisher) *string {
+func (o PublisherSectionPtrOutput) DownloadPage() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *PublisherSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -493,8 +493,8 @@ func (o PublisherPtrOutput) DownloadPage() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o PublisherPtrOutput) Publisher() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Publisher) *string {
+func (o PublisherSectionPtrOutput) Publisher() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *PublisherSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -502,8 +502,8 @@ func (o PublisherPtrOutput) Publisher() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o PublisherPtrOutput) RetailPrice() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Publisher) *string {
+func (o PublisherSectionPtrOutput) RetailPrice() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *PublisherSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -511,8 +511,8 @@ func (o PublisherPtrOutput) RetailPrice() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o PublisherPtrOutput) SupportEmail() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Publisher) *string {
+func (o PublisherSectionPtrOutput) SupportEmail() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *PublisherSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -520,8 +520,8 @@ func (o PublisherPtrOutput) SupportEmail() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o PublisherPtrOutput) Website() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Publisher) *string {
+func (o PublisherSectionPtrOutput) Website() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *PublisherSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -530,16 +530,16 @@ func (o PublisherPtrOutput) Website() pulumi.StringPtrOutput {
 }
 
 func init() {
-	pulumi.RegisterInputType(reflect.TypeOf((*CustomerInput)(nil)).Elem(), CustomerArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*CustomerPtrInput)(nil)).Elem(), CustomerArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*OrderInput)(nil)).Elem(), OrderArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*OrderPtrInput)(nil)).Elem(), OrderArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*PublisherInput)(nil)).Elem(), PublisherArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*PublisherPtrInput)(nil)).Elem(), PublisherArgs{})
-	pulumi.RegisterOutputType(CustomerOutput{})
-	pulumi.RegisterOutputType(CustomerPtrOutput{})
-	pulumi.RegisterOutputType(OrderOutput{})
-	pulumi.RegisterOutputType(OrderPtrOutput{})
-	pulumi.RegisterOutputType(PublisherOutput{})
-	pulumi.RegisterOutputType(PublisherPtrOutput{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CustomerSectionInput)(nil)).Elem(), CustomerSectionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CustomerSectionPtrInput)(nil)).Elem(), CustomerSectionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*OrderSectionInput)(nil)).Elem(), OrderSectionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*OrderSectionPtrInput)(nil)).Elem(), OrderSectionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*PublisherSectionInput)(nil)).Elem(), PublisherSectionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*PublisherSectionPtrInput)(nil)).Elem(), PublisherSectionArgs{})
+	pulumi.RegisterOutputType(CustomerSectionOutput{})
+	pulumi.RegisterOutputType(CustomerSectionPtrOutput{})
+	pulumi.RegisterOutputType(OrderSectionOutput{})
+	pulumi.RegisterOutputType(OrderSectionPtrOutput{})
+	pulumi.RegisterOutputType(PublisherSectionOutput{})
+	pulumi.RegisterOutputType(PublisherSectionPtrOutput{})
 }

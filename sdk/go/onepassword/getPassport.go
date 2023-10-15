@@ -10,8 +10,8 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-func LookupPassport(ctx *pulumi.Context, args *LookupPassportArgs, opts ...pulumi.InvokeOption) (*LookupPassportResult, error) {
-	var rv LookupPassportResult
+func GetPassport(ctx *pulumi.Context, args *GetPassportArgs, opts ...pulumi.InvokeOption) (*GetPassportResult, error) {
+	var rv GetPassportResult
 	err := ctx.Invoke("onepassword:index:GetPassport", args, &rv, opts...)
 	if err != nil {
 		return nil, err
@@ -19,7 +19,7 @@ func LookupPassport(ctx *pulumi.Context, args *LookupPassportArgs, opts ...pulum
 	return &rv, nil
 }
 
-type LookupPassportArgs struct {
+type GetPassportArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -28,7 +28,7 @@ type LookupPassportArgs struct {
 	Vault string `pulumi:"vault"`
 }
 
-type LookupPassportResult struct {
+type GetPassportResult struct {
 	Category         *string      `pulumi:"category"`
 	DateOfBirth      *string      `pulumi:"dateOfBirth"`
 	ExpiryDate       *string      `pulumi:"expiryDate"`
@@ -55,20 +55,20 @@ type LookupPassportResult struct {
 	Vault *string `pulumi:"vault"`
 }
 
-func LookupPassportOutput(ctx *pulumi.Context, args LookupPassportOutputArgs, opts ...pulumi.InvokeOption) LookupPassportResultOutput {
+func GetPassportOutput(ctx *pulumi.Context, args GetPassportOutputArgs, opts ...pulumi.InvokeOption) GetPassportResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupPassportResult, error) {
-			args := v.(LookupPassportArgs)
-			r, err := LookupPassport(ctx, &args, opts...)
-			var s LookupPassportResult
+		ApplyT(func(v interface{}) (GetPassportResult, error) {
+			args := v.(GetPassportArgs)
+			r, err := GetPassport(ctx, &args, opts...)
+			var s GetPassportResult
 			if r != nil {
 				s = *r
 			}
 			return s, err
-		}).(LookupPassportResultOutput)
+		}).(GetPassportResultOutput)
 }
 
-type LookupPassportOutputArgs struct {
+type GetPassportOutputArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -77,108 +77,108 @@ type LookupPassportOutputArgs struct {
 	Vault pulumi.StringInput `pulumi:"vault"`
 }
 
-func (LookupPassportOutputArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupPassportArgs)(nil)).Elem()
+func (GetPassportOutputArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetPassportArgs)(nil)).Elem()
 }
 
-type LookupPassportResultOutput struct{ *pulumi.OutputState }
+type GetPassportResultOutput struct{ *pulumi.OutputState }
 
-func (LookupPassportResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupPassportResult)(nil)).Elem()
+func (GetPassportResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetPassportResult)(nil)).Elem()
 }
 
-func (o LookupPassportResultOutput) ToLookupPassportResultOutput() LookupPassportResultOutput {
+func (o GetPassportResultOutput) ToGetPassportResultOutput() GetPassportResultOutput {
 	return o
 }
 
-func (o LookupPassportResultOutput) ToLookupPassportResultOutputWithContext(ctx context.Context) LookupPassportResultOutput {
+func (o GetPassportResultOutput) ToGetPassportResultOutputWithContext(ctx context.Context) GetPassportResultOutput {
 	return o
 }
 
-func (o LookupPassportResultOutput) Category() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupPassportResult) *string { return v.Category }).(pulumi.StringPtrOutput)
+func (o GetPassportResultOutput) Category() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetPassportResult) *string { return v.Category }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupPassportResultOutput) DateOfBirth() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupPassportResult) *string { return v.DateOfBirth }).(pulumi.StringPtrOutput)
+func (o GetPassportResultOutput) DateOfBirth() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetPassportResult) *string { return v.DateOfBirth }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupPassportResultOutput) ExpiryDate() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupPassportResult) *string { return v.ExpiryDate }).(pulumi.StringPtrOutput)
+func (o GetPassportResultOutput) ExpiryDate() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetPassportResult) *string { return v.ExpiryDate }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupPassportResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v LookupPassportResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetPassportResultOutput) Fields() GetFieldArrayOutput {
+	return o.ApplyT(func(v GetPassportResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
 }
 
-func (o LookupPassportResultOutput) FullName() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupPassportResult) *string { return v.FullName }).(pulumi.StringPtrOutput)
+func (o GetPassportResultOutput) FullName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetPassportResult) *string { return v.FullName }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupPassportResultOutput) Gender() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupPassportResult) *string { return v.Gender }).(pulumi.StringPtrOutput)
+func (o GetPassportResultOutput) Gender() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetPassportResult) *string { return v.Gender }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupPassportResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupPassportResult) *string { return v.Id }).(pulumi.StringPtrOutput)
+func (o GetPassportResultOutput) Id() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetPassportResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupPassportResultOutput) IssuedOn() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupPassportResult) *string { return v.IssuedOn }).(pulumi.StringPtrOutput)
+func (o GetPassportResultOutput) IssuedOn() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetPassportResult) *string { return v.IssuedOn }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupPassportResultOutput) IssuingAuthority() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupPassportResult) *string { return v.IssuingAuthority }).(pulumi.StringPtrOutput)
+func (o GetPassportResultOutput) IssuingAuthority() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetPassportResult) *string { return v.IssuingAuthority }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupPassportResultOutput) IssuingCountry() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupPassportResult) *string { return v.IssuingCountry }).(pulumi.StringPtrOutput)
+func (o GetPassportResultOutput) IssuingCountry() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetPassportResult) *string { return v.IssuingCountry }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupPassportResultOutput) Nationality() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupPassportResult) *string { return v.Nationality }).(pulumi.StringPtrOutput)
+func (o GetPassportResultOutput) Nationality() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetPassportResult) *string { return v.Nationality }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupPassportResultOutput) Notes() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupPassportResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
+func (o GetPassportResultOutput) Notes() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetPassportResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupPassportResultOutput) Number() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupPassportResult) *string { return v.Number }).(pulumi.StringPtrOutput)
+func (o GetPassportResultOutput) Number() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetPassportResult) *string { return v.Number }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupPassportResultOutput) PlaceOfBirth() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupPassportResult) *string { return v.PlaceOfBirth }).(pulumi.StringPtrOutput)
+func (o GetPassportResultOutput) PlaceOfBirth() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetPassportResult) *string { return v.PlaceOfBirth }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupPassportResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v LookupPassportResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetPassportResultOutput) Sections() GetSectionArrayOutput {
+	return o.ApplyT(func(v GetPassportResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
 }
 
 // An array of strings of the tags assigned to the item.
-func (o LookupPassportResultOutput) Tags() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v LookupPassportResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
+func (o GetPassportResultOutput) Tags() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetPassportResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
 }
 
 // The title of the item.
-func (o LookupPassportResultOutput) Title() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupPassportResult) *string { return v.Title }).(pulumi.StringPtrOutput)
+func (o GetPassportResultOutput) Title() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetPassportResult) *string { return v.Title }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupPassportResultOutput) Type() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupPassportResult) *string { return v.Type }).(pulumi.StringPtrOutput)
+func (o GetPassportResultOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetPassportResult) *string { return v.Type }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o LookupPassportResultOutput) Uuid() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupPassportResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
+func (o GetPassportResultOutput) Uuid() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetPassportResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the vault the item is in.
-func (o LookupPassportResultOutput) Vault() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupPassportResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
+func (o GetPassportResultOutput) Vault() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetPassportResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
 }
 
 func init() {
-	pulumi.RegisterOutputType(LookupPassportResultOutput{})
+	pulumi.RegisterOutputType(GetPassportResultOutput{})
 }

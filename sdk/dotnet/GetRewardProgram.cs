@@ -79,7 +79,7 @@ namespace Pulumi.Onepassword
         public readonly string? Id;
         public readonly string? MemberId;
         public readonly string? MemberName;
-        public readonly Pulumi.Onepassword.RewardProgram.Outputs.MoreInformation? MoreInformation;
+        public readonly Pulumi.Onepassword.RewardProgram.Outputs.MoreInformationSection? MoreInformation;
         public readonly string? Notes;
         public readonly string? Pin;
         public readonly ImmutableArray<Outputs.GetSection> Sections;
@@ -114,7 +114,7 @@ namespace Pulumi.Onepassword
 
             string? memberName,
 
-            Pulumi.Onepassword.RewardProgram.Outputs.MoreInformation? moreInformation,
+            Pulumi.Onepassword.RewardProgram.Outputs.MoreInformationSection? moreInformation,
 
             string? notes,
 

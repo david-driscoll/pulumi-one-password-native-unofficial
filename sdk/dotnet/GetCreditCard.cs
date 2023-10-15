@@ -73,10 +73,10 @@ namespace Pulumi.Onepassword
     [OutputType]
     public sealed class GetCreditCardResult
     {
-        public readonly Pulumi.Onepassword.CreditCard.Outputs.AdditionalDetails? AdditionalDetails;
+        public readonly Pulumi.Onepassword.CreditCard.Outputs.AdditionalDetailsSection? AdditionalDetails;
         public readonly string? CardholderName;
         public readonly string? Category;
-        public readonly Pulumi.Onepassword.CreditCard.Outputs.ContactInformation? ContactInformation;
+        public readonly Pulumi.Onepassword.CreditCard.Outputs.ContactInformationSection? ContactInformation;
         public readonly string? ExpiryDate;
         public readonly ImmutableArray<Outputs.GetField> Fields;
         public readonly string? Id;
@@ -105,13 +105,13 @@ namespace Pulumi.Onepassword
 
         [OutputConstructor]
         private GetCreditCardResult(
-            Pulumi.Onepassword.CreditCard.Outputs.AdditionalDetails? additionalDetails,
+            Pulumi.Onepassword.CreditCard.Outputs.AdditionalDetailsSection? additionalDetails,
 
             string? cardholderName,
 
             string? category,
 
-            Pulumi.Onepassword.CreditCard.Outputs.ContactInformation? contactInformation,
+            Pulumi.Onepassword.CreditCard.Outputs.ContactInformationSection? contactInformation,
 
             string? expiryDate,
 

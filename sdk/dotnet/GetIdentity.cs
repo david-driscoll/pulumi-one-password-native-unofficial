@@ -73,12 +73,12 @@ namespace Pulumi.Onepassword
     [OutputType]
     public sealed class GetIdentityResult
     {
-        public readonly Pulumi.Onepassword.Identity.Outputs.Address? Address;
+        public readonly Pulumi.Onepassword.Identity.Outputs.AddressSection? Address;
         public readonly string? Category;
         public readonly ImmutableArray<Outputs.GetField> Fields;
         public readonly string? Id;
-        public readonly Pulumi.Onepassword.Identity.Outputs.Identification? Identification;
-        public readonly Pulumi.Onepassword.Identity.Outputs.InternetDetails? InternetDetails;
+        public readonly Pulumi.Onepassword.Identity.Outputs.IdentificationSection? Identification;
+        public readonly Pulumi.Onepassword.Identity.Outputs.InternetDetailsSection? InternetDetails;
         public readonly string? Notes;
         public readonly ImmutableArray<Outputs.GetSection> Sections;
         /// <summary>
@@ -100,7 +100,7 @@ namespace Pulumi.Onepassword
 
         [OutputConstructor]
         private GetIdentityResult(
-            Pulumi.Onepassword.Identity.Outputs.Address? address,
+            Pulumi.Onepassword.Identity.Outputs.AddressSection? address,
 
             string? category,
 
@@ -108,9 +108,9 @@ namespace Pulumi.Onepassword
 
             string? id,
 
-            Pulumi.Onepassword.Identity.Outputs.Identification? identification,
+            Pulumi.Onepassword.Identity.Outputs.IdentificationSection? identification,
 
-            Pulumi.Onepassword.Identity.Outputs.InternetDetails? internetDetails,
+            Pulumi.Onepassword.Identity.Outputs.InternetDetailsSection? internetDetails,
 
             string? notes,
 

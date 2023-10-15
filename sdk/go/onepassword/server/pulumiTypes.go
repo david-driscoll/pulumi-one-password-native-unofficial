@@ -10,144 +10,144 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-type AdminConsole struct {
+type AdminConsoleSection struct {
 	AdminConsoleUrl      *string `pulumi:"adminConsoleUrl"`
 	AdminConsoleUsername *string `pulumi:"adminConsoleUsername"`
 	ConsolePassword      *string `pulumi:"consolePassword"`
 }
 
-// AdminConsoleInput is an input type that accepts AdminConsoleArgs and AdminConsoleOutput values.
-// You can construct a concrete instance of `AdminConsoleInput` via:
+// AdminConsoleSectionInput is an input type that accepts AdminConsoleSectionArgs and AdminConsoleSectionOutput values.
+// You can construct a concrete instance of `AdminConsoleSectionInput` via:
 //
-//	AdminConsoleArgs{...}
-type AdminConsoleInput interface {
+//	AdminConsoleSectionArgs{...}
+type AdminConsoleSectionInput interface {
 	pulumi.Input
 
-	ToAdminConsoleOutput() AdminConsoleOutput
-	ToAdminConsoleOutputWithContext(context.Context) AdminConsoleOutput
+	ToAdminConsoleSectionOutput() AdminConsoleSectionOutput
+	ToAdminConsoleSectionOutputWithContext(context.Context) AdminConsoleSectionOutput
 }
 
-type AdminConsoleArgs struct {
+type AdminConsoleSectionArgs struct {
 	AdminConsoleUrl      pulumi.StringPtrInput `pulumi:"adminConsoleUrl"`
 	AdminConsoleUsername pulumi.StringPtrInput `pulumi:"adminConsoleUsername"`
 	ConsolePassword      pulumi.StringPtrInput `pulumi:"consolePassword"`
 }
 
-func (AdminConsoleArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*AdminConsole)(nil)).Elem()
+func (AdminConsoleSectionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*AdminConsoleSection)(nil)).Elem()
 }
 
-func (i AdminConsoleArgs) ToAdminConsoleOutput() AdminConsoleOutput {
-	return i.ToAdminConsoleOutputWithContext(context.Background())
+func (i AdminConsoleSectionArgs) ToAdminConsoleSectionOutput() AdminConsoleSectionOutput {
+	return i.ToAdminConsoleSectionOutputWithContext(context.Background())
 }
 
-func (i AdminConsoleArgs) ToAdminConsoleOutputWithContext(ctx context.Context) AdminConsoleOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(AdminConsoleOutput)
+func (i AdminConsoleSectionArgs) ToAdminConsoleSectionOutputWithContext(ctx context.Context) AdminConsoleSectionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(AdminConsoleSectionOutput)
 }
 
-func (i AdminConsoleArgs) ToAdminConsolePtrOutput() AdminConsolePtrOutput {
-	return i.ToAdminConsolePtrOutputWithContext(context.Background())
+func (i AdminConsoleSectionArgs) ToAdminConsoleSectionPtrOutput() AdminConsoleSectionPtrOutput {
+	return i.ToAdminConsoleSectionPtrOutputWithContext(context.Background())
 }
 
-func (i AdminConsoleArgs) ToAdminConsolePtrOutputWithContext(ctx context.Context) AdminConsolePtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(AdminConsoleOutput).ToAdminConsolePtrOutputWithContext(ctx)
+func (i AdminConsoleSectionArgs) ToAdminConsoleSectionPtrOutputWithContext(ctx context.Context) AdminConsoleSectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(AdminConsoleSectionOutput).ToAdminConsoleSectionPtrOutputWithContext(ctx)
 }
 
-// AdminConsolePtrInput is an input type that accepts AdminConsoleArgs, AdminConsolePtr and AdminConsolePtrOutput values.
-// You can construct a concrete instance of `AdminConsolePtrInput` via:
+// AdminConsoleSectionPtrInput is an input type that accepts AdminConsoleSectionArgs, AdminConsoleSectionPtr and AdminConsoleSectionPtrOutput values.
+// You can construct a concrete instance of `AdminConsoleSectionPtrInput` via:
 //
-//	        AdminConsoleArgs{...}
+//	        AdminConsoleSectionArgs{...}
 //
 //	or:
 //
 //	        nil
-type AdminConsolePtrInput interface {
+type AdminConsoleSectionPtrInput interface {
 	pulumi.Input
 
-	ToAdminConsolePtrOutput() AdminConsolePtrOutput
-	ToAdminConsolePtrOutputWithContext(context.Context) AdminConsolePtrOutput
+	ToAdminConsoleSectionPtrOutput() AdminConsoleSectionPtrOutput
+	ToAdminConsoleSectionPtrOutputWithContext(context.Context) AdminConsoleSectionPtrOutput
 }
 
-type adminConsolePtrType AdminConsoleArgs
+type adminConsoleSectionPtrType AdminConsoleSectionArgs
 
-func AdminConsolePtr(v *AdminConsoleArgs) AdminConsolePtrInput {
-	return (*adminConsolePtrType)(v)
+func AdminConsoleSectionPtr(v *AdminConsoleSectionArgs) AdminConsoleSectionPtrInput {
+	return (*adminConsoleSectionPtrType)(v)
 }
 
-func (*adminConsolePtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**AdminConsole)(nil)).Elem()
+func (*adminConsoleSectionPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**AdminConsoleSection)(nil)).Elem()
 }
 
-func (i *adminConsolePtrType) ToAdminConsolePtrOutput() AdminConsolePtrOutput {
-	return i.ToAdminConsolePtrOutputWithContext(context.Background())
+func (i *adminConsoleSectionPtrType) ToAdminConsoleSectionPtrOutput() AdminConsoleSectionPtrOutput {
+	return i.ToAdminConsoleSectionPtrOutputWithContext(context.Background())
 }
 
-func (i *adminConsolePtrType) ToAdminConsolePtrOutputWithContext(ctx context.Context) AdminConsolePtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(AdminConsolePtrOutput)
+func (i *adminConsoleSectionPtrType) ToAdminConsoleSectionPtrOutputWithContext(ctx context.Context) AdminConsoleSectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(AdminConsoleSectionPtrOutput)
 }
 
-type AdminConsoleOutput struct{ *pulumi.OutputState }
+type AdminConsoleSectionOutput struct{ *pulumi.OutputState }
 
-func (AdminConsoleOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*AdminConsole)(nil)).Elem()
+func (AdminConsoleSectionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*AdminConsoleSection)(nil)).Elem()
 }
 
-func (o AdminConsoleOutput) ToAdminConsoleOutput() AdminConsoleOutput {
+func (o AdminConsoleSectionOutput) ToAdminConsoleSectionOutput() AdminConsoleSectionOutput {
 	return o
 }
 
-func (o AdminConsoleOutput) ToAdminConsoleOutputWithContext(ctx context.Context) AdminConsoleOutput {
+func (o AdminConsoleSectionOutput) ToAdminConsoleSectionOutputWithContext(ctx context.Context) AdminConsoleSectionOutput {
 	return o
 }
 
-func (o AdminConsoleOutput) ToAdminConsolePtrOutput() AdminConsolePtrOutput {
-	return o.ToAdminConsolePtrOutputWithContext(context.Background())
+func (o AdminConsoleSectionOutput) ToAdminConsoleSectionPtrOutput() AdminConsoleSectionPtrOutput {
+	return o.ToAdminConsoleSectionPtrOutputWithContext(context.Background())
 }
 
-func (o AdminConsoleOutput) ToAdminConsolePtrOutputWithContext(ctx context.Context) AdminConsolePtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, v AdminConsole) *AdminConsole {
+func (o AdminConsoleSectionOutput) ToAdminConsoleSectionPtrOutputWithContext(ctx context.Context) AdminConsoleSectionPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v AdminConsoleSection) *AdminConsoleSection {
 		return &v
-	}).(AdminConsolePtrOutput)
+	}).(AdminConsoleSectionPtrOutput)
 }
 
-func (o AdminConsoleOutput) AdminConsoleUrl() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v AdminConsole) *string { return v.AdminConsoleUrl }).(pulumi.StringPtrOutput)
+func (o AdminConsoleSectionOutput) AdminConsoleUrl() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v AdminConsoleSection) *string { return v.AdminConsoleUrl }).(pulumi.StringPtrOutput)
 }
 
-func (o AdminConsoleOutput) AdminConsoleUsername() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v AdminConsole) *string { return v.AdminConsoleUsername }).(pulumi.StringPtrOutput)
+func (o AdminConsoleSectionOutput) AdminConsoleUsername() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v AdminConsoleSection) *string { return v.AdminConsoleUsername }).(pulumi.StringPtrOutput)
 }
 
-func (o AdminConsoleOutput) ConsolePassword() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v AdminConsole) *string { return v.ConsolePassword }).(pulumi.StringPtrOutput)
+func (o AdminConsoleSectionOutput) ConsolePassword() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v AdminConsoleSection) *string { return v.ConsolePassword }).(pulumi.StringPtrOutput)
 }
 
-type AdminConsolePtrOutput struct{ *pulumi.OutputState }
+type AdminConsoleSectionPtrOutput struct{ *pulumi.OutputState }
 
-func (AdminConsolePtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**AdminConsole)(nil)).Elem()
+func (AdminConsoleSectionPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**AdminConsoleSection)(nil)).Elem()
 }
 
-func (o AdminConsolePtrOutput) ToAdminConsolePtrOutput() AdminConsolePtrOutput {
+func (o AdminConsoleSectionPtrOutput) ToAdminConsoleSectionPtrOutput() AdminConsoleSectionPtrOutput {
 	return o
 }
 
-func (o AdminConsolePtrOutput) ToAdminConsolePtrOutputWithContext(ctx context.Context) AdminConsolePtrOutput {
+func (o AdminConsoleSectionPtrOutput) ToAdminConsoleSectionPtrOutputWithContext(ctx context.Context) AdminConsoleSectionPtrOutput {
 	return o
 }
 
-func (o AdminConsolePtrOutput) Elem() AdminConsoleOutput {
-	return o.ApplyT(func(v *AdminConsole) AdminConsole {
+func (o AdminConsoleSectionPtrOutput) Elem() AdminConsoleSectionOutput {
+	return o.ApplyT(func(v *AdminConsoleSection) AdminConsoleSection {
 		if v != nil {
 			return *v
 		}
-		var ret AdminConsole
+		var ret AdminConsoleSection
 		return ret
-	}).(AdminConsoleOutput)
+	}).(AdminConsoleSectionOutput)
 }
 
-func (o AdminConsolePtrOutput) AdminConsoleUrl() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *AdminConsole) *string {
+func (o AdminConsoleSectionPtrOutput) AdminConsoleUrl() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *AdminConsoleSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -155,8 +155,8 @@ func (o AdminConsolePtrOutput) AdminConsoleUrl() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o AdminConsolePtrOutput) AdminConsoleUsername() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *AdminConsole) *string {
+func (o AdminConsoleSectionPtrOutput) AdminConsoleUsername() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *AdminConsoleSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -164,8 +164,8 @@ func (o AdminConsolePtrOutput) AdminConsoleUsername() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o AdminConsolePtrOutput) ConsolePassword() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *AdminConsole) *string {
+func (o AdminConsoleSectionPtrOutput) ConsolePassword() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *AdminConsoleSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -173,150 +173,150 @@ func (o AdminConsolePtrOutput) ConsolePassword() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-type HostingProvider struct {
+type HostingProviderSection struct {
 	Name         *string `pulumi:"name"`
 	SupportPhone *string `pulumi:"supportPhone"`
 	SupportUrl   *string `pulumi:"supportUrl"`
 	Website      *string `pulumi:"website"`
 }
 
-// HostingProviderInput is an input type that accepts HostingProviderArgs and HostingProviderOutput values.
-// You can construct a concrete instance of `HostingProviderInput` via:
+// HostingProviderSectionInput is an input type that accepts HostingProviderSectionArgs and HostingProviderSectionOutput values.
+// You can construct a concrete instance of `HostingProviderSectionInput` via:
 //
-//	HostingProviderArgs{...}
-type HostingProviderInput interface {
+//	HostingProviderSectionArgs{...}
+type HostingProviderSectionInput interface {
 	pulumi.Input
 
-	ToHostingProviderOutput() HostingProviderOutput
-	ToHostingProviderOutputWithContext(context.Context) HostingProviderOutput
+	ToHostingProviderSectionOutput() HostingProviderSectionOutput
+	ToHostingProviderSectionOutputWithContext(context.Context) HostingProviderSectionOutput
 }
 
-type HostingProviderArgs struct {
+type HostingProviderSectionArgs struct {
 	Name         pulumi.StringPtrInput `pulumi:"name"`
 	SupportPhone pulumi.StringPtrInput `pulumi:"supportPhone"`
 	SupportUrl   pulumi.StringPtrInput `pulumi:"supportUrl"`
 	Website      pulumi.StringPtrInput `pulumi:"website"`
 }
 
-func (HostingProviderArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*HostingProvider)(nil)).Elem()
+func (HostingProviderSectionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*HostingProviderSection)(nil)).Elem()
 }
 
-func (i HostingProviderArgs) ToHostingProviderOutput() HostingProviderOutput {
-	return i.ToHostingProviderOutputWithContext(context.Background())
+func (i HostingProviderSectionArgs) ToHostingProviderSectionOutput() HostingProviderSectionOutput {
+	return i.ToHostingProviderSectionOutputWithContext(context.Background())
 }
 
-func (i HostingProviderArgs) ToHostingProviderOutputWithContext(ctx context.Context) HostingProviderOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(HostingProviderOutput)
+func (i HostingProviderSectionArgs) ToHostingProviderSectionOutputWithContext(ctx context.Context) HostingProviderSectionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(HostingProviderSectionOutput)
 }
 
-func (i HostingProviderArgs) ToHostingProviderPtrOutput() HostingProviderPtrOutput {
-	return i.ToHostingProviderPtrOutputWithContext(context.Background())
+func (i HostingProviderSectionArgs) ToHostingProviderSectionPtrOutput() HostingProviderSectionPtrOutput {
+	return i.ToHostingProviderSectionPtrOutputWithContext(context.Background())
 }
 
-func (i HostingProviderArgs) ToHostingProviderPtrOutputWithContext(ctx context.Context) HostingProviderPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(HostingProviderOutput).ToHostingProviderPtrOutputWithContext(ctx)
+func (i HostingProviderSectionArgs) ToHostingProviderSectionPtrOutputWithContext(ctx context.Context) HostingProviderSectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(HostingProviderSectionOutput).ToHostingProviderSectionPtrOutputWithContext(ctx)
 }
 
-// HostingProviderPtrInput is an input type that accepts HostingProviderArgs, HostingProviderPtr and HostingProviderPtrOutput values.
-// You can construct a concrete instance of `HostingProviderPtrInput` via:
+// HostingProviderSectionPtrInput is an input type that accepts HostingProviderSectionArgs, HostingProviderSectionPtr and HostingProviderSectionPtrOutput values.
+// You can construct a concrete instance of `HostingProviderSectionPtrInput` via:
 //
-//	        HostingProviderArgs{...}
+//	        HostingProviderSectionArgs{...}
 //
 //	or:
 //
 //	        nil
-type HostingProviderPtrInput interface {
+type HostingProviderSectionPtrInput interface {
 	pulumi.Input
 
-	ToHostingProviderPtrOutput() HostingProviderPtrOutput
-	ToHostingProviderPtrOutputWithContext(context.Context) HostingProviderPtrOutput
+	ToHostingProviderSectionPtrOutput() HostingProviderSectionPtrOutput
+	ToHostingProviderSectionPtrOutputWithContext(context.Context) HostingProviderSectionPtrOutput
 }
 
-type hostingProviderPtrType HostingProviderArgs
+type hostingProviderSectionPtrType HostingProviderSectionArgs
 
-func HostingProviderPtr(v *HostingProviderArgs) HostingProviderPtrInput {
-	return (*hostingProviderPtrType)(v)
+func HostingProviderSectionPtr(v *HostingProviderSectionArgs) HostingProviderSectionPtrInput {
+	return (*hostingProviderSectionPtrType)(v)
 }
 
-func (*hostingProviderPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**HostingProvider)(nil)).Elem()
+func (*hostingProviderSectionPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**HostingProviderSection)(nil)).Elem()
 }
 
-func (i *hostingProviderPtrType) ToHostingProviderPtrOutput() HostingProviderPtrOutput {
-	return i.ToHostingProviderPtrOutputWithContext(context.Background())
+func (i *hostingProviderSectionPtrType) ToHostingProviderSectionPtrOutput() HostingProviderSectionPtrOutput {
+	return i.ToHostingProviderSectionPtrOutputWithContext(context.Background())
 }
 
-func (i *hostingProviderPtrType) ToHostingProviderPtrOutputWithContext(ctx context.Context) HostingProviderPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(HostingProviderPtrOutput)
+func (i *hostingProviderSectionPtrType) ToHostingProviderSectionPtrOutputWithContext(ctx context.Context) HostingProviderSectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(HostingProviderSectionPtrOutput)
 }
 
-type HostingProviderOutput struct{ *pulumi.OutputState }
+type HostingProviderSectionOutput struct{ *pulumi.OutputState }
 
-func (HostingProviderOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*HostingProvider)(nil)).Elem()
+func (HostingProviderSectionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*HostingProviderSection)(nil)).Elem()
 }
 
-func (o HostingProviderOutput) ToHostingProviderOutput() HostingProviderOutput {
+func (o HostingProviderSectionOutput) ToHostingProviderSectionOutput() HostingProviderSectionOutput {
 	return o
 }
 
-func (o HostingProviderOutput) ToHostingProviderOutputWithContext(ctx context.Context) HostingProviderOutput {
+func (o HostingProviderSectionOutput) ToHostingProviderSectionOutputWithContext(ctx context.Context) HostingProviderSectionOutput {
 	return o
 }
 
-func (o HostingProviderOutput) ToHostingProviderPtrOutput() HostingProviderPtrOutput {
-	return o.ToHostingProviderPtrOutputWithContext(context.Background())
+func (o HostingProviderSectionOutput) ToHostingProviderSectionPtrOutput() HostingProviderSectionPtrOutput {
+	return o.ToHostingProviderSectionPtrOutputWithContext(context.Background())
 }
 
-func (o HostingProviderOutput) ToHostingProviderPtrOutputWithContext(ctx context.Context) HostingProviderPtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, v HostingProvider) *HostingProvider {
+func (o HostingProviderSectionOutput) ToHostingProviderSectionPtrOutputWithContext(ctx context.Context) HostingProviderSectionPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v HostingProviderSection) *HostingProviderSection {
 		return &v
-	}).(HostingProviderPtrOutput)
+	}).(HostingProviderSectionPtrOutput)
 }
 
-func (o HostingProviderOutput) Name() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v HostingProvider) *string { return v.Name }).(pulumi.StringPtrOutput)
+func (o HostingProviderSectionOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v HostingProviderSection) *string { return v.Name }).(pulumi.StringPtrOutput)
 }
 
-func (o HostingProviderOutput) SupportPhone() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v HostingProvider) *string { return v.SupportPhone }).(pulumi.StringPtrOutput)
+func (o HostingProviderSectionOutput) SupportPhone() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v HostingProviderSection) *string { return v.SupportPhone }).(pulumi.StringPtrOutput)
 }
 
-func (o HostingProviderOutput) SupportUrl() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v HostingProvider) *string { return v.SupportUrl }).(pulumi.StringPtrOutput)
+func (o HostingProviderSectionOutput) SupportUrl() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v HostingProviderSection) *string { return v.SupportUrl }).(pulumi.StringPtrOutput)
 }
 
-func (o HostingProviderOutput) Website() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v HostingProvider) *string { return v.Website }).(pulumi.StringPtrOutput)
+func (o HostingProviderSectionOutput) Website() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v HostingProviderSection) *string { return v.Website }).(pulumi.StringPtrOutput)
 }
 
-type HostingProviderPtrOutput struct{ *pulumi.OutputState }
+type HostingProviderSectionPtrOutput struct{ *pulumi.OutputState }
 
-func (HostingProviderPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**HostingProvider)(nil)).Elem()
+func (HostingProviderSectionPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**HostingProviderSection)(nil)).Elem()
 }
 
-func (o HostingProviderPtrOutput) ToHostingProviderPtrOutput() HostingProviderPtrOutput {
+func (o HostingProviderSectionPtrOutput) ToHostingProviderSectionPtrOutput() HostingProviderSectionPtrOutput {
 	return o
 }
 
-func (o HostingProviderPtrOutput) ToHostingProviderPtrOutputWithContext(ctx context.Context) HostingProviderPtrOutput {
+func (o HostingProviderSectionPtrOutput) ToHostingProviderSectionPtrOutputWithContext(ctx context.Context) HostingProviderSectionPtrOutput {
 	return o
 }
 
-func (o HostingProviderPtrOutput) Elem() HostingProviderOutput {
-	return o.ApplyT(func(v *HostingProvider) HostingProvider {
+func (o HostingProviderSectionPtrOutput) Elem() HostingProviderSectionOutput {
+	return o.ApplyT(func(v *HostingProviderSection) HostingProviderSection {
 		if v != nil {
 			return *v
 		}
-		var ret HostingProvider
+		var ret HostingProviderSection
 		return ret
-	}).(HostingProviderOutput)
+	}).(HostingProviderSectionOutput)
 }
 
-func (o HostingProviderPtrOutput) Name() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *HostingProvider) *string {
+func (o HostingProviderSectionPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *HostingProviderSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -324,8 +324,8 @@ func (o HostingProviderPtrOutput) Name() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o HostingProviderPtrOutput) SupportPhone() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *HostingProvider) *string {
+func (o HostingProviderSectionPtrOutput) SupportPhone() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *HostingProviderSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -333,8 +333,8 @@ func (o HostingProviderPtrOutput) SupportPhone() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o HostingProviderPtrOutput) SupportUrl() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *HostingProvider) *string {
+func (o HostingProviderSectionPtrOutput) SupportUrl() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *HostingProviderSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -342,8 +342,8 @@ func (o HostingProviderPtrOutput) SupportUrl() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o HostingProviderPtrOutput) Website() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *HostingProvider) *string {
+func (o HostingProviderSectionPtrOutput) Website() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *HostingProviderSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -352,12 +352,12 @@ func (o HostingProviderPtrOutput) Website() pulumi.StringPtrOutput {
 }
 
 func init() {
-	pulumi.RegisterInputType(reflect.TypeOf((*AdminConsoleInput)(nil)).Elem(), AdminConsoleArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*AdminConsolePtrInput)(nil)).Elem(), AdminConsoleArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*HostingProviderInput)(nil)).Elem(), HostingProviderArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*HostingProviderPtrInput)(nil)).Elem(), HostingProviderArgs{})
-	pulumi.RegisterOutputType(AdminConsoleOutput{})
-	pulumi.RegisterOutputType(AdminConsolePtrOutput{})
-	pulumi.RegisterOutputType(HostingProviderOutput{})
-	pulumi.RegisterOutputType(HostingProviderPtrOutput{})
+	pulumi.RegisterInputType(reflect.TypeOf((*AdminConsoleSectionInput)(nil)).Elem(), AdminConsoleSectionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*AdminConsoleSectionPtrInput)(nil)).Elem(), AdminConsoleSectionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*HostingProviderSectionInput)(nil)).Elem(), HostingProviderSectionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*HostingProviderSectionPtrInput)(nil)).Elem(), HostingProviderSectionArgs{})
+	pulumi.RegisterOutputType(AdminConsoleSectionOutput{})
+	pulumi.RegisterOutputType(AdminConsoleSectionPtrOutput{})
+	pulumi.RegisterOutputType(HostingProviderSectionOutput{})
+	pulumi.RegisterOutputType(HostingProviderSectionPtrOutput{})
 }

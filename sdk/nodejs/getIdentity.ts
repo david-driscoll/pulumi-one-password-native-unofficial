@@ -34,12 +34,12 @@ export interface GetIdentityArgs {
 }
 
 export interface GetIdentityResult {
-    readonly address?: outputs.identity.Address;
+    readonly address?: outputs.identity.AddressSection;
     readonly category?: enums.Category | string;
     readonly fields?: outputs.GetField[];
     readonly id?: string;
-    readonly identification?: outputs.identity.Identification;
-    readonly internetDetails?: outputs.identity.InternetDetails;
+    readonly identification?: outputs.identity.IdentificationSection;
+    readonly internetDetails?: outputs.identity.InternetDetailsSection;
     readonly notes?: string;
     readonly sections?: outputs.GetSection[];
     /**

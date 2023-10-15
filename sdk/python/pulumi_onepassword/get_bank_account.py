@@ -88,7 +88,7 @@ class GetBankAccountResult:
 
     @property
     @pulumi.getter(name="branchInformation")
-    def branch_information(self) -> Optional['_bankaccount.outputs.BranchInformation']:
+    def branch_information(self) -> Optional['_bankaccount.outputs.BranchInformationSection']:
         return pulumi.get(self, "branch_information")
 
     @property

@@ -10,7 +10,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-type MoreInformation struct {
+type MoreInformationSection struct {
 	CustomerServicePhone *string `pulumi:"customerServicePhone"`
 	MemberIdAdditional   *string `pulumi:"memberIdAdditional"`
 	MemberSince          *string `pulumi:"memberSince"`
@@ -18,18 +18,18 @@ type MoreInformation struct {
 	Website              *string `pulumi:"website"`
 }
 
-// MoreInformationInput is an input type that accepts MoreInformationArgs and MoreInformationOutput values.
-// You can construct a concrete instance of `MoreInformationInput` via:
+// MoreInformationSectionInput is an input type that accepts MoreInformationSectionArgs and MoreInformationSectionOutput values.
+// You can construct a concrete instance of `MoreInformationSectionInput` via:
 //
-//	MoreInformationArgs{...}
-type MoreInformationInput interface {
+//	MoreInformationSectionArgs{...}
+type MoreInformationSectionInput interface {
 	pulumi.Input
 
-	ToMoreInformationOutput() MoreInformationOutput
-	ToMoreInformationOutputWithContext(context.Context) MoreInformationOutput
+	ToMoreInformationSectionOutput() MoreInformationSectionOutput
+	ToMoreInformationSectionOutputWithContext(context.Context) MoreInformationSectionOutput
 }
 
-type MoreInformationArgs struct {
+type MoreInformationSectionArgs struct {
 	CustomerServicePhone pulumi.StringPtrInput `pulumi:"customerServicePhone"`
 	MemberIdAdditional   pulumi.StringPtrInput `pulumi:"memberIdAdditional"`
 	MemberSince          pulumi.StringPtrInput `pulumi:"memberSince"`
@@ -37,129 +37,129 @@ type MoreInformationArgs struct {
 	Website              pulumi.StringPtrInput `pulumi:"website"`
 }
 
-func (MoreInformationArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*MoreInformation)(nil)).Elem()
+func (MoreInformationSectionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*MoreInformationSection)(nil)).Elem()
 }
 
-func (i MoreInformationArgs) ToMoreInformationOutput() MoreInformationOutput {
-	return i.ToMoreInformationOutputWithContext(context.Background())
+func (i MoreInformationSectionArgs) ToMoreInformationSectionOutput() MoreInformationSectionOutput {
+	return i.ToMoreInformationSectionOutputWithContext(context.Background())
 }
 
-func (i MoreInformationArgs) ToMoreInformationOutputWithContext(ctx context.Context) MoreInformationOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(MoreInformationOutput)
+func (i MoreInformationSectionArgs) ToMoreInformationSectionOutputWithContext(ctx context.Context) MoreInformationSectionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MoreInformationSectionOutput)
 }
 
-func (i MoreInformationArgs) ToMoreInformationPtrOutput() MoreInformationPtrOutput {
-	return i.ToMoreInformationPtrOutputWithContext(context.Background())
+func (i MoreInformationSectionArgs) ToMoreInformationSectionPtrOutput() MoreInformationSectionPtrOutput {
+	return i.ToMoreInformationSectionPtrOutputWithContext(context.Background())
 }
 
-func (i MoreInformationArgs) ToMoreInformationPtrOutputWithContext(ctx context.Context) MoreInformationPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(MoreInformationOutput).ToMoreInformationPtrOutputWithContext(ctx)
+func (i MoreInformationSectionArgs) ToMoreInformationSectionPtrOutputWithContext(ctx context.Context) MoreInformationSectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MoreInformationSectionOutput).ToMoreInformationSectionPtrOutputWithContext(ctx)
 }
 
-// MoreInformationPtrInput is an input type that accepts MoreInformationArgs, MoreInformationPtr and MoreInformationPtrOutput values.
-// You can construct a concrete instance of `MoreInformationPtrInput` via:
+// MoreInformationSectionPtrInput is an input type that accepts MoreInformationSectionArgs, MoreInformationSectionPtr and MoreInformationSectionPtrOutput values.
+// You can construct a concrete instance of `MoreInformationSectionPtrInput` via:
 //
-//	        MoreInformationArgs{...}
+//	        MoreInformationSectionArgs{...}
 //
 //	or:
 //
 //	        nil
-type MoreInformationPtrInput interface {
+type MoreInformationSectionPtrInput interface {
 	pulumi.Input
 
-	ToMoreInformationPtrOutput() MoreInformationPtrOutput
-	ToMoreInformationPtrOutputWithContext(context.Context) MoreInformationPtrOutput
+	ToMoreInformationSectionPtrOutput() MoreInformationSectionPtrOutput
+	ToMoreInformationSectionPtrOutputWithContext(context.Context) MoreInformationSectionPtrOutput
 }
 
-type moreInformationPtrType MoreInformationArgs
+type moreInformationSectionPtrType MoreInformationSectionArgs
 
-func MoreInformationPtr(v *MoreInformationArgs) MoreInformationPtrInput {
-	return (*moreInformationPtrType)(v)
+func MoreInformationSectionPtr(v *MoreInformationSectionArgs) MoreInformationSectionPtrInput {
+	return (*moreInformationSectionPtrType)(v)
 }
 
-func (*moreInformationPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**MoreInformation)(nil)).Elem()
+func (*moreInformationSectionPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**MoreInformationSection)(nil)).Elem()
 }
 
-func (i *moreInformationPtrType) ToMoreInformationPtrOutput() MoreInformationPtrOutput {
-	return i.ToMoreInformationPtrOutputWithContext(context.Background())
+func (i *moreInformationSectionPtrType) ToMoreInformationSectionPtrOutput() MoreInformationSectionPtrOutput {
+	return i.ToMoreInformationSectionPtrOutputWithContext(context.Background())
 }
 
-func (i *moreInformationPtrType) ToMoreInformationPtrOutputWithContext(ctx context.Context) MoreInformationPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(MoreInformationPtrOutput)
+func (i *moreInformationSectionPtrType) ToMoreInformationSectionPtrOutputWithContext(ctx context.Context) MoreInformationSectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MoreInformationSectionPtrOutput)
 }
 
-type MoreInformationOutput struct{ *pulumi.OutputState }
+type MoreInformationSectionOutput struct{ *pulumi.OutputState }
 
-func (MoreInformationOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*MoreInformation)(nil)).Elem()
+func (MoreInformationSectionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*MoreInformationSection)(nil)).Elem()
 }
 
-func (o MoreInformationOutput) ToMoreInformationOutput() MoreInformationOutput {
+func (o MoreInformationSectionOutput) ToMoreInformationSectionOutput() MoreInformationSectionOutput {
 	return o
 }
 
-func (o MoreInformationOutput) ToMoreInformationOutputWithContext(ctx context.Context) MoreInformationOutput {
+func (o MoreInformationSectionOutput) ToMoreInformationSectionOutputWithContext(ctx context.Context) MoreInformationSectionOutput {
 	return o
 }
 
-func (o MoreInformationOutput) ToMoreInformationPtrOutput() MoreInformationPtrOutput {
-	return o.ToMoreInformationPtrOutputWithContext(context.Background())
+func (o MoreInformationSectionOutput) ToMoreInformationSectionPtrOutput() MoreInformationSectionPtrOutput {
+	return o.ToMoreInformationSectionPtrOutputWithContext(context.Background())
 }
 
-func (o MoreInformationOutput) ToMoreInformationPtrOutputWithContext(ctx context.Context) MoreInformationPtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, v MoreInformation) *MoreInformation {
+func (o MoreInformationSectionOutput) ToMoreInformationSectionPtrOutputWithContext(ctx context.Context) MoreInformationSectionPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v MoreInformationSection) *MoreInformationSection {
 		return &v
-	}).(MoreInformationPtrOutput)
+	}).(MoreInformationSectionPtrOutput)
 }
 
-func (o MoreInformationOutput) CustomerServicePhone() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v MoreInformation) *string { return v.CustomerServicePhone }).(pulumi.StringPtrOutput)
+func (o MoreInformationSectionOutput) CustomerServicePhone() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v MoreInformationSection) *string { return v.CustomerServicePhone }).(pulumi.StringPtrOutput)
 }
 
-func (o MoreInformationOutput) MemberIdAdditional() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v MoreInformation) *string { return v.MemberIdAdditional }).(pulumi.StringPtrOutput)
+func (o MoreInformationSectionOutput) MemberIdAdditional() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v MoreInformationSection) *string { return v.MemberIdAdditional }).(pulumi.StringPtrOutput)
 }
 
-func (o MoreInformationOutput) MemberSince() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v MoreInformation) *string { return v.MemberSince }).(pulumi.StringPtrOutput)
+func (o MoreInformationSectionOutput) MemberSince() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v MoreInformationSection) *string { return v.MemberSince }).(pulumi.StringPtrOutput)
 }
 
-func (o MoreInformationOutput) PhoneForReservations() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v MoreInformation) *string { return v.PhoneForReservations }).(pulumi.StringPtrOutput)
+func (o MoreInformationSectionOutput) PhoneForReservations() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v MoreInformationSection) *string { return v.PhoneForReservations }).(pulumi.StringPtrOutput)
 }
 
-func (o MoreInformationOutput) Website() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v MoreInformation) *string { return v.Website }).(pulumi.StringPtrOutput)
+func (o MoreInformationSectionOutput) Website() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v MoreInformationSection) *string { return v.Website }).(pulumi.StringPtrOutput)
 }
 
-type MoreInformationPtrOutput struct{ *pulumi.OutputState }
+type MoreInformationSectionPtrOutput struct{ *pulumi.OutputState }
 
-func (MoreInformationPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**MoreInformation)(nil)).Elem()
+func (MoreInformationSectionPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**MoreInformationSection)(nil)).Elem()
 }
 
-func (o MoreInformationPtrOutput) ToMoreInformationPtrOutput() MoreInformationPtrOutput {
+func (o MoreInformationSectionPtrOutput) ToMoreInformationSectionPtrOutput() MoreInformationSectionPtrOutput {
 	return o
 }
 
-func (o MoreInformationPtrOutput) ToMoreInformationPtrOutputWithContext(ctx context.Context) MoreInformationPtrOutput {
+func (o MoreInformationSectionPtrOutput) ToMoreInformationSectionPtrOutputWithContext(ctx context.Context) MoreInformationSectionPtrOutput {
 	return o
 }
 
-func (o MoreInformationPtrOutput) Elem() MoreInformationOutput {
-	return o.ApplyT(func(v *MoreInformation) MoreInformation {
+func (o MoreInformationSectionPtrOutput) Elem() MoreInformationSectionOutput {
+	return o.ApplyT(func(v *MoreInformationSection) MoreInformationSection {
 		if v != nil {
 			return *v
 		}
-		var ret MoreInformation
+		var ret MoreInformationSection
 		return ret
-	}).(MoreInformationOutput)
+	}).(MoreInformationSectionOutput)
 }
 
-func (o MoreInformationPtrOutput) CustomerServicePhone() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *MoreInformation) *string {
+func (o MoreInformationSectionPtrOutput) CustomerServicePhone() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *MoreInformationSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -167,8 +167,8 @@ func (o MoreInformationPtrOutput) CustomerServicePhone() pulumi.StringPtrOutput 
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o MoreInformationPtrOutput) MemberIdAdditional() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *MoreInformation) *string {
+func (o MoreInformationSectionPtrOutput) MemberIdAdditional() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *MoreInformationSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -176,8 +176,8 @@ func (o MoreInformationPtrOutput) MemberIdAdditional() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o MoreInformationPtrOutput) MemberSince() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *MoreInformation) *string {
+func (o MoreInformationSectionPtrOutput) MemberSince() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *MoreInformationSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -185,8 +185,8 @@ func (o MoreInformationPtrOutput) MemberSince() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o MoreInformationPtrOutput) PhoneForReservations() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *MoreInformation) *string {
+func (o MoreInformationSectionPtrOutput) PhoneForReservations() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *MoreInformationSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -194,8 +194,8 @@ func (o MoreInformationPtrOutput) PhoneForReservations() pulumi.StringPtrOutput 
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o MoreInformationPtrOutput) Website() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *MoreInformation) *string {
+func (o MoreInformationSectionPtrOutput) Website() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *MoreInformationSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -204,8 +204,8 @@ func (o MoreInformationPtrOutput) Website() pulumi.StringPtrOutput {
 }
 
 func init() {
-	pulumi.RegisterInputType(reflect.TypeOf((*MoreInformationInput)(nil)).Elem(), MoreInformationArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*MoreInformationPtrInput)(nil)).Elem(), MoreInformationArgs{})
-	pulumi.RegisterOutputType(MoreInformationOutput{})
-	pulumi.RegisterOutputType(MoreInformationPtrOutput{})
+	pulumi.RegisterInputType(reflect.TypeOf((*MoreInformationSectionInput)(nil)).Elem(), MoreInformationSectionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*MoreInformationSectionPtrInput)(nil)).Elem(), MoreInformationSectionArgs{})
+	pulumi.RegisterOutputType(MoreInformationSectionOutput{})
+	pulumi.RegisterOutputType(MoreInformationSectionPtrOutput{})
 }

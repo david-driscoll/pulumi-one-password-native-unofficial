@@ -20,7 +20,6 @@ class ItemArgs:
                  vault: pulumi.Input[str],
                  category: Optional[pulumi.Input[Union['Category', str]]] = None,
                  fields: Optional[pulumi.Input[Sequence[pulumi.Input['FieldArgs']]]] = None,
-                 notes: Optional[pulumi.Input[str]] = None,
                  sections: Optional[pulumi.Input[Sequence[pulumi.Input['SectionArgs']]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
         """
@@ -37,8 +36,6 @@ class ItemArgs:
             pulumi.set(__self__, "category", category)
         if fields is not None:
             pulumi.set(__self__, "fields", fields)
-        if notes is not None:
-            pulumi.set(__self__, "notes", notes)
         if sections is not None:
             pulumi.set(__self__, "sections", sections)
         if tags is not None:
@@ -88,15 +85,6 @@ class ItemArgs:
 
     @property
     @pulumi.getter
-    def notes(self) -> Optional[pulumi.Input[str]]:
-        return pulumi.get(self, "notes")
-
-    @notes.setter
-    def notes(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "notes", value)
-
-    @property
-    @pulumi.getter
     def sections(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SectionArgs']]]]:
         return pulumi.get(self, "sections")
 
@@ -124,7 +112,6 @@ class Item(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  category: Optional[pulumi.Input[Union['Category', str]]] = None,
                  fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
-                 notes: Optional[pulumi.Input[str]] = None,
                  sections: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
@@ -163,7 +150,6 @@ class Item(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  category: Optional[pulumi.Input[Union['Category', str]]] = None,
                  fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
-                 notes: Optional[pulumi.Input[str]] = None,
                  sections: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
@@ -184,7 +170,6 @@ class Item(pulumi.CustomResource):
                 category = 'Item'
             __props__.__dict__["category"] = category
             __props__.__dict__["fields"] = fields
-            __props__.__dict__["notes"] = notes
             __props__.__dict__["sections"] = sections
             __props__.__dict__["tags"] = tags
             if title is None and not opts.urn:
@@ -220,7 +205,6 @@ class Item(pulumi.CustomResource):
         __props__.__dict__["category"] = None
         __props__.__dict__["fields"] = None
         __props__.__dict__["id"] = None
-        __props__.__dict__["notes"] = None
         __props__.__dict__["sections"] = None
         __props__.__dict__["tags"] = None
         __props__.__dict__["title"] = None
@@ -242,11 +226,6 @@ class Item(pulumi.CustomResource):
     @pulumi.getter
     def id(self) -> pulumi.Output[str]:
         return pulumi.get(self, "id")
-
-    @property
-    @pulumi.getter
-    def notes(self) -> pulumi.Output[Optional[str]]:
-        return pulumi.get(self, "notes")
 
     @property
     @pulumi.getter

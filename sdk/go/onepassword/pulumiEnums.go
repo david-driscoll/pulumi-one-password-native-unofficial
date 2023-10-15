@@ -24,7 +24,6 @@ const (
 	CategoryEmailAccount         = Category("Email Account")
 	CategoryIdentity             = Category("Identity")
 	CategoryItem                 = Category("Item")
-	CategoryItem                 = Category("Item")
 	CategoryLogin                = Category("Login")
 	CategoryMedicalRecord        = Category("Medical Record")
 	CategoryMembership           = Category("Membership")

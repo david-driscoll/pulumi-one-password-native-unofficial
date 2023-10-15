@@ -10,150 +10,150 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-type ContactInformation struct {
+type ContactInformationSection struct {
 	PhoneLocal       *string `pulumi:"phoneLocal"`
 	PhoneTollFree    *string `pulumi:"phoneTollFree"`
 	Provider         *string `pulumi:"provider"`
 	ProvidersWebsite *string `pulumi:"providersWebsite"`
 }
 
-// ContactInformationInput is an input type that accepts ContactInformationArgs and ContactInformationOutput values.
-// You can construct a concrete instance of `ContactInformationInput` via:
+// ContactInformationSectionInput is an input type that accepts ContactInformationSectionArgs and ContactInformationSectionOutput values.
+// You can construct a concrete instance of `ContactInformationSectionInput` via:
 //
-//	ContactInformationArgs{...}
-type ContactInformationInput interface {
+//	ContactInformationSectionArgs{...}
+type ContactInformationSectionInput interface {
 	pulumi.Input
 
-	ToContactInformationOutput() ContactInformationOutput
-	ToContactInformationOutputWithContext(context.Context) ContactInformationOutput
+	ToContactInformationSectionOutput() ContactInformationSectionOutput
+	ToContactInformationSectionOutputWithContext(context.Context) ContactInformationSectionOutput
 }
 
-type ContactInformationArgs struct {
+type ContactInformationSectionArgs struct {
 	PhoneLocal       pulumi.StringPtrInput `pulumi:"phoneLocal"`
 	PhoneTollFree    pulumi.StringPtrInput `pulumi:"phoneTollFree"`
 	Provider         pulumi.StringPtrInput `pulumi:"provider"`
 	ProvidersWebsite pulumi.StringPtrInput `pulumi:"providersWebsite"`
 }
 
-func (ContactInformationArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*ContactInformation)(nil)).Elem()
+func (ContactInformationSectionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*ContactInformationSection)(nil)).Elem()
 }
 
-func (i ContactInformationArgs) ToContactInformationOutput() ContactInformationOutput {
-	return i.ToContactInformationOutputWithContext(context.Background())
+func (i ContactInformationSectionArgs) ToContactInformationSectionOutput() ContactInformationSectionOutput {
+	return i.ToContactInformationSectionOutputWithContext(context.Background())
 }
 
-func (i ContactInformationArgs) ToContactInformationOutputWithContext(ctx context.Context) ContactInformationOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(ContactInformationOutput)
+func (i ContactInformationSectionArgs) ToContactInformationSectionOutputWithContext(ctx context.Context) ContactInformationSectionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ContactInformationSectionOutput)
 }
 
-func (i ContactInformationArgs) ToContactInformationPtrOutput() ContactInformationPtrOutput {
-	return i.ToContactInformationPtrOutputWithContext(context.Background())
+func (i ContactInformationSectionArgs) ToContactInformationSectionPtrOutput() ContactInformationSectionPtrOutput {
+	return i.ToContactInformationSectionPtrOutputWithContext(context.Background())
 }
 
-func (i ContactInformationArgs) ToContactInformationPtrOutputWithContext(ctx context.Context) ContactInformationPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(ContactInformationOutput).ToContactInformationPtrOutputWithContext(ctx)
+func (i ContactInformationSectionArgs) ToContactInformationSectionPtrOutputWithContext(ctx context.Context) ContactInformationSectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ContactInformationSectionOutput).ToContactInformationSectionPtrOutputWithContext(ctx)
 }
 
-// ContactInformationPtrInput is an input type that accepts ContactInformationArgs, ContactInformationPtr and ContactInformationPtrOutput values.
-// You can construct a concrete instance of `ContactInformationPtrInput` via:
+// ContactInformationSectionPtrInput is an input type that accepts ContactInformationSectionArgs, ContactInformationSectionPtr and ContactInformationSectionPtrOutput values.
+// You can construct a concrete instance of `ContactInformationSectionPtrInput` via:
 //
-//	        ContactInformationArgs{...}
+//	        ContactInformationSectionArgs{...}
 //
 //	or:
 //
 //	        nil
-type ContactInformationPtrInput interface {
+type ContactInformationSectionPtrInput interface {
 	pulumi.Input
 
-	ToContactInformationPtrOutput() ContactInformationPtrOutput
-	ToContactInformationPtrOutputWithContext(context.Context) ContactInformationPtrOutput
+	ToContactInformationSectionPtrOutput() ContactInformationSectionPtrOutput
+	ToContactInformationSectionPtrOutputWithContext(context.Context) ContactInformationSectionPtrOutput
 }
 
-type contactInformationPtrType ContactInformationArgs
+type contactInformationSectionPtrType ContactInformationSectionArgs
 
-func ContactInformationPtr(v *ContactInformationArgs) ContactInformationPtrInput {
-	return (*contactInformationPtrType)(v)
+func ContactInformationSectionPtr(v *ContactInformationSectionArgs) ContactInformationSectionPtrInput {
+	return (*contactInformationSectionPtrType)(v)
 }
 
-func (*contactInformationPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**ContactInformation)(nil)).Elem()
+func (*contactInformationSectionPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**ContactInformationSection)(nil)).Elem()
 }
 
-func (i *contactInformationPtrType) ToContactInformationPtrOutput() ContactInformationPtrOutput {
-	return i.ToContactInformationPtrOutputWithContext(context.Background())
+func (i *contactInformationSectionPtrType) ToContactInformationSectionPtrOutput() ContactInformationSectionPtrOutput {
+	return i.ToContactInformationSectionPtrOutputWithContext(context.Background())
 }
 
-func (i *contactInformationPtrType) ToContactInformationPtrOutputWithContext(ctx context.Context) ContactInformationPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(ContactInformationPtrOutput)
+func (i *contactInformationSectionPtrType) ToContactInformationSectionPtrOutputWithContext(ctx context.Context) ContactInformationSectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ContactInformationSectionPtrOutput)
 }
 
-type ContactInformationOutput struct{ *pulumi.OutputState }
+type ContactInformationSectionOutput struct{ *pulumi.OutputState }
 
-func (ContactInformationOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*ContactInformation)(nil)).Elem()
+func (ContactInformationSectionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ContactInformationSection)(nil)).Elem()
 }
 
-func (o ContactInformationOutput) ToContactInformationOutput() ContactInformationOutput {
+func (o ContactInformationSectionOutput) ToContactInformationSectionOutput() ContactInformationSectionOutput {
 	return o
 }
 
-func (o ContactInformationOutput) ToContactInformationOutputWithContext(ctx context.Context) ContactInformationOutput {
+func (o ContactInformationSectionOutput) ToContactInformationSectionOutputWithContext(ctx context.Context) ContactInformationSectionOutput {
 	return o
 }
 
-func (o ContactInformationOutput) ToContactInformationPtrOutput() ContactInformationPtrOutput {
-	return o.ToContactInformationPtrOutputWithContext(context.Background())
+func (o ContactInformationSectionOutput) ToContactInformationSectionPtrOutput() ContactInformationSectionPtrOutput {
+	return o.ToContactInformationSectionPtrOutputWithContext(context.Background())
 }
 
-func (o ContactInformationOutput) ToContactInformationPtrOutputWithContext(ctx context.Context) ContactInformationPtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, v ContactInformation) *ContactInformation {
+func (o ContactInformationSectionOutput) ToContactInformationSectionPtrOutputWithContext(ctx context.Context) ContactInformationSectionPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v ContactInformationSection) *ContactInformationSection {
 		return &v
-	}).(ContactInformationPtrOutput)
+	}).(ContactInformationSectionPtrOutput)
 }
 
-func (o ContactInformationOutput) PhoneLocal() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v ContactInformation) *string { return v.PhoneLocal }).(pulumi.StringPtrOutput)
+func (o ContactInformationSectionOutput) PhoneLocal() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ContactInformationSection) *string { return v.PhoneLocal }).(pulumi.StringPtrOutput)
 }
 
-func (o ContactInformationOutput) PhoneTollFree() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v ContactInformation) *string { return v.PhoneTollFree }).(pulumi.StringPtrOutput)
+func (o ContactInformationSectionOutput) PhoneTollFree() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ContactInformationSection) *string { return v.PhoneTollFree }).(pulumi.StringPtrOutput)
 }
 
-func (o ContactInformationOutput) Provider() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v ContactInformation) *string { return v.Provider }).(pulumi.StringPtrOutput)
+func (o ContactInformationSectionOutput) Provider() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ContactInformationSection) *string { return v.Provider }).(pulumi.StringPtrOutput)
 }
 
-func (o ContactInformationOutput) ProvidersWebsite() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v ContactInformation) *string { return v.ProvidersWebsite }).(pulumi.StringPtrOutput)
+func (o ContactInformationSectionOutput) ProvidersWebsite() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ContactInformationSection) *string { return v.ProvidersWebsite }).(pulumi.StringPtrOutput)
 }
 
-type ContactInformationPtrOutput struct{ *pulumi.OutputState }
+type ContactInformationSectionPtrOutput struct{ *pulumi.OutputState }
 
-func (ContactInformationPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**ContactInformation)(nil)).Elem()
+func (ContactInformationSectionPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**ContactInformationSection)(nil)).Elem()
 }
 
-func (o ContactInformationPtrOutput) ToContactInformationPtrOutput() ContactInformationPtrOutput {
+func (o ContactInformationSectionPtrOutput) ToContactInformationSectionPtrOutput() ContactInformationSectionPtrOutput {
 	return o
 }
 
-func (o ContactInformationPtrOutput) ToContactInformationPtrOutputWithContext(ctx context.Context) ContactInformationPtrOutput {
+func (o ContactInformationSectionPtrOutput) ToContactInformationSectionPtrOutputWithContext(ctx context.Context) ContactInformationSectionPtrOutput {
 	return o
 }
 
-func (o ContactInformationPtrOutput) Elem() ContactInformationOutput {
-	return o.ApplyT(func(v *ContactInformation) ContactInformation {
+func (o ContactInformationSectionPtrOutput) Elem() ContactInformationSectionOutput {
+	return o.ApplyT(func(v *ContactInformationSection) ContactInformationSection {
 		if v != nil {
 			return *v
 		}
-		var ret ContactInformation
+		var ret ContactInformationSection
 		return ret
-	}).(ContactInformationOutput)
+	}).(ContactInformationSectionOutput)
 }
 
-func (o ContactInformationPtrOutput) PhoneLocal() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ContactInformation) *string {
+func (o ContactInformationSectionPtrOutput) PhoneLocal() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ContactInformationSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -161,8 +161,8 @@ func (o ContactInformationPtrOutput) PhoneLocal() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o ContactInformationPtrOutput) PhoneTollFree() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ContactInformation) *string {
+func (o ContactInformationSectionPtrOutput) PhoneTollFree() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ContactInformationSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -170,8 +170,8 @@ func (o ContactInformationPtrOutput) PhoneTollFree() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o ContactInformationPtrOutput) Provider() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ContactInformation) *string {
+func (o ContactInformationSectionPtrOutput) Provider() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ContactInformationSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -179,8 +179,8 @@ func (o ContactInformationPtrOutput) Provider() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o ContactInformationPtrOutput) ProvidersWebsite() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ContactInformation) *string {
+func (o ContactInformationSectionPtrOutput) ProvidersWebsite() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ContactInformationSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -188,7 +188,7 @@ func (o ContactInformationPtrOutput) ProvidersWebsite() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-type Smtp struct {
+type SmtpSection struct {
 	AuthMethod *string `pulumi:"authMethod"`
 	Password   *string `pulumi:"password"`
 	PortNumber *string `pulumi:"portNumber"`
@@ -197,18 +197,18 @@ type Smtp struct {
 	Username   *string `pulumi:"username"`
 }
 
-// SmtpInput is an input type that accepts SmtpArgs and SmtpOutput values.
-// You can construct a concrete instance of `SmtpInput` via:
+// SmtpSectionInput is an input type that accepts SmtpSectionArgs and SmtpSectionOutput values.
+// You can construct a concrete instance of `SmtpSectionInput` via:
 //
-//	SmtpArgs{...}
-type SmtpInput interface {
+//	SmtpSectionArgs{...}
+type SmtpSectionInput interface {
 	pulumi.Input
 
-	ToSmtpOutput() SmtpOutput
-	ToSmtpOutputWithContext(context.Context) SmtpOutput
+	ToSmtpSectionOutput() SmtpSectionOutput
+	ToSmtpSectionOutputWithContext(context.Context) SmtpSectionOutput
 }
 
-type SmtpArgs struct {
+type SmtpSectionArgs struct {
 	AuthMethod pulumi.StringPtrInput `pulumi:"authMethod"`
 	Password   pulumi.StringPtrInput `pulumi:"password"`
 	PortNumber pulumi.StringPtrInput `pulumi:"portNumber"`
@@ -217,133 +217,133 @@ type SmtpArgs struct {
 	Username   pulumi.StringPtrInput `pulumi:"username"`
 }
 
-func (SmtpArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*Smtp)(nil)).Elem()
+func (SmtpSectionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SmtpSection)(nil)).Elem()
 }
 
-func (i SmtpArgs) ToSmtpOutput() SmtpOutput {
-	return i.ToSmtpOutputWithContext(context.Background())
+func (i SmtpSectionArgs) ToSmtpSectionOutput() SmtpSectionOutput {
+	return i.ToSmtpSectionOutputWithContext(context.Background())
 }
 
-func (i SmtpArgs) ToSmtpOutputWithContext(ctx context.Context) SmtpOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(SmtpOutput)
+func (i SmtpSectionArgs) ToSmtpSectionOutputWithContext(ctx context.Context) SmtpSectionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SmtpSectionOutput)
 }
 
-func (i SmtpArgs) ToSmtpPtrOutput() SmtpPtrOutput {
-	return i.ToSmtpPtrOutputWithContext(context.Background())
+func (i SmtpSectionArgs) ToSmtpSectionPtrOutput() SmtpSectionPtrOutput {
+	return i.ToSmtpSectionPtrOutputWithContext(context.Background())
 }
 
-func (i SmtpArgs) ToSmtpPtrOutputWithContext(ctx context.Context) SmtpPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(SmtpOutput).ToSmtpPtrOutputWithContext(ctx)
+func (i SmtpSectionArgs) ToSmtpSectionPtrOutputWithContext(ctx context.Context) SmtpSectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SmtpSectionOutput).ToSmtpSectionPtrOutputWithContext(ctx)
 }
 
-// SmtpPtrInput is an input type that accepts SmtpArgs, SmtpPtr and SmtpPtrOutput values.
-// You can construct a concrete instance of `SmtpPtrInput` via:
+// SmtpSectionPtrInput is an input type that accepts SmtpSectionArgs, SmtpSectionPtr and SmtpSectionPtrOutput values.
+// You can construct a concrete instance of `SmtpSectionPtrInput` via:
 //
-//	        SmtpArgs{...}
+//	        SmtpSectionArgs{...}
 //
 //	or:
 //
 //	        nil
-type SmtpPtrInput interface {
+type SmtpSectionPtrInput interface {
 	pulumi.Input
 
-	ToSmtpPtrOutput() SmtpPtrOutput
-	ToSmtpPtrOutputWithContext(context.Context) SmtpPtrOutput
+	ToSmtpSectionPtrOutput() SmtpSectionPtrOutput
+	ToSmtpSectionPtrOutputWithContext(context.Context) SmtpSectionPtrOutput
 }
 
-type smtpPtrType SmtpArgs
+type smtpSectionPtrType SmtpSectionArgs
 
-func SmtpPtr(v *SmtpArgs) SmtpPtrInput {
-	return (*smtpPtrType)(v)
+func SmtpSectionPtr(v *SmtpSectionArgs) SmtpSectionPtrInput {
+	return (*smtpSectionPtrType)(v)
 }
 
-func (*smtpPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**Smtp)(nil)).Elem()
+func (*smtpSectionPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**SmtpSection)(nil)).Elem()
 }
 
-func (i *smtpPtrType) ToSmtpPtrOutput() SmtpPtrOutput {
-	return i.ToSmtpPtrOutputWithContext(context.Background())
+func (i *smtpSectionPtrType) ToSmtpSectionPtrOutput() SmtpSectionPtrOutput {
+	return i.ToSmtpSectionPtrOutputWithContext(context.Background())
 }
 
-func (i *smtpPtrType) ToSmtpPtrOutputWithContext(ctx context.Context) SmtpPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(SmtpPtrOutput)
+func (i *smtpSectionPtrType) ToSmtpSectionPtrOutputWithContext(ctx context.Context) SmtpSectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SmtpSectionPtrOutput)
 }
 
-type SmtpOutput struct{ *pulumi.OutputState }
+type SmtpSectionOutput struct{ *pulumi.OutputState }
 
-func (SmtpOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*Smtp)(nil)).Elem()
+func (SmtpSectionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SmtpSection)(nil)).Elem()
 }
 
-func (o SmtpOutput) ToSmtpOutput() SmtpOutput {
+func (o SmtpSectionOutput) ToSmtpSectionOutput() SmtpSectionOutput {
 	return o
 }
 
-func (o SmtpOutput) ToSmtpOutputWithContext(ctx context.Context) SmtpOutput {
+func (o SmtpSectionOutput) ToSmtpSectionOutputWithContext(ctx context.Context) SmtpSectionOutput {
 	return o
 }
 
-func (o SmtpOutput) ToSmtpPtrOutput() SmtpPtrOutput {
-	return o.ToSmtpPtrOutputWithContext(context.Background())
+func (o SmtpSectionOutput) ToSmtpSectionPtrOutput() SmtpSectionPtrOutput {
+	return o.ToSmtpSectionPtrOutputWithContext(context.Background())
 }
 
-func (o SmtpOutput) ToSmtpPtrOutputWithContext(ctx context.Context) SmtpPtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, v Smtp) *Smtp {
+func (o SmtpSectionOutput) ToSmtpSectionPtrOutputWithContext(ctx context.Context) SmtpSectionPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v SmtpSection) *SmtpSection {
 		return &v
-	}).(SmtpPtrOutput)
+	}).(SmtpSectionPtrOutput)
 }
 
-func (o SmtpOutput) AuthMethod() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v Smtp) *string { return v.AuthMethod }).(pulumi.StringPtrOutput)
+func (o SmtpSectionOutput) AuthMethod() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SmtpSection) *string { return v.AuthMethod }).(pulumi.StringPtrOutput)
 }
 
-func (o SmtpOutput) Password() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v Smtp) *string { return v.Password }).(pulumi.StringPtrOutput)
+func (o SmtpSectionOutput) Password() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SmtpSection) *string { return v.Password }).(pulumi.StringPtrOutput)
 }
 
-func (o SmtpOutput) PortNumber() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v Smtp) *string { return v.PortNumber }).(pulumi.StringPtrOutput)
+func (o SmtpSectionOutput) PortNumber() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SmtpSection) *string { return v.PortNumber }).(pulumi.StringPtrOutput)
 }
 
-func (o SmtpOutput) Security() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v Smtp) *string { return v.Security }).(pulumi.StringPtrOutput)
+func (o SmtpSectionOutput) Security() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SmtpSection) *string { return v.Security }).(pulumi.StringPtrOutput)
 }
 
-func (o SmtpOutput) SmtpServer() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v Smtp) *string { return v.SmtpServer }).(pulumi.StringPtrOutput)
+func (o SmtpSectionOutput) SmtpServer() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SmtpSection) *string { return v.SmtpServer }).(pulumi.StringPtrOutput)
 }
 
-func (o SmtpOutput) Username() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v Smtp) *string { return v.Username }).(pulumi.StringPtrOutput)
+func (o SmtpSectionOutput) Username() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SmtpSection) *string { return v.Username }).(pulumi.StringPtrOutput)
 }
 
-type SmtpPtrOutput struct{ *pulumi.OutputState }
+type SmtpSectionPtrOutput struct{ *pulumi.OutputState }
 
-func (SmtpPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**Smtp)(nil)).Elem()
+func (SmtpSectionPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**SmtpSection)(nil)).Elem()
 }
 
-func (o SmtpPtrOutput) ToSmtpPtrOutput() SmtpPtrOutput {
+func (o SmtpSectionPtrOutput) ToSmtpSectionPtrOutput() SmtpSectionPtrOutput {
 	return o
 }
 
-func (o SmtpPtrOutput) ToSmtpPtrOutputWithContext(ctx context.Context) SmtpPtrOutput {
+func (o SmtpSectionPtrOutput) ToSmtpSectionPtrOutputWithContext(ctx context.Context) SmtpSectionPtrOutput {
 	return o
 }
 
-func (o SmtpPtrOutput) Elem() SmtpOutput {
-	return o.ApplyT(func(v *Smtp) Smtp {
+func (o SmtpSectionPtrOutput) Elem() SmtpSectionOutput {
+	return o.ApplyT(func(v *SmtpSection) SmtpSection {
 		if v != nil {
 			return *v
 		}
-		var ret Smtp
+		var ret SmtpSection
 		return ret
-	}).(SmtpOutput)
+	}).(SmtpSectionOutput)
 }
 
-func (o SmtpPtrOutput) AuthMethod() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Smtp) *string {
+func (o SmtpSectionPtrOutput) AuthMethod() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SmtpSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -351,8 +351,8 @@ func (o SmtpPtrOutput) AuthMethod() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o SmtpPtrOutput) Password() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Smtp) *string {
+func (o SmtpSectionPtrOutput) Password() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SmtpSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -360,8 +360,8 @@ func (o SmtpPtrOutput) Password() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o SmtpPtrOutput) PortNumber() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Smtp) *string {
+func (o SmtpSectionPtrOutput) PortNumber() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SmtpSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -369,8 +369,8 @@ func (o SmtpPtrOutput) PortNumber() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o SmtpPtrOutput) Security() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Smtp) *string {
+func (o SmtpSectionPtrOutput) Security() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SmtpSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -378,8 +378,8 @@ func (o SmtpPtrOutput) Security() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o SmtpPtrOutput) SmtpServer() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Smtp) *string {
+func (o SmtpSectionPtrOutput) SmtpServer() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SmtpSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -387,8 +387,8 @@ func (o SmtpPtrOutput) SmtpServer() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o SmtpPtrOutput) Username() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Smtp) *string {
+func (o SmtpSectionPtrOutput) Username() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SmtpSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -397,12 +397,12 @@ func (o SmtpPtrOutput) Username() pulumi.StringPtrOutput {
 }
 
 func init() {
-	pulumi.RegisterInputType(reflect.TypeOf((*ContactInformationInput)(nil)).Elem(), ContactInformationArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*ContactInformationPtrInput)(nil)).Elem(), ContactInformationArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*SmtpInput)(nil)).Elem(), SmtpArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*SmtpPtrInput)(nil)).Elem(), SmtpArgs{})
-	pulumi.RegisterOutputType(ContactInformationOutput{})
-	pulumi.RegisterOutputType(ContactInformationPtrOutput{})
-	pulumi.RegisterOutputType(SmtpOutput{})
-	pulumi.RegisterOutputType(SmtpPtrOutput{})
+	pulumi.RegisterInputType(reflect.TypeOf((*ContactInformationSectionInput)(nil)).Elem(), ContactInformationSectionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*ContactInformationSectionPtrInput)(nil)).Elem(), ContactInformationSectionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*SmtpSectionInput)(nil)).Elem(), SmtpSectionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*SmtpSectionPtrInput)(nil)).Elem(), SmtpSectionArgs{})
+	pulumi.RegisterOutputType(ContactInformationSectionOutput{})
+	pulumi.RegisterOutputType(ContactInformationSectionPtrOutput{})
+	pulumi.RegisterOutputType(SmtpSectionOutput{})
+	pulumi.RegisterOutputType(SmtpSectionPtrOutput{})
 }

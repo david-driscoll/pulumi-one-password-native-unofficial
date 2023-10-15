@@ -96,10 +96,7 @@ schema.types = {
     "onepassword:index:Category": {
         "type": "string",
         "description": `The category of the item. One of [${allTemplates.join(', ')}]\n`,
-        enum: orderBy(templates.concat({
-            uuid: "-1",
-            name: 'Item',
-        }), z => z.name).map(t => ({
+        enum: orderBy(templates, z => z.name).map(t => ({
             "name": camelCase(t.name)[0].toUpperCase() + camelCase(t.name).substring(1),
             "value": t.name
         }))
@@ -211,7 +208,7 @@ for (const template of templates) {
     console.log(template.name)
 
     const templateSchema = template.name === 'Item' ? { fields: [] } : item.template.get(template.name as any) as any as ItemTemplate
-    const resourceName = `onepassword:index:${template.name.replace(/ /g, '')}`
+    const resourceName = template.name === 'Item' ? `onepassword:index:Item` : `onepassword:index:${template.name.replace(/ /g, '')}Item`;
 
     const currentResource = schema.resources[resourceName] ??= {
         "isComponent": false,
@@ -371,7 +368,7 @@ writeFileSync('./schema.json', JSON.stringify(schema, null, 4))
  */
 
 function getSectionKey(template: string, section: Section) {
-    return `onepassword:${camelCase(template)}:${camelCase(section!.label || section!.id)}`;
+    return `onepassword:${camelCase(template)}:${camelCase(section!.label || section!.id)}Section`;
 }
 
 function isUserNameField(field: Field): field is UsernameField {

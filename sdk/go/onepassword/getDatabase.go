@@ -10,8 +10,8 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-func LookupDatabase(ctx *pulumi.Context, args *LookupDatabaseArgs, opts ...pulumi.InvokeOption) (*LookupDatabaseResult, error) {
-	var rv LookupDatabaseResult
+func GetDatabase(ctx *pulumi.Context, args *GetDatabaseArgs, opts ...pulumi.InvokeOption) (*GetDatabaseResult, error) {
+	var rv GetDatabaseResult
 	err := ctx.Invoke("onepassword:index:GetDatabase", args, &rv, opts...)
 	if err != nil {
 		return nil, err
@@ -19,7 +19,7 @@ func LookupDatabase(ctx *pulumi.Context, args *LookupDatabaseArgs, opts ...pulum
 	return &rv, nil
 }
 
-type LookupDatabaseArgs struct {
+type GetDatabaseArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -28,7 +28,7 @@ type LookupDatabaseArgs struct {
 	Vault string `pulumi:"vault"`
 }
 
-type LookupDatabaseResult struct {
+type GetDatabaseResult struct {
 	Alias             *string      `pulumi:"alias"`
 	Category          *string      `pulumi:"category"`
 	ConnectionOptions *string      `pulumi:"connectionOptions"`
@@ -53,20 +53,20 @@ type LookupDatabaseResult struct {
 	Vault *string `pulumi:"vault"`
 }
 
-func LookupDatabaseOutput(ctx *pulumi.Context, args LookupDatabaseOutputArgs, opts ...pulumi.InvokeOption) LookupDatabaseResultOutput {
+func GetDatabaseOutput(ctx *pulumi.Context, args GetDatabaseOutputArgs, opts ...pulumi.InvokeOption) GetDatabaseResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupDatabaseResult, error) {
-			args := v.(LookupDatabaseArgs)
-			r, err := LookupDatabase(ctx, &args, opts...)
-			var s LookupDatabaseResult
+		ApplyT(func(v interface{}) (GetDatabaseResult, error) {
+			args := v.(GetDatabaseArgs)
+			r, err := GetDatabase(ctx, &args, opts...)
+			var s GetDatabaseResult
 			if r != nil {
 				s = *r
 			}
 			return s, err
-		}).(LookupDatabaseResultOutput)
+		}).(GetDatabaseResultOutput)
 }
 
-type LookupDatabaseOutputArgs struct {
+type GetDatabaseOutputArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -75,100 +75,100 @@ type LookupDatabaseOutputArgs struct {
 	Vault pulumi.StringInput `pulumi:"vault"`
 }
 
-func (LookupDatabaseOutputArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupDatabaseArgs)(nil)).Elem()
+func (GetDatabaseOutputArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetDatabaseArgs)(nil)).Elem()
 }
 
-type LookupDatabaseResultOutput struct{ *pulumi.OutputState }
+type GetDatabaseResultOutput struct{ *pulumi.OutputState }
 
-func (LookupDatabaseResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupDatabaseResult)(nil)).Elem()
+func (GetDatabaseResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetDatabaseResult)(nil)).Elem()
 }
 
-func (o LookupDatabaseResultOutput) ToLookupDatabaseResultOutput() LookupDatabaseResultOutput {
+func (o GetDatabaseResultOutput) ToGetDatabaseResultOutput() GetDatabaseResultOutput {
 	return o
 }
 
-func (o LookupDatabaseResultOutput) ToLookupDatabaseResultOutputWithContext(ctx context.Context) LookupDatabaseResultOutput {
+func (o GetDatabaseResultOutput) ToGetDatabaseResultOutputWithContext(ctx context.Context) GetDatabaseResultOutput {
 	return o
 }
 
-func (o LookupDatabaseResultOutput) Alias() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupDatabaseResult) *string { return v.Alias }).(pulumi.StringPtrOutput)
+func (o GetDatabaseResultOutput) Alias() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetDatabaseResult) *string { return v.Alias }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupDatabaseResultOutput) Category() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupDatabaseResult) *string { return v.Category }).(pulumi.StringPtrOutput)
+func (o GetDatabaseResultOutput) Category() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetDatabaseResult) *string { return v.Category }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupDatabaseResultOutput) ConnectionOptions() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupDatabaseResult) *string { return v.ConnectionOptions }).(pulumi.StringPtrOutput)
+func (o GetDatabaseResultOutput) ConnectionOptions() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetDatabaseResult) *string { return v.ConnectionOptions }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupDatabaseResultOutput) Database() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupDatabaseResult) *string { return v.Database }).(pulumi.StringPtrOutput)
+func (o GetDatabaseResultOutput) Database() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetDatabaseResult) *string { return v.Database }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupDatabaseResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v LookupDatabaseResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetDatabaseResultOutput) Fields() GetFieldArrayOutput {
+	return o.ApplyT(func(v GetDatabaseResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
 }
 
-func (o LookupDatabaseResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupDatabaseResult) *string { return v.Id }).(pulumi.StringPtrOutput)
+func (o GetDatabaseResultOutput) Id() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetDatabaseResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupDatabaseResultOutput) Notes() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupDatabaseResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
+func (o GetDatabaseResultOutput) Notes() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetDatabaseResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupDatabaseResultOutput) Password() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupDatabaseResult) *string { return v.Password }).(pulumi.StringPtrOutput)
+func (o GetDatabaseResultOutput) Password() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetDatabaseResult) *string { return v.Password }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupDatabaseResultOutput) Port() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupDatabaseResult) *string { return v.Port }).(pulumi.StringPtrOutput)
+func (o GetDatabaseResultOutput) Port() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetDatabaseResult) *string { return v.Port }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupDatabaseResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v LookupDatabaseResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetDatabaseResultOutput) Sections() GetSectionArrayOutput {
+	return o.ApplyT(func(v GetDatabaseResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
 }
 
-func (o LookupDatabaseResultOutput) Server() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupDatabaseResult) *string { return v.Server }).(pulumi.StringPtrOutput)
+func (o GetDatabaseResultOutput) Server() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetDatabaseResult) *string { return v.Server }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupDatabaseResultOutput) Sid() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupDatabaseResult) *string { return v.Sid }).(pulumi.StringPtrOutput)
+func (o GetDatabaseResultOutput) Sid() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetDatabaseResult) *string { return v.Sid }).(pulumi.StringPtrOutput)
 }
 
 // An array of strings of the tags assigned to the item.
-func (o LookupDatabaseResultOutput) Tags() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v LookupDatabaseResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
+func (o GetDatabaseResultOutput) Tags() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetDatabaseResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
 }
 
 // The title of the item.
-func (o LookupDatabaseResultOutput) Title() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupDatabaseResult) *string { return v.Title }).(pulumi.StringPtrOutput)
+func (o GetDatabaseResultOutput) Title() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetDatabaseResult) *string { return v.Title }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupDatabaseResultOutput) Type() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupDatabaseResult) *string { return v.Type }).(pulumi.StringPtrOutput)
+func (o GetDatabaseResultOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetDatabaseResult) *string { return v.Type }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupDatabaseResultOutput) Username() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupDatabaseResult) *string { return v.Username }).(pulumi.StringPtrOutput)
+func (o GetDatabaseResultOutput) Username() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetDatabaseResult) *string { return v.Username }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o LookupDatabaseResultOutput) Uuid() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupDatabaseResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
+func (o GetDatabaseResultOutput) Uuid() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetDatabaseResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the vault the item is in.
-func (o LookupDatabaseResultOutput) Vault() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupDatabaseResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
+func (o GetDatabaseResultOutput) Vault() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetDatabaseResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
 }
 
 func init() {
-	pulumi.RegisterOutputType(LookupDatabaseResultOutput{})
+	pulumi.RegisterOutputType(GetDatabaseResultOutput{})
 }

@@ -10,144 +10,144 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-type Medication struct {
+type MedicationSection struct {
 	Dosage          *string `pulumi:"dosage"`
 	Medication      *string `pulumi:"medication"`
 	MedicationNotes *string `pulumi:"medicationNotes"`
 }
 
-// MedicationInput is an input type that accepts MedicationArgs and MedicationOutput values.
-// You can construct a concrete instance of `MedicationInput` via:
+// MedicationSectionInput is an input type that accepts MedicationSectionArgs and MedicationSectionOutput values.
+// You can construct a concrete instance of `MedicationSectionInput` via:
 //
-//	MedicationArgs{...}
-type MedicationInput interface {
+//	MedicationSectionArgs{...}
+type MedicationSectionInput interface {
 	pulumi.Input
 
-	ToMedicationOutput() MedicationOutput
-	ToMedicationOutputWithContext(context.Context) MedicationOutput
+	ToMedicationSectionOutput() MedicationSectionOutput
+	ToMedicationSectionOutputWithContext(context.Context) MedicationSectionOutput
 }
 
-type MedicationArgs struct {
+type MedicationSectionArgs struct {
 	Dosage          pulumi.StringPtrInput `pulumi:"dosage"`
 	Medication      pulumi.StringPtrInput `pulumi:"medication"`
 	MedicationNotes pulumi.StringPtrInput `pulumi:"medicationNotes"`
 }
 
-func (MedicationArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*Medication)(nil)).Elem()
+func (MedicationSectionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*MedicationSection)(nil)).Elem()
 }
 
-func (i MedicationArgs) ToMedicationOutput() MedicationOutput {
-	return i.ToMedicationOutputWithContext(context.Background())
+func (i MedicationSectionArgs) ToMedicationSectionOutput() MedicationSectionOutput {
+	return i.ToMedicationSectionOutputWithContext(context.Background())
 }
 
-func (i MedicationArgs) ToMedicationOutputWithContext(ctx context.Context) MedicationOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(MedicationOutput)
+func (i MedicationSectionArgs) ToMedicationSectionOutputWithContext(ctx context.Context) MedicationSectionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MedicationSectionOutput)
 }
 
-func (i MedicationArgs) ToMedicationPtrOutput() MedicationPtrOutput {
-	return i.ToMedicationPtrOutputWithContext(context.Background())
+func (i MedicationSectionArgs) ToMedicationSectionPtrOutput() MedicationSectionPtrOutput {
+	return i.ToMedicationSectionPtrOutputWithContext(context.Background())
 }
 
-func (i MedicationArgs) ToMedicationPtrOutputWithContext(ctx context.Context) MedicationPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(MedicationOutput).ToMedicationPtrOutputWithContext(ctx)
+func (i MedicationSectionArgs) ToMedicationSectionPtrOutputWithContext(ctx context.Context) MedicationSectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MedicationSectionOutput).ToMedicationSectionPtrOutputWithContext(ctx)
 }
 
-// MedicationPtrInput is an input type that accepts MedicationArgs, MedicationPtr and MedicationPtrOutput values.
-// You can construct a concrete instance of `MedicationPtrInput` via:
+// MedicationSectionPtrInput is an input type that accepts MedicationSectionArgs, MedicationSectionPtr and MedicationSectionPtrOutput values.
+// You can construct a concrete instance of `MedicationSectionPtrInput` via:
 //
-//	        MedicationArgs{...}
+//	        MedicationSectionArgs{...}
 //
 //	or:
 //
 //	        nil
-type MedicationPtrInput interface {
+type MedicationSectionPtrInput interface {
 	pulumi.Input
 
-	ToMedicationPtrOutput() MedicationPtrOutput
-	ToMedicationPtrOutputWithContext(context.Context) MedicationPtrOutput
+	ToMedicationSectionPtrOutput() MedicationSectionPtrOutput
+	ToMedicationSectionPtrOutputWithContext(context.Context) MedicationSectionPtrOutput
 }
 
-type medicationPtrType MedicationArgs
+type medicationSectionPtrType MedicationSectionArgs
 
-func MedicationPtr(v *MedicationArgs) MedicationPtrInput {
-	return (*medicationPtrType)(v)
+func MedicationSectionPtr(v *MedicationSectionArgs) MedicationSectionPtrInput {
+	return (*medicationSectionPtrType)(v)
 }
 
-func (*medicationPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**Medication)(nil)).Elem()
+func (*medicationSectionPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**MedicationSection)(nil)).Elem()
 }
 
-func (i *medicationPtrType) ToMedicationPtrOutput() MedicationPtrOutput {
-	return i.ToMedicationPtrOutputWithContext(context.Background())
+func (i *medicationSectionPtrType) ToMedicationSectionPtrOutput() MedicationSectionPtrOutput {
+	return i.ToMedicationSectionPtrOutputWithContext(context.Background())
 }
 
-func (i *medicationPtrType) ToMedicationPtrOutputWithContext(ctx context.Context) MedicationPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(MedicationPtrOutput)
+func (i *medicationSectionPtrType) ToMedicationSectionPtrOutputWithContext(ctx context.Context) MedicationSectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MedicationSectionPtrOutput)
 }
 
-type MedicationOutput struct{ *pulumi.OutputState }
+type MedicationSectionOutput struct{ *pulumi.OutputState }
 
-func (MedicationOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*Medication)(nil)).Elem()
+func (MedicationSectionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*MedicationSection)(nil)).Elem()
 }
 
-func (o MedicationOutput) ToMedicationOutput() MedicationOutput {
+func (o MedicationSectionOutput) ToMedicationSectionOutput() MedicationSectionOutput {
 	return o
 }
 
-func (o MedicationOutput) ToMedicationOutputWithContext(ctx context.Context) MedicationOutput {
+func (o MedicationSectionOutput) ToMedicationSectionOutputWithContext(ctx context.Context) MedicationSectionOutput {
 	return o
 }
 
-func (o MedicationOutput) ToMedicationPtrOutput() MedicationPtrOutput {
-	return o.ToMedicationPtrOutputWithContext(context.Background())
+func (o MedicationSectionOutput) ToMedicationSectionPtrOutput() MedicationSectionPtrOutput {
+	return o.ToMedicationSectionPtrOutputWithContext(context.Background())
 }
 
-func (o MedicationOutput) ToMedicationPtrOutputWithContext(ctx context.Context) MedicationPtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, v Medication) *Medication {
+func (o MedicationSectionOutput) ToMedicationSectionPtrOutputWithContext(ctx context.Context) MedicationSectionPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v MedicationSection) *MedicationSection {
 		return &v
-	}).(MedicationPtrOutput)
+	}).(MedicationSectionPtrOutput)
 }
 
-func (o MedicationOutput) Dosage() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v Medication) *string { return v.Dosage }).(pulumi.StringPtrOutput)
+func (o MedicationSectionOutput) Dosage() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v MedicationSection) *string { return v.Dosage }).(pulumi.StringPtrOutput)
 }
 
-func (o MedicationOutput) Medication() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v Medication) *string { return v.Medication }).(pulumi.StringPtrOutput)
+func (o MedicationSectionOutput) Medication() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v MedicationSection) *string { return v.Medication }).(pulumi.StringPtrOutput)
 }
 
-func (o MedicationOutput) MedicationNotes() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v Medication) *string { return v.MedicationNotes }).(pulumi.StringPtrOutput)
+func (o MedicationSectionOutput) MedicationNotes() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v MedicationSection) *string { return v.MedicationNotes }).(pulumi.StringPtrOutput)
 }
 
-type MedicationPtrOutput struct{ *pulumi.OutputState }
+type MedicationSectionPtrOutput struct{ *pulumi.OutputState }
 
-func (MedicationPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**Medication)(nil)).Elem()
+func (MedicationSectionPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**MedicationSection)(nil)).Elem()
 }
 
-func (o MedicationPtrOutput) ToMedicationPtrOutput() MedicationPtrOutput {
+func (o MedicationSectionPtrOutput) ToMedicationSectionPtrOutput() MedicationSectionPtrOutput {
 	return o
 }
 
-func (o MedicationPtrOutput) ToMedicationPtrOutputWithContext(ctx context.Context) MedicationPtrOutput {
+func (o MedicationSectionPtrOutput) ToMedicationSectionPtrOutputWithContext(ctx context.Context) MedicationSectionPtrOutput {
 	return o
 }
 
-func (o MedicationPtrOutput) Elem() MedicationOutput {
-	return o.ApplyT(func(v *Medication) Medication {
+func (o MedicationSectionPtrOutput) Elem() MedicationSectionOutput {
+	return o.ApplyT(func(v *MedicationSection) MedicationSection {
 		if v != nil {
 			return *v
 		}
-		var ret Medication
+		var ret MedicationSection
 		return ret
-	}).(MedicationOutput)
+	}).(MedicationSectionOutput)
 }
 
-func (o MedicationPtrOutput) Dosage() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Medication) *string {
+func (o MedicationSectionPtrOutput) Dosage() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *MedicationSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -155,8 +155,8 @@ func (o MedicationPtrOutput) Dosage() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o MedicationPtrOutput) Medication() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Medication) *string {
+func (o MedicationSectionPtrOutput) Medication() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *MedicationSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -164,8 +164,8 @@ func (o MedicationPtrOutput) Medication() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o MedicationPtrOutput) MedicationNotes() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Medication) *string {
+func (o MedicationSectionPtrOutput) MedicationNotes() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *MedicationSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -174,8 +174,8 @@ func (o MedicationPtrOutput) MedicationNotes() pulumi.StringPtrOutput {
 }
 
 func init() {
-	pulumi.RegisterInputType(reflect.TypeOf((*MedicationInput)(nil)).Elem(), MedicationArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*MedicationPtrInput)(nil)).Elem(), MedicationArgs{})
-	pulumi.RegisterOutputType(MedicationOutput{})
-	pulumi.RegisterOutputType(MedicationPtrOutput{})
+	pulumi.RegisterInputType(reflect.TypeOf((*MedicationSectionInput)(nil)).Elem(), MedicationSectionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*MedicationSectionPtrInput)(nil)).Elem(), MedicationSectionArgs{})
+	pulumi.RegisterOutputType(MedicationSectionOutput{})
+	pulumi.RegisterOutputType(MedicationSectionPtrOutput{})
 }

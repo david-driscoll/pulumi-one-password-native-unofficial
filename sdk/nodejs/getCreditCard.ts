@@ -34,10 +34,10 @@ export interface GetCreditCardArgs {
 }
 
 export interface GetCreditCardResult {
-    readonly additionalDetails?: outputs.creditCard.AdditionalDetails;
+    readonly additionalDetails?: outputs.creditCard.AdditionalDetailsSection;
     readonly cardholderName?: string;
     readonly category?: enums.Category | string;
-    readonly contactInformation?: outputs.creditCard.ContactInformation;
+    readonly contactInformation?: outputs.creditCard.ContactInformationSection;
     readonly expiryDate?: string;
     readonly fields?: outputs.GetField[];
     readonly id?: string;

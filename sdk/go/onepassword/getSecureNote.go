@@ -10,8 +10,8 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-func LookupSecureNote(ctx *pulumi.Context, args *LookupSecureNoteArgs, opts ...pulumi.InvokeOption) (*LookupSecureNoteResult, error) {
-	var rv LookupSecureNoteResult
+func GetSecureNote(ctx *pulumi.Context, args *GetSecureNoteArgs, opts ...pulumi.InvokeOption) (*GetSecureNoteResult, error) {
+	var rv GetSecureNoteResult
 	err := ctx.Invoke("onepassword:index:GetSecureNote", args, &rv, opts...)
 	if err != nil {
 		return nil, err
@@ -19,7 +19,7 @@ func LookupSecureNote(ctx *pulumi.Context, args *LookupSecureNoteArgs, opts ...p
 	return &rv, nil
 }
 
-type LookupSecureNoteArgs struct {
+type GetSecureNoteArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -28,7 +28,7 @@ type LookupSecureNoteArgs struct {
 	Vault string `pulumi:"vault"`
 }
 
-type LookupSecureNoteResult struct {
+type GetSecureNoteResult struct {
 	Category *string      `pulumi:"category"`
 	Fields   []GetField   `pulumi:"fields"`
 	Id       *string      `pulumi:"id"`
@@ -44,20 +44,20 @@ type LookupSecureNoteResult struct {
 	Vault *string `pulumi:"vault"`
 }
 
-func LookupSecureNoteOutput(ctx *pulumi.Context, args LookupSecureNoteOutputArgs, opts ...pulumi.InvokeOption) LookupSecureNoteResultOutput {
+func GetSecureNoteOutput(ctx *pulumi.Context, args GetSecureNoteOutputArgs, opts ...pulumi.InvokeOption) GetSecureNoteResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupSecureNoteResult, error) {
-			args := v.(LookupSecureNoteArgs)
-			r, err := LookupSecureNote(ctx, &args, opts...)
-			var s LookupSecureNoteResult
+		ApplyT(func(v interface{}) (GetSecureNoteResult, error) {
+			args := v.(GetSecureNoteArgs)
+			r, err := GetSecureNote(ctx, &args, opts...)
+			var s GetSecureNoteResult
 			if r != nil {
 				s = *r
 			}
 			return s, err
-		}).(LookupSecureNoteResultOutput)
+		}).(GetSecureNoteResultOutput)
 }
 
-type LookupSecureNoteOutputArgs struct {
+type GetSecureNoteOutputArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -66,64 +66,64 @@ type LookupSecureNoteOutputArgs struct {
 	Vault pulumi.StringInput `pulumi:"vault"`
 }
 
-func (LookupSecureNoteOutputArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupSecureNoteArgs)(nil)).Elem()
+func (GetSecureNoteOutputArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSecureNoteArgs)(nil)).Elem()
 }
 
-type LookupSecureNoteResultOutput struct{ *pulumi.OutputState }
+type GetSecureNoteResultOutput struct{ *pulumi.OutputState }
 
-func (LookupSecureNoteResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupSecureNoteResult)(nil)).Elem()
+func (GetSecureNoteResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSecureNoteResult)(nil)).Elem()
 }
 
-func (o LookupSecureNoteResultOutput) ToLookupSecureNoteResultOutput() LookupSecureNoteResultOutput {
+func (o GetSecureNoteResultOutput) ToGetSecureNoteResultOutput() GetSecureNoteResultOutput {
 	return o
 }
 
-func (o LookupSecureNoteResultOutput) ToLookupSecureNoteResultOutputWithContext(ctx context.Context) LookupSecureNoteResultOutput {
+func (o GetSecureNoteResultOutput) ToGetSecureNoteResultOutputWithContext(ctx context.Context) GetSecureNoteResultOutput {
 	return o
 }
 
-func (o LookupSecureNoteResultOutput) Category() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupSecureNoteResult) *string { return v.Category }).(pulumi.StringPtrOutput)
+func (o GetSecureNoteResultOutput) Category() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetSecureNoteResult) *string { return v.Category }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupSecureNoteResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v LookupSecureNoteResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetSecureNoteResultOutput) Fields() GetFieldArrayOutput {
+	return o.ApplyT(func(v GetSecureNoteResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
 }
 
-func (o LookupSecureNoteResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupSecureNoteResult) *string { return v.Id }).(pulumi.StringPtrOutput)
+func (o GetSecureNoteResultOutput) Id() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetSecureNoteResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupSecureNoteResultOutput) Notes() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupSecureNoteResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
+func (o GetSecureNoteResultOutput) Notes() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetSecureNoteResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupSecureNoteResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v LookupSecureNoteResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetSecureNoteResultOutput) Sections() GetSectionArrayOutput {
+	return o.ApplyT(func(v GetSecureNoteResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
 }
 
 // An array of strings of the tags assigned to the item.
-func (o LookupSecureNoteResultOutput) Tags() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v LookupSecureNoteResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
+func (o GetSecureNoteResultOutput) Tags() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetSecureNoteResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
 }
 
 // The title of the item.
-func (o LookupSecureNoteResultOutput) Title() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupSecureNoteResult) *string { return v.Title }).(pulumi.StringPtrOutput)
+func (o GetSecureNoteResultOutput) Title() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetSecureNoteResult) *string { return v.Title }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o LookupSecureNoteResultOutput) Uuid() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupSecureNoteResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
+func (o GetSecureNoteResultOutput) Uuid() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetSecureNoteResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the vault the item is in.
-func (o LookupSecureNoteResultOutput) Vault() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupSecureNoteResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
+func (o GetSecureNoteResultOutput) Vault() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetSecureNoteResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
 }
 
 func init() {
-	pulumi.RegisterOutputType(LookupSecureNoteResultOutput{})
+	pulumi.RegisterOutputType(GetSecureNoteResultOutput{})
 }

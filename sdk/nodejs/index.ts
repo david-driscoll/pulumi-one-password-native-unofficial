@@ -5,14 +5,14 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
 // Export members:
-export * from "./apicredential";
-export * from "./bankAccount";
-export * from "./creditCard";
-export * from "./cryptoWallet";
-export * from "./database";
-export * from "./document";
-export * from "./driverLicense";
-export * from "./emailAccount";
+export * from "./apicredentialItem";
+export * from "./bankAccountItem";
+export * from "./creditCardItem";
+export * from "./cryptoWalletItem";
+export * from "./databaseItem";
+export * from "./documentItem";
+export * from "./driverLicenseItem";
+export * from "./emailAccountItem";
 export * from "./getAPICredential";
 export * from "./getBankAccount";
 export * from "./getCreditCard";
@@ -38,22 +38,22 @@ export * from "./getSocialSecurityNumber";
 export * from "./getSoftwareLicense";
 export * from "./getVault";
 export * from "./getWirelessRouter";
-export * from "./identity";
+export * from "./identityItem";
 export * from "./item";
-export * from "./login";
-export * from "./medicalRecord";
-export * from "./membership";
-export * from "./outdoorLicense";
-export * from "./passport";
-export * from "./password";
+export * from "./loginItem";
+export * from "./medicalRecordItem";
+export * from "./membershipItem";
+export * from "./outdoorLicenseItem";
+export * from "./passportItem";
+export * from "./passwordItem";
 export * from "./provider";
-export * from "./rewardProgram";
-export * from "./secureNote";
-export * from "./server";
-export * from "./socialSecurityNumber";
-export * from "./softwareLicense";
-export * from "./sshkey";
-export * from "./wirelessRouter";
+export * from "./rewardProgramItem";
+export * from "./secureNoteItem";
+export * from "./serverItem";
+export * from "./socialSecurityNumberItem";
+export * from "./softwareLicenseItem";
+export * from "./sshkeyItem";
+export * from "./wirelessRouterItem";
 
 // Export enums:
 export * from "./types/enums";
@@ -66,80 +66,80 @@ export {
 };
 
 // Import resources to register:
-import { APICredential } from "./apicredential";
-import { BankAccount } from "./bankAccount";
-import { CreditCard } from "./creditCard";
-import { CryptoWallet } from "./cryptoWallet";
-import { Database } from "./database";
-import { Document } from "./document";
-import { DriverLicense } from "./driverLicense";
-import { EmailAccount } from "./emailAccount";
-import { Identity } from "./identity";
+import { APICredentialItem } from "./apicredentialItem";
+import { BankAccountItem } from "./bankAccountItem";
+import { CreditCardItem } from "./creditCardItem";
+import { CryptoWalletItem } from "./cryptoWalletItem";
+import { DatabaseItem } from "./databaseItem";
+import { DocumentItem } from "./documentItem";
+import { DriverLicenseItem } from "./driverLicenseItem";
+import { EmailAccountItem } from "./emailAccountItem";
+import { IdentityItem } from "./identityItem";
 import { Item } from "./item";
-import { Login } from "./login";
-import { MedicalRecord } from "./medicalRecord";
-import { Membership } from "./membership";
-import { OutdoorLicense } from "./outdoorLicense";
-import { Passport } from "./passport";
-import { Password } from "./password";
-import { RewardProgram } from "./rewardProgram";
-import { SSHKey } from "./sshkey";
-import { SecureNote } from "./secureNote";
-import { Server } from "./server";
-import { SocialSecurityNumber } from "./socialSecurityNumber";
-import { SoftwareLicense } from "./softwareLicense";
-import { WirelessRouter } from "./wirelessRouter";
+import { LoginItem } from "./loginItem";
+import { MedicalRecordItem } from "./medicalRecordItem";
+import { MembershipItem } from "./membershipItem";
+import { OutdoorLicenseItem } from "./outdoorLicenseItem";
+import { PassportItem } from "./passportItem";
+import { PasswordItem } from "./passwordItem";
+import { RewardProgramItem } from "./rewardProgramItem";
+import { SSHKeyItem } from "./sshkeyItem";
+import { SecureNoteItem } from "./secureNoteItem";
+import { ServerItem } from "./serverItem";
+import { SocialSecurityNumberItem } from "./socialSecurityNumberItem";
+import { SoftwareLicenseItem } from "./softwareLicenseItem";
+import { WirelessRouterItem } from "./wirelessRouterItem";
 
 const _module = {
     version: utilities.getVersion(),
     construct: (name: string, type: string, urn: string): pulumi.Resource => {
         switch (type) {
-            case "onepassword:index:APICredential":
-                return new APICredential(name, <any>undefined, { urn })
-            case "onepassword:index:BankAccount":
-                return new BankAccount(name, <any>undefined, { urn })
-            case "onepassword:index:CreditCard":
-                return new CreditCard(name, <any>undefined, { urn })
-            case "onepassword:index:CryptoWallet":
-                return new CryptoWallet(name, <any>undefined, { urn })
-            case "onepassword:index:Database":
-                return new Database(name, <any>undefined, { urn })
-            case "onepassword:index:Document":
-                return new Document(name, <any>undefined, { urn })
-            case "onepassword:index:DriverLicense":
-                return new DriverLicense(name, <any>undefined, { urn })
-            case "onepassword:index:EmailAccount":
-                return new EmailAccount(name, <any>undefined, { urn })
-            case "onepassword:index:Identity":
-                return new Identity(name, <any>undefined, { urn })
+            case "onepassword:index:APICredentialItem":
+                return new APICredentialItem(name, <any>undefined, { urn })
+            case "onepassword:index:BankAccountItem":
+                return new BankAccountItem(name, <any>undefined, { urn })
+            case "onepassword:index:CreditCardItem":
+                return new CreditCardItem(name, <any>undefined, { urn })
+            case "onepassword:index:CryptoWalletItem":
+                return new CryptoWalletItem(name, <any>undefined, { urn })
+            case "onepassword:index:DatabaseItem":
+                return new DatabaseItem(name, <any>undefined, { urn })
+            case "onepassword:index:DocumentItem":
+                return new DocumentItem(name, <any>undefined, { urn })
+            case "onepassword:index:DriverLicenseItem":
+                return new DriverLicenseItem(name, <any>undefined, { urn })
+            case "onepassword:index:EmailAccountItem":
+                return new EmailAccountItem(name, <any>undefined, { urn })
+            case "onepassword:index:IdentityItem":
+                return new IdentityItem(name, <any>undefined, { urn })
             case "onepassword:index:Item":
                 return new Item(name, <any>undefined, { urn })
-            case "onepassword:index:Login":
-                return new Login(name, <any>undefined, { urn })
-            case "onepassword:index:MedicalRecord":
-                return new MedicalRecord(name, <any>undefined, { urn })
-            case "onepassword:index:Membership":
-                return new Membership(name, <any>undefined, { urn })
-            case "onepassword:index:OutdoorLicense":
-                return new OutdoorLicense(name, <any>undefined, { urn })
-            case "onepassword:index:Passport":
-                return new Passport(name, <any>undefined, { urn })
-            case "onepassword:index:Password":
-                return new Password(name, <any>undefined, { urn })
-            case "onepassword:index:RewardProgram":
-                return new RewardProgram(name, <any>undefined, { urn })
-            case "onepassword:index:SSHKey":
-                return new SSHKey(name, <any>undefined, { urn })
-            case "onepassword:index:SecureNote":
-                return new SecureNote(name, <any>undefined, { urn })
-            case "onepassword:index:Server":
-                return new Server(name, <any>undefined, { urn })
-            case "onepassword:index:SocialSecurityNumber":
-                return new SocialSecurityNumber(name, <any>undefined, { urn })
-            case "onepassword:index:SoftwareLicense":
-                return new SoftwareLicense(name, <any>undefined, { urn })
-            case "onepassword:index:WirelessRouter":
-                return new WirelessRouter(name, <any>undefined, { urn })
+            case "onepassword:index:LoginItem":
+                return new LoginItem(name, <any>undefined, { urn })
+            case "onepassword:index:MedicalRecordItem":
+                return new MedicalRecordItem(name, <any>undefined, { urn })
+            case "onepassword:index:MembershipItem":
+                return new MembershipItem(name, <any>undefined, { urn })
+            case "onepassword:index:OutdoorLicenseItem":
+                return new OutdoorLicenseItem(name, <any>undefined, { urn })
+            case "onepassword:index:PassportItem":
+                return new PassportItem(name, <any>undefined, { urn })
+            case "onepassword:index:PasswordItem":
+                return new PasswordItem(name, <any>undefined, { urn })
+            case "onepassword:index:RewardProgramItem":
+                return new RewardProgramItem(name, <any>undefined, { urn })
+            case "onepassword:index:SSHKeyItem":
+                return new SSHKeyItem(name, <any>undefined, { urn })
+            case "onepassword:index:SecureNoteItem":
+                return new SecureNoteItem(name, <any>undefined, { urn })
+            case "onepassword:index:ServerItem":
+                return new ServerItem(name, <any>undefined, { urn })
+            case "onepassword:index:SocialSecurityNumberItem":
+                return new SocialSecurityNumberItem(name, <any>undefined, { urn })
+            case "onepassword:index:SoftwareLicenseItem":
+                return new SoftwareLicenseItem(name, <any>undefined, { urn })
+            case "onepassword:index:WirelessRouterItem":
+                return new WirelessRouterItem(name, <any>undefined, { urn })
             default:
                 throw new Error(`unknown resource type ${type}`);
         }

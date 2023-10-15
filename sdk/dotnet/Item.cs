@@ -21,9 +21,6 @@ namespace Pulumi.Onepassword
         [Output("id")]
         public Output<string> Id { get; private set; } = null!;
 
-        [Output("notes")]
-        public Output<string?> Notes { get; private set; } = null!;
-
         [Output("sections")]
         public Output<ImmutableArray<Outputs.GetSection>> Sections { get; private set; } = null!;
 
@@ -106,9 +103,6 @@ namespace Pulumi.Onepassword
             get => _fields ?? (_fields = new InputList<Inputs.FieldArgs>());
             set => _fields = value;
         }
-
-        [Input("notes")]
-        public Input<string>? Notes { get; set; }
 
         [Input("sections")]
         private InputList<Inputs.SectionArgs>? _sections;

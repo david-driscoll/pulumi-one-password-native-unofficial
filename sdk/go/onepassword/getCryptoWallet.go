@@ -11,8 +11,8 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-func LookupCryptoWallet(ctx *pulumi.Context, args *LookupCryptoWalletArgs, opts ...pulumi.InvokeOption) (*LookupCryptoWalletResult, error) {
-	var rv LookupCryptoWalletResult
+func GetCryptoWallet(ctx *pulumi.Context, args *GetCryptoWalletArgs, opts ...pulumi.InvokeOption) (*GetCryptoWalletResult, error) {
+	var rv GetCryptoWalletResult
 	err := ctx.Invoke("onepassword:index:GetCryptoWallet", args, &rv, opts...)
 	if err != nil {
 		return nil, err
@@ -20,7 +20,7 @@ func LookupCryptoWallet(ctx *pulumi.Context, args *LookupCryptoWalletArgs, opts 
 	return &rv, nil
 }
 
-type LookupCryptoWalletArgs struct {
+type GetCryptoWalletArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -29,7 +29,7 @@ type LookupCryptoWalletArgs struct {
 	Vault string `pulumi:"vault"`
 }
 
-type LookupCryptoWalletResult struct {
+type GetCryptoWalletResult struct {
 	Category       *string      `pulumi:"category"`
 	Fields         []GetField   `pulumi:"fields"`
 	Id             *string      `pulumi:"id"`
@@ -44,24 +44,24 @@ type LookupCryptoWalletResult struct {
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
 	Uuid *string `pulumi:"uuid"`
 	// The UUID of the vault the item is in.
-	Vault  *string              `pulumi:"vault"`
-	Wallet *cryptowallet.Wallet `pulumi:"wallet"`
+	Vault  *string                     `pulumi:"vault"`
+	Wallet *cryptowallet.WalletSection `pulumi:"wallet"`
 }
 
-func LookupCryptoWalletOutput(ctx *pulumi.Context, args LookupCryptoWalletOutputArgs, opts ...pulumi.InvokeOption) LookupCryptoWalletResultOutput {
+func GetCryptoWalletOutput(ctx *pulumi.Context, args GetCryptoWalletOutputArgs, opts ...pulumi.InvokeOption) GetCryptoWalletResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupCryptoWalletResult, error) {
-			args := v.(LookupCryptoWalletArgs)
-			r, err := LookupCryptoWallet(ctx, &args, opts...)
-			var s LookupCryptoWalletResult
+		ApplyT(func(v interface{}) (GetCryptoWalletResult, error) {
+			args := v.(GetCryptoWalletArgs)
+			r, err := GetCryptoWallet(ctx, &args, opts...)
+			var s GetCryptoWalletResult
 			if r != nil {
 				s = *r
 			}
 			return s, err
-		}).(LookupCryptoWalletResultOutput)
+		}).(GetCryptoWalletResultOutput)
 }
 
-type LookupCryptoWalletOutputArgs struct {
+type GetCryptoWalletOutputArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -70,76 +70,76 @@ type LookupCryptoWalletOutputArgs struct {
 	Vault pulumi.StringInput `pulumi:"vault"`
 }
 
-func (LookupCryptoWalletOutputArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupCryptoWalletArgs)(nil)).Elem()
+func (GetCryptoWalletOutputArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetCryptoWalletArgs)(nil)).Elem()
 }
 
-type LookupCryptoWalletResultOutput struct{ *pulumi.OutputState }
+type GetCryptoWalletResultOutput struct{ *pulumi.OutputState }
 
-func (LookupCryptoWalletResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupCryptoWalletResult)(nil)).Elem()
+func (GetCryptoWalletResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetCryptoWalletResult)(nil)).Elem()
 }
 
-func (o LookupCryptoWalletResultOutput) ToLookupCryptoWalletResultOutput() LookupCryptoWalletResultOutput {
+func (o GetCryptoWalletResultOutput) ToGetCryptoWalletResultOutput() GetCryptoWalletResultOutput {
 	return o
 }
 
-func (o LookupCryptoWalletResultOutput) ToLookupCryptoWalletResultOutputWithContext(ctx context.Context) LookupCryptoWalletResultOutput {
+func (o GetCryptoWalletResultOutput) ToGetCryptoWalletResultOutputWithContext(ctx context.Context) GetCryptoWalletResultOutput {
 	return o
 }
 
-func (o LookupCryptoWalletResultOutput) Category() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupCryptoWalletResult) *string { return v.Category }).(pulumi.StringPtrOutput)
+func (o GetCryptoWalletResultOutput) Category() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetCryptoWalletResult) *string { return v.Category }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupCryptoWalletResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v LookupCryptoWalletResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetCryptoWalletResultOutput) Fields() GetFieldArrayOutput {
+	return o.ApplyT(func(v GetCryptoWalletResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
 }
 
-func (o LookupCryptoWalletResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupCryptoWalletResult) *string { return v.Id }).(pulumi.StringPtrOutput)
+func (o GetCryptoWalletResultOutput) Id() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetCryptoWalletResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupCryptoWalletResultOutput) Notes() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupCryptoWalletResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
+func (o GetCryptoWalletResultOutput) Notes() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetCryptoWalletResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupCryptoWalletResultOutput) Password() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupCryptoWalletResult) *string { return v.Password }).(pulumi.StringPtrOutput)
+func (o GetCryptoWalletResultOutput) Password() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetCryptoWalletResult) *string { return v.Password }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupCryptoWalletResultOutput) RecoveryPhrase() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupCryptoWalletResult) *string { return v.RecoveryPhrase }).(pulumi.StringPtrOutput)
+func (o GetCryptoWalletResultOutput) RecoveryPhrase() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetCryptoWalletResult) *string { return v.RecoveryPhrase }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupCryptoWalletResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v LookupCryptoWalletResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetCryptoWalletResultOutput) Sections() GetSectionArrayOutput {
+	return o.ApplyT(func(v GetCryptoWalletResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
 }
 
 // An array of strings of the tags assigned to the item.
-func (o LookupCryptoWalletResultOutput) Tags() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v LookupCryptoWalletResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
+func (o GetCryptoWalletResultOutput) Tags() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetCryptoWalletResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
 }
 
 // The title of the item.
-func (o LookupCryptoWalletResultOutput) Title() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupCryptoWalletResult) *string { return v.Title }).(pulumi.StringPtrOutput)
+func (o GetCryptoWalletResultOutput) Title() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetCryptoWalletResult) *string { return v.Title }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o LookupCryptoWalletResultOutput) Uuid() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupCryptoWalletResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
+func (o GetCryptoWalletResultOutput) Uuid() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetCryptoWalletResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the vault the item is in.
-func (o LookupCryptoWalletResultOutput) Vault() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupCryptoWalletResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
+func (o GetCryptoWalletResultOutput) Vault() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetCryptoWalletResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupCryptoWalletResultOutput) Wallet() cryptowallet.WalletPtrOutput {
-	return o.ApplyT(func(v LookupCryptoWalletResult) *cryptowallet.Wallet { return v.Wallet }).(cryptowallet.WalletPtrOutput)
+func (o GetCryptoWalletResultOutput) Wallet() cryptowallet.WalletSectionPtrOutput {
+	return o.ApplyT(func(v GetCryptoWalletResult) *cryptowallet.WalletSection { return v.Wallet }).(cryptowallet.WalletSectionPtrOutput)
 }
 
 func init() {
-	pulumi.RegisterOutputType(LookupCryptoWalletResultOutput{})
+	pulumi.RegisterOutputType(GetCryptoWalletResultOutput{})
 }

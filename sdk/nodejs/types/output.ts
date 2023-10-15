@@ -20,7 +20,7 @@ export interface GetSection {
 }
 
 export namespace bankAccount {
-    export interface BranchInformation {
+    export interface BranchInformationSection {
         address?: string;
         phone?: string;
     }
@@ -28,7 +28,7 @@ export namespace bankAccount {
 }
 
 export namespace creditCard {
-    export interface AdditionalDetails {
+    export interface AdditionalDetailsSection {
         cashWithdrawalLimit?: string;
         creditLimit?: string;
         interestRate?: string;
@@ -36,7 +36,7 @@ export namespace creditCard {
         pin?: string;
     }
 
-    export interface ContactInformation {
+    export interface ContactInformationSection {
         issuingBank?: string;
         phoneIntl?: string;
         phoneLocal?: string;
@@ -47,21 +47,21 @@ export namespace creditCard {
 }
 
 export namespace cryptoWallet {
-    export interface Wallet {
+    export interface WalletSection {
         walletAddress?: string;
     }
 
 }
 
 export namespace emailAccount {
-    export interface ContactInformation {
+    export interface ContactInformationSection {
         phoneLocal?: string;
         phoneTollFree?: string;
         provider?: string;
         providersWebsite?: string;
     }
 
-    export interface Smtp {
+    export interface SmtpSection {
         authMethod?: string;
         password?: string;
         portNumber?: string;
@@ -73,7 +73,7 @@ export namespace emailAccount {
 }
 
 export namespace identity {
-    export interface Address {
+    export interface AddressSection {
         address?: string;
         business?: string;
         cell?: string;
@@ -81,7 +81,7 @@ export namespace identity {
         home?: string;
     }
 
-    export interface Identification {
+    export interface IdentificationSection {
         birthDate?: string;
         company?: string;
         department?: string;
@@ -93,7 +93,7 @@ export namespace identity {
         occupation?: string;
     }
 
-    export interface InternetDetails {
+    export interface InternetDetailsSection {
         aolAim?: string;
         email?: string;
         forumSignature?: string;
@@ -110,7 +110,7 @@ export namespace identity {
 }
 
 export namespace medicalRecord {
-    export interface Medication {
+    export interface MedicationSection {
         dosage?: string;
         medication?: string;
         medicationNotes?: string;
@@ -119,7 +119,7 @@ export namespace medicalRecord {
 }
 
 export namespace rewardProgram {
-    export interface MoreInformation {
+    export interface MoreInformationSection {
         customerServicePhone?: string;
         memberIdAdditional?: string;
         memberSince?: string;
@@ -130,13 +130,13 @@ export namespace rewardProgram {
 }
 
 export namespace server {
-    export interface AdminConsole {
+    export interface AdminConsoleSection {
         adminConsoleUrl?: string;
         adminConsoleUsername?: string;
         consolePassword?: string;
     }
 
-    export interface HostingProvider {
+    export interface HostingProviderSection {
         name?: string;
         supportPhone?: string;
         supportUrl?: string;
@@ -146,19 +146,19 @@ export namespace server {
 }
 
 export namespace softwareLicense {
-    export interface Customer {
+    export interface CustomerSection {
         company?: string;
         licensedTo?: string;
         registeredEmail?: string;
     }
 
-    export interface Order {
+    export interface OrderSection {
         orderNumber?: string;
         orderTotal?: string;
         purchaseDate?: string;
     }
 
-    export interface Publisher {
+    export interface PublisherSection {
         downloadPage?: string;
         publisher?: string;
         retailPrice?: string;

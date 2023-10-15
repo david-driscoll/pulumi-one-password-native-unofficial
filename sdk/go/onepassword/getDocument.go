@@ -10,8 +10,8 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-func LookupDocument(ctx *pulumi.Context, args *LookupDocumentArgs, opts ...pulumi.InvokeOption) (*LookupDocumentResult, error) {
-	var rv LookupDocumentResult
+func GetDocument(ctx *pulumi.Context, args *GetDocumentArgs, opts ...pulumi.InvokeOption) (*GetDocumentResult, error) {
+	var rv GetDocumentResult
 	err := ctx.Invoke("onepassword:index:GetDocument", args, &rv, opts...)
 	if err != nil {
 		return nil, err
@@ -19,7 +19,7 @@ func LookupDocument(ctx *pulumi.Context, args *LookupDocumentArgs, opts ...pulum
 	return &rv, nil
 }
 
-type LookupDocumentArgs struct {
+type GetDocumentArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -28,7 +28,7 @@ type LookupDocumentArgs struct {
 	Vault string `pulumi:"vault"`
 }
 
-type LookupDocumentResult struct {
+type GetDocumentResult struct {
 	Category *string      `pulumi:"category"`
 	Fields   []GetField   `pulumi:"fields"`
 	Id       *string      `pulumi:"id"`
@@ -44,20 +44,20 @@ type LookupDocumentResult struct {
 	Vault *string `pulumi:"vault"`
 }
 
-func LookupDocumentOutput(ctx *pulumi.Context, args LookupDocumentOutputArgs, opts ...pulumi.InvokeOption) LookupDocumentResultOutput {
+func GetDocumentOutput(ctx *pulumi.Context, args GetDocumentOutputArgs, opts ...pulumi.InvokeOption) GetDocumentResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupDocumentResult, error) {
-			args := v.(LookupDocumentArgs)
-			r, err := LookupDocument(ctx, &args, opts...)
-			var s LookupDocumentResult
+		ApplyT(func(v interface{}) (GetDocumentResult, error) {
+			args := v.(GetDocumentArgs)
+			r, err := GetDocument(ctx, &args, opts...)
+			var s GetDocumentResult
 			if r != nil {
 				s = *r
 			}
 			return s, err
-		}).(LookupDocumentResultOutput)
+		}).(GetDocumentResultOutput)
 }
 
-type LookupDocumentOutputArgs struct {
+type GetDocumentOutputArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -66,64 +66,64 @@ type LookupDocumentOutputArgs struct {
 	Vault pulumi.StringInput `pulumi:"vault"`
 }
 
-func (LookupDocumentOutputArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupDocumentArgs)(nil)).Elem()
+func (GetDocumentOutputArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetDocumentArgs)(nil)).Elem()
 }
 
-type LookupDocumentResultOutput struct{ *pulumi.OutputState }
+type GetDocumentResultOutput struct{ *pulumi.OutputState }
 
-func (LookupDocumentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupDocumentResult)(nil)).Elem()
+func (GetDocumentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetDocumentResult)(nil)).Elem()
 }
 
-func (o LookupDocumentResultOutput) ToLookupDocumentResultOutput() LookupDocumentResultOutput {
+func (o GetDocumentResultOutput) ToGetDocumentResultOutput() GetDocumentResultOutput {
 	return o
 }
 
-func (o LookupDocumentResultOutput) ToLookupDocumentResultOutputWithContext(ctx context.Context) LookupDocumentResultOutput {
+func (o GetDocumentResultOutput) ToGetDocumentResultOutputWithContext(ctx context.Context) GetDocumentResultOutput {
 	return o
 }
 
-func (o LookupDocumentResultOutput) Category() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupDocumentResult) *string { return v.Category }).(pulumi.StringPtrOutput)
+func (o GetDocumentResultOutput) Category() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetDocumentResult) *string { return v.Category }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupDocumentResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v LookupDocumentResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetDocumentResultOutput) Fields() GetFieldArrayOutput {
+	return o.ApplyT(func(v GetDocumentResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
 }
 
-func (o LookupDocumentResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupDocumentResult) *string { return v.Id }).(pulumi.StringPtrOutput)
+func (o GetDocumentResultOutput) Id() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetDocumentResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupDocumentResultOutput) Notes() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupDocumentResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
+func (o GetDocumentResultOutput) Notes() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetDocumentResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupDocumentResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v LookupDocumentResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetDocumentResultOutput) Sections() GetSectionArrayOutput {
+	return o.ApplyT(func(v GetDocumentResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
 }
 
 // An array of strings of the tags assigned to the item.
-func (o LookupDocumentResultOutput) Tags() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v LookupDocumentResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
+func (o GetDocumentResultOutput) Tags() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetDocumentResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
 }
 
 // The title of the item.
-func (o LookupDocumentResultOutput) Title() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupDocumentResult) *string { return v.Title }).(pulumi.StringPtrOutput)
+func (o GetDocumentResultOutput) Title() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetDocumentResult) *string { return v.Title }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o LookupDocumentResultOutput) Uuid() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupDocumentResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
+func (o GetDocumentResultOutput) Uuid() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetDocumentResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the vault the item is in.
-func (o LookupDocumentResultOutput) Vault() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupDocumentResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
+func (o GetDocumentResultOutput) Vault() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetDocumentResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
 }
 
 func init() {
-	pulumi.RegisterOutputType(LookupDocumentResultOutput{})
+	pulumi.RegisterOutputType(GetDocumentResultOutput{})
 }

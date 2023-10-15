@@ -15,7 +15,7 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as provider from "@pulumi/pulumi/provider";
 
-import { StaticPage, StaticPageArgs } from "./staticPage";
+// import { StaticPage, StaticPageArgs } from "./staticPage";
 
 export class Provider implements provider.Provider {
     constructor(readonly version: string, readonly schema: string) { }
@@ -33,86 +33,86 @@ export class Provider implements provider.Provider {
 
         // TODO: Add support for additional component resources here.
         switch (type) {
-            case "onepassword:index:StaticPage":
-                return await constructStaticPage(name, inputs, options);
+            // case "onepassword:index:StaticPage":
+            //     return await constructStaticPage(name, inputs, options);
             default:
                 throw new Error(`unknown resource type ${type}`);
         }
     }
 
-    /**
-     * Create allocates a new instance of the provided resource and returns its unique ID afterwards.
-     * If this call fails, the resource must not have been created (i.e., it is "transactional").
-     *
-     * @param inputs The properties to set during creation.
-     */
-    async create(urn: pulumi.URN, inputs: any): Promise<provider.CreateResult> { }
+    // /**
+    //  * Create allocates a new instance of the provided resource and returns its unique ID afterwards.
+    //  * If this call fails, the resource must not have been created (i.e., it is "transactional").
+    //  *
+    //  * @param inputs The properties to set during creation.
+    //  */
+    // async create(urn: pulumi.URN, inputs: any): Promise<provider.CreateResult> { }
 
-    /**
-     * Check validates that the given property bag is valid for a resource of the given type.
-     *
-     * @param olds The old input properties to use for validation.
-     * @param news The new input properties to use for validation.
-     */
-    async check(urn: pulumi.URN, olds: any, news: any): Promise<provider.CheckResult> {
+    // /**
+    //  * Check validates that the given property bag is valid for a resource of the given type.
+    //  *
+    //  * @param olds The old input properties to use for validation.
+    //  * @param news The new input properties to use for validation.
+    //  */
+    // async check(urn: pulumi.URN, olds: any, news: any): Promise<provider.CheckResult> {
 
-    }
-    /**
-     * Diff checks what impacts a hypothetical update will have on the resource's properties.
-     *
-     * @param id The ID of the resource to diff.
-     * @param olds The old values of properties to diff.
-     * @param news The new values of properties to diff.
-     */
-    async diff(id: pulumi.ID, urn: pulumi.URN, olds: any, news: any): Promise<provider.DiffResult> { }
-    /**
-     * Reads the current live state associated with a pulumi.  Enough state must be included in the inputs to uniquely
-     * identify the resource; this is typically just the resource ID, but it may also include some properties.
-     */
-    async read(id: pulumi.ID, urn: pulumi.URN, props?: any): Promise<provider.ReadResult> { }
-    /**
-     * Update updates an existing resource with new values.
-     *
-     * @param id The ID of the resource to update.
-     * @param olds The old values of properties to update.
-     * @param news The new values of properties to update.
-     */
-    async update(id: pulumi.ID, urn: pulumi.URN, olds: any, news: any): Promise<provider.UpdateResult> { }
-    /**
-     * Delete tears down an existing resource with the given ID.  If it fails, the resource is assumed to still exist.
-     *
-     * @param id The ID of the resource to delete.
-     * @param props The current properties on the pulumi.
-     */
-    async delete(id: pulumi.ID, urn: pulumi.URN, props: any): Promise<void> { }
-    /**
-     * Call calls the indicated method.
-     *
-     * @param token The token of the method to call.
-     * @param inputs The inputs to the method.
-     */
-    async call(token: string, inputs: pulumi.Inputs): Promise<provider.InvokeResult> { }
-    /**
-     * Invoke calls the indicated function.
-     *
-     * @param token The token of the function to call.
-     * @param inputs The inputs to the function.
-     */
-    async invoke(token: string, inputs: any): Promise<provider.InvokeResult> { }
+    // }
+    // /**
+    //  * Diff checks what impacts a hypothetical update will have on the resource's properties.
+    //  *
+    //  * @param id The ID of the resource to diff.
+    //  * @param olds The old values of properties to diff.
+    //  * @param news The new values of properties to diff.
+    //  */
+    // async diff(id: pulumi.ID, urn: pulumi.URN, olds: any, news: any): Promise<provider.DiffResult> { }
+    // /**
+    //  * Reads the current live state associated with a pulumi.  Enough state must be included in the inputs to uniquely
+    //  * identify the resource; this is typically just the resource ID, but it may also include some properties.
+    //  */
+    // async read(id: pulumi.ID, urn: pulumi.URN, props?: any): Promise<provider.ReadResult> { }
+    // /**
+    //  * Update updates an existing resource with new values.
+    //  *
+    //  * @param id The ID of the resource to update.
+    //  * @param olds The old values of properties to update.
+    //  * @param news The new values of properties to update.
+    //  */
+    // async update(id: pulumi.ID, urn: pulumi.URN, olds: any, news: any): Promise<provider.UpdateResult> { }
+    // /**
+    //  * Delete tears down an existing resource with the given ID.  If it fails, the resource is assumed to still exist.
+    //  *
+    //  * @param id The ID of the resource to delete.
+    //  * @param props The current properties on the pulumi.
+    //  */
+    // async delete(id: pulumi.ID, urn: pulumi.URN, props: any): Promise<void> { }
+    // /**
+    //  * Call calls the indicated method.
+    //  *
+    //  * @param token The token of the method to call.
+    //  * @param inputs The inputs to the method.
+    //  */
+    // async call(token: string, inputs: pulumi.Inputs): Promise<provider.InvokeResult> { }
+    // /**
+    //  * Invoke calls the indicated function.
+    //  *
+    //  * @param token The token of the function to call.
+    //  * @param inputs The inputs to the function.
+    //  */
+    // async invoke(token: string, inputs: any): Promise<provider.InvokeResult> { }
 }
 
-async function constructStaticPage(name: string, inputs: pulumi.Inputs,
-    options: pulumi.ComponentResourceOptions): Promise<provider.ConstructResult> {
+// async function constructStaticPage(name: string, inputs: pulumi.Inputs,
+//     options: pulumi.ComponentResourceOptions): Promise<provider.ConstructResult> {
 
-    // Create the component pulumi.
-    const staticPage = new StaticPage(name, inputs as StaticPageArgs, options);
+//     // Create the component pulumi.
+//     const staticPage = new StaticPage(name, inputs as StaticPageArgs, options);
 
-    // Return the component resource's URN and outputs as its state.
-    return {
-        urn: staticPage.urn,
-        state: {
-            bucket: staticPage.bucket,
-            websiteUrl: staticPage.websiteUrl,
-        },
-    };
-}
+//     // Return the component resource's URN and outputs as its state.
+//     return {
+//         urn: staticPage.urn,
+//         state: {
+//             bucket: staticPage.bucket,
+//             websiteUrl: staticPage.websiteUrl,
+//         },
+//     };
+// }

@@ -9,13 +9,13 @@ from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 
 __all__ = [
-    'Customer',
-    'Order',
-    'Publisher',
+    'CustomerSection',
+    'OrderSection',
+    'PublisherSection',
 ]
 
 @pulumi.output_type
-class Customer(dict):
+class CustomerSection(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
@@ -25,14 +25,14 @@ class Customer(dict):
             suggest = "registered_email"
 
         if suggest:
-            pulumi.log.warn(f"Key '{key}' not found in Customer. Access the value via the '{suggest}' property getter instead.")
+            pulumi.log.warn(f"Key '{key}' not found in CustomerSection. Access the value via the '{suggest}' property getter instead.")
 
     def __getitem__(self, key: str) -> Any:
-        Customer.__key_warning(key)
+        CustomerSection.__key_warning(key)
         return super().__getitem__(key)
 
     def get(self, key: str, default = None) -> Any:
-        Customer.__key_warning(key)
+        CustomerSection.__key_warning(key)
         return super().get(key, default)
 
     def __init__(__self__, *,
@@ -63,7 +63,7 @@ class Customer(dict):
 
 
 @pulumi.output_type
-class Order(dict):
+class OrderSection(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
@@ -75,14 +75,14 @@ class Order(dict):
             suggest = "purchase_date"
 
         if suggest:
-            pulumi.log.warn(f"Key '{key}' not found in Order. Access the value via the '{suggest}' property getter instead.")
+            pulumi.log.warn(f"Key '{key}' not found in OrderSection. Access the value via the '{suggest}' property getter instead.")
 
     def __getitem__(self, key: str) -> Any:
-        Order.__key_warning(key)
+        OrderSection.__key_warning(key)
         return super().__getitem__(key)
 
     def get(self, key: str, default = None) -> Any:
-        Order.__key_warning(key)
+        OrderSection.__key_warning(key)
         return super().get(key, default)
 
     def __init__(__self__, *,
@@ -113,7 +113,7 @@ class Order(dict):
 
 
 @pulumi.output_type
-class Publisher(dict):
+class PublisherSection(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
@@ -125,14 +125,14 @@ class Publisher(dict):
             suggest = "support_email"
 
         if suggest:
-            pulumi.log.warn(f"Key '{key}' not found in Publisher. Access the value via the '{suggest}' property getter instead.")
+            pulumi.log.warn(f"Key '{key}' not found in PublisherSection. Access the value via the '{suggest}' property getter instead.")
 
     def __getitem__(self, key: str) -> Any:
-        Publisher.__key_warning(key)
+        PublisherSection.__key_warning(key)
         return super().__getitem__(key)
 
     def get(self, key: str, default = None) -> Any:
-        Publisher.__key_warning(key)
+        PublisherSection.__key_warning(key)
         return super().get(key, default)
 
     def __init__(__self__, *,

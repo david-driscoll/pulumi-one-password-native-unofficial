@@ -11,8 +11,8 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-func LookupBankAccount(ctx *pulumi.Context, args *LookupBankAccountArgs, opts ...pulumi.InvokeOption) (*LookupBankAccountResult, error) {
-	var rv LookupBankAccountResult
+func GetBankAccount(ctx *pulumi.Context, args *GetBankAccountArgs, opts ...pulumi.InvokeOption) (*GetBankAccountResult, error) {
+	var rv GetBankAccountResult
 	err := ctx.Invoke("onepassword:index:GetBankAccount", args, &rv, opts...)
 	if err != nil {
 		return nil, err
@@ -20,7 +20,7 @@ func LookupBankAccount(ctx *pulumi.Context, args *LookupBankAccountArgs, opts ..
 	return &rv, nil
 }
 
-type LookupBankAccountArgs struct {
+type GetBankAccountArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -29,20 +29,20 @@ type LookupBankAccountArgs struct {
 	Vault string `pulumi:"vault"`
 }
 
-type LookupBankAccountResult struct {
-	AccountNumber     *string                        `pulumi:"accountNumber"`
-	BankName          *string                        `pulumi:"bankName"`
-	BranchInformation *bankaccount.BranchInformation `pulumi:"branchInformation"`
-	Category          *string                        `pulumi:"category"`
-	Fields            []GetField                     `pulumi:"fields"`
-	Iban              *string                        `pulumi:"iban"`
-	Id                *string                        `pulumi:"id"`
-	NameOnAccount     *string                        `pulumi:"nameOnAccount"`
-	Notes             *string                        `pulumi:"notes"`
-	Pin               *string                        `pulumi:"pin"`
-	RoutingNumber     *string                        `pulumi:"routingNumber"`
-	Sections          []GetSection                   `pulumi:"sections"`
-	Swift             *string                        `pulumi:"swift"`
+type GetBankAccountResult struct {
+	AccountNumber     *string                               `pulumi:"accountNumber"`
+	BankName          *string                               `pulumi:"bankName"`
+	BranchInformation *bankaccount.BranchInformationSection `pulumi:"branchInformation"`
+	Category          *string                               `pulumi:"category"`
+	Fields            []GetField                            `pulumi:"fields"`
+	Iban              *string                               `pulumi:"iban"`
+	Id                *string                               `pulumi:"id"`
+	NameOnAccount     *string                               `pulumi:"nameOnAccount"`
+	Notes             *string                               `pulumi:"notes"`
+	Pin               *string                               `pulumi:"pin"`
+	RoutingNumber     *string                               `pulumi:"routingNumber"`
+	Sections          []GetSection                          `pulumi:"sections"`
+	Swift             *string                               `pulumi:"swift"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -54,20 +54,20 @@ type LookupBankAccountResult struct {
 	Vault *string `pulumi:"vault"`
 }
 
-func LookupBankAccountOutput(ctx *pulumi.Context, args LookupBankAccountOutputArgs, opts ...pulumi.InvokeOption) LookupBankAccountResultOutput {
+func GetBankAccountOutput(ctx *pulumi.Context, args GetBankAccountOutputArgs, opts ...pulumi.InvokeOption) GetBankAccountResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupBankAccountResult, error) {
-			args := v.(LookupBankAccountArgs)
-			r, err := LookupBankAccount(ctx, &args, opts...)
-			var s LookupBankAccountResult
+		ApplyT(func(v interface{}) (GetBankAccountResult, error) {
+			args := v.(GetBankAccountArgs)
+			r, err := GetBankAccount(ctx, &args, opts...)
+			var s GetBankAccountResult
 			if r != nil {
 				s = *r
 			}
 			return s, err
-		}).(LookupBankAccountResultOutput)
+		}).(GetBankAccountResultOutput)
 }
 
-type LookupBankAccountOutputArgs struct {
+type GetBankAccountOutputArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -76,100 +76,100 @@ type LookupBankAccountOutputArgs struct {
 	Vault pulumi.StringInput `pulumi:"vault"`
 }
 
-func (LookupBankAccountOutputArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupBankAccountArgs)(nil)).Elem()
+func (GetBankAccountOutputArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetBankAccountArgs)(nil)).Elem()
 }
 
-type LookupBankAccountResultOutput struct{ *pulumi.OutputState }
+type GetBankAccountResultOutput struct{ *pulumi.OutputState }
 
-func (LookupBankAccountResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupBankAccountResult)(nil)).Elem()
+func (GetBankAccountResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetBankAccountResult)(nil)).Elem()
 }
 
-func (o LookupBankAccountResultOutput) ToLookupBankAccountResultOutput() LookupBankAccountResultOutput {
+func (o GetBankAccountResultOutput) ToGetBankAccountResultOutput() GetBankAccountResultOutput {
 	return o
 }
 
-func (o LookupBankAccountResultOutput) ToLookupBankAccountResultOutputWithContext(ctx context.Context) LookupBankAccountResultOutput {
+func (o GetBankAccountResultOutput) ToGetBankAccountResultOutputWithContext(ctx context.Context) GetBankAccountResultOutput {
 	return o
 }
 
-func (o LookupBankAccountResultOutput) AccountNumber() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupBankAccountResult) *string { return v.AccountNumber }).(pulumi.StringPtrOutput)
+func (o GetBankAccountResultOutput) AccountNumber() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetBankAccountResult) *string { return v.AccountNumber }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupBankAccountResultOutput) BankName() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupBankAccountResult) *string { return v.BankName }).(pulumi.StringPtrOutput)
+func (o GetBankAccountResultOutput) BankName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetBankAccountResult) *string { return v.BankName }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupBankAccountResultOutput) BranchInformation() bankaccount.BranchInformationPtrOutput {
-	return o.ApplyT(func(v LookupBankAccountResult) *bankaccount.BranchInformation { return v.BranchInformation }).(bankaccount.BranchInformationPtrOutput)
+func (o GetBankAccountResultOutput) BranchInformation() bankaccount.BranchInformationSectionPtrOutput {
+	return o.ApplyT(func(v GetBankAccountResult) *bankaccount.BranchInformationSection { return v.BranchInformation }).(bankaccount.BranchInformationSectionPtrOutput)
 }
 
-func (o LookupBankAccountResultOutput) Category() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupBankAccountResult) *string { return v.Category }).(pulumi.StringPtrOutput)
+func (o GetBankAccountResultOutput) Category() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetBankAccountResult) *string { return v.Category }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupBankAccountResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v LookupBankAccountResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetBankAccountResultOutput) Fields() GetFieldArrayOutput {
+	return o.ApplyT(func(v GetBankAccountResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
 }
 
-func (o LookupBankAccountResultOutput) Iban() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupBankAccountResult) *string { return v.Iban }).(pulumi.StringPtrOutput)
+func (o GetBankAccountResultOutput) Iban() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetBankAccountResult) *string { return v.Iban }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupBankAccountResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupBankAccountResult) *string { return v.Id }).(pulumi.StringPtrOutput)
+func (o GetBankAccountResultOutput) Id() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetBankAccountResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupBankAccountResultOutput) NameOnAccount() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupBankAccountResult) *string { return v.NameOnAccount }).(pulumi.StringPtrOutput)
+func (o GetBankAccountResultOutput) NameOnAccount() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetBankAccountResult) *string { return v.NameOnAccount }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupBankAccountResultOutput) Notes() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupBankAccountResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
+func (o GetBankAccountResultOutput) Notes() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetBankAccountResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupBankAccountResultOutput) Pin() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupBankAccountResult) *string { return v.Pin }).(pulumi.StringPtrOutput)
+func (o GetBankAccountResultOutput) Pin() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetBankAccountResult) *string { return v.Pin }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupBankAccountResultOutput) RoutingNumber() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupBankAccountResult) *string { return v.RoutingNumber }).(pulumi.StringPtrOutput)
+func (o GetBankAccountResultOutput) RoutingNumber() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetBankAccountResult) *string { return v.RoutingNumber }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupBankAccountResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v LookupBankAccountResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetBankAccountResultOutput) Sections() GetSectionArrayOutput {
+	return o.ApplyT(func(v GetBankAccountResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
 }
 
-func (o LookupBankAccountResultOutput) Swift() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupBankAccountResult) *string { return v.Swift }).(pulumi.StringPtrOutput)
+func (o GetBankAccountResultOutput) Swift() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetBankAccountResult) *string { return v.Swift }).(pulumi.StringPtrOutput)
 }
 
 // An array of strings of the tags assigned to the item.
-func (o LookupBankAccountResultOutput) Tags() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v LookupBankAccountResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
+func (o GetBankAccountResultOutput) Tags() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetBankAccountResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
 }
 
 // The title of the item.
-func (o LookupBankAccountResultOutput) Title() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupBankAccountResult) *string { return v.Title }).(pulumi.StringPtrOutput)
+func (o GetBankAccountResultOutput) Title() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetBankAccountResult) *string { return v.Title }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupBankAccountResultOutput) Type() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupBankAccountResult) *string { return v.Type }).(pulumi.StringPtrOutput)
+func (o GetBankAccountResultOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetBankAccountResult) *string { return v.Type }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o LookupBankAccountResultOutput) Uuid() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupBankAccountResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
+func (o GetBankAccountResultOutput) Uuid() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetBankAccountResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the vault the item is in.
-func (o LookupBankAccountResultOutput) Vault() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupBankAccountResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
+func (o GetBankAccountResultOutput) Vault() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetBankAccountResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
 }
 
 func init() {
-	pulumi.RegisterOutputType(LookupBankAccountResultOutput{})
+	pulumi.RegisterOutputType(GetBankAccountResultOutput{})
 }

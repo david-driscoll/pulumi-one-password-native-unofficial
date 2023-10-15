@@ -79,7 +79,7 @@ namespace Pulumi.Onepassword
         public readonly string? HealthcareProfessional;
         public readonly string? Id;
         public readonly string? Location;
-        public readonly Pulumi.Onepassword.MedicalRecord.Outputs.Medication? Medication;
+        public readonly Pulumi.Onepassword.MedicalRecord.Outputs.MedicationSection? Medication;
         public readonly string? Notes;
         public readonly string? Patient;
         public readonly string? ReasonForVisit;
@@ -115,7 +115,7 @@ namespace Pulumi.Onepassword
 
             string? location,
 
-            Pulumi.Onepassword.MedicalRecord.Outputs.Medication? medication,
+            Pulumi.Onepassword.MedicalRecord.Outputs.MedicationSection? medication,
 
             string? notes,
 

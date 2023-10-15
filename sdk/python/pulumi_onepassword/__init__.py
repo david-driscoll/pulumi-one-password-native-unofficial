@@ -6,14 +6,14 @@ from . import _utilities
 import typing
 # Export this package's modules as members:
 from ._enums import *
-from .api_credential import *
-from .bank_account import *
-from .credit_card import *
-from .crypto_wallet import *
-from .database import *
-from .document import *
-from .driver_license import *
-from .email_account import *
+from .api_credential_item import *
+from .bank_account_item import *
+from .credit_card_item import *
+from .crypto_wallet_item import *
+from .database_item import *
+from .document_item import *
+from .driver_license_item import *
+from .email_account_item import *
 from .get_api_credential import *
 from .get_bank_account import *
 from .get_credit_card import *
@@ -39,22 +39,22 @@ from .get_software_license import *
 from .get_ssh_key import *
 from .get_vault import *
 from .get_wireless_router import *
-from .identity import *
+from .identity_item import *
 from .item import *
-from .login import *
-from .medical_record import *
-from .membership import *
-from .outdoor_license import *
-from .passport import *
-from .password import *
+from .login_item import *
+from .medical_record_item import *
+from .membership_item import *
+from .outdoor_license_item import *
+from .passport_item import *
+from .password_item import *
 from .provider import *
-from .reward_program import *
-from .secure_note import *
-from .server import *
-from .social_security_number import *
-from .software_license import *
-from .ssh_key import *
-from .wireless_router import *
+from .reward_program_item import *
+from .secure_note_item import *
+from .server_item import *
+from .social_security_number_item import *
+from .software_license_item import *
+from .ssh_key_item import *
+from .wireless_router_item import *
 from ._inputs import *
 from . import outputs
 
@@ -97,29 +97,29 @@ _utilities.register(
   "mod": "index",
   "fqn": "pulumi_onepassword",
   "classes": {
-   "onepassword:index:APICredential": "APICredential",
-   "onepassword:index:BankAccount": "BankAccount",
-   "onepassword:index:CreditCard": "CreditCard",
-   "onepassword:index:CryptoWallet": "CryptoWallet",
-   "onepassword:index:Database": "Database",
-   "onepassword:index:Document": "Document",
-   "onepassword:index:DriverLicense": "DriverLicense",
-   "onepassword:index:EmailAccount": "EmailAccount",
-   "onepassword:index:Identity": "Identity",
+   "onepassword:index:APICredentialItem": "APICredentialItem",
+   "onepassword:index:BankAccountItem": "BankAccountItem",
+   "onepassword:index:CreditCardItem": "CreditCardItem",
+   "onepassword:index:CryptoWalletItem": "CryptoWalletItem",
+   "onepassword:index:DatabaseItem": "DatabaseItem",
+   "onepassword:index:DocumentItem": "DocumentItem",
+   "onepassword:index:DriverLicenseItem": "DriverLicenseItem",
+   "onepassword:index:EmailAccountItem": "EmailAccountItem",
+   "onepassword:index:IdentityItem": "IdentityItem",
    "onepassword:index:Item": "Item",
-   "onepassword:index:Login": "Login",
-   "onepassword:index:MedicalRecord": "MedicalRecord",
-   "onepassword:index:Membership": "Membership",
-   "onepassword:index:OutdoorLicense": "OutdoorLicense",
-   "onepassword:index:Passport": "Passport",
-   "onepassword:index:Password": "Password",
-   "onepassword:index:RewardProgram": "RewardProgram",
-   "onepassword:index:SSHKey": "SSHKey",
-   "onepassword:index:SecureNote": "SecureNote",
-   "onepassword:index:Server": "Server",
-   "onepassword:index:SocialSecurityNumber": "SocialSecurityNumber",
-   "onepassword:index:SoftwareLicense": "SoftwareLicense",
-   "onepassword:index:WirelessRouter": "WirelessRouter"
+   "onepassword:index:LoginItem": "LoginItem",
+   "onepassword:index:MedicalRecordItem": "MedicalRecordItem",
+   "onepassword:index:MembershipItem": "MembershipItem",
+   "onepassword:index:OutdoorLicenseItem": "OutdoorLicenseItem",
+   "onepassword:index:PassportItem": "PassportItem",
+   "onepassword:index:PasswordItem": "PasswordItem",
+   "onepassword:index:RewardProgramItem": "RewardProgramItem",
+   "onepassword:index:SSHKeyItem": "SSHKeyItem",
+   "onepassword:index:SecureNoteItem": "SecureNoteItem",
+   "onepassword:index:ServerItem": "ServerItem",
+   "onepassword:index:SocialSecurityNumberItem": "SocialSecurityNumberItem",
+   "onepassword:index:SoftwareLicenseItem": "SoftwareLicenseItem",
+   "onepassword:index:WirelessRouterItem": "WirelessRouterItem"
   }
  }
 ]

@@ -9,13 +9,13 @@ from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 
 __all__ = [
-    'Address',
-    'Identification',
-    'InternetDetails',
+    'AddressSection',
+    'IdentificationSection',
+    'InternetDetailsSection',
 ]
 
 @pulumi.output_type
-class Address(dict):
+class AddressSection(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
@@ -23,14 +23,14 @@ class Address(dict):
             suggest = "default_phone"
 
         if suggest:
-            pulumi.log.warn(f"Key '{key}' not found in Address. Access the value via the '{suggest}' property getter instead.")
+            pulumi.log.warn(f"Key '{key}' not found in AddressSection. Access the value via the '{suggest}' property getter instead.")
 
     def __getitem__(self, key: str) -> Any:
-        Address.__key_warning(key)
+        AddressSection.__key_warning(key)
         return super().__getitem__(key)
 
     def get(self, key: str, default = None) -> Any:
-        Address.__key_warning(key)
+        AddressSection.__key_warning(key)
         return super().get(key, default)
 
     def __init__(__self__, *,
@@ -77,7 +77,7 @@ class Address(dict):
 
 
 @pulumi.output_type
-class Identification(dict):
+class IdentificationSection(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
@@ -91,14 +91,14 @@ class Identification(dict):
             suggest = "last_name"
 
         if suggest:
-            pulumi.log.warn(f"Key '{key}' not found in Identification. Access the value via the '{suggest}' property getter instead.")
+            pulumi.log.warn(f"Key '{key}' not found in IdentificationSection. Access the value via the '{suggest}' property getter instead.")
 
     def __getitem__(self, key: str) -> Any:
-        Identification.__key_warning(key)
+        IdentificationSection.__key_warning(key)
         return super().__getitem__(key)
 
     def get(self, key: str, default = None) -> Any:
-        Identification.__key_warning(key)
+        IdentificationSection.__key_warning(key)
         return super().get(key, default)
 
     def __init__(__self__, *,
@@ -177,7 +177,7 @@ class Identification(dict):
 
 
 @pulumi.output_type
-class InternetDetails(dict):
+class InternetDetailsSection(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
@@ -191,14 +191,14 @@ class InternetDetails(dict):
             suggest = "reminder_question"
 
         if suggest:
-            pulumi.log.warn(f"Key '{key}' not found in InternetDetails. Access the value via the '{suggest}' property getter instead.")
+            pulumi.log.warn(f"Key '{key}' not found in InternetDetailsSection. Access the value via the '{suggest}' property getter instead.")
 
     def __getitem__(self, key: str) -> Any:
-        InternetDetails.__key_warning(key)
+        InternetDetailsSection.__key_warning(key)
         return super().__getitem__(key)
 
     def get(self, key: str, default = None) -> Any:
-        InternetDetails.__key_warning(key)
+        InternetDetailsSection.__key_warning(key)
         return super().get(key, default)
 
     def __init__(__self__, *,

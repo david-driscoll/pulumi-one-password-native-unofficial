@@ -9,12 +9,12 @@ from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 
 __all__ = [
-    'ContactInformation',
-    'Smtp',
+    'ContactInformationSection',
+    'SmtpSection',
 ]
 
 @pulumi.output_type
-class ContactInformation(dict):
+class ContactInformationSection(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
@@ -26,14 +26,14 @@ class ContactInformation(dict):
             suggest = "providers_website"
 
         if suggest:
-            pulumi.log.warn(f"Key '{key}' not found in ContactInformation. Access the value via the '{suggest}' property getter instead.")
+            pulumi.log.warn(f"Key '{key}' not found in ContactInformationSection. Access the value via the '{suggest}' property getter instead.")
 
     def __getitem__(self, key: str) -> Any:
-        ContactInformation.__key_warning(key)
+        ContactInformationSection.__key_warning(key)
         return super().__getitem__(key)
 
     def get(self, key: str, default = None) -> Any:
-        ContactInformation.__key_warning(key)
+        ContactInformationSection.__key_warning(key)
         return super().get(key, default)
 
     def __init__(__self__, *,
@@ -72,7 +72,7 @@ class ContactInformation(dict):
 
 
 @pulumi.output_type
-class Smtp(dict):
+class SmtpSection(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
@@ -84,14 +84,14 @@ class Smtp(dict):
             suggest = "smtp_server"
 
         if suggest:
-            pulumi.log.warn(f"Key '{key}' not found in Smtp. Access the value via the '{suggest}' property getter instead.")
+            pulumi.log.warn(f"Key '{key}' not found in SmtpSection. Access the value via the '{suggest}' property getter instead.")
 
     def __getitem__(self, key: str) -> Any:
-        Smtp.__key_warning(key)
+        SmtpSection.__key_warning(key)
         return super().__getitem__(key)
 
     def get(self, key: str, default = None) -> Any:
-        Smtp.__key_warning(key)
+        SmtpSection.__key_warning(key)
         return super().get(key, default)
 
     def __init__(__self__, *,

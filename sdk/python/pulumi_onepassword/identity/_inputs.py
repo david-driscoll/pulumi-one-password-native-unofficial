@@ -9,13 +9,13 @@ from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 
 __all__ = [
-    'AddressArgs',
-    'IdentificationArgs',
-    'InternetDetailsArgs',
+    'AddressSectionArgs',
+    'IdentificationSectionArgs',
+    'InternetDetailsSectionArgs',
 ]
 
 @pulumi.input_type
-class AddressArgs:
+class AddressSectionArgs:
     def __init__(__self__, *,
                  address: Optional[pulumi.Input[str]] = None,
                  business: Optional[pulumi.Input[str]] = None,
@@ -80,7 +80,7 @@ class AddressArgs:
 
 
 @pulumi.input_type
-class IdentificationArgs:
+class IdentificationSectionArgs:
     def __init__(__self__, *,
                  birth_date: Optional[pulumi.Input[str]] = None,
                  company: Optional[pulumi.Input[str]] = None,
@@ -193,7 +193,7 @@ class IdentificationArgs:
 
 
 @pulumi.input_type
-class InternetDetailsArgs:
+class InternetDetailsSectionArgs:
     def __init__(__self__, *,
                  aol_aim: Optional[pulumi.Input[str]] = None,
                  email: Optional[pulumi.Input[str]] = None,

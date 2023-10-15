@@ -36,7 +36,7 @@ export interface GetEmailAccountArgs {
 export interface GetEmailAccountResult {
     readonly authMethod?: string;
     readonly category?: enums.Category | string;
-    readonly contactInformation?: outputs.emailAccount.ContactInformation;
+    readonly contactInformation?: outputs.emailAccount.ContactInformationSection;
     readonly fields?: outputs.GetField[];
     readonly id?: string;
     readonly notes?: string;
@@ -45,7 +45,7 @@ export interface GetEmailAccountResult {
     readonly sections?: outputs.GetSection[];
     readonly security?: string;
     readonly server?: string;
-    readonly smtp?: outputs.emailAccount.Smtp;
+    readonly smtp?: outputs.emailAccount.SmtpSection;
     /**
      * An array of strings of the tags assigned to the item.
      */

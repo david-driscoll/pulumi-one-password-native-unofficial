@@ -57,7 +57,7 @@ export interface GetCryptoWalletResult {
      * The UUID of the vault the item is in.
      */
     readonly vault?: string;
-    readonly wallet?: outputs.cryptoWallet.Wallet;
+    readonly wallet?: outputs.cryptoWallet.WalletSection;
 }
 
 export function getCryptoWalletOutput(args: GetCryptoWalletOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetCryptoWalletResult> {

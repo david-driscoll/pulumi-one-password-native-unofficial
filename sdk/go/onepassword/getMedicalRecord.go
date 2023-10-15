@@ -11,8 +11,8 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-func LookupMedicalRecord(ctx *pulumi.Context, args *LookupMedicalRecordArgs, opts ...pulumi.InvokeOption) (*LookupMedicalRecordResult, error) {
-	var rv LookupMedicalRecordResult
+func GetMedicalRecord(ctx *pulumi.Context, args *GetMedicalRecordArgs, opts ...pulumi.InvokeOption) (*GetMedicalRecordResult, error) {
+	var rv GetMedicalRecordResult
 	err := ctx.Invoke("onepassword:index:GetMedicalRecord", args, &rv, opts...)
 	if err != nil {
 		return nil, err
@@ -20,7 +20,7 @@ func LookupMedicalRecord(ctx *pulumi.Context, args *LookupMedicalRecordArgs, opt
 	return &rv, nil
 }
 
-type LookupMedicalRecordArgs struct {
+type GetMedicalRecordArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -29,18 +29,18 @@ type LookupMedicalRecordArgs struct {
 	Vault string `pulumi:"vault"`
 }
 
-type LookupMedicalRecordResult struct {
-	Category               *string                   `pulumi:"category"`
-	Date                   *string                   `pulumi:"date"`
-	Fields                 []GetField                `pulumi:"fields"`
-	HealthcareProfessional *string                   `pulumi:"healthcareProfessional"`
-	Id                     *string                   `pulumi:"id"`
-	Location               *string                   `pulumi:"location"`
-	Medication             *medicalrecord.Medication `pulumi:"medication"`
-	Notes                  *string                   `pulumi:"notes"`
-	Patient                *string                   `pulumi:"patient"`
-	ReasonForVisit         *string                   `pulumi:"reasonForVisit"`
-	Sections               []GetSection              `pulumi:"sections"`
+type GetMedicalRecordResult struct {
+	Category               *string                          `pulumi:"category"`
+	Date                   *string                          `pulumi:"date"`
+	Fields                 []GetField                       `pulumi:"fields"`
+	HealthcareProfessional *string                          `pulumi:"healthcareProfessional"`
+	Id                     *string                          `pulumi:"id"`
+	Location               *string                          `pulumi:"location"`
+	Medication             *medicalrecord.MedicationSection `pulumi:"medication"`
+	Notes                  *string                          `pulumi:"notes"`
+	Patient                *string                          `pulumi:"patient"`
+	ReasonForVisit         *string                          `pulumi:"reasonForVisit"`
+	Sections               []GetSection                     `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -51,20 +51,20 @@ type LookupMedicalRecordResult struct {
 	Vault *string `pulumi:"vault"`
 }
 
-func LookupMedicalRecordOutput(ctx *pulumi.Context, args LookupMedicalRecordOutputArgs, opts ...pulumi.InvokeOption) LookupMedicalRecordResultOutput {
+func GetMedicalRecordOutput(ctx *pulumi.Context, args GetMedicalRecordOutputArgs, opts ...pulumi.InvokeOption) GetMedicalRecordResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupMedicalRecordResult, error) {
-			args := v.(LookupMedicalRecordArgs)
-			r, err := LookupMedicalRecord(ctx, &args, opts...)
-			var s LookupMedicalRecordResult
+		ApplyT(func(v interface{}) (GetMedicalRecordResult, error) {
+			args := v.(GetMedicalRecordArgs)
+			r, err := GetMedicalRecord(ctx, &args, opts...)
+			var s GetMedicalRecordResult
 			if r != nil {
 				s = *r
 			}
 			return s, err
-		}).(LookupMedicalRecordResultOutput)
+		}).(GetMedicalRecordResultOutput)
 }
 
-type LookupMedicalRecordOutputArgs struct {
+type GetMedicalRecordOutputArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -73,88 +73,88 @@ type LookupMedicalRecordOutputArgs struct {
 	Vault pulumi.StringInput `pulumi:"vault"`
 }
 
-func (LookupMedicalRecordOutputArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupMedicalRecordArgs)(nil)).Elem()
+func (GetMedicalRecordOutputArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetMedicalRecordArgs)(nil)).Elem()
 }
 
-type LookupMedicalRecordResultOutput struct{ *pulumi.OutputState }
+type GetMedicalRecordResultOutput struct{ *pulumi.OutputState }
 
-func (LookupMedicalRecordResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupMedicalRecordResult)(nil)).Elem()
+func (GetMedicalRecordResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetMedicalRecordResult)(nil)).Elem()
 }
 
-func (o LookupMedicalRecordResultOutput) ToLookupMedicalRecordResultOutput() LookupMedicalRecordResultOutput {
+func (o GetMedicalRecordResultOutput) ToGetMedicalRecordResultOutput() GetMedicalRecordResultOutput {
 	return o
 }
 
-func (o LookupMedicalRecordResultOutput) ToLookupMedicalRecordResultOutputWithContext(ctx context.Context) LookupMedicalRecordResultOutput {
+func (o GetMedicalRecordResultOutput) ToGetMedicalRecordResultOutputWithContext(ctx context.Context) GetMedicalRecordResultOutput {
 	return o
 }
 
-func (o LookupMedicalRecordResultOutput) Category() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupMedicalRecordResult) *string { return v.Category }).(pulumi.StringPtrOutput)
+func (o GetMedicalRecordResultOutput) Category() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetMedicalRecordResult) *string { return v.Category }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupMedicalRecordResultOutput) Date() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupMedicalRecordResult) *string { return v.Date }).(pulumi.StringPtrOutput)
+func (o GetMedicalRecordResultOutput) Date() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetMedicalRecordResult) *string { return v.Date }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupMedicalRecordResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v LookupMedicalRecordResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetMedicalRecordResultOutput) Fields() GetFieldArrayOutput {
+	return o.ApplyT(func(v GetMedicalRecordResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
 }
 
-func (o LookupMedicalRecordResultOutput) HealthcareProfessional() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupMedicalRecordResult) *string { return v.HealthcareProfessional }).(pulumi.StringPtrOutput)
+func (o GetMedicalRecordResultOutput) HealthcareProfessional() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetMedicalRecordResult) *string { return v.HealthcareProfessional }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupMedicalRecordResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupMedicalRecordResult) *string { return v.Id }).(pulumi.StringPtrOutput)
+func (o GetMedicalRecordResultOutput) Id() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetMedicalRecordResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupMedicalRecordResultOutput) Location() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupMedicalRecordResult) *string { return v.Location }).(pulumi.StringPtrOutput)
+func (o GetMedicalRecordResultOutput) Location() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetMedicalRecordResult) *string { return v.Location }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupMedicalRecordResultOutput) Medication() medicalrecord.MedicationPtrOutput {
-	return o.ApplyT(func(v LookupMedicalRecordResult) *medicalrecord.Medication { return v.Medication }).(medicalrecord.MedicationPtrOutput)
+func (o GetMedicalRecordResultOutput) Medication() medicalrecord.MedicationSectionPtrOutput {
+	return o.ApplyT(func(v GetMedicalRecordResult) *medicalrecord.MedicationSection { return v.Medication }).(medicalrecord.MedicationSectionPtrOutput)
 }
 
-func (o LookupMedicalRecordResultOutput) Notes() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupMedicalRecordResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
+func (o GetMedicalRecordResultOutput) Notes() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetMedicalRecordResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupMedicalRecordResultOutput) Patient() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupMedicalRecordResult) *string { return v.Patient }).(pulumi.StringPtrOutput)
+func (o GetMedicalRecordResultOutput) Patient() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetMedicalRecordResult) *string { return v.Patient }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupMedicalRecordResultOutput) ReasonForVisit() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupMedicalRecordResult) *string { return v.ReasonForVisit }).(pulumi.StringPtrOutput)
+func (o GetMedicalRecordResultOutput) ReasonForVisit() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetMedicalRecordResult) *string { return v.ReasonForVisit }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupMedicalRecordResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v LookupMedicalRecordResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetMedicalRecordResultOutput) Sections() GetSectionArrayOutput {
+	return o.ApplyT(func(v GetMedicalRecordResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
 }
 
 // An array of strings of the tags assigned to the item.
-func (o LookupMedicalRecordResultOutput) Tags() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v LookupMedicalRecordResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
+func (o GetMedicalRecordResultOutput) Tags() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetMedicalRecordResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
 }
 
 // The title of the item.
-func (o LookupMedicalRecordResultOutput) Title() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupMedicalRecordResult) *string { return v.Title }).(pulumi.StringPtrOutput)
+func (o GetMedicalRecordResultOutput) Title() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetMedicalRecordResult) *string { return v.Title }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o LookupMedicalRecordResultOutput) Uuid() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupMedicalRecordResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
+func (o GetMedicalRecordResultOutput) Uuid() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetMedicalRecordResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the vault the item is in.
-func (o LookupMedicalRecordResultOutput) Vault() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupMedicalRecordResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
+func (o GetMedicalRecordResultOutput) Vault() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetMedicalRecordResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
 }
 
 func init() {
-	pulumi.RegisterOutputType(LookupMedicalRecordResultOutput{})
+	pulumi.RegisterOutputType(GetMedicalRecordResultOutput{})
 }

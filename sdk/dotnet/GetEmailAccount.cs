@@ -75,7 +75,7 @@ namespace Pulumi.Onepassword
     {
         public readonly string? AuthMethod;
         public readonly string? Category;
-        public readonly Pulumi.Onepassword.EmailAccount.Outputs.ContactInformation? ContactInformation;
+        public readonly Pulumi.Onepassword.EmailAccount.Outputs.ContactInformationSection? ContactInformation;
         public readonly ImmutableArray<Outputs.GetField> Fields;
         public readonly string? Id;
         public readonly string? Notes;
@@ -84,7 +84,7 @@ namespace Pulumi.Onepassword
         public readonly ImmutableArray<Outputs.GetSection> Sections;
         public readonly string? Security;
         public readonly string? Server;
-        public readonly Pulumi.Onepassword.EmailAccount.Outputs.Smtp? Smtp;
+        public readonly Pulumi.Onepassword.EmailAccount.Outputs.SmtpSection? Smtp;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
         /// </summary>
@@ -110,7 +110,7 @@ namespace Pulumi.Onepassword
 
             string? category,
 
-            Pulumi.Onepassword.EmailAccount.Outputs.ContactInformation? contactInformation,
+            Pulumi.Onepassword.EmailAccount.Outputs.ContactInformationSection? contactInformation,
 
             ImmutableArray<Outputs.GetField> fields,
 
@@ -128,7 +128,7 @@ namespace Pulumi.Onepassword
 
             string? server,
 
-            Pulumi.Onepassword.EmailAccount.Outputs.Smtp? smtp,
+            Pulumi.Onepassword.EmailAccount.Outputs.SmtpSection? smtp,
 
             ImmutableArray<string> tags,
 

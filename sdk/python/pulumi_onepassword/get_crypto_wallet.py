@@ -127,7 +127,7 @@ class GetCryptoWalletResult:
 
     @property
     @pulumi.getter
-    def wallet(self) -> Optional['_cryptowallet.outputs.Wallet']:
+    def wallet(self) -> Optional['_cryptowallet.outputs.WalletSection']:
         return pulumi.get(self, "wallet")
 
 

@@ -66,7 +66,7 @@ class GetServerResult:
 
     @property
     @pulumi.getter(name="adminConsole")
-    def admin_console(self) -> Optional['_server.outputs.AdminConsole']:
+    def admin_console(self) -> Optional['_server.outputs.AdminConsoleSection']:
         return pulumi.get(self, "admin_console")
 
     @property
@@ -81,7 +81,7 @@ class GetServerResult:
 
     @property
     @pulumi.getter(name="hostingProvider")
-    def hosting_provider(self) -> Optional['_server.outputs.HostingProvider']:
+    def hosting_provider(self) -> Optional['_server.outputs.HostingProviderSection']:
         return pulumi.get(self, "hosting_provider")
 
     @property

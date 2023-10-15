@@ -10,132 +10,132 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-type Wallet struct {
+type WalletSection struct {
 	WalletAddress *string `pulumi:"walletAddress"`
 }
 
-// WalletInput is an input type that accepts WalletArgs and WalletOutput values.
-// You can construct a concrete instance of `WalletInput` via:
+// WalletSectionInput is an input type that accepts WalletSectionArgs and WalletSectionOutput values.
+// You can construct a concrete instance of `WalletSectionInput` via:
 //
-//	WalletArgs{...}
-type WalletInput interface {
+//	WalletSectionArgs{...}
+type WalletSectionInput interface {
 	pulumi.Input
 
-	ToWalletOutput() WalletOutput
-	ToWalletOutputWithContext(context.Context) WalletOutput
+	ToWalletSectionOutput() WalletSectionOutput
+	ToWalletSectionOutputWithContext(context.Context) WalletSectionOutput
 }
 
-type WalletArgs struct {
+type WalletSectionArgs struct {
 	WalletAddress pulumi.StringPtrInput `pulumi:"walletAddress"`
 }
 
-func (WalletArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*Wallet)(nil)).Elem()
+func (WalletSectionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WalletSection)(nil)).Elem()
 }
 
-func (i WalletArgs) ToWalletOutput() WalletOutput {
-	return i.ToWalletOutputWithContext(context.Background())
+func (i WalletSectionArgs) ToWalletSectionOutput() WalletSectionOutput {
+	return i.ToWalletSectionOutputWithContext(context.Background())
 }
 
-func (i WalletArgs) ToWalletOutputWithContext(ctx context.Context) WalletOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(WalletOutput)
+func (i WalletSectionArgs) ToWalletSectionOutputWithContext(ctx context.Context) WalletSectionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WalletSectionOutput)
 }
 
-func (i WalletArgs) ToWalletPtrOutput() WalletPtrOutput {
-	return i.ToWalletPtrOutputWithContext(context.Background())
+func (i WalletSectionArgs) ToWalletSectionPtrOutput() WalletSectionPtrOutput {
+	return i.ToWalletSectionPtrOutputWithContext(context.Background())
 }
 
-func (i WalletArgs) ToWalletPtrOutputWithContext(ctx context.Context) WalletPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(WalletOutput).ToWalletPtrOutputWithContext(ctx)
+func (i WalletSectionArgs) ToWalletSectionPtrOutputWithContext(ctx context.Context) WalletSectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WalletSectionOutput).ToWalletSectionPtrOutputWithContext(ctx)
 }
 
-// WalletPtrInput is an input type that accepts WalletArgs, WalletPtr and WalletPtrOutput values.
-// You can construct a concrete instance of `WalletPtrInput` via:
+// WalletSectionPtrInput is an input type that accepts WalletSectionArgs, WalletSectionPtr and WalletSectionPtrOutput values.
+// You can construct a concrete instance of `WalletSectionPtrInput` via:
 //
-//	        WalletArgs{...}
+//	        WalletSectionArgs{...}
 //
 //	or:
 //
 //	        nil
-type WalletPtrInput interface {
+type WalletSectionPtrInput interface {
 	pulumi.Input
 
-	ToWalletPtrOutput() WalletPtrOutput
-	ToWalletPtrOutputWithContext(context.Context) WalletPtrOutput
+	ToWalletSectionPtrOutput() WalletSectionPtrOutput
+	ToWalletSectionPtrOutputWithContext(context.Context) WalletSectionPtrOutput
 }
 
-type walletPtrType WalletArgs
+type walletSectionPtrType WalletSectionArgs
 
-func WalletPtr(v *WalletArgs) WalletPtrInput {
-	return (*walletPtrType)(v)
+func WalletSectionPtr(v *WalletSectionArgs) WalletSectionPtrInput {
+	return (*walletSectionPtrType)(v)
 }
 
-func (*walletPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**Wallet)(nil)).Elem()
+func (*walletSectionPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WalletSection)(nil)).Elem()
 }
 
-func (i *walletPtrType) ToWalletPtrOutput() WalletPtrOutput {
-	return i.ToWalletPtrOutputWithContext(context.Background())
+func (i *walletSectionPtrType) ToWalletSectionPtrOutput() WalletSectionPtrOutput {
+	return i.ToWalletSectionPtrOutputWithContext(context.Background())
 }
 
-func (i *walletPtrType) ToWalletPtrOutputWithContext(ctx context.Context) WalletPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(WalletPtrOutput)
+func (i *walletSectionPtrType) ToWalletSectionPtrOutputWithContext(ctx context.Context) WalletSectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WalletSectionPtrOutput)
 }
 
-type WalletOutput struct{ *pulumi.OutputState }
+type WalletSectionOutput struct{ *pulumi.OutputState }
 
-func (WalletOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*Wallet)(nil)).Elem()
+func (WalletSectionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WalletSection)(nil)).Elem()
 }
 
-func (o WalletOutput) ToWalletOutput() WalletOutput {
+func (o WalletSectionOutput) ToWalletSectionOutput() WalletSectionOutput {
 	return o
 }
 
-func (o WalletOutput) ToWalletOutputWithContext(ctx context.Context) WalletOutput {
+func (o WalletSectionOutput) ToWalletSectionOutputWithContext(ctx context.Context) WalletSectionOutput {
 	return o
 }
 
-func (o WalletOutput) ToWalletPtrOutput() WalletPtrOutput {
-	return o.ToWalletPtrOutputWithContext(context.Background())
+func (o WalletSectionOutput) ToWalletSectionPtrOutput() WalletSectionPtrOutput {
+	return o.ToWalletSectionPtrOutputWithContext(context.Background())
 }
 
-func (o WalletOutput) ToWalletPtrOutputWithContext(ctx context.Context) WalletPtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, v Wallet) *Wallet {
+func (o WalletSectionOutput) ToWalletSectionPtrOutputWithContext(ctx context.Context) WalletSectionPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WalletSection) *WalletSection {
 		return &v
-	}).(WalletPtrOutput)
+	}).(WalletSectionPtrOutput)
 }
 
-func (o WalletOutput) WalletAddress() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v Wallet) *string { return v.WalletAddress }).(pulumi.StringPtrOutput)
+func (o WalletSectionOutput) WalletAddress() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WalletSection) *string { return v.WalletAddress }).(pulumi.StringPtrOutput)
 }
 
-type WalletPtrOutput struct{ *pulumi.OutputState }
+type WalletSectionPtrOutput struct{ *pulumi.OutputState }
 
-func (WalletPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**Wallet)(nil)).Elem()
+func (WalletSectionPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WalletSection)(nil)).Elem()
 }
 
-func (o WalletPtrOutput) ToWalletPtrOutput() WalletPtrOutput {
+func (o WalletSectionPtrOutput) ToWalletSectionPtrOutput() WalletSectionPtrOutput {
 	return o
 }
 
-func (o WalletPtrOutput) ToWalletPtrOutputWithContext(ctx context.Context) WalletPtrOutput {
+func (o WalletSectionPtrOutput) ToWalletSectionPtrOutputWithContext(ctx context.Context) WalletSectionPtrOutput {
 	return o
 }
 
-func (o WalletPtrOutput) Elem() WalletOutput {
-	return o.ApplyT(func(v *Wallet) Wallet {
+func (o WalletSectionPtrOutput) Elem() WalletSectionOutput {
+	return o.ApplyT(func(v *WalletSection) WalletSection {
 		if v != nil {
 			return *v
 		}
-		var ret Wallet
+		var ret WalletSection
 		return ret
-	}).(WalletOutput)
+	}).(WalletSectionOutput)
 }
 
-func (o WalletPtrOutput) WalletAddress() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Wallet) *string {
+func (o WalletSectionPtrOutput) WalletAddress() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WalletSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -144,8 +144,8 @@ func (o WalletPtrOutput) WalletAddress() pulumi.StringPtrOutput {
 }
 
 func init() {
-	pulumi.RegisterInputType(reflect.TypeOf((*WalletInput)(nil)).Elem(), WalletArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*WalletPtrInput)(nil)).Elem(), WalletArgs{})
-	pulumi.RegisterOutputType(WalletOutput{})
-	pulumi.RegisterOutputType(WalletPtrOutput{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WalletSectionInput)(nil)).Elem(), WalletSectionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WalletSectionPtrInput)(nil)).Elem(), WalletSectionArgs{})
+	pulumi.RegisterOutputType(WalletSectionOutput{})
+	pulumi.RegisterOutputType(WalletSectionPtrOutput{})
 }

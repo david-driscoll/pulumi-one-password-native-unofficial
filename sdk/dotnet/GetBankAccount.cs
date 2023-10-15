@@ -75,7 +75,7 @@ namespace Pulumi.Onepassword
     {
         public readonly string? AccountNumber;
         public readonly string? BankName;
-        public readonly Pulumi.Onepassword.BankAccount.Outputs.BranchInformation? BranchInformation;
+        public readonly Pulumi.Onepassword.BankAccount.Outputs.BranchInformationSection? BranchInformation;
         public readonly string? Category;
         public readonly ImmutableArray<Outputs.GetField> Fields;
         public readonly string? Iban;
@@ -110,7 +110,7 @@ namespace Pulumi.Onepassword
 
             string? bankName,
 
-            Pulumi.Onepassword.BankAccount.Outputs.BranchInformation? branchInformation,
+            Pulumi.Onepassword.BankAccount.Outputs.BranchInformationSection? branchInformation,
 
             string? category,
 

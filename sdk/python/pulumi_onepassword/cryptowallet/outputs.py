@@ -9,11 +9,11 @@ from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 
 __all__ = [
-    'Wallet',
+    'WalletSection',
 ]
 
 @pulumi.output_type
-class Wallet(dict):
+class WalletSection(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
@@ -21,14 +21,14 @@ class Wallet(dict):
             suggest = "wallet_address"
 
         if suggest:
-            pulumi.log.warn(f"Key '{key}' not found in Wallet. Access the value via the '{suggest}' property getter instead.")
+            pulumi.log.warn(f"Key '{key}' not found in WalletSection. Access the value via the '{suggest}' property getter instead.")
 
     def __getitem__(self, key: str) -> Any:
-        Wallet.__key_warning(key)
+        WalletSection.__key_warning(key)
         return super().__getitem__(key)
 
     def get(self, key: str, default = None) -> Any:
-        Wallet.__key_warning(key)
+        WalletSection.__key_warning(key)
         return super().get(key, default)
 
     def __init__(__self__, *,

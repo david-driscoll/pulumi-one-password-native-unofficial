@@ -74,13 +74,13 @@ namespace Pulumi.Onepassword
     public sealed class GetSoftwareLicenseResult
     {
         public readonly string? Category;
-        public readonly Pulumi.Onepassword.SoftwareLicense.Outputs.Customer? Customer;
+        public readonly Pulumi.Onepassword.SoftwareLicense.Outputs.CustomerSection? Customer;
         public readonly ImmutableArray<Outputs.GetField> Fields;
         public readonly string? Id;
         public readonly string? LicenseKey;
         public readonly string? Notes;
-        public readonly Pulumi.Onepassword.SoftwareLicense.Outputs.Order? Order;
-        public readonly Pulumi.Onepassword.SoftwareLicense.Outputs.Publisher? Publisher;
+        public readonly Pulumi.Onepassword.SoftwareLicense.Outputs.OrderSection? Order;
+        public readonly Pulumi.Onepassword.SoftwareLicense.Outputs.PublisherSection? Publisher;
         public readonly ImmutableArray<Outputs.GetSection> Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
@@ -104,7 +104,7 @@ namespace Pulumi.Onepassword
         private GetSoftwareLicenseResult(
             string? category,
 
-            Pulumi.Onepassword.SoftwareLicense.Outputs.Customer? customer,
+            Pulumi.Onepassword.SoftwareLicense.Outputs.CustomerSection? customer,
 
             ImmutableArray<Outputs.GetField> fields,
 
@@ -114,9 +114,9 @@ namespace Pulumi.Onepassword
 
             string? notes,
 
-            Pulumi.Onepassword.SoftwareLicense.Outputs.Order? order,
+            Pulumi.Onepassword.SoftwareLicense.Outputs.OrderSection? order,
 
-            Pulumi.Onepassword.SoftwareLicense.Outputs.Publisher? publisher,
+            Pulumi.Onepassword.SoftwareLicense.Outputs.PublisherSection? publisher,
 
             ImmutableArray<Outputs.GetSection> sections,
 

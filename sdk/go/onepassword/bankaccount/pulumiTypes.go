@@ -10,138 +10,138 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-type BranchInformation struct {
+type BranchInformationSection struct {
 	Address *string `pulumi:"address"`
 	Phone   *string `pulumi:"phone"`
 }
 
-// BranchInformationInput is an input type that accepts BranchInformationArgs and BranchInformationOutput values.
-// You can construct a concrete instance of `BranchInformationInput` via:
+// BranchInformationSectionInput is an input type that accepts BranchInformationSectionArgs and BranchInformationSectionOutput values.
+// You can construct a concrete instance of `BranchInformationSectionInput` via:
 //
-//	BranchInformationArgs{...}
-type BranchInformationInput interface {
+//	BranchInformationSectionArgs{...}
+type BranchInformationSectionInput interface {
 	pulumi.Input
 
-	ToBranchInformationOutput() BranchInformationOutput
-	ToBranchInformationOutputWithContext(context.Context) BranchInformationOutput
+	ToBranchInformationSectionOutput() BranchInformationSectionOutput
+	ToBranchInformationSectionOutputWithContext(context.Context) BranchInformationSectionOutput
 }
 
-type BranchInformationArgs struct {
+type BranchInformationSectionArgs struct {
 	Address pulumi.StringPtrInput `pulumi:"address"`
 	Phone   pulumi.StringPtrInput `pulumi:"phone"`
 }
 
-func (BranchInformationArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*BranchInformation)(nil)).Elem()
+func (BranchInformationSectionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BranchInformationSection)(nil)).Elem()
 }
 
-func (i BranchInformationArgs) ToBranchInformationOutput() BranchInformationOutput {
-	return i.ToBranchInformationOutputWithContext(context.Background())
+func (i BranchInformationSectionArgs) ToBranchInformationSectionOutput() BranchInformationSectionOutput {
+	return i.ToBranchInformationSectionOutputWithContext(context.Background())
 }
 
-func (i BranchInformationArgs) ToBranchInformationOutputWithContext(ctx context.Context) BranchInformationOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(BranchInformationOutput)
+func (i BranchInformationSectionArgs) ToBranchInformationSectionOutputWithContext(ctx context.Context) BranchInformationSectionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BranchInformationSectionOutput)
 }
 
-func (i BranchInformationArgs) ToBranchInformationPtrOutput() BranchInformationPtrOutput {
-	return i.ToBranchInformationPtrOutputWithContext(context.Background())
+func (i BranchInformationSectionArgs) ToBranchInformationSectionPtrOutput() BranchInformationSectionPtrOutput {
+	return i.ToBranchInformationSectionPtrOutputWithContext(context.Background())
 }
 
-func (i BranchInformationArgs) ToBranchInformationPtrOutputWithContext(ctx context.Context) BranchInformationPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(BranchInformationOutput).ToBranchInformationPtrOutputWithContext(ctx)
+func (i BranchInformationSectionArgs) ToBranchInformationSectionPtrOutputWithContext(ctx context.Context) BranchInformationSectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BranchInformationSectionOutput).ToBranchInformationSectionPtrOutputWithContext(ctx)
 }
 
-// BranchInformationPtrInput is an input type that accepts BranchInformationArgs, BranchInformationPtr and BranchInformationPtrOutput values.
-// You can construct a concrete instance of `BranchInformationPtrInput` via:
+// BranchInformationSectionPtrInput is an input type that accepts BranchInformationSectionArgs, BranchInformationSectionPtr and BranchInformationSectionPtrOutput values.
+// You can construct a concrete instance of `BranchInformationSectionPtrInput` via:
 //
-//	        BranchInformationArgs{...}
+//	        BranchInformationSectionArgs{...}
 //
 //	or:
 //
 //	        nil
-type BranchInformationPtrInput interface {
+type BranchInformationSectionPtrInput interface {
 	pulumi.Input
 
-	ToBranchInformationPtrOutput() BranchInformationPtrOutput
-	ToBranchInformationPtrOutputWithContext(context.Context) BranchInformationPtrOutput
+	ToBranchInformationSectionPtrOutput() BranchInformationSectionPtrOutput
+	ToBranchInformationSectionPtrOutputWithContext(context.Context) BranchInformationSectionPtrOutput
 }
 
-type branchInformationPtrType BranchInformationArgs
+type branchInformationSectionPtrType BranchInformationSectionArgs
 
-func BranchInformationPtr(v *BranchInformationArgs) BranchInformationPtrInput {
-	return (*branchInformationPtrType)(v)
+func BranchInformationSectionPtr(v *BranchInformationSectionArgs) BranchInformationSectionPtrInput {
+	return (*branchInformationSectionPtrType)(v)
 }
 
-func (*branchInformationPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**BranchInformation)(nil)).Elem()
+func (*branchInformationSectionPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BranchInformationSection)(nil)).Elem()
 }
 
-func (i *branchInformationPtrType) ToBranchInformationPtrOutput() BranchInformationPtrOutput {
-	return i.ToBranchInformationPtrOutputWithContext(context.Background())
+func (i *branchInformationSectionPtrType) ToBranchInformationSectionPtrOutput() BranchInformationSectionPtrOutput {
+	return i.ToBranchInformationSectionPtrOutputWithContext(context.Background())
 }
 
-func (i *branchInformationPtrType) ToBranchInformationPtrOutputWithContext(ctx context.Context) BranchInformationPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(BranchInformationPtrOutput)
+func (i *branchInformationSectionPtrType) ToBranchInformationSectionPtrOutputWithContext(ctx context.Context) BranchInformationSectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BranchInformationSectionPtrOutput)
 }
 
-type BranchInformationOutput struct{ *pulumi.OutputState }
+type BranchInformationSectionOutput struct{ *pulumi.OutputState }
 
-func (BranchInformationOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*BranchInformation)(nil)).Elem()
+func (BranchInformationSectionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BranchInformationSection)(nil)).Elem()
 }
 
-func (o BranchInformationOutput) ToBranchInformationOutput() BranchInformationOutput {
+func (o BranchInformationSectionOutput) ToBranchInformationSectionOutput() BranchInformationSectionOutput {
 	return o
 }
 
-func (o BranchInformationOutput) ToBranchInformationOutputWithContext(ctx context.Context) BranchInformationOutput {
+func (o BranchInformationSectionOutput) ToBranchInformationSectionOutputWithContext(ctx context.Context) BranchInformationSectionOutput {
 	return o
 }
 
-func (o BranchInformationOutput) ToBranchInformationPtrOutput() BranchInformationPtrOutput {
-	return o.ToBranchInformationPtrOutputWithContext(context.Background())
+func (o BranchInformationSectionOutput) ToBranchInformationSectionPtrOutput() BranchInformationSectionPtrOutput {
+	return o.ToBranchInformationSectionPtrOutputWithContext(context.Background())
 }
 
-func (o BranchInformationOutput) ToBranchInformationPtrOutputWithContext(ctx context.Context) BranchInformationPtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, v BranchInformation) *BranchInformation {
+func (o BranchInformationSectionOutput) ToBranchInformationSectionPtrOutputWithContext(ctx context.Context) BranchInformationSectionPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v BranchInformationSection) *BranchInformationSection {
 		return &v
-	}).(BranchInformationPtrOutput)
+	}).(BranchInformationSectionPtrOutput)
 }
 
-func (o BranchInformationOutput) Address() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v BranchInformation) *string { return v.Address }).(pulumi.StringPtrOutput)
+func (o BranchInformationSectionOutput) Address() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BranchInformationSection) *string { return v.Address }).(pulumi.StringPtrOutput)
 }
 
-func (o BranchInformationOutput) Phone() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v BranchInformation) *string { return v.Phone }).(pulumi.StringPtrOutput)
+func (o BranchInformationSectionOutput) Phone() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BranchInformationSection) *string { return v.Phone }).(pulumi.StringPtrOutput)
 }
 
-type BranchInformationPtrOutput struct{ *pulumi.OutputState }
+type BranchInformationSectionPtrOutput struct{ *pulumi.OutputState }
 
-func (BranchInformationPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**BranchInformation)(nil)).Elem()
+func (BranchInformationSectionPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BranchInformationSection)(nil)).Elem()
 }
 
-func (o BranchInformationPtrOutput) ToBranchInformationPtrOutput() BranchInformationPtrOutput {
+func (o BranchInformationSectionPtrOutput) ToBranchInformationSectionPtrOutput() BranchInformationSectionPtrOutput {
 	return o
 }
 
-func (o BranchInformationPtrOutput) ToBranchInformationPtrOutputWithContext(ctx context.Context) BranchInformationPtrOutput {
+func (o BranchInformationSectionPtrOutput) ToBranchInformationSectionPtrOutputWithContext(ctx context.Context) BranchInformationSectionPtrOutput {
 	return o
 }
 
-func (o BranchInformationPtrOutput) Elem() BranchInformationOutput {
-	return o.ApplyT(func(v *BranchInformation) BranchInformation {
+func (o BranchInformationSectionPtrOutput) Elem() BranchInformationSectionOutput {
+	return o.ApplyT(func(v *BranchInformationSection) BranchInformationSection {
 		if v != nil {
 			return *v
 		}
-		var ret BranchInformation
+		var ret BranchInformationSection
 		return ret
-	}).(BranchInformationOutput)
+	}).(BranchInformationSectionOutput)
 }
 
-func (o BranchInformationPtrOutput) Address() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *BranchInformation) *string {
+func (o BranchInformationSectionPtrOutput) Address() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BranchInformationSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -149,8 +149,8 @@ func (o BranchInformationPtrOutput) Address() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o BranchInformationPtrOutput) Phone() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *BranchInformation) *string {
+func (o BranchInformationSectionPtrOutput) Phone() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BranchInformationSection) *string {
 		if v == nil {
 			return nil
 		}
@@ -159,8 +159,8 @@ func (o BranchInformationPtrOutput) Phone() pulumi.StringPtrOutput {
 }
 
 func init() {
-	pulumi.RegisterInputType(reflect.TypeOf((*BranchInformationInput)(nil)).Elem(), BranchInformationArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*BranchInformationPtrInput)(nil)).Elem(), BranchInformationArgs{})
-	pulumi.RegisterOutputType(BranchInformationOutput{})
-	pulumi.RegisterOutputType(BranchInformationPtrOutput{})
+	pulumi.RegisterInputType(reflect.TypeOf((*BranchInformationSectionInput)(nil)).Elem(), BranchInformationSectionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*BranchInformationSectionPtrInput)(nil)).Elem(), BranchInformationSectionArgs{})
+	pulumi.RegisterOutputType(BranchInformationSectionOutput{})
+	pulumi.RegisterOutputType(BranchInformationSectionPtrOutput{})
 }

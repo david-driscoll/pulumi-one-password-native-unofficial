@@ -20,52 +20,52 @@ func (m *module) Version() semver.Version {
 
 func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi.Resource, err error) {
 	switch typ {
-	case "onepassword:index:APICredential":
-		r = &APICredential{}
-	case "onepassword:index:BankAccount":
-		r = &BankAccount{}
-	case "onepassword:index:CreditCard":
-		r = &CreditCard{}
-	case "onepassword:index:CryptoWallet":
-		r = &CryptoWallet{}
-	case "onepassword:index:Database":
-		r = &Database{}
-	case "onepassword:index:Document":
-		r = &Document{}
-	case "onepassword:index:DriverLicense":
-		r = &DriverLicense{}
-	case "onepassword:index:EmailAccount":
-		r = &EmailAccount{}
-	case "onepassword:index:Identity":
-		r = &Identity{}
+	case "onepassword:index:APICredentialItem":
+		r = &APICredentialItem{}
+	case "onepassword:index:BankAccountItem":
+		r = &BankAccountItem{}
+	case "onepassword:index:CreditCardItem":
+		r = &CreditCardItem{}
+	case "onepassword:index:CryptoWalletItem":
+		r = &CryptoWalletItem{}
+	case "onepassword:index:DatabaseItem":
+		r = &DatabaseItem{}
+	case "onepassword:index:DocumentItem":
+		r = &DocumentItem{}
+	case "onepassword:index:DriverLicenseItem":
+		r = &DriverLicenseItem{}
+	case "onepassword:index:EmailAccountItem":
+		r = &EmailAccountItem{}
+	case "onepassword:index:IdentityItem":
+		r = &IdentityItem{}
 	case "onepassword:index:Item":
 		r = &Item{}
-	case "onepassword:index:Login":
-		r = &Login{}
-	case "onepassword:index:MedicalRecord":
-		r = &MedicalRecord{}
-	case "onepassword:index:Membership":
-		r = &Membership{}
-	case "onepassword:index:OutdoorLicense":
-		r = &OutdoorLicense{}
-	case "onepassword:index:Passport":
-		r = &Passport{}
-	case "onepassword:index:Password":
-		r = &Password{}
-	case "onepassword:index:RewardProgram":
-		r = &RewardProgram{}
-	case "onepassword:index:SSHKey":
-		r = &SSHKey{}
-	case "onepassword:index:SecureNote":
-		r = &SecureNote{}
-	case "onepassword:index:Server":
-		r = &Server{}
-	case "onepassword:index:SocialSecurityNumber":
-		r = &SocialSecurityNumber{}
-	case "onepassword:index:SoftwareLicense":
-		r = &SoftwareLicense{}
-	case "onepassword:index:WirelessRouter":
-		r = &WirelessRouter{}
+	case "onepassword:index:LoginItem":
+		r = &LoginItem{}
+	case "onepassword:index:MedicalRecordItem":
+		r = &MedicalRecordItem{}
+	case "onepassword:index:MembershipItem":
+		r = &MembershipItem{}
+	case "onepassword:index:OutdoorLicenseItem":
+		r = &OutdoorLicenseItem{}
+	case "onepassword:index:PassportItem":
+		r = &PassportItem{}
+	case "onepassword:index:PasswordItem":
+		r = &PasswordItem{}
+	case "onepassword:index:RewardProgramItem":
+		r = &RewardProgramItem{}
+	case "onepassword:index:SSHKeyItem":
+		r = &SSHKeyItem{}
+	case "onepassword:index:SecureNoteItem":
+		r = &SecureNoteItem{}
+	case "onepassword:index:ServerItem":
+		r = &ServerItem{}
+	case "onepassword:index:SocialSecurityNumberItem":
+		r = &SocialSecurityNumberItem{}
+	case "onepassword:index:SoftwareLicenseItem":
+		r = &SoftwareLicenseItem{}
+	case "onepassword:index:WirelessRouterItem":
+		r = &WirelessRouterItem{}
 	default:
 		return nil, fmt.Errorf("unknown resource type: %s", typ)
 	}

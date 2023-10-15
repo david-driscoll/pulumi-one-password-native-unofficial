@@ -11,8 +11,8 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-func LookupSoftwareLicense(ctx *pulumi.Context, args *LookupSoftwareLicenseArgs, opts ...pulumi.InvokeOption) (*LookupSoftwareLicenseResult, error) {
-	var rv LookupSoftwareLicenseResult
+func GetSoftwareLicense(ctx *pulumi.Context, args *GetSoftwareLicenseArgs, opts ...pulumi.InvokeOption) (*GetSoftwareLicenseResult, error) {
+	var rv GetSoftwareLicenseResult
 	err := ctx.Invoke("onepassword:index:GetSoftwareLicense", args, &rv, opts...)
 	if err != nil {
 		return nil, err
@@ -20,7 +20,7 @@ func LookupSoftwareLicense(ctx *pulumi.Context, args *LookupSoftwareLicenseArgs,
 	return &rv, nil
 }
 
-type LookupSoftwareLicenseArgs struct {
+type GetSoftwareLicenseArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -29,16 +29,16 @@ type LookupSoftwareLicenseArgs struct {
 	Vault string `pulumi:"vault"`
 }
 
-type LookupSoftwareLicenseResult struct {
-	Category   *string                    `pulumi:"category"`
-	Customer   *softwarelicense.Customer  `pulumi:"customer"`
-	Fields     []GetField                 `pulumi:"fields"`
-	Id         *string                    `pulumi:"id"`
-	LicenseKey *string                    `pulumi:"licenseKey"`
-	Notes      *string                    `pulumi:"notes"`
-	Order      *softwarelicense.Order     `pulumi:"order"`
-	Publisher  *softwarelicense.Publisher `pulumi:"publisher"`
-	Sections   []GetSection               `pulumi:"sections"`
+type GetSoftwareLicenseResult struct {
+	Category   *string                           `pulumi:"category"`
+	Customer   *softwarelicense.CustomerSection  `pulumi:"customer"`
+	Fields     []GetField                        `pulumi:"fields"`
+	Id         *string                           `pulumi:"id"`
+	LicenseKey *string                           `pulumi:"licenseKey"`
+	Notes      *string                           `pulumi:"notes"`
+	Order      *softwarelicense.OrderSection     `pulumi:"order"`
+	Publisher  *softwarelicense.PublisherSection `pulumi:"publisher"`
+	Sections   []GetSection                      `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -50,20 +50,20 @@ type LookupSoftwareLicenseResult struct {
 	Version *string `pulumi:"version"`
 }
 
-func LookupSoftwareLicenseOutput(ctx *pulumi.Context, args LookupSoftwareLicenseOutputArgs, opts ...pulumi.InvokeOption) LookupSoftwareLicenseResultOutput {
+func GetSoftwareLicenseOutput(ctx *pulumi.Context, args GetSoftwareLicenseOutputArgs, opts ...pulumi.InvokeOption) GetSoftwareLicenseResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupSoftwareLicenseResult, error) {
-			args := v.(LookupSoftwareLicenseArgs)
-			r, err := LookupSoftwareLicense(ctx, &args, opts...)
-			var s LookupSoftwareLicenseResult
+		ApplyT(func(v interface{}) (GetSoftwareLicenseResult, error) {
+			args := v.(GetSoftwareLicenseArgs)
+			r, err := GetSoftwareLicense(ctx, &args, opts...)
+			var s GetSoftwareLicenseResult
 			if r != nil {
 				s = *r
 			}
 			return s, err
-		}).(LookupSoftwareLicenseResultOutput)
+		}).(GetSoftwareLicenseResultOutput)
 }
 
-type LookupSoftwareLicenseOutputArgs struct {
+type GetSoftwareLicenseOutputArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -72,84 +72,84 @@ type LookupSoftwareLicenseOutputArgs struct {
 	Vault pulumi.StringInput `pulumi:"vault"`
 }
 
-func (LookupSoftwareLicenseOutputArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupSoftwareLicenseArgs)(nil)).Elem()
+func (GetSoftwareLicenseOutputArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSoftwareLicenseArgs)(nil)).Elem()
 }
 
-type LookupSoftwareLicenseResultOutput struct{ *pulumi.OutputState }
+type GetSoftwareLicenseResultOutput struct{ *pulumi.OutputState }
 
-func (LookupSoftwareLicenseResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupSoftwareLicenseResult)(nil)).Elem()
+func (GetSoftwareLicenseResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSoftwareLicenseResult)(nil)).Elem()
 }
 
-func (o LookupSoftwareLicenseResultOutput) ToLookupSoftwareLicenseResultOutput() LookupSoftwareLicenseResultOutput {
+func (o GetSoftwareLicenseResultOutput) ToGetSoftwareLicenseResultOutput() GetSoftwareLicenseResultOutput {
 	return o
 }
 
-func (o LookupSoftwareLicenseResultOutput) ToLookupSoftwareLicenseResultOutputWithContext(ctx context.Context) LookupSoftwareLicenseResultOutput {
+func (o GetSoftwareLicenseResultOutput) ToGetSoftwareLicenseResultOutputWithContext(ctx context.Context) GetSoftwareLicenseResultOutput {
 	return o
 }
 
-func (o LookupSoftwareLicenseResultOutput) Category() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupSoftwareLicenseResult) *string { return v.Category }).(pulumi.StringPtrOutput)
+func (o GetSoftwareLicenseResultOutput) Category() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetSoftwareLicenseResult) *string { return v.Category }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupSoftwareLicenseResultOutput) Customer() softwarelicense.CustomerPtrOutput {
-	return o.ApplyT(func(v LookupSoftwareLicenseResult) *softwarelicense.Customer { return v.Customer }).(softwarelicense.CustomerPtrOutput)
+func (o GetSoftwareLicenseResultOutput) Customer() softwarelicense.CustomerSectionPtrOutput {
+	return o.ApplyT(func(v GetSoftwareLicenseResult) *softwarelicense.CustomerSection { return v.Customer }).(softwarelicense.CustomerSectionPtrOutput)
 }
 
-func (o LookupSoftwareLicenseResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v LookupSoftwareLicenseResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetSoftwareLicenseResultOutput) Fields() GetFieldArrayOutput {
+	return o.ApplyT(func(v GetSoftwareLicenseResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
 }
 
-func (o LookupSoftwareLicenseResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupSoftwareLicenseResult) *string { return v.Id }).(pulumi.StringPtrOutput)
+func (o GetSoftwareLicenseResultOutput) Id() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetSoftwareLicenseResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupSoftwareLicenseResultOutput) LicenseKey() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupSoftwareLicenseResult) *string { return v.LicenseKey }).(pulumi.StringPtrOutput)
+func (o GetSoftwareLicenseResultOutput) LicenseKey() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetSoftwareLicenseResult) *string { return v.LicenseKey }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupSoftwareLicenseResultOutput) Notes() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupSoftwareLicenseResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
+func (o GetSoftwareLicenseResultOutput) Notes() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetSoftwareLicenseResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupSoftwareLicenseResultOutput) Order() softwarelicense.OrderPtrOutput {
-	return o.ApplyT(func(v LookupSoftwareLicenseResult) *softwarelicense.Order { return v.Order }).(softwarelicense.OrderPtrOutput)
+func (o GetSoftwareLicenseResultOutput) Order() softwarelicense.OrderSectionPtrOutput {
+	return o.ApplyT(func(v GetSoftwareLicenseResult) *softwarelicense.OrderSection { return v.Order }).(softwarelicense.OrderSectionPtrOutput)
 }
 
-func (o LookupSoftwareLicenseResultOutput) Publisher() softwarelicense.PublisherPtrOutput {
-	return o.ApplyT(func(v LookupSoftwareLicenseResult) *softwarelicense.Publisher { return v.Publisher }).(softwarelicense.PublisherPtrOutput)
+func (o GetSoftwareLicenseResultOutput) Publisher() softwarelicense.PublisherSectionPtrOutput {
+	return o.ApplyT(func(v GetSoftwareLicenseResult) *softwarelicense.PublisherSection { return v.Publisher }).(softwarelicense.PublisherSectionPtrOutput)
 }
 
-func (o LookupSoftwareLicenseResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v LookupSoftwareLicenseResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetSoftwareLicenseResultOutput) Sections() GetSectionArrayOutput {
+	return o.ApplyT(func(v GetSoftwareLicenseResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
 }
 
 // An array of strings of the tags assigned to the item.
-func (o LookupSoftwareLicenseResultOutput) Tags() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v LookupSoftwareLicenseResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
+func (o GetSoftwareLicenseResultOutput) Tags() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetSoftwareLicenseResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
 }
 
 // The title of the item.
-func (o LookupSoftwareLicenseResultOutput) Title() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupSoftwareLicenseResult) *string { return v.Title }).(pulumi.StringPtrOutput)
+func (o GetSoftwareLicenseResultOutput) Title() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetSoftwareLicenseResult) *string { return v.Title }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o LookupSoftwareLicenseResultOutput) Uuid() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupSoftwareLicenseResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
+func (o GetSoftwareLicenseResultOutput) Uuid() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetSoftwareLicenseResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the vault the item is in.
-func (o LookupSoftwareLicenseResultOutput) Vault() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupSoftwareLicenseResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
+func (o GetSoftwareLicenseResultOutput) Vault() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetSoftwareLicenseResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupSoftwareLicenseResultOutput) Version() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupSoftwareLicenseResult) *string { return v.Version }).(pulumi.StringPtrOutput)
+func (o GetSoftwareLicenseResultOutput) Version() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetSoftwareLicenseResult) *string { return v.Version }).(pulumi.StringPtrOutput)
 }
 
 func init() {
-	pulumi.RegisterOutputType(LookupSoftwareLicenseResultOutput{})
+	pulumi.RegisterOutputType(GetSoftwareLicenseResultOutput{})
 }

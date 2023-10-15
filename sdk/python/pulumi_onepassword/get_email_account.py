@@ -88,7 +88,7 @@ class GetEmailAccountResult:
 
     @property
     @pulumi.getter(name="contactInformation")
-    def contact_information(self) -> Optional['_emailaccount.outputs.ContactInformation']:
+    def contact_information(self) -> Optional['_emailaccount.outputs.ContactInformationSection']:
         return pulumi.get(self, "contact_information")
 
     @property
@@ -133,7 +133,7 @@ class GetEmailAccountResult:
 
     @property
     @pulumi.getter
-    def smtp(self) -> Optional['_emailaccount.outputs.Smtp']:
+    def smtp(self) -> Optional['_emailaccount.outputs.SmtpSection']:
         return pulumi.get(self, "smtp")
 
     @property

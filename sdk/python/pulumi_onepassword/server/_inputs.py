@@ -9,12 +9,12 @@ from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 
 __all__ = [
-    'AdminConsoleArgs',
-    'HostingProviderArgs',
+    'AdminConsoleSectionArgs',
+    'HostingProviderSectionArgs',
 ]
 
 @pulumi.input_type
-class AdminConsoleArgs:
+class AdminConsoleSectionArgs:
     def __init__(__self__, *,
                  admin_console_url: Optional[pulumi.Input[str]] = None,
                  admin_console_username: Optional[pulumi.Input[str]] = None,
@@ -55,7 +55,7 @@ class AdminConsoleArgs:
 
 
 @pulumi.input_type
-class HostingProviderArgs:
+class HostingProviderSectionArgs:
     def __init__(__self__, *,
                  name: Optional[pulumi.Input[str]] = None,
                  support_phone: Optional[pulumi.Input[str]] = None,

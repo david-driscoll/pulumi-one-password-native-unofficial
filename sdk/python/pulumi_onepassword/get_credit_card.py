@@ -75,7 +75,7 @@ class GetCreditCardResult:
 
     @property
     @pulumi.getter(name="additionalDetails")
-    def additional_details(self) -> Optional['_creditcard.outputs.AdditionalDetails']:
+    def additional_details(self) -> Optional['_creditcard.outputs.AdditionalDetailsSection']:
         return pulumi.get(self, "additional_details")
 
     @property
@@ -90,7 +90,7 @@ class GetCreditCardResult:
 
     @property
     @pulumi.getter(name="contactInformation")
-    def contact_information(self) -> Optional['_creditcard.outputs.ContactInformation']:
+    def contact_information(self) -> Optional['_creditcard.outputs.ContactInformationSection']:
         return pulumi.get(self, "contact_information")
 
     @property

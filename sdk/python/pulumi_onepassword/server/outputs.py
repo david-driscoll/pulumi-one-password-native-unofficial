@@ -9,12 +9,12 @@ from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 
 __all__ = [
-    'AdminConsole',
-    'HostingProvider',
+    'AdminConsoleSection',
+    'HostingProviderSection',
 ]
 
 @pulumi.output_type
-class AdminConsole(dict):
+class AdminConsoleSection(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
@@ -26,14 +26,14 @@ class AdminConsole(dict):
             suggest = "console_password"
 
         if suggest:
-            pulumi.log.warn(f"Key '{key}' not found in AdminConsole. Access the value via the '{suggest}' property getter instead.")
+            pulumi.log.warn(f"Key '{key}' not found in AdminConsoleSection. Access the value via the '{suggest}' property getter instead.")
 
     def __getitem__(self, key: str) -> Any:
-        AdminConsole.__key_warning(key)
+        AdminConsoleSection.__key_warning(key)
         return super().__getitem__(key)
 
     def get(self, key: str, default = None) -> Any:
-        AdminConsole.__key_warning(key)
+        AdminConsoleSection.__key_warning(key)
         return super().get(key, default)
 
     def __init__(__self__, *,
@@ -64,7 +64,7 @@ class AdminConsole(dict):
 
 
 @pulumi.output_type
-class HostingProvider(dict):
+class HostingProviderSection(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
@@ -74,14 +74,14 @@ class HostingProvider(dict):
             suggest = "support_url"
 
         if suggest:
-            pulumi.log.warn(f"Key '{key}' not found in HostingProvider. Access the value via the '{suggest}' property getter instead.")
+            pulumi.log.warn(f"Key '{key}' not found in HostingProviderSection. Access the value via the '{suggest}' property getter instead.")
 
     def __getitem__(self, key: str) -> Any:
-        HostingProvider.__key_warning(key)
+        HostingProviderSection.__key_warning(key)
         return super().__getitem__(key)
 
     def get(self, key: str, default = None) -> Any:
-        HostingProvider.__key_warning(key)
+        HostingProviderSection.__key_warning(key)
         return super().get(key, default)
 
     def __init__(__self__, *,

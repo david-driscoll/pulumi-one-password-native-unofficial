@@ -10,8 +10,8 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-func LookupMembership(ctx *pulumi.Context, args *LookupMembershipArgs, opts ...pulumi.InvokeOption) (*LookupMembershipResult, error) {
-	var rv LookupMembershipResult
+func GetMembership(ctx *pulumi.Context, args *GetMembershipArgs, opts ...pulumi.InvokeOption) (*GetMembershipResult, error) {
+	var rv GetMembershipResult
 	err := ctx.Invoke("onepassword:index:GetMembership", args, &rv, opts...)
 	if err != nil {
 		return nil, err
@@ -19,7 +19,7 @@ func LookupMembership(ctx *pulumi.Context, args *LookupMembershipArgs, opts ...p
 	return &rv, nil
 }
 
-type LookupMembershipArgs struct {
+type GetMembershipArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -28,7 +28,7 @@ type LookupMembershipArgs struct {
 	Vault string `pulumi:"vault"`
 }
 
-type LookupMembershipResult struct {
+type GetMembershipResult struct {
 	Category    *string      `pulumi:"category"`
 	ExpiryDate  *string      `pulumi:"expiryDate"`
 	Fields      []GetField   `pulumi:"fields"`
@@ -52,20 +52,20 @@ type LookupMembershipResult struct {
 	Website *string `pulumi:"website"`
 }
 
-func LookupMembershipOutput(ctx *pulumi.Context, args LookupMembershipOutputArgs, opts ...pulumi.InvokeOption) LookupMembershipResultOutput {
+func GetMembershipOutput(ctx *pulumi.Context, args GetMembershipOutputArgs, opts ...pulumi.InvokeOption) GetMembershipResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupMembershipResult, error) {
-			args := v.(LookupMembershipArgs)
-			r, err := LookupMembership(ctx, &args, opts...)
-			var s LookupMembershipResult
+		ApplyT(func(v interface{}) (GetMembershipResult, error) {
+			args := v.(GetMembershipArgs)
+			r, err := GetMembership(ctx, &args, opts...)
+			var s GetMembershipResult
 			if r != nil {
 				s = *r
 			}
 			return s, err
-		}).(LookupMembershipResultOutput)
+		}).(GetMembershipResultOutput)
 }
 
-type LookupMembershipOutputArgs struct {
+type GetMembershipOutputArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -74,96 +74,96 @@ type LookupMembershipOutputArgs struct {
 	Vault pulumi.StringInput `pulumi:"vault"`
 }
 
-func (LookupMembershipOutputArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupMembershipArgs)(nil)).Elem()
+func (GetMembershipOutputArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetMembershipArgs)(nil)).Elem()
 }
 
-type LookupMembershipResultOutput struct{ *pulumi.OutputState }
+type GetMembershipResultOutput struct{ *pulumi.OutputState }
 
-func (LookupMembershipResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupMembershipResult)(nil)).Elem()
+func (GetMembershipResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetMembershipResult)(nil)).Elem()
 }
 
-func (o LookupMembershipResultOutput) ToLookupMembershipResultOutput() LookupMembershipResultOutput {
+func (o GetMembershipResultOutput) ToGetMembershipResultOutput() GetMembershipResultOutput {
 	return o
 }
 
-func (o LookupMembershipResultOutput) ToLookupMembershipResultOutputWithContext(ctx context.Context) LookupMembershipResultOutput {
+func (o GetMembershipResultOutput) ToGetMembershipResultOutputWithContext(ctx context.Context) GetMembershipResultOutput {
 	return o
 }
 
-func (o LookupMembershipResultOutput) Category() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupMembershipResult) *string { return v.Category }).(pulumi.StringPtrOutput)
+func (o GetMembershipResultOutput) Category() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetMembershipResult) *string { return v.Category }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupMembershipResultOutput) ExpiryDate() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupMembershipResult) *string { return v.ExpiryDate }).(pulumi.StringPtrOutput)
+func (o GetMembershipResultOutput) ExpiryDate() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetMembershipResult) *string { return v.ExpiryDate }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupMembershipResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v LookupMembershipResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetMembershipResultOutput) Fields() GetFieldArrayOutput {
+	return o.ApplyT(func(v GetMembershipResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
 }
 
-func (o LookupMembershipResultOutput) Group() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupMembershipResult) *string { return v.Group }).(pulumi.StringPtrOutput)
+func (o GetMembershipResultOutput) Group() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetMembershipResult) *string { return v.Group }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupMembershipResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupMembershipResult) *string { return v.Id }).(pulumi.StringPtrOutput)
+func (o GetMembershipResultOutput) Id() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetMembershipResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupMembershipResultOutput) MemberId() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupMembershipResult) *string { return v.MemberId }).(pulumi.StringPtrOutput)
+func (o GetMembershipResultOutput) MemberId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetMembershipResult) *string { return v.MemberId }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupMembershipResultOutput) MemberName() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupMembershipResult) *string { return v.MemberName }).(pulumi.StringPtrOutput)
+func (o GetMembershipResultOutput) MemberName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetMembershipResult) *string { return v.MemberName }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupMembershipResultOutput) MemberSince() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupMembershipResult) *string { return v.MemberSince }).(pulumi.StringPtrOutput)
+func (o GetMembershipResultOutput) MemberSince() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetMembershipResult) *string { return v.MemberSince }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupMembershipResultOutput) Notes() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupMembershipResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
+func (o GetMembershipResultOutput) Notes() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetMembershipResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupMembershipResultOutput) Pin() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupMembershipResult) *string { return v.Pin }).(pulumi.StringPtrOutput)
+func (o GetMembershipResultOutput) Pin() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetMembershipResult) *string { return v.Pin }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupMembershipResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v LookupMembershipResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetMembershipResultOutput) Sections() GetSectionArrayOutput {
+	return o.ApplyT(func(v GetMembershipResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
 }
 
 // An array of strings of the tags assigned to the item.
-func (o LookupMembershipResultOutput) Tags() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v LookupMembershipResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
+func (o GetMembershipResultOutput) Tags() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetMembershipResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
 }
 
-func (o LookupMembershipResultOutput) Telephone() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupMembershipResult) *string { return v.Telephone }).(pulumi.StringPtrOutput)
+func (o GetMembershipResultOutput) Telephone() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetMembershipResult) *string { return v.Telephone }).(pulumi.StringPtrOutput)
 }
 
 // The title of the item.
-func (o LookupMembershipResultOutput) Title() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupMembershipResult) *string { return v.Title }).(pulumi.StringPtrOutput)
+func (o GetMembershipResultOutput) Title() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetMembershipResult) *string { return v.Title }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o LookupMembershipResultOutput) Uuid() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupMembershipResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
+func (o GetMembershipResultOutput) Uuid() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetMembershipResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
 }
 
 // The UUID of the vault the item is in.
-func (o LookupMembershipResultOutput) Vault() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupMembershipResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
+func (o GetMembershipResultOutput) Vault() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetMembershipResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupMembershipResultOutput) Website() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupMembershipResult) *string { return v.Website }).(pulumi.StringPtrOutput)
+func (o GetMembershipResultOutput) Website() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetMembershipResult) *string { return v.Website }).(pulumi.StringPtrOutput)
 }
 
 func init() {
-	pulumi.RegisterOutputType(LookupMembershipResultOutput{})
+	pulumi.RegisterOutputType(GetMembershipResultOutput{})
 }

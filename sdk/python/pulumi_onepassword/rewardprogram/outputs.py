@@ -9,11 +9,11 @@ from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 
 __all__ = [
-    'MoreInformation',
+    'MoreInformationSection',
 ]
 
 @pulumi.output_type
-class MoreInformation(dict):
+class MoreInformationSection(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
@@ -27,14 +27,14 @@ class MoreInformation(dict):
             suggest = "phone_for_reservations"
 
         if suggest:
-            pulumi.log.warn(f"Key '{key}' not found in MoreInformation. Access the value via the '{suggest}' property getter instead.")
+            pulumi.log.warn(f"Key '{key}' not found in MoreInformationSection. Access the value via the '{suggest}' property getter instead.")
 
     def __getitem__(self, key: str) -> Any:
-        MoreInformation.__key_warning(key)
+        MoreInformationSection.__key_warning(key)
         return super().__getitem__(key)
 
     def get(self, key: str, default = None) -> Any:
-        MoreInformation.__key_warning(key)
+        MoreInformationSection.__key_warning(key)
         return super().get(key, default)
 
     def __init__(__self__, *,

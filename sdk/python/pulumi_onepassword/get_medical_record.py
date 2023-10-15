@@ -99,7 +99,7 @@ class GetMedicalRecordResult:
 
     @property
     @pulumi.getter
-    def medication(self) -> Optional['_medicalrecord.outputs.Medication']:
+    def medication(self) -> Optional['_medicalrecord.outputs.MedicationSection']:
         return pulumi.get(self, "medication")
 
     @property

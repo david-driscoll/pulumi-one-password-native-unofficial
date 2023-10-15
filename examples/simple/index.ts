@@ -1,8 +1,8 @@
-import * as xyz from "@pulumi/xyz";
+import * as op from "@pulumi/onepassword";
 
-const page = new xyz.StaticPage("page", {
-    indexContent: "<html><body><p>Hello world!</p></body></html>",
-});
+// const page = new op.StaticPage("page", {
+//     indexContent: "<html><body><p>Hello world!</p></body></html>",
+// });
 
-export const bucket = page.bucket;
-export const url = page.websiteUrl;
+// export const bucket = page.bucket;
+// export const url = page.websiteUrl;
