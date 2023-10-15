@@ -163,8 +163,8 @@ namespace Pulumi.Onepassword
         /// <summary>
         /// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         /// </summary>
-        [Input("title", required: true)]
-        public Input<string> Title { get; set; } = null!;
+        [Input("title")]
+        public Input<string>? Title { get; set; }
 
         [Input("type")]
         public Input<string>? Type { get; set; }

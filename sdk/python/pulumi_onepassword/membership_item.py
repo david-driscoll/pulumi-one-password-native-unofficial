@@ -16,7 +16,6 @@ __all__ = ['MembershipItemArgs', 'MembershipItem']
 @pulumi.input_type
 class MembershipItemArgs:
     def __init__(__self__, *,
-                 title: pulumi.Input[str],
                  vault: pulumi.Input[str],
                  expiry_date: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Sequence[pulumi.Input['FieldArgs']]]] = None,
@@ -29,14 +28,14 @@ class MembershipItemArgs:
                  sections: Optional[pulumi.Input[Sequence[pulumi.Input['SectionArgs']]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  telephone: Optional[pulumi.Input[str]] = None,
+                 title: Optional[pulumi.Input[str]] = None,
                  website: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a MembershipItem resource.
-        :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
+        :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         """
-        pulumi.set(__self__, "title", title)
         pulumi.set(__self__, "vault", vault)
         if expiry_date is not None:
             pulumi.set(__self__, "expiry_date", expiry_date)
@@ -60,20 +59,10 @@ class MembershipItemArgs:
             pulumi.set(__self__, "tags", tags)
         if telephone is not None:
             pulumi.set(__self__, "telephone", telephone)
+        if title is not None:
+            pulumi.set(__self__, "title", title)
         if website is not None:
             pulumi.set(__self__, "website", website)
-
-    @property
-    @pulumi.getter
-    def title(self) -> pulumi.Input[str]:
-        """
-        The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-        """
-        return pulumi.get(self, "title")
-
-    @title.setter
-    def title(self, value: pulumi.Input[str]):
-        pulumi.set(self, "title", value)
 
     @property
     @pulumi.getter
@@ -191,6 +180,18 @@ class MembershipItemArgs:
 
     @property
     @pulumi.getter
+    def title(self) -> Optional[pulumi.Input[str]]:
+        """
+        The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
+        """
+        return pulumi.get(self, "title")
+
+    @title.setter
+    def title(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "title", value)
+
+    @property
+    @pulumi.getter
     def website(self) -> Optional[pulumi.Input[str]]:
         return pulumi.get(self, "website")
 
@@ -287,8 +288,6 @@ class MembershipItem(pulumi.CustomResource):
             __props__.__dict__["sections"] = sections
             __props__.__dict__["tags"] = tags
             __props__.__dict__["telephone"] = telephone
-            if title is None and not opts.urn:
-                raise TypeError("Missing required property 'title'")
             __props__.__dict__["title"] = title
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")

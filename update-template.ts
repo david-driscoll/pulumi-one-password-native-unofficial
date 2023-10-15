@@ -1,6 +1,6 @@
 import { Field, GenericField, ItemTemplate, NotesField, OtpField, PasswordField, Section, UsernameField, item } from "@1password/op-js"
 import { readFileSync, writeFileSync } from 'fs';
-import { camelCase, uniq, orderBy, cloneDeep } from 'lodash'
+import { camelCase, uniq, orderBy, cloneDeep, last } from 'lodash'
 
 const templates = item.template.list().concat({
     name: 'Item',
@@ -10,7 +10,7 @@ const schema = JSON.parse(readFileSync('./schema.json').toString('ascii'));
 
 const allTemplates = orderBy(templates.map(z => camelCase(z.name)[0].toUpperCase() + camelCase(z.name).substring(1)));
 
-// TODOS: Document
+// TODOS: Documents, password recipes
 
 schema.functions = {
     "onepassword:index:GetItem": {
@@ -207,8 +207,11 @@ schema.types = {
 for (const template of templates) {
     console.log(template.name)
 
+
+
     const templateSchema = template.name === 'Item' ? { fields: [] } : item.template.get(template.name as any) as any as ItemTemplate
     const resourceName = template.name === 'Item' ? `onepassword:index:Item` : `onepassword:index:${template.name.replace(/ /g, '')}Item`;
+    (template as any).resourceName = resourceName
 
     const currentResource = schema.resources[resourceName] ??= {
         "isComponent": false,
@@ -217,7 +220,7 @@ for (const template of templates) {
     currentResource.isComponent = false;
     currentResource.inputProperties ??= {};
     currentResource.requiredInputs ??= [];
-    currentResource.requiredInputs = uniq(currentResource.requiredInputs.concat('title', 'vault'));
+    currentResource.requiredInputs = ['vault'];
     currentResource.properties ??= {};
     currentResource.required ??= [];
     currentResource.required = uniq(currentResource.required.concat('tags', 'id', 'uuid', 'title', 'vault', 'category'));
@@ -337,6 +340,16 @@ schema.resources[`onepassword:index:Item`].inputProperties['category'] = {
 
 console.log()
 writeFileSync('./schema.json', JSON.stringify(schema, null, 4))
+
+writeFileSync('./provider/cmd/pulumi-resource-onepassword/types.ts', `
+export const ItemType = {
+${Object.keys(schema.resources).map(z => `"${last(z.split(':'))}": "${z}"`).join(',\n')}
+} as const
+export const ItemTypeNames = {
+${templates.map(z => `"${(z as any).resourceName}": "${z.name}"`).join(',\n')}
+} as const
+export const ResourceTypes = [${Object.keys(schema.resources).map(z => `"${z}"`).join(', ')}] as const
+`)
 
 /*
 {

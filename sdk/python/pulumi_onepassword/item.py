@@ -16,19 +16,18 @@ __all__ = ['ItemArgs', 'Item']
 @pulumi.input_type
 class ItemArgs:
     def __init__(__self__, *,
-                 title: pulumi.Input[str],
                  vault: pulumi.Input[str],
                  category: Optional[pulumi.Input[Union['Category', str]]] = None,
                  fields: Optional[pulumi.Input[Sequence[pulumi.Input['FieldArgs']]]] = None,
                  sections: Optional[pulumi.Input[Sequence[pulumi.Input['SectionArgs']]]] = None,
-                 tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+                 tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 title: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a Item resource.
-        :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
+        :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         """
-        pulumi.set(__self__, "title", title)
         pulumi.set(__self__, "vault", vault)
         if category is None:
             category = 'Item'
@@ -40,18 +39,8 @@ class ItemArgs:
             pulumi.set(__self__, "sections", sections)
         if tags is not None:
             pulumi.set(__self__, "tags", tags)
-
-    @property
-    @pulumi.getter
-    def title(self) -> pulumi.Input[str]:
-        """
-        The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-        """
-        return pulumi.get(self, "title")
-
-    @title.setter
-    def title(self, value: pulumi.Input[str]):
-        pulumi.set(self, "title", value)
+        if title is not None:
+            pulumi.set(__self__, "title", title)
 
     @property
     @pulumi.getter
@@ -103,6 +92,18 @@ class ItemArgs:
     @tags.setter
     def tags(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
         pulumi.set(self, "tags", value)
+
+    @property
+    @pulumi.getter
+    def title(self) -> Optional[pulumi.Input[str]]:
+        """
+        The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
+        """
+        return pulumi.get(self, "title")
+
+    @title.setter
+    def title(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "title", value)
 
 
 class Item(pulumi.CustomResource):
@@ -172,8 +173,6 @@ class Item(pulumi.CustomResource):
             __props__.__dict__["fields"] = fields
             __props__.__dict__["sections"] = sections
             __props__.__dict__["tags"] = tags
-            if title is None and not opts.urn:
-                raise TypeError("Missing required property 'title'")
             __props__.__dict__["title"] = title
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")

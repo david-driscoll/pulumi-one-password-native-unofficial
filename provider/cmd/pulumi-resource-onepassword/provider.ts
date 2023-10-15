@@ -1,19 +1,11 @@
-// Copyright 2016-2021, Pulumi Corporation.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 import * as pulumi from "@pulumi/pulumi";
 import * as provider from "@pulumi/pulumi/provider";
+import { ItemType, ResourceTypes, ItemTypeNames } from './types'
+import { FieldAssignment, FieldPurpose, item } from "@1password/op-js"
+import { last, max, pick, split } from "lodash";
+import { createHash, randomBytes } from "crypto";
+import { RNGFactory, Random } from "random/dist/cjs/random";
+
 
 // import { StaticPage, StaticPageArgs } from "./staticPage";
 
@@ -33,30 +25,119 @@ export class Provider implements provider.Provider {
 
         // TODO: Add support for additional component resources here.
         switch (type) {
-            // case "onepassword:index:StaticPage":
-            //     return await constructStaticPage(name, inputs, options);
             default:
-                throw new Error(`unknown resource type ${type}`);
+                throw new Error(`unknown resource type ${type} name ${name}`);
         }
     }
 
-    // /**
-    //  * Create allocates a new instance of the provided resource and returns its unique ID afterwards.
-    //  * If this call fails, the resource must not have been created (i.e., it is "transactional").
-    //  *
-    //  * @param inputs The properties to set during creation.
-    //  */
-    // async create(urn: pulumi.URN, inputs: any): Promise<provider.CreateResult> { }
+    /**
+     * Create allocates a new instance of the provided resource and returns its unique ID afterwards.
+     * If this call fails, the resource must not have been created (i.e., it is "transactional").
+     *
+     * @param inputs The properties to set during creation.
+     */
+    async create(urn: pulumi.URN, inputs: CommonProperties): Promise<provider.CreateResult> {
+        const resourceType = getResourceTypeFromUrn(urn);
+        if (!resourceType) throw new Error(`unknown resource type ${urn}`);
 
-    // /**
-    //  * Check validates that the given property bag is valid for a resource of the given type.
-    //  *
-    //  * @param olds The old input properties to use for validation.
-    //  * @param news The new input properties to use for validation.
-    //  */
-    // async check(urn: pulumi.URN, olds: any, news: any): Promise<provider.CheckResult> {
+        const assignments: FieldAssignment[] = [];
+        // TODO: well known fields, sections
+        if (inputs.fields) {
+            for (const field of inputs.fields) {
+                assignments.push([field.label, field.purpose === 'PASSWORD' ? 'concealed' : 'text', field.value, field.purpose])
+            }
+        }
+        if (inputs.sections) {
+            for (const section of inputs.sections) {
+                assignments.push([field.label, field.purpose === 'PASSWORD' ? 'concealed' : 'text', field.value, field.purpose])
+            }
+        }
+
+        const name = newUniqueName(getNameFromUrn(urn));
+
+        const result = item.create(
+            assignments,
+            {
+                category: resourceType === ItemType.Item ? 'Secure Note' : ItemTypeNames[resourceType] as any,
+                vault: inputs.vault,
+                // tags:
+                title: inputs.title ?? newUniqueName(getNameFromUrn(urn)),
+            }
+        )
+
+        return {
+            id: result.id,
+            outs: {
+                assignments,
+                id: result.id,
+                result,
+                name,
+                urn,
+                test: 'data',
+                type: resourceType
+            }
+        }
+
+    }
+
+    /**
+     * Delete tears down an existing resource with the given ID.  If it fails, the resource is assumed to still exist.
+     *
+     * @param id The ID of the resource to delete.
+     * @param props The current properties on the pulumi.
+     */
+    async delete(id: pulumi.ID, urn: pulumi.URN, props: CommonProperties): Promise<void> {
+        const resourceType = getResourceTypeFromUrn(urn);
+        if (!resourceType) throw new Error(`unknown resource type ${urn}`);
+        item.delete(id);
+    }
+    /**
+     * Update updates an existing resource with new values.
+     *
+     * @param id The ID of the resource to update.
+     * @param olds The old values of properties to update.
+     * @param news The new values of properties to update.
+     */
+    // async update(id: pulumi.ID, urn: pulumi.URN, olds: any, news: any): Promise<provider.UpdateResult> {
 
     // }
+
+    /**
+     * Check validates that the given property bag is valid for a resource of the given type.
+     *
+     * @param olds The old input properties to use for validation.
+     * @param news The new input properties to use for validation.
+     */
+    async check(urn: pulumi.URN, olds: CommonProperties, news: CommonProperties): Promise<provider.CheckResult> {
+        const failures: provider.CheckFailure[] = [];
+        const resourceType = getResourceTypeFromUrn(urn);
+        if (!resourceType) return {};
+
+        const typeName = ItemTypeNames[resourceType]
+        if (resourceType !== ItemType.Item && news.category !== typeName) {
+            failures.push({
+                property: "category",
+                reason: `Category must be ${typeName}`
+            })
+        }
+        if (news.fields) {
+            news.fields
+                .filter(z => z.label.includes('.') || z.label.includes('\\') || z.label.includes('='))
+                .forEach(field => failures.push({
+                    property: `fields.${field.label}`,
+                    reason: 'Field cannot contain a period, equals sign or backslash'
+                }));
+        }
+        if (news.sections) {
+            news.sections
+                .filter(z => z.label.includes('.') || z.label.includes('\\') || z.label.includes('='))
+                .forEach(field => failures.push({
+                    property: `fields.${field.label}`,
+                    reason: 'Field cannot contain a period, equals sign or backslash'
+                }));
+        }
+        return failures.length ? { inputs: news, failures } : {};
+    }
     // /**
     //  * Diff checks what impacts a hypothetical update will have on the resource's properties.
     //  *
@@ -70,21 +151,6 @@ export class Provider implements provider.Provider {
     //  * identify the resource; this is typically just the resource ID, but it may also include some properties.
     //  */
     // async read(id: pulumi.ID, urn: pulumi.URN, props?: any): Promise<provider.ReadResult> { }
-    // /**
-    //  * Update updates an existing resource with new values.
-    //  *
-    //  * @param id The ID of the resource to update.
-    //  * @param olds The old values of properties to update.
-    //  * @param news The new values of properties to update.
-    //  */
-    // async update(id: pulumi.ID, urn: pulumi.URN, olds: any, news: any): Promise<provider.UpdateResult> { }
-    // /**
-    //  * Delete tears down an existing resource with the given ID.  If it fails, the resource is assumed to still exist.
-    //  *
-    //  * @param id The ID of the resource to delete.
-    //  * @param props The current properties on the pulumi.
-    //  */
-    // async delete(id: pulumi.ID, urn: pulumi.URN, props: any): Promise<void> { }
     // /**
     //  * Call calls the indicated method.
     //  *
@@ -116,3 +182,52 @@ export class Provider implements provider.Provider {
 //         },
 //     };
 // }
+
+function getResourceTypeFromUrn(urn: pulumi.URN) {
+    return ResourceTypes.find(z => urn.includes(`:${z}:`));
+}
+function getNameFromUrn(urn: pulumi.URN) {
+    return last(split(urn, ':'))!;
+}
+
+function newUniqueName(prefix: string, randomSeed?: Buffer, randlen = 8, maxlen?: number, charset?: string): string {
+
+    if (randlen <= 0) {
+        randlen = 8
+    }
+    if (maxlen && maxlen > 0 && prefix.length + randlen > maxlen) {
+        throw new Error(`name '${prefix}' plus ${randlen} random chars is longer than maximum length ${maxlen}`)
+    }
+
+    if (!charset) {
+        charset = "0123456789abcdef";
+    }
+
+    let r: import("random").Random;
+    if (!randomSeed || randomSeed.length === 0) {
+        r = new Random(RNGFactory(randomBytes(randlen).toString('hex')))
+    } else {
+        const hash = createHash('sha256');
+        hash.write(randomSeed);
+        const seed = hash.digest('hex')
+        r = new Random(RNGFactory(seed));
+    }
+
+    let randomSuffix = '';
+    for (let i = 0; i < randlen; i++) {
+        randomSuffix += charset[r.int(0, charset.length - 1)]
+    }
+
+    return prefix + randomSuffix;
+}
+
+interface CommonProperties { category: string; fields?: Field[]; sections?: Section[];[key: string]: any };
+interface Field {
+    label: string
+    purpose: FieldPurpose;
+    value: string;
+}
+interface Section {
+    fields: Field[];
+    label: string;
+}

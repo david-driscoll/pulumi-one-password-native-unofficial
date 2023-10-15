@@ -12,10 +12,5 @@
         "noImplicitReturns": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true
-    },
-    "files": [
-        "index.ts",
-        "provider.ts",
-        "staticPage.ts"
-    ]
+    }
 }

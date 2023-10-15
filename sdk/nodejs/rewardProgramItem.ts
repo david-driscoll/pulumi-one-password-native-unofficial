@@ -70,9 +70,6 @@ export class RewardProgramItem extends pulumi.CustomResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
-            if ((!args || args.title === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'title'");
-            }
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
@@ -130,7 +127,7 @@ export interface RewardProgramItemArgs {
     /**
      * The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
      */
-    title: pulumi.Input<string>;
+    title?: pulumi.Input<string>;
     /**
      * The UUID of the vault the item is in.
      */

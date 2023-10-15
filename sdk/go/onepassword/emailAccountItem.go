@@ -46,9 +46,6 @@ func NewEmailAccountItem(ctx *pulumi.Context,
 		return nil, errors.New("missing one or more required arguments")
 	}
 
-	if args.Title == nil {
-		return nil, errors.New("invalid value for required argument 'Title'")
-	}
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
@@ -97,7 +94,7 @@ type emailAccountItemArgs struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-	Title    string  `pulumi:"title"`
+	Title    *string `pulumi:"title"`
 	Type     *string `pulumi:"type"`
 	Username *string `pulumi:"username"`
 	// The UUID of the vault the item is in.
@@ -119,7 +116,7 @@ type EmailAccountItemArgs struct {
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-	Title    pulumi.StringInput
+	Title    pulumi.StringPtrInput
 	Type     pulumi.StringPtrInput
 	Username pulumi.StringPtrInput
 	// The UUID of the vault the item is in.

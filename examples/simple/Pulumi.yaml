@@ -2,6 +2,6 @@ name: simple
 runtime: nodejs
 description: A simple xyz example
 plugins:
-  resource:
+  providers:
     - name: onepassword
-      path: ../../provider/cmd/pulumi-resource-onepassword/bin
+      path: ../../provider/cmd/pulumi-resource-onepassword/
