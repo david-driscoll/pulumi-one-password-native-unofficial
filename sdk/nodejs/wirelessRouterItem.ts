@@ -36,7 +36,7 @@ export class WirelessRouterItem extends pulumi.CustomResource {
     public readonly attachedStoragePassword!: pulumi.Output<string | undefined>;
     public readonly baseStationName!: pulumi.Output<string | undefined>;
     public readonly baseStationPassword!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
+    public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly networkName!: pulumi.Output<string | undefined>;
@@ -80,6 +80,7 @@ export class WirelessRouterItem extends pulumi.CustomResource {
             resourceInputs["attachedStoragePassword"] = args ? args.attachedStoragePassword : undefined;
             resourceInputs["baseStationName"] = args ? args.baseStationName : undefined;
             resourceInputs["baseStationPassword"] = args ? args.baseStationPassword : undefined;
+            resourceInputs["category"] = "Wireless Router";
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["networkName"] = args ? args.networkName : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
@@ -90,7 +91,6 @@ export class WirelessRouterItem extends pulumi.CustomResource {
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["wirelessNetworkPassword"] = args ? args.wirelessNetworkPassword : undefined;
             resourceInputs["wirelessSecurity"] = args ? args.wirelessSecurity : undefined;
-            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -125,6 +125,10 @@ export interface WirelessRouterItemArgs {
     attachedStoragePassword?: pulumi.Input<string>;
     baseStationName?: pulumi.Input<string>;
     baseStationPassword?: pulumi.Input<string>;
+    /**
+     * The category of the vault the item is in.
+     */
+    category?: pulumi.Input<"Wireless Router">;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     networkName?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;

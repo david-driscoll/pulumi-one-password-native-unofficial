@@ -78,13 +78,20 @@ namespace Pulumi.Onepassword
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public MedicalRecordItem(string name, MedicalRecordItemArgs args, CustomResourceOptions? options = null)
-            : base("onepassword:index:MedicalRecordItem", name, args ?? new MedicalRecordItemArgs(), MakeResourceOptions(options, ""))
+            : base("onepassword:index:MedicalRecordItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private MedicalRecordItem(string name, Input<string> id, CustomResourceOptions? options = null)
             : base("onepassword:index:MedicalRecordItem", name, null, MakeResourceOptions(options, id))
         {
+        }
+
+        private static MedicalRecordItemArgs MakeArgs(MedicalRecordItemArgs args)
+        {
+            args ??= new MedicalRecordItemArgs();
+            args.Category = "Medical Record";
+            return args;
         }
 
         private static CustomResourceOptions MakeResourceOptions(CustomResourceOptions? options, Input<string>? id)
@@ -114,6 +121,12 @@ namespace Pulumi.Onepassword
 
     public sealed class MedicalRecordItemArgs : Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The category of the vault the item is in.
+        /// </summary>
+        [Input("category")]
+        public Input<string>? Category { get; set; }
+
         [Input("date")]
         public Input<string>? Date { get; set; }
 

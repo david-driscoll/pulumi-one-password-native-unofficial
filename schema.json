@@ -34,39 +34,55 @@
                 },
                 "notes": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "purpose": "NOTES",
+                    "kind": "STRING"
                 },
                 "group": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "website": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "URL"
                 },
                 "telephone": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "PHONE"
                 },
                 "memberName": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "memberSince": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "MONTH_YEAR"
                 },
                 "expiryDate": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "MONTH_YEAR"
                 },
                 "memberId": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "pin": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "CONCEALED"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "The category of the vault the item is in.\n",
+                    "willReplaceOnChanges": true,
+                    "const": "Membership"
                 }
             },
             "requiredInputs": [
@@ -196,51 +212,70 @@
                 },
                 "notes": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "purpose": "NOTES",
+                    "kind": "STRING"
                 },
                 "type": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "issuingCountry": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "number": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "fullName": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "gender": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "nationality": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "issuingAuthority": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "dateOfBirth": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "DATE"
                 },
                 "placeOfBirth": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "issuedOn": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "DATE"
                 },
                 "expiryDate": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "DATE"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "The category of the vault the item is in.\n",
+                    "willReplaceOnChanges": true,
+                    "const": "Passport"
                 }
             },
             "requiredInputs": [
@@ -382,11 +417,21 @@
                 },
                 "password": {
                     "type": "string",
-                    "secret": true
+                    "secret": true,
+                    "purpose": "PASSWORD",
+                    "kind": "CONCEALED"
                 },
                 "notes": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "purpose": "NOTES",
+                    "kind": "STRING"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "The category of the vault the item is in.\n",
+                    "willReplaceOnChanges": true,
+                    "const": "Password"
                 }
             },
             "requiredInputs": [
@@ -494,19 +539,30 @@
                 },
                 "notes": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "purpose": "NOTES",
+                    "kind": "STRING"
                 },
                 "url": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "username": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "password": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "CONCEALED"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "The category of the vault the item is in.\n",
+                    "willReplaceOnChanges": true,
+                    "const": "Server"
                 }
             },
             "requiredInputs": [
@@ -628,35 +684,50 @@
                 },
                 "notes": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "purpose": "NOTES",
+                    "kind": "STRING"
                 },
                 "type": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "MENU"
                 },
                 "username": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "server": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "portNumber": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "password": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "CONCEALED"
                 },
                 "security": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "MENU"
                 },
                 "authMethod": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "MENU"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "The category of the vault the item is in.\n",
+                    "willReplaceOnChanges": true,
+                    "const": "Email Account"
                 }
             },
             "requiredInputs": [
@@ -797,7 +868,15 @@
                 },
                 "notes": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "purpose": "NOTES",
+                    "kind": "STRING"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "The category of the vault the item is in.\n",
+                    "willReplaceOnChanges": true,
+                    "const": "Identity"
                 }
             },
             "requiredInputs": [
@@ -904,15 +983,27 @@
                 },
                 "username": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "purpose": "USERNAME",
+                    "kind": "STRING"
                 },
                 "password": {
                     "type": "string",
-                    "secret": true
+                    "secret": true,
+                    "purpose": "PASSWORD",
+                    "kind": "CONCEALED"
                 },
                 "notes": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "purpose": "NOTES",
+                    "kind": "STRING"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "The category of the vault the item is in.\n",
+                    "willReplaceOnChanges": true,
+                    "const": "Login"
                 }
             },
             "requiredInputs": [
@@ -1021,23 +1112,35 @@
                 },
                 "notes": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "purpose": "NOTES",
+                    "kind": "STRING"
                 },
                 "companyName": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "memberName": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "memberId": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "pin": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "CONCEALED"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "The category of the vault the item is in.\n",
+                    "willReplaceOnChanges": true,
+                    "const": "Reward Program"
                 }
             },
             "requiredInputs": [
@@ -1154,39 +1257,55 @@
                 },
                 "notes": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "purpose": "NOTES",
+                    "kind": "STRING"
                 },
                 "baseStationName": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "baseStationPassword": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "CONCEALED"
                 },
                 "serverIpAddress": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "airPortId": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "networkName": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "wirelessSecurity": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "MENU"
                 },
                 "wirelessNetworkPassword": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "CONCEALED"
                 },
                 "attachedStoragePassword": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "CONCEALED"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "The category of the vault the item is in.\n",
+                    "willReplaceOnChanges": true,
+                    "const": "Wireless Router"
                 }
             },
             "requiredInputs": [
@@ -1316,35 +1435,50 @@
                 },
                 "notes": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "purpose": "NOTES",
+                    "kind": "STRING"
                 },
                 "username": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "credential": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "CONCEALED"
                 },
                 "type": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "MENU"
                 },
                 "filename": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "validFrom": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "DATE"
                 },
                 "expires": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "DATE"
                 },
                 "hostname": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "The category of the vault the item is in.\n",
+                    "willReplaceOnChanges": true,
+                    "const": "API Credential"
                 }
             },
             "requiredInputs": [
@@ -1473,39 +1607,55 @@
                 },
                 "notes": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "purpose": "NOTES",
+                    "kind": "STRING"
                 },
                 "bankName": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "nameOnAccount": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "type": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "MENU"
                 },
                 "routingNumber": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "accountNumber": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "swift": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "iban": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "pin": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "CONCEALED"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "The category of the vault the item is in.\n",
+                    "willReplaceOnChanges": true,
+                    "const": "Bank Account"
                 }
             },
             "requiredInputs": [
@@ -1644,31 +1794,45 @@
                 },
                 "notes": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "purpose": "NOTES",
+                    "kind": "STRING"
                 },
                 "cardholderName": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "type": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "CREDIT_CARD_TYPE"
                 },
                 "number": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "CREDIT_CARD_NUMBER"
                 },
                 "verificationNumber": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "CONCEALED"
                 },
                 "expiryDate": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "MONTH_YEAR"
                 },
                 "validFrom": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "MONTH_YEAR"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "The category of the vault the item is in.\n",
+                    "willReplaceOnChanges": true,
+                    "const": "Credit Card"
                 }
             },
             "requiredInputs": [
@@ -1796,43 +1960,60 @@
                 },
                 "notes": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "purpose": "NOTES",
+                    "kind": "STRING"
                 },
                 "type": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "MENU"
                 },
                 "server": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "port": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "database": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "username": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "password": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "CONCEALED"
                 },
                 "sid": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "alias": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "connectionOptions": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "The category of the vault the item is in.\n",
+                    "willReplaceOnChanges": true,
+                    "const": "Database"
                 }
             },
             "requiredInputs": [
@@ -1966,51 +2147,70 @@
                 },
                 "notes": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "purpose": "NOTES",
+                    "kind": "STRING"
                 },
                 "fullName": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "address": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "dateOfBirth": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "DATE"
                 },
                 "gender": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "height": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "number": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "licenseClass": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "conditionsRestrictions": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "state": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "country": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "expiryDate": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "MONTH_YEAR"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "The category of the vault the item is in.\n",
+                    "willReplaceOnChanges": true,
+                    "const": "Driver License"
                 }
             },
             "requiredInputs": [
@@ -2155,27 +2355,40 @@
                 },
                 "notes": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "purpose": "NOTES",
+                    "kind": "STRING"
                 },
                 "date": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "DATE"
                 },
                 "location": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "healthcareProfessional": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "patient": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "reasonForVisit": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "The category of the vault the item is in.\n",
+                    "willReplaceOnChanges": true,
+                    "const": "Medical Record"
                 }
             },
             "requiredInputs": [
@@ -2296,35 +2509,50 @@
                 },
                 "notes": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "purpose": "NOTES",
+                    "kind": "STRING"
                 },
                 "fullName": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "validFrom": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "DATE"
                 },
                 "expires": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "DATE"
                 },
                 "approvedWildlife": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "maximumQuota": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "state": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "country": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "The category of the vault the item is in.\n",
+                    "willReplaceOnChanges": true,
+                    "const": "Outdoor License"
                 }
             },
             "requiredInputs": [
@@ -2450,7 +2678,15 @@
                 },
                 "notes": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "purpose": "NOTES",
+                    "kind": "STRING"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "The category of the vault the item is in.\n",
+                    "willReplaceOnChanges": true,
+                    "const": "Secure Note"
                 }
             },
             "requiredInputs": [
@@ -2557,15 +2793,25 @@
                 },
                 "notes": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "purpose": "NOTES",
+                    "kind": "STRING"
                 },
                 "version": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "licenseKey": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "The category of the vault the item is in.\n",
+                    "willReplaceOnChanges": true,
+                    "const": "Software License"
                 }
             },
             "requiredInputs": [
@@ -2683,15 +2929,25 @@
                 },
                 "notes": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "purpose": "NOTES",
+                    "kind": "STRING"
                 },
                 "recoveryPhrase": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "CONCEALED"
                 },
                 "password": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "CONCEALED"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "The category of the vault the item is in.\n",
+                    "willReplaceOnChanges": true,
+                    "const": "Crypto Wallet"
                 }
             },
             "requiredInputs": [
@@ -2800,7 +3056,15 @@
                 },
                 "notes": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "purpose": "NOTES",
+                    "kind": "STRING"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "The category of the vault the item is in.\n",
+                    "willReplaceOnChanges": true,
+                    "const": "Document"
                 }
             },
             "requiredInputs": [
@@ -2898,15 +3162,25 @@
                 },
                 "notes": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "purpose": "NOTES",
+                    "kind": "STRING"
                 },
                 "name": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "STRING"
                 },
                 "number": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "CONCEALED"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "The category of the vault the item is in.\n",
+                    "willReplaceOnChanges": true,
+                    "const": "Social Security Number"
                 }
             },
             "requiredInputs": [
@@ -3012,11 +3286,20 @@
                 },
                 "notes": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "purpose": "NOTES",
+                    "kind": "STRING"
                 },
                 "privateKey": {
                     "type": "string",
-                    "secret": false
+                    "secret": false,
+                    "kind": "SSHKEY"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "The category of the vault the item is in.\n",
+                    "willReplaceOnChanges": true,
+                    "const": "SSH Key"
                 }
             },
             "requiredInputs": [
@@ -3315,6 +3598,384 @@
                 "description": "The resolved reference value"
             }
         },
+        "onepassword:index:GetRewardProgram": {
+            "inputs": {
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
+                    },
+                    "vault": {
+                        "type": "string",
+                        "description": "The UUID of the vault the item is in.\n"
+                    }
+                },
+                "required": [
+                    "vault"
+                ]
+            },
+            "outputs": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "The title of the item.\n"
+                    },
+                    "vault": {
+                        "type": "string",
+                        "description": "The UUID of the vault the item is in.\n"
+                    },
+                    "sections": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/types/onepassword:index:GetSection"
+                        }
+                    },
+                    "fields": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/types/onepassword:index:GetField"
+                        }
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "An array of strings of the tags assigned to the item.\n"
+                    },
+                    "category": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/onepassword:index:Category"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    "moreInformation": {
+                        "$ref": "#/types/onepassword:rewardProgram:moreInformationSection"
+                    },
+                    "notes": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "companyName": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "memberName": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "memberId": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "pin": {
+                        "type": "string",
+                        "secret": false
+                    }
+                }
+            }
+        },
+        "onepassword:index:GetWirelessRouter": {
+            "inputs": {
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
+                    },
+                    "vault": {
+                        "type": "string",
+                        "description": "The UUID of the vault the item is in.\n"
+                    }
+                },
+                "required": [
+                    "vault"
+                ]
+            },
+            "outputs": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "The title of the item.\n"
+                    },
+                    "vault": {
+                        "type": "string",
+                        "description": "The UUID of the vault the item is in.\n"
+                    },
+                    "sections": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/types/onepassword:index:GetSection"
+                        }
+                    },
+                    "fields": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/types/onepassword:index:GetField"
+                        }
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "An array of strings of the tags assigned to the item.\n"
+                    },
+                    "category": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/onepassword:index:Category"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    "notes": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "baseStationName": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "baseStationPassword": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "serverIpAddress": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "airPortId": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "networkName": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "wirelessSecurity": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "wirelessNetworkPassword": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "attachedStoragePassword": {
+                        "type": "string",
+                        "secret": false
+                    }
+                }
+            }
+        },
+        "onepassword:index:GetSoftwareLicense": {
+            "inputs": {
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
+                    },
+                    "vault": {
+                        "type": "string",
+                        "description": "The UUID of the vault the item is in.\n"
+                    }
+                },
+                "required": [
+                    "vault"
+                ]
+            },
+            "outputs": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "The title of the item.\n"
+                    },
+                    "vault": {
+                        "type": "string",
+                        "description": "The UUID of the vault the item is in.\n"
+                    },
+                    "sections": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/types/onepassword:index:GetSection"
+                        }
+                    },
+                    "fields": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/types/onepassword:index:GetField"
+                        }
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "An array of strings of the tags assigned to the item.\n"
+                    },
+                    "category": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/onepassword:index:Category"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    "customer": {
+                        "$ref": "#/types/onepassword:softwareLicense:customerSection"
+                    },
+                    "publisher": {
+                        "$ref": "#/types/onepassword:softwareLicense:publisherSection"
+                    },
+                    "order": {
+                        "$ref": "#/types/onepassword:softwareLicense:orderSection"
+                    },
+                    "notes": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "version": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "licenseKey": {
+                        "type": "string",
+                        "secret": false
+                    }
+                }
+            }
+        },
+        "onepassword:index:GetServer": {
+            "inputs": {
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
+                    },
+                    "vault": {
+                        "type": "string",
+                        "description": "The UUID of the vault the item is in.\n"
+                    }
+                },
+                "required": [
+                    "vault"
+                ]
+            },
+            "outputs": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "The title of the item.\n"
+                    },
+                    "vault": {
+                        "type": "string",
+                        "description": "The UUID of the vault the item is in.\n"
+                    },
+                    "sections": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/types/onepassword:index:GetSection"
+                        }
+                    },
+                    "fields": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/types/onepassword:index:GetField"
+                        }
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "An array of strings of the tags assigned to the item.\n"
+                    },
+                    "category": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/onepassword:index:Category"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    "adminConsole": {
+                        "$ref": "#/types/onepassword:server:adminConsoleSection"
+                    },
+                    "hostingProvider": {
+                        "$ref": "#/types/onepassword:server:hostingProviderSection"
+                    },
+                    "notes": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "url": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "username": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "password": {
+                        "type": "string",
+                        "secret": false
+                    }
+                }
+            }
+        },
         "onepassword:index:GetCreditCard": {
             "inputs": {
                 "properties": {
@@ -3418,7 +4079,7 @@
                 }
             }
         },
-        "onepassword:index:GetDocument": {
+        "onepassword:index:GetDatabase": {
             "inputs": {
                 "properties": {
                     "title": {
@@ -3485,6 +4146,42 @@
                         ]
                     },
                     "notes": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "type": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "server": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "port": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "database": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "username": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "password": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "sid": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "alias": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "connectionOptions": {
                         "type": "string",
                         "secret": false
                     }
@@ -3608,6 +4305,270 @@
                 }
             }
         },
+        "onepassword:index:GetIdentity": {
+            "inputs": {
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
+                    },
+                    "vault": {
+                        "type": "string",
+                        "description": "The UUID of the vault the item is in.\n"
+                    }
+                },
+                "required": [
+                    "vault"
+                ]
+            },
+            "outputs": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "The title of the item.\n"
+                    },
+                    "vault": {
+                        "type": "string",
+                        "description": "The UUID of the vault the item is in.\n"
+                    },
+                    "sections": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/types/onepassword:index:GetSection"
+                        }
+                    },
+                    "fields": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/types/onepassword:index:GetField"
+                        }
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "An array of strings of the tags assigned to the item.\n"
+                    },
+                    "category": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/onepassword:index:Category"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    "identification": {
+                        "$ref": "#/types/onepassword:identity:identificationSection"
+                    },
+                    "address": {
+                        "$ref": "#/types/onepassword:identity:addressSection"
+                    },
+                    "internetDetails": {
+                        "$ref": "#/types/onepassword:identity:internetDetailsSection"
+                    },
+                    "notes": {
+                        "type": "string",
+                        "secret": false
+                    }
+                }
+            }
+        },
+        "onepassword:index:GetLogin": {
+            "inputs": {
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
+                    },
+                    "vault": {
+                        "type": "string",
+                        "description": "The UUID of the vault the item is in.\n"
+                    }
+                },
+                "required": [
+                    "vault"
+                ]
+            },
+            "outputs": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "The title of the item.\n"
+                    },
+                    "vault": {
+                        "type": "string",
+                        "description": "The UUID of the vault the item is in.\n"
+                    },
+                    "sections": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/types/onepassword:index:GetSection"
+                        }
+                    },
+                    "fields": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/types/onepassword:index:GetField"
+                        }
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "An array of strings of the tags assigned to the item.\n"
+                    },
+                    "category": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/onepassword:index:Category"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    "username": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "password": {
+                        "type": "string",
+                        "secret": true
+                    },
+                    "notes": {
+                        "type": "string",
+                        "secret": false
+                    }
+                }
+            }
+        },
+        "onepassword:index:GetOutdoorLicense": {
+            "inputs": {
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
+                    },
+                    "vault": {
+                        "type": "string",
+                        "description": "The UUID of the vault the item is in.\n"
+                    }
+                },
+                "required": [
+                    "vault"
+                ]
+            },
+            "outputs": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "The title of the item.\n"
+                    },
+                    "vault": {
+                        "type": "string",
+                        "description": "The UUID of the vault the item is in.\n"
+                    },
+                    "sections": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/types/onepassword:index:GetSection"
+                        }
+                    },
+                    "fields": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/types/onepassword:index:GetField"
+                        }
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "An array of strings of the tags assigned to the item.\n"
+                    },
+                    "category": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/onepassword:index:Category"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    "notes": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "fullName": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "validFrom": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "expires": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "approvedWildlife": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "maximumQuota": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "state": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "country": {
+                        "type": "string",
+                        "secret": false
+                    }
+                }
+            }
+        },
         "onepassword:index:GetPassport": {
             "inputs": {
                 "properties": {
@@ -3719,97 +4680,6 @@
                         "secret": false
                     },
                     "expiryDate": {
-                        "type": "string",
-                        "secret": false
-                    }
-                }
-            }
-        },
-        "onepassword:index:GetServer": {
-            "inputs": {
-                "properties": {
-                    "title": {
-                        "type": "string",
-                        "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
-                    },
-                    "uuid": {
-                        "type": "string",
-                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
-                    },
-                    "vault": {
-                        "type": "string",
-                        "description": "The UUID of the vault the item is in.\n"
-                    }
-                },
-                "required": [
-                    "vault"
-                ]
-            },
-            "outputs": {
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "uuid": {
-                        "type": "string",
-                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
-                    },
-                    "title": {
-                        "type": "string",
-                        "description": "The title of the item.\n"
-                    },
-                    "vault": {
-                        "type": "string",
-                        "description": "The UUID of the vault the item is in.\n"
-                    },
-                    "sections": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/types/onepassword:index:GetSection"
-                        }
-                    },
-                    "fields": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/types/onepassword:index:GetField"
-                        }
-                    },
-                    "tags": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "description": "An array of strings of the tags assigned to the item.\n"
-                    },
-                    "category": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/types/onepassword:index:Category"
-                            },
-                            {
-                                "type": "string"
-                            }
-                        ]
-                    },
-                    "adminConsole": {
-                        "$ref": "#/types/onepassword:server:adminConsoleSection"
-                    },
-                    "hostingProvider": {
-                        "$ref": "#/types/onepassword:server:hostingProviderSection"
-                    },
-                    "notes": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "url": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "username": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "password": {
                         "type": "string",
                         "secret": false
                     }
@@ -3994,6 +4864,187 @@
                 }
             }
         },
+        "onepassword:index:GetBankAccount": {
+            "inputs": {
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
+                    },
+                    "vault": {
+                        "type": "string",
+                        "description": "The UUID of the vault the item is in.\n"
+                    }
+                },
+                "required": [
+                    "vault"
+                ]
+            },
+            "outputs": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "The title of the item.\n"
+                    },
+                    "vault": {
+                        "type": "string",
+                        "description": "The UUID of the vault the item is in.\n"
+                    },
+                    "sections": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/types/onepassword:index:GetSection"
+                        }
+                    },
+                    "fields": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/types/onepassword:index:GetField"
+                        }
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "An array of strings of the tags assigned to the item.\n"
+                    },
+                    "category": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/onepassword:index:Category"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    "branchInformation": {
+                        "$ref": "#/types/onepassword:bankAccount:branchInformationSection"
+                    },
+                    "notes": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "bankName": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "nameOnAccount": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "type": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "routingNumber": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "accountNumber": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "swift": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "iban": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "pin": {
+                        "type": "string",
+                        "secret": false
+                    }
+                }
+            }
+        },
+        "onepassword:index:GetDocument": {
+            "inputs": {
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
+                    },
+                    "vault": {
+                        "type": "string",
+                        "description": "The UUID of the vault the item is in.\n"
+                    }
+                },
+                "required": [
+                    "vault"
+                ]
+            },
+            "outputs": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "The title of the item.\n"
+                    },
+                    "vault": {
+                        "type": "string",
+                        "description": "The UUID of the vault the item is in.\n"
+                    },
+                    "sections": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/types/onepassword:index:GetSection"
+                        }
+                    },
+                    "fields": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/types/onepassword:index:GetField"
+                        }
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "An array of strings of the tags assigned to the item.\n"
+                    },
+                    "category": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/onepassword:index:Category"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    "notes": {
+                        "type": "string",
+                        "secret": false
+                    }
+                }
+            }
+        },
         "onepassword:index:GetEmailAccount": {
             "inputs": {
                 "properties": {
@@ -4095,6 +5146,102 @@
                         "secret": false
                     },
                     "authMethod": {
+                        "type": "string",
+                        "secret": false
+                    }
+                }
+            }
+        },
+        "onepassword:index:GetMedicalRecord": {
+            "inputs": {
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
+                    },
+                    "vault": {
+                        "type": "string",
+                        "description": "The UUID of the vault the item is in.\n"
+                    }
+                },
+                "required": [
+                    "vault"
+                ]
+            },
+            "outputs": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "The title of the item.\n"
+                    },
+                    "vault": {
+                        "type": "string",
+                        "description": "The UUID of the vault the item is in.\n"
+                    },
+                    "sections": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/types/onepassword:index:GetSection"
+                        }
+                    },
+                    "fields": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/types/onepassword:index:GetField"
+                        }
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "An array of strings of the tags assigned to the item.\n"
+                    },
+                    "category": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/onepassword:index:Category"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    "medication": {
+                        "$ref": "#/types/onepassword:medicalRecord:medicationSection"
+                    },
+                    "notes": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "date": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "location": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "healthcareProfessional": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "patient": {
+                        "type": "string",
+                        "secret": false
+                    },
+                    "reasonForVisit": {
                         "type": "string",
                         "secret": false
                     }
@@ -4206,7 +5353,7 @@
                 }
             }
         },
-        "onepassword:index:GetOutdoorLicense": {
+        "onepassword:index:GetPassword": {
             "inputs": {
                 "properties": {
                     "title": {
@@ -4272,140 +5419,11 @@
                             }
                         ]
                     },
-                    "notes": {
+                    "password": {
                         "type": "string",
-                        "secret": false
-                    },
-                    "fullName": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "validFrom": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "expires": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "approvedWildlife": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "maximumQuota": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "state": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "country": {
-                        "type": "string",
-                        "secret": false
-                    }
-                }
-            }
-        },
-        "onepassword:index:GetWirelessRouter": {
-            "inputs": {
-                "properties": {
-                    "title": {
-                        "type": "string",
-                        "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
-                    },
-                    "uuid": {
-                        "type": "string",
-                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
-                    },
-                    "vault": {
-                        "type": "string",
-                        "description": "The UUID of the vault the item is in.\n"
-                    }
-                },
-                "required": [
-                    "vault"
-                ]
-            },
-            "outputs": {
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "uuid": {
-                        "type": "string",
-                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
-                    },
-                    "title": {
-                        "type": "string",
-                        "description": "The title of the item.\n"
-                    },
-                    "vault": {
-                        "type": "string",
-                        "description": "The UUID of the vault the item is in.\n"
-                    },
-                    "sections": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/types/onepassword:index:GetSection"
-                        }
-                    },
-                    "fields": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/types/onepassword:index:GetField"
-                        }
-                    },
-                    "tags": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "description": "An array of strings of the tags assigned to the item.\n"
-                    },
-                    "category": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/types/onepassword:index:Category"
-                            },
-                            {
-                                "type": "string"
-                            }
-                        ]
+                        "secret": true
                     },
                     "notes": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "baseStationName": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "baseStationPassword": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "serverIpAddress": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "airPortId": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "networkName": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "wirelessSecurity": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "wirelessNetworkPassword": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "attachedStoragePassword": {
                         "type": "string",
                         "secret": false
                     }
@@ -4496,7 +5514,7 @@
                 }
             }
         },
-        "onepassword:index:GetDatabase": {
+        "onepassword:index:GetSecureNote": {
             "inputs": {
                 "properties": {
                     "title": {
@@ -4563,374 +5581,6 @@
                         ]
                     },
                     "notes": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "type": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "server": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "port": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "database": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "username": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "password": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "sid": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "alias": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "connectionOptions": {
-                        "type": "string",
-                        "secret": false
-                    }
-                }
-            }
-        },
-        "onepassword:index:GetIdentity": {
-            "inputs": {
-                "properties": {
-                    "title": {
-                        "type": "string",
-                        "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
-                    },
-                    "uuid": {
-                        "type": "string",
-                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
-                    },
-                    "vault": {
-                        "type": "string",
-                        "description": "The UUID of the vault the item is in.\n"
-                    }
-                },
-                "required": [
-                    "vault"
-                ]
-            },
-            "outputs": {
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "uuid": {
-                        "type": "string",
-                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
-                    },
-                    "title": {
-                        "type": "string",
-                        "description": "The title of the item.\n"
-                    },
-                    "vault": {
-                        "type": "string",
-                        "description": "The UUID of the vault the item is in.\n"
-                    },
-                    "sections": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/types/onepassword:index:GetSection"
-                        }
-                    },
-                    "fields": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/types/onepassword:index:GetField"
-                        }
-                    },
-                    "tags": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "description": "An array of strings of the tags assigned to the item.\n"
-                    },
-                    "category": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/types/onepassword:index:Category"
-                            },
-                            {
-                                "type": "string"
-                            }
-                        ]
-                    },
-                    "identification": {
-                        "$ref": "#/types/onepassword:identity:identificationSection"
-                    },
-                    "address": {
-                        "$ref": "#/types/onepassword:identity:addressSection"
-                    },
-                    "internetDetails": {
-                        "$ref": "#/types/onepassword:identity:internetDetailsSection"
-                    },
-                    "notes": {
-                        "type": "string",
-                        "secret": false
-                    }
-                }
-            }
-        },
-        "onepassword:index:GetLogin": {
-            "inputs": {
-                "properties": {
-                    "title": {
-                        "type": "string",
-                        "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
-                    },
-                    "uuid": {
-                        "type": "string",
-                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
-                    },
-                    "vault": {
-                        "type": "string",
-                        "description": "The UUID of the vault the item is in.\n"
-                    }
-                },
-                "required": [
-                    "vault"
-                ]
-            },
-            "outputs": {
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "uuid": {
-                        "type": "string",
-                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
-                    },
-                    "title": {
-                        "type": "string",
-                        "description": "The title of the item.\n"
-                    },
-                    "vault": {
-                        "type": "string",
-                        "description": "The UUID of the vault the item is in.\n"
-                    },
-                    "sections": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/types/onepassword:index:GetSection"
-                        }
-                    },
-                    "fields": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/types/onepassword:index:GetField"
-                        }
-                    },
-                    "tags": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "description": "An array of strings of the tags assigned to the item.\n"
-                    },
-                    "category": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/types/onepassword:index:Category"
-                            },
-                            {
-                                "type": "string"
-                            }
-                        ]
-                    },
-                    "username": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "password": {
-                        "type": "string",
-                        "secret": true
-                    },
-                    "notes": {
-                        "type": "string",
-                        "secret": false
-                    }
-                }
-            }
-        },
-        "onepassword:index:GetPassword": {
-            "inputs": {
-                "properties": {
-                    "title": {
-                        "type": "string",
-                        "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
-                    },
-                    "uuid": {
-                        "type": "string",
-                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
-                    },
-                    "vault": {
-                        "type": "string",
-                        "description": "The UUID of the vault the item is in.\n"
-                    }
-                },
-                "required": [
-                    "vault"
-                ]
-            },
-            "outputs": {
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "uuid": {
-                        "type": "string",
-                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
-                    },
-                    "title": {
-                        "type": "string",
-                        "description": "The title of the item.\n"
-                    },
-                    "vault": {
-                        "type": "string",
-                        "description": "The UUID of the vault the item is in.\n"
-                    },
-                    "sections": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/types/onepassword:index:GetSection"
-                        }
-                    },
-                    "fields": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/types/onepassword:index:GetField"
-                        }
-                    },
-                    "tags": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "description": "An array of strings of the tags assigned to the item.\n"
-                    },
-                    "category": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/types/onepassword:index:Category"
-                            },
-                            {
-                                "type": "string"
-                            }
-                        ]
-                    },
-                    "password": {
-                        "type": "string",
-                        "secret": true
-                    },
-                    "notes": {
-                        "type": "string",
-                        "secret": false
-                    }
-                }
-            }
-        },
-        "onepassword:index:GetRewardProgram": {
-            "inputs": {
-                "properties": {
-                    "title": {
-                        "type": "string",
-                        "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
-                    },
-                    "uuid": {
-                        "type": "string",
-                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
-                    },
-                    "vault": {
-                        "type": "string",
-                        "description": "The UUID of the vault the item is in.\n"
-                    }
-                },
-                "required": [
-                    "vault"
-                ]
-            },
-            "outputs": {
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "uuid": {
-                        "type": "string",
-                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
-                    },
-                    "title": {
-                        "type": "string",
-                        "description": "The title of the item.\n"
-                    },
-                    "vault": {
-                        "type": "string",
-                        "description": "The UUID of the vault the item is in.\n"
-                    },
-                    "sections": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/types/onepassword:index:GetSection"
-                        }
-                    },
-                    "fields": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/types/onepassword:index:GetField"
-                        }
-                    },
-                    "tags": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "description": "An array of strings of the tags assigned to the item.\n"
-                    },
-                    "category": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/types/onepassword:index:Category"
-                            },
-                            {
-                                "type": "string"
-                            }
-                        ]
-                    },
-                    "moreInformation": {
-                        "$ref": "#/types/onepassword:rewardProgram:moreInformationSection"
-                    },
-                    "notes": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "companyName": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "memberName": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "memberId": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "pin": {
                         "type": "string",
                         "secret": false
                     }
@@ -5012,373 +5662,6 @@
                         "secret": false
                     },
                     "number": {
-                        "type": "string",
-                        "secret": false
-                    }
-                }
-            }
-        },
-        "onepassword:index:GetSoftwareLicense": {
-            "inputs": {
-                "properties": {
-                    "title": {
-                        "type": "string",
-                        "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
-                    },
-                    "uuid": {
-                        "type": "string",
-                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
-                    },
-                    "vault": {
-                        "type": "string",
-                        "description": "The UUID of the vault the item is in.\n"
-                    }
-                },
-                "required": [
-                    "vault"
-                ]
-            },
-            "outputs": {
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "uuid": {
-                        "type": "string",
-                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
-                    },
-                    "title": {
-                        "type": "string",
-                        "description": "The title of the item.\n"
-                    },
-                    "vault": {
-                        "type": "string",
-                        "description": "The UUID of the vault the item is in.\n"
-                    },
-                    "sections": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/types/onepassword:index:GetSection"
-                        }
-                    },
-                    "fields": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/types/onepassword:index:GetField"
-                        }
-                    },
-                    "tags": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "description": "An array of strings of the tags assigned to the item.\n"
-                    },
-                    "category": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/types/onepassword:index:Category"
-                            },
-                            {
-                                "type": "string"
-                            }
-                        ]
-                    },
-                    "customer": {
-                        "$ref": "#/types/onepassword:softwareLicense:customerSection"
-                    },
-                    "publisher": {
-                        "$ref": "#/types/onepassword:softwareLicense:publisherSection"
-                    },
-                    "order": {
-                        "$ref": "#/types/onepassword:softwareLicense:orderSection"
-                    },
-                    "notes": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "version": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "licenseKey": {
-                        "type": "string",
-                        "secret": false
-                    }
-                }
-            }
-        },
-        "onepassword:index:GetBankAccount": {
-            "inputs": {
-                "properties": {
-                    "title": {
-                        "type": "string",
-                        "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
-                    },
-                    "uuid": {
-                        "type": "string",
-                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
-                    },
-                    "vault": {
-                        "type": "string",
-                        "description": "The UUID of the vault the item is in.\n"
-                    }
-                },
-                "required": [
-                    "vault"
-                ]
-            },
-            "outputs": {
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "uuid": {
-                        "type": "string",
-                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
-                    },
-                    "title": {
-                        "type": "string",
-                        "description": "The title of the item.\n"
-                    },
-                    "vault": {
-                        "type": "string",
-                        "description": "The UUID of the vault the item is in.\n"
-                    },
-                    "sections": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/types/onepassword:index:GetSection"
-                        }
-                    },
-                    "fields": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/types/onepassword:index:GetField"
-                        }
-                    },
-                    "tags": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "description": "An array of strings of the tags assigned to the item.\n"
-                    },
-                    "category": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/types/onepassword:index:Category"
-                            },
-                            {
-                                "type": "string"
-                            }
-                        ]
-                    },
-                    "branchInformation": {
-                        "$ref": "#/types/onepassword:bankAccount:branchInformationSection"
-                    },
-                    "notes": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "bankName": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "nameOnAccount": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "type": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "routingNumber": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "accountNumber": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "swift": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "iban": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "pin": {
-                        "type": "string",
-                        "secret": false
-                    }
-                }
-            }
-        },
-        "onepassword:index:GetMedicalRecord": {
-            "inputs": {
-                "properties": {
-                    "title": {
-                        "type": "string",
-                        "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
-                    },
-                    "uuid": {
-                        "type": "string",
-                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
-                    },
-                    "vault": {
-                        "type": "string",
-                        "description": "The UUID of the vault the item is in.\n"
-                    }
-                },
-                "required": [
-                    "vault"
-                ]
-            },
-            "outputs": {
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "uuid": {
-                        "type": "string",
-                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
-                    },
-                    "title": {
-                        "type": "string",
-                        "description": "The title of the item.\n"
-                    },
-                    "vault": {
-                        "type": "string",
-                        "description": "The UUID of the vault the item is in.\n"
-                    },
-                    "sections": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/types/onepassword:index:GetSection"
-                        }
-                    },
-                    "fields": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/types/onepassword:index:GetField"
-                        }
-                    },
-                    "tags": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "description": "An array of strings of the tags assigned to the item.\n"
-                    },
-                    "category": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/types/onepassword:index:Category"
-                            },
-                            {
-                                "type": "string"
-                            }
-                        ]
-                    },
-                    "medication": {
-                        "$ref": "#/types/onepassword:medicalRecord:medicationSection"
-                    },
-                    "notes": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "date": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "location": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "healthcareProfessional": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "patient": {
-                        "type": "string",
-                        "secret": false
-                    },
-                    "reasonForVisit": {
-                        "type": "string",
-                        "secret": false
-                    }
-                }
-            }
-        },
-        "onepassword:index:GetSecureNote": {
-            "inputs": {
-                "properties": {
-                    "title": {
-                        "type": "string",
-                        "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
-                    },
-                    "uuid": {
-                        "type": "string",
-                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
-                    },
-                    "vault": {
-                        "type": "string",
-                        "description": "The UUID of the vault the item is in.\n"
-                    }
-                },
-                "required": [
-                    "vault"
-                ]
-            },
-            "outputs": {
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "uuid": {
-                        "type": "string",
-                        "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
-                    },
-                    "title": {
-                        "type": "string",
-                        "description": "The title of the item.\n"
-                    },
-                    "vault": {
-                        "type": "string",
-                        "description": "The UUID of the vault the item is in.\n"
-                    },
-                    "sections": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/types/onepassword:index:GetSection"
-                        }
-                    },
-                    "fields": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/types/onepassword:index:GetField"
-                        }
-                    },
-                    "tags": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "description": "An array of strings of the tags assigned to the item.\n"
-                    },
-                    "category": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/types/onepassword:index:Category"
-                            },
-                            {
-                                "type": "string"
-                            }
-                        ]
-                    },
-                    "notes": {
                         "type": "string",
                         "secret": false
                     }
@@ -5606,6 +5889,128 @@
                 }
             ]
         },
+        "onepassword:rewardProgram:moreInformationSection": {
+            "type": "object",
+            "properties": {
+                "memberIdAdditional": {
+                    "type": "string",
+                    "secret": false
+                },
+                "memberSince": {
+                    "type": "string",
+                    "secret": false
+                },
+                "customerServicePhone": {
+                    "type": "string",
+                    "secret": false
+                },
+                "phoneForReservations": {
+                    "type": "string",
+                    "secret": false
+                },
+                "website": {
+                    "type": "string",
+                    "secret": false
+                }
+            }
+        },
+        "onepassword:softwareLicense:customerSection": {
+            "type": "object",
+            "properties": {
+                "licensedTo": {
+                    "type": "string",
+                    "secret": false
+                },
+                "registeredEmail": {
+                    "type": "string",
+                    "secret": false
+                },
+                "company": {
+                    "type": "string",
+                    "secret": false
+                }
+            }
+        },
+        "onepassword:softwareLicense:publisherSection": {
+            "type": "object",
+            "properties": {
+                "downloadPage": {
+                    "type": "string",
+                    "secret": false
+                },
+                "publisher": {
+                    "type": "string",
+                    "secret": false
+                },
+                "website": {
+                    "type": "string",
+                    "secret": false
+                },
+                "retailPrice": {
+                    "type": "string",
+                    "secret": false
+                },
+                "supportEmail": {
+                    "type": "string",
+                    "secret": false
+                }
+            }
+        },
+        "onepassword:softwareLicense:orderSection": {
+            "type": "object",
+            "properties": {
+                "purchaseDate": {
+                    "type": "string",
+                    "secret": false
+                },
+                "orderNumber": {
+                    "type": "string",
+                    "secret": false
+                },
+                "orderTotal": {
+                    "type": "string",
+                    "secret": false
+                }
+            }
+        },
+        "onepassword:server:adminConsoleSection": {
+            "type": "object",
+            "properties": {
+                "adminConsoleUrl": {
+                    "type": "string",
+                    "secret": false
+                },
+                "adminConsoleUsername": {
+                    "type": "string",
+                    "secret": false
+                },
+                "consolePassword": {
+                    "type": "string",
+                    "secret": false
+                }
+            }
+        },
+        "onepassword:server:hostingProviderSection": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "secret": false
+                },
+                "website": {
+                    "type": "string",
+                    "secret": false
+                },
+                "supportUrl": {
+                    "type": "string",
+                    "secret": false
+                },
+                "supportPhone": {
+                    "type": "string",
+                    "secret": false
+                }
+            }
+        },
         "onepassword:creditCard:contactInformationSection": {
             "type": "object",
             "properties": {
@@ -5651,103 +6056,6 @@
                     "secret": false
                 },
                 "issueNumber": {
-                    "type": "string",
-                    "secret": false
-                }
-            }
-        },
-        "onepassword:server:adminConsoleSection": {
-            "type": "object",
-            "properties": {
-                "adminConsoleUrl": {
-                    "type": "string",
-                    "secret": false
-                },
-                "adminConsoleUsername": {
-                    "type": "string",
-                    "secret": false
-                },
-                "consolePassword": {
-                    "type": "string",
-                    "secret": false
-                }
-            }
-        },
-        "onepassword:server:hostingProviderSection": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "secret": false
-                },
-                "website": {
-                    "type": "string",
-                    "secret": false
-                },
-                "supportUrl": {
-                    "type": "string",
-                    "secret": false
-                },
-                "supportPhone": {
-                    "type": "string",
-                    "secret": false
-                }
-            }
-        },
-        "onepassword:emailAccount:smtpSection": {
-            "type": "object",
-            "properties": {
-                "smtpServer": {
-                    "type": "string",
-                    "secret": false
-                },
-                "portNumber": {
-                    "type": "string",
-                    "secret": false
-                },
-                "username": {
-                    "type": "string",
-                    "secret": false
-                },
-                "password": {
-                    "type": "string",
-                    "secret": false
-                },
-                "security": {
-                    "type": "string",
-                    "secret": false
-                },
-                "authMethod": {
-                    "type": "string",
-                    "secret": false
-                }
-            }
-        },
-        "onepassword:emailAccount:contactInformationSection": {
-            "type": "object",
-            "properties": {
-                "provider": {
-                    "type": "string",
-                    "secret": false
-                },
-                "providersWebsite": {
-                    "type": "string",
-                    "secret": false
-                },
-                "phoneLocal": {
-                    "type": "string",
-                    "secret": false
-                },
-                "phoneTollFree": {
-                    "type": "string",
-                    "secret": false
-                }
-            }
-        },
-        "onepassword:cryptoWallet:walletSection": {
-            "type": "object",
-            "properties": {
-                "walletAddress": {
                     "type": "string",
                     "secret": false
                 }
@@ -5868,90 +6176,6 @@
                 }
             }
         },
-        "onepassword:rewardProgram:moreInformationSection": {
-            "type": "object",
-            "properties": {
-                "memberIdAdditional": {
-                    "type": "string",
-                    "secret": false
-                },
-                "memberSince": {
-                    "type": "string",
-                    "secret": false
-                },
-                "customerServicePhone": {
-                    "type": "string",
-                    "secret": false
-                },
-                "phoneForReservations": {
-                    "type": "string",
-                    "secret": false
-                },
-                "website": {
-                    "type": "string",
-                    "secret": false
-                }
-            }
-        },
-        "onepassword:softwareLicense:customerSection": {
-            "type": "object",
-            "properties": {
-                "licensedTo": {
-                    "type": "string",
-                    "secret": false
-                },
-                "registeredEmail": {
-                    "type": "string",
-                    "secret": false
-                },
-                "company": {
-                    "type": "string",
-                    "secret": false
-                }
-            }
-        },
-        "onepassword:softwareLicense:publisherSection": {
-            "type": "object",
-            "properties": {
-                "downloadPage": {
-                    "type": "string",
-                    "secret": false
-                },
-                "publisher": {
-                    "type": "string",
-                    "secret": false
-                },
-                "website": {
-                    "type": "string",
-                    "secret": false
-                },
-                "retailPrice": {
-                    "type": "string",
-                    "secret": false
-                },
-                "supportEmail": {
-                    "type": "string",
-                    "secret": false
-                }
-            }
-        },
-        "onepassword:softwareLicense:orderSection": {
-            "type": "object",
-            "properties": {
-                "purchaseDate": {
-                    "type": "string",
-                    "secret": false
-                },
-                "orderNumber": {
-                    "type": "string",
-                    "secret": false
-                },
-                "orderTotal": {
-                    "type": "string",
-                    "secret": false
-                }
-            }
-        },
         "onepassword:bankAccount:branchInformationSection": {
             "type": "object",
             "properties": {
@@ -5960,6 +6184,56 @@
                     "secret": false
                 },
                 "address": {
+                    "type": "string",
+                    "secret": false
+                }
+            }
+        },
+        "onepassword:emailAccount:smtpSection": {
+            "type": "object",
+            "properties": {
+                "smtpServer": {
+                    "type": "string",
+                    "secret": false
+                },
+                "portNumber": {
+                    "type": "string",
+                    "secret": false
+                },
+                "username": {
+                    "type": "string",
+                    "secret": false
+                },
+                "password": {
+                    "type": "string",
+                    "secret": false
+                },
+                "security": {
+                    "type": "string",
+                    "secret": false
+                },
+                "authMethod": {
+                    "type": "string",
+                    "secret": false
+                }
+            }
+        },
+        "onepassword:emailAccount:contactInformationSection": {
+            "type": "object",
+            "properties": {
+                "provider": {
+                    "type": "string",
+                    "secret": false
+                },
+                "providersWebsite": {
+                    "type": "string",
+                    "secret": false
+                },
+                "phoneLocal": {
+                    "type": "string",
+                    "secret": false
+                },
+                "phoneTollFree": {
                     "type": "string",
                     "secret": false
                 }
@@ -5977,6 +6251,15 @@
                     "secret": false
                 },
                 "medicationNotes": {
+                    "type": "string",
+                    "secret": false
+                }
+            }
+        },
+        "onepassword:cryptoWallet:walletSection": {
+            "type": "object",
+            "properties": {
+                "walletAddress": {
                     "type": "string",
                     "secret": false
                 }

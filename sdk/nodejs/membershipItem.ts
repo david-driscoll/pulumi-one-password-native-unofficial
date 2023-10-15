@@ -32,7 +32,7 @@ export class MembershipItem extends pulumi.CustomResource {
         return obj['__pulumiType'] === MembershipItem.__pulumiType;
     }
 
-    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
+    public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly expiryDate!: pulumi.Output<string | undefined>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public readonly group!: pulumi.Output<string | undefined>;
@@ -76,6 +76,7 @@ export class MembershipItem extends pulumi.CustomResource {
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
+            resourceInputs["category"] = "Membership";
             resourceInputs["expiryDate"] = args ? args.expiryDate : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["group"] = args ? args.group : undefined;
@@ -90,7 +91,6 @@ export class MembershipItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["website"] = args ? args.website : undefined;
-            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -121,6 +121,10 @@ export class MembershipItem extends pulumi.CustomResource {
  * The set of arguments for constructing a MembershipItem resource.
  */
 export interface MembershipItemArgs {
+    /**
+     * The category of the vault the item is in.
+     */
+    category?: pulumi.Input<"Membership">;
     expiryDate?: pulumi.Input<string>;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     group?: pulumi.Input<string>;

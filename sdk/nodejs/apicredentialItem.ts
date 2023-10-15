@@ -32,7 +32,7 @@ export class APICredentialItem extends pulumi.CustomResource {
         return obj['__pulumiType'] === APICredentialItem.__pulumiType;
     }
 
-    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
+    public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly credential!: pulumi.Output<string | undefined>;
     public readonly expires!: pulumi.Output<string | undefined>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
@@ -75,6 +75,7 @@ export class APICredentialItem extends pulumi.CustomResource {
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
+            resourceInputs["category"] = "API Credential";
             resourceInputs["credential"] = args ? args.credential : undefined;
             resourceInputs["expires"] = args ? args.expires : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
@@ -88,7 +89,6 @@ export class APICredentialItem extends pulumi.CustomResource {
             resourceInputs["username"] = args ? args.username : undefined;
             resourceInputs["validFrom"] = args ? args.validFrom : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
-            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -118,6 +118,10 @@ export class APICredentialItem extends pulumi.CustomResource {
  * The set of arguments for constructing a APICredentialItem resource.
  */
 export interface APICredentialItemArgs {
+    /**
+     * The category of the vault the item is in.
+     */
+    category?: pulumi.Input<"API Credential">;
     credential?: pulumi.Input<string>;
     expires?: pulumi.Input<string>;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;

@@ -75,13 +75,20 @@ namespace Pulumi.Onepassword
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public ServerItem(string name, ServerItemArgs args, CustomResourceOptions? options = null)
-            : base("onepassword:index:ServerItem", name, args ?? new ServerItemArgs(), MakeResourceOptions(options, ""))
+            : base("onepassword:index:ServerItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private ServerItem(string name, Input<string> id, CustomResourceOptions? options = null)
             : base("onepassword:index:ServerItem", name, null, MakeResourceOptions(options, id))
         {
+        }
+
+        private static ServerItemArgs MakeArgs(ServerItemArgs args)
+        {
+            args ??= new ServerItemArgs();
+            args.Category = "Server";
+            return args;
         }
 
         private static CustomResourceOptions MakeResourceOptions(CustomResourceOptions? options, Input<string>? id)
@@ -113,6 +120,12 @@ namespace Pulumi.Onepassword
     {
         [Input("adminConsole")]
         public Input<Pulumi.Onepassword.Server.Inputs.AdminConsoleSectionArgs>? AdminConsole { get; set; }
+
+        /// <summary>
+        /// The category of the vault the item is in.
+        /// </summary>
+        [Input("category")]
+        public Input<string>? Category { get; set; }
 
         [Input("fields")]
         private InputMap<Inputs.FieldArgs>? _fields;

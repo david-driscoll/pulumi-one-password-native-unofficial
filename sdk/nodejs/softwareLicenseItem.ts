@@ -32,7 +32,7 @@ export class SoftwareLicenseItem extends pulumi.CustomResource {
         return obj['__pulumiType'] === SoftwareLicenseItem.__pulumiType;
     }
 
-    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
+    public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly customer!: pulumi.Output<outputs.softwareLicense.CustomerSection | undefined>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public /*out*/ readonly id!: pulumi.Output<string>;
@@ -73,6 +73,7 @@ export class SoftwareLicenseItem extends pulumi.CustomResource {
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
+            resourceInputs["category"] = "Software License";
             resourceInputs["customer"] = args ? args.customer : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["licenseKey"] = args ? args.licenseKey : undefined;
@@ -84,7 +85,6 @@ export class SoftwareLicenseItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["version"] = args ? args.version : undefined;
-            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -112,6 +112,10 @@ export class SoftwareLicenseItem extends pulumi.CustomResource {
  * The set of arguments for constructing a SoftwareLicenseItem resource.
  */
 export interface SoftwareLicenseItemArgs {
+    /**
+     * The category of the vault the item is in.
+     */
+    category?: pulumi.Input<"Software License">;
     customer?: pulumi.Input<inputs.softwareLicense.CustomerSectionArgs>;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     licenseKey?: pulumi.Input<string>;

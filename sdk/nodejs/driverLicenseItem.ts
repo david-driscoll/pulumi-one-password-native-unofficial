@@ -33,7 +33,7 @@ export class DriverLicenseItem extends pulumi.CustomResource {
     }
 
     public readonly address!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
+    public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly conditionsRestrictions!: pulumi.Output<string | undefined>;
     public readonly country!: pulumi.Output<string | undefined>;
     public readonly dateOfBirth!: pulumi.Output<string | undefined>;
@@ -80,6 +80,7 @@ export class DriverLicenseItem extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vault'");
             }
             resourceInputs["address"] = args ? args.address : undefined;
+            resourceInputs["category"] = "Driver License";
             resourceInputs["conditionsRestrictions"] = args ? args.conditionsRestrictions : undefined;
             resourceInputs["country"] = args ? args.country : undefined;
             resourceInputs["dateOfBirth"] = args ? args.dateOfBirth : undefined;
@@ -96,7 +97,6 @@ export class DriverLicenseItem extends pulumi.CustomResource {
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
-            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -131,6 +131,10 @@ export class DriverLicenseItem extends pulumi.CustomResource {
  */
 export interface DriverLicenseItemArgs {
     address?: pulumi.Input<string>;
+    /**
+     * The category of the vault the item is in.
+     */
+    category?: pulumi.Input<"Driver License">;
     conditionsRestrictions?: pulumi.Input<string>;
     country?: pulumi.Input<string>;
     dateOfBirth?: pulumi.Input<string>;

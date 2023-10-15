@@ -33,7 +33,7 @@ export class OutdoorLicenseItem extends pulumi.CustomResource {
     }
 
     public readonly approvedWildlife!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
+    public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly country!: pulumi.Output<string | undefined>;
     public readonly expires!: pulumi.Output<string | undefined>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
@@ -76,6 +76,7 @@ export class OutdoorLicenseItem extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vault'");
             }
             resourceInputs["approvedWildlife"] = args ? args.approvedWildlife : undefined;
+            resourceInputs["category"] = "Outdoor License";
             resourceInputs["country"] = args ? args.country : undefined;
             resourceInputs["expires"] = args ? args.expires : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
@@ -88,7 +89,6 @@ export class OutdoorLicenseItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["validFrom"] = args ? args.validFrom : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
-            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -119,6 +119,10 @@ export class OutdoorLicenseItem extends pulumi.CustomResource {
  */
 export interface OutdoorLicenseItemArgs {
     approvedWildlife?: pulumi.Input<string>;
+    /**
+     * The category of the vault the item is in.
+     */
+    category?: pulumi.Input<"Outdoor License">;
     country?: pulumi.Input<string>;
     expires?: pulumi.Input<string>;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;

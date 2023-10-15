@@ -87,13 +87,20 @@ namespace Pulumi.Onepassword
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public BankAccountItem(string name, BankAccountItemArgs args, CustomResourceOptions? options = null)
-            : base("onepassword:index:BankAccountItem", name, args ?? new BankAccountItemArgs(), MakeResourceOptions(options, ""))
+            : base("onepassword:index:BankAccountItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private BankAccountItem(string name, Input<string> id, CustomResourceOptions? options = null)
             : base("onepassword:index:BankAccountItem", name, null, MakeResourceOptions(options, id))
         {
+        }
+
+        private static BankAccountItemArgs MakeArgs(BankAccountItemArgs args)
+        {
+            args ??= new BankAccountItemArgs();
+            args.Category = "Bank Account";
+            return args;
         }
 
         private static CustomResourceOptions MakeResourceOptions(CustomResourceOptions? options, Input<string>? id)
@@ -131,6 +138,12 @@ namespace Pulumi.Onepassword
 
         [Input("branchInformation")]
         public Input<Pulumi.Onepassword.BankAccount.Inputs.BranchInformationSectionArgs>? BranchInformation { get; set; }
+
+        /// <summary>
+        /// The category of the vault the item is in.
+        /// </summary>
+        [Input("category")]
+        public Input<string>? Category { get; set; }
 
         [Input("fields")]
         private InputMap<Inputs.FieldArgs>? _fields;

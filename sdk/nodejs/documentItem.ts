@@ -32,7 +32,7 @@ export class DocumentItem extends pulumi.CustomResource {
         return obj['__pulumiType'] === DocumentItem.__pulumiType;
     }
 
-    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
+    public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly notes!: pulumi.Output<string | undefined>;
@@ -68,13 +68,13 @@ export class DocumentItem extends pulumi.CustomResource {
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
+            resourceInputs["category"] = "Document";
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
-            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -97,6 +97,10 @@ export class DocumentItem extends pulumi.CustomResource {
  * The set of arguments for constructing a DocumentItem resource.
  */
 export interface DocumentItemArgs {
+    /**
+     * The category of the vault the item is in.
+     */
+    category?: pulumi.Input<"Document">;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     notes?: pulumi.Input<string>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;

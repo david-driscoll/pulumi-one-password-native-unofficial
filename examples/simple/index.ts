@@ -40,3 +40,13 @@ new op.Item("test-item2", {
 }, {
 
 })
+
+new op.BankAccountItem('bank-account-info', {
+
+    vault: 'testing-pulumi',
+    accountNumber: "123456789",
+    branchInformation: {
+        address: "12345",
+        phone: "5698789987"
+    }
+})

@@ -34,7 +34,7 @@ export class CreditCardItem extends pulumi.CustomResource {
 
     public readonly additionalDetails!: pulumi.Output<outputs.creditCard.AdditionalDetailsSection | undefined>;
     public readonly cardholderName!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
+    public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly contactInformation!: pulumi.Output<outputs.creditCard.ContactInformationSection | undefined>;
     public readonly expiryDate!: pulumi.Output<string | undefined>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
@@ -78,6 +78,7 @@ export class CreditCardItem extends pulumi.CustomResource {
             }
             resourceInputs["additionalDetails"] = args ? args.additionalDetails : undefined;
             resourceInputs["cardholderName"] = args ? args.cardholderName : undefined;
+            resourceInputs["category"] = "Credit Card";
             resourceInputs["contactInformation"] = args ? args.contactInformation : undefined;
             resourceInputs["expiryDate"] = args ? args.expiryDate : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
@@ -90,7 +91,6 @@ export class CreditCardItem extends pulumi.CustomResource {
             resourceInputs["validFrom"] = args ? args.validFrom : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["verificationNumber"] = args ? args.verificationNumber : undefined;
-            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -123,6 +123,10 @@ export class CreditCardItem extends pulumi.CustomResource {
 export interface CreditCardItemArgs {
     additionalDetails?: pulumi.Input<inputs.creditCard.AdditionalDetailsSectionArgs>;
     cardholderName?: pulumi.Input<string>;
+    /**
+     * The category of the vault the item is in.
+     */
+    category?: pulumi.Input<"Credit Card">;
     contactInformation?: pulumi.Input<inputs.creditCard.ContactInformationSectionArgs>;
     expiryDate?: pulumi.Input<string>;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;

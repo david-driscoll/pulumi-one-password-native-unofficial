@@ -93,13 +93,20 @@ namespace Pulumi.Onepassword
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public DriverLicenseItem(string name, DriverLicenseItemArgs args, CustomResourceOptions? options = null)
-            : base("onepassword:index:DriverLicenseItem", name, args ?? new DriverLicenseItemArgs(), MakeResourceOptions(options, ""))
+            : base("onepassword:index:DriverLicenseItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private DriverLicenseItem(string name, Input<string> id, CustomResourceOptions? options = null)
             : base("onepassword:index:DriverLicenseItem", name, null, MakeResourceOptions(options, id))
         {
+        }
+
+        private static DriverLicenseItemArgs MakeArgs(DriverLicenseItemArgs args)
+        {
+            args ??= new DriverLicenseItemArgs();
+            args.Category = "Driver License";
+            return args;
         }
 
         private static CustomResourceOptions MakeResourceOptions(CustomResourceOptions? options, Input<string>? id)
@@ -131,6 +138,12 @@ namespace Pulumi.Onepassword
     {
         [Input("address")]
         public Input<string>? Address { get; set; }
+
+        /// <summary>
+        /// The category of the vault the item is in.
+        /// </summary>
+        [Input("category")]
+        public Input<string>? Category { get; set; }
 
         [Input("conditionsRestrictions")]
         public Input<string>? ConditionsRestrictions { get; set; }

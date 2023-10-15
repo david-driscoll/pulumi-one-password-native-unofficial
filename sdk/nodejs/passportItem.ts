@@ -32,7 +32,7 @@ export class PassportItem extends pulumi.CustomResource {
         return obj['__pulumiType'] === PassportItem.__pulumiType;
     }
 
-    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
+    public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly dateOfBirth!: pulumi.Output<string | undefined>;
     public readonly expiryDate!: pulumi.Output<string | undefined>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
@@ -79,6 +79,7 @@ export class PassportItem extends pulumi.CustomResource {
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
+            resourceInputs["category"] = "Passport";
             resourceInputs["dateOfBirth"] = args ? args.dateOfBirth : undefined;
             resourceInputs["expiryDate"] = args ? args.expiryDate : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
@@ -96,7 +97,6 @@ export class PassportItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["type"] = args ? args.type : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
-            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -130,6 +130,10 @@ export class PassportItem extends pulumi.CustomResource {
  * The set of arguments for constructing a PassportItem resource.
  */
 export interface PassportItemArgs {
+    /**
+     * The category of the vault the item is in.
+     */
+    category?: pulumi.Input<"Passport">;
     dateOfBirth?: pulumi.Input<string>;
     expiryDate?: pulumi.Input<string>;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;

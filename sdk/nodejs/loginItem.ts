@@ -32,7 +32,7 @@ export class LoginItem extends pulumi.CustomResource {
         return obj['__pulumiType'] === LoginItem.__pulumiType;
     }
 
-    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
+    public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly notes!: pulumi.Output<string | undefined>;
@@ -70,6 +70,7 @@ export class LoginItem extends pulumi.CustomResource {
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
+            resourceInputs["category"] = "Login";
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["password"] = args?.password ? pulumi.secret(args.password) : undefined;
@@ -78,7 +79,6 @@ export class LoginItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["username"] = args ? args.username : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
-            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -105,6 +105,10 @@ export class LoginItem extends pulumi.CustomResource {
  * The set of arguments for constructing a LoginItem resource.
  */
 export interface LoginItemArgs {
+    /**
+     * The category of the vault the item is in.
+     */
+    category?: pulumi.Input<"Login">;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     notes?: pulumi.Input<string>;
     password?: pulumi.Input<string>;

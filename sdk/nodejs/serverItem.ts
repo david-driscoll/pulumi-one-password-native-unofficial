@@ -33,7 +33,7 @@ export class ServerItem extends pulumi.CustomResource {
     }
 
     public readonly adminConsole!: pulumi.Output<outputs.server.AdminConsoleSection | undefined>;
-    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
+    public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public readonly hostingProvider!: pulumi.Output<outputs.server.HostingProviderSection | undefined>;
     public /*out*/ readonly id!: pulumi.Output<string>;
@@ -74,6 +74,7 @@ export class ServerItem extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vault'");
             }
             resourceInputs["adminConsole"] = args ? args.adminConsole : undefined;
+            resourceInputs["category"] = "Server";
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["hostingProvider"] = args ? args.hostingProvider : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
@@ -84,7 +85,6 @@ export class ServerItem extends pulumi.CustomResource {
             resourceInputs["url"] = args ? args.url : undefined;
             resourceInputs["username"] = args ? args.username : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
-            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -113,6 +113,10 @@ export class ServerItem extends pulumi.CustomResource {
  */
 export interface ServerItemArgs {
     adminConsole?: pulumi.Input<inputs.server.AdminConsoleSectionArgs>;
+    /**
+     * The category of the vault the item is in.
+     */
+    category?: pulumi.Input<"Server">;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     hostingProvider?: pulumi.Input<inputs.server.HostingProviderSectionArgs>;
     notes?: pulumi.Input<string>;

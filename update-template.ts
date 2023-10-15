@@ -1,4 +1,4 @@
-import { Field, GenericField, ItemTemplate, NotesField, OtpField, PasswordField, Section, UsernameField, item } from "@1password/op-js"
+import { Field, FieldPurpose, GenericField, ItemTemplate, NotesField, OtpField, PasswordField, Section, UsernameField, item } from "@1password/op-js"
 import { readFileSync, writeFileSync } from 'fs';
 import { camelCase, uniq, orderBy, cloneDeep, last } from 'lodash'
 
@@ -241,6 +241,12 @@ for (const template of templates) {
         "description": "The UUID of the vault the item is in.\n",
         "willReplaceOnChanges": true
     };
+    currentResource.inputProperties['category'] = {
+        "type": "string",
+        "description": "The category of the vault the item is in.\n",
+        "willReplaceOnChanges": true,
+        "const": template.name,
+    };
 
     applyDefaultOutputProperties(currentResource);
 
@@ -287,7 +293,7 @@ for (const template of templates) {
             const sectionProperties = section.properties;
             sectionProperties[fieldInfo.name] = {
                 type: fieldInfo.type,
-                secret: fieldInfo.secret,
+                secret: fieldInfo.secret
             }
             if (fieldInfo.default) {
                 sectionProperties[fieldInfo.name].default = fieldInfo.default
@@ -297,14 +303,16 @@ for (const template of templates) {
             currentResource.inputProperties[fieldInfo.name] = {
                 type: fieldInfo.type,
                 secret: fieldInfo.secret,
+                purpose: fieldInfo.purpose,
+                kind: fieldInfo.kind
             }
             currentResource.properties[fieldInfo.name] = {
                 type: fieldInfo.type,
-                secret: fieldInfo.secret,
+                secret: fieldInfo.secret
             }
             currentFunction.outputs.properties[fieldInfo.name] = {
                 type: fieldInfo.type,
-                secret: fieldInfo.secret,
+                secret: fieldInfo.secret
             }
             if (fieldInfo.default) {
                 currentResource.inputProperties[fieldInfo.name].default = fieldInfo.default
@@ -403,6 +411,8 @@ function getFieldType(field: Field) {
         secret: false,
         default: field.value,
         type: 'string',
+        kind: field.type,
+        purpose: (field as any).purpose as FieldPurpose
     };
 
     if (isUserNameField(field)) {

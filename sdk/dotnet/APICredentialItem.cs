@@ -81,13 +81,20 @@ namespace Pulumi.Onepassword
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public APICredentialItem(string name, APICredentialItemArgs args, CustomResourceOptions? options = null)
-            : base("onepassword:index:APICredentialItem", name, args ?? new APICredentialItemArgs(), MakeResourceOptions(options, ""))
+            : base("onepassword:index:APICredentialItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private APICredentialItem(string name, Input<string> id, CustomResourceOptions? options = null)
             : base("onepassword:index:APICredentialItem", name, null, MakeResourceOptions(options, id))
         {
+        }
+
+        private static APICredentialItemArgs MakeArgs(APICredentialItemArgs args)
+        {
+            args ??= new APICredentialItemArgs();
+            args.Category = "API Credential";
+            return args;
         }
 
         private static CustomResourceOptions MakeResourceOptions(CustomResourceOptions? options, Input<string>? id)
@@ -117,6 +124,12 @@ namespace Pulumi.Onepassword
 
     public sealed class APICredentialItemArgs : Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The category of the vault the item is in.
+        /// </summary>
+        [Input("category")]
+        public Input<string>? Category { get; set; }
+
         [Input("credential")]
         public Input<string>? Credential { get; set; }
 

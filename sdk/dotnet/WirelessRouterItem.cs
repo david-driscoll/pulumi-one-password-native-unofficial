@@ -84,13 +84,20 @@ namespace Pulumi.Onepassword
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public WirelessRouterItem(string name, WirelessRouterItemArgs args, CustomResourceOptions? options = null)
-            : base("onepassword:index:WirelessRouterItem", name, args ?? new WirelessRouterItemArgs(), MakeResourceOptions(options, ""))
+            : base("onepassword:index:WirelessRouterItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private WirelessRouterItem(string name, Input<string> id, CustomResourceOptions? options = null)
             : base("onepassword:index:WirelessRouterItem", name, null, MakeResourceOptions(options, id))
         {
+        }
+
+        private static WirelessRouterItemArgs MakeArgs(WirelessRouterItemArgs args)
+        {
+            args ??= new WirelessRouterItemArgs();
+            args.Category = "Wireless Router";
+            return args;
         }
 
         private static CustomResourceOptions MakeResourceOptions(CustomResourceOptions? options, Input<string>? id)
@@ -131,6 +138,12 @@ namespace Pulumi.Onepassword
 
         [Input("baseStationPassword")]
         public Input<string>? BaseStationPassword { get; set; }
+
+        /// <summary>
+        /// The category of the vault the item is in.
+        /// </summary>
+        [Input("category")]
+        public Input<string>? Category { get; set; }
 
         [Input("fields")]
         private InputMap<Inputs.FieldArgs>? _fields;

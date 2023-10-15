@@ -75,13 +75,20 @@ namespace Pulumi.Onepassword
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public RewardProgramItem(string name, RewardProgramItemArgs args, CustomResourceOptions? options = null)
-            : base("onepassword:index:RewardProgramItem", name, args ?? new RewardProgramItemArgs(), MakeResourceOptions(options, ""))
+            : base("onepassword:index:RewardProgramItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private RewardProgramItem(string name, Input<string> id, CustomResourceOptions? options = null)
             : base("onepassword:index:RewardProgramItem", name, null, MakeResourceOptions(options, id))
         {
+        }
+
+        private static RewardProgramItemArgs MakeArgs(RewardProgramItemArgs args)
+        {
+            args ??= new RewardProgramItemArgs();
+            args.Category = "Reward Program";
+            return args;
         }
 
         private static CustomResourceOptions MakeResourceOptions(CustomResourceOptions? options, Input<string>? id)
@@ -111,6 +118,12 @@ namespace Pulumi.Onepassword
 
     public sealed class RewardProgramItemArgs : Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The category of the vault the item is in.
+        /// </summary>
+        [Input("category")]
+        public Input<string>? Category { get; set; }
+
         [Input("companyName")]
         public Input<string>? CompanyName { get; set; }
 

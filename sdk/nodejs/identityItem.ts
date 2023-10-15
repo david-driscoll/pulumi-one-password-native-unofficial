@@ -33,7 +33,7 @@ export class IdentityItem extends pulumi.CustomResource {
     }
 
     public readonly address!: pulumi.Output<outputs.identity.AddressSection | undefined>;
-    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
+    public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly identification!: pulumi.Output<outputs.identity.IdentificationSection | undefined>;
@@ -72,6 +72,7 @@ export class IdentityItem extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vault'");
             }
             resourceInputs["address"] = args ? args.address : undefined;
+            resourceInputs["category"] = "Identity";
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["identification"] = args ? args.identification : undefined;
             resourceInputs["internetDetails"] = args ? args.internetDetails : undefined;
@@ -80,7 +81,6 @@ export class IdentityItem extends pulumi.CustomResource {
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
-            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -107,6 +107,10 @@ export class IdentityItem extends pulumi.CustomResource {
  */
 export interface IdentityItemArgs {
     address?: pulumi.Input<inputs.identity.AddressSectionArgs>;
+    /**
+     * The category of the vault the item is in.
+     */
+    category?: pulumi.Input<"Identity">;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     identification?: pulumi.Input<inputs.identity.IdentificationSectionArgs>;
     internetDetails?: pulumi.Input<inputs.identity.InternetDetailsSectionArgs>;

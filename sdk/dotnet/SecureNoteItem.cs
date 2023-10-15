@@ -60,13 +60,20 @@ namespace Pulumi.Onepassword
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public SecureNoteItem(string name, SecureNoteItemArgs args, CustomResourceOptions? options = null)
-            : base("onepassword:index:SecureNoteItem", name, args ?? new SecureNoteItemArgs(), MakeResourceOptions(options, ""))
+            : base("onepassword:index:SecureNoteItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private SecureNoteItem(string name, Input<string> id, CustomResourceOptions? options = null)
             : base("onepassword:index:SecureNoteItem", name, null, MakeResourceOptions(options, id))
         {
+        }
+
+        private static SecureNoteItemArgs MakeArgs(SecureNoteItemArgs args)
+        {
+            args ??= new SecureNoteItemArgs();
+            args.Category = "Secure Note";
+            return args;
         }
 
         private static CustomResourceOptions MakeResourceOptions(CustomResourceOptions? options, Input<string>? id)
@@ -96,6 +103,12 @@ namespace Pulumi.Onepassword
 
     public sealed class SecureNoteItemArgs : Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The category of the vault the item is in.
+        /// </summary>
+        [Input("category")]
+        public Input<string>? Category { get; set; }
+
         [Input("fields")]
         private InputMap<Inputs.FieldArgs>? _fields;
         public InputMap<Inputs.FieldArgs> Fields

@@ -87,13 +87,20 @@ namespace Pulumi.Onepassword
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public DatabaseItem(string name, DatabaseItemArgs args, CustomResourceOptions? options = null)
-            : base("onepassword:index:DatabaseItem", name, args ?? new DatabaseItemArgs(), MakeResourceOptions(options, ""))
+            : base("onepassword:index:DatabaseItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private DatabaseItem(string name, Input<string> id, CustomResourceOptions? options = null)
             : base("onepassword:index:DatabaseItem", name, null, MakeResourceOptions(options, id))
         {
+        }
+
+        private static DatabaseItemArgs MakeArgs(DatabaseItemArgs args)
+        {
+            args ??= new DatabaseItemArgs();
+            args.Category = "Database";
+            return args;
         }
 
         private static CustomResourceOptions MakeResourceOptions(CustomResourceOptions? options, Input<string>? id)
@@ -125,6 +132,12 @@ namespace Pulumi.Onepassword
     {
         [Input("alias")]
         public Input<string>? Alias { get; set; }
+
+        /// <summary>
+        /// The category of the vault the item is in.
+        /// </summary>
+        [Input("category")]
+        public Input<string>? Category { get; set; }
 
         [Input("connectionOptions")]
         public Input<string>? ConnectionOptions { get; set; }

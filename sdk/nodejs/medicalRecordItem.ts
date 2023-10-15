@@ -32,7 +32,7 @@ export class MedicalRecordItem extends pulumi.CustomResource {
         return obj['__pulumiType'] === MedicalRecordItem.__pulumiType;
     }
 
-    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
+    public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly date!: pulumi.Output<string | undefined>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public readonly healthcareProfessional!: pulumi.Output<string | undefined>;
@@ -74,6 +74,7 @@ export class MedicalRecordItem extends pulumi.CustomResource {
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
+            resourceInputs["category"] = "Medical Record";
             resourceInputs["date"] = args ? args.date : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["healthcareProfessional"] = args ? args.healthcareProfessional : undefined;
@@ -86,7 +87,6 @@ export class MedicalRecordItem extends pulumi.CustomResource {
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
-            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -115,6 +115,10 @@ export class MedicalRecordItem extends pulumi.CustomResource {
  * The set of arguments for constructing a MedicalRecordItem resource.
  */
 export interface MedicalRecordItemArgs {
+    /**
+     * The category of the vault the item is in.
+     */
+    category?: pulumi.Input<"Medical Record">;
     date?: pulumi.Input<string>;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     healthcareProfessional?: pulumi.Input<string>;

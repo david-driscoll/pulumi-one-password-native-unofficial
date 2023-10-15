@@ -81,13 +81,20 @@ namespace Pulumi.Onepassword
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public OutdoorLicenseItem(string name, OutdoorLicenseItemArgs args, CustomResourceOptions? options = null)
-            : base("onepassword:index:OutdoorLicenseItem", name, args ?? new OutdoorLicenseItemArgs(), MakeResourceOptions(options, ""))
+            : base("onepassword:index:OutdoorLicenseItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private OutdoorLicenseItem(string name, Input<string> id, CustomResourceOptions? options = null)
             : base("onepassword:index:OutdoorLicenseItem", name, null, MakeResourceOptions(options, id))
         {
+        }
+
+        private static OutdoorLicenseItemArgs MakeArgs(OutdoorLicenseItemArgs args)
+        {
+            args ??= new OutdoorLicenseItemArgs();
+            args.Category = "Outdoor License";
+            return args;
         }
 
         private static CustomResourceOptions MakeResourceOptions(CustomResourceOptions? options, Input<string>? id)
@@ -119,6 +126,12 @@ namespace Pulumi.Onepassword
     {
         [Input("approvedWildlife")]
         public Input<string>? ApprovedWildlife { get; set; }
+
+        /// <summary>
+        /// The category of the vault the item is in.
+        /// </summary>
+        [Input("category")]
+        public Input<string>? Category { get; set; }
 
         [Input("country")]
         public Input<string>? Country { get; set; }

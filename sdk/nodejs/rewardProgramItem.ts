@@ -32,7 +32,7 @@ export class RewardProgramItem extends pulumi.CustomResource {
         return obj['__pulumiType'] === RewardProgramItem.__pulumiType;
     }
 
-    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
+    public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly companyName!: pulumi.Output<string | undefined>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public /*out*/ readonly id!: pulumi.Output<string>;
@@ -73,6 +73,7 @@ export class RewardProgramItem extends pulumi.CustomResource {
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
+            resourceInputs["category"] = "Reward Program";
             resourceInputs["companyName"] = args ? args.companyName : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["memberId"] = args ? args.memberId : undefined;
@@ -84,7 +85,6 @@ export class RewardProgramItem extends pulumi.CustomResource {
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
-            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -112,6 +112,10 @@ export class RewardProgramItem extends pulumi.CustomResource {
  * The set of arguments for constructing a RewardProgramItem resource.
  */
 export interface RewardProgramItemArgs {
+    /**
+     * The category of the vault the item is in.
+     */
+    category?: pulumi.Input<"Reward Program">;
     companyName?: pulumi.Input<string>;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     memberId?: pulumi.Input<string>;

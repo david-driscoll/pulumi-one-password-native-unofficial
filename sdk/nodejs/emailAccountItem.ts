@@ -33,7 +33,7 @@ export class EmailAccountItem extends pulumi.CustomResource {
     }
 
     public readonly authMethod!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
+    public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly contactInformation!: pulumi.Output<outputs.emailAccount.ContactInformationSection | undefined>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public /*out*/ readonly id!: pulumi.Output<string>;
@@ -78,6 +78,7 @@ export class EmailAccountItem extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vault'");
             }
             resourceInputs["authMethod"] = args ? args.authMethod : undefined;
+            resourceInputs["category"] = "Email Account";
             resourceInputs["contactInformation"] = args ? args.contactInformation : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
@@ -92,7 +93,6 @@ export class EmailAccountItem extends pulumi.CustomResource {
             resourceInputs["type"] = args ? args.type : undefined;
             resourceInputs["username"] = args ? args.username : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
-            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -125,6 +125,10 @@ export class EmailAccountItem extends pulumi.CustomResource {
  */
 export interface EmailAccountItemArgs {
     authMethod?: pulumi.Input<string>;
+    /**
+     * The category of the vault the item is in.
+     */
+    category?: pulumi.Input<"Email Account">;
     contactInformation?: pulumi.Input<inputs.emailAccount.ContactInformationSectionArgs>;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     notes?: pulumi.Input<string>;

@@ -35,7 +35,7 @@ export class BankAccountItem extends pulumi.CustomResource {
     public readonly accountNumber!: pulumi.Output<string | undefined>;
     public readonly bankName!: pulumi.Output<string | undefined>;
     public readonly branchInformation!: pulumi.Output<outputs.bankAccount.BranchInformationSection | undefined>;
-    public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
+    public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public readonly iban!: pulumi.Output<string | undefined>;
     public /*out*/ readonly id!: pulumi.Output<string>;
@@ -80,6 +80,7 @@ export class BankAccountItem extends pulumi.CustomResource {
             resourceInputs["accountNumber"] = args ? args.accountNumber : undefined;
             resourceInputs["bankName"] = args ? args.bankName : undefined;
             resourceInputs["branchInformation"] = args ? args.branchInformation : undefined;
+            resourceInputs["category"] = "Bank Account";
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["iban"] = args ? args.iban : undefined;
             resourceInputs["nameOnAccount"] = args ? args.nameOnAccount : undefined;
@@ -92,7 +93,6 @@ export class BankAccountItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["type"] = args ? args.type : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
-            resourceInputs["category"] = undefined /*out*/;
             resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
@@ -127,6 +127,10 @@ export interface BankAccountItemArgs {
     accountNumber?: pulumi.Input<string>;
     bankName?: pulumi.Input<string>;
     branchInformation?: pulumi.Input<inputs.bankAccount.BranchInformationSectionArgs>;
+    /**
+     * The category of the vault the item is in.
+     */
+    category?: pulumi.Input<"Bank Account">;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     iban?: pulumi.Input<string>;
     nameOnAccount?: pulumi.Input<string>;

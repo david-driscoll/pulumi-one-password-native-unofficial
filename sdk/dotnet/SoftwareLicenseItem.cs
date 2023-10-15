@@ -75,13 +75,20 @@ namespace Pulumi.Onepassword
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public SoftwareLicenseItem(string name, SoftwareLicenseItemArgs args, CustomResourceOptions? options = null)
-            : base("onepassword:index:SoftwareLicenseItem", name, args ?? new SoftwareLicenseItemArgs(), MakeResourceOptions(options, ""))
+            : base("onepassword:index:SoftwareLicenseItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private SoftwareLicenseItem(string name, Input<string> id, CustomResourceOptions? options = null)
             : base("onepassword:index:SoftwareLicenseItem", name, null, MakeResourceOptions(options, id))
         {
+        }
+
+        private static SoftwareLicenseItemArgs MakeArgs(SoftwareLicenseItemArgs args)
+        {
+            args ??= new SoftwareLicenseItemArgs();
+            args.Category = "Software License";
+            return args;
         }
 
         private static CustomResourceOptions MakeResourceOptions(CustomResourceOptions? options, Input<string>? id)
@@ -111,6 +118,12 @@ namespace Pulumi.Onepassword
 
     public sealed class SoftwareLicenseItemArgs : Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The category of the vault the item is in.
+        /// </summary>
+        [Input("category")]
+        public Input<string>? Category { get; set; }
+
         [Input("customer")]
         public Input<Pulumi.Onepassword.SoftwareLicense.Inputs.CustomerSectionArgs>? Customer { get; set; }
 
