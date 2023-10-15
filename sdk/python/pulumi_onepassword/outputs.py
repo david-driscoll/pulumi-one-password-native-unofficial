@@ -51,7 +51,7 @@ class GetField(dict):
 @pulumi.output_type
 class GetSection(dict):
     def __init__(__self__, *,
-                 fields: Sequence['outputs.GetField'],
+                 fields: Mapping[str, 'outputs.GetField'],
                  id: str,
                  label: str):
         pulumi.set(__self__, "fields", fields)
@@ -60,7 +60,7 @@ class GetSection(dict):
 
     @property
     @pulumi.getter
-    def fields(self) -> Sequence['outputs.GetField']:
+    def fields(self) -> Mapping[str, 'outputs.GetField']:
         return pulumi.get(self, "fields")
 
     @property

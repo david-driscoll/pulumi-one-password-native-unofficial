@@ -30,10 +30,10 @@ type LookupItemArgs struct {
 }
 
 type LookupItemResult struct {
-	Category *string      `pulumi:"category"`
-	Fields   []GetField   `pulumi:"fields"`
-	Id       *string      `pulumi:"id"`
-	Sections []GetSection `pulumi:"sections"`
+	Category *string               `pulumi:"category"`
+	Fields   map[string]GetField   `pulumi:"fields"`
+	Id       *string               `pulumi:"id"`
+	Sections map[string]GetSection `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -88,16 +88,16 @@ func (o LookupItemResultOutput) Category() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v LookupItemResult) *string { return v.Category }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupItemResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v LookupItemResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o LookupItemResultOutput) Fields() GetFieldMapOutput {
+	return o.ApplyT(func(v LookupItemResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
 }
 
 func (o LookupItemResultOutput) Id() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v LookupItemResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
-func (o LookupItemResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v LookupItemResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o LookupItemResultOutput) Sections() GetSectionMapOutput {
+	return o.ApplyT(func(v LookupItemResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.

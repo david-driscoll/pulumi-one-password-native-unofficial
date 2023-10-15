@@ -13,15 +13,12 @@ namespace Pulumi.Onepassword.Inputs
     public sealed class SectionArgs : Pulumi.ResourceArgs
     {
         [Input("fields", required: true)]
-        private InputList<Inputs.FieldArgs>? _fields;
-        public InputList<Inputs.FieldArgs> Fields
+        private InputMap<Inputs.FieldArgs>? _fields;
+        public InputMap<Inputs.FieldArgs> Fields
         {
-            get => _fields ?? (_fields = new InputList<Inputs.FieldArgs>());
+            get => _fields ?? (_fields = new InputMap<Inputs.FieldArgs>());
             set => _fields = value;
         }
-
-        [Input("label", required: true)]
-        public Input<string> Label { get; set; } = null!;
 
         public SectionArgs()
         {

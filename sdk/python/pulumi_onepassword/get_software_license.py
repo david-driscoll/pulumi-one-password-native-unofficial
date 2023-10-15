@@ -27,8 +27,8 @@ class GetSoftwareLicenseResult:
         if customer and not isinstance(customer, dict):
             raise TypeError("Expected argument 'customer' to be a dict")
         pulumi.set(__self__, "customer", customer)
-        if fields and not isinstance(fields, list):
-            raise TypeError("Expected argument 'fields' to be a list")
+        if fields and not isinstance(fields, dict):
+            raise TypeError("Expected argument 'fields' to be a dict")
         pulumi.set(__self__, "fields", fields)
         if id and not isinstance(id, str):
             raise TypeError("Expected argument 'id' to be a str")
@@ -45,8 +45,8 @@ class GetSoftwareLicenseResult:
         if publisher and not isinstance(publisher, dict):
             raise TypeError("Expected argument 'publisher' to be a dict")
         pulumi.set(__self__, "publisher", publisher)
-        if sections and not isinstance(sections, list):
-            raise TypeError("Expected argument 'sections' to be a list")
+        if sections and not isinstance(sections, dict):
+            raise TypeError("Expected argument 'sections' to be a dict")
         pulumi.set(__self__, "sections", sections)
         if tags and not isinstance(tags, list):
             raise TypeError("Expected argument 'tags' to be a list")
@@ -76,7 +76,7 @@ class GetSoftwareLicenseResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Optional[Sequence['outputs.GetField']]:
+    def fields(self) -> Optional[Mapping[str, 'outputs.GetField']]:
         return pulumi.get(self, "fields")
 
     @property
@@ -106,7 +106,7 @@ class GetSoftwareLicenseResult:
 
     @property
     @pulumi.getter
-    def sections(self) -> Optional[Sequence['outputs.GetSection']]:
+    def sections(self) -> Optional[Mapping[str, 'outputs.GetSection']]:
         return pulumi.get(self, "sections")
 
     @property

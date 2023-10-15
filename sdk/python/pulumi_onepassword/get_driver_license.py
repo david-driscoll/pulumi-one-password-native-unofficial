@@ -38,8 +38,8 @@ class GetDriverLicenseResult:
         if expiry_date and not isinstance(expiry_date, str):
             raise TypeError("Expected argument 'expiry_date' to be a str")
         pulumi.set(__self__, "expiry_date", expiry_date)
-        if fields and not isinstance(fields, list):
-            raise TypeError("Expected argument 'fields' to be a list")
+        if fields and not isinstance(fields, dict):
+            raise TypeError("Expected argument 'fields' to be a dict")
         pulumi.set(__self__, "fields", fields)
         if full_name and not isinstance(full_name, str):
             raise TypeError("Expected argument 'full_name' to be a str")
@@ -62,8 +62,8 @@ class GetDriverLicenseResult:
         if number and not isinstance(number, str):
             raise TypeError("Expected argument 'number' to be a str")
         pulumi.set(__self__, "number", number)
-        if sections and not isinstance(sections, list):
-            raise TypeError("Expected argument 'sections' to be a list")
+        if sections and not isinstance(sections, dict):
+            raise TypeError("Expected argument 'sections' to be a dict")
         pulumi.set(__self__, "sections", sections)
         if state and not isinstance(state, str):
             raise TypeError("Expected argument 'state' to be a str")
@@ -113,7 +113,7 @@ class GetDriverLicenseResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Optional[Sequence['outputs.GetField']]:
+    def fields(self) -> Optional[Mapping[str, 'outputs.GetField']]:
         return pulumi.get(self, "fields")
 
     @property
@@ -153,7 +153,7 @@ class GetDriverLicenseResult:
 
     @property
     @pulumi.getter
-    def sections(self) -> Optional[Sequence['outputs.GetSection']]:
+    def sections(self) -> Optional[Mapping[str, 'outputs.GetSection']]:
         return pulumi.get(self, "sections")
 
     @property

@@ -35,12 +35,12 @@ export class APICredentialItem extends pulumi.CustomResource {
     public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
     public readonly credential!: pulumi.Output<string | undefined>;
     public readonly expires!: pulumi.Output<string | undefined>;
-    public readonly fields!: pulumi.Output<outputs.GetField[] | undefined>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public readonly filename!: pulumi.Output<string | undefined>;
     public readonly hostname!: pulumi.Output<string | undefined>;
     public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly notes!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<outputs.GetSection[] | undefined>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection} | undefined>;
     /**
      * An array of strings of the tags assigned to the item.
      */
@@ -120,11 +120,11 @@ export class APICredentialItem extends pulumi.CustomResource {
 export interface APICredentialItemArgs {
     credential?: pulumi.Input<string>;
     expires?: pulumi.Input<string>;
-    fields?: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     filename?: pulumi.Input<string>;
     hostname?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
-    sections?: pulumi.Input<pulumi.Input<inputs.SectionArgs>[]>;
+    sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     /**
      * An array of strings of the tags assigned to the item.
      */

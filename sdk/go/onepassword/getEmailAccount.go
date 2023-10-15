@@ -33,12 +33,12 @@ type GetEmailAccountResult struct {
 	AuthMethod         *string                                 `pulumi:"authMethod"`
 	Category           *string                                 `pulumi:"category"`
 	ContactInformation *emailaccount.ContactInformationSection `pulumi:"contactInformation"`
-	Fields             []GetField                              `pulumi:"fields"`
+	Fields             map[string]GetField                     `pulumi:"fields"`
 	Id                 *string                                 `pulumi:"id"`
 	Notes              *string                                 `pulumi:"notes"`
 	Password           *string                                 `pulumi:"password"`
 	PortNumber         *string                                 `pulumi:"portNumber"`
-	Sections           []GetSection                            `pulumi:"sections"`
+	Sections           map[string]GetSection                   `pulumi:"sections"`
 	Security           *string                                 `pulumi:"security"`
 	Server             *string                                 `pulumi:"server"`
 	Smtp               *emailaccount.SmtpSection               `pulumi:"smtp"`
@@ -106,8 +106,8 @@ func (o GetEmailAccountResultOutput) ContactInformation() emailaccount.ContactIn
 	return o.ApplyT(func(v GetEmailAccountResult) *emailaccount.ContactInformationSection { return v.ContactInformation }).(emailaccount.ContactInformationSectionPtrOutput)
 }
 
-func (o GetEmailAccountResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v GetEmailAccountResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetEmailAccountResultOutput) Fields() GetFieldMapOutput {
+	return o.ApplyT(func(v GetEmailAccountResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
 }
 
 func (o GetEmailAccountResultOutput) Id() pulumi.StringPtrOutput {
@@ -126,8 +126,8 @@ func (o GetEmailAccountResultOutput) PortNumber() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetEmailAccountResult) *string { return v.PortNumber }).(pulumi.StringPtrOutput)
 }
 
-func (o GetEmailAccountResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v GetEmailAccountResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetEmailAccountResultOutput) Sections() GetSectionMapOutput {
+	return o.ApplyT(func(v GetEmailAccountResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
 }
 
 func (o GetEmailAccountResultOutput) Security() pulumi.StringPtrOutput {

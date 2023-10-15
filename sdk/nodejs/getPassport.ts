@@ -37,7 +37,7 @@ export interface GetPassportResult {
     readonly category?: enums.Category | string;
     readonly dateOfBirth?: string;
     readonly expiryDate?: string;
-    readonly fields?: outputs.GetField[];
+    readonly fields?: {[key: string]: outputs.GetField};
     readonly fullName?: string;
     readonly gender?: string;
     readonly id?: string;
@@ -48,7 +48,7 @@ export interface GetPassportResult {
     readonly notes?: string;
     readonly number?: string;
     readonly placeOfBirth?: string;
-    readonly sections?: outputs.GetSection[];
+    readonly sections?: {[key: string]: outputs.GetSection};
     /**
      * An array of strings of the tags assigned to the item.
      */

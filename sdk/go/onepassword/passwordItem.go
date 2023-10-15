@@ -15,11 +15,11 @@ type PasswordItem struct {
 	pulumi.CustomResourceState
 
 	Category pulumi.StringOutput    `pulumi:"category"`
-	Fields   GetFieldArrayOutput    `pulumi:"fields"`
+	Fields   GetFieldMapOutput      `pulumi:"fields"`
 	Id       pulumi.StringOutput    `pulumi:"id"`
 	Notes    pulumi.StringPtrOutput `pulumi:"notes"`
 	Password pulumi.StringPtrOutput `pulumi:"password"`
-	Sections GetSectionArrayOutput  `pulumi:"sections"`
+	Sections GetSectionMapOutput    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -79,10 +79,10 @@ func (PasswordItemState) ElementType() reflect.Type {
 }
 
 type passwordItemArgs struct {
-	Fields   []Field   `pulumi:"fields"`
-	Notes    *string   `pulumi:"notes"`
-	Password *string   `pulumi:"password"`
-	Sections []Section `pulumi:"sections"`
+	Fields   map[string]Field   `pulumi:"fields"`
+	Notes    *string            `pulumi:"notes"`
+	Password *string            `pulumi:"password"`
+	Sections map[string]Section `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -93,10 +93,10 @@ type passwordItemArgs struct {
 
 // The set of arguments for constructing a PasswordItem resource.
 type PasswordItemArgs struct {
-	Fields   FieldArrayInput
+	Fields   FieldMapInput
 	Notes    pulumi.StringPtrInput
 	Password pulumi.StringPtrInput
-	Sections SectionArrayInput
+	Sections SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.

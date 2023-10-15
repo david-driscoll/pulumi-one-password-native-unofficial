@@ -76,12 +76,12 @@ namespace Pulumi.Onepassword
         public readonly string? AuthMethod;
         public readonly string? Category;
         public readonly Pulumi.Onepassword.EmailAccount.Outputs.ContactInformationSection? ContactInformation;
-        public readonly ImmutableArray<Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
         public readonly string? Id;
         public readonly string? Notes;
         public readonly string? Password;
         public readonly string? PortNumber;
-        public readonly ImmutableArray<Outputs.GetSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.GetSection>? Sections;
         public readonly string? Security;
         public readonly string? Server;
         public readonly Pulumi.Onepassword.EmailAccount.Outputs.SmtpSection? Smtp;
@@ -112,7 +112,7 @@ namespace Pulumi.Onepassword
 
             Pulumi.Onepassword.EmailAccount.Outputs.ContactInformationSection? contactInformation,
 
-            ImmutableArray<Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.GetField>? fields,
 
             string? id,
 
@@ -122,7 +122,7 @@ namespace Pulumi.Onepassword
 
             string? portNumber,
 
-            ImmutableArray<Outputs.GetSection> sections,
+            ImmutableDictionary<string, Outputs.GetSection>? sections,
 
             string? security,
 

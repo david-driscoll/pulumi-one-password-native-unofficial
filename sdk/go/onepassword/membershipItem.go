@@ -16,7 +16,7 @@ type MembershipItem struct {
 
 	Category    pulumi.StringOutput    `pulumi:"category"`
 	ExpiryDate  pulumi.StringPtrOutput `pulumi:"expiryDate"`
-	Fields      GetFieldArrayOutput    `pulumi:"fields"`
+	Fields      GetFieldMapOutput      `pulumi:"fields"`
 	Group       pulumi.StringPtrOutput `pulumi:"group"`
 	Id          pulumi.StringOutput    `pulumi:"id"`
 	MemberId    pulumi.StringPtrOutput `pulumi:"memberId"`
@@ -24,7 +24,7 @@ type MembershipItem struct {
 	MemberSince pulumi.StringPtrOutput `pulumi:"memberSince"`
 	Notes       pulumi.StringPtrOutput `pulumi:"notes"`
 	Pin         pulumi.StringPtrOutput `pulumi:"pin"`
-	Sections    GetSectionArrayOutput  `pulumi:"sections"`
+	Sections    GetSectionMapOutput    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags      pulumi.StringArrayOutput `pulumi:"tags"`
 	Telephone pulumi.StringPtrOutput   `pulumi:"telephone"`
@@ -79,15 +79,15 @@ func (MembershipItemState) ElementType() reflect.Type {
 }
 
 type membershipItemArgs struct {
-	ExpiryDate  *string   `pulumi:"expiryDate"`
-	Fields      []Field   `pulumi:"fields"`
-	Group       *string   `pulumi:"group"`
-	MemberId    *string   `pulumi:"memberId"`
-	MemberName  *string   `pulumi:"memberName"`
-	MemberSince *string   `pulumi:"memberSince"`
-	Notes       *string   `pulumi:"notes"`
-	Pin         *string   `pulumi:"pin"`
-	Sections    []Section `pulumi:"sections"`
+	ExpiryDate  *string            `pulumi:"expiryDate"`
+	Fields      map[string]Field   `pulumi:"fields"`
+	Group       *string            `pulumi:"group"`
+	MemberId    *string            `pulumi:"memberId"`
+	MemberName  *string            `pulumi:"memberName"`
+	MemberSince *string            `pulumi:"memberSince"`
+	Notes       *string            `pulumi:"notes"`
+	Pin         *string            `pulumi:"pin"`
+	Sections    map[string]Section `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags      []string `pulumi:"tags"`
 	Telephone *string  `pulumi:"telephone"`
@@ -101,14 +101,14 @@ type membershipItemArgs struct {
 // The set of arguments for constructing a MembershipItem resource.
 type MembershipItemArgs struct {
 	ExpiryDate  pulumi.StringPtrInput
-	Fields      FieldArrayInput
+	Fields      FieldMapInput
 	Group       pulumi.StringPtrInput
 	MemberId    pulumi.StringPtrInput
 	MemberName  pulumi.StringPtrInput
 	MemberSince pulumi.StringPtrInput
 	Notes       pulumi.StringPtrInput
 	Pin         pulumi.StringPtrInput
-	Sections    SectionArrayInput
+	Sections    SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags      pulumi.StringArrayInput
 	Telephone pulumi.StringPtrInput

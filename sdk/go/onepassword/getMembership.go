@@ -29,17 +29,17 @@ type GetMembershipArgs struct {
 }
 
 type GetMembershipResult struct {
-	Category    *string      `pulumi:"category"`
-	ExpiryDate  *string      `pulumi:"expiryDate"`
-	Fields      []GetField   `pulumi:"fields"`
-	Group       *string      `pulumi:"group"`
-	Id          *string      `pulumi:"id"`
-	MemberId    *string      `pulumi:"memberId"`
-	MemberName  *string      `pulumi:"memberName"`
-	MemberSince *string      `pulumi:"memberSince"`
-	Notes       *string      `pulumi:"notes"`
-	Pin         *string      `pulumi:"pin"`
-	Sections    []GetSection `pulumi:"sections"`
+	Category    *string               `pulumi:"category"`
+	ExpiryDate  *string               `pulumi:"expiryDate"`
+	Fields      map[string]GetField   `pulumi:"fields"`
+	Group       *string               `pulumi:"group"`
+	Id          *string               `pulumi:"id"`
+	MemberId    *string               `pulumi:"memberId"`
+	MemberName  *string               `pulumi:"memberName"`
+	MemberSince *string               `pulumi:"memberSince"`
+	Notes       *string               `pulumi:"notes"`
+	Pin         *string               `pulumi:"pin"`
+	Sections    map[string]GetSection `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags      []string `pulumi:"tags"`
 	Telephone *string  `pulumi:"telephone"`
@@ -100,8 +100,8 @@ func (o GetMembershipResultOutput) ExpiryDate() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetMembershipResult) *string { return v.ExpiryDate }).(pulumi.StringPtrOutput)
 }
 
-func (o GetMembershipResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v GetMembershipResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetMembershipResultOutput) Fields() GetFieldMapOutput {
+	return o.ApplyT(func(v GetMembershipResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
 }
 
 func (o GetMembershipResultOutput) Group() pulumi.StringPtrOutput {
@@ -132,8 +132,8 @@ func (o GetMembershipResultOutput) Pin() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetMembershipResult) *string { return v.Pin }).(pulumi.StringPtrOutput)
 }
 
-func (o GetMembershipResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v GetMembershipResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetMembershipResultOutput) Sections() GetSectionMapOutput {
+	return o.ApplyT(func(v GetMembershipResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.

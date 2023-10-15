@@ -34,7 +34,7 @@ export class MedicalRecordItem extends pulumi.CustomResource {
 
     public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
     public readonly date!: pulumi.Output<string | undefined>;
-    public readonly fields!: pulumi.Output<outputs.GetField[] | undefined>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public readonly healthcareProfessional!: pulumi.Output<string | undefined>;
     public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly location!: pulumi.Output<string | undefined>;
@@ -42,7 +42,7 @@ export class MedicalRecordItem extends pulumi.CustomResource {
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly patient!: pulumi.Output<string | undefined>;
     public readonly reasonForVisit!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<outputs.GetSection[] | undefined>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection} | undefined>;
     /**
      * An array of strings of the tags assigned to the item.
      */
@@ -116,14 +116,14 @@ export class MedicalRecordItem extends pulumi.CustomResource {
  */
 export interface MedicalRecordItemArgs {
     date?: pulumi.Input<string>;
-    fields?: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     healthcareProfessional?: pulumi.Input<string>;
     location?: pulumi.Input<string>;
     medication?: pulumi.Input<inputs.medicalRecord.MedicationSectionArgs>;
     notes?: pulumi.Input<string>;
     patient?: pulumi.Input<string>;
     reasonForVisit?: pulumi.Input<string>;
-    sections?: pulumi.Input<pulumi.Input<inputs.SectionArgs>[]>;
+    sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     /**
      * An array of strings of the tags assigned to the item.
      */

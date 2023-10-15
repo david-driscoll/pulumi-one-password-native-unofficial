@@ -20,11 +20,11 @@ type CreditCardItem struct {
 	Category           pulumi.StringOutput                           `pulumi:"category"`
 	ContactInformation creditcard.ContactInformationSectionPtrOutput `pulumi:"contactInformation"`
 	ExpiryDate         pulumi.StringPtrOutput                        `pulumi:"expiryDate"`
-	Fields             GetFieldArrayOutput                           `pulumi:"fields"`
+	Fields             GetFieldMapOutput                             `pulumi:"fields"`
 	Id                 pulumi.StringOutput                           `pulumi:"id"`
 	Notes              pulumi.StringPtrOutput                        `pulumi:"notes"`
 	Number             pulumi.StringPtrOutput                        `pulumi:"number"`
-	Sections           GetSectionArrayOutput                         `pulumi:"sections"`
+	Sections           GetSectionMapOutput                           `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -84,10 +84,10 @@ type creditCardItemArgs struct {
 	CardholderName     *string                               `pulumi:"cardholderName"`
 	ContactInformation *creditcard.ContactInformationSection `pulumi:"contactInformation"`
 	ExpiryDate         *string                               `pulumi:"expiryDate"`
-	Fields             []Field                               `pulumi:"fields"`
+	Fields             map[string]Field                      `pulumi:"fields"`
 	Notes              *string                               `pulumi:"notes"`
 	Number             *string                               `pulumi:"number"`
-	Sections           []Section                             `pulumi:"sections"`
+	Sections           map[string]Section                    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -105,10 +105,10 @@ type CreditCardItemArgs struct {
 	CardholderName     pulumi.StringPtrInput
 	ContactInformation creditcard.ContactInformationSectionPtrInput
 	ExpiryDate         pulumi.StringPtrInput
-	Fields             FieldArrayInput
+	Fields             FieldMapInput
 	Notes              pulumi.StringPtrInput
 	Number             pulumi.StringPtrInput
-	Sections           SectionArrayInput
+	Sections           SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.

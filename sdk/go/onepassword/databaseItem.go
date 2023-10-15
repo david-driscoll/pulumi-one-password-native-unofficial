@@ -18,12 +18,12 @@ type DatabaseItem struct {
 	Category          pulumi.StringOutput    `pulumi:"category"`
 	ConnectionOptions pulumi.StringPtrOutput `pulumi:"connectionOptions"`
 	Database          pulumi.StringPtrOutput `pulumi:"database"`
-	Fields            GetFieldArrayOutput    `pulumi:"fields"`
+	Fields            GetFieldMapOutput      `pulumi:"fields"`
 	Id                pulumi.StringOutput    `pulumi:"id"`
 	Notes             pulumi.StringPtrOutput `pulumi:"notes"`
 	Password          pulumi.StringPtrOutput `pulumi:"password"`
 	Port              pulumi.StringPtrOutput `pulumi:"port"`
-	Sections          GetSectionArrayOutput  `pulumi:"sections"`
+	Sections          GetSectionMapOutput    `pulumi:"sections"`
 	Server            pulumi.StringPtrOutput `pulumi:"server"`
 	Sid               pulumi.StringPtrOutput `pulumi:"sid"`
 	// An array of strings of the tags assigned to the item.
@@ -80,16 +80,16 @@ func (DatabaseItemState) ElementType() reflect.Type {
 }
 
 type databaseItemArgs struct {
-	Alias             *string   `pulumi:"alias"`
-	ConnectionOptions *string   `pulumi:"connectionOptions"`
-	Database          *string   `pulumi:"database"`
-	Fields            []Field   `pulumi:"fields"`
-	Notes             *string   `pulumi:"notes"`
-	Password          *string   `pulumi:"password"`
-	Port              *string   `pulumi:"port"`
-	Sections          []Section `pulumi:"sections"`
-	Server            *string   `pulumi:"server"`
-	Sid               *string   `pulumi:"sid"`
+	Alias             *string            `pulumi:"alias"`
+	ConnectionOptions *string            `pulumi:"connectionOptions"`
+	Database          *string            `pulumi:"database"`
+	Fields            map[string]Field   `pulumi:"fields"`
+	Notes             *string            `pulumi:"notes"`
+	Password          *string            `pulumi:"password"`
+	Port              *string            `pulumi:"port"`
+	Sections          map[string]Section `pulumi:"sections"`
+	Server            *string            `pulumi:"server"`
+	Sid               *string            `pulumi:"sid"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -105,11 +105,11 @@ type DatabaseItemArgs struct {
 	Alias             pulumi.StringPtrInput
 	ConnectionOptions pulumi.StringPtrInput
 	Database          pulumi.StringPtrInput
-	Fields            FieldArrayInput
+	Fields            FieldMapInput
 	Notes             pulumi.StringPtrInput
 	Password          pulumi.StringPtrInput
 	Port              pulumi.StringPtrInput
-	Sections          SectionArrayInput
+	Sections          SectionMapInput
 	Server            pulumi.StringPtrInput
 	Sid               pulumi.StringPtrInput
 	// An array of strings of the tags assigned to the item.

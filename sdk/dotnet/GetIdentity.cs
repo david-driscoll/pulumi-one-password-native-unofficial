@@ -75,12 +75,12 @@ namespace Pulumi.Onepassword
     {
         public readonly Pulumi.Onepassword.Identity.Outputs.AddressSection? Address;
         public readonly string? Category;
-        public readonly ImmutableArray<Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
         public readonly string? Id;
         public readonly Pulumi.Onepassword.Identity.Outputs.IdentificationSection? Identification;
         public readonly Pulumi.Onepassword.Identity.Outputs.InternetDetailsSection? InternetDetails;
         public readonly string? Notes;
-        public readonly ImmutableArray<Outputs.GetSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.GetSection>? Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
         /// </summary>
@@ -104,7 +104,7 @@ namespace Pulumi.Onepassword
 
             string? category,
 
-            ImmutableArray<Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.GetField>? fields,
 
             string? id,
 
@@ -114,7 +114,7 @@ namespace Pulumi.Onepassword
 
             string? notes,
 
-            ImmutableArray<Outputs.GetSection> sections,
+            ImmutableDictionary<string, Outputs.GetSection>? sections,
 
             ImmutableArray<string> tags,
 

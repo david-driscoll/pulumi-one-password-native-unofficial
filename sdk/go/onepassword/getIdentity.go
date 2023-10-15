@@ -32,12 +32,12 @@ type GetIdentityArgs struct {
 type GetIdentityResult struct {
 	Address         *identity.AddressSection         `pulumi:"address"`
 	Category        *string                          `pulumi:"category"`
-	Fields          []GetField                       `pulumi:"fields"`
+	Fields          map[string]GetField              `pulumi:"fields"`
 	Id              *string                          `pulumi:"id"`
 	Identification  *identity.IdentificationSection  `pulumi:"identification"`
 	InternetDetails *identity.InternetDetailsSection `pulumi:"internetDetails"`
 	Notes           *string                          `pulumi:"notes"`
-	Sections        []GetSection                     `pulumi:"sections"`
+	Sections        map[string]GetSection            `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -96,8 +96,8 @@ func (o GetIdentityResultOutput) Category() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetIdentityResult) *string { return v.Category }).(pulumi.StringPtrOutput)
 }
 
-func (o GetIdentityResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v GetIdentityResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetIdentityResultOutput) Fields() GetFieldMapOutput {
+	return o.ApplyT(func(v GetIdentityResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
 }
 
 func (o GetIdentityResultOutput) Id() pulumi.StringPtrOutput {
@@ -116,8 +116,8 @@ func (o GetIdentityResultOutput) Notes() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetIdentityResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o GetIdentityResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v GetIdentityResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetIdentityResultOutput) Sections() GetSectionMapOutput {
+	return o.ApplyT(func(v GetIdentityResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.

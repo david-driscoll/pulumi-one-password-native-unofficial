@@ -18,12 +18,12 @@ type EmailAccountItem struct {
 	AuthMethod         pulumi.StringPtrOutput                          `pulumi:"authMethod"`
 	Category           pulumi.StringOutput                             `pulumi:"category"`
 	ContactInformation emailaccount.ContactInformationSectionPtrOutput `pulumi:"contactInformation"`
-	Fields             GetFieldArrayOutput                             `pulumi:"fields"`
+	Fields             GetFieldMapOutput                               `pulumi:"fields"`
 	Id                 pulumi.StringOutput                             `pulumi:"id"`
 	Notes              pulumi.StringPtrOutput                          `pulumi:"notes"`
 	Password           pulumi.StringPtrOutput                          `pulumi:"password"`
 	PortNumber         pulumi.StringPtrOutput                          `pulumi:"portNumber"`
-	Sections           GetSectionArrayOutput                           `pulumi:"sections"`
+	Sections           GetSectionMapOutput                             `pulumi:"sections"`
 	Security           pulumi.StringPtrOutput                          `pulumi:"security"`
 	Server             pulumi.StringPtrOutput                          `pulumi:"server"`
 	Smtp               emailaccount.SmtpSectionPtrOutput               `pulumi:"smtp"`
@@ -83,11 +83,11 @@ func (EmailAccountItemState) ElementType() reflect.Type {
 type emailAccountItemArgs struct {
 	AuthMethod         *string                                 `pulumi:"authMethod"`
 	ContactInformation *emailaccount.ContactInformationSection `pulumi:"contactInformation"`
-	Fields             []Field                                 `pulumi:"fields"`
+	Fields             map[string]Field                        `pulumi:"fields"`
 	Notes              *string                                 `pulumi:"notes"`
 	Password           *string                                 `pulumi:"password"`
 	PortNumber         *string                                 `pulumi:"portNumber"`
-	Sections           []Section                               `pulumi:"sections"`
+	Sections           map[string]Section                      `pulumi:"sections"`
 	Security           *string                                 `pulumi:"security"`
 	Server             *string                                 `pulumi:"server"`
 	Smtp               *emailaccount.SmtpSection               `pulumi:"smtp"`
@@ -105,11 +105,11 @@ type emailAccountItemArgs struct {
 type EmailAccountItemArgs struct {
 	AuthMethod         pulumi.StringPtrInput
 	ContactInformation emailaccount.ContactInformationSectionPtrInput
-	Fields             FieldArrayInput
+	Fields             FieldMapInput
 	Notes              pulumi.StringPtrInput
 	Password           pulumi.StringPtrInput
 	PortNumber         pulumi.StringPtrInput
-	Sections           SectionArrayInput
+	Sections           SectionMapInput
 	Security           pulumi.StringPtrInput
 	Server             pulumi.StringPtrInput
 	Smtp               emailaccount.SmtpSectionPtrInput

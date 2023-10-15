@@ -17,12 +17,12 @@ type IdentityItem struct {
 
 	Address         identity.AddressSectionPtrOutput         `pulumi:"address"`
 	Category        pulumi.StringOutput                      `pulumi:"category"`
-	Fields          GetFieldArrayOutput                      `pulumi:"fields"`
+	Fields          GetFieldMapOutput                        `pulumi:"fields"`
 	Id              pulumi.StringOutput                      `pulumi:"id"`
 	Identification  identity.IdentificationSectionPtrOutput  `pulumi:"identification"`
 	InternetDetails identity.InternetDetailsSectionPtrOutput `pulumi:"internetDetails"`
 	Notes           pulumi.StringPtrOutput                   `pulumi:"notes"`
-	Sections        GetSectionArrayOutput                    `pulumi:"sections"`
+	Sections        GetSectionMapOutput                      `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -76,11 +76,11 @@ func (IdentityItemState) ElementType() reflect.Type {
 
 type identityItemArgs struct {
 	Address         *identity.AddressSection         `pulumi:"address"`
-	Fields          []Field                          `pulumi:"fields"`
+	Fields          map[string]Field                 `pulumi:"fields"`
 	Identification  *identity.IdentificationSection  `pulumi:"identification"`
 	InternetDetails *identity.InternetDetailsSection `pulumi:"internetDetails"`
 	Notes           *string                          `pulumi:"notes"`
-	Sections        []Section                        `pulumi:"sections"`
+	Sections        map[string]Section               `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -92,11 +92,11 @@ type identityItemArgs struct {
 // The set of arguments for constructing a IdentityItem resource.
 type IdentityItemArgs struct {
 	Address         identity.AddressSectionPtrInput
-	Fields          FieldArrayInput
+	Fields          FieldMapInput
 	Identification  identity.IdentificationSectionPtrInput
 	InternetDetails identity.InternetDetailsSectionPtrInput
 	Notes           pulumi.StringPtrInput
-	Sections        SectionArrayInput
+	Sections        SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.

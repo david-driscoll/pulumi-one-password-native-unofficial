@@ -29,15 +29,15 @@ type GetAPICredentialArgs struct {
 }
 
 type GetAPICredentialResult struct {
-	Category   *string      `pulumi:"category"`
-	Credential *string      `pulumi:"credential"`
-	Expires    *string      `pulumi:"expires"`
-	Fields     []GetField   `pulumi:"fields"`
-	Filename   *string      `pulumi:"filename"`
-	Hostname   *string      `pulumi:"hostname"`
-	Id         *string      `pulumi:"id"`
-	Notes      *string      `pulumi:"notes"`
-	Sections   []GetSection `pulumi:"sections"`
+	Category   *string               `pulumi:"category"`
+	Credential *string               `pulumi:"credential"`
+	Expires    *string               `pulumi:"expires"`
+	Fields     map[string]GetField   `pulumi:"fields"`
+	Filename   *string               `pulumi:"filename"`
+	Hostname   *string               `pulumi:"hostname"`
+	Id         *string               `pulumi:"id"`
+	Notes      *string               `pulumi:"notes"`
+	Sections   map[string]GetSection `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -103,8 +103,8 @@ func (o GetAPICredentialResultOutput) Expires() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetAPICredentialResult) *string { return v.Expires }).(pulumi.StringPtrOutput)
 }
 
-func (o GetAPICredentialResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v GetAPICredentialResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetAPICredentialResultOutput) Fields() GetFieldMapOutput {
+	return o.ApplyT(func(v GetAPICredentialResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
 }
 
 func (o GetAPICredentialResultOutput) Filename() pulumi.StringPtrOutput {
@@ -123,8 +123,8 @@ func (o GetAPICredentialResultOutput) Notes() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetAPICredentialResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o GetAPICredentialResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v GetAPICredentialResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetAPICredentialResultOutput) Sections() GetSectionMapOutput {
+	return o.ApplyT(func(v GetAPICredentialResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.

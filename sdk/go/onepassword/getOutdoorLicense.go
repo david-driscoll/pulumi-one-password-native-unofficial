@@ -29,17 +29,17 @@ type GetOutdoorLicenseArgs struct {
 }
 
 type GetOutdoorLicenseResult struct {
-	ApprovedWildlife *string      `pulumi:"approvedWildlife"`
-	Category         *string      `pulumi:"category"`
-	Country          *string      `pulumi:"country"`
-	Expires          *string      `pulumi:"expires"`
-	Fields           []GetField   `pulumi:"fields"`
-	FullName         *string      `pulumi:"fullName"`
-	Id               *string      `pulumi:"id"`
-	MaximumQuota     *string      `pulumi:"maximumQuota"`
-	Notes            *string      `pulumi:"notes"`
-	Sections         []GetSection `pulumi:"sections"`
-	State            *string      `pulumi:"state"`
+	ApprovedWildlife *string               `pulumi:"approvedWildlife"`
+	Category         *string               `pulumi:"category"`
+	Country          *string               `pulumi:"country"`
+	Expires          *string               `pulumi:"expires"`
+	Fields           map[string]GetField   `pulumi:"fields"`
+	FullName         *string               `pulumi:"fullName"`
+	Id               *string               `pulumi:"id"`
+	MaximumQuota     *string               `pulumi:"maximumQuota"`
+	Notes            *string               `pulumi:"notes"`
+	Sections         map[string]GetSection `pulumi:"sections"`
+	State            *string               `pulumi:"state"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -107,8 +107,8 @@ func (o GetOutdoorLicenseResultOutput) Expires() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetOutdoorLicenseResult) *string { return v.Expires }).(pulumi.StringPtrOutput)
 }
 
-func (o GetOutdoorLicenseResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v GetOutdoorLicenseResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetOutdoorLicenseResultOutput) Fields() GetFieldMapOutput {
+	return o.ApplyT(func(v GetOutdoorLicenseResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
 }
 
 func (o GetOutdoorLicenseResultOutput) FullName() pulumi.StringPtrOutput {
@@ -127,8 +127,8 @@ func (o GetOutdoorLicenseResultOutput) Notes() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetOutdoorLicenseResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o GetOutdoorLicenseResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v GetOutdoorLicenseResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetOutdoorLicenseResultOutput) Sections() GetSectionMapOutput {
+	return o.ApplyT(func(v GetOutdoorLicenseResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
 }
 
 func (o GetOutdoorLicenseResultOutput) State() pulumi.StringPtrOutput {

@@ -78,11 +78,11 @@ namespace Pulumi.Onepassword
         public readonly string? Category;
         public readonly Pulumi.Onepassword.CreditCard.Outputs.ContactInformationSection? ContactInformation;
         public readonly string? ExpiryDate;
-        public readonly ImmutableArray<Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
         public readonly string? Id;
         public readonly string? Notes;
         public readonly string? Number;
-        public readonly ImmutableArray<Outputs.GetSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.GetSection>? Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
         /// </summary>
@@ -115,7 +115,7 @@ namespace Pulumi.Onepassword
 
             string? expiryDate,
 
-            ImmutableArray<Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.GetField>? fields,
 
             string? id,
 
@@ -123,7 +123,7 @@ namespace Pulumi.Onepassword
 
             string? number,
 
-            ImmutableArray<Outputs.GetSection> sections,
+            ImmutableDictionary<string, Outputs.GetSection>? sections,
 
             ImmutableArray<string> tags,
 

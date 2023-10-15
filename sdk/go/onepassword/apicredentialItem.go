@@ -17,12 +17,12 @@ type APICredentialItem struct {
 	Category   pulumi.StringOutput    `pulumi:"category"`
 	Credential pulumi.StringPtrOutput `pulumi:"credential"`
 	Expires    pulumi.StringPtrOutput `pulumi:"expires"`
-	Fields     GetFieldArrayOutput    `pulumi:"fields"`
+	Fields     GetFieldMapOutput      `pulumi:"fields"`
 	Filename   pulumi.StringPtrOutput `pulumi:"filename"`
 	Hostname   pulumi.StringPtrOutput `pulumi:"hostname"`
 	Id         pulumi.StringOutput    `pulumi:"id"`
 	Notes      pulumi.StringPtrOutput `pulumi:"notes"`
-	Sections   GetSectionArrayOutput  `pulumi:"sections"`
+	Sections   GetSectionMapOutput    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -78,13 +78,13 @@ func (APICredentialItemState) ElementType() reflect.Type {
 }
 
 type apicredentialItemArgs struct {
-	Credential *string   `pulumi:"credential"`
-	Expires    *string   `pulumi:"expires"`
-	Fields     []Field   `pulumi:"fields"`
-	Filename   *string   `pulumi:"filename"`
-	Hostname   *string   `pulumi:"hostname"`
-	Notes      *string   `pulumi:"notes"`
-	Sections   []Section `pulumi:"sections"`
+	Credential *string            `pulumi:"credential"`
+	Expires    *string            `pulumi:"expires"`
+	Fields     map[string]Field   `pulumi:"fields"`
+	Filename   *string            `pulumi:"filename"`
+	Hostname   *string            `pulumi:"hostname"`
+	Notes      *string            `pulumi:"notes"`
+	Sections   map[string]Section `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -100,11 +100,11 @@ type apicredentialItemArgs struct {
 type APICredentialItemArgs struct {
 	Credential pulumi.StringPtrInput
 	Expires    pulumi.StringPtrInput
-	Fields     FieldArrayInput
+	Fields     FieldMapInput
 	Filename   pulumi.StringPtrInput
 	Hostname   pulumi.StringPtrInput
 	Notes      pulumi.StringPtrInput
-	Sections   SectionArrayInput
+	Sections   SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.

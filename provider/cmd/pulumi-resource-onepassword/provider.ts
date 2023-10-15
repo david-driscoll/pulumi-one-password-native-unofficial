@@ -2,7 +2,7 @@ import * as pulumi from "@pulumi/pulumi";
 import * as provider from "@pulumi/pulumi/provider";
 import { ItemType, ResourceTypes, ItemTypeNames } from './types'
 import { FieldAssignment, FieldPurpose, item } from "@1password/op-js"
-import { last, max, pick, split } from "lodash";
+import { flatMap, last, max, pick, split } from "lodash";
 import { createHash, randomBytes } from "crypto";
 import { RNGFactory, Random } from "random/dist/cjs/random";
 
@@ -43,13 +43,15 @@ export class Provider implements provider.Provider {
         const assignments: FieldAssignment[] = [];
         // TODO: well known fields, sections
         if (inputs.fields) {
-            for (const field of inputs.fields) {
-                assignments.push([field.label, field.purpose === 'PASSWORD' ? 'concealed' : 'text', field.value, field.purpose])
+            for (const field of Object.entries(inputs.fields)) {
+                assignments.push([field[0], field[1].purpose === 'PASSWORD' ? 'concealed' : 'text', field[1].value, field[1].purpose])
             }
         }
         if (inputs.sections) {
-            for (const section of inputs.sections) {
-                assignments.push([field.label, field.purpose === 'PASSWORD' ? 'concealed' : 'text', field.value, field.purpose])
+            for (const section of Object.entries(inputs.sections)) {
+                for (const field of Object.entries(section[1].fields)) {
+                    assignments.push([`${section[0]}.${field[0]}`, field[1].purpose === 'PASSWORD' ? 'concealed' : 'text', field[1].value, field[1].purpose])
+                }
             }
         }
 
@@ -121,20 +123,28 @@ export class Provider implements provider.Provider {
             })
         }
         if (news.fields) {
-            news.fields
-                .filter(z => z.label.includes('.') || z.label.includes('\\') || z.label.includes('='))
+            Object.entries(news.fields)
+                .filter(z => z[0].includes('.') || z[0].includes('\\') || z[0].includes('='))
                 .forEach(field => failures.push({
-                    property: `fields.${field.label}`,
-                    reason: 'Field cannot contain a period, equals sign or backslash'
+                    property: `fields.${field[0]}`,
+                    reason: 'Field labels cannot contain a period, equals sign or backslash'
                 }));
         }
         if (news.sections) {
-            news.sections
-                .filter(z => z.label.includes('.') || z.label.includes('\\') || z.label.includes('='))
-                .forEach(field => failures.push({
-                    property: `fields.${field.label}`,
-                    reason: 'Field cannot contain a period, equals sign or backslash'
-                }));
+            for (const section of Object.entries(news.sections)) {
+                if (section[0].includes('.') || section[0].includes('\\') || section[0].includes('=')) {
+                    failures.push({
+                        property: `sections.${section[0]}`,
+                        reason: 'Section labels cannot contain a period, equals sign or backslash'
+                    })
+                }
+                for (const field of Object.entries(section[1].fields).filter(z => z[0].includes('.') || z[0].includes('\\') || z[0].includes('='))) {
+                    failures.push({
+                        property: `sections.${section[0]}.fields.${field[0]}`,
+                        reason: 'Field labels cannot contain a period, equals sign or backslash'
+                    });
+                }
+            }
         }
         return failures.length ? { inputs: news, failures } : {};
     }
@@ -221,13 +231,11 @@ function newUniqueName(prefix: string, randomSeed?: Buffer, randlen = 8, maxlen?
     return prefix + randomSuffix;
 }
 
-interface CommonProperties { category: string; fields?: Field[]; sections?: Section[];[key: string]: any };
+interface CommonProperties { category: string; fields?: Record<string, Field>; sections?: Record<string, Section>;[key: string]: any };
 interface Field {
-    label: string
-    purpose: FieldPurpose;
+    purpose?: FieldPurpose;
     value: string;
 }
 interface Section {
-    fields: Field[];
-    label: string;
+    fields: Record<string, Field>;
 }

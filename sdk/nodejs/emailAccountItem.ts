@@ -35,12 +35,12 @@ export class EmailAccountItem extends pulumi.CustomResource {
     public readonly authMethod!: pulumi.Output<string | undefined>;
     public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
     public readonly contactInformation!: pulumi.Output<outputs.emailAccount.ContactInformationSection | undefined>;
-    public readonly fields!: pulumi.Output<outputs.GetField[] | undefined>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly password!: pulumi.Output<string | undefined>;
     public readonly portNumber!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<outputs.GetSection[] | undefined>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection} | undefined>;
     public readonly security!: pulumi.Output<string | undefined>;
     public readonly server!: pulumi.Output<string | undefined>;
     public readonly smtp!: pulumi.Output<outputs.emailAccount.SmtpSection | undefined>;
@@ -126,11 +126,11 @@ export class EmailAccountItem extends pulumi.CustomResource {
 export interface EmailAccountItemArgs {
     authMethod?: pulumi.Input<string>;
     contactInformation?: pulumi.Input<inputs.emailAccount.ContactInformationSectionArgs>;
-    fields?: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     notes?: pulumi.Input<string>;
     password?: pulumi.Input<string>;
     portNumber?: pulumi.Input<string>;
-    sections?: pulumi.Input<pulumi.Input<inputs.SectionArgs>[]>;
+    sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     security?: pulumi.Input<string>;
     server?: pulumi.Input<string>;
     smtp?: pulumi.Input<inputs.emailAccount.SmtpSectionArgs>;

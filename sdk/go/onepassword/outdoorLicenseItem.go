@@ -18,12 +18,12 @@ type OutdoorLicenseItem struct {
 	Category         pulumi.StringOutput    `pulumi:"category"`
 	Country          pulumi.StringPtrOutput `pulumi:"country"`
 	Expires          pulumi.StringPtrOutput `pulumi:"expires"`
-	Fields           GetFieldArrayOutput    `pulumi:"fields"`
+	Fields           GetFieldMapOutput      `pulumi:"fields"`
 	FullName         pulumi.StringPtrOutput `pulumi:"fullName"`
 	Id               pulumi.StringOutput    `pulumi:"id"`
 	MaximumQuota     pulumi.StringPtrOutput `pulumi:"maximumQuota"`
 	Notes            pulumi.StringPtrOutput `pulumi:"notes"`
-	Sections         GetSectionArrayOutput  `pulumi:"sections"`
+	Sections         GetSectionMapOutput    `pulumi:"sections"`
 	State            pulumi.StringPtrOutput `pulumi:"state"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
@@ -78,15 +78,15 @@ func (OutdoorLicenseItemState) ElementType() reflect.Type {
 }
 
 type outdoorLicenseItemArgs struct {
-	ApprovedWildlife *string   `pulumi:"approvedWildlife"`
-	Country          *string   `pulumi:"country"`
-	Expires          *string   `pulumi:"expires"`
-	Fields           []Field   `pulumi:"fields"`
-	FullName         *string   `pulumi:"fullName"`
-	MaximumQuota     *string   `pulumi:"maximumQuota"`
-	Notes            *string   `pulumi:"notes"`
-	Sections         []Section `pulumi:"sections"`
-	State            *string   `pulumi:"state"`
+	ApprovedWildlife *string            `pulumi:"approvedWildlife"`
+	Country          *string            `pulumi:"country"`
+	Expires          *string            `pulumi:"expires"`
+	Fields           map[string]Field   `pulumi:"fields"`
+	FullName         *string            `pulumi:"fullName"`
+	MaximumQuota     *string            `pulumi:"maximumQuota"`
+	Notes            *string            `pulumi:"notes"`
+	Sections         map[string]Section `pulumi:"sections"`
+	State            *string            `pulumi:"state"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -101,11 +101,11 @@ type OutdoorLicenseItemArgs struct {
 	ApprovedWildlife pulumi.StringPtrInput
 	Country          pulumi.StringPtrInput
 	Expires          pulumi.StringPtrInput
-	Fields           FieldArrayInput
+	Fields           FieldMapInput
 	FullName         pulumi.StringPtrInput
 	MaximumQuota     pulumi.StringPtrInput
 	Notes            pulumi.StringPtrInput
-	Sections         SectionArrayInput
+	Sections         SectionMapInput
 	State            pulumi.StringPtrInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput

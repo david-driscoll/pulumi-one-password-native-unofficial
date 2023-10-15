@@ -78,11 +78,11 @@ namespace Pulumi.Onepassword
         public readonly string? BaseStationName;
         public readonly string? BaseStationPassword;
         public readonly string? Category;
-        public readonly ImmutableArray<Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
         public readonly string? Id;
         public readonly string? NetworkName;
         public readonly string? Notes;
-        public readonly ImmutableArray<Outputs.GetSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.GetSection>? Sections;
         public readonly string? ServerIpAddress;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
@@ -115,7 +115,7 @@ namespace Pulumi.Onepassword
 
             string? category,
 
-            ImmutableArray<Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.GetField>? fields,
 
             string? id,
 
@@ -123,7 +123,7 @@ namespace Pulumi.Onepassword
 
             string? notes,
 
-            ImmutableArray<Outputs.GetSection> sections,
+            ImmutableDictionary<string, Outputs.GetSection>? sections,
 
             string? serverIpAddress,
 

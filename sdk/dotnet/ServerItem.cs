@@ -19,7 +19,7 @@ namespace Pulumi.Onepassword
         public Output<string> Category { get; private set; } = null!;
 
         [Output("fields")]
-        public Output<ImmutableArray<Outputs.GetField>> Fields { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.GetField>?> Fields { get; private set; } = null!;
 
         [Output("hostingProvider")]
         public Output<Pulumi.Onepassword.Server.Outputs.HostingProviderSection?> HostingProvider { get; private set; } = null!;
@@ -34,7 +34,7 @@ namespace Pulumi.Onepassword
         public Output<string?> Password { get; private set; } = null!;
 
         [Output("sections")]
-        public Output<ImmutableArray<Outputs.GetSection>> Sections { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.GetSection>?> Sections { get; private set; } = null!;
 
         /// <summary>
         /// An array of strings of the tags assigned to the item.
@@ -115,10 +115,10 @@ namespace Pulumi.Onepassword
         public Input<Pulumi.Onepassword.Server.Inputs.AdminConsoleSectionArgs>? AdminConsole { get; set; }
 
         [Input("fields")]
-        private InputList<Inputs.FieldArgs>? _fields;
-        public InputList<Inputs.FieldArgs> Fields
+        private InputMap<Inputs.FieldArgs>? _fields;
+        public InputMap<Inputs.FieldArgs> Fields
         {
-            get => _fields ?? (_fields = new InputList<Inputs.FieldArgs>());
+            get => _fields ?? (_fields = new InputMap<Inputs.FieldArgs>());
             set => _fields = value;
         }
 
@@ -132,10 +132,10 @@ namespace Pulumi.Onepassword
         public Input<string>? Password { get; set; }
 
         [Input("sections")]
-        private InputList<Inputs.SectionArgs>? _sections;
-        public InputList<Inputs.SectionArgs> Sections
+        private InputMap<Inputs.SectionArgs>? _sections;
+        public InputMap<Inputs.SectionArgs> Sections
         {
-            get => _sections ?? (_sections = new InputList<Inputs.SectionArgs>());
+            get => _sections ?? (_sections = new InputMap<Inputs.SectionArgs>());
             set => _sections = value;
         }
 

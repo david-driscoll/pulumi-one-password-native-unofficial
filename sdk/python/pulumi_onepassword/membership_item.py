@@ -18,14 +18,14 @@ class MembershipItemArgs:
     def __init__(__self__, *,
                  vault: pulumi.Input[str],
                  expiry_date: Optional[pulumi.Input[str]] = None,
-                 fields: Optional[pulumi.Input[Sequence[pulumi.Input['FieldArgs']]]] = None,
+                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
                  group: Optional[pulumi.Input[str]] = None,
                  member_id: Optional[pulumi.Input[str]] = None,
                  member_name: Optional[pulumi.Input[str]] = None,
                  member_since: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  pin: Optional[pulumi.Input[str]] = None,
-                 sections: Optional[pulumi.Input[Sequence[pulumi.Input['SectionArgs']]]] = None,
+                 sections: Optional[pulumi.Input[Mapping[str, pulumi.Input['SectionArgs']]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  telephone: Optional[pulumi.Input[str]] = None,
                  title: Optional[pulumi.Input[str]] = None,
@@ -87,11 +87,11 @@ class MembershipItemArgs:
 
     @property
     @pulumi.getter
-    def fields(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['FieldArgs']]]]:
+    def fields(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]]:
         return pulumi.get(self, "fields")
 
     @fields.setter
-    def fields(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['FieldArgs']]]]):
+    def fields(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]]):
         pulumi.set(self, "fields", value)
 
     @property
@@ -150,11 +150,11 @@ class MembershipItemArgs:
 
     @property
     @pulumi.getter
-    def sections(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SectionArgs']]]]:
+    def sections(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['SectionArgs']]]]:
         return pulumi.get(self, "sections")
 
     @sections.setter
-    def sections(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SectionArgs']]]]):
+    def sections(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['SectionArgs']]]]):
         pulumi.set(self, "sections", value)
 
     @property
@@ -206,14 +206,14 @@ class MembershipItem(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  expiry_date: Optional[pulumi.Input[str]] = None,
-                 fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
+                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  group: Optional[pulumi.Input[str]] = None,
                  member_id: Optional[pulumi.Input[str]] = None,
                  member_name: Optional[pulumi.Input[str]] = None,
                  member_since: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  pin: Optional[pulumi.Input[str]] = None,
-                 sections: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
+                 sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  telephone: Optional[pulumi.Input[str]] = None,
                  title: Optional[pulumi.Input[str]] = None,
@@ -252,14 +252,14 @@ class MembershipItem(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  expiry_date: Optional[pulumi.Input[str]] = None,
-                 fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
+                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  group: Optional[pulumi.Input[str]] = None,
                  member_id: Optional[pulumi.Input[str]] = None,
                  member_name: Optional[pulumi.Input[str]] = None,
                  member_since: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  pin: Optional[pulumi.Input[str]] = None,
-                 sections: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
+                 sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  telephone: Optional[pulumi.Input[str]] = None,
                  title: Optional[pulumi.Input[str]] = None,
@@ -349,7 +349,7 @@ class MembershipItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def fields(self) -> pulumi.Output[Optional[Sequence['outputs.GetField']]]:
+    def fields(self) -> pulumi.Output[Optional[Mapping[str, 'outputs.GetField']]]:
         return pulumi.get(self, "fields")
 
     @property
@@ -389,7 +389,7 @@ class MembershipItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def sections(self) -> pulumi.Output[Optional[Sequence['outputs.GetSection']]]:
+    def sections(self) -> pulumi.Output[Optional[Mapping[str, 'outputs.GetSection']]]:
         return pulumi.get(self, "sections")
 
     @property

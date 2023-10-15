@@ -30,13 +30,13 @@ type GetCryptoWalletArgs struct {
 }
 
 type GetCryptoWalletResult struct {
-	Category       *string      `pulumi:"category"`
-	Fields         []GetField   `pulumi:"fields"`
-	Id             *string      `pulumi:"id"`
-	Notes          *string      `pulumi:"notes"`
-	Password       *string      `pulumi:"password"`
-	RecoveryPhrase *string      `pulumi:"recoveryPhrase"`
-	Sections       []GetSection `pulumi:"sections"`
+	Category       *string               `pulumi:"category"`
+	Fields         map[string]GetField   `pulumi:"fields"`
+	Id             *string               `pulumi:"id"`
+	Notes          *string               `pulumi:"notes"`
+	Password       *string               `pulumi:"password"`
+	RecoveryPhrase *string               `pulumi:"recoveryPhrase"`
+	Sections       map[string]GetSection `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -92,8 +92,8 @@ func (o GetCryptoWalletResultOutput) Category() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetCryptoWalletResult) *string { return v.Category }).(pulumi.StringPtrOutput)
 }
 
-func (o GetCryptoWalletResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v GetCryptoWalletResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetCryptoWalletResultOutput) Fields() GetFieldMapOutput {
+	return o.ApplyT(func(v GetCryptoWalletResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
 }
 
 func (o GetCryptoWalletResultOutput) Id() pulumi.StringPtrOutput {
@@ -112,8 +112,8 @@ func (o GetCryptoWalletResultOutput) RecoveryPhrase() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetCryptoWalletResult) *string { return v.RecoveryPhrase }).(pulumi.StringPtrOutput)
 }
 
-func (o GetCryptoWalletResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v GetCryptoWalletResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetCryptoWalletResultOutput) Sections() GetSectionMapOutput {
+	return o.ApplyT(func(v GetCryptoWalletResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.

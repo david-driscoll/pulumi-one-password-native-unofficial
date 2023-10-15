@@ -29,13 +29,13 @@ type GetSocialSecurityNumberArgs struct {
 }
 
 type GetSocialSecurityNumberResult struct {
-	Category *string      `pulumi:"category"`
-	Fields   []GetField   `pulumi:"fields"`
-	Id       *string      `pulumi:"id"`
-	Name     *string      `pulumi:"name"`
-	Notes    *string      `pulumi:"notes"`
-	Number   *string      `pulumi:"number"`
-	Sections []GetSection `pulumi:"sections"`
+	Category *string               `pulumi:"category"`
+	Fields   map[string]GetField   `pulumi:"fields"`
+	Id       *string               `pulumi:"id"`
+	Name     *string               `pulumi:"name"`
+	Notes    *string               `pulumi:"notes"`
+	Number   *string               `pulumi:"number"`
+	Sections map[string]GetSection `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -90,8 +90,8 @@ func (o GetSocialSecurityNumberResultOutput) Category() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetSocialSecurityNumberResult) *string { return v.Category }).(pulumi.StringPtrOutput)
 }
 
-func (o GetSocialSecurityNumberResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v GetSocialSecurityNumberResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetSocialSecurityNumberResultOutput) Fields() GetFieldMapOutput {
+	return o.ApplyT(func(v GetSocialSecurityNumberResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
 }
 
 func (o GetSocialSecurityNumberResultOutput) Id() pulumi.StringPtrOutput {
@@ -110,8 +110,8 @@ func (o GetSocialSecurityNumberResultOutput) Number() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetSocialSecurityNumberResult) *string { return v.Number }).(pulumi.StringPtrOutput)
 }
 
-func (o GetSocialSecurityNumberResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v GetSocialSecurityNumberResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetSocialSecurityNumberResultOutput) Sections() GetSectionMapOutput {
+	return o.ApplyT(func(v GetSocialSecurityNumberResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.

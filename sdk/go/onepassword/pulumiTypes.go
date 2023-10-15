@@ -11,7 +11,6 @@ import (
 )
 
 type Field struct {
-	Label   string       `pulumi:"label"`
 	Purpose FieldPurpose `pulumi:"purpose"`
 	Value   string       `pulumi:"value"`
 }
@@ -40,7 +39,6 @@ type FieldInput interface {
 }
 
 type FieldArgs struct {
-	Label   pulumi.StringInput `pulumi:"label"`
 	Purpose FieldPurposeInput  `pulumi:"purpose"`
 	Value   pulumi.StringInput `pulumi:"value"`
 }
@@ -57,29 +55,29 @@ func (i FieldArgs) ToFieldOutputWithContext(ctx context.Context) FieldOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(FieldOutput)
 }
 
-// FieldArrayInput is an input type that accepts FieldArray and FieldArrayOutput values.
-// You can construct a concrete instance of `FieldArrayInput` via:
+// FieldMapInput is an input type that accepts FieldMap and FieldMapOutput values.
+// You can construct a concrete instance of `FieldMapInput` via:
 //
-//	FieldArray{ FieldArgs{...} }
-type FieldArrayInput interface {
+//	FieldMap{ "key": FieldArgs{...} }
+type FieldMapInput interface {
 	pulumi.Input
 
-	ToFieldArrayOutput() FieldArrayOutput
-	ToFieldArrayOutputWithContext(context.Context) FieldArrayOutput
+	ToFieldMapOutput() FieldMapOutput
+	ToFieldMapOutputWithContext(context.Context) FieldMapOutput
 }
 
-type FieldArray []FieldInput
+type FieldMap map[string]FieldInput
 
-func (FieldArray) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]Field)(nil)).Elem()
+func (FieldMap) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]Field)(nil)).Elem()
 }
 
-func (i FieldArray) ToFieldArrayOutput() FieldArrayOutput {
-	return i.ToFieldArrayOutputWithContext(context.Background())
+func (i FieldMap) ToFieldMapOutput() FieldMapOutput {
+	return i.ToFieldMapOutputWithContext(context.Background())
 }
 
-func (i FieldArray) ToFieldArrayOutputWithContext(ctx context.Context) FieldArrayOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(FieldArrayOutput)
+func (i FieldMap) ToFieldMapOutputWithContext(ctx context.Context) FieldMapOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FieldMapOutput)
 }
 
 type FieldOutput struct{ *pulumi.OutputState }
@@ -96,10 +94,6 @@ func (o FieldOutput) ToFieldOutputWithContext(ctx context.Context) FieldOutput {
 	return o
 }
 
-func (o FieldOutput) Label() pulumi.StringOutput {
-	return o.ApplyT(func(v Field) string { return v.Label }).(pulumi.StringOutput)
-}
-
 func (o FieldOutput) Purpose() FieldPurposeOutput {
 	return o.ApplyT(func(v Field) FieldPurpose { return v.Purpose }).(FieldPurposeOutput)
 }
@@ -108,23 +102,23 @@ func (o FieldOutput) Value() pulumi.StringOutput {
 	return o.ApplyT(func(v Field) string { return v.Value }).(pulumi.StringOutput)
 }
 
-type FieldArrayOutput struct{ *pulumi.OutputState }
+type FieldMapOutput struct{ *pulumi.OutputState }
 
-func (FieldArrayOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]Field)(nil)).Elem()
+func (FieldMapOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]Field)(nil)).Elem()
 }
 
-func (o FieldArrayOutput) ToFieldArrayOutput() FieldArrayOutput {
+func (o FieldMapOutput) ToFieldMapOutput() FieldMapOutput {
 	return o
 }
 
-func (o FieldArrayOutput) ToFieldArrayOutputWithContext(ctx context.Context) FieldArrayOutput {
+func (o FieldMapOutput) ToFieldMapOutputWithContext(ctx context.Context) FieldMapOutput {
 	return o
 }
 
-func (o FieldArrayOutput) Index(i pulumi.IntInput) FieldOutput {
-	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Field {
-		return vs[0].([]Field)[vs[1].(int)]
+func (o FieldMapOutput) MapIndex(k pulumi.StringInput) FieldOutput {
+	return pulumi.All(o, k).ApplyT(func(vs []interface{}) Field {
+		return vs[0].(map[string]Field)[vs[1].(string)]
 	}).(FieldOutput)
 }
 
@@ -165,30 +159,30 @@ func (o GetFieldOutput) Value() pulumi.StringOutput {
 	return o.ApplyT(func(v GetField) string { return v.Value }).(pulumi.StringOutput)
 }
 
-type GetFieldArrayOutput struct{ *pulumi.OutputState }
+type GetFieldMapOutput struct{ *pulumi.OutputState }
 
-func (GetFieldArrayOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]GetField)(nil)).Elem()
+func (GetFieldMapOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]GetField)(nil)).Elem()
 }
 
-func (o GetFieldArrayOutput) ToGetFieldArrayOutput() GetFieldArrayOutput {
+func (o GetFieldMapOutput) ToGetFieldMapOutput() GetFieldMapOutput {
 	return o
 }
 
-func (o GetFieldArrayOutput) ToGetFieldArrayOutputWithContext(ctx context.Context) GetFieldArrayOutput {
+func (o GetFieldMapOutput) ToGetFieldMapOutputWithContext(ctx context.Context) GetFieldMapOutput {
 	return o
 }
 
-func (o GetFieldArrayOutput) Index(i pulumi.IntInput) GetFieldOutput {
-	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetField {
-		return vs[0].([]GetField)[vs[1].(int)]
+func (o GetFieldMapOutput) MapIndex(k pulumi.StringInput) GetFieldOutput {
+	return pulumi.All(o, k).ApplyT(func(vs []interface{}) GetField {
+		return vs[0].(map[string]GetField)[vs[1].(string)]
 	}).(GetFieldOutput)
 }
 
 type GetSection struct {
-	Fields []GetField `pulumi:"fields"`
-	Id     string     `pulumi:"id"`
-	Label  string     `pulumi:"label"`
+	Fields map[string]GetField `pulumi:"fields"`
+	Id     string              `pulumi:"id"`
+	Label  string              `pulumi:"label"`
 }
 
 type GetSectionOutput struct{ *pulumi.OutputState }
@@ -205,8 +199,8 @@ func (o GetSectionOutput) ToGetSectionOutputWithContext(ctx context.Context) Get
 	return o
 }
 
-func (o GetSectionOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v GetSection) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetSectionOutput) Fields() GetFieldMapOutput {
+	return o.ApplyT(func(v GetSection) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
 }
 
 func (o GetSectionOutput) Id() pulumi.StringOutput {
@@ -217,29 +211,28 @@ func (o GetSectionOutput) Label() pulumi.StringOutput {
 	return o.ApplyT(func(v GetSection) string { return v.Label }).(pulumi.StringOutput)
 }
 
-type GetSectionArrayOutput struct{ *pulumi.OutputState }
+type GetSectionMapOutput struct{ *pulumi.OutputState }
 
-func (GetSectionArrayOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]GetSection)(nil)).Elem()
+func (GetSectionMapOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]GetSection)(nil)).Elem()
 }
 
-func (o GetSectionArrayOutput) ToGetSectionArrayOutput() GetSectionArrayOutput {
+func (o GetSectionMapOutput) ToGetSectionMapOutput() GetSectionMapOutput {
 	return o
 }
 
-func (o GetSectionArrayOutput) ToGetSectionArrayOutputWithContext(ctx context.Context) GetSectionArrayOutput {
+func (o GetSectionMapOutput) ToGetSectionMapOutputWithContext(ctx context.Context) GetSectionMapOutput {
 	return o
 }
 
-func (o GetSectionArrayOutput) Index(i pulumi.IntInput) GetSectionOutput {
-	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetSection {
-		return vs[0].([]GetSection)[vs[1].(int)]
+func (o GetSectionMapOutput) MapIndex(k pulumi.StringInput) GetSectionOutput {
+	return pulumi.All(o, k).ApplyT(func(vs []interface{}) GetSection {
+		return vs[0].(map[string]GetSection)[vs[1].(string)]
 	}).(GetSectionOutput)
 }
 
 type Section struct {
-	Fields []Field `pulumi:"fields"`
-	Label  string  `pulumi:"label"`
+	Fields map[string]Field `pulumi:"fields"`
 }
 
 // SectionInput is an input type that accepts SectionArgs and SectionOutput values.
@@ -254,8 +247,7 @@ type SectionInput interface {
 }
 
 type SectionArgs struct {
-	Fields FieldArrayInput    `pulumi:"fields"`
-	Label  pulumi.StringInput `pulumi:"label"`
+	Fields FieldMapInput `pulumi:"fields"`
 }
 
 func (SectionArgs) ElementType() reflect.Type {
@@ -270,29 +262,29 @@ func (i SectionArgs) ToSectionOutputWithContext(ctx context.Context) SectionOutp
 	return pulumi.ToOutputWithContext(ctx, i).(SectionOutput)
 }
 
-// SectionArrayInput is an input type that accepts SectionArray and SectionArrayOutput values.
-// You can construct a concrete instance of `SectionArrayInput` via:
+// SectionMapInput is an input type that accepts SectionMap and SectionMapOutput values.
+// You can construct a concrete instance of `SectionMapInput` via:
 //
-//	SectionArray{ SectionArgs{...} }
-type SectionArrayInput interface {
+//	SectionMap{ "key": SectionArgs{...} }
+type SectionMapInput interface {
 	pulumi.Input
 
-	ToSectionArrayOutput() SectionArrayOutput
-	ToSectionArrayOutputWithContext(context.Context) SectionArrayOutput
+	ToSectionMapOutput() SectionMapOutput
+	ToSectionMapOutputWithContext(context.Context) SectionMapOutput
 }
 
-type SectionArray []SectionInput
+type SectionMap map[string]SectionInput
 
-func (SectionArray) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]Section)(nil)).Elem()
+func (SectionMap) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]Section)(nil)).Elem()
 }
 
-func (i SectionArray) ToSectionArrayOutput() SectionArrayOutput {
-	return i.ToSectionArrayOutputWithContext(context.Background())
+func (i SectionMap) ToSectionMapOutput() SectionMapOutput {
+	return i.ToSectionMapOutputWithContext(context.Background())
 }
 
-func (i SectionArray) ToSectionArrayOutputWithContext(ctx context.Context) SectionArrayOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(SectionArrayOutput)
+func (i SectionMap) ToSectionMapOutputWithContext(ctx context.Context) SectionMapOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SectionMapOutput)
 }
 
 type SectionOutput struct{ *pulumi.OutputState }
@@ -309,45 +301,41 @@ func (o SectionOutput) ToSectionOutputWithContext(ctx context.Context) SectionOu
 	return o
 }
 
-func (o SectionOutput) Fields() FieldArrayOutput {
-	return o.ApplyT(func(v Section) []Field { return v.Fields }).(FieldArrayOutput)
+func (o SectionOutput) Fields() FieldMapOutput {
+	return o.ApplyT(func(v Section) map[string]Field { return v.Fields }).(FieldMapOutput)
 }
 
-func (o SectionOutput) Label() pulumi.StringOutput {
-	return o.ApplyT(func(v Section) string { return v.Label }).(pulumi.StringOutput)
+type SectionMapOutput struct{ *pulumi.OutputState }
+
+func (SectionMapOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]Section)(nil)).Elem()
 }
 
-type SectionArrayOutput struct{ *pulumi.OutputState }
-
-func (SectionArrayOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]Section)(nil)).Elem()
-}
-
-func (o SectionArrayOutput) ToSectionArrayOutput() SectionArrayOutput {
+func (o SectionMapOutput) ToSectionMapOutput() SectionMapOutput {
 	return o
 }
 
-func (o SectionArrayOutput) ToSectionArrayOutputWithContext(ctx context.Context) SectionArrayOutput {
+func (o SectionMapOutput) ToSectionMapOutputWithContext(ctx context.Context) SectionMapOutput {
 	return o
 }
 
-func (o SectionArrayOutput) Index(i pulumi.IntInput) SectionOutput {
-	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Section {
-		return vs[0].([]Section)[vs[1].(int)]
+func (o SectionMapOutput) MapIndex(k pulumi.StringInput) SectionOutput {
+	return pulumi.All(o, k).ApplyT(func(vs []interface{}) Section {
+		return vs[0].(map[string]Section)[vs[1].(string)]
 	}).(SectionOutput)
 }
 
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*FieldInput)(nil)).Elem(), FieldArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*FieldArrayInput)(nil)).Elem(), FieldArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FieldMapInput)(nil)).Elem(), FieldMap{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SectionInput)(nil)).Elem(), SectionArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*SectionArrayInput)(nil)).Elem(), SectionArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*SectionMapInput)(nil)).Elem(), SectionMap{})
 	pulumi.RegisterOutputType(FieldOutput{})
-	pulumi.RegisterOutputType(FieldArrayOutput{})
+	pulumi.RegisterOutputType(FieldMapOutput{})
 	pulumi.RegisterOutputType(GetFieldOutput{})
-	pulumi.RegisterOutputType(GetFieldArrayOutput{})
+	pulumi.RegisterOutputType(GetFieldMapOutput{})
 	pulumi.RegisterOutputType(GetSectionOutput{})
-	pulumi.RegisterOutputType(GetSectionArrayOutput{})
+	pulumi.RegisterOutputType(GetSectionMapOutput{})
 	pulumi.RegisterOutputType(SectionOutput{})
-	pulumi.RegisterOutputType(SectionArrayOutput{})
+	pulumi.RegisterOutputType(SectionMapOutput{})
 }

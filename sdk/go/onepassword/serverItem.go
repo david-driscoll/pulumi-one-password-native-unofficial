@@ -17,12 +17,12 @@ type ServerItem struct {
 
 	AdminConsole    server.AdminConsoleSectionPtrOutput    `pulumi:"adminConsole"`
 	Category        pulumi.StringOutput                    `pulumi:"category"`
-	Fields          GetFieldArrayOutput                    `pulumi:"fields"`
+	Fields          GetFieldMapOutput                      `pulumi:"fields"`
 	HostingProvider server.HostingProviderSectionPtrOutput `pulumi:"hostingProvider"`
 	Id              pulumi.StringOutput                    `pulumi:"id"`
 	Notes           pulumi.StringPtrOutput                 `pulumi:"notes"`
 	Password        pulumi.StringPtrOutput                 `pulumi:"password"`
-	Sections        GetSectionArrayOutput                  `pulumi:"sections"`
+	Sections        GetSectionMapOutput                    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -78,11 +78,11 @@ func (ServerItemState) ElementType() reflect.Type {
 
 type serverItemArgs struct {
 	AdminConsole    *server.AdminConsoleSection    `pulumi:"adminConsole"`
-	Fields          []Field                        `pulumi:"fields"`
+	Fields          map[string]Field               `pulumi:"fields"`
 	HostingProvider *server.HostingProviderSection `pulumi:"hostingProvider"`
 	Notes           *string                        `pulumi:"notes"`
 	Password        *string                        `pulumi:"password"`
-	Sections        []Section                      `pulumi:"sections"`
+	Sections        map[string]Section             `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -96,11 +96,11 @@ type serverItemArgs struct {
 // The set of arguments for constructing a ServerItem resource.
 type ServerItemArgs struct {
 	AdminConsole    server.AdminConsoleSectionPtrInput
-	Fields          FieldArrayInput
+	Fields          FieldMapInput
 	HostingProvider server.HostingProviderSectionPtrInput
 	Notes           pulumi.StringPtrInput
 	Password        pulumi.StringPtrInput
-	Sections        SectionArrayInput
+	Sections        SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.

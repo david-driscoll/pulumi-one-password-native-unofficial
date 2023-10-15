@@ -27,8 +27,8 @@ class GetServerResult:
         if category and not isinstance(category, dict):
             raise TypeError("Expected argument 'category' to be a dict")
         pulumi.set(__self__, "category", category)
-        if fields and not isinstance(fields, list):
-            raise TypeError("Expected argument 'fields' to be a list")
+        if fields and not isinstance(fields, dict):
+            raise TypeError("Expected argument 'fields' to be a dict")
         pulumi.set(__self__, "fields", fields)
         if hosting_provider and not isinstance(hosting_provider, dict):
             raise TypeError("Expected argument 'hosting_provider' to be a dict")
@@ -42,8 +42,8 @@ class GetServerResult:
         if password and not isinstance(password, str):
             raise TypeError("Expected argument 'password' to be a str")
         pulumi.set(__self__, "password", password)
-        if sections and not isinstance(sections, list):
-            raise TypeError("Expected argument 'sections' to be a list")
+        if sections and not isinstance(sections, dict):
+            raise TypeError("Expected argument 'sections' to be a dict")
         pulumi.set(__self__, "sections", sections)
         if tags and not isinstance(tags, list):
             raise TypeError("Expected argument 'tags' to be a list")
@@ -76,7 +76,7 @@ class GetServerResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Optional[Sequence['outputs.GetField']]:
+    def fields(self) -> Optional[Mapping[str, 'outputs.GetField']]:
         return pulumi.get(self, "fields")
 
     @property
@@ -101,7 +101,7 @@ class GetServerResult:
 
     @property
     @pulumi.getter
-    def sections(self) -> Optional[Sequence['outputs.GetSection']]:
+    def sections(self) -> Optional[Mapping[str, 'outputs.GetSection']]:
         return pulumi.get(self, "sections")
 
     @property

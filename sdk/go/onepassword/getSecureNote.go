@@ -29,11 +29,11 @@ type GetSecureNoteArgs struct {
 }
 
 type GetSecureNoteResult struct {
-	Category *string      `pulumi:"category"`
-	Fields   []GetField   `pulumi:"fields"`
-	Id       *string      `pulumi:"id"`
-	Notes    *string      `pulumi:"notes"`
-	Sections []GetSection `pulumi:"sections"`
+	Category *string               `pulumi:"category"`
+	Fields   map[string]GetField   `pulumi:"fields"`
+	Id       *string               `pulumi:"id"`
+	Notes    *string               `pulumi:"notes"`
+	Sections map[string]GetSection `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -88,8 +88,8 @@ func (o GetSecureNoteResultOutput) Category() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetSecureNoteResult) *string { return v.Category }).(pulumi.StringPtrOutput)
 }
 
-func (o GetSecureNoteResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v GetSecureNoteResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetSecureNoteResultOutput) Fields() GetFieldMapOutput {
+	return o.ApplyT(func(v GetSecureNoteResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
 }
 
 func (o GetSecureNoteResultOutput) Id() pulumi.StringPtrOutput {
@@ -100,8 +100,8 @@ func (o GetSecureNoteResultOutput) Notes() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetSecureNoteResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o GetSecureNoteResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v GetSecureNoteResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetSecureNoteResultOutput) Sections() GetSectionMapOutput {
+	return o.ApplyT(func(v GetSecureNoteResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.

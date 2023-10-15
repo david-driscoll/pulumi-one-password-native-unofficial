@@ -7,7 +7,6 @@ import { input as inputs, output as outputs, enums } from "../types";
 import * as utilities from "../utilities";
 
 export interface FieldArgs {
-    label: pulumi.Input<string>;
     purpose: pulumi.Input<enums.FieldPurpose>;
     value: pulumi.Input<string>;
 }
@@ -22,8 +21,7 @@ export function fieldArgsProvideDefaults(val: FieldArgs): FieldArgs {
 }
 
 export interface SectionArgs {
-    fields: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;
-    label: pulumi.Input<string>;
+    fields: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
 }
 export namespace bankAccount {
     export interface BranchInformationSectionArgs {

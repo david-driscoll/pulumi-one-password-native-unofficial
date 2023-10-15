@@ -37,12 +37,12 @@ export interface GetAPICredentialResult {
     readonly category?: enums.Category | string;
     readonly credential?: string;
     readonly expires?: string;
-    readonly fields?: outputs.GetField[];
+    readonly fields?: {[key: string]: outputs.GetField};
     readonly filename?: string;
     readonly hostname?: string;
     readonly id?: string;
     readonly notes?: string;
-    readonly sections?: outputs.GetSection[];
+    readonly sections?: {[key: string]: outputs.GetSection};
     /**
      * An array of strings of the tags assigned to the item.
      */

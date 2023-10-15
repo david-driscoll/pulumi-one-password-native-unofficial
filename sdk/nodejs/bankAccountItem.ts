@@ -36,14 +36,14 @@ export class BankAccountItem extends pulumi.CustomResource {
     public readonly bankName!: pulumi.Output<string | undefined>;
     public readonly branchInformation!: pulumi.Output<outputs.bankAccount.BranchInformationSection | undefined>;
     public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
-    public readonly fields!: pulumi.Output<outputs.GetField[] | undefined>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public readonly iban!: pulumi.Output<string | undefined>;
     public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly nameOnAccount!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly pin!: pulumi.Output<string | undefined>;
     public readonly routingNumber!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<outputs.GetSection[] | undefined>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection} | undefined>;
     public readonly swift!: pulumi.Output<string | undefined>;
     /**
      * An array of strings of the tags assigned to the item.
@@ -127,13 +127,13 @@ export interface BankAccountItemArgs {
     accountNumber?: pulumi.Input<string>;
     bankName?: pulumi.Input<string>;
     branchInformation?: pulumi.Input<inputs.bankAccount.BranchInformationSectionArgs>;
-    fields?: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     iban?: pulumi.Input<string>;
     nameOnAccount?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
     pin?: pulumi.Input<string>;
     routingNumber?: pulumi.Input<string>;
-    sections?: pulumi.Input<pulumi.Input<inputs.SectionArgs>[]>;
+    sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     swift?: pulumi.Input<string>;
     /**
      * An array of strings of the tags assigned to the item.

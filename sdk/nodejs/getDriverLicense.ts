@@ -40,7 +40,7 @@ export interface GetDriverLicenseResult {
     readonly country?: string;
     readonly dateOfBirth?: string;
     readonly expiryDate?: string;
-    readonly fields?: outputs.GetField[];
+    readonly fields?: {[key: string]: outputs.GetField};
     readonly fullName?: string;
     readonly gender?: string;
     readonly height?: string;
@@ -48,7 +48,7 @@ export interface GetDriverLicenseResult {
     readonly licenseClass?: string;
     readonly notes?: string;
     readonly number?: string;
-    readonly sections?: outputs.GetSection[];
+    readonly sections?: {[key: string]: outputs.GetSection};
     readonly state?: string;
     /**
      * An array of strings of the tags assigned to the item.

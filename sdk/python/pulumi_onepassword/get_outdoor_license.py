@@ -32,8 +32,8 @@ class GetOutdoorLicenseResult:
         if expires and not isinstance(expires, str):
             raise TypeError("Expected argument 'expires' to be a str")
         pulumi.set(__self__, "expires", expires)
-        if fields and not isinstance(fields, list):
-            raise TypeError("Expected argument 'fields' to be a list")
+        if fields and not isinstance(fields, dict):
+            raise TypeError("Expected argument 'fields' to be a dict")
         pulumi.set(__self__, "fields", fields)
         if full_name and not isinstance(full_name, str):
             raise TypeError("Expected argument 'full_name' to be a str")
@@ -47,8 +47,8 @@ class GetOutdoorLicenseResult:
         if notes and not isinstance(notes, str):
             raise TypeError("Expected argument 'notes' to be a str")
         pulumi.set(__self__, "notes", notes)
-        if sections and not isinstance(sections, list):
-            raise TypeError("Expected argument 'sections' to be a list")
+        if sections and not isinstance(sections, dict):
+            raise TypeError("Expected argument 'sections' to be a dict")
         pulumi.set(__self__, "sections", sections)
         if state and not isinstance(state, str):
             raise TypeError("Expected argument 'state' to be a str")
@@ -91,7 +91,7 @@ class GetOutdoorLicenseResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Optional[Sequence['outputs.GetField']]:
+    def fields(self) -> Optional[Mapping[str, 'outputs.GetField']]:
         return pulumi.get(self, "fields")
 
     @property
@@ -116,7 +116,7 @@ class GetOutdoorLicenseResult:
 
     @property
     @pulumi.getter
-    def sections(self) -> Optional[Sequence['outputs.GetSection']]:
+    def sections(self) -> Optional[Mapping[str, 'outputs.GetSection']]:
         return pulumi.get(self, "sections")
 
     @property

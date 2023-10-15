@@ -29,22 +29,22 @@ type GetDriverLicenseArgs struct {
 }
 
 type GetDriverLicenseResult struct {
-	Address                *string      `pulumi:"address"`
-	Category               *string      `pulumi:"category"`
-	ConditionsRestrictions *string      `pulumi:"conditionsRestrictions"`
-	Country                *string      `pulumi:"country"`
-	DateOfBirth            *string      `pulumi:"dateOfBirth"`
-	ExpiryDate             *string      `pulumi:"expiryDate"`
-	Fields                 []GetField   `pulumi:"fields"`
-	FullName               *string      `pulumi:"fullName"`
-	Gender                 *string      `pulumi:"gender"`
-	Height                 *string      `pulumi:"height"`
-	Id                     *string      `pulumi:"id"`
-	LicenseClass           *string      `pulumi:"licenseClass"`
-	Notes                  *string      `pulumi:"notes"`
-	Number                 *string      `pulumi:"number"`
-	Sections               []GetSection `pulumi:"sections"`
-	State                  *string      `pulumi:"state"`
+	Address                *string               `pulumi:"address"`
+	Category               *string               `pulumi:"category"`
+	ConditionsRestrictions *string               `pulumi:"conditionsRestrictions"`
+	Country                *string               `pulumi:"country"`
+	DateOfBirth            *string               `pulumi:"dateOfBirth"`
+	ExpiryDate             *string               `pulumi:"expiryDate"`
+	Fields                 map[string]GetField   `pulumi:"fields"`
+	FullName               *string               `pulumi:"fullName"`
+	Gender                 *string               `pulumi:"gender"`
+	Height                 *string               `pulumi:"height"`
+	Id                     *string               `pulumi:"id"`
+	LicenseClass           *string               `pulumi:"licenseClass"`
+	Notes                  *string               `pulumi:"notes"`
+	Number                 *string               `pulumi:"number"`
+	Sections               map[string]GetSection `pulumi:"sections"`
+	State                  *string               `pulumi:"state"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -119,8 +119,8 @@ func (o GetDriverLicenseResultOutput) ExpiryDate() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetDriverLicenseResult) *string { return v.ExpiryDate }).(pulumi.StringPtrOutput)
 }
 
-func (o GetDriverLicenseResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v GetDriverLicenseResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetDriverLicenseResultOutput) Fields() GetFieldMapOutput {
+	return o.ApplyT(func(v GetDriverLicenseResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
 }
 
 func (o GetDriverLicenseResultOutput) FullName() pulumi.StringPtrOutput {
@@ -151,8 +151,8 @@ func (o GetDriverLicenseResultOutput) Number() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetDriverLicenseResult) *string { return v.Number }).(pulumi.StringPtrOutput)
 }
 
-func (o GetDriverLicenseResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v GetDriverLicenseResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetDriverLicenseResultOutput) Sections() GetSectionMapOutput {
+	return o.ApplyT(func(v GetDriverLicenseResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
 }
 
 func (o GetDriverLicenseResultOutput) State() pulumi.StringPtrOutput {

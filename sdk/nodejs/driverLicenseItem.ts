@@ -38,7 +38,7 @@ export class DriverLicenseItem extends pulumi.CustomResource {
     public readonly country!: pulumi.Output<string | undefined>;
     public readonly dateOfBirth!: pulumi.Output<string | undefined>;
     public readonly expiryDate!: pulumi.Output<string | undefined>;
-    public readonly fields!: pulumi.Output<outputs.GetField[] | undefined>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public readonly fullName!: pulumi.Output<string | undefined>;
     public readonly gender!: pulumi.Output<string | undefined>;
     public readonly height!: pulumi.Output<string | undefined>;
@@ -46,7 +46,7 @@ export class DriverLicenseItem extends pulumi.CustomResource {
     public readonly licenseClass!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly number!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<outputs.GetSection[] | undefined>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection} | undefined>;
     public readonly state!: pulumi.Output<string | undefined>;
     /**
      * An array of strings of the tags assigned to the item.
@@ -135,14 +135,14 @@ export interface DriverLicenseItemArgs {
     country?: pulumi.Input<string>;
     dateOfBirth?: pulumi.Input<string>;
     expiryDate?: pulumi.Input<string>;
-    fields?: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     fullName?: pulumi.Input<string>;
     gender?: pulumi.Input<string>;
     height?: pulumi.Input<string>;
     licenseClass?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
     number?: pulumi.Input<string>;
-    sections?: pulumi.Input<pulumi.Input<inputs.SectionArgs>[]>;
+    sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     state?: pulumi.Input<string>;
     /**
      * An array of strings of the tags assigned to the item.

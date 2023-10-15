@@ -38,14 +38,14 @@ export interface GetBankAccountResult {
     readonly bankName?: string;
     readonly branchInformation?: outputs.bankAccount.BranchInformationSection;
     readonly category?: enums.Category | string;
-    readonly fields?: outputs.GetField[];
+    readonly fields?: {[key: string]: outputs.GetField};
     readonly iban?: string;
     readonly id?: string;
     readonly nameOnAccount?: string;
     readonly notes?: string;
     readonly pin?: string;
     readonly routingNumber?: string;
-    readonly sections?: outputs.GetSection[];
+    readonly sections?: {[key: string]: outputs.GetSection};
     readonly swift?: string;
     /**
      * An array of strings of the tags assigned to the item.

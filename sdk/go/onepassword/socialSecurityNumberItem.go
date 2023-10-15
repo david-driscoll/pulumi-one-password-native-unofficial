@@ -15,12 +15,12 @@ type SocialSecurityNumberItem struct {
 	pulumi.CustomResourceState
 
 	Category pulumi.StringOutput    `pulumi:"category"`
-	Fields   GetFieldArrayOutput    `pulumi:"fields"`
+	Fields   GetFieldMapOutput      `pulumi:"fields"`
 	Id       pulumi.StringOutput    `pulumi:"id"`
 	Name     pulumi.StringPtrOutput `pulumi:"name"`
 	Notes    pulumi.StringPtrOutput `pulumi:"notes"`
 	Number   pulumi.StringPtrOutput `pulumi:"number"`
-	Sections GetSectionArrayOutput  `pulumi:"sections"`
+	Sections GetSectionMapOutput    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -73,11 +73,11 @@ func (SocialSecurityNumberItemState) ElementType() reflect.Type {
 }
 
 type socialSecurityNumberItemArgs struct {
-	Fields   []Field   `pulumi:"fields"`
-	Name     *string   `pulumi:"name"`
-	Notes    *string   `pulumi:"notes"`
-	Number   *string   `pulumi:"number"`
-	Sections []Section `pulumi:"sections"`
+	Fields   map[string]Field   `pulumi:"fields"`
+	Name     *string            `pulumi:"name"`
+	Notes    *string            `pulumi:"notes"`
+	Number   *string            `pulumi:"number"`
+	Sections map[string]Section `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -88,11 +88,11 @@ type socialSecurityNumberItemArgs struct {
 
 // The set of arguments for constructing a SocialSecurityNumberItem resource.
 type SocialSecurityNumberItemArgs struct {
-	Fields   FieldArrayInput
+	Fields   FieldMapInput
 	Name     pulumi.StringPtrInput
 	Notes    pulumi.StringPtrInput
 	Number   pulumi.StringPtrInput
-	Sections SectionArrayInput
+	Sections SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.

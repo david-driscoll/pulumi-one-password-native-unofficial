@@ -75,7 +75,7 @@ namespace Pulumi.Onepassword
     {
         public readonly string? Category;
         public readonly string? Date;
-        public readonly ImmutableArray<Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
         public readonly string? HealthcareProfessional;
         public readonly string? Id;
         public readonly string? Location;
@@ -83,7 +83,7 @@ namespace Pulumi.Onepassword
         public readonly string? Notes;
         public readonly string? Patient;
         public readonly string? ReasonForVisit;
-        public readonly ImmutableArray<Outputs.GetSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.GetSection>? Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
         /// </summary>
@@ -107,7 +107,7 @@ namespace Pulumi.Onepassword
 
             string? date,
 
-            ImmutableArray<Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.GetField>? fields,
 
             string? healthcareProfessional,
 
@@ -123,7 +123,7 @@ namespace Pulumi.Onepassword
 
             string? reasonForVisit,
 
-            ImmutableArray<Outputs.GetSection> sections,
+            ImmutableDictionary<string, Outputs.GetSection>? sections,
 
             ImmutableArray<string> tags,
 

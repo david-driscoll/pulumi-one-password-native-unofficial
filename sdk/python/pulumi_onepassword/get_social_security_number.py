@@ -23,8 +23,8 @@ class GetSocialSecurityNumberResult:
         if category and not isinstance(category, dict):
             raise TypeError("Expected argument 'category' to be a dict")
         pulumi.set(__self__, "category", category)
-        if fields and not isinstance(fields, list):
-            raise TypeError("Expected argument 'fields' to be a list")
+        if fields and not isinstance(fields, dict):
+            raise TypeError("Expected argument 'fields' to be a dict")
         pulumi.set(__self__, "fields", fields)
         if id and not isinstance(id, str):
             raise TypeError("Expected argument 'id' to be a str")
@@ -38,8 +38,8 @@ class GetSocialSecurityNumberResult:
         if number and not isinstance(number, str):
             raise TypeError("Expected argument 'number' to be a str")
         pulumi.set(__self__, "number", number)
-        if sections and not isinstance(sections, list):
-            raise TypeError("Expected argument 'sections' to be a list")
+        if sections and not isinstance(sections, dict):
+            raise TypeError("Expected argument 'sections' to be a dict")
         pulumi.set(__self__, "sections", sections)
         if tags and not isinstance(tags, list):
             raise TypeError("Expected argument 'tags' to be a list")
@@ -61,7 +61,7 @@ class GetSocialSecurityNumberResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Optional[Sequence['outputs.GetField']]:
+    def fields(self) -> Optional[Mapping[str, 'outputs.GetField']]:
         return pulumi.get(self, "fields")
 
     @property
@@ -86,7 +86,7 @@ class GetSocialSecurityNumberResult:
 
     @property
     @pulumi.getter
-    def sections(self) -> Optional[Sequence['outputs.GetSection']]:
+    def sections(self) -> Optional[Mapping[str, 'outputs.GetSection']]:
         return pulumi.get(self, "sections")
 
     @property

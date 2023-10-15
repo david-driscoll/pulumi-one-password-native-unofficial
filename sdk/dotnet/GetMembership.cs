@@ -75,7 +75,7 @@ namespace Pulumi.Onepassword
     {
         public readonly string? Category;
         public readonly string? ExpiryDate;
-        public readonly ImmutableArray<Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
         public readonly string? Group;
         public readonly string? Id;
         public readonly string? MemberId;
@@ -83,7 +83,7 @@ namespace Pulumi.Onepassword
         public readonly string? MemberSince;
         public readonly string? Notes;
         public readonly string? Pin;
-        public readonly ImmutableArray<Outputs.GetSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.GetSection>? Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
         /// </summary>
@@ -109,7 +109,7 @@ namespace Pulumi.Onepassword
 
             string? expiryDate,
 
-            ImmutableArray<Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.GetField>? fields,
 
             string? group,
 
@@ -125,7 +125,7 @@ namespace Pulumi.Onepassword
 
             string? pin,
 
-            ImmutableArray<Outputs.GetSection> sections,
+            ImmutableDictionary<string, Outputs.GetSection>? sections,
 
             ImmutableArray<string> tags,
 

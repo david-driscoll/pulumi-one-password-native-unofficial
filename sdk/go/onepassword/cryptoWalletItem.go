@@ -16,12 +16,12 @@ type CryptoWalletItem struct {
 	pulumi.CustomResourceState
 
 	Category       pulumi.StringOutput    `pulumi:"category"`
-	Fields         GetFieldArrayOutput    `pulumi:"fields"`
+	Fields         GetFieldMapOutput      `pulumi:"fields"`
 	Id             pulumi.StringOutput    `pulumi:"id"`
 	Notes          pulumi.StringPtrOutput `pulumi:"notes"`
 	Password       pulumi.StringPtrOutput `pulumi:"password"`
 	RecoveryPhrase pulumi.StringPtrOutput `pulumi:"recoveryPhrase"`
-	Sections       GetSectionArrayOutput  `pulumi:"sections"`
+	Sections       GetSectionMapOutput    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -75,11 +75,11 @@ func (CryptoWalletItemState) ElementType() reflect.Type {
 }
 
 type cryptoWalletItemArgs struct {
-	Fields         []Field   `pulumi:"fields"`
-	Notes          *string   `pulumi:"notes"`
-	Password       *string   `pulumi:"password"`
-	RecoveryPhrase *string   `pulumi:"recoveryPhrase"`
-	Sections       []Section `pulumi:"sections"`
+	Fields         map[string]Field   `pulumi:"fields"`
+	Notes          *string            `pulumi:"notes"`
+	Password       *string            `pulumi:"password"`
+	RecoveryPhrase *string            `pulumi:"recoveryPhrase"`
+	Sections       map[string]Section `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -91,11 +91,11 @@ type cryptoWalletItemArgs struct {
 
 // The set of arguments for constructing a CryptoWalletItem resource.
 type CryptoWalletItemArgs struct {
-	Fields         FieldArrayInput
+	Fields         FieldMapInput
 	Notes          pulumi.StringPtrInput
 	Password       pulumi.StringPtrInput
 	RecoveryPhrase pulumi.StringPtrInput
-	Sections       SectionArrayInput
+	Sections       SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.

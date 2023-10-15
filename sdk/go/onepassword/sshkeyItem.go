@@ -15,11 +15,11 @@ type SSHKeyItem struct {
 	pulumi.CustomResourceState
 
 	Category   pulumi.StringOutput    `pulumi:"category"`
-	Fields     GetFieldArrayOutput    `pulumi:"fields"`
+	Fields     GetFieldMapOutput      `pulumi:"fields"`
 	Id         pulumi.StringOutput    `pulumi:"id"`
 	Notes      pulumi.StringPtrOutput `pulumi:"notes"`
 	PrivateKey pulumi.StringPtrOutput `pulumi:"privateKey"`
-	Sections   GetSectionArrayOutput  `pulumi:"sections"`
+	Sections   GetSectionMapOutput    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -72,10 +72,10 @@ func (SSHKeyItemState) ElementType() reflect.Type {
 }
 
 type sshkeyItemArgs struct {
-	Fields     []Field   `pulumi:"fields"`
-	Notes      *string   `pulumi:"notes"`
-	PrivateKey *string   `pulumi:"privateKey"`
-	Sections   []Section `pulumi:"sections"`
+	Fields     map[string]Field   `pulumi:"fields"`
+	Notes      *string            `pulumi:"notes"`
+	PrivateKey *string            `pulumi:"privateKey"`
+	Sections   map[string]Section `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -86,10 +86,10 @@ type sshkeyItemArgs struct {
 
 // The set of arguments for constructing a SSHKeyItem resource.
 type SSHKeyItemArgs struct {
-	Fields     FieldArrayInput
+	Fields     FieldMapInput
 	Notes      pulumi.StringPtrInput
 	PrivateKey pulumi.StringPtrInput
-	Sections   SectionArrayInput
+	Sections   SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.

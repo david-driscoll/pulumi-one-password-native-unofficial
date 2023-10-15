@@ -77,14 +77,14 @@ namespace Pulumi.Onepassword
         public readonly string? BankName;
         public readonly Pulumi.Onepassword.BankAccount.Outputs.BranchInformationSection? BranchInformation;
         public readonly string? Category;
-        public readonly ImmutableArray<Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
         public readonly string? Iban;
         public readonly string? Id;
         public readonly string? NameOnAccount;
         public readonly string? Notes;
         public readonly string? Pin;
         public readonly string? RoutingNumber;
-        public readonly ImmutableArray<Outputs.GetSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.GetSection>? Sections;
         public readonly string? Swift;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
@@ -114,7 +114,7 @@ namespace Pulumi.Onepassword
 
             string? category,
 
-            ImmutableArray<Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.GetField>? fields,
 
             string? iban,
 
@@ -128,7 +128,7 @@ namespace Pulumi.Onepassword
 
             string? routingNumber,
 
-            ImmutableArray<Outputs.GetSection> sections,
+            ImmutableDictionary<string, Outputs.GetSection>? sections,
 
             string? swift,
 

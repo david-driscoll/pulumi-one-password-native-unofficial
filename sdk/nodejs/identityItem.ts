@@ -34,12 +34,12 @@ export class IdentityItem extends pulumi.CustomResource {
 
     public readonly address!: pulumi.Output<outputs.identity.AddressSection | undefined>;
     public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
-    public readonly fields!: pulumi.Output<outputs.GetField[] | undefined>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly identification!: pulumi.Output<outputs.identity.IdentificationSection | undefined>;
     public readonly internetDetails!: pulumi.Output<outputs.identity.InternetDetailsSection | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<outputs.GetSection[] | undefined>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection} | undefined>;
     /**
      * An array of strings of the tags assigned to the item.
      */
@@ -107,11 +107,11 @@ export class IdentityItem extends pulumi.CustomResource {
  */
 export interface IdentityItemArgs {
     address?: pulumi.Input<inputs.identity.AddressSectionArgs>;
-    fields?: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     identification?: pulumi.Input<inputs.identity.IdentificationSectionArgs>;
     internetDetails?: pulumi.Input<inputs.identity.InternetDetailsSectionArgs>;
     notes?: pulumi.Input<string>;
-    sections?: pulumi.Input<pulumi.Input<inputs.SectionArgs>[]>;
+    sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     /**
      * An array of strings of the tags assigned to the item.
      */

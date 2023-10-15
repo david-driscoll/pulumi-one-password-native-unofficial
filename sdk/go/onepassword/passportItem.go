@@ -17,7 +17,7 @@ type PassportItem struct {
 	Category         pulumi.StringOutput    `pulumi:"category"`
 	DateOfBirth      pulumi.StringPtrOutput `pulumi:"dateOfBirth"`
 	ExpiryDate       pulumi.StringPtrOutput `pulumi:"expiryDate"`
-	Fields           GetFieldArrayOutput    `pulumi:"fields"`
+	Fields           GetFieldMapOutput      `pulumi:"fields"`
 	FullName         pulumi.StringPtrOutput `pulumi:"fullName"`
 	Gender           pulumi.StringPtrOutput `pulumi:"gender"`
 	Id               pulumi.StringOutput    `pulumi:"id"`
@@ -28,7 +28,7 @@ type PassportItem struct {
 	Notes            pulumi.StringPtrOutput `pulumi:"notes"`
 	Number           pulumi.StringPtrOutput `pulumi:"number"`
 	PlaceOfBirth     pulumi.StringPtrOutput `pulumi:"placeOfBirth"`
-	Sections         GetSectionArrayOutput  `pulumi:"sections"`
+	Sections         GetSectionMapOutput    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -82,19 +82,19 @@ func (PassportItemState) ElementType() reflect.Type {
 }
 
 type passportItemArgs struct {
-	DateOfBirth      *string   `pulumi:"dateOfBirth"`
-	ExpiryDate       *string   `pulumi:"expiryDate"`
-	Fields           []Field   `pulumi:"fields"`
-	FullName         *string   `pulumi:"fullName"`
-	Gender           *string   `pulumi:"gender"`
-	IssuedOn         *string   `pulumi:"issuedOn"`
-	IssuingAuthority *string   `pulumi:"issuingAuthority"`
-	IssuingCountry   *string   `pulumi:"issuingCountry"`
-	Nationality      *string   `pulumi:"nationality"`
-	Notes            *string   `pulumi:"notes"`
-	Number           *string   `pulumi:"number"`
-	PlaceOfBirth     *string   `pulumi:"placeOfBirth"`
-	Sections         []Section `pulumi:"sections"`
+	DateOfBirth      *string            `pulumi:"dateOfBirth"`
+	ExpiryDate       *string            `pulumi:"expiryDate"`
+	Fields           map[string]Field   `pulumi:"fields"`
+	FullName         *string            `pulumi:"fullName"`
+	Gender           *string            `pulumi:"gender"`
+	IssuedOn         *string            `pulumi:"issuedOn"`
+	IssuingAuthority *string            `pulumi:"issuingAuthority"`
+	IssuingCountry   *string            `pulumi:"issuingCountry"`
+	Nationality      *string            `pulumi:"nationality"`
+	Notes            *string            `pulumi:"notes"`
+	Number           *string            `pulumi:"number"`
+	PlaceOfBirth     *string            `pulumi:"placeOfBirth"`
+	Sections         map[string]Section `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -108,7 +108,7 @@ type passportItemArgs struct {
 type PassportItemArgs struct {
 	DateOfBirth      pulumi.StringPtrInput
 	ExpiryDate       pulumi.StringPtrInput
-	Fields           FieldArrayInput
+	Fields           FieldMapInput
 	FullName         pulumi.StringPtrInput
 	Gender           pulumi.StringPtrInput
 	IssuedOn         pulumi.StringPtrInput
@@ -118,7 +118,7 @@ type PassportItemArgs struct {
 	Notes            pulumi.StringPtrInput
 	Number           pulumi.StringPtrInput
 	PlaceOfBirth     pulumi.StringPtrInput
-	Sections         SectionArrayInput
+	Sections         SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.

@@ -15,10 +15,10 @@ type DocumentItem struct {
 	pulumi.CustomResourceState
 
 	Category pulumi.StringOutput    `pulumi:"category"`
-	Fields   GetFieldArrayOutput    `pulumi:"fields"`
+	Fields   GetFieldMapOutput      `pulumi:"fields"`
 	Id       pulumi.StringOutput    `pulumi:"id"`
 	Notes    pulumi.StringPtrOutput `pulumi:"notes"`
-	Sections GetSectionArrayOutput  `pulumi:"sections"`
+	Sections GetSectionMapOutput    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -71,9 +71,9 @@ func (DocumentItemState) ElementType() reflect.Type {
 }
 
 type documentItemArgs struct {
-	Fields   []Field   `pulumi:"fields"`
-	Notes    *string   `pulumi:"notes"`
-	Sections []Section `pulumi:"sections"`
+	Fields   map[string]Field   `pulumi:"fields"`
+	Notes    *string            `pulumi:"notes"`
+	Sections map[string]Section `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -84,9 +84,9 @@ type documentItemArgs struct {
 
 // The set of arguments for constructing a DocumentItem resource.
 type DocumentItemArgs struct {
-	Fields   FieldArrayInput
+	Fields   FieldMapInput
 	Notes    pulumi.StringPtrInput
-	Sections SectionArrayInput
+	Sections SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.

@@ -14,7 +14,7 @@ export interface GetField {
 }
 
 export interface GetSection {
-    fields: outputs.GetField[];
+    fields: {[key: string]: outputs.GetField};
     id: string;
     label: string;
 }

@@ -32,12 +32,12 @@ type GetServerArgs struct {
 type GetServerResult struct {
 	AdminConsole    *server.AdminConsoleSection    `pulumi:"adminConsole"`
 	Category        *string                        `pulumi:"category"`
-	Fields          []GetField                     `pulumi:"fields"`
+	Fields          map[string]GetField            `pulumi:"fields"`
 	HostingProvider *server.HostingProviderSection `pulumi:"hostingProvider"`
 	Id              *string                        `pulumi:"id"`
 	Notes           *string                        `pulumi:"notes"`
 	Password        *string                        `pulumi:"password"`
-	Sections        []GetSection                   `pulumi:"sections"`
+	Sections        map[string]GetSection          `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -98,8 +98,8 @@ func (o GetServerResultOutput) Category() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetServerResult) *string { return v.Category }).(pulumi.StringPtrOutput)
 }
 
-func (o GetServerResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v GetServerResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetServerResultOutput) Fields() GetFieldMapOutput {
+	return o.ApplyT(func(v GetServerResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
 }
 
 func (o GetServerResultOutput) HostingProvider() server.HostingProviderSectionPtrOutput {
@@ -118,8 +118,8 @@ func (o GetServerResultOutput) Password() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetServerResult) *string { return v.Password }).(pulumi.StringPtrOutput)
 }
 
-func (o GetServerResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v GetServerResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetServerResultOutput) Sections() GetSectionMapOutput {
+	return o.ApplyT(func(v GetServerResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.

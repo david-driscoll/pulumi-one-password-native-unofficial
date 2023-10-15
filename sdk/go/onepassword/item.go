@@ -14,10 +14,10 @@ import (
 type Item struct {
 	pulumi.CustomResourceState
 
-	Category pulumi.StringOutput   `pulumi:"category"`
-	Fields   GetFieldArrayOutput   `pulumi:"fields"`
-	Id       pulumi.StringOutput   `pulumi:"id"`
-	Sections GetSectionArrayOutput `pulumi:"sections"`
+	Category pulumi.StringOutput `pulumi:"category"`
+	Fields   GetFieldMapOutput   `pulumi:"fields"`
+	Id       pulumi.StringOutput `pulumi:"id"`
+	Sections GetSectionMapOutput `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -73,9 +73,9 @@ func (ItemState) ElementType() reflect.Type {
 }
 
 type itemArgs struct {
-	Category *string   `pulumi:"category"`
-	Fields   []Field   `pulumi:"fields"`
-	Sections []Section `pulumi:"sections"`
+	Category *string            `pulumi:"category"`
+	Fields   map[string]Field   `pulumi:"fields"`
+	Sections map[string]Section `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -87,8 +87,8 @@ type itemArgs struct {
 // The set of arguments for constructing a Item resource.
 type ItemArgs struct {
 	Category pulumi.StringPtrInput
-	Fields   FieldArrayInput
-	Sections SectionArrayInput
+	Fields   FieldMapInput
+	Sections SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.

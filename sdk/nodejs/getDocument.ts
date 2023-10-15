@@ -35,10 +35,10 @@ export interface GetDocumentArgs {
 
 export interface GetDocumentResult {
     readonly category?: enums.Category | string;
-    readonly fields?: outputs.GetField[];
+    readonly fields?: {[key: string]: outputs.GetField};
     readonly id?: string;
     readonly notes?: string;
-    readonly sections?: outputs.GetSection[];
+    readonly sections?: {[key: string]: outputs.GetSection};
     /**
      * An array of strings of the tags assigned to the item.
      */

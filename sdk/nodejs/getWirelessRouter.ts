@@ -39,11 +39,11 @@ export interface GetWirelessRouterResult {
     readonly baseStationName?: string;
     readonly baseStationPassword?: string;
     readonly category?: enums.Category | string;
-    readonly fields?: outputs.GetField[];
+    readonly fields?: {[key: string]: outputs.GetField};
     readonly id?: string;
     readonly networkName?: string;
     readonly notes?: string;
-    readonly sections?: outputs.GetSection[];
+    readonly sections?: {[key: string]: outputs.GetSection};
     readonly serverIpAddress?: string;
     /**
      * An array of strings of the tags assigned to the item.

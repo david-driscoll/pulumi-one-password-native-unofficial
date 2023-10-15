@@ -32,14 +32,14 @@ type GetRewardProgramArgs struct {
 type GetRewardProgramResult struct {
 	Category        *string                               `pulumi:"category"`
 	CompanyName     *string                               `pulumi:"companyName"`
-	Fields          []GetField                            `pulumi:"fields"`
+	Fields          map[string]GetField                   `pulumi:"fields"`
 	Id              *string                               `pulumi:"id"`
 	MemberId        *string                               `pulumi:"memberId"`
 	MemberName      *string                               `pulumi:"memberName"`
 	MoreInformation *rewardprogram.MoreInformationSection `pulumi:"moreInformation"`
 	Notes           *string                               `pulumi:"notes"`
 	Pin             *string                               `pulumi:"pin"`
-	Sections        []GetSection                          `pulumi:"sections"`
+	Sections        map[string]GetSection                 `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -98,8 +98,8 @@ func (o GetRewardProgramResultOutput) CompanyName() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetRewardProgramResult) *string { return v.CompanyName }).(pulumi.StringPtrOutput)
 }
 
-func (o GetRewardProgramResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v GetRewardProgramResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetRewardProgramResultOutput) Fields() GetFieldMapOutput {
+	return o.ApplyT(func(v GetRewardProgramResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
 }
 
 func (o GetRewardProgramResultOutput) Id() pulumi.StringPtrOutput {
@@ -126,8 +126,8 @@ func (o GetRewardProgramResultOutput) Pin() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetRewardProgramResult) *string { return v.Pin }).(pulumi.StringPtrOutput)
 }
 
-func (o GetRewardProgramResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v GetRewardProgramResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetRewardProgramResultOutput) Sections() GetSectionMapOutput {
+	return o.ApplyT(func(v GetRewardProgramResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.

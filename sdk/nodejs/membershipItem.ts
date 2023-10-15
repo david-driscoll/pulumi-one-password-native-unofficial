@@ -34,7 +34,7 @@ export class MembershipItem extends pulumi.CustomResource {
 
     public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
     public readonly expiryDate!: pulumi.Output<string | undefined>;
-    public readonly fields!: pulumi.Output<outputs.GetField[] | undefined>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public readonly group!: pulumi.Output<string | undefined>;
     public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly memberId!: pulumi.Output<string | undefined>;
@@ -42,7 +42,7 @@ export class MembershipItem extends pulumi.CustomResource {
     public readonly memberSince!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly pin!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<outputs.GetSection[] | undefined>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection} | undefined>;
     /**
      * An array of strings of the tags assigned to the item.
      */
@@ -122,14 +122,14 @@ export class MembershipItem extends pulumi.CustomResource {
  */
 export interface MembershipItemArgs {
     expiryDate?: pulumi.Input<string>;
-    fields?: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     group?: pulumi.Input<string>;
     memberId?: pulumi.Input<string>;
     memberName?: pulumi.Input<string>;
     memberSince?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
     pin?: pulumi.Input<string>;
-    sections?: pulumi.Input<pulumi.Input<inputs.SectionArgs>[]>;
+    sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     /**
      * An array of strings of the tags assigned to the item.
      */

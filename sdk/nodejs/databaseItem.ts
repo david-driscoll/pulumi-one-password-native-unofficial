@@ -36,12 +36,12 @@ export class DatabaseItem extends pulumi.CustomResource {
     public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
     public readonly connectionOptions!: pulumi.Output<string | undefined>;
     public readonly database!: pulumi.Output<string | undefined>;
-    public readonly fields!: pulumi.Output<outputs.GetField[] | undefined>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly password!: pulumi.Output<string | undefined>;
     public readonly port!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<outputs.GetSection[] | undefined>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection} | undefined>;
     public readonly server!: pulumi.Output<string | undefined>;
     public readonly sid!: pulumi.Output<string | undefined>;
     /**
@@ -127,11 +127,11 @@ export interface DatabaseItemArgs {
     alias?: pulumi.Input<string>;
     connectionOptions?: pulumi.Input<string>;
     database?: pulumi.Input<string>;
-    fields?: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     notes?: pulumi.Input<string>;
     password?: pulumi.Input<string>;
     port?: pulumi.Input<string>;
-    sections?: pulumi.Input<pulumi.Input<inputs.SectionArgs>[]>;
+    sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     server?: pulumi.Input<string>;
     sid?: pulumi.Input<string>;
     /**

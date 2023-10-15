@@ -36,7 +36,7 @@ export interface GetMembershipArgs {
 export interface GetMembershipResult {
     readonly category?: enums.Category | string;
     readonly expiryDate?: string;
-    readonly fields?: outputs.GetField[];
+    readonly fields?: {[key: string]: outputs.GetField};
     readonly group?: string;
     readonly id?: string;
     readonly memberId?: string;
@@ -44,7 +44,7 @@ export interface GetMembershipResult {
     readonly memberSince?: string;
     readonly notes?: string;
     readonly pin?: string;
-    readonly sections?: outputs.GetSection[];
+    readonly sections?: {[key: string]: outputs.GetSection};
     /**
      * An array of strings of the tags assigned to the item.
      */

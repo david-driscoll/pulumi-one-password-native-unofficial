@@ -29,12 +29,12 @@ type GetPasswordArgs struct {
 }
 
 type GetPasswordResult struct {
-	Category *string      `pulumi:"category"`
-	Fields   []GetField   `pulumi:"fields"`
-	Id       *string      `pulumi:"id"`
-	Notes    *string      `pulumi:"notes"`
-	Password *string      `pulumi:"password"`
-	Sections []GetSection `pulumi:"sections"`
+	Category *string               `pulumi:"category"`
+	Fields   map[string]GetField   `pulumi:"fields"`
+	Id       *string               `pulumi:"id"`
+	Notes    *string               `pulumi:"notes"`
+	Password *string               `pulumi:"password"`
+	Sections map[string]GetSection `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -89,8 +89,8 @@ func (o GetPasswordResultOutput) Category() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetPasswordResult) *string { return v.Category }).(pulumi.StringPtrOutput)
 }
 
-func (o GetPasswordResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v GetPasswordResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetPasswordResultOutput) Fields() GetFieldMapOutput {
+	return o.ApplyT(func(v GetPasswordResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
 }
 
 func (o GetPasswordResultOutput) Id() pulumi.StringPtrOutput {
@@ -105,8 +105,8 @@ func (o GetPasswordResultOutput) Password() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetPasswordResult) *string { return v.Password }).(pulumi.StringPtrOutput)
 }
 
-func (o GetPasswordResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v GetPasswordResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetPasswordResultOutput) Sections() GetSectionMapOutput {
+	return o.ApplyT(func(v GetPasswordResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.

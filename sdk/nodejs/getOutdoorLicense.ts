@@ -38,12 +38,12 @@ export interface GetOutdoorLicenseResult {
     readonly category?: enums.Category | string;
     readonly country?: string;
     readonly expires?: string;
-    readonly fields?: outputs.GetField[];
+    readonly fields?: {[key: string]: outputs.GetField};
     readonly fullName?: string;
     readonly id?: string;
     readonly maximumQuota?: string;
     readonly notes?: string;
-    readonly sections?: outputs.GetSection[];
+    readonly sections?: {[key: string]: outputs.GetSection};
     readonly state?: string;
     /**
      * An array of strings of the tags assigned to the item.

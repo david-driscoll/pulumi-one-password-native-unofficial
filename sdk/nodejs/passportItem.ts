@@ -35,7 +35,7 @@ export class PassportItem extends pulumi.CustomResource {
     public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
     public readonly dateOfBirth!: pulumi.Output<string | undefined>;
     public readonly expiryDate!: pulumi.Output<string | undefined>;
-    public readonly fields!: pulumi.Output<outputs.GetField[] | undefined>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public readonly fullName!: pulumi.Output<string | undefined>;
     public readonly gender!: pulumi.Output<string | undefined>;
     public /*out*/ readonly id!: pulumi.Output<string>;
@@ -46,7 +46,7 @@ export class PassportItem extends pulumi.CustomResource {
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly number!: pulumi.Output<string | undefined>;
     public readonly placeOfBirth!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<outputs.GetSection[] | undefined>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection} | undefined>;
     /**
      * An array of strings of the tags assigned to the item.
      */
@@ -132,7 +132,7 @@ export class PassportItem extends pulumi.CustomResource {
 export interface PassportItemArgs {
     dateOfBirth?: pulumi.Input<string>;
     expiryDate?: pulumi.Input<string>;
-    fields?: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     fullName?: pulumi.Input<string>;
     gender?: pulumi.Input<string>;
     issuedOn?: pulumi.Input<string>;
@@ -142,7 +142,7 @@ export interface PassportItemArgs {
     notes?: pulumi.Input<string>;
     number?: pulumi.Input<string>;
     placeOfBirth?: pulumi.Input<string>;
-    sections?: pulumi.Input<pulumi.Input<inputs.SectionArgs>[]>;
+    sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     /**
      * An array of strings of the tags assigned to the item.
      */

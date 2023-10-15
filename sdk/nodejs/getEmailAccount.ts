@@ -37,12 +37,12 @@ export interface GetEmailAccountResult {
     readonly authMethod?: string;
     readonly category?: enums.Category | string;
     readonly contactInformation?: outputs.emailAccount.ContactInformationSection;
-    readonly fields?: outputs.GetField[];
+    readonly fields?: {[key: string]: outputs.GetField};
     readonly id?: string;
     readonly notes?: string;
     readonly password?: string;
     readonly portNumber?: string;
-    readonly sections?: outputs.GetSection[];
+    readonly sections?: {[key: string]: outputs.GetSection};
     readonly security?: string;
     readonly server?: string;
     readonly smtp?: outputs.emailAccount.SmtpSection;

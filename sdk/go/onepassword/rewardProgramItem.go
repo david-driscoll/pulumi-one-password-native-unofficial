@@ -17,14 +17,14 @@ type RewardProgramItem struct {
 
 	Category        pulumi.StringOutput                           `pulumi:"category"`
 	CompanyName     pulumi.StringPtrOutput                        `pulumi:"companyName"`
-	Fields          GetFieldArrayOutput                           `pulumi:"fields"`
+	Fields          GetFieldMapOutput                             `pulumi:"fields"`
 	Id              pulumi.StringOutput                           `pulumi:"id"`
 	MemberId        pulumi.StringPtrOutput                        `pulumi:"memberId"`
 	MemberName      pulumi.StringPtrOutput                        `pulumi:"memberName"`
 	MoreInformation rewardprogram.MoreInformationSectionPtrOutput `pulumi:"moreInformation"`
 	Notes           pulumi.StringPtrOutput                        `pulumi:"notes"`
 	Pin             pulumi.StringPtrOutput                        `pulumi:"pin"`
-	Sections        GetSectionArrayOutput                         `pulumi:"sections"`
+	Sections        GetSectionMapOutput                           `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -78,13 +78,13 @@ func (RewardProgramItemState) ElementType() reflect.Type {
 
 type rewardProgramItemArgs struct {
 	CompanyName     *string                               `pulumi:"companyName"`
-	Fields          []Field                               `pulumi:"fields"`
+	Fields          map[string]Field                      `pulumi:"fields"`
 	MemberId        *string                               `pulumi:"memberId"`
 	MemberName      *string                               `pulumi:"memberName"`
 	MoreInformation *rewardprogram.MoreInformationSection `pulumi:"moreInformation"`
 	Notes           *string                               `pulumi:"notes"`
 	Pin             *string                               `pulumi:"pin"`
-	Sections        []Section                             `pulumi:"sections"`
+	Sections        map[string]Section                    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -96,13 +96,13 @@ type rewardProgramItemArgs struct {
 // The set of arguments for constructing a RewardProgramItem resource.
 type RewardProgramItemArgs struct {
 	CompanyName     pulumi.StringPtrInput
-	Fields          FieldArrayInput
+	Fields          FieldMapInput
 	MemberId        pulumi.StringPtrInput
 	MemberName      pulumi.StringPtrInput
 	MoreInformation rewardprogram.MoreInformationSectionPtrInput
 	Notes           pulumi.StringPtrInput
 	Pin             pulumi.StringPtrInput
-	Sections        SectionArrayInput
+	Sections        SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.

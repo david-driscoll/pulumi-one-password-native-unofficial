@@ -36,13 +36,13 @@ export interface GetSoftwareLicenseArgs {
 export interface GetSoftwareLicenseResult {
     readonly category?: enums.Category | string;
     readonly customer?: outputs.softwareLicense.CustomerSection;
-    readonly fields?: outputs.GetField[];
+    readonly fields?: {[key: string]: outputs.GetField};
     readonly id?: string;
     readonly licenseKey?: string;
     readonly notes?: string;
     readonly order?: outputs.softwareLicense.OrderSection;
     readonly publisher?: outputs.softwareLicense.PublisherSection;
-    readonly sections?: outputs.GetSection[];
+    readonly sections?: {[key: string]: outputs.GetSection};
     /**
      * An array of strings of the tags assigned to the item.
      */

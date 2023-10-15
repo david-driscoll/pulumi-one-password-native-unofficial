@@ -12,9 +12,6 @@ namespace Pulumi.Onepassword.Inputs
 
     public sealed class FieldArgs : Pulumi.ResourceArgs
     {
-        [Input("label", required: true)]
-        public Input<string> Label { get; set; } = null!;
-
         [Input("purpose", required: true)]
         public Input<Pulumi.Onepassword.FieldPurpose> Purpose { get; set; } = null!;
 

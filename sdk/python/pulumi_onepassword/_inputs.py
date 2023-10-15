@@ -17,23 +17,12 @@ __all__ = [
 @pulumi.input_type
 class FieldArgs:
     def __init__(__self__, *,
-                 label: pulumi.Input[str],
                  purpose: pulumi.Input['FieldPurpose'],
                  value: pulumi.Input[str]):
-        pulumi.set(__self__, "label", label)
         if purpose is None:
             purpose = 'NOTE'
         pulumi.set(__self__, "purpose", purpose)
         pulumi.set(__self__, "value", value)
-
-    @property
-    @pulumi.getter
-    def label(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "label")
-
-    @label.setter
-    def label(self, value: pulumi.Input[str]):
-        pulumi.set(self, "label", value)
 
     @property
     @pulumi.getter
@@ -57,27 +46,16 @@ class FieldArgs:
 @pulumi.input_type
 class SectionArgs:
     def __init__(__self__, *,
-                 fields: pulumi.Input[Sequence[pulumi.Input['FieldArgs']]],
-                 label: pulumi.Input[str]):
+                 fields: pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]):
         pulumi.set(__self__, "fields", fields)
-        pulumi.set(__self__, "label", label)
 
     @property
     @pulumi.getter
-    def fields(self) -> pulumi.Input[Sequence[pulumi.Input['FieldArgs']]]:
+    def fields(self) -> pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]:
         return pulumi.get(self, "fields")
 
     @fields.setter
-    def fields(self, value: pulumi.Input[Sequence[pulumi.Input['FieldArgs']]]):
+    def fields(self, value: pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]):
         pulumi.set(self, "fields", value)
-
-    @property
-    @pulumi.getter
-    def label(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "label")
-
-    @label.setter
-    def label(self, value: pulumi.Input[str]):
-        pulumi.set(self, "label", value)
 
 

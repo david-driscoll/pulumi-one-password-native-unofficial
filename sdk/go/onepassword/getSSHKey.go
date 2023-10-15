@@ -29,12 +29,12 @@ type GetSSHKeyArgs struct {
 }
 
 type GetSSHKeyResult struct {
-	Category   *string      `pulumi:"category"`
-	Fields     []GetField   `pulumi:"fields"`
-	Id         *string      `pulumi:"id"`
-	Notes      *string      `pulumi:"notes"`
-	PrivateKey *string      `pulumi:"privateKey"`
-	Sections   []GetSection `pulumi:"sections"`
+	Category   *string               `pulumi:"category"`
+	Fields     map[string]GetField   `pulumi:"fields"`
+	Id         *string               `pulumi:"id"`
+	Notes      *string               `pulumi:"notes"`
+	PrivateKey *string               `pulumi:"privateKey"`
+	Sections   map[string]GetSection `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -89,8 +89,8 @@ func (o GetSSHKeyResultOutput) Category() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetSSHKeyResult) *string { return v.Category }).(pulumi.StringPtrOutput)
 }
 
-func (o GetSSHKeyResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v GetSSHKeyResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetSSHKeyResultOutput) Fields() GetFieldMapOutput {
+	return o.ApplyT(func(v GetSSHKeyResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
 }
 
 func (o GetSSHKeyResultOutput) Id() pulumi.StringPtrOutput {
@@ -105,8 +105,8 @@ func (o GetSSHKeyResultOutput) PrivateKey() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetSSHKeyResult) *string { return v.PrivateKey }).(pulumi.StringPtrOutput)
 }
 
-func (o GetSSHKeyResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v GetSSHKeyResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetSSHKeyResultOutput) Sections() GetSectionMapOutput {
+	return o.ApplyT(func(v GetSSHKeyResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.

@@ -29,18 +29,18 @@ type GetDatabaseArgs struct {
 }
 
 type GetDatabaseResult struct {
-	Alias             *string      `pulumi:"alias"`
-	Category          *string      `pulumi:"category"`
-	ConnectionOptions *string      `pulumi:"connectionOptions"`
-	Database          *string      `pulumi:"database"`
-	Fields            []GetField   `pulumi:"fields"`
-	Id                *string      `pulumi:"id"`
-	Notes             *string      `pulumi:"notes"`
-	Password          *string      `pulumi:"password"`
-	Port              *string      `pulumi:"port"`
-	Sections          []GetSection `pulumi:"sections"`
-	Server            *string      `pulumi:"server"`
-	Sid               *string      `pulumi:"sid"`
+	Alias             *string               `pulumi:"alias"`
+	Category          *string               `pulumi:"category"`
+	ConnectionOptions *string               `pulumi:"connectionOptions"`
+	Database          *string               `pulumi:"database"`
+	Fields            map[string]GetField   `pulumi:"fields"`
+	Id                *string               `pulumi:"id"`
+	Notes             *string               `pulumi:"notes"`
+	Password          *string               `pulumi:"password"`
+	Port              *string               `pulumi:"port"`
+	Sections          map[string]GetSection `pulumi:"sections"`
+	Server            *string               `pulumi:"server"`
+	Sid               *string               `pulumi:"sid"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -109,8 +109,8 @@ func (o GetDatabaseResultOutput) Database() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetDatabaseResult) *string { return v.Database }).(pulumi.StringPtrOutput)
 }
 
-func (o GetDatabaseResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v GetDatabaseResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetDatabaseResultOutput) Fields() GetFieldMapOutput {
+	return o.ApplyT(func(v GetDatabaseResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
 }
 
 func (o GetDatabaseResultOutput) Id() pulumi.StringPtrOutput {
@@ -129,8 +129,8 @@ func (o GetDatabaseResultOutput) Port() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetDatabaseResult) *string { return v.Port }).(pulumi.StringPtrOutput)
 }
 
-func (o GetDatabaseResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v GetDatabaseResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetDatabaseResultOutput) Sections() GetSectionMapOutput {
+	return o.ApplyT(func(v GetDatabaseResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
 }
 
 func (o GetDatabaseResultOutput) Server() pulumi.StringPtrOutput {

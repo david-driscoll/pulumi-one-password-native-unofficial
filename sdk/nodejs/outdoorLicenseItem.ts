@@ -36,12 +36,12 @@ export class OutdoorLicenseItem extends pulumi.CustomResource {
     public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
     public readonly country!: pulumi.Output<string | undefined>;
     public readonly expires!: pulumi.Output<string | undefined>;
-    public readonly fields!: pulumi.Output<outputs.GetField[] | undefined>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public readonly fullName!: pulumi.Output<string | undefined>;
     public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly maximumQuota!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<outputs.GetSection[] | undefined>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection} | undefined>;
     public readonly state!: pulumi.Output<string | undefined>;
     /**
      * An array of strings of the tags assigned to the item.
@@ -121,11 +121,11 @@ export interface OutdoorLicenseItemArgs {
     approvedWildlife?: pulumi.Input<string>;
     country?: pulumi.Input<string>;
     expires?: pulumi.Input<string>;
-    fields?: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     fullName?: pulumi.Input<string>;
     maximumQuota?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
-    sections?: pulumi.Input<pulumi.Input<inputs.SectionArgs>[]>;
+    sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     state?: pulumi.Input<string>;
     /**
      * An array of strings of the tags assigned to the item.

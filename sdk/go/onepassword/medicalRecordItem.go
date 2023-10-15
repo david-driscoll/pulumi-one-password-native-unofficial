@@ -17,7 +17,7 @@ type MedicalRecordItem struct {
 
 	Category               pulumi.StringOutput                      `pulumi:"category"`
 	Date                   pulumi.StringPtrOutput                   `pulumi:"date"`
-	Fields                 GetFieldArrayOutput                      `pulumi:"fields"`
+	Fields                 GetFieldMapOutput                        `pulumi:"fields"`
 	HealthcareProfessional pulumi.StringPtrOutput                   `pulumi:"healthcareProfessional"`
 	Id                     pulumi.StringOutput                      `pulumi:"id"`
 	Location               pulumi.StringPtrOutput                   `pulumi:"location"`
@@ -25,7 +25,7 @@ type MedicalRecordItem struct {
 	Notes                  pulumi.StringPtrOutput                   `pulumi:"notes"`
 	Patient                pulumi.StringPtrOutput                   `pulumi:"patient"`
 	ReasonForVisit         pulumi.StringPtrOutput                   `pulumi:"reasonForVisit"`
-	Sections               GetSectionArrayOutput                    `pulumi:"sections"`
+	Sections               GetSectionMapOutput                      `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -79,14 +79,14 @@ func (MedicalRecordItemState) ElementType() reflect.Type {
 
 type medicalRecordItemArgs struct {
 	Date                   *string                          `pulumi:"date"`
-	Fields                 []Field                          `pulumi:"fields"`
+	Fields                 map[string]Field                 `pulumi:"fields"`
 	HealthcareProfessional *string                          `pulumi:"healthcareProfessional"`
 	Location               *string                          `pulumi:"location"`
 	Medication             *medicalrecord.MedicationSection `pulumi:"medication"`
 	Notes                  *string                          `pulumi:"notes"`
 	Patient                *string                          `pulumi:"patient"`
 	ReasonForVisit         *string                          `pulumi:"reasonForVisit"`
-	Sections               []Section                        `pulumi:"sections"`
+	Sections               map[string]Section               `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -98,14 +98,14 @@ type medicalRecordItemArgs struct {
 // The set of arguments for constructing a MedicalRecordItem resource.
 type MedicalRecordItemArgs struct {
 	Date                   pulumi.StringPtrInput
-	Fields                 FieldArrayInput
+	Fields                 FieldMapInput
 	HealthcareProfessional pulumi.StringPtrInput
 	Location               pulumi.StringPtrInput
 	Medication             medicalrecord.MedicationSectionPtrInput
 	Notes                  pulumi.StringPtrInput
 	Patient                pulumi.StringPtrInput
 	ReasonForVisit         pulumi.StringPtrInput
-	Sections               SectionArrayInput
+	Sections               SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.

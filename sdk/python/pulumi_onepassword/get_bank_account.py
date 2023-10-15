@@ -33,8 +33,8 @@ class GetBankAccountResult:
         if category and not isinstance(category, dict):
             raise TypeError("Expected argument 'category' to be a dict")
         pulumi.set(__self__, "category", category)
-        if fields and not isinstance(fields, list):
-            raise TypeError("Expected argument 'fields' to be a list")
+        if fields and not isinstance(fields, dict):
+            raise TypeError("Expected argument 'fields' to be a dict")
         pulumi.set(__self__, "fields", fields)
         if iban and not isinstance(iban, str):
             raise TypeError("Expected argument 'iban' to be a str")
@@ -54,8 +54,8 @@ class GetBankAccountResult:
         if routing_number and not isinstance(routing_number, str):
             raise TypeError("Expected argument 'routing_number' to be a str")
         pulumi.set(__self__, "routing_number", routing_number)
-        if sections and not isinstance(sections, list):
-            raise TypeError("Expected argument 'sections' to be a list")
+        if sections and not isinstance(sections, dict):
+            raise TypeError("Expected argument 'sections' to be a dict")
         pulumi.set(__self__, "sections", sections)
         if swift and not isinstance(swift, str):
             raise TypeError("Expected argument 'swift' to be a str")
@@ -98,7 +98,7 @@ class GetBankAccountResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Optional[Sequence['outputs.GetField']]:
+    def fields(self) -> Optional[Mapping[str, 'outputs.GetField']]:
         return pulumi.get(self, "fields")
 
     @property
@@ -133,7 +133,7 @@ class GetBankAccountResult:
 
     @property
     @pulumi.getter
-    def sections(self) -> Optional[Sequence['outputs.GetSection']]:
+    def sections(self) -> Optional[Mapping[str, 'outputs.GetSection']]:
         return pulumi.get(self, "sections")
 
     @property

@@ -77,12 +77,12 @@ namespace Pulumi.Onepassword
         public readonly string? Category;
         public readonly string? ConnectionOptions;
         public readonly string? Database;
-        public readonly ImmutableArray<Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
         public readonly string? Id;
         public readonly string? Notes;
         public readonly string? Password;
         public readonly string? Port;
-        public readonly ImmutableArray<Outputs.GetSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.GetSection>? Sections;
         public readonly string? Server;
         public readonly string? Sid;
         /// <summary>
@@ -114,7 +114,7 @@ namespace Pulumi.Onepassword
 
             string? database,
 
-            ImmutableArray<Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.GetField>? fields,
 
             string? id,
 
@@ -124,7 +124,7 @@ namespace Pulumi.Onepassword
 
             string? port,
 
-            ImmutableArray<Outputs.GetSection> sections,
+            ImmutableDictionary<string, Outputs.GetSection>? sections,
 
             string? server,
 

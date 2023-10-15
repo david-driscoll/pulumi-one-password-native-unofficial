@@ -37,11 +37,11 @@ export class WirelessRouterItem extends pulumi.CustomResource {
     public readonly baseStationName!: pulumi.Output<string | undefined>;
     public readonly baseStationPassword!: pulumi.Output<string | undefined>;
     public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
-    public readonly fields!: pulumi.Output<outputs.GetField[] | undefined>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly networkName!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<outputs.GetSection[] | undefined>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection} | undefined>;
     public readonly serverIpAddress!: pulumi.Output<string | undefined>;
     /**
      * An array of strings of the tags assigned to the item.
@@ -125,10 +125,10 @@ export interface WirelessRouterItemArgs {
     attachedStoragePassword?: pulumi.Input<string>;
     baseStationName?: pulumi.Input<string>;
     baseStationPassword?: pulumi.Input<string>;
-    fields?: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     networkName?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
-    sections?: pulumi.Input<pulumi.Input<inputs.SectionArgs>[]>;
+    sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     serverIpAddress?: pulumi.Input<string>;
     /**
      * An array of strings of the tags assigned to the item.

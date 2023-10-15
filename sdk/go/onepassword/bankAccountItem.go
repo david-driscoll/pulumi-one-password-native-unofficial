@@ -19,14 +19,14 @@ type BankAccountItem struct {
 	BankName          pulumi.StringPtrOutput                        `pulumi:"bankName"`
 	BranchInformation bankaccount.BranchInformationSectionPtrOutput `pulumi:"branchInformation"`
 	Category          pulumi.StringOutput                           `pulumi:"category"`
-	Fields            GetFieldArrayOutput                           `pulumi:"fields"`
+	Fields            GetFieldMapOutput                             `pulumi:"fields"`
 	Iban              pulumi.StringPtrOutput                        `pulumi:"iban"`
 	Id                pulumi.StringOutput                           `pulumi:"id"`
 	NameOnAccount     pulumi.StringPtrOutput                        `pulumi:"nameOnAccount"`
 	Notes             pulumi.StringPtrOutput                        `pulumi:"notes"`
 	Pin               pulumi.StringPtrOutput                        `pulumi:"pin"`
 	RoutingNumber     pulumi.StringPtrOutput                        `pulumi:"routingNumber"`
-	Sections          GetSectionArrayOutput                         `pulumi:"sections"`
+	Sections          GetSectionMapOutput                           `pulumi:"sections"`
 	Swift             pulumi.StringPtrOutput                        `pulumi:"swift"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
@@ -84,13 +84,13 @@ type bankAccountItemArgs struct {
 	AccountNumber     *string                               `pulumi:"accountNumber"`
 	BankName          *string                               `pulumi:"bankName"`
 	BranchInformation *bankaccount.BranchInformationSection `pulumi:"branchInformation"`
-	Fields            []Field                               `pulumi:"fields"`
+	Fields            map[string]Field                      `pulumi:"fields"`
 	Iban              *string                               `pulumi:"iban"`
 	NameOnAccount     *string                               `pulumi:"nameOnAccount"`
 	Notes             *string                               `pulumi:"notes"`
 	Pin               *string                               `pulumi:"pin"`
 	RoutingNumber     *string                               `pulumi:"routingNumber"`
-	Sections          []Section                             `pulumi:"sections"`
+	Sections          map[string]Section                    `pulumi:"sections"`
 	Swift             *string                               `pulumi:"swift"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
@@ -106,13 +106,13 @@ type BankAccountItemArgs struct {
 	AccountNumber     pulumi.StringPtrInput
 	BankName          pulumi.StringPtrInput
 	BranchInformation bankaccount.BranchInformationSectionPtrInput
-	Fields            FieldArrayInput
+	Fields            FieldMapInput
 	Iban              pulumi.StringPtrInput
 	NameOnAccount     pulumi.StringPtrInput
 	Notes             pulumi.StringPtrInput
 	Pin               pulumi.StringPtrInput
 	RoutingNumber     pulumi.StringPtrInput
-	Sections          SectionArrayInput
+	Sections          SectionMapInput
 	Swift             pulumi.StringPtrInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput

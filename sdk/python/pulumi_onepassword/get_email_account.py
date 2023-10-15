@@ -30,8 +30,8 @@ class GetEmailAccountResult:
         if contact_information and not isinstance(contact_information, dict):
             raise TypeError("Expected argument 'contact_information' to be a dict")
         pulumi.set(__self__, "contact_information", contact_information)
-        if fields and not isinstance(fields, list):
-            raise TypeError("Expected argument 'fields' to be a list")
+        if fields and not isinstance(fields, dict):
+            raise TypeError("Expected argument 'fields' to be a dict")
         pulumi.set(__self__, "fields", fields)
         if id and not isinstance(id, str):
             raise TypeError("Expected argument 'id' to be a str")
@@ -45,8 +45,8 @@ class GetEmailAccountResult:
         if port_number and not isinstance(port_number, str):
             raise TypeError("Expected argument 'port_number' to be a str")
         pulumi.set(__self__, "port_number", port_number)
-        if sections and not isinstance(sections, list):
-            raise TypeError("Expected argument 'sections' to be a list")
+        if sections and not isinstance(sections, dict):
+            raise TypeError("Expected argument 'sections' to be a dict")
         pulumi.set(__self__, "sections", sections)
         if security and not isinstance(security, str):
             raise TypeError("Expected argument 'security' to be a str")
@@ -93,7 +93,7 @@ class GetEmailAccountResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Optional[Sequence['outputs.GetField']]:
+    def fields(self) -> Optional[Mapping[str, 'outputs.GetField']]:
         return pulumi.get(self, "fields")
 
     @property
@@ -118,7 +118,7 @@ class GetEmailAccountResult:
 
     @property
     @pulumi.getter
-    def sections(self) -> Optional[Sequence['outputs.GetSection']]:
+    def sections(self) -> Optional[Mapping[str, 'outputs.GetSection']]:
         return pulumi.get(self, "sections")
 
     @property

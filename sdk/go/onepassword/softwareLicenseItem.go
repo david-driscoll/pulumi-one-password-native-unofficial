@@ -17,13 +17,13 @@ type SoftwareLicenseItem struct {
 
 	Category   pulumi.StringOutput                       `pulumi:"category"`
 	Customer   softwarelicense.CustomerSectionPtrOutput  `pulumi:"customer"`
-	Fields     GetFieldArrayOutput                       `pulumi:"fields"`
+	Fields     GetFieldMapOutput                         `pulumi:"fields"`
 	Id         pulumi.StringOutput                       `pulumi:"id"`
 	LicenseKey pulumi.StringPtrOutput                    `pulumi:"licenseKey"`
 	Notes      pulumi.StringPtrOutput                    `pulumi:"notes"`
 	Order      softwarelicense.OrderSectionPtrOutput     `pulumi:"order"`
 	Publisher  softwarelicense.PublisherSectionPtrOutput `pulumi:"publisher"`
-	Sections   GetSectionArrayOutput                     `pulumi:"sections"`
+	Sections   GetSectionMapOutput                       `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -78,12 +78,12 @@ func (SoftwareLicenseItemState) ElementType() reflect.Type {
 
 type softwareLicenseItemArgs struct {
 	Customer   *softwarelicense.CustomerSection  `pulumi:"customer"`
-	Fields     []Field                           `pulumi:"fields"`
+	Fields     map[string]Field                  `pulumi:"fields"`
 	LicenseKey *string                           `pulumi:"licenseKey"`
 	Notes      *string                           `pulumi:"notes"`
 	Order      *softwarelicense.OrderSection     `pulumi:"order"`
 	Publisher  *softwarelicense.PublisherSection `pulumi:"publisher"`
-	Sections   []Section                         `pulumi:"sections"`
+	Sections   map[string]Section                `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -96,12 +96,12 @@ type softwareLicenseItemArgs struct {
 // The set of arguments for constructing a SoftwareLicenseItem resource.
 type SoftwareLicenseItemArgs struct {
 	Customer   softwarelicense.CustomerSectionPtrInput
-	Fields     FieldArrayInput
+	Fields     FieldMapInput
 	LicenseKey pulumi.StringPtrInput
 	Notes      pulumi.StringPtrInput
 	Order      softwarelicense.OrderSectionPtrInput
 	Publisher  softwarelicense.PublisherSectionPtrInput
-	Sections   SectionArrayInput
+	Sections   SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.

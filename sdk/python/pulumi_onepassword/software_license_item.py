@@ -19,12 +19,12 @@ class SoftwareLicenseItemArgs:
     def __init__(__self__, *,
                  vault: pulumi.Input[str],
                  customer: Optional[pulumi.Input['_softwarelicense.CustomerSectionArgs']] = None,
-                 fields: Optional[pulumi.Input[Sequence[pulumi.Input['FieldArgs']]]] = None,
+                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
                  license_key: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  order: Optional[pulumi.Input['_softwarelicense.OrderSectionArgs']] = None,
                  publisher: Optional[pulumi.Input['_softwarelicense.PublisherSectionArgs']] = None,
-                 sections: Optional[pulumi.Input[Sequence[pulumi.Input['SectionArgs']]]] = None,
+                 sections: Optional[pulumi.Input[Mapping[str, pulumi.Input['SectionArgs']]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
                  version: Optional[pulumi.Input[str]] = None):
@@ -79,11 +79,11 @@ class SoftwareLicenseItemArgs:
 
     @property
     @pulumi.getter
-    def fields(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['FieldArgs']]]]:
+    def fields(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]]:
         return pulumi.get(self, "fields")
 
     @fields.setter
-    def fields(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['FieldArgs']]]]):
+    def fields(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]]):
         pulumi.set(self, "fields", value)
 
     @property
@@ -124,11 +124,11 @@ class SoftwareLicenseItemArgs:
 
     @property
     @pulumi.getter
-    def sections(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SectionArgs']]]]:
+    def sections(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['SectionArgs']]]]:
         return pulumi.get(self, "sections")
 
     @sections.setter
-    def sections(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SectionArgs']]]]):
+    def sections(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['SectionArgs']]]]):
         pulumi.set(self, "sections", value)
 
     @property
@@ -171,12 +171,12 @@ class SoftwareLicenseItem(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  customer: Optional[pulumi.Input[pulumi.InputType['_softwarelicense.CustomerSectionArgs']]] = None,
-                 fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
+                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  license_key: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  order: Optional[pulumi.Input[pulumi.InputType['_softwarelicense.OrderSectionArgs']]] = None,
                  publisher: Optional[pulumi.Input[pulumi.InputType['_softwarelicense.PublisherSectionArgs']]] = None,
-                 sections: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
+                 sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
                  vault: Optional[pulumi.Input[str]] = None,
@@ -214,12 +214,12 @@ class SoftwareLicenseItem(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  customer: Optional[pulumi.Input[pulumi.InputType['_softwarelicense.CustomerSectionArgs']]] = None,
-                 fields: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
+                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  license_key: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  order: Optional[pulumi.Input[pulumi.InputType['_softwarelicense.OrderSectionArgs']]] = None,
                  publisher: Optional[pulumi.Input[pulumi.InputType['_softwarelicense.PublisherSectionArgs']]] = None,
-                 sections: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
+                 sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
                  vault: Optional[pulumi.Input[str]] = None,
@@ -302,7 +302,7 @@ class SoftwareLicenseItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def fields(self) -> pulumi.Output[Optional[Sequence['outputs.GetField']]]:
+    def fields(self) -> pulumi.Output[Optional[Mapping[str, 'outputs.GetField']]]:
         return pulumi.get(self, "fields")
 
     @property
@@ -332,7 +332,7 @@ class SoftwareLicenseItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def sections(self) -> pulumi.Output[Optional[Sequence['outputs.GetSection']]]:
+    def sections(self) -> pulumi.Output[Optional[Mapping[str, 'outputs.GetSection']]]:
         return pulumi.get(self, "sections")
 
     @property

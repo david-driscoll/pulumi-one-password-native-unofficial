@@ -8,39 +8,35 @@ import * as op from "@pulumi/onepassword";
 // export const url = page.websiteUrl;
 new op.Item("test-item", {
     vault: 'testing-pulumi',
-    fields: [
-        {
-            label: 'test',
+    fields: {
+        test: {
             purpose: "PASSWORD",
             value: '12345'
         }
-    ],
-    sections: [
-        {
-            label: 'mysection',
-            fields: [
-                {
-
-                    label: 'test',
+    },
+    sections: {
+        mysection: {
+            fields: {
+                test: {
                     purpose: "NOTE",
                     value: '12345'
                 }
-            ]
+            }
+
         }
-    ]
+    }
 }, {
 
 })
 new op.Item("test-item2", {
     title: 'test-item2',
     vault: 'testing-pulumi',
-    fields: [
-        {
-            label: 'Field',
+    fields: {
+        Field: {
             purpose: "PASSWORD",
             value: '12345'
         }
-    ]
+    }
 }, {
 
 })

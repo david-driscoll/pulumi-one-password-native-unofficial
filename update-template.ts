@@ -10,7 +10,7 @@ const schema = JSON.parse(readFileSync('./schema.json').toString('ascii'));
 
 const allTemplates = orderBy(templates.map(z => camelCase(z.name)[0].toUpperCase() + camelCase(z.name).substring(1)));
 
-// TODOS: Documents, password recipes
+// TODOS: Documents, password recipes, date fields, url fields, etc.
 
 schema.functions = {
     "onepassword:index:GetItem": {
@@ -104,8 +104,8 @@ schema.types = {
     "onepassword:index:GetSection": {
         "properties": {
             "fields": {
-                "type": "array",
-                "items": {
+                "type": "object",
+                "additionalProperties": {
                     "$ref": "#/types/onepassword:index:GetField"
                 }
             },
@@ -126,19 +126,15 @@ schema.types = {
     "onepassword:index:Section": {
         "properties": {
             "fields": {
-                "type": "array",
-                "items": {
+                "type": "object",
+                "additionalProperties": {
                     "$ref": "#/types/onepassword:index:Field"
                 }
-            },
-            "label": {
-                "type": "string"
             }
         },
         "type": "object",
         "required": [
-            "fields",
-            "label"
+            "fields"
         ]
     },
     "onepassword:index:GetField": {
@@ -166,9 +162,6 @@ schema.types = {
     },
     "onepassword:index:Field": {
         "properties": {
-            "label": {
-                "type": "string"
-            },
             "purpose": {
                 "$ref": "#/types/onepassword:index:FieldPurpose",
                 "default": "NOTE",
@@ -180,7 +173,6 @@ schema.types = {
         },
         "type": "object",
         "required": [
-            "label",
             "purpose",
             "value"
         ]
@@ -237,12 +229,12 @@ for (const template of templates) {
         "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
     };
     currentResource.inputProperties['sections'] = {
-        "type": "array",
-        "items": { "$ref": "#/types/onepassword:index:Section" }
+        "type": "object",
+        "additionalProperties": { "$ref": "#/types/onepassword:index:Section" }
     };
     currentResource.inputProperties['fields'] = {
-        "type": "array",
-        "items": { "$ref": "#/types/onepassword:index:Field" }
+        "type": "object",
+        "additionalProperties": { "$ref": "#/types/onepassword:index:Field" }
     };
     currentResource.inputProperties['vault'] = {
         "type": "string",
@@ -471,12 +463,12 @@ function applyDefaultOutputProperties(item: any) {
             "description": "The UUID of the vault the item is in.\n"
         },
         ['sections']: {
-            "type": "array",
-            "items": { "$ref": "#/types/onepassword:index:GetSection" }
+            "type": "object",
+            "additionalProperties": { "$ref": "#/types/onepassword:index:GetSection" }
         },
         ['fields']: {
-            "type": "array",
-            "items": { "$ref": "#/types/onepassword:index:GetField" }
+            "type": "object",
+            "additionalProperties": { "$ref": "#/types/onepassword:index:GetField" }
         },
         ['tags']: {
             type: 'array',

@@ -76,12 +76,12 @@ namespace Pulumi.Onepassword
         public readonly string? Category;
         public readonly string? Credential;
         public readonly string? Expires;
-        public readonly ImmutableArray<Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
         public readonly string? Filename;
         public readonly string? Hostname;
         public readonly string? Id;
         public readonly string? Notes;
-        public readonly ImmutableArray<Outputs.GetSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.GetSection>? Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
         /// </summary>
@@ -110,7 +110,7 @@ namespace Pulumi.Onepassword
 
             string? expires,
 
-            ImmutableArray<Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.GetField>? fields,
 
             string? filename,
 
@@ -120,7 +120,7 @@ namespace Pulumi.Onepassword
 
             string? notes,
 
-            ImmutableArray<Outputs.GetSection> sections,
+            ImmutableDictionary<string, Outputs.GetSection>? sections,
 
             ImmutableArray<string> tags,
 

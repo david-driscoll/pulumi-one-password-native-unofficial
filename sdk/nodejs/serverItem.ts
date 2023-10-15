@@ -34,12 +34,12 @@ export class ServerItem extends pulumi.CustomResource {
 
     public readonly adminConsole!: pulumi.Output<outputs.server.AdminConsoleSection | undefined>;
     public /*out*/ readonly category!: pulumi.Output<enums.Category | string>;
-    public readonly fields!: pulumi.Output<outputs.GetField[] | undefined>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public readonly hostingProvider!: pulumi.Output<outputs.server.HostingProviderSection | undefined>;
     public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly password!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<outputs.GetSection[] | undefined>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection} | undefined>;
     /**
      * An array of strings of the tags assigned to the item.
      */
@@ -113,11 +113,11 @@ export class ServerItem extends pulumi.CustomResource {
  */
 export interface ServerItemArgs {
     adminConsole?: pulumi.Input<inputs.server.AdminConsoleSectionArgs>;
-    fields?: pulumi.Input<pulumi.Input<inputs.FieldArgs>[]>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     hostingProvider?: pulumi.Input<inputs.server.HostingProviderSectionArgs>;
     notes?: pulumi.Input<string>;
     password?: pulumi.Input<string>;
-    sections?: pulumi.Input<pulumi.Input<inputs.SectionArgs>[]>;
+    sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     /**
      * An array of strings of the tags assigned to the item.
      */

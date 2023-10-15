@@ -13,13 +13,13 @@ namespace Pulumi.Onepassword.Outputs
     [OutputType]
     public sealed class GetSection
     {
-        public readonly ImmutableArray<Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
         public readonly string Id;
         public readonly string Label;
 
         [OutputConstructor]
         private GetSection(
-            ImmutableArray<Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.GetField> fields,
 
             string id,
 

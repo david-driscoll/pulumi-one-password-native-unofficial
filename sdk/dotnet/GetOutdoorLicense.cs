@@ -77,12 +77,12 @@ namespace Pulumi.Onepassword
         public readonly string? Category;
         public readonly string? Country;
         public readonly string? Expires;
-        public readonly ImmutableArray<Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
         public readonly string? FullName;
         public readonly string? Id;
         public readonly string? MaximumQuota;
         public readonly string? Notes;
-        public readonly ImmutableArray<Outputs.GetSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.GetSection>? Sections;
         public readonly string? State;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
@@ -112,7 +112,7 @@ namespace Pulumi.Onepassword
 
             string? expires,
 
-            ImmutableArray<Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.GetField>? fields,
 
             string? fullName,
 
@@ -122,7 +122,7 @@ namespace Pulumi.Onepassword
 
             string? notes,
 
-            ImmutableArray<Outputs.GetSection> sections,
+            ImmutableDictionary<string, Outputs.GetSection>? sections,
 
             string? state,
 

@@ -35,11 +35,11 @@ type GetCreditCardResult struct {
 	Category           *string                               `pulumi:"category"`
 	ContactInformation *creditcard.ContactInformationSection `pulumi:"contactInformation"`
 	ExpiryDate         *string                               `pulumi:"expiryDate"`
-	Fields             []GetField                            `pulumi:"fields"`
+	Fields             map[string]GetField                   `pulumi:"fields"`
 	Id                 *string                               `pulumi:"id"`
 	Notes              *string                               `pulumi:"notes"`
 	Number             *string                               `pulumi:"number"`
-	Sections           []GetSection                          `pulumi:"sections"`
+	Sections           map[string]GetSection                 `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -113,8 +113,8 @@ func (o GetCreditCardResultOutput) ExpiryDate() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetCreditCardResult) *string { return v.ExpiryDate }).(pulumi.StringPtrOutput)
 }
 
-func (o GetCreditCardResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v GetCreditCardResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetCreditCardResultOutput) Fields() GetFieldMapOutput {
+	return o.ApplyT(func(v GetCreditCardResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
 }
 
 func (o GetCreditCardResultOutput) Id() pulumi.StringPtrOutput {
@@ -129,8 +129,8 @@ func (o GetCreditCardResultOutput) Number() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetCreditCardResult) *string { return v.Number }).(pulumi.StringPtrOutput)
 }
 
-func (o GetCreditCardResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v GetCreditCardResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetCreditCardResultOutput) Sections() GetSectionMapOutput {
+	return o.ApplyT(func(v GetCreditCardResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.

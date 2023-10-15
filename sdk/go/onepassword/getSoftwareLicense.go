@@ -32,13 +32,13 @@ type GetSoftwareLicenseArgs struct {
 type GetSoftwareLicenseResult struct {
 	Category   *string                           `pulumi:"category"`
 	Customer   *softwarelicense.CustomerSection  `pulumi:"customer"`
-	Fields     []GetField                        `pulumi:"fields"`
+	Fields     map[string]GetField               `pulumi:"fields"`
 	Id         *string                           `pulumi:"id"`
 	LicenseKey *string                           `pulumi:"licenseKey"`
 	Notes      *string                           `pulumi:"notes"`
 	Order      *softwarelicense.OrderSection     `pulumi:"order"`
 	Publisher  *softwarelicense.PublisherSection `pulumi:"publisher"`
-	Sections   []GetSection                      `pulumi:"sections"`
+	Sections   map[string]GetSection             `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -98,8 +98,8 @@ func (o GetSoftwareLicenseResultOutput) Customer() softwarelicense.CustomerSecti
 	return o.ApplyT(func(v GetSoftwareLicenseResult) *softwarelicense.CustomerSection { return v.Customer }).(softwarelicense.CustomerSectionPtrOutput)
 }
 
-func (o GetSoftwareLicenseResultOutput) Fields() GetFieldArrayOutput {
-	return o.ApplyT(func(v GetSoftwareLicenseResult) []GetField { return v.Fields }).(GetFieldArrayOutput)
+func (o GetSoftwareLicenseResultOutput) Fields() GetFieldMapOutput {
+	return o.ApplyT(func(v GetSoftwareLicenseResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
 }
 
 func (o GetSoftwareLicenseResultOutput) Id() pulumi.StringPtrOutput {
@@ -122,8 +122,8 @@ func (o GetSoftwareLicenseResultOutput) Publisher() softwarelicense.PublisherSec
 	return o.ApplyT(func(v GetSoftwareLicenseResult) *softwarelicense.PublisherSection { return v.Publisher }).(softwarelicense.PublisherSectionPtrOutput)
 }
 
-func (o GetSoftwareLicenseResultOutput) Sections() GetSectionArrayOutput {
-	return o.ApplyT(func(v GetSoftwareLicenseResult) []GetSection { return v.Sections }).(GetSectionArrayOutput)
+func (o GetSoftwareLicenseResultOutput) Sections() GetSectionMapOutput {
+	return o.ApplyT(func(v GetSoftwareLicenseResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.
