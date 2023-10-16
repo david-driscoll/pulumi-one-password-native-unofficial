@@ -62,9 +62,13 @@ func GetSSHKeyItem(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering SSHKeyItem resources.
 type sshkeyItemState struct {
+	// The UUID of the vault the item is in.
+	Vault *string `pulumi:"vault"`
 }
 
 type SSHKeyItemState struct {
+	// The UUID of the vault the item is in.
+	Vault pulumi.StringInput
 }
 
 func (SSHKeyItemState) ElementType() reflect.Type {

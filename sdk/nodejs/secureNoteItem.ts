@@ -12,10 +12,11 @@ export class SecureNoteItem extends pulumi.CustomResource {
      *
      * @param name The _unique_ name of the resulting resource.
      * @param id The _unique_ provider ID of the resource to lookup.
+     * @param state Any extra arguments used during the lookup.
      * @param opts Optional settings to control the behavior of the CustomResource.
      */
-    public static get(name: string, id: pulumi.Input<pulumi.ID>, opts?: pulumi.CustomResourceOptions): SecureNoteItem {
-        return new SecureNoteItem(name, undefined as any, { ...opts, id: id });
+    public static get(name: string, id: pulumi.Input<pulumi.ID>, state?: SecureNoteItemState, opts?: pulumi.CustomResourceOptions): SecureNoteItem {
+        return new SecureNoteItem(name, <any>state, { ...opts, id: id });
     }
 
     /** @internal */
@@ -60,10 +61,15 @@ export class SecureNoteItem extends pulumi.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: SecureNoteItemArgs, opts?: pulumi.CustomResourceOptions) {
+    constructor(name: string, args: SecureNoteItemArgs, opts?: pulumi.CustomResourceOptions)
+    constructor(name: string, argsOrState?: SecureNoteItemArgs | SecureNoteItemState, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
-        if (!opts.id) {
+        if (opts.id) {
+            const state = argsOrState as SecureNoteItemState | undefined;
+            resourceInputs["vault"] = state ? state.vault : undefined;
+        } else {
+            const args = argsOrState as SecureNoteItemArgs | undefined;
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
@@ -75,19 +81,17 @@ export class SecureNoteItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["uuid"] = undefined /*out*/;
-        } else {
-            resourceInputs["category"] = undefined /*out*/;
-            resourceInputs["fields"] = undefined /*out*/;
-            resourceInputs["notes"] = undefined /*out*/;
-            resourceInputs["sections"] = undefined /*out*/;
-            resourceInputs["tags"] = undefined /*out*/;
-            resourceInputs["title"] = undefined /*out*/;
-            resourceInputs["uuid"] = undefined /*out*/;
-            resourceInputs["vault"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(SecureNoteItem.__pulumiType, name, resourceInputs, opts);
     }
+}
+
+export interface SecureNoteItemState {
+    /**
+     * The UUID of the vault the item is in.
+     */
+    vault: pulumi.Input<string>;
 }
 
 /**

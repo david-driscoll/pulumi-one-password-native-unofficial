@@ -82,8 +82,8 @@ namespace Pulumi.Onepassword
         {
         }
 
-        private APICredentialItem(string name, Input<string> id, CustomResourceOptions? options = null)
-            : base("onepassword:index:APICredentialItem", name, null, MakeResourceOptions(options, id))
+        private APICredentialItem(string name, Input<string> id, APICredentialItemState? state = null, CustomResourceOptions? options = null)
+            : base("onepassword:index:APICredentialItem", name, state, MakeResourceOptions(options, id))
         {
         }
 
@@ -112,10 +112,11 @@ namespace Pulumi.Onepassword
         ///
         /// <param name="name">The unique name of the resulting resource.</param>
         /// <param name="id">The unique provider ID of the resource to lookup.</param>
+        /// <param name="state">Any extra arguments used during the lookup.</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public static APICredentialItem Get(string name, Input<string> id, CustomResourceOptions? options = null)
+        public static APICredentialItem Get(string name, Input<string> id, APICredentialItemState? state = null, CustomResourceOptions? options = null)
         {
-            return new APICredentialItem(name, id, options);
+            return new APICredentialItem(name, id, state, options);
         }
     }
 
@@ -192,6 +193,19 @@ namespace Pulumi.Onepassword
         public Input<string> Vault { get; set; } = null!;
 
         public APICredentialItemArgs()
+        {
+        }
+    }
+
+    public sealed class APICredentialItemState : Pulumi.ResourceArgs
+    {
+        /// <summary>
+        /// The UUID of the vault the item is in.
+        /// </summary>
+        [Input("vault", required: true)]
+        public Input<string> Vault { get; set; } = null!;
+
+        public APICredentialItemState()
         {
         }
     }

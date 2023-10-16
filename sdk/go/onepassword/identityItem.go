@@ -65,9 +65,13 @@ func GetIdentityItem(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering IdentityItem resources.
 type identityItemState struct {
+	// The UUID of the vault the item is in.
+	Vault *string `pulumi:"vault"`
 }
 
 type IdentityItemState struct {
+	// The UUID of the vault the item is in.
+	Vault pulumi.StringInput
 }
 
 func (IdentityItemState) ElementType() reflect.Type {

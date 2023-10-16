@@ -67,9 +67,13 @@ func GetServerItem(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering ServerItem resources.
 type serverItemState struct {
+	// The UUID of the vault the item is in.
+	Vault *string `pulumi:"vault"`
 }
 
 type ServerItemState struct {
+	// The UUID of the vault the item is in.
+	Vault pulumi.StringInput
 }
 
 func (ServerItemState) ElementType() reflect.Type {

@@ -193,6 +193,29 @@ class MedicalRecordItemArgs:
         pulumi.set(self, "title", value)
 
 
+@pulumi.input_type
+class _MedicalRecordItemState:
+    def __init__(__self__, *,
+                 vault: pulumi.Input[str]):
+        """
+        Input properties used for looking up and filtering MedicalRecordItem resources.
+        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
+        """
+        pulumi.set(__self__, "vault", vault)
+
+    @property
+    @pulumi.getter
+    def vault(self) -> pulumi.Input[str]:
+        """
+        The UUID of the vault the item is in.
+        """
+        return pulumi.get(self, "vault")
+
+    @vault.setter
+    def vault(self, value: pulumi.Input[str]):
+        pulumi.set(self, "vault", value)
+
+
 class MedicalRecordItem(pulumi.CustomResource):
     @overload
     def __init__(__self__,
@@ -294,7 +317,8 @@ class MedicalRecordItem(pulumi.CustomResource):
     @staticmethod
     def get(resource_name: str,
             id: pulumi.Input[str],
-            opts: Optional[pulumi.ResourceOptions] = None) -> 'MedicalRecordItem':
+            opts: Optional[pulumi.ResourceOptions] = None,
+            vault: Optional[pulumi.Input[str]] = None) -> 'MedicalRecordItem':
         """
         Get an existing MedicalRecordItem resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -302,11 +326,13 @@ class MedicalRecordItem(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
-        __props__ = MedicalRecordItemArgs.__new__(MedicalRecordItemArgs)
+        __props__ = _MedicalRecordItemState.__new__(_MedicalRecordItemState)
 
+        __props__.__dict__["vault"] = vault
         __props__.__dict__["category"] = None
         __props__.__dict__["date"] = None
         __props__.__dict__["fields"] = None
@@ -320,7 +346,6 @@ class MedicalRecordItem(pulumi.CustomResource):
         __props__.__dict__["tags"] = None
         __props__.__dict__["title"] = None
         __props__.__dict__["uuid"] = None
-        __props__.__dict__["vault"] = None
         return MedicalRecordItem(resource_name, opts=opts, __props__=__props__)
 
     @property

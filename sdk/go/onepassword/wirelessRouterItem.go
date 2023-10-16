@@ -69,9 +69,13 @@ func GetWirelessRouterItem(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering WirelessRouterItem resources.
 type wirelessRouterItemState struct {
+	// The UUID of the vault the item is in.
+	Vault *string `pulumi:"vault"`
 }
 
 type WirelessRouterItemState struct {
+	// The UUID of the vault the item is in.
+	Vault pulumi.StringInput
 }
 
 func (WirelessRouterItemState) ElementType() reflect.Type {

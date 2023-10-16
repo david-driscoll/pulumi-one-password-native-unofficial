@@ -239,6 +239,12 @@ for (const template of templates) {
         "description": "The UUID of the vault the item is in.\n",
         "willReplaceOnChanges": true
     };
+    currentResource.stateInputs = {
+        properties: {
+            vault: Object.assign({}, currentResource.inputProperties['vault'])
+        },
+        required: ['vault']
+    }
     currentResource.inputProperties['category'] = {
         "type": "string",
         "description": "The category of the vault the item is in.\n",

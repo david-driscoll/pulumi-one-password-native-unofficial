@@ -157,6 +157,29 @@ class IdentityItemArgs:
         pulumi.set(self, "title", value)
 
 
+@pulumi.input_type
+class _IdentityItemState:
+    def __init__(__self__, *,
+                 vault: pulumi.Input[str]):
+        """
+        Input properties used for looking up and filtering IdentityItem resources.
+        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
+        """
+        pulumi.set(__self__, "vault", vault)
+
+    @property
+    @pulumi.getter
+    def vault(self) -> pulumi.Input[str]:
+        """
+        The UUID of the vault the item is in.
+        """
+        return pulumi.get(self, "vault")
+
+    @vault.setter
+    def vault(self, value: pulumi.Input[str]):
+        pulumi.set(self, "vault", value)
+
+
 class IdentityItem(pulumi.CustomResource):
     @overload
     def __init__(__self__,
@@ -249,7 +272,8 @@ class IdentityItem(pulumi.CustomResource):
     @staticmethod
     def get(resource_name: str,
             id: pulumi.Input[str],
-            opts: Optional[pulumi.ResourceOptions] = None) -> 'IdentityItem':
+            opts: Optional[pulumi.ResourceOptions] = None,
+            vault: Optional[pulumi.Input[str]] = None) -> 'IdentityItem':
         """
         Get an existing IdentityItem resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -257,11 +281,13 @@ class IdentityItem(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
-        __props__ = IdentityItemArgs.__new__(IdentityItemArgs)
+        __props__ = _IdentityItemState.__new__(_IdentityItemState)
 
+        __props__.__dict__["vault"] = vault
         __props__.__dict__["address"] = None
         __props__.__dict__["category"] = None
         __props__.__dict__["fields"] = None
@@ -272,7 +298,6 @@ class IdentityItem(pulumi.CustomResource):
         __props__.__dict__["tags"] = None
         __props__.__dict__["title"] = None
         __props__.__dict__["uuid"] = None
-        __props__.__dict__["vault"] = None
         return IdentityItem(resource_name, opts=opts, __props__=__props__)
 
     @property

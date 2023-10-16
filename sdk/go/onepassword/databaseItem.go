@@ -70,9 +70,13 @@ func GetDatabaseItem(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering DatabaseItem resources.
 type databaseItemState struct {
+	// The UUID of the vault the item is in.
+	Vault *string `pulumi:"vault"`
 }
 
 type DatabaseItemState struct {
+	// The UUID of the vault the item is in.
+	Vault pulumi.StringInput
 }
 
 func (DatabaseItemState) ElementType() reflect.Type {

@@ -12,10 +12,11 @@ export class DriverLicenseItem extends pulumi.CustomResource {
      *
      * @param name The _unique_ name of the resulting resource.
      * @param id The _unique_ provider ID of the resource to lookup.
+     * @param state Any extra arguments used during the lookup.
      * @param opts Optional settings to control the behavior of the CustomResource.
      */
-    public static get(name: string, id: pulumi.Input<pulumi.ID>, opts?: pulumi.CustomResourceOptions): DriverLicenseItem {
-        return new DriverLicenseItem(name, undefined as any, { ...opts, id: id });
+    public static get(name: string, id: pulumi.Input<pulumi.ID>, state?: DriverLicenseItemState, opts?: pulumi.CustomResourceOptions): DriverLicenseItem {
+        return new DriverLicenseItem(name, <any>state, { ...opts, id: id });
     }
 
     /** @internal */
@@ -71,10 +72,15 @@ export class DriverLicenseItem extends pulumi.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: DriverLicenseItemArgs, opts?: pulumi.CustomResourceOptions) {
+    constructor(name: string, args: DriverLicenseItemArgs, opts?: pulumi.CustomResourceOptions)
+    constructor(name: string, argsOrState?: DriverLicenseItemArgs | DriverLicenseItemState, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
-        if (!opts.id) {
+        if (opts.id) {
+            const state = argsOrState as DriverLicenseItemState | undefined;
+            resourceInputs["vault"] = state ? state.vault : undefined;
+        } else {
+            const args = argsOrState as DriverLicenseItemArgs | undefined;
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
@@ -97,30 +103,17 @@ export class DriverLicenseItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["uuid"] = undefined /*out*/;
-        } else {
-            resourceInputs["address"] = undefined /*out*/;
-            resourceInputs["category"] = undefined /*out*/;
-            resourceInputs["conditionsRestrictions"] = undefined /*out*/;
-            resourceInputs["country"] = undefined /*out*/;
-            resourceInputs["dateOfBirth"] = undefined /*out*/;
-            resourceInputs["expiryDate"] = undefined /*out*/;
-            resourceInputs["fields"] = undefined /*out*/;
-            resourceInputs["fullName"] = undefined /*out*/;
-            resourceInputs["gender"] = undefined /*out*/;
-            resourceInputs["height"] = undefined /*out*/;
-            resourceInputs["licenseClass"] = undefined /*out*/;
-            resourceInputs["notes"] = undefined /*out*/;
-            resourceInputs["number"] = undefined /*out*/;
-            resourceInputs["sections"] = undefined /*out*/;
-            resourceInputs["state"] = undefined /*out*/;
-            resourceInputs["tags"] = undefined /*out*/;
-            resourceInputs["title"] = undefined /*out*/;
-            resourceInputs["uuid"] = undefined /*out*/;
-            resourceInputs["vault"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(DriverLicenseItem.__pulumiType, name, resourceInputs, opts);
     }
+}
+
+export interface DriverLicenseItemState {
+    /**
+     * The UUID of the vault the item is in.
+     */
+    vault: pulumi.Input<string>;
 }
 
 /**

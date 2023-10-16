@@ -216,6 +216,29 @@ class MembershipItemArgs:
         pulumi.set(self, "website", value)
 
 
+@pulumi.input_type
+class _MembershipItemState:
+    def __init__(__self__, *,
+                 vault: pulumi.Input[str]):
+        """
+        Input properties used for looking up and filtering MembershipItem resources.
+        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
+        """
+        pulumi.set(__self__, "vault", vault)
+
+    @property
+    @pulumi.getter
+    def vault(self) -> pulumi.Input[str]:
+        """
+        The UUID of the vault the item is in.
+        """
+        return pulumi.get(self, "vault")
+
+    @vault.setter
+    def vault(self, value: pulumi.Input[str]):
+        pulumi.set(self, "vault", value)
+
+
 class MembershipItem(pulumi.CustomResource):
     @overload
     def __init__(__self__,
@@ -323,7 +346,8 @@ class MembershipItem(pulumi.CustomResource):
     @staticmethod
     def get(resource_name: str,
             id: pulumi.Input[str],
-            opts: Optional[pulumi.ResourceOptions] = None) -> 'MembershipItem':
+            opts: Optional[pulumi.ResourceOptions] = None,
+            vault: Optional[pulumi.Input[str]] = None) -> 'MembershipItem':
         """
         Get an existing MembershipItem resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -331,11 +355,13 @@ class MembershipItem(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
-        __props__ = MembershipItemArgs.__new__(MembershipItemArgs)
+        __props__ = _MembershipItemState.__new__(_MembershipItemState)
 
+        __props__.__dict__["vault"] = vault
         __props__.__dict__["category"] = None
         __props__.__dict__["expiry_date"] = None
         __props__.__dict__["fields"] = None
@@ -350,7 +376,6 @@ class MembershipItem(pulumi.CustomResource):
         __props__.__dict__["telephone"] = None
         __props__.__dict__["title"] = None
         __props__.__dict__["uuid"] = None
-        __props__.__dict__["vault"] = None
         __props__.__dict__["website"] = None
         return MembershipItem(resource_name, opts=opts, __props__=__props__)
 

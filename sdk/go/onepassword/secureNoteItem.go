@@ -61,9 +61,13 @@ func GetSecureNoteItem(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering SecureNoteItem resources.
 type secureNoteItemState struct {
+	// The UUID of the vault the item is in.
+	Vault *string `pulumi:"vault"`
 }
 
 type SecureNoteItemState struct {
+	// The UUID of the vault the item is in.
+	Vault pulumi.StringInput
 }
 
 func (SecureNoteItemState) ElementType() reflect.Type {

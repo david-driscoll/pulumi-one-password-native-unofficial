@@ -217,6 +217,29 @@ class CreditCardItemArgs:
         pulumi.set(self, "verification_number", value)
 
 
+@pulumi.input_type
+class _CreditCardItemState:
+    def __init__(__self__, *,
+                 vault: pulumi.Input[str]):
+        """
+        Input properties used for looking up and filtering CreditCardItem resources.
+        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
+        """
+        pulumi.set(__self__, "vault", vault)
+
+    @property
+    @pulumi.getter
+    def vault(self) -> pulumi.Input[str]:
+        """
+        The UUID of the vault the item is in.
+        """
+        return pulumi.get(self, "vault")
+
+    @vault.setter
+    def vault(self, value: pulumi.Input[str]):
+        pulumi.set(self, "vault", value)
+
+
 class CreditCardItem(pulumi.CustomResource):
     @overload
     def __init__(__self__,
@@ -324,7 +347,8 @@ class CreditCardItem(pulumi.CustomResource):
     @staticmethod
     def get(resource_name: str,
             id: pulumi.Input[str],
-            opts: Optional[pulumi.ResourceOptions] = None) -> 'CreditCardItem':
+            opts: Optional[pulumi.ResourceOptions] = None,
+            vault: Optional[pulumi.Input[str]] = None) -> 'CreditCardItem':
         """
         Get an existing CreditCardItem resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -332,11 +356,13 @@ class CreditCardItem(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
-        __props__ = CreditCardItemArgs.__new__(CreditCardItemArgs)
+        __props__ = _CreditCardItemState.__new__(_CreditCardItemState)
 
+        __props__.__dict__["vault"] = vault
         __props__.__dict__["additional_details"] = None
         __props__.__dict__["cardholder_name"] = None
         __props__.__dict__["category"] = None
@@ -351,7 +377,6 @@ class CreditCardItem(pulumi.CustomResource):
         __props__.__dict__["type"] = None
         __props__.__dict__["uuid"] = None
         __props__.__dict__["valid_from"] = None
-        __props__.__dict__["vault"] = None
         __props__.__dict__["verification_number"] = None
         return CreditCardItem(resource_name, opts=opts, __props__=__props__)
 

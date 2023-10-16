@@ -51,7 +51,6 @@ export class Provider implements provider.Provider {
 
         const fields: Record<string, Field> = {}
         const sections: Record<string, Section> = {}
-        const fieldPropPaths: [field: string, section?: string][] = [];
         Object.assign(fields, inputs.fields ?? {});
         Object.assign(sections, inputs.sections ?? {});
 
@@ -68,7 +67,6 @@ export class Provider implements provider.Provider {
                                 type: sPropSchema.kind ?? null,
                                 purpose: sPropSchema.purpose ?? null
                             };
-                            fieldPropPaths.push([sName, name]);
                         }
                     }
                 } else {
@@ -77,7 +75,6 @@ export class Provider implements provider.Provider {
                         type: propScheme.kind ?? null,
                         purpose: propScheme.purpose ?? null
                     };
-                    fieldPropPaths.push([name]);
                 }
             }
         }
@@ -106,6 +103,23 @@ export class Provider implements provider.Provider {
             }
         }
 
+    }
+
+    /**
+     * Reads the current live state associated with a pulumi.  Enough state must be included in the inputs to uniquely
+     * identify the resource; this is typically just the resource ID, but it may also include some properties.
+     */
+    async read(id: pulumi.ID, urn: pulumi.URN, props?: any): Promise<provider.ReadResult> {
+        const resourceType = getResourceTypeFromUrn(urn);
+        if (!resourceType) throw new Error(`unknown resource type ${urn}`);
+
+        const result = item.get(id, { vault: props.vault })
+
+        const outputs = convertResultToOutputs(resourceType, result);
+        return {
+            id: result.id,
+            props: outputs
+        }
     }
 
     /**
@@ -174,6 +188,7 @@ export class Provider implements provider.Provider {
         }
         return failures.length ? { inputs: news, failures } : {};
     }
+
     /**
      * Invoke calls the indicated function.
      *
@@ -243,11 +258,6 @@ export class Provider implements provider.Provider {
     //  * @param news The new values of properties to diff.
     //  */
     // async diff(id: pulumi.ID, urn: pulumi.URN, olds: any, news: any): Promise<provider.DiffResult> { }
-    // /**
-    //  * Reads the current live state associated with a pulumi.  Enough state must be included in the inputs to uniquely
-    //  * identify the resource; this is typically just the resource ID, but it may also include some properties.
-    //  */
-    // async read(id: pulumi.ID, urn: pulumi.URN, props?: any): Promise<provider.ReadResult> { }
     // /**
     //  * Call calls the indicated method.
     //  *

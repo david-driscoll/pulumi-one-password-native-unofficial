@@ -62,9 +62,13 @@ func GetItem(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Item resources.
 type itemState struct {
+	// The UUID of the vault the item is in.
+	Vault *string `pulumi:"vault"`
 }
 
 type ItemState struct {
+	// The UUID of the vault the item is in.
+	Vault pulumi.StringInput
 }
 
 func (ItemState) ElementType() reflect.Type {

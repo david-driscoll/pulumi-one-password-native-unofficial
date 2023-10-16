@@ -12,10 +12,11 @@ export class BankAccountItem extends pulumi.CustomResource {
      *
      * @param name The _unique_ name of the resulting resource.
      * @param id The _unique_ provider ID of the resource to lookup.
+     * @param state Any extra arguments used during the lookup.
      * @param opts Optional settings to control the behavior of the CustomResource.
      */
-    public static get(name: string, id: pulumi.Input<pulumi.ID>, opts?: pulumi.CustomResourceOptions): BankAccountItem {
-        return new BankAccountItem(name, undefined as any, { ...opts, id: id });
+    public static get(name: string, id: pulumi.Input<pulumi.ID>, state?: BankAccountItemState, opts?: pulumi.CustomResourceOptions): BankAccountItem {
+        return new BankAccountItem(name, <any>state, { ...opts, id: id });
     }
 
     /** @internal */
@@ -69,10 +70,15 @@ export class BankAccountItem extends pulumi.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: BankAccountItemArgs, opts?: pulumi.CustomResourceOptions) {
+    constructor(name: string, args: BankAccountItemArgs, opts?: pulumi.CustomResourceOptions)
+    constructor(name: string, argsOrState?: BankAccountItemArgs | BankAccountItemState, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
-        if (!opts.id) {
+        if (opts.id) {
+            const state = argsOrState as BankAccountItemState | undefined;
+            resourceInputs["vault"] = state ? state.vault : undefined;
+        } else {
+            const args = argsOrState as BankAccountItemArgs | undefined;
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
@@ -93,28 +99,17 @@ export class BankAccountItem extends pulumi.CustomResource {
             resourceInputs["type"] = args ? args.type : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["uuid"] = undefined /*out*/;
-        } else {
-            resourceInputs["accountNumber"] = undefined /*out*/;
-            resourceInputs["bankName"] = undefined /*out*/;
-            resourceInputs["branchInformation"] = undefined /*out*/;
-            resourceInputs["category"] = undefined /*out*/;
-            resourceInputs["fields"] = undefined /*out*/;
-            resourceInputs["iban"] = undefined /*out*/;
-            resourceInputs["nameOnAccount"] = undefined /*out*/;
-            resourceInputs["notes"] = undefined /*out*/;
-            resourceInputs["pin"] = undefined /*out*/;
-            resourceInputs["routingNumber"] = undefined /*out*/;
-            resourceInputs["sections"] = undefined /*out*/;
-            resourceInputs["swift"] = undefined /*out*/;
-            resourceInputs["tags"] = undefined /*out*/;
-            resourceInputs["title"] = undefined /*out*/;
-            resourceInputs["type"] = undefined /*out*/;
-            resourceInputs["uuid"] = undefined /*out*/;
-            resourceInputs["vault"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(BankAccountItem.__pulumiType, name, resourceInputs, opts);
     }
+}
+
+export interface BankAccountItemState {
+    /**
+     * The UUID of the vault the item is in.
+     */
+    vault: pulumi.Input<string>;
 }
 
 /**

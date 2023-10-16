@@ -70,9 +70,13 @@ func GetLoginItem(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering LoginItem resources.
 type loginItemState struct {
+	// The UUID of the vault the item is in.
+	Vault *string `pulumi:"vault"`
 }
 
 type LoginItemState struct {
+	// The UUID of the vault the item is in.
+	Vault pulumi.StringInput
 }
 
 func (LoginItemState) ElementType() reflect.Type {

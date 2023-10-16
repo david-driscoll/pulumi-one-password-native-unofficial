@@ -85,8 +85,8 @@ namespace Pulumi.Onepassword
         {
         }
 
-        private WirelessRouterItem(string name, Input<string> id, CustomResourceOptions? options = null)
-            : base("onepassword:index:WirelessRouterItem", name, null, MakeResourceOptions(options, id))
+        private WirelessRouterItem(string name, Input<string> id, WirelessRouterItemState? state = null, CustomResourceOptions? options = null)
+            : base("onepassword:index:WirelessRouterItem", name, state, MakeResourceOptions(options, id))
         {
         }
 
@@ -115,10 +115,11 @@ namespace Pulumi.Onepassword
         ///
         /// <param name="name">The unique name of the resulting resource.</param>
         /// <param name="id">The unique provider ID of the resource to lookup.</param>
+        /// <param name="state">Any extra arguments used during the lookup.</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public static WirelessRouterItem Get(string name, Input<string> id, CustomResourceOptions? options = null)
+        public static WirelessRouterItem Get(string name, Input<string> id, WirelessRouterItemState? state = null, CustomResourceOptions? options = null)
         {
-            return new WirelessRouterItem(name, id, options);
+            return new WirelessRouterItem(name, id, state, options);
         }
     }
 
@@ -198,6 +199,19 @@ namespace Pulumi.Onepassword
         public Input<string>? WirelessSecurity { get; set; }
 
         public WirelessRouterItemArgs()
+        {
+        }
+    }
+
+    public sealed class WirelessRouterItemState : Pulumi.ResourceArgs
+    {
+        /// <summary>
+        /// The UUID of the vault the item is in.
+        /// </summary>
+        [Input("vault", required: true)]
+        public Input<string> Vault { get; set; } = null!;
+
+        public WirelessRouterItemState()
         {
         }
     }

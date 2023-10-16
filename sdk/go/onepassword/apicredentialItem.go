@@ -68,9 +68,13 @@ func GetAPICredentialItem(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering APICredentialItem resources.
 type apicredentialItemState struct {
+	// The UUID of the vault the item is in.
+	Vault *string `pulumi:"vault"`
 }
 
 type APICredentialItemState struct {
+	// The UUID of the vault the item is in.
+	Vault pulumi.StringInput
 }
 
 func (APICredentialItemState) ElementType() reflect.Type {

@@ -68,9 +68,13 @@ func GetOutdoorLicenseItem(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering OutdoorLicenseItem resources.
 type outdoorLicenseItemState struct {
+	// The UUID of the vault the item is in.
+	Vault *string `pulumi:"vault"`
 }
 
 type OutdoorLicenseItemState struct {
+	// The UUID of the vault the item is in.
+	Vault pulumi.StringInput
 }
 
 func (OutdoorLicenseItemState) ElementType() reflect.Type {

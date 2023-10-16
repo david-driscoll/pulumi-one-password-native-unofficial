@@ -12,10 +12,11 @@ export class MembershipItem extends pulumi.CustomResource {
      *
      * @param name The _unique_ name of the resulting resource.
      * @param id The _unique_ provider ID of the resource to lookup.
+     * @param state Any extra arguments used during the lookup.
      * @param opts Optional settings to control the behavior of the CustomResource.
      */
-    public static get(name: string, id: pulumi.Input<pulumi.ID>, opts?: pulumi.CustomResourceOptions): MembershipItem {
-        return new MembershipItem(name, undefined as any, { ...opts, id: id });
+    public static get(name: string, id: pulumi.Input<pulumi.ID>, state?: MembershipItemState, opts?: pulumi.CustomResourceOptions): MembershipItem {
+        return new MembershipItem(name, <any>state, { ...opts, id: id });
     }
 
     /** @internal */
@@ -68,10 +69,15 @@ export class MembershipItem extends pulumi.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: MembershipItemArgs, opts?: pulumi.CustomResourceOptions) {
+    constructor(name: string, args: MembershipItemArgs, opts?: pulumi.CustomResourceOptions)
+    constructor(name: string, argsOrState?: MembershipItemArgs | MembershipItemState, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
-        if (!opts.id) {
+        if (opts.id) {
+            const state = argsOrState as MembershipItemState | undefined;
+            resourceInputs["vault"] = state ? state.vault : undefined;
+        } else {
+            const args = argsOrState as MembershipItemArgs | undefined;
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
@@ -91,27 +97,17 @@ export class MembershipItem extends pulumi.CustomResource {
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["website"] = args ? args.website : undefined;
             resourceInputs["uuid"] = undefined /*out*/;
-        } else {
-            resourceInputs["category"] = undefined /*out*/;
-            resourceInputs["expiryDate"] = undefined /*out*/;
-            resourceInputs["fields"] = undefined /*out*/;
-            resourceInputs["group"] = undefined /*out*/;
-            resourceInputs["memberId"] = undefined /*out*/;
-            resourceInputs["memberName"] = undefined /*out*/;
-            resourceInputs["memberSince"] = undefined /*out*/;
-            resourceInputs["notes"] = undefined /*out*/;
-            resourceInputs["pin"] = undefined /*out*/;
-            resourceInputs["sections"] = undefined /*out*/;
-            resourceInputs["tags"] = undefined /*out*/;
-            resourceInputs["telephone"] = undefined /*out*/;
-            resourceInputs["title"] = undefined /*out*/;
-            resourceInputs["uuid"] = undefined /*out*/;
-            resourceInputs["vault"] = undefined /*out*/;
-            resourceInputs["website"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(MembershipItem.__pulumiType, name, resourceInputs, opts);
     }
+}
+
+export interface MembershipItemState {
+    /**
+     * The UUID of the vault the item is in.
+     */
+    vault: pulumi.Input<string>;
 }
 
 /**

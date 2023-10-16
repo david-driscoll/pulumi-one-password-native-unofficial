@@ -12,10 +12,11 @@ export class WirelessRouterItem extends pulumi.CustomResource {
      *
      * @param name The _unique_ name of the resulting resource.
      * @param id The _unique_ provider ID of the resource to lookup.
+     * @param state Any extra arguments used during the lookup.
      * @param opts Optional settings to control the behavior of the CustomResource.
      */
-    public static get(name: string, id: pulumi.Input<pulumi.ID>, opts?: pulumi.CustomResourceOptions): WirelessRouterItem {
-        return new WirelessRouterItem(name, undefined as any, { ...opts, id: id });
+    public static get(name: string, id: pulumi.Input<pulumi.ID>, state?: WirelessRouterItemState, opts?: pulumi.CustomResourceOptions): WirelessRouterItem {
+        return new WirelessRouterItem(name, <any>state, { ...opts, id: id });
     }
 
     /** @internal */
@@ -68,10 +69,15 @@ export class WirelessRouterItem extends pulumi.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: WirelessRouterItemArgs, opts?: pulumi.CustomResourceOptions) {
+    constructor(name: string, args: WirelessRouterItemArgs, opts?: pulumi.CustomResourceOptions)
+    constructor(name: string, argsOrState?: WirelessRouterItemArgs | WirelessRouterItemState, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
-        if (!opts.id) {
+        if (opts.id) {
+            const state = argsOrState as WirelessRouterItemState | undefined;
+            resourceInputs["vault"] = state ? state.vault : undefined;
+        } else {
+            const args = argsOrState as WirelessRouterItemArgs | undefined;
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
@@ -91,27 +97,17 @@ export class WirelessRouterItem extends pulumi.CustomResource {
             resourceInputs["wirelessNetworkPassword"] = args ? args.wirelessNetworkPassword : undefined;
             resourceInputs["wirelessSecurity"] = args ? args.wirelessSecurity : undefined;
             resourceInputs["uuid"] = undefined /*out*/;
-        } else {
-            resourceInputs["airPortId"] = undefined /*out*/;
-            resourceInputs["attachedStoragePassword"] = undefined /*out*/;
-            resourceInputs["baseStationName"] = undefined /*out*/;
-            resourceInputs["baseStationPassword"] = undefined /*out*/;
-            resourceInputs["category"] = undefined /*out*/;
-            resourceInputs["fields"] = undefined /*out*/;
-            resourceInputs["networkName"] = undefined /*out*/;
-            resourceInputs["notes"] = undefined /*out*/;
-            resourceInputs["sections"] = undefined /*out*/;
-            resourceInputs["serverIpAddress"] = undefined /*out*/;
-            resourceInputs["tags"] = undefined /*out*/;
-            resourceInputs["title"] = undefined /*out*/;
-            resourceInputs["uuid"] = undefined /*out*/;
-            resourceInputs["vault"] = undefined /*out*/;
-            resourceInputs["wirelessNetworkPassword"] = undefined /*out*/;
-            resourceInputs["wirelessSecurity"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(WirelessRouterItem.__pulumiType, name, resourceInputs, opts);
     }
+}
+
+export interface WirelessRouterItemState {
+    /**
+     * The UUID of the vault the item is in.
+     */
+    vault: pulumi.Input<string>;
 }
 
 /**

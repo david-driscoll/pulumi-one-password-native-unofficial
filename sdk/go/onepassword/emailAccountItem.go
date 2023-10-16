@@ -71,9 +71,13 @@ func GetEmailAccountItem(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering EmailAccountItem resources.
 type emailAccountItemState struct {
+	// The UUID of the vault the item is in.
+	Vault *string `pulumi:"vault"`
 }
 
 type EmailAccountItemState struct {
+	// The UUID of the vault the item is in.
+	Vault pulumi.StringInput
 }
 
 func (EmailAccountItemState) ElementType() reflect.Type {

@@ -65,9 +65,13 @@ func GetCryptoWalletItem(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering CryptoWalletItem resources.
 type cryptoWalletItemState struct {
+	// The UUID of the vault the item is in.
+	Vault *string `pulumi:"vault"`
 }
 
 type CryptoWalletItemState struct {
+	// The UUID of the vault the item is in.
+	Vault pulumi.StringInput
 }
 
 func (CryptoWalletItemState) ElementType() reflect.Type {

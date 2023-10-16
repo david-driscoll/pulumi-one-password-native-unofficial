@@ -69,9 +69,13 @@ func GetPasswordItem(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering PasswordItem resources.
 type passwordItemState struct {
+	// The UUID of the vault the item is in.
+	Vault *string `pulumi:"vault"`
 }
 
 type PasswordItemState struct {
+	// The UUID of the vault the item is in.
+	Vault pulumi.StringInput
 }
 
 func (PasswordItemState) ElementType() reflect.Type {

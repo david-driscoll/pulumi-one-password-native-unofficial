@@ -71,9 +71,13 @@ func GetBankAccountItem(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering BankAccountItem resources.
 type bankAccountItemState struct {
+	// The UUID of the vault the item is in.
+	Vault *string `pulumi:"vault"`
 }
 
 type BankAccountItemState struct {
+	// The UUID of the vault the item is in.
+	Vault pulumi.StringInput
 }
 
 func (BankAccountItemState) ElementType() reflect.Type {

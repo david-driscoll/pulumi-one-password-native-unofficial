@@ -67,9 +67,13 @@ func GetRewardProgramItem(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering RewardProgramItem resources.
 type rewardProgramItemState struct {
+	// The UUID of the vault the item is in.
+	Vault *string `pulumi:"vault"`
 }
 
 type RewardProgramItemState struct {
+	// The UUID of the vault the item is in.
+	Vault pulumi.StringInput
 }
 
 func (RewardProgramItemState) ElementType() reflect.Type {

@@ -67,9 +67,13 @@ func GetSoftwareLicenseItem(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering SoftwareLicenseItem resources.
 type softwareLicenseItemState struct {
+	// The UUID of the vault the item is in.
+	Vault *string `pulumi:"vault"`
 }
 
 type SoftwareLicenseItemState struct {
+	// The UUID of the vault the item is in.
+	Vault pulumi.StringInput
 }
 
 func (SoftwareLicenseItemState) ElementType() reflect.Type {

@@ -88,8 +88,8 @@ namespace Pulumi.Onepassword
         {
         }
 
-        private DatabaseItem(string name, Input<string> id, CustomResourceOptions? options = null)
-            : base("onepassword:index:DatabaseItem", name, null, MakeResourceOptions(options, id))
+        private DatabaseItem(string name, Input<string> id, DatabaseItemState? state = null, CustomResourceOptions? options = null)
+            : base("onepassword:index:DatabaseItem", name, state, MakeResourceOptions(options, id))
         {
         }
 
@@ -118,10 +118,11 @@ namespace Pulumi.Onepassword
         ///
         /// <param name="name">The unique name of the resulting resource.</param>
         /// <param name="id">The unique provider ID of the resource to lookup.</param>
+        /// <param name="state">Any extra arguments used during the lookup.</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public static DatabaseItem Get(string name, Input<string> id, CustomResourceOptions? options = null)
+        public static DatabaseItem Get(string name, Input<string> id, DatabaseItemState? state = null, CustomResourceOptions? options = null)
         {
-            return new DatabaseItem(name, id, options);
+            return new DatabaseItem(name, id, state, options);
         }
     }
 
@@ -204,6 +205,19 @@ namespace Pulumi.Onepassword
         public Input<string> Vault { get; set; } = null!;
 
         public DatabaseItemArgs()
+        {
+        }
+    }
+
+    public sealed class DatabaseItemState : Pulumi.ResourceArgs
+    {
+        /// <summary>
+        /// The UUID of the vault the item is in.
+        /// </summary>
+        [Input("vault", required: true)]
+        public Input<string> Vault { get; set; } = null!;
+
+        public DatabaseItemState()
         {
         }
     }

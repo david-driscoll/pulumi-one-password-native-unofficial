@@ -63,9 +63,13 @@ func GetSocialSecurityNumberItem(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering SocialSecurityNumberItem resources.
 type socialSecurityNumberItemState struct {
+	// The UUID of the vault the item is in.
+	Vault *string `pulumi:"vault"`
 }
 
 type SocialSecurityNumberItemState struct {
+	// The UUID of the vault the item is in.
+	Vault pulumi.StringInput
 }
 
 func (SocialSecurityNumberItemState) ElementType() reflect.Type {
