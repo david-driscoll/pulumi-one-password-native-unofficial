@@ -1,7 +1,7 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as provider from "@pulumi/pulumi/provider";
-import { ItemType, ResourceTypes, ItemTypeNames } from './types'
-import { FieldAssignment, FieldAssignmentType, FieldPurpose, FieldTypeSelector, item, Field as OpField, Section as OpSection } from "@1password/op-js"
+import { ItemType, ResourceTypes, ItemTypeNames, FunctionTypes, PropertyPaths } from './types'
+import { FieldAssignment, FieldAssignmentType, FieldPurpose, item, vault, read } from "@1password/op-js"
 import { createHash, randomBytes } from "crypto";
 import { RNGFactory, Random } from "random/dist/cjs/random";
 import { camelCase } from "lodash";
@@ -96,56 +96,7 @@ export class Provider implements provider.Provider {
             }
         )
 
-        const output = {
-            fields: result.fields?.reduce((result, value) => {
-                result[camelCase(value.label ?? value.id)] = {
-                    label: value.label ?? null,
-                    uuid: value.id ?? null,
-                    type: value.type as any ?? null,
-                    reference: value.reference ?? null!
-                };
-                if (value.value) {
-                    result[camelCase(value.label ?? value.id)].value = value.value;
-                }
-                return result;
-            }, {} as Record<string, OutField>),
-            sections: result.fields?.filter(z => !!z.section).reduce((result, value) => {
-                result[camelCase(value.section?.label ?? value.section!.id)] ??= {
-                    label: value.section!.label!,
-                    uuid: value.section!.id,
-                    fields: {}
-                };
-                result[camelCase(value.section?.label ?? value.section!.id)].fields[camelCase(value.label ?? value.id)] = {
-                    label: value.label ?? null,
-                    uuid: value.id ?? null,
-                    type: value.type as any ?? null,
-                    reference: value.reference ?? null!
-                }
-                if (value.value) {
-                    result[camelCase(value.section?.label ?? value.section!.id)].fields[camelCase(value.label ?? value.id)].value = value.value;
-                }
-                return result;
-            }, {} as Record<string, OutSection>)
-        } as Record<string, any>
-
-        for (const item of fieldPropPaths) {
-            if (item[1]) {
-                output[item[1]] ??= {};
-                Object.defineProperty(output[item[1]], item[0], {
-                    enumerable: true,
-                    get() {
-                        return output.sections?.[item[1]!]?.fields?.[item[0]]?.value ?? null
-                    }
-                })
-            } else {
-                Object.defineProperty(output, item[0], {
-                    enumerable: true,
-                    get() {
-                        return output.fields?.[item[0]]?.value ?? null
-                    }
-                })
-            }
-        }
+        const output = convertResultToOutputs(resourceType, result);
 
         return {
             id: result.id,
@@ -223,6 +174,64 @@ export class Provider implements provider.Provider {
         }
         return failures.length ? { inputs: news, failures } : {};
     }
+    /**
+     * Invoke calls the indicated function.
+     *
+     * @param token The token of the function to call.
+     * @param inputs The inputs to the function.
+     */
+    async invoke(token: string, inputs: any): Promise<provider.InvokeResult> {
+        const functionType = getFunctionType(token);
+        if (!functionType) throw new Error(`unknown function type ${token}`);
+        switch (functionType) {
+            case 'onepassword:index:GetVault': return this.getVault(inputs)
+            case 'onepassword:index:GetSecretReference': return this.getSecretReference(inputs)
+            default: return this.getItem(functionType, inputs)
+        }
+    }
+
+    private getVault(inputs: { vault: string }): provider.InvokeResult {
+        const failures: provider.CheckFailure[] = [];
+        if (!inputs.vault) failures.push({ property: 'vault', reason: `Must give a vault in order to get a Vault` });
+        if (failures.length > 0) {
+            return { failures };
+        }
+
+        const result = vault.get(inputs.vault);
+        return {
+            outputs: {
+                description: '',
+                name: result.name,
+                uuid: result.id,
+            }
+        }
+    }
+
+    private getSecretReference(inputs: { reference: string }): provider.InvokeResult {
+        const failures: provider.CheckFailure[] = [];
+        if (!inputs.reference) failures.push({ property: 'reference', reason: `Must give a reference in order to get an field by reference uri` });
+        if (failures.length > 0) {
+            return { failures };
+        }
+
+        const result = read.parse(inputs.reference);
+        return { outputs: { value: result } }
+    }
+
+    private getItem(token: ReturnType<NonNullable<typeof getFunctionType>>, inputs: { title?: string; uuid?: string; vault: string; }): provider.InvokeResult {
+        const name = inputs.title ?? inputs.uuid;
+        const failures: provider.CheckFailure[] = [];
+        if (!name) failures.push({ property: 'title', reason: `Must give the title or uuid for in order to get a ${ItemTypeNames[token!]}` }, { property: 'uuid', reason: `Must give the title or uuid for in order to get a ${ItemTypeNames[token!]}` });
+        if (!inputs.vault) failures.push({ property: 'vault', reason: `Must give a vault in order to get a ${ItemTypeNames[token!]}` });
+        if (failures.length > 0) {
+            return { failures };
+        }
+
+        const result = item.get(name!, { vault: inputs.vault })
+
+        const outputs = convertResultToOutputs(token!, result);
+        return { outputs };
+    }
     // /**
     //  * Diff checks what impacts a hypothetical update will have on the resource's properties.
     //  *
@@ -243,33 +252,13 @@ export class Provider implements provider.Provider {
     //  * @param inputs The inputs to the method.
     //  */
     // async call(token: string, inputs: pulumi.Inputs): Promise<provider.InvokeResult> { }
-    // /**
-    //  * Invoke calls the indicated function.
-    //  *
-    //  * @param token The token of the function to call.
-    //  * @param inputs The inputs to the function.
-    //  */
-    // async invoke(token: string, inputs: any): Promise<provider.InvokeResult> { }
 }
-
-// async function constructStaticPage(name: string, inputs: pulumi.Inputs,
-//     options: pulumi.ComponentResourceOptions): Promise<provider.ConstructResult> {
-
-//     // Create the component pulumi.
-//     const staticPage = new StaticPage(name, inputs as StaticPageArgs, options);
-
-//     // Return the component resource's URN and outputs as its state.
-//     return {
-//         urn: staticPage.urn,
-//         state: {
-//             bucket: staticPage.bucket,
-//             websiteUrl: staticPage.websiteUrl,
-//         },
-//     };
-// }
 
 function getResourceTypeFromUrn(urn: pulumi.URN) {
     return ResourceTypes.find(z => urn.includes(`:${z}:`));
+}
+function getFunctionType(urn: string) {
+    return FunctionTypes.find(z => z === urn);
 }
 function getNameFromUrn(urn: pulumi.URN) {
     const parts = urn.split(':');
@@ -350,4 +339,62 @@ function assignSections(sections: Record<string, Section>) {
     }
     return assignments;
 
+}
+
+function convertResultToOutputs(kind: string, result: import('@1password/op-js').Item) {
+    const output = {
+        fields: result.fields?.reduce((result, value) => {
+            result[camelCase(value.label ?? value.id)] = {
+                label: value.label ?? null,
+                uuid: value.id ?? null,
+                type: value.type as any ?? null,
+                reference: value.reference ?? null!
+            };
+            if (value.value) {
+                result[camelCase(value.label ?? value.id)].value = value.value;
+            }
+            return result;
+        }, {} as Record<string, OutField>),
+        sections: result.fields?.filter(z => !!z.section).reduce((result, value) => {
+            result[camelCase(value.section?.label ?? value.section!.id)] ??= {
+                label: value.section!.label!,
+                uuid: value.section!.id,
+                fields: {}
+            };
+            result[camelCase(value.section?.label ?? value.section!.id)].fields[camelCase(value.label ?? value.id)] = {
+                label: value.label ?? null,
+                uuid: value.id ?? null,
+                type: value.type as any ?? null,
+                reference: value.reference ?? null!
+            }
+            if (value.value) {
+                result[camelCase(value.section?.label ?? value.section!.id)].fields[camelCase(value.label ?? value.id)].value = value.value;
+            }
+            return result;
+        }, {} as Record<string, OutSection>)
+    } as Record<string, any>
+
+    for (const item of PropertyPaths[kind] ?? []) {
+        if (item[1] && output.sections?.[item[1]!]?.fields?.[item[0]]?.value) {
+            output[item[1]] ??= {};
+            Object.defineProperty(output[item[1]], item[0], {
+                enumerable: true,
+                get() {
+                    return output.sections?.[item[1]!]?.fields?.[item[0]]?.value ?? null
+                }
+            })
+        } else if (!item[1] && output.fields?.[item[0]]?.value) {
+            Object.defineProperty(output, item[0], {
+                enumerable: true,
+                get() {
+                    return output.fields?.[item[0]]?.value ?? null
+                }
+            })
+        }
+    }
+
+    return {
+        ...output,
+        uuid: result.id
+    };
 }

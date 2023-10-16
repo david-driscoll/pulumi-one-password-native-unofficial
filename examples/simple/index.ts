@@ -41,28 +41,43 @@ import * as op from "@pulumi/onepassword";
 
 // })
 
-new op.BankAccountItem('bank-account-info', {
+// new op.BankAccountItem('bank-account-info', {
+
+//     vault: 'testing-pulumi',
+//     accountNumber: "123456789",
+//     branchInformation: {
+//         address: "12345",
+//         phone: "5698789987"
+//     },
+//     fields: {
+//         "test": {
+//             value: "abcd",
+//             purpose: "NOTE"
+//         }
+//     },
+//     sections: {
+//         "my section": {
+//             fields: {
+//                 "my field": {
+//                     value: "my value",
+//                     purpose: "PASSWORD"
+//                 }
+//             }
+//         }
+//     }
+// })
+
+const account = op.getBankAccountOutput({ vault: 'testing-pulumi', title: 'bank-account-info1a8ac7fc' })
+
+account.apply(z => {
+    if (z.accountNumber !== '123456789') {
+        throw new Error("wrong account found!!");
+    }
+    console.log(JSON.stringify(z));
+})
+
+new op.BankAccountItem('other-account-info', {
 
     vault: 'testing-pulumi',
-    accountNumber: "123456789",
-    branchInformation: {
-        address: "12345",
-        phone: "5698789987"
-    },
-    fields: {
-        "test": {
-            value: "abcd",
-            purpose: "NOTE"
-        }
-    },
-    sections: {
-        "my section": {
-            fields: {
-                "my field": {
-                    value: "my value",
-                    purpose: "PASSWORD"
-                }
-            }
-        }
-    }
+    accountNumber: account.apply(z => Array.from(z.accountNumber ?? '').reverse().join(''))
 })

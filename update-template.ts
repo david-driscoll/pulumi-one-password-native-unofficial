@@ -9,6 +9,8 @@ const templates = item.template.list().concat({
 const schema = JSON.parse(readFileSync('./schema.json').toString('ascii'));
 
 const allTemplates = orderBy(templates.map(z => camelCase(z.name)[0].toUpperCase() + camelCase(z.name).substring(1)));
+const resourcePropPaths: Record<string, [field: string, section?: string][]> = {};
+const functionPropPaths: Record<string, [field: string, section?: string][]> = {};
 
 // TODOS: Documents, password recipes, date fields, url fields, etc.
 
@@ -250,7 +252,8 @@ for (const template of templates) {
 
     applyDefaultOutputProperties(currentResource);
 
-    const functionName = `onepassword:index:Get${template.name.replace(/ /g, '')}`
+    const functionName = `onepassword:index:Get${template.name.replace(/ /g, '')}`;
+    (template as any).functionName = functionName
     const currentFunction = schema.functions[functionName] ??= {};
     currentFunction.inputs = {
         "properties": {
@@ -276,15 +279,20 @@ for (const template of templates) {
     const sections = templateSchema.fields
         .filter(z => !!z.section)
         .reduce((o, v) => {
-            schema.types[getSectionKey(template.name, v.section!)] = o[getSectionKey(template.name, v.section!)] = { "type": "object", "properties": {} };
-            currentResource.inputProperties[camelCase(v.section!.label ?? v.section!.id)] = { '$ref': `#/types/${getSectionKey(template.name, v.section!)}`, refName: getSectionKey(template.name, v.section!) };
-            currentResource.properties[camelCase(v.section!.label ?? v.section!.id)] = { '$ref': `#/types/${getSectionKey(template.name, v.section!)}` };
-            currentFunction.outputs.properties[camelCase(v.section!.label ?? v.section!.id)] = { '$ref': `#/types/${getSectionKey(template.name, v.section!)}` };
+            const fieldInfo = getFieldType(v);
+            const sectionKey = getSectionKey(template.name, v.section!);
+            const objectKey = camelCase(v.section!.label ?? v.section!.id);
+            schema.types[sectionKey] = o[sectionKey] = { "type": "object", "properties": {} };
+            currentResource.inputProperties[objectKey] = { '$ref': `#/types/${sectionKey}`, refName: sectionKey };
+            currentResource.properties[objectKey] = { '$ref': `#/types/${sectionKey}` };
+            currentFunction.outputs.properties[objectKey] = { '$ref': `#/types/${sectionKey}` };
             return o;
         }, {} as Record<string, any>);
 
     for (const field of templateSchema.fields) {
 
+        resourcePropPaths[resourceName] ??= [];
+        functionPropPaths[functionName] ??= [];
         const fieldInfo = getFieldType(field);
         if (field.section) {
             const sectionKey = getSectionKey(template.name, field.section!);
@@ -301,6 +309,9 @@ for (const template of templates) {
             if (fieldInfo.default) {
                 sectionProperties[fieldInfo.name].default = fieldInfo.default
             }
+            const objectKey = camelCase(field.section!.label ?? field.section!.id);
+            resourcePropPaths[resourceName].push([fieldInfo.name, objectKey])
+            functionPropPaths[functionName].push([fieldInfo.name, objectKey])
 
         } else {
             currentResource.inputProperties[fieldInfo.name] = {
@@ -329,6 +340,8 @@ for (const template of templates) {
                 currentResource.properties[fieldInfo.name].default = fieldInfo.default
                 currentFunction.outputs.properties[fieldInfo.name].default = fieldInfo.default
             }
+            resourcePropPaths[resourceName].push([fieldInfo.name])
+            functionPropPaths[functionName].push([fieldInfo.name])
         }
     }
 
@@ -348,17 +361,32 @@ schema.resources[`onepassword:index:Item`].inputProperties['category'] = {
 };
 
 
-console.log()
 writeFileSync('./schema.json', JSON.stringify(schema, null, 4))
 
 writeFileSync('./provider/cmd/pulumi-resource-onepassword/types.ts', `
 export const ItemType = {
-${Object.keys(schema.resources).map(z => `"${last(z.split(':'))}": "${z}"`).join(',\n')}
-} as const
+${Object.keys(schema.resources)
+        .concat(Object.keys(schema.functions))
+        .map(z => `"${last(z.split(':'))}": "${z}"`).join(',\n')}
+} as const;
 export const ItemTypeNames = {
-${templates.map(z => `"${(z as any).resourceName}": "${z.name}"`).join(',\n')}
-} as const
-export const ResourceTypes = [${Object.keys(schema.resources).map(z => `"${z}"`).join(', ')}] as const
+${templates.map(z => `"${(z as any).resourceName}": "${z.name}"`)
+        .concat(
+            templates.map(z => `"${(z as any).functionName}": "${z.name}"`)
+        )
+        .concat([
+            `"onepassword:index:GetVault": "Vault"`,
+            `"onepassword:index:GetSecretReference": "Secret Reference"`
+        ])
+        .join(',\n')}
+} as const;
+export const ResourceTypes = [${Object.keys(schema.resources).map(z => `"${z}"`).join(', ')}] as const;
+export const FunctionTypes = [${Object.keys(schema.functions).map(z => `"${z}"`).join(', ')}] as const;
+export const PropertyPaths: Record<string, [field: string, section?: string][]> = {
+    ${Object.entries(resourcePropPaths)
+        .concat(Object.entries(functionPropPaths))
+        .map((v) => `"${v[0]}": ${JSON.stringify(v[1])}`).join(',\n')}
+}
 `)
 
 /*
