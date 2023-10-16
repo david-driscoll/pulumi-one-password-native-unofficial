@@ -18,7 +18,6 @@ type SoftwareLicenseItem struct {
 	Category   pulumi.StringOutput                       `pulumi:"category"`
 	Customer   softwarelicense.CustomerSectionPtrOutput  `pulumi:"customer"`
 	Fields     GetFieldMapOutput                         `pulumi:"fields"`
-	Id         pulumi.StringOutput                       `pulumi:"id"`
 	LicenseKey pulumi.StringPtrOutput                    `pulumi:"licenseKey"`
 	Notes      pulumi.StringPtrOutput                    `pulumi:"notes"`
 	Order      softwarelicense.OrderSectionPtrOutput     `pulumi:"order"`
@@ -45,6 +44,7 @@ func NewSoftwareLicenseItem(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
+	args.Category = pulumi.StringPtr("Software License")
 	var resource SoftwareLicenseItem
 	err := ctx.RegisterResource("onepassword:index:SoftwareLicenseItem", name, args, &resource, opts...)
 	if err != nil {
@@ -77,6 +77,8 @@ func (SoftwareLicenseItemState) ElementType() reflect.Type {
 }
 
 type softwareLicenseItemArgs struct {
+	// The category of the vault the item is in.
+	Category   *string                           `pulumi:"category"`
 	Customer   *softwarelicense.CustomerSection  `pulumi:"customer"`
 	Fields     map[string]Field                  `pulumi:"fields"`
 	LicenseKey *string                           `pulumi:"licenseKey"`
@@ -95,6 +97,8 @@ type softwareLicenseItemArgs struct {
 
 // The set of arguments for constructing a SoftwareLicenseItem resource.
 type SoftwareLicenseItemArgs struct {
+	// The category of the vault the item is in.
+	Category   pulumi.StringPtrInput
 	Customer   softwarelicense.CustomerSectionPtrInput
 	Fields     FieldMapInput
 	LicenseKey pulumi.StringPtrInput

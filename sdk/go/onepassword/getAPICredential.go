@@ -35,7 +35,6 @@ type GetAPICredentialResult struct {
 	Fields     map[string]GetField   `pulumi:"fields"`
 	Filename   *string               `pulumi:"filename"`
 	Hostname   *string               `pulumi:"hostname"`
-	Id         *string               `pulumi:"id"`
 	Notes      *string               `pulumi:"notes"`
 	Sections   map[string]GetSection `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
@@ -113,10 +112,6 @@ func (o GetAPICredentialResultOutput) Filename() pulumi.StringPtrOutput {
 
 func (o GetAPICredentialResultOutput) Hostname() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetAPICredentialResult) *string { return v.Hostname }).(pulumi.StringPtrOutput)
-}
-
-func (o GetAPICredentialResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetAPICredentialResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
 func (o GetAPICredentialResultOutput) Notes() pulumi.StringPtrOutput {

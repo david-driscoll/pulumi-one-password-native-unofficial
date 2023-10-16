@@ -81,7 +81,6 @@ namespace Pulumi.Onepassword
     {
         public readonly string? Category;
         public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
-        public readonly string? Id;
         public readonly ImmutableDictionary<string, Outputs.GetSection>? Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
@@ -106,8 +105,6 @@ namespace Pulumi.Onepassword
 
             ImmutableDictionary<string, Outputs.GetField>? fields,
 
-            string? id,
-
             ImmutableDictionary<string, Outputs.GetSection>? sections,
 
             ImmutableArray<string> tags,
@@ -120,7 +117,6 @@ namespace Pulumi.Onepassword
         {
             Category = category;
             Fields = fields;
-            Id = id;
             Sections = sections;
             Tags = tags;
             Title = title;

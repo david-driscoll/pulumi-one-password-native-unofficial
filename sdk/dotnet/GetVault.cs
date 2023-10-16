@@ -59,7 +59,6 @@ namespace Pulumi.Onepassword
         /// The description of the vault.
         /// </summary>
         public readonly string? Description;
-        public readonly string? Id;
         /// <summary>
         /// The name of the vault to retrieve. This field will be populated with the name of the vault if the vault it looked up by its UUID.
         /// </summary>
@@ -73,14 +72,11 @@ namespace Pulumi.Onepassword
         private GetVaultResult(
             string? description,
 
-            string? id,
-
             string? name,
 
             string? uuid)
         {
             Description = description;
-            Id = id;
             Name = name;
             Uuid = uuid;
         }

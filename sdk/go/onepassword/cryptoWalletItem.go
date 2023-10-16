@@ -17,7 +17,6 @@ type CryptoWalletItem struct {
 
 	Category       pulumi.StringOutput    `pulumi:"category"`
 	Fields         GetFieldMapOutput      `pulumi:"fields"`
-	Id             pulumi.StringOutput    `pulumi:"id"`
 	Notes          pulumi.StringPtrOutput `pulumi:"notes"`
 	Password       pulumi.StringPtrOutput `pulumi:"password"`
 	RecoveryPhrase pulumi.StringPtrOutput `pulumi:"recoveryPhrase"`
@@ -43,6 +42,7 @@ func NewCryptoWalletItem(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
+	args.Category = pulumi.StringPtr("Crypto Wallet")
 	var resource CryptoWalletItem
 	err := ctx.RegisterResource("onepassword:index:CryptoWalletItem", name, args, &resource, opts...)
 	if err != nil {
@@ -75,6 +75,8 @@ func (CryptoWalletItemState) ElementType() reflect.Type {
 }
 
 type cryptoWalletItemArgs struct {
+	// The category of the vault the item is in.
+	Category       *string            `pulumi:"category"`
 	Fields         map[string]Field   `pulumi:"fields"`
 	Notes          *string            `pulumi:"notes"`
 	Password       *string            `pulumi:"password"`
@@ -91,6 +93,8 @@ type cryptoWalletItemArgs struct {
 
 // The set of arguments for constructing a CryptoWalletItem resource.
 type CryptoWalletItemArgs struct {
+	// The category of the vault the item is in.
+	Category       pulumi.StringPtrInput
 	Fields         FieldMapInput
 	Notes          pulumi.StringPtrInput
 	Password       pulumi.StringPtrInput

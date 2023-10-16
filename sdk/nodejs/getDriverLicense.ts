@@ -44,7 +44,6 @@ export interface GetDriverLicenseResult {
     readonly fullName?: string;
     readonly gender?: string;
     readonly height?: string;
-    readonly id?: string;
     readonly licenseClass?: string;
     readonly notes?: string;
     readonly number?: string;

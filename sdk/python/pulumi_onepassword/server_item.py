@@ -19,6 +19,7 @@ class ServerItemArgs:
     def __init__(__self__, *,
                  vault: pulumi.Input[str],
                  admin_console: Optional[pulumi.Input['_server.AdminConsoleSectionArgs']] = None,
+                 category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
                  hosting_provider: Optional[pulumi.Input['_server.HostingProviderSectionArgs']] = None,
                  notes: Optional[pulumi.Input[str]] = None,
@@ -31,12 +32,15 @@ class ServerItemArgs:
         """
         The set of arguments for constructing a ServerItem resource.
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
+        :param pulumi.Input[str] category: The category of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         """
         pulumi.set(__self__, "vault", vault)
         if admin_console is not None:
             pulumi.set(__self__, "admin_console", admin_console)
+        if category is not None:
+            pulumi.set(__self__, "category", 'Server')
         if fields is not None:
             pulumi.set(__self__, "fields", fields)
         if hosting_provider is not None:
@@ -76,6 +80,18 @@ class ServerItemArgs:
     @admin_console.setter
     def admin_console(self, value: Optional[pulumi.Input['_server.AdminConsoleSectionArgs']]):
         pulumi.set(self, "admin_console", value)
+
+    @property
+    @pulumi.getter
+    def category(self) -> Optional[pulumi.Input[str]]:
+        """
+        The category of the vault the item is in.
+        """
+        return pulumi.get(self, "category")
+
+    @category.setter
+    def category(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "category", value)
 
     @property
     @pulumi.getter
@@ -171,6 +187,7 @@ class ServerItem(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  admin_console: Optional[pulumi.Input[pulumi.InputType['_server.AdminConsoleSectionArgs']]] = None,
+                 category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  hosting_provider: Optional[pulumi.Input[pulumi.InputType['_server.HostingProviderSectionArgs']]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
@@ -186,6 +203,7 @@ class ServerItem(pulumi.CustomResource):
         Create a ServerItem resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] category: The category of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
@@ -214,6 +232,7 @@ class ServerItem(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  admin_console: Optional[pulumi.Input[pulumi.InputType['_server.AdminConsoleSectionArgs']]] = None,
+                 category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  hosting_provider: Optional[pulumi.Input[pulumi.InputType['_server.HostingProviderSectionArgs']]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
@@ -237,6 +256,7 @@ class ServerItem(pulumi.CustomResource):
             __props__ = ServerItemArgs.__new__(ServerItemArgs)
 
             __props__.__dict__["admin_console"] = admin_console
+            __props__.__dict__["category"] = 'Server'
             __props__.__dict__["fields"] = fields
             __props__.__dict__["hosting_provider"] = hosting_provider
             __props__.__dict__["notes"] = notes
@@ -249,8 +269,6 @@ class ServerItem(pulumi.CustomResource):
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
-            __props__.__dict__["category"] = None
-            __props__.__dict__["id"] = None
             __props__.__dict__["uuid"] = None
         super(ServerItem, __self__).__init__(
             'onepassword:index:ServerItem',
@@ -278,7 +296,6 @@ class ServerItem(pulumi.CustomResource):
         __props__.__dict__["category"] = None
         __props__.__dict__["fields"] = None
         __props__.__dict__["hosting_provider"] = None
-        __props__.__dict__["id"] = None
         __props__.__dict__["notes"] = None
         __props__.__dict__["password"] = None
         __props__.__dict__["sections"] = None
@@ -309,11 +326,6 @@ class ServerItem(pulumi.CustomResource):
     @pulumi.getter(name="hostingProvider")
     def hosting_provider(self) -> pulumi.Output[Optional['_server.outputs.HostingProviderSection']]:
         return pulumi.get(self, "hosting_provider")
-
-    @property
-    @pulumi.getter
-    def id(self) -> pulumi.Output[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter

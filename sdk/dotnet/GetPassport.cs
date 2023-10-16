@@ -79,7 +79,6 @@ namespace Pulumi.Onepassword
         public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
         public readonly string? FullName;
         public readonly string? Gender;
-        public readonly string? Id;
         public readonly string? IssuedOn;
         public readonly string? IssuingAuthority;
         public readonly string? IssuingCountry;
@@ -120,8 +119,6 @@ namespace Pulumi.Onepassword
 
             string? gender,
 
-            string? id,
-
             string? issuedOn,
 
             string? issuingAuthority,
@@ -154,7 +151,6 @@ namespace Pulumi.Onepassword
             Fields = fields;
             FullName = fullName;
             Gender = gender;
-            Id = id;
             IssuedOn = issuedOn;
             IssuingAuthority = issuingAuthority;
             IssuingCountry = issuingCountry;

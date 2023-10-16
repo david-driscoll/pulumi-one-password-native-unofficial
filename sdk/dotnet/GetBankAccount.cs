@@ -79,7 +79,6 @@ namespace Pulumi.Onepassword
         public readonly string? Category;
         public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
         public readonly string? Iban;
-        public readonly string? Id;
         public readonly string? NameOnAccount;
         public readonly string? Notes;
         public readonly string? Pin;
@@ -118,8 +117,6 @@ namespace Pulumi.Onepassword
 
             string? iban,
 
-            string? id,
-
             string? nameOnAccount,
 
             string? notes,
@@ -148,7 +145,6 @@ namespace Pulumi.Onepassword
             Category = category;
             Fields = fields;
             Iban = iban;
-            Id = id;
             NameOnAccount = nameOnAccount;
             Notes = notes;
             Pin = pin;

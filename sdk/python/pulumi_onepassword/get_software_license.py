@@ -20,7 +20,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetSoftwareLicenseResult:
-    def __init__(__self__, category=None, customer=None, fields=None, id=None, license_key=None, notes=None, order=None, publisher=None, sections=None, tags=None, title=None, uuid=None, vault=None, version=None):
+    def __init__(__self__, category=None, customer=None, fields=None, license_key=None, notes=None, order=None, publisher=None, sections=None, tags=None, title=None, uuid=None, vault=None, version=None):
         if category and not isinstance(category, dict):
             raise TypeError("Expected argument 'category' to be a dict")
         pulumi.set(__self__, "category", category)
@@ -30,9 +30,6 @@ class GetSoftwareLicenseResult:
         if fields and not isinstance(fields, dict):
             raise TypeError("Expected argument 'fields' to be a dict")
         pulumi.set(__self__, "fields", fields)
-        if id and not isinstance(id, str):
-            raise TypeError("Expected argument 'id' to be a str")
-        pulumi.set(__self__, "id", id)
         if license_key and not isinstance(license_key, str):
             raise TypeError("Expected argument 'license_key' to be a str")
         pulumi.set(__self__, "license_key", license_key)
@@ -78,11 +75,6 @@ class GetSoftwareLicenseResult:
     @pulumi.getter
     def fields(self) -> Optional[Mapping[str, 'outputs.GetField']]:
         return pulumi.get(self, "fields")
-
-    @property
-    @pulumi.getter
-    def id(self) -> Optional[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter(name="licenseKey")
@@ -156,7 +148,6 @@ class AwaitableGetSoftwareLicenseResult(GetSoftwareLicenseResult):
             category=self.category,
             customer=self.customer,
             fields=self.fields,
-            id=self.id,
             license_key=self.license_key,
             notes=self.notes,
             order=self.order,
@@ -194,7 +185,6 @@ def get_software_license(title: Optional[str] = None,
         category=__ret__.category,
         customer=__ret__.customer,
         fields=__ret__.fields,
-        id=__ret__.id,
         license_key=__ret__.license_key,
         notes=__ret__.notes,
         order=__ret__.order,

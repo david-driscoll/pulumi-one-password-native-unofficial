@@ -77,7 +77,6 @@ namespace Pulumi.Onepassword
         public readonly string? Date;
         public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
         public readonly string? HealthcareProfessional;
-        public readonly string? Id;
         public readonly string? Location;
         public readonly Pulumi.Onepassword.MedicalRecord.Outputs.MedicationSection? Medication;
         public readonly string? Notes;
@@ -111,8 +110,6 @@ namespace Pulumi.Onepassword
 
             string? healthcareProfessional,
 
-            string? id,
-
             string? location,
 
             Pulumi.Onepassword.MedicalRecord.Outputs.MedicationSection? medication,
@@ -137,7 +134,6 @@ namespace Pulumi.Onepassword
             Date = date;
             Fields = fields;
             HealthcareProfessional = healthcareProfessional;
-            Id = id;
             Location = location;
             Medication = medication;
             Notes = notes;

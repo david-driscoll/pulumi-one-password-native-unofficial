@@ -38,7 +38,6 @@ export class OutdoorLicenseItem extends pulumi.CustomResource {
     public readonly expires!: pulumi.Output<string | undefined>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public readonly fullName!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly maximumQuota!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection} | undefined>;
@@ -89,7 +88,6 @@ export class OutdoorLicenseItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["validFrom"] = args ? args.validFrom : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
             resourceInputs["approvedWildlife"] = undefined /*out*/;
@@ -98,7 +96,6 @@ export class OutdoorLicenseItem extends pulumi.CustomResource {
             resourceInputs["expires"] = undefined /*out*/;
             resourceInputs["fields"] = undefined /*out*/;
             resourceInputs["fullName"] = undefined /*out*/;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["maximumQuota"] = undefined /*out*/;
             resourceInputs["notes"] = undefined /*out*/;
             resourceInputs["sections"] = undefined /*out*/;

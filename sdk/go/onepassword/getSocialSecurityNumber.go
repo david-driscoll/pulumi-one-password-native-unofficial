@@ -31,7 +31,6 @@ type GetSocialSecurityNumberArgs struct {
 type GetSocialSecurityNumberResult struct {
 	Category *string               `pulumi:"category"`
 	Fields   map[string]GetField   `pulumi:"fields"`
-	Id       *string               `pulumi:"id"`
 	Name     *string               `pulumi:"name"`
 	Notes    *string               `pulumi:"notes"`
 	Number   *string               `pulumi:"number"`
@@ -92,10 +91,6 @@ func (o GetSocialSecurityNumberResultOutput) Category() pulumi.StringPtrOutput {
 
 func (o GetSocialSecurityNumberResultOutput) Fields() GetFieldMapOutput {
 	return o.ApplyT(func(v GetSocialSecurityNumberResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
-}
-
-func (o GetSocialSecurityNumberResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetSocialSecurityNumberResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
 func (o GetSocialSecurityNumberResultOutput) Name() pulumi.StringPtrOutput {

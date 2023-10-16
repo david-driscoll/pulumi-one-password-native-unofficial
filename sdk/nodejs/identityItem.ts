@@ -35,7 +35,6 @@ export class IdentityItem extends pulumi.CustomResource {
     public readonly address!: pulumi.Output<outputs.identity.AddressSection | undefined>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
-    public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly identification!: pulumi.Output<outputs.identity.IdentificationSection | undefined>;
     public readonly internetDetails!: pulumi.Output<outputs.identity.InternetDetailsSection | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
@@ -81,13 +80,11 @@ export class IdentityItem extends pulumi.CustomResource {
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
             resourceInputs["address"] = undefined /*out*/;
             resourceInputs["category"] = undefined /*out*/;
             resourceInputs["fields"] = undefined /*out*/;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["identification"] = undefined /*out*/;
             resourceInputs["internetDetails"] = undefined /*out*/;
             resourceInputs["notes"] = undefined /*out*/;

@@ -35,7 +35,6 @@ type GetPassportResult struct {
 	Fields           map[string]GetField   `pulumi:"fields"`
 	FullName         *string               `pulumi:"fullName"`
 	Gender           *string               `pulumi:"gender"`
-	Id               *string               `pulumi:"id"`
 	IssuedOn         *string               `pulumi:"issuedOn"`
 	IssuingAuthority *string               `pulumi:"issuingAuthority"`
 	IssuingCountry   *string               `pulumi:"issuingCountry"`
@@ -117,10 +116,6 @@ func (o GetPassportResultOutput) FullName() pulumi.StringPtrOutput {
 
 func (o GetPassportResultOutput) Gender() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetPassportResult) *string { return v.Gender }).(pulumi.StringPtrOutput)
-}
-
-func (o GetPassportResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetPassportResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
 func (o GetPassportResultOutput) IssuedOn() pulumi.StringPtrOutput {

@@ -34,7 +34,6 @@ export class CryptoWalletItem extends pulumi.CustomResource {
 
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
-    public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly password!: pulumi.Output<string | undefined>;
     public readonly recoveryPhrase!: pulumi.Output<string | undefined>;
@@ -81,12 +80,10 @@ export class CryptoWalletItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["wallet"] = args ? args.wallet : undefined;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
             resourceInputs["category"] = undefined /*out*/;
             resourceInputs["fields"] = undefined /*out*/;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["notes"] = undefined /*out*/;
             resourceInputs["password"] = undefined /*out*/;
             resourceInputs["recoveryPhrase"] = undefined /*out*/;

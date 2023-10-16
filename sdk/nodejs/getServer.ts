@@ -38,7 +38,6 @@ export interface GetServerResult {
     readonly category?: enums.Category | string;
     readonly fields?: {[key: string]: outputs.GetField};
     readonly hostingProvider?: outputs.server.HostingProviderSection;
-    readonly id?: string;
     readonly notes?: string;
     readonly password?: string;
     readonly sections?: {[key: string]: outputs.GetSection};

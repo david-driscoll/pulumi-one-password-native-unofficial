@@ -20,7 +20,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetEmailAccountResult:
-    def __init__(__self__, auth_method=None, category=None, contact_information=None, fields=None, id=None, notes=None, password=None, port_number=None, sections=None, security=None, server=None, smtp=None, tags=None, title=None, type=None, username=None, uuid=None, vault=None):
+    def __init__(__self__, auth_method=None, category=None, contact_information=None, fields=None, notes=None, password=None, port_number=None, sections=None, security=None, server=None, smtp=None, tags=None, title=None, type=None, username=None, uuid=None, vault=None):
         if auth_method and not isinstance(auth_method, str):
             raise TypeError("Expected argument 'auth_method' to be a str")
         pulumi.set(__self__, "auth_method", auth_method)
@@ -33,9 +33,6 @@ class GetEmailAccountResult:
         if fields and not isinstance(fields, dict):
             raise TypeError("Expected argument 'fields' to be a dict")
         pulumi.set(__self__, "fields", fields)
-        if id and not isinstance(id, str):
-            raise TypeError("Expected argument 'id' to be a str")
-        pulumi.set(__self__, "id", id)
         if notes and not isinstance(notes, str):
             raise TypeError("Expected argument 'notes' to be a str")
         pulumi.set(__self__, "notes", notes)
@@ -95,11 +92,6 @@ class GetEmailAccountResult:
     @pulumi.getter
     def fields(self) -> Optional[Mapping[str, 'outputs.GetField']]:
         return pulumi.get(self, "fields")
-
-    @property
-    @pulumi.getter
-    def id(self) -> Optional[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter
@@ -189,7 +181,6 @@ class AwaitableGetEmailAccountResult(GetEmailAccountResult):
             category=self.category,
             contact_information=self.contact_information,
             fields=self.fields,
-            id=self.id,
             notes=self.notes,
             password=self.password,
             port_number=self.port_number,
@@ -231,7 +222,6 @@ def get_email_account(title: Optional[str] = None,
         category=__ret__.category,
         contact_information=__ret__.contact_information,
         fields=__ret__.fields,
-        id=__ret__.id,
         notes=__ret__.notes,
         password=__ret__.password,
         port_number=__ret__.port_number,

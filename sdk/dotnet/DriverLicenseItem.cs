@@ -42,9 +42,6 @@ namespace Pulumi.Onepassword
         [Output("height")]
         public Output<string?> Height { get; private set; } = null!;
 
-        [Output("id")]
-        public Output<string> Id { get; private set; } = null!;
-
         [Output("licenseClass")]
         public Output<string?> LicenseClass { get; private set; } = null!;
 

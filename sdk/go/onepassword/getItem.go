@@ -32,7 +32,6 @@ type LookupItemArgs struct {
 type LookupItemResult struct {
 	Category *string               `pulumi:"category"`
 	Fields   map[string]GetField   `pulumi:"fields"`
-	Id       *string               `pulumi:"id"`
 	Sections map[string]GetSection `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
@@ -90,10 +89,6 @@ func (o LookupItemResultOutput) Category() pulumi.StringPtrOutput {
 
 func (o LookupItemResultOutput) Fields() GetFieldMapOutput {
 	return o.ApplyT(func(v LookupItemResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
-}
-
-func (o LookupItemResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v LookupItemResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
 func (o LookupItemResultOutput) Sections() GetSectionMapOutput {

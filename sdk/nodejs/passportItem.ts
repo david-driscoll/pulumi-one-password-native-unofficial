@@ -38,7 +38,6 @@ export class PassportItem extends pulumi.CustomResource {
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public readonly fullName!: pulumi.Output<string | undefined>;
     public readonly gender!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly issuedOn!: pulumi.Output<string | undefined>;
     public readonly issuingAuthority!: pulumi.Output<string | undefined>;
     public readonly issuingCountry!: pulumi.Output<string | undefined>;
@@ -97,7 +96,6 @@ export class PassportItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["type"] = args ? args.type : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
             resourceInputs["category"] = undefined /*out*/;
@@ -106,7 +104,6 @@ export class PassportItem extends pulumi.CustomResource {
             resourceInputs["fields"] = undefined /*out*/;
             resourceInputs["fullName"] = undefined /*out*/;
             resourceInputs["gender"] = undefined /*out*/;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["issuedOn"] = undefined /*out*/;
             resourceInputs["issuingAuthority"] = undefined /*out*/;
             resourceInputs["issuingCountry"] = undefined /*out*/;

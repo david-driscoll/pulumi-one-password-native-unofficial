@@ -36,7 +36,6 @@ export interface GetLoginArgs {
 export interface GetLoginResult {
     readonly category?: enums.Category | string;
     readonly fields?: {[key: string]: outputs.GetField};
-    readonly id?: string;
     readonly notes?: string;
     readonly password?: string;
     readonly sections?: {[key: string]: outputs.GetSection};

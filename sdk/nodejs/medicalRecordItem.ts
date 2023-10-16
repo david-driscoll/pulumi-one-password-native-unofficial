@@ -36,7 +36,6 @@ export class MedicalRecordItem extends pulumi.CustomResource {
     public readonly date!: pulumi.Output<string | undefined>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public readonly healthcareProfessional!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly location!: pulumi.Output<string | undefined>;
     public readonly medication!: pulumi.Output<outputs.medicalRecord.MedicationSection | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
@@ -87,14 +86,12 @@ export class MedicalRecordItem extends pulumi.CustomResource {
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
             resourceInputs["category"] = undefined /*out*/;
             resourceInputs["date"] = undefined /*out*/;
             resourceInputs["fields"] = undefined /*out*/;
             resourceInputs["healthcareProfessional"] = undefined /*out*/;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["location"] = undefined /*out*/;
             resourceInputs["medication"] = undefined /*out*/;
             resourceInputs["notes"] = undefined /*out*/;

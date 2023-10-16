@@ -30,9 +30,6 @@ namespace Pulumi.Onepassword
         [Output("fullName")]
         public Output<string?> FullName { get; private set; } = null!;
 
-        [Output("id")]
-        public Output<string> Id { get; private set; } = null!;
-
         [Output("maximumQuota")]
         public Output<string?> MaximumQuota { get; private set; } = null!;
 

@@ -16,7 +16,6 @@ type DocumentItem struct {
 
 	Category pulumi.StringOutput    `pulumi:"category"`
 	Fields   GetFieldMapOutput      `pulumi:"fields"`
-	Id       pulumi.StringOutput    `pulumi:"id"`
 	Notes    pulumi.StringPtrOutput `pulumi:"notes"`
 	Sections GetSectionMapOutput    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
@@ -39,6 +38,7 @@ func NewDocumentItem(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
+	args.Category = pulumi.StringPtr("Document")
 	var resource DocumentItem
 	err := ctx.RegisterResource("onepassword:index:DocumentItem", name, args, &resource, opts...)
 	if err != nil {
@@ -71,6 +71,8 @@ func (DocumentItemState) ElementType() reflect.Type {
 }
 
 type documentItemArgs struct {
+	// The category of the vault the item is in.
+	Category *string            `pulumi:"category"`
 	Fields   map[string]Field   `pulumi:"fields"`
 	Notes    *string            `pulumi:"notes"`
 	Sections map[string]Section `pulumi:"sections"`
@@ -84,6 +86,8 @@ type documentItemArgs struct {
 
 // The set of arguments for constructing a DocumentItem resource.
 type DocumentItemArgs struct {
+	// The category of the vault the item is in.
+	Category pulumi.StringPtrInput
 	Fields   FieldMapInput
 	Notes    pulumi.StringPtrInput
 	Sections SectionMapInput

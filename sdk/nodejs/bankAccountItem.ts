@@ -38,7 +38,6 @@ export class BankAccountItem extends pulumi.CustomResource {
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public readonly iban!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly nameOnAccount!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly pin!: pulumi.Output<string | undefined>;
@@ -93,7 +92,6 @@ export class BankAccountItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["type"] = args ? args.type : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
             resourceInputs["accountNumber"] = undefined /*out*/;
@@ -102,7 +100,6 @@ export class BankAccountItem extends pulumi.CustomResource {
             resourceInputs["category"] = undefined /*out*/;
             resourceInputs["fields"] = undefined /*out*/;
             resourceInputs["iban"] = undefined /*out*/;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["nameOnAccount"] = undefined /*out*/;
             resourceInputs["notes"] = undefined /*out*/;
             resourceInputs["pin"] = undefined /*out*/;

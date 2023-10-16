@@ -34,7 +34,6 @@ type GetServerResult struct {
 	Category        *string                        `pulumi:"category"`
 	Fields          map[string]GetField            `pulumi:"fields"`
 	HostingProvider *server.HostingProviderSection `pulumi:"hostingProvider"`
-	Id              *string                        `pulumi:"id"`
 	Notes           *string                        `pulumi:"notes"`
 	Password        *string                        `pulumi:"password"`
 	Sections        map[string]GetSection          `pulumi:"sections"`
@@ -104,10 +103,6 @@ func (o GetServerResultOutput) Fields() GetFieldMapOutput {
 
 func (o GetServerResultOutput) HostingProvider() server.HostingProviderSectionPtrOutput {
 	return o.ApplyT(func(v GetServerResult) *server.HostingProviderSection { return v.HostingProvider }).(server.HostingProviderSectionPtrOutput)
-}
-
-func (o GetServerResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetServerResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
 func (o GetServerResultOutput) Notes() pulumi.StringPtrOutput {

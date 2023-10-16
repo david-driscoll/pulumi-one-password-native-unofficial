@@ -38,7 +38,6 @@ export interface GetMedicalRecordResult {
     readonly date?: string;
     readonly fields?: {[key: string]: outputs.GetField};
     readonly healthcareProfessional?: string;
-    readonly id?: string;
     readonly location?: string;
     readonly medication?: outputs.medicalRecord.MedicationSection;
     readonly notes?: string;

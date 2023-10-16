@@ -36,7 +36,6 @@ type GetCreditCardResult struct {
 	ContactInformation *creditcard.ContactInformationSection `pulumi:"contactInformation"`
 	ExpiryDate         *string                               `pulumi:"expiryDate"`
 	Fields             map[string]GetField                   `pulumi:"fields"`
-	Id                 *string                               `pulumi:"id"`
 	Notes              *string                               `pulumi:"notes"`
 	Number             *string                               `pulumi:"number"`
 	Sections           map[string]GetSection                 `pulumi:"sections"`
@@ -115,10 +114,6 @@ func (o GetCreditCardResultOutput) ExpiryDate() pulumi.StringPtrOutput {
 
 func (o GetCreditCardResultOutput) Fields() GetFieldMapOutput {
 	return o.ApplyT(func(v GetCreditCardResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
-}
-
-func (o GetCreditCardResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetCreditCardResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
 func (o GetCreditCardResultOutput) Notes() pulumi.StringPtrOutput {

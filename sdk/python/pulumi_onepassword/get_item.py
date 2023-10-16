@@ -19,16 +19,13 @@ __all__ = [
 
 @pulumi.output_type
 class GetItemResult:
-    def __init__(__self__, category=None, fields=None, id=None, sections=None, tags=None, title=None, uuid=None, vault=None):
+    def __init__(__self__, category=None, fields=None, sections=None, tags=None, title=None, uuid=None, vault=None):
         if category and not isinstance(category, dict):
             raise TypeError("Expected argument 'category' to be a dict")
         pulumi.set(__self__, "category", category)
         if fields and not isinstance(fields, dict):
             raise TypeError("Expected argument 'fields' to be a dict")
         pulumi.set(__self__, "fields", fields)
-        if id and not isinstance(id, str):
-            raise TypeError("Expected argument 'id' to be a str")
-        pulumi.set(__self__, "id", id)
         if sections and not isinstance(sections, dict):
             raise TypeError("Expected argument 'sections' to be a dict")
         pulumi.set(__self__, "sections", sections)
@@ -54,11 +51,6 @@ class GetItemResult:
     @pulumi.getter
     def fields(self) -> Optional[Mapping[str, 'outputs.GetField']]:
         return pulumi.get(self, "fields")
-
-    @property
-    @pulumi.getter
-    def id(self) -> Optional[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter
@@ -106,7 +98,6 @@ class AwaitableGetItemResult(GetItemResult):
         return GetItemResult(
             category=self.category,
             fields=self.fields,
-            id=self.id,
             sections=self.sections,
             tags=self.tags,
             title=self.title,
@@ -139,7 +130,6 @@ def get_item(title: Optional[str] = None,
     return AwaitableGetItemResult(
         category=__ret__.category,
         fields=__ret__.fields,
-        id=__ret__.id,
         sections=__ret__.sections,
         tags=__ret__.tags,
         title=__ret__.title,

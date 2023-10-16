@@ -36,7 +36,6 @@ export class EmailAccountItem extends pulumi.CustomResource {
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly contactInformation!: pulumi.Output<outputs.emailAccount.ContactInformationSection | undefined>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
-    public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly password!: pulumi.Output<string | undefined>;
     public readonly portNumber!: pulumi.Output<string | undefined>;
@@ -93,14 +92,12 @@ export class EmailAccountItem extends pulumi.CustomResource {
             resourceInputs["type"] = args ? args.type : undefined;
             resourceInputs["username"] = args ? args.username : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
             resourceInputs["authMethod"] = undefined /*out*/;
             resourceInputs["category"] = undefined /*out*/;
             resourceInputs["contactInformation"] = undefined /*out*/;
             resourceInputs["fields"] = undefined /*out*/;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["notes"] = undefined /*out*/;
             resourceInputs["password"] = undefined /*out*/;
             resourceInputs["portNumber"] = undefined /*out*/;

@@ -38,7 +38,6 @@ export class WirelessRouterItem extends pulumi.CustomResource {
     public readonly baseStationPassword!: pulumi.Output<string | undefined>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
-    public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly networkName!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection} | undefined>;
@@ -91,7 +90,6 @@ export class WirelessRouterItem extends pulumi.CustomResource {
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["wirelessNetworkPassword"] = args ? args.wirelessNetworkPassword : undefined;
             resourceInputs["wirelessSecurity"] = args ? args.wirelessSecurity : undefined;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
             resourceInputs["airPortId"] = undefined /*out*/;
@@ -100,7 +98,6 @@ export class WirelessRouterItem extends pulumi.CustomResource {
             resourceInputs["baseStationPassword"] = undefined /*out*/;
             resourceInputs["category"] = undefined /*out*/;
             resourceInputs["fields"] = undefined /*out*/;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["networkName"] = undefined /*out*/;
             resourceInputs["notes"] = undefined /*out*/;
             resourceInputs["sections"] = undefined /*out*/;

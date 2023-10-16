@@ -77,7 +77,6 @@ namespace Pulumi.Onepassword
         public readonly string? ExpiryDate;
         public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
         public readonly string? Group;
-        public readonly string? Id;
         public readonly string? MemberId;
         public readonly string? MemberName;
         public readonly string? MemberSince;
@@ -113,8 +112,6 @@ namespace Pulumi.Onepassword
 
             string? group,
 
-            string? id,
-
             string? memberId,
 
             string? memberName,
@@ -143,7 +140,6 @@ namespace Pulumi.Onepassword
             ExpiryDate = expiryDate;
             Fields = fields;
             Group = group;
-            Id = id;
             MemberId = memberId;
             MemberName = memberName;
             MemberSince = memberSince;

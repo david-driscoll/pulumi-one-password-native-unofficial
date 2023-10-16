@@ -79,7 +79,6 @@ namespace Pulumi.Onepassword
         public readonly Pulumi.Onepassword.CreditCard.Outputs.ContactInformationSection? ContactInformation;
         public readonly string? ExpiryDate;
         public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
-        public readonly string? Id;
         public readonly string? Notes;
         public readonly string? Number;
         public readonly ImmutableDictionary<string, Outputs.GetSection>? Sections;
@@ -117,8 +116,6 @@ namespace Pulumi.Onepassword
 
             ImmutableDictionary<string, Outputs.GetField>? fields,
 
-            string? id,
-
             string? notes,
 
             string? number,
@@ -145,7 +142,6 @@ namespace Pulumi.Onepassword
             ContactInformation = contactInformation;
             ExpiryDate = expiryDate;
             Fields = fields;
-            Id = id;
             Notes = notes;
             Number = number;
             Sections = sections;

@@ -39,7 +39,6 @@ type GetDriverLicenseResult struct {
 	FullName               *string               `pulumi:"fullName"`
 	Gender                 *string               `pulumi:"gender"`
 	Height                 *string               `pulumi:"height"`
-	Id                     *string               `pulumi:"id"`
 	LicenseClass           *string               `pulumi:"licenseClass"`
 	Notes                  *string               `pulumi:"notes"`
 	Number                 *string               `pulumi:"number"`
@@ -133,10 +132,6 @@ func (o GetDriverLicenseResultOutput) Gender() pulumi.StringPtrOutput {
 
 func (o GetDriverLicenseResultOutput) Height() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetDriverLicenseResult) *string { return v.Height }).(pulumi.StringPtrOutput)
-}
-
-func (o GetDriverLicenseResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetDriverLicenseResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
 func (o GetDriverLicenseResultOutput) LicenseClass() pulumi.StringPtrOutput {

@@ -35,7 +35,6 @@ type GetWirelessRouterResult struct {
 	BaseStationPassword     *string               `pulumi:"baseStationPassword"`
 	Category                *string               `pulumi:"category"`
 	Fields                  map[string]GetField   `pulumi:"fields"`
-	Id                      *string               `pulumi:"id"`
 	NetworkName             *string               `pulumi:"networkName"`
 	Notes                   *string               `pulumi:"notes"`
 	Sections                map[string]GetSection `pulumi:"sections"`
@@ -114,10 +113,6 @@ func (o GetWirelessRouterResultOutput) Category() pulumi.StringPtrOutput {
 
 func (o GetWirelessRouterResultOutput) Fields() GetFieldMapOutput {
 	return o.ApplyT(func(v GetWirelessRouterResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
-}
-
-func (o GetWirelessRouterResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetWirelessRouterResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
 func (o GetWirelessRouterResultOutput) NetworkName() pulumi.StringPtrOutput {

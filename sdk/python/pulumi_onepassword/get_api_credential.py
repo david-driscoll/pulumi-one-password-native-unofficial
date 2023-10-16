@@ -19,7 +19,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetAPICredentialResult:
-    def __init__(__self__, category=None, credential=None, expires=None, fields=None, filename=None, hostname=None, id=None, notes=None, sections=None, tags=None, title=None, type=None, username=None, uuid=None, valid_from=None, vault=None):
+    def __init__(__self__, category=None, credential=None, expires=None, fields=None, filename=None, hostname=None, notes=None, sections=None, tags=None, title=None, type=None, username=None, uuid=None, valid_from=None, vault=None):
         if category and not isinstance(category, dict):
             raise TypeError("Expected argument 'category' to be a dict")
         pulumi.set(__self__, "category", category)
@@ -38,9 +38,6 @@ class GetAPICredentialResult:
         if hostname and not isinstance(hostname, str):
             raise TypeError("Expected argument 'hostname' to be a str")
         pulumi.set(__self__, "hostname", hostname)
-        if id and not isinstance(id, str):
-            raise TypeError("Expected argument 'id' to be a str")
-        pulumi.set(__self__, "id", id)
         if notes and not isinstance(notes, str):
             raise TypeError("Expected argument 'notes' to be a str")
         pulumi.set(__self__, "notes", notes)
@@ -98,11 +95,6 @@ class GetAPICredentialResult:
     @pulumi.getter
     def hostname(self) -> Optional[str]:
         return pulumi.get(self, "hostname")
-
-    @property
-    @pulumi.getter
-    def id(self) -> Optional[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter
@@ -174,7 +166,6 @@ class AwaitableGetAPICredentialResult(GetAPICredentialResult):
             fields=self.fields,
             filename=self.filename,
             hostname=self.hostname,
-            id=self.id,
             notes=self.notes,
             sections=self.sections,
             tags=self.tags,
@@ -214,7 +205,6 @@ def get_api_credential(title: Optional[str] = None,
         fields=__ret__.fields,
         filename=__ret__.filename,
         hostname=__ret__.hostname,
-        id=__ret__.id,
         notes=__ret__.notes,
         sections=__ret__.sections,
         tags=__ret__.tags,

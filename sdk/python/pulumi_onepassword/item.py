@@ -177,7 +177,6 @@ class Item(pulumi.CustomResource):
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
-            __props__.__dict__["id"] = None
             __props__.__dict__["uuid"] = None
         super(Item, __self__).__init__(
             'onepassword:index:Item',
@@ -203,7 +202,6 @@ class Item(pulumi.CustomResource):
 
         __props__.__dict__["category"] = None
         __props__.__dict__["fields"] = None
-        __props__.__dict__["id"] = None
         __props__.__dict__["sections"] = None
         __props__.__dict__["tags"] = None
         __props__.__dict__["title"] = None
@@ -220,11 +218,6 @@ class Item(pulumi.CustomResource):
     @pulumi.getter
     def fields(self) -> pulumi.Output[Optional[Mapping[str, 'outputs.GetField']]]:
         return pulumi.get(self, "fields")
-
-    @property
-    @pulumi.getter
-    def id(self) -> pulumi.Output[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter

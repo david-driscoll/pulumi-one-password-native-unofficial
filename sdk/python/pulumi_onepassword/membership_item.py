@@ -17,6 +17,7 @@ __all__ = ['MembershipItemArgs', 'MembershipItem']
 class MembershipItemArgs:
     def __init__(__self__, *,
                  vault: pulumi.Input[str],
+                 category: Optional[pulumi.Input[str]] = None,
                  expiry_date: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
                  group: Optional[pulumi.Input[str]] = None,
@@ -33,10 +34,13 @@ class MembershipItemArgs:
         """
         The set of arguments for constructing a MembershipItem resource.
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
+        :param pulumi.Input[str] category: The category of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         """
         pulumi.set(__self__, "vault", vault)
+        if category is not None:
+            pulumi.set(__self__, "category", 'Membership')
         if expiry_date is not None:
             pulumi.set(__self__, "expiry_date", expiry_date)
         if fields is not None:
@@ -75,6 +79,18 @@ class MembershipItemArgs:
     @vault.setter
     def vault(self, value: pulumi.Input[str]):
         pulumi.set(self, "vault", value)
+
+    @property
+    @pulumi.getter
+    def category(self) -> Optional[pulumi.Input[str]]:
+        """
+        The category of the vault the item is in.
+        """
+        return pulumi.get(self, "category")
+
+    @category.setter
+    def category(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "category", value)
 
     @property
     @pulumi.getter(name="expiryDate")
@@ -205,6 +221,7 @@ class MembershipItem(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 category: Optional[pulumi.Input[str]] = None,
                  expiry_date: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  group: Optional[pulumi.Input[str]] = None,
@@ -224,6 +241,7 @@ class MembershipItem(pulumi.CustomResource):
         Create a MembershipItem resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] category: The category of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
@@ -251,6 +269,7 @@ class MembershipItem(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 category: Optional[pulumi.Input[str]] = None,
                  expiry_date: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  group: Optional[pulumi.Input[str]] = None,
@@ -277,6 +296,7 @@ class MembershipItem(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = MembershipItemArgs.__new__(MembershipItemArgs)
 
+            __props__.__dict__["category"] = 'Membership'
             __props__.__dict__["expiry_date"] = expiry_date
             __props__.__dict__["fields"] = fields
             __props__.__dict__["group"] = group
@@ -293,8 +313,6 @@ class MembershipItem(pulumi.CustomResource):
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
             __props__.__dict__["website"] = website
-            __props__.__dict__["category"] = None
-            __props__.__dict__["id"] = None
             __props__.__dict__["uuid"] = None
         super(MembershipItem, __self__).__init__(
             'onepassword:index:MembershipItem',
@@ -322,7 +340,6 @@ class MembershipItem(pulumi.CustomResource):
         __props__.__dict__["expiry_date"] = None
         __props__.__dict__["fields"] = None
         __props__.__dict__["group"] = None
-        __props__.__dict__["id"] = None
         __props__.__dict__["member_id"] = None
         __props__.__dict__["member_name"] = None
         __props__.__dict__["member_since"] = None
@@ -356,11 +373,6 @@ class MembershipItem(pulumi.CustomResource):
     @pulumi.getter
     def group(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "group")
-
-    @property
-    @pulumi.getter
-    def id(self) -> pulumi.Output[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter(name="memberId")

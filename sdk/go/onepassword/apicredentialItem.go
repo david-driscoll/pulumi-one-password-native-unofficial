@@ -20,7 +20,6 @@ type APICredentialItem struct {
 	Fields     GetFieldMapOutput      `pulumi:"fields"`
 	Filename   pulumi.StringPtrOutput `pulumi:"filename"`
 	Hostname   pulumi.StringPtrOutput `pulumi:"hostname"`
-	Id         pulumi.StringOutput    `pulumi:"id"`
 	Notes      pulumi.StringPtrOutput `pulumi:"notes"`
 	Sections   GetSectionMapOutput    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
@@ -46,6 +45,7 @@ func NewAPICredentialItem(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
+	args.Category = pulumi.StringPtr("API Credential")
 	var resource APICredentialItem
 	err := ctx.RegisterResource("onepassword:index:APICredentialItem", name, args, &resource, opts...)
 	if err != nil {
@@ -78,6 +78,8 @@ func (APICredentialItemState) ElementType() reflect.Type {
 }
 
 type apicredentialItemArgs struct {
+	// The category of the vault the item is in.
+	Category   *string            `pulumi:"category"`
 	Credential *string            `pulumi:"credential"`
 	Expires    *string            `pulumi:"expires"`
 	Fields     map[string]Field   `pulumi:"fields"`
@@ -98,6 +100,8 @@ type apicredentialItemArgs struct {
 
 // The set of arguments for constructing a APICredentialItem resource.
 type APICredentialItemArgs struct {
+	// The category of the vault the item is in.
+	Category   pulumi.StringPtrInput
 	Credential pulumi.StringPtrInput
 	Expires    pulumi.StringPtrInput
 	Fields     FieldMapInput

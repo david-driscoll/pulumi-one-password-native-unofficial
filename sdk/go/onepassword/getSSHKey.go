@@ -31,7 +31,6 @@ type GetSSHKeyArgs struct {
 type GetSSHKeyResult struct {
 	Category   *string               `pulumi:"category"`
 	Fields     map[string]GetField   `pulumi:"fields"`
-	Id         *string               `pulumi:"id"`
 	Notes      *string               `pulumi:"notes"`
 	PrivateKey *string               `pulumi:"privateKey"`
 	Sections   map[string]GetSection `pulumi:"sections"`
@@ -91,10 +90,6 @@ func (o GetSSHKeyResultOutput) Category() pulumi.StringPtrOutput {
 
 func (o GetSSHKeyResultOutput) Fields() GetFieldMapOutput {
 	return o.ApplyT(func(v GetSSHKeyResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
-}
-
-func (o GetSSHKeyResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetSSHKeyResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
 func (o GetSSHKeyResultOutput) Notes() pulumi.StringPtrOutput {

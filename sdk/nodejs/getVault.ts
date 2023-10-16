@@ -30,7 +30,6 @@ export interface GetVaultResult {
      * The description of the vault.
      */
     readonly description?: string;
-    readonly id?: string;
     /**
      * The name of the vault to retrieve. This field will be populated with the name of the vault if the vault it looked up by its UUID.
      */

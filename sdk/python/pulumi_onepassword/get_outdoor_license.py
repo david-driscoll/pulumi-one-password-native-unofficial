@@ -19,7 +19,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetOutdoorLicenseResult:
-    def __init__(__self__, approved_wildlife=None, category=None, country=None, expires=None, fields=None, full_name=None, id=None, maximum_quota=None, notes=None, sections=None, state=None, tags=None, title=None, uuid=None, valid_from=None, vault=None):
+    def __init__(__self__, approved_wildlife=None, category=None, country=None, expires=None, fields=None, full_name=None, maximum_quota=None, notes=None, sections=None, state=None, tags=None, title=None, uuid=None, valid_from=None, vault=None):
         if approved_wildlife and not isinstance(approved_wildlife, str):
             raise TypeError("Expected argument 'approved_wildlife' to be a str")
         pulumi.set(__self__, "approved_wildlife", approved_wildlife)
@@ -38,9 +38,6 @@ class GetOutdoorLicenseResult:
         if full_name and not isinstance(full_name, str):
             raise TypeError("Expected argument 'full_name' to be a str")
         pulumi.set(__self__, "full_name", full_name)
-        if id and not isinstance(id, str):
-            raise TypeError("Expected argument 'id' to be a str")
-        pulumi.set(__self__, "id", id)
         if maximum_quota and not isinstance(maximum_quota, str):
             raise TypeError("Expected argument 'maximum_quota' to be a str")
         pulumi.set(__self__, "maximum_quota", maximum_quota)
@@ -98,11 +95,6 @@ class GetOutdoorLicenseResult:
     @pulumi.getter(name="fullName")
     def full_name(self) -> Optional[str]:
         return pulumi.get(self, "full_name")
-
-    @property
-    @pulumi.getter
-    def id(self) -> Optional[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter(name="maximumQuota")
@@ -174,7 +166,6 @@ class AwaitableGetOutdoorLicenseResult(GetOutdoorLicenseResult):
             expires=self.expires,
             fields=self.fields,
             full_name=self.full_name,
-            id=self.id,
             maximum_quota=self.maximum_quota,
             notes=self.notes,
             sections=self.sections,
@@ -214,7 +205,6 @@ def get_outdoor_license(title: Optional[str] = None,
         expires=__ret__.expires,
         fields=__ret__.fields,
         full_name=__ret__.full_name,
-        id=__ret__.id,
         maximum_quota=__ret__.maximum_quota,
         notes=__ret__.notes,
         sections=__ret__.sections,

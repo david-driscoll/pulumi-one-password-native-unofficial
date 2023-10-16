@@ -33,7 +33,6 @@ type GetRewardProgramResult struct {
 	Category        *string                               `pulumi:"category"`
 	CompanyName     *string                               `pulumi:"companyName"`
 	Fields          map[string]GetField                   `pulumi:"fields"`
-	Id              *string                               `pulumi:"id"`
 	MemberId        *string                               `pulumi:"memberId"`
 	MemberName      *string                               `pulumi:"memberName"`
 	MoreInformation *rewardprogram.MoreInformationSection `pulumi:"moreInformation"`
@@ -100,10 +99,6 @@ func (o GetRewardProgramResultOutput) CompanyName() pulumi.StringPtrOutput {
 
 func (o GetRewardProgramResultOutput) Fields() GetFieldMapOutput {
 	return o.ApplyT(func(v GetRewardProgramResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
-}
-
-func (o GetRewardProgramResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetRewardProgramResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
 func (o GetRewardProgramResultOutput) MemberId() pulumi.StringPtrOutput {

@@ -16,7 +16,6 @@ type PasswordItem struct {
 
 	Category pulumi.StringOutput    `pulumi:"category"`
 	Fields   GetFieldMapOutput      `pulumi:"fields"`
-	Id       pulumi.StringOutput    `pulumi:"id"`
 	Notes    pulumi.StringPtrOutput `pulumi:"notes"`
 	Password pulumi.StringPtrOutput `pulumi:"password"`
 	Sections GetSectionMapOutput    `pulumi:"sections"`
@@ -40,6 +39,7 @@ func NewPasswordItem(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
+	args.Category = pulumi.StringPtr("Password")
 	if args.Password != nil {
 		args.Password = pulumi.ToSecret(args.Password).(pulumi.StringPtrOutput)
 	}
@@ -79,6 +79,8 @@ func (PasswordItemState) ElementType() reflect.Type {
 }
 
 type passwordItemArgs struct {
+	// The category of the vault the item is in.
+	Category *string            `pulumi:"category"`
 	Fields   map[string]Field   `pulumi:"fields"`
 	Notes    *string            `pulumi:"notes"`
 	Password *string            `pulumi:"password"`
@@ -93,6 +95,8 @@ type passwordItemArgs struct {
 
 // The set of arguments for constructing a PasswordItem resource.
 type PasswordItemArgs struct {
+	// The category of the vault the item is in.
+	Category pulumi.StringPtrInput
 	Fields   FieldMapInput
 	Notes    pulumi.StringPtrInput
 	Password pulumi.StringPtrInput

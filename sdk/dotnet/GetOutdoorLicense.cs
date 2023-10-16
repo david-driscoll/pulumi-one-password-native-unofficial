@@ -79,7 +79,6 @@ namespace Pulumi.Onepassword
         public readonly string? Expires;
         public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
         public readonly string? FullName;
-        public readonly string? Id;
         public readonly string? MaximumQuota;
         public readonly string? Notes;
         public readonly ImmutableDictionary<string, Outputs.GetSection>? Sections;
@@ -116,8 +115,6 @@ namespace Pulumi.Onepassword
 
             string? fullName,
 
-            string? id,
-
             string? maximumQuota,
 
             string? notes,
@@ -142,7 +139,6 @@ namespace Pulumi.Onepassword
             Expires = expires;
             Fields = fields;
             FullName = fullName;
-            Id = id;
             MaximumQuota = maximumQuota;
             Notes = notes;
             Sections = sections;

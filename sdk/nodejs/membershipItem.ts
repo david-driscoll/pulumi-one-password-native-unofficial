@@ -36,7 +36,6 @@ export class MembershipItem extends pulumi.CustomResource {
     public readonly expiryDate!: pulumi.Output<string | undefined>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
     public readonly group!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly memberId!: pulumi.Output<string | undefined>;
     public readonly memberName!: pulumi.Output<string | undefined>;
     public readonly memberSince!: pulumi.Output<string | undefined>;
@@ -91,14 +90,12 @@ export class MembershipItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["website"] = args ? args.website : undefined;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
             resourceInputs["category"] = undefined /*out*/;
             resourceInputs["expiryDate"] = undefined /*out*/;
             resourceInputs["fields"] = undefined /*out*/;
             resourceInputs["group"] = undefined /*out*/;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["memberId"] = undefined /*out*/;
             resourceInputs["memberName"] = undefined /*out*/;
             resourceInputs["memberSince"] = undefined /*out*/;

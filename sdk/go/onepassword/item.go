@@ -16,7 +16,6 @@ type Item struct {
 
 	Category pulumi.StringOutput `pulumi:"category"`
 	Fields   GetFieldMapOutput   `pulumi:"fields"`
-	Id       pulumi.StringOutput `pulumi:"id"`
 	Sections GetSectionMapOutput `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`

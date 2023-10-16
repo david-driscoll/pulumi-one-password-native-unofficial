@@ -76,7 +76,6 @@ namespace Pulumi.Onepassword
         public readonly string? Category;
         public readonly string? CompanyName;
         public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
-        public readonly string? Id;
         public readonly string? MemberId;
         public readonly string? MemberName;
         public readonly Pulumi.Onepassword.RewardProgram.Outputs.MoreInformationSection? MoreInformation;
@@ -108,8 +107,6 @@ namespace Pulumi.Onepassword
 
             ImmutableDictionary<string, Outputs.GetField>? fields,
 
-            string? id,
-
             string? memberId,
 
             string? memberName,
@@ -133,7 +130,6 @@ namespace Pulumi.Onepassword
             Category = category;
             CompanyName = companyName;
             Fields = fields;
-            Id = id;
             MemberId = memberId;
             MemberName = memberName;
             MoreInformation = moreInformation;

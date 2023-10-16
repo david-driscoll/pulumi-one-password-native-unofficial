@@ -37,7 +37,6 @@ export interface GetSoftwareLicenseResult {
     readonly category?: enums.Category | string;
     readonly customer?: outputs.softwareLicense.CustomerSection;
     readonly fields?: {[key: string]: outputs.GetField};
-    readonly id?: string;
     readonly licenseKey?: string;
     readonly notes?: string;
     readonly order?: outputs.softwareLicense.OrderSection;

@@ -21,6 +21,7 @@ class WirelessRouterItemArgs:
                  attached_storage_password: Optional[pulumi.Input[str]] = None,
                  base_station_name: Optional[pulumi.Input[str]] = None,
                  base_station_password: Optional[pulumi.Input[str]] = None,
+                 category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
                  network_name: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
@@ -33,6 +34,7 @@ class WirelessRouterItemArgs:
         """
         The set of arguments for constructing a WirelessRouterItem resource.
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
+        :param pulumi.Input[str] category: The category of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         """
@@ -45,6 +47,8 @@ class WirelessRouterItemArgs:
             pulumi.set(__self__, "base_station_name", base_station_name)
         if base_station_password is not None:
             pulumi.set(__self__, "base_station_password", base_station_password)
+        if category is not None:
+            pulumi.set(__self__, "category", 'Wireless Router')
         if fields is not None:
             pulumi.set(__self__, "fields", fields)
         if network_name is not None:
@@ -111,6 +115,18 @@ class WirelessRouterItemArgs:
     @base_station_password.setter
     def base_station_password(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "base_station_password", value)
+
+    @property
+    @pulumi.getter
+    def category(self) -> Optional[pulumi.Input[str]]:
+        """
+        The category of the vault the item is in.
+        """
+        return pulumi.get(self, "category")
+
+    @category.setter
+    def category(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "category", value)
 
     @property
     @pulumi.getter
@@ -209,6 +225,7 @@ class WirelessRouterItem(pulumi.CustomResource):
                  attached_storage_password: Optional[pulumi.Input[str]] = None,
                  base_station_name: Optional[pulumi.Input[str]] = None,
                  base_station_password: Optional[pulumi.Input[str]] = None,
+                 category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  network_name: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
@@ -224,6 +241,7 @@ class WirelessRouterItem(pulumi.CustomResource):
         Create a WirelessRouterItem resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] category: The category of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
@@ -255,6 +273,7 @@ class WirelessRouterItem(pulumi.CustomResource):
                  attached_storage_password: Optional[pulumi.Input[str]] = None,
                  base_station_name: Optional[pulumi.Input[str]] = None,
                  base_station_password: Optional[pulumi.Input[str]] = None,
+                 category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  network_name: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
@@ -281,6 +300,7 @@ class WirelessRouterItem(pulumi.CustomResource):
             __props__.__dict__["attached_storage_password"] = attached_storage_password
             __props__.__dict__["base_station_name"] = base_station_name
             __props__.__dict__["base_station_password"] = base_station_password
+            __props__.__dict__["category"] = 'Wireless Router'
             __props__.__dict__["fields"] = fields
             __props__.__dict__["network_name"] = network_name
             __props__.__dict__["notes"] = notes
@@ -293,8 +313,6 @@ class WirelessRouterItem(pulumi.CustomResource):
             __props__.__dict__["vault"] = vault
             __props__.__dict__["wireless_network_password"] = wireless_network_password
             __props__.__dict__["wireless_security"] = wireless_security
-            __props__.__dict__["category"] = None
-            __props__.__dict__["id"] = None
             __props__.__dict__["uuid"] = None
         super(WirelessRouterItem, __self__).__init__(
             'onepassword:index:WirelessRouterItem',
@@ -324,7 +342,6 @@ class WirelessRouterItem(pulumi.CustomResource):
         __props__.__dict__["base_station_password"] = None
         __props__.__dict__["category"] = None
         __props__.__dict__["fields"] = None
-        __props__.__dict__["id"] = None
         __props__.__dict__["network_name"] = None
         __props__.__dict__["notes"] = None
         __props__.__dict__["sections"] = None
@@ -366,11 +383,6 @@ class WirelessRouterItem(pulumi.CustomResource):
     @pulumi.getter
     def fields(self) -> pulumi.Output[Optional[Mapping[str, 'outputs.GetField']]]:
         return pulumi.get(self, "fields")
-
-    @property
-    @pulumi.getter
-    def id(self) -> pulumi.Output[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter(name="networkName")

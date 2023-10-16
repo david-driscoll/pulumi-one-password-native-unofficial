@@ -30,9 +30,6 @@ namespace Pulumi.Onepassword
         [Output("iban")]
         public Output<string?> Iban { get; private set; } = null!;
 
-        [Output("id")]
-        public Output<string> Id { get; private set; } = null!;
-
         [Output("nameOnAccount")]
         public Output<string?> NameOnAccount { get; private set; } = null!;
 

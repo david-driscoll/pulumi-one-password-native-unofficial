@@ -19,7 +19,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetDatabaseResult:
-    def __init__(__self__, alias=None, category=None, connection_options=None, database=None, fields=None, id=None, notes=None, password=None, port=None, sections=None, server=None, sid=None, tags=None, title=None, type=None, username=None, uuid=None, vault=None):
+    def __init__(__self__, alias=None, category=None, connection_options=None, database=None, fields=None, notes=None, password=None, port=None, sections=None, server=None, sid=None, tags=None, title=None, type=None, username=None, uuid=None, vault=None):
         if alias and not isinstance(alias, str):
             raise TypeError("Expected argument 'alias' to be a str")
         pulumi.set(__self__, "alias", alias)
@@ -35,9 +35,6 @@ class GetDatabaseResult:
         if fields and not isinstance(fields, dict):
             raise TypeError("Expected argument 'fields' to be a dict")
         pulumi.set(__self__, "fields", fields)
-        if id and not isinstance(id, str):
-            raise TypeError("Expected argument 'id' to be a str")
-        pulumi.set(__self__, "id", id)
         if notes and not isinstance(notes, str):
             raise TypeError("Expected argument 'notes' to be a str")
         pulumi.set(__self__, "notes", notes)
@@ -99,11 +96,6 @@ class GetDatabaseResult:
     @pulumi.getter
     def fields(self) -> Optional[Mapping[str, 'outputs.GetField']]:
         return pulumi.get(self, "fields")
-
-    @property
-    @pulumi.getter
-    def id(self) -> Optional[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter
@@ -189,7 +181,6 @@ class AwaitableGetDatabaseResult(GetDatabaseResult):
             connection_options=self.connection_options,
             database=self.database,
             fields=self.fields,
-            id=self.id,
             notes=self.notes,
             password=self.password,
             port=self.port,
@@ -231,7 +222,6 @@ def get_database(title: Optional[str] = None,
         connection_options=__ret__.connection_options,
         database=__ret__.database,
         fields=__ret__.fields,
-        id=__ret__.id,
         notes=__ret__.notes,
         password=__ret__.password,
         port=__ret__.port,

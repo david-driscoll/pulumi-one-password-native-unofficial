@@ -20,7 +20,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetMedicalRecordResult:
-    def __init__(__self__, category=None, date=None, fields=None, healthcare_professional=None, id=None, location=None, medication=None, notes=None, patient=None, reason_for_visit=None, sections=None, tags=None, title=None, uuid=None, vault=None):
+    def __init__(__self__, category=None, date=None, fields=None, healthcare_professional=None, location=None, medication=None, notes=None, patient=None, reason_for_visit=None, sections=None, tags=None, title=None, uuid=None, vault=None):
         if category and not isinstance(category, dict):
             raise TypeError("Expected argument 'category' to be a dict")
         pulumi.set(__self__, "category", category)
@@ -33,9 +33,6 @@ class GetMedicalRecordResult:
         if healthcare_professional and not isinstance(healthcare_professional, str):
             raise TypeError("Expected argument 'healthcare_professional' to be a str")
         pulumi.set(__self__, "healthcare_professional", healthcare_professional)
-        if id and not isinstance(id, str):
-            raise TypeError("Expected argument 'id' to be a str")
-        pulumi.set(__self__, "id", id)
         if location and not isinstance(location, str):
             raise TypeError("Expected argument 'location' to be a str")
         pulumi.set(__self__, "location", location)
@@ -86,11 +83,6 @@ class GetMedicalRecordResult:
     @pulumi.getter(name="healthcareProfessional")
     def healthcare_professional(self) -> Optional[str]:
         return pulumi.get(self, "healthcare_professional")
-
-    @property
-    @pulumi.getter
-    def id(self) -> Optional[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter
@@ -165,7 +157,6 @@ class AwaitableGetMedicalRecordResult(GetMedicalRecordResult):
             date=self.date,
             fields=self.fields,
             healthcare_professional=self.healthcare_professional,
-            id=self.id,
             location=self.location,
             medication=self.medication,
             notes=self.notes,
@@ -204,7 +195,6 @@ def get_medical_record(title: Optional[str] = None,
         date=__ret__.date,
         fields=__ret__.fields,
         healthcare_professional=__ret__.healthcare_professional,
-        id=__ret__.id,
         location=__ret__.location,
         medication=__ret__.medication,
         notes=__ret__.notes,

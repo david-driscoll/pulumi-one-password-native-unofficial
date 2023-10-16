@@ -24,7 +24,6 @@ type DriverLicenseItem struct {
 	FullName               pulumi.StringPtrOutput `pulumi:"fullName"`
 	Gender                 pulumi.StringPtrOutput `pulumi:"gender"`
 	Height                 pulumi.StringPtrOutput `pulumi:"height"`
-	Id                     pulumi.StringOutput    `pulumi:"id"`
 	LicenseClass           pulumi.StringPtrOutput `pulumi:"licenseClass"`
 	Notes                  pulumi.StringPtrOutput `pulumi:"notes"`
 	Number                 pulumi.StringPtrOutput `pulumi:"number"`
@@ -50,6 +49,7 @@ func NewDriverLicenseItem(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
+	args.Category = pulumi.StringPtr("Driver License")
 	var resource DriverLicenseItem
 	err := ctx.RegisterResource("onepassword:index:DriverLicenseItem", name, args, &resource, opts...)
 	if err != nil {
@@ -82,7 +82,9 @@ func (DriverLicenseItemState) ElementType() reflect.Type {
 }
 
 type driverLicenseItemArgs struct {
-	Address                *string            `pulumi:"address"`
+	Address *string `pulumi:"address"`
+	// The category of the vault the item is in.
+	Category               *string            `pulumi:"category"`
 	ConditionsRestrictions *string            `pulumi:"conditionsRestrictions"`
 	Country                *string            `pulumi:"country"`
 	DateOfBirth            *string            `pulumi:"dateOfBirth"`
@@ -106,7 +108,9 @@ type driverLicenseItemArgs struct {
 
 // The set of arguments for constructing a DriverLicenseItem resource.
 type DriverLicenseItemArgs struct {
-	Address                pulumi.StringPtrInput
+	Address pulumi.StringPtrInput
+	// The category of the vault the item is in.
+	Category               pulumi.StringPtrInput
 	ConditionsRestrictions pulumi.StringPtrInput
 	Country                pulumi.StringPtrInput
 	DateOfBirth            pulumi.StringPtrInput

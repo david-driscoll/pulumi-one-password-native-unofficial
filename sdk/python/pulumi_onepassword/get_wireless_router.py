@@ -19,7 +19,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetWirelessRouterResult:
-    def __init__(__self__, air_port_id=None, attached_storage_password=None, base_station_name=None, base_station_password=None, category=None, fields=None, id=None, network_name=None, notes=None, sections=None, server_ip_address=None, tags=None, title=None, uuid=None, vault=None, wireless_network_password=None, wireless_security=None):
+    def __init__(__self__, air_port_id=None, attached_storage_password=None, base_station_name=None, base_station_password=None, category=None, fields=None, network_name=None, notes=None, sections=None, server_ip_address=None, tags=None, title=None, uuid=None, vault=None, wireless_network_password=None, wireless_security=None):
         if air_port_id and not isinstance(air_port_id, str):
             raise TypeError("Expected argument 'air_port_id' to be a str")
         pulumi.set(__self__, "air_port_id", air_port_id)
@@ -38,9 +38,6 @@ class GetWirelessRouterResult:
         if fields and not isinstance(fields, dict):
             raise TypeError("Expected argument 'fields' to be a dict")
         pulumi.set(__self__, "fields", fields)
-        if id and not isinstance(id, str):
-            raise TypeError("Expected argument 'id' to be a str")
-        pulumi.set(__self__, "id", id)
         if network_name and not isinstance(network_name, str):
             raise TypeError("Expected argument 'network_name' to be a str")
         pulumi.set(__self__, "network_name", network_name)
@@ -101,11 +98,6 @@ class GetWirelessRouterResult:
     @pulumi.getter
     def fields(self) -> Optional[Mapping[str, 'outputs.GetField']]:
         return pulumi.get(self, "fields")
-
-    @property
-    @pulumi.getter
-    def id(self) -> Optional[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter(name="networkName")
@@ -182,7 +174,6 @@ class AwaitableGetWirelessRouterResult(GetWirelessRouterResult):
             base_station_password=self.base_station_password,
             category=self.category,
             fields=self.fields,
-            id=self.id,
             network_name=self.network_name,
             notes=self.notes,
             sections=self.sections,
@@ -223,7 +214,6 @@ def get_wireless_router(title: Optional[str] = None,
         base_station_password=__ret__.base_station_password,
         category=__ret__.category,
         fields=__ret__.fields,
-        id=__ret__.id,
         network_name=__ret__.network_name,
         notes=__ret__.notes,
         sections=__ret__.sections,

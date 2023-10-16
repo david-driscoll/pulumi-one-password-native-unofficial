@@ -31,7 +31,6 @@ type GetLoginArgs struct {
 type GetLoginResult struct {
 	Category *string               `pulumi:"category"`
 	Fields   map[string]GetField   `pulumi:"fields"`
-	Id       *string               `pulumi:"id"`
 	Notes    *string               `pulumi:"notes"`
 	Password *string               `pulumi:"password"`
 	Sections map[string]GetSection `pulumi:"sections"`
@@ -92,10 +91,6 @@ func (o GetLoginResultOutput) Category() pulumi.StringPtrOutput {
 
 func (o GetLoginResultOutput) Fields() GetFieldMapOutput {
 	return o.ApplyT(func(v GetLoginResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
-}
-
-func (o GetLoginResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetLoginResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
 func (o GetLoginResultOutput) Notes() pulumi.StringPtrOutput {

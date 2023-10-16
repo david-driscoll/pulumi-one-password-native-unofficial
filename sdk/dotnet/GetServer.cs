@@ -77,7 +77,6 @@ namespace Pulumi.Onepassword
         public readonly string? Category;
         public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
         public readonly Pulumi.Onepassword.Server.Outputs.HostingProviderSection? HostingProvider;
-        public readonly string? Id;
         public readonly string? Notes;
         public readonly string? Password;
         public readonly ImmutableDictionary<string, Outputs.GetSection>? Sections;
@@ -110,8 +109,6 @@ namespace Pulumi.Onepassword
 
             Pulumi.Onepassword.Server.Outputs.HostingProviderSection? hostingProvider,
 
-            string? id,
-
             string? notes,
 
             string? password,
@@ -134,7 +131,6 @@ namespace Pulumi.Onepassword
             Category = category;
             Fields = fields;
             HostingProvider = hostingProvider;
-            Id = id;
             Notes = notes;
             Password = password;
             Sections = sections;

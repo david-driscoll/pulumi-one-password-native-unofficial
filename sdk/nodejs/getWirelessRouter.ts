@@ -40,7 +40,6 @@ export interface GetWirelessRouterResult {
     readonly baseStationPassword?: string;
     readonly category?: enums.Category | string;
     readonly fields?: {[key: string]: outputs.GetField};
-    readonly id?: string;
     readonly networkName?: string;
     readonly notes?: string;
     readonly sections?: {[key: string]: outputs.GetSection};

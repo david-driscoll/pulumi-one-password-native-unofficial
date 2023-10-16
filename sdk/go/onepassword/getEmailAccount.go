@@ -34,7 +34,6 @@ type GetEmailAccountResult struct {
 	Category           *string                                 `pulumi:"category"`
 	ContactInformation *emailaccount.ContactInformationSection `pulumi:"contactInformation"`
 	Fields             map[string]GetField                     `pulumi:"fields"`
-	Id                 *string                                 `pulumi:"id"`
 	Notes              *string                                 `pulumi:"notes"`
 	Password           *string                                 `pulumi:"password"`
 	PortNumber         *string                                 `pulumi:"portNumber"`
@@ -108,10 +107,6 @@ func (o GetEmailAccountResultOutput) ContactInformation() emailaccount.ContactIn
 
 func (o GetEmailAccountResultOutput) Fields() GetFieldMapOutput {
 	return o.ApplyT(func(v GetEmailAccountResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
-}
-
-func (o GetEmailAccountResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetEmailAccountResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
 func (o GetEmailAccountResultOutput) Notes() pulumi.StringPtrOutput {

@@ -75,7 +75,6 @@ namespace Pulumi.Onepassword
     {
         public readonly string? Category;
         public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
-        public readonly string? Id;
         public readonly string? Notes;
         public readonly string? Password;
         public readonly ImmutableDictionary<string, Outputs.GetSection>? Sections;
@@ -103,8 +102,6 @@ namespace Pulumi.Onepassword
 
             ImmutableDictionary<string, Outputs.GetField>? fields,
 
-            string? id,
-
             string? notes,
 
             string? password,
@@ -123,7 +120,6 @@ namespace Pulumi.Onepassword
         {
             Category = category;
             Fields = fields;
-            Id = id;
             Notes = notes;
             Password = password;
             Sections = sections;

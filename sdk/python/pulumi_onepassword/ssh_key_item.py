@@ -17,6 +17,7 @@ __all__ = ['SSHKeyItemArgs', 'SSHKeyItem']
 class SSHKeyItemArgs:
     def __init__(__self__, *,
                  vault: pulumi.Input[str],
+                 category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  private_key: Optional[pulumi.Input[str]] = None,
@@ -26,10 +27,13 @@ class SSHKeyItemArgs:
         """
         The set of arguments for constructing a SSHKeyItem resource.
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
+        :param pulumi.Input[str] category: The category of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         """
         pulumi.set(__self__, "vault", vault)
+        if category is not None:
+            pulumi.set(__self__, "category", 'SSH Key')
         if fields is not None:
             pulumi.set(__self__, "fields", fields)
         if notes is not None:
@@ -54,6 +58,18 @@ class SSHKeyItemArgs:
     @vault.setter
     def vault(self, value: pulumi.Input[str]):
         pulumi.set(self, "vault", value)
+
+    @property
+    @pulumi.getter
+    def category(self) -> Optional[pulumi.Input[str]]:
+        """
+        The category of the vault the item is in.
+        """
+        return pulumi.get(self, "category")
+
+    @category.setter
+    def category(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "category", value)
 
     @property
     @pulumi.getter
@@ -121,6 +137,7 @@ class SSHKeyItem(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  private_key: Optional[pulumi.Input[str]] = None,
@@ -133,6 +150,7 @@ class SSHKeyItem(pulumi.CustomResource):
         Create a SSHKeyItem resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] category: The category of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
@@ -160,6 +178,7 @@ class SSHKeyItem(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  private_key: Optional[pulumi.Input[str]] = None,
@@ -179,6 +198,7 @@ class SSHKeyItem(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = SSHKeyItemArgs.__new__(SSHKeyItemArgs)
 
+            __props__.__dict__["category"] = 'SSH Key'
             __props__.__dict__["fields"] = fields
             __props__.__dict__["notes"] = notes
             __props__.__dict__["private_key"] = private_key
@@ -188,8 +208,6 @@ class SSHKeyItem(pulumi.CustomResource):
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
-            __props__.__dict__["category"] = None
-            __props__.__dict__["id"] = None
             __props__.__dict__["uuid"] = None
         super(SSHKeyItem, __self__).__init__(
             'onepassword:index:SSHKeyItem',
@@ -215,7 +233,6 @@ class SSHKeyItem(pulumi.CustomResource):
 
         __props__.__dict__["category"] = None
         __props__.__dict__["fields"] = None
-        __props__.__dict__["id"] = None
         __props__.__dict__["notes"] = None
         __props__.__dict__["private_key"] = None
         __props__.__dict__["sections"] = None
@@ -234,11 +251,6 @@ class SSHKeyItem(pulumi.CustomResource):
     @pulumi.getter
     def fields(self) -> pulumi.Output[Optional[Mapping[str, 'outputs.GetField']]]:
         return pulumi.get(self, "fields")
-
-    @property
-    @pulumi.getter
-    def id(self) -> pulumi.Output[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter

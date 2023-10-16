@@ -20,7 +20,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetBankAccountResult:
-    def __init__(__self__, account_number=None, bank_name=None, branch_information=None, category=None, fields=None, iban=None, id=None, name_on_account=None, notes=None, pin=None, routing_number=None, sections=None, swift=None, tags=None, title=None, type=None, uuid=None, vault=None):
+    def __init__(__self__, account_number=None, bank_name=None, branch_information=None, category=None, fields=None, iban=None, name_on_account=None, notes=None, pin=None, routing_number=None, sections=None, swift=None, tags=None, title=None, type=None, uuid=None, vault=None):
         if account_number and not isinstance(account_number, str):
             raise TypeError("Expected argument 'account_number' to be a str")
         pulumi.set(__self__, "account_number", account_number)
@@ -39,9 +39,6 @@ class GetBankAccountResult:
         if iban and not isinstance(iban, str):
             raise TypeError("Expected argument 'iban' to be a str")
         pulumi.set(__self__, "iban", iban)
-        if id and not isinstance(id, str):
-            raise TypeError("Expected argument 'id' to be a str")
-        pulumi.set(__self__, "id", id)
         if name_on_account and not isinstance(name_on_account, str):
             raise TypeError("Expected argument 'name_on_account' to be a str")
         pulumi.set(__self__, "name_on_account", name_on_account)
@@ -105,11 +102,6 @@ class GetBankAccountResult:
     @pulumi.getter
     def iban(self) -> Optional[str]:
         return pulumi.get(self, "iban")
-
-    @property
-    @pulumi.getter
-    def id(self) -> Optional[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter(name="nameOnAccount")
@@ -191,7 +183,6 @@ class AwaitableGetBankAccountResult(GetBankAccountResult):
             category=self.category,
             fields=self.fields,
             iban=self.iban,
-            id=self.id,
             name_on_account=self.name_on_account,
             notes=self.notes,
             pin=self.pin,
@@ -233,7 +224,6 @@ def get_bank_account(title: Optional[str] = None,
         category=__ret__.category,
         fields=__ret__.fields,
         iban=__ret__.iban,
-        id=__ret__.id,
         name_on_account=__ret__.name_on_account,
         notes=__ret__.notes,
         pin=__ret__.pin,

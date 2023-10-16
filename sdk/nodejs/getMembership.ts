@@ -38,7 +38,6 @@ export interface GetMembershipResult {
     readonly expiryDate?: string;
     readonly fields?: {[key: string]: outputs.GetField};
     readonly group?: string;
-    readonly id?: string;
     readonly memberId?: string;
     readonly memberName?: string;
     readonly memberSince?: string;

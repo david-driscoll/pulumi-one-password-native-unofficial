@@ -39,7 +39,6 @@ export interface GetDatabaseResult {
     readonly connectionOptions?: string;
     readonly database?: string;
     readonly fields?: {[key: string]: outputs.GetField};
-    readonly id?: string;
     readonly notes?: string;
     readonly password?: string;
     readonly port?: string;

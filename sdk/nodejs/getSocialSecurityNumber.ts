@@ -36,7 +36,6 @@ export interface GetSocialSecurityNumberArgs {
 export interface GetSocialSecurityNumberResult {
     readonly category?: enums.Category | string;
     readonly fields?: {[key: string]: outputs.GetField};
-    readonly id?: string;
     readonly name?: string;
     readonly notes?: string;
     readonly number?: string;

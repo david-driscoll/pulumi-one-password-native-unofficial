@@ -38,7 +38,6 @@ export class CreditCardItem extends pulumi.CustomResource {
     public readonly contactInformation!: pulumi.Output<outputs.creditCard.ContactInformationSection | undefined>;
     public readonly expiryDate!: pulumi.Output<string | undefined>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
-    public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly number!: pulumi.Output<string | undefined>;
     public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection} | undefined>;
@@ -91,7 +90,6 @@ export class CreditCardItem extends pulumi.CustomResource {
             resourceInputs["validFrom"] = args ? args.validFrom : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["verificationNumber"] = args ? args.verificationNumber : undefined;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
             resourceInputs["additionalDetails"] = undefined /*out*/;
@@ -100,7 +98,6 @@ export class CreditCardItem extends pulumi.CustomResource {
             resourceInputs["contactInformation"] = undefined /*out*/;
             resourceInputs["expiryDate"] = undefined /*out*/;
             resourceInputs["fields"] = undefined /*out*/;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["notes"] = undefined /*out*/;
             resourceInputs["number"] = undefined /*out*/;
             resourceInputs["sections"] = undefined /*out*/;

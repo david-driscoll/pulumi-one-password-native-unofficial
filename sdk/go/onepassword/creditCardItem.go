@@ -21,7 +21,6 @@ type CreditCardItem struct {
 	ContactInformation creditcard.ContactInformationSectionPtrOutput `pulumi:"contactInformation"`
 	ExpiryDate         pulumi.StringPtrOutput                        `pulumi:"expiryDate"`
 	Fields             GetFieldMapOutput                             `pulumi:"fields"`
-	Id                 pulumi.StringOutput                           `pulumi:"id"`
 	Notes              pulumi.StringPtrOutput                        `pulumi:"notes"`
 	Number             pulumi.StringPtrOutput                        `pulumi:"number"`
 	Sections           GetSectionMapOutput                           `pulumi:"sections"`
@@ -48,6 +47,7 @@ func NewCreditCardItem(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
+	args.Category = pulumi.StringPtr("Credit Card")
 	var resource CreditCardItem
 	err := ctx.RegisterResource("onepassword:index:CreditCardItem", name, args, &resource, opts...)
 	if err != nil {
@@ -80,8 +80,10 @@ func (CreditCardItemState) ElementType() reflect.Type {
 }
 
 type creditCardItemArgs struct {
-	AdditionalDetails  *creditcard.AdditionalDetailsSection  `pulumi:"additionalDetails"`
-	CardholderName     *string                               `pulumi:"cardholderName"`
+	AdditionalDetails *creditcard.AdditionalDetailsSection `pulumi:"additionalDetails"`
+	CardholderName    *string                              `pulumi:"cardholderName"`
+	// The category of the vault the item is in.
+	Category           *string                               `pulumi:"category"`
 	ContactInformation *creditcard.ContactInformationSection `pulumi:"contactInformation"`
 	ExpiryDate         *string                               `pulumi:"expiryDate"`
 	Fields             map[string]Field                      `pulumi:"fields"`
@@ -101,8 +103,10 @@ type creditCardItemArgs struct {
 
 // The set of arguments for constructing a CreditCardItem resource.
 type CreditCardItemArgs struct {
-	AdditionalDetails  creditcard.AdditionalDetailsSectionPtrInput
-	CardholderName     pulumi.StringPtrInput
+	AdditionalDetails creditcard.AdditionalDetailsSectionPtrInput
+	CardholderName    pulumi.StringPtrInput
+	// The category of the vault the item is in.
+	Category           pulumi.StringPtrInput
 	ContactInformation creditcard.ContactInformationSectionPtrInput
 	ExpiryDate         pulumi.StringPtrInput
 	Fields             FieldMapInput

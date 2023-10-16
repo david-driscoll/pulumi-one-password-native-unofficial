@@ -20,7 +20,6 @@ type WirelessRouterItem struct {
 	BaseStationPassword     pulumi.StringPtrOutput `pulumi:"baseStationPassword"`
 	Category                pulumi.StringOutput    `pulumi:"category"`
 	Fields                  GetFieldMapOutput      `pulumi:"fields"`
-	Id                      pulumi.StringOutput    `pulumi:"id"`
 	NetworkName             pulumi.StringPtrOutput `pulumi:"networkName"`
 	Notes                   pulumi.StringPtrOutput `pulumi:"notes"`
 	Sections                GetSectionMapOutput    `pulumi:"sections"`
@@ -47,6 +46,7 @@ func NewWirelessRouterItem(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
+	args.Category = pulumi.StringPtr("Wireless Router")
 	var resource WirelessRouterItem
 	err := ctx.RegisterResource("onepassword:index:WirelessRouterItem", name, args, &resource, opts...)
 	if err != nil {
@@ -79,15 +79,17 @@ func (WirelessRouterItemState) ElementType() reflect.Type {
 }
 
 type wirelessRouterItemArgs struct {
-	AirPortId               *string            `pulumi:"airPortId"`
-	AttachedStoragePassword *string            `pulumi:"attachedStoragePassword"`
-	BaseStationName         *string            `pulumi:"baseStationName"`
-	BaseStationPassword     *string            `pulumi:"baseStationPassword"`
-	Fields                  map[string]Field   `pulumi:"fields"`
-	NetworkName             *string            `pulumi:"networkName"`
-	Notes                   *string            `pulumi:"notes"`
-	Sections                map[string]Section `pulumi:"sections"`
-	ServerIpAddress         *string            `pulumi:"serverIpAddress"`
+	AirPortId               *string `pulumi:"airPortId"`
+	AttachedStoragePassword *string `pulumi:"attachedStoragePassword"`
+	BaseStationName         *string `pulumi:"baseStationName"`
+	BaseStationPassword     *string `pulumi:"baseStationPassword"`
+	// The category of the vault the item is in.
+	Category        *string            `pulumi:"category"`
+	Fields          map[string]Field   `pulumi:"fields"`
+	NetworkName     *string            `pulumi:"networkName"`
+	Notes           *string            `pulumi:"notes"`
+	Sections        map[string]Section `pulumi:"sections"`
+	ServerIpAddress *string            `pulumi:"serverIpAddress"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -104,11 +106,13 @@ type WirelessRouterItemArgs struct {
 	AttachedStoragePassword pulumi.StringPtrInput
 	BaseStationName         pulumi.StringPtrInput
 	BaseStationPassword     pulumi.StringPtrInput
-	Fields                  FieldMapInput
-	NetworkName             pulumi.StringPtrInput
-	Notes                   pulumi.StringPtrInput
-	Sections                SectionMapInput
-	ServerIpAddress         pulumi.StringPtrInput
+	// The category of the vault the item is in.
+	Category        pulumi.StringPtrInput
+	Fields          FieldMapInput
+	NetworkName     pulumi.StringPtrInput
+	Notes           pulumi.StringPtrInput
+	Sections        SectionMapInput
+	ServerIpAddress pulumi.StringPtrInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.

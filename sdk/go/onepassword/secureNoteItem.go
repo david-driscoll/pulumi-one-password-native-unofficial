@@ -16,7 +16,6 @@ type SecureNoteItem struct {
 
 	Category pulumi.StringOutput    `pulumi:"category"`
 	Fields   GetFieldMapOutput      `pulumi:"fields"`
-	Id       pulumi.StringOutput    `pulumi:"id"`
 	Notes    pulumi.StringPtrOutput `pulumi:"notes"`
 	Sections GetSectionMapOutput    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
@@ -39,6 +38,7 @@ func NewSecureNoteItem(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
+	args.Category = pulumi.StringPtr("Secure Note")
 	var resource SecureNoteItem
 	err := ctx.RegisterResource("onepassword:index:SecureNoteItem", name, args, &resource, opts...)
 	if err != nil {
@@ -71,6 +71,8 @@ func (SecureNoteItemState) ElementType() reflect.Type {
 }
 
 type secureNoteItemArgs struct {
+	// The category of the vault the item is in.
+	Category *string            `pulumi:"category"`
 	Fields   map[string]Field   `pulumi:"fields"`
 	Notes    *string            `pulumi:"notes"`
 	Sections map[string]Section `pulumi:"sections"`
@@ -84,6 +86,8 @@ type secureNoteItemArgs struct {
 
 // The set of arguments for constructing a SecureNoteItem resource.
 type SecureNoteItemArgs struct {
+	// The category of the vault the item is in.
+	Category pulumi.StringPtrInput
 	Fields   FieldMapInput
 	Notes    pulumi.StringPtrInput
 	Sections SectionMapInput

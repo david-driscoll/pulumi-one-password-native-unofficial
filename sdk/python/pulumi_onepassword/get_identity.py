@@ -20,7 +20,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetIdentityResult:
-    def __init__(__self__, address=None, category=None, fields=None, id=None, identification=None, internet_details=None, notes=None, sections=None, tags=None, title=None, uuid=None, vault=None):
+    def __init__(__self__, address=None, category=None, fields=None, identification=None, internet_details=None, notes=None, sections=None, tags=None, title=None, uuid=None, vault=None):
         if address and not isinstance(address, dict):
             raise TypeError("Expected argument 'address' to be a dict")
         pulumi.set(__self__, "address", address)
@@ -30,9 +30,6 @@ class GetIdentityResult:
         if fields and not isinstance(fields, dict):
             raise TypeError("Expected argument 'fields' to be a dict")
         pulumi.set(__self__, "fields", fields)
-        if id and not isinstance(id, str):
-            raise TypeError("Expected argument 'id' to be a str")
-        pulumi.set(__self__, "id", id)
         if identification and not isinstance(identification, dict):
             raise TypeError("Expected argument 'identification' to be a dict")
         pulumi.set(__self__, "identification", identification)
@@ -72,11 +69,6 @@ class GetIdentityResult:
     @pulumi.getter
     def fields(self) -> Optional[Mapping[str, 'outputs.GetField']]:
         return pulumi.get(self, "fields")
-
-    @property
-    @pulumi.getter
-    def id(self) -> Optional[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter
@@ -140,7 +132,6 @@ class AwaitableGetIdentityResult(GetIdentityResult):
             address=self.address,
             category=self.category,
             fields=self.fields,
-            id=self.id,
             identification=self.identification,
             internet_details=self.internet_details,
             notes=self.notes,
@@ -176,7 +167,6 @@ def get_identity(title: Optional[str] = None,
         address=__ret__.address,
         category=__ret__.category,
         fields=__ret__.fields,
-        id=__ret__.id,
         identification=__ret__.identification,
         internet_details=__ret__.internet_details,
         notes=__ret__.notes,

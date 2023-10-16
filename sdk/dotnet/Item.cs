@@ -18,9 +18,6 @@ namespace Pulumi.Onepassword
         [Output("fields")]
         public Output<ImmutableDictionary<string, Outputs.GetField>?> Fields { get; private set; } = null!;
 
-        [Output("id")]
-        public Output<string> Id { get; private set; } = null!;
-
         [Output("sections")]
         public Output<ImmutableDictionary<string, Outputs.GetSection>?> Sections { get; private set; } = null!;
 

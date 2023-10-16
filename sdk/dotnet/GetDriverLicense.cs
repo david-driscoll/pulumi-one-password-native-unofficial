@@ -83,7 +83,6 @@ namespace Pulumi.Onepassword
         public readonly string? FullName;
         public readonly string? Gender;
         public readonly string? Height;
-        public readonly string? Id;
         public readonly string? LicenseClass;
         public readonly string? Notes;
         public readonly string? Number;
@@ -128,8 +127,6 @@ namespace Pulumi.Onepassword
 
             string? height,
 
-            string? id,
-
             string? licenseClass,
 
             string? notes,
@@ -158,7 +155,6 @@ namespace Pulumi.Onepassword
             FullName = fullName;
             Gender = gender;
             Height = height;
-            Id = id;
             LicenseClass = licenseClass;
             Notes = notes;
             Number = number;

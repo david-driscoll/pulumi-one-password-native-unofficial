@@ -40,7 +40,6 @@ export interface GetBankAccountResult {
     readonly category?: enums.Category | string;
     readonly fields?: {[key: string]: outputs.GetField};
     readonly iban?: string;
-    readonly id?: string;
     readonly nameOnAccount?: string;
     readonly notes?: string;
     readonly pin?: string;

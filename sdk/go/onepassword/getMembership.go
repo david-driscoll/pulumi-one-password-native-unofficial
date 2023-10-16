@@ -33,7 +33,6 @@ type GetMembershipResult struct {
 	ExpiryDate  *string               `pulumi:"expiryDate"`
 	Fields      map[string]GetField   `pulumi:"fields"`
 	Group       *string               `pulumi:"group"`
-	Id          *string               `pulumi:"id"`
 	MemberId    *string               `pulumi:"memberId"`
 	MemberName  *string               `pulumi:"memberName"`
 	MemberSince *string               `pulumi:"memberSince"`
@@ -106,10 +105,6 @@ func (o GetMembershipResultOutput) Fields() GetFieldMapOutput {
 
 func (o GetMembershipResultOutput) Group() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetMembershipResult) *string { return v.Group }).(pulumi.StringPtrOutput)
-}
-
-func (o GetMembershipResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetMembershipResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
 func (o GetMembershipResultOutput) MemberId() pulumi.StringPtrOutput {

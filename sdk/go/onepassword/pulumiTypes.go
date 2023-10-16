@@ -123,10 +123,11 @@ func (o FieldMapOutput) MapIndex(k pulumi.StringInput) FieldOutput {
 }
 
 type GetField struct {
-	Id      string       `pulumi:"id"`
-	Label   string       `pulumi:"label"`
-	Purpose FieldPurpose `pulumi:"purpose"`
-	Value   string       `pulumi:"value"`
+	Label     string       `pulumi:"label"`
+	Purpose   FieldPurpose `pulumi:"purpose"`
+	Reference *string      `pulumi:"reference"`
+	Uuid      string       `pulumi:"uuid"`
+	Value     string       `pulumi:"value"`
 }
 
 type GetFieldOutput struct{ *pulumi.OutputState }
@@ -143,16 +144,20 @@ func (o GetFieldOutput) ToGetFieldOutputWithContext(ctx context.Context) GetFiel
 	return o
 }
 
-func (o GetFieldOutput) Id() pulumi.StringOutput {
-	return o.ApplyT(func(v GetField) string { return v.Id }).(pulumi.StringOutput)
-}
-
 func (o GetFieldOutput) Label() pulumi.StringOutput {
 	return o.ApplyT(func(v GetField) string { return v.Label }).(pulumi.StringOutput)
 }
 
 func (o GetFieldOutput) Purpose() FieldPurposeOutput {
 	return o.ApplyT(func(v GetField) FieldPurpose { return v.Purpose }).(FieldPurposeOutput)
+}
+
+func (o GetFieldOutput) Reference() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetField) *string { return v.Reference }).(pulumi.StringPtrOutput)
+}
+
+func (o GetFieldOutput) Uuid() pulumi.StringOutput {
+	return o.ApplyT(func(v GetField) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
 func (o GetFieldOutput) Value() pulumi.StringOutput {
@@ -181,8 +186,8 @@ func (o GetFieldMapOutput) MapIndex(k pulumi.StringInput) GetFieldOutput {
 
 type GetSection struct {
 	Fields map[string]GetField `pulumi:"fields"`
-	Id     string              `pulumi:"id"`
 	Label  string              `pulumi:"label"`
+	Uuid   string              `pulumi:"uuid"`
 }
 
 type GetSectionOutput struct{ *pulumi.OutputState }
@@ -203,12 +208,12 @@ func (o GetSectionOutput) Fields() GetFieldMapOutput {
 	return o.ApplyT(func(v GetSection) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
 }
 
-func (o GetSectionOutput) Id() pulumi.StringOutput {
-	return o.ApplyT(func(v GetSection) string { return v.Id }).(pulumi.StringOutput)
-}
-
 func (o GetSectionOutput) Label() pulumi.StringOutput {
 	return o.ApplyT(func(v GetSection) string { return v.Label }).(pulumi.StringOutput)
+}
+
+func (o GetSectionOutput) Uuid() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSection) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
 type GetSectionMapOutput struct{ *pulumi.OutputState }

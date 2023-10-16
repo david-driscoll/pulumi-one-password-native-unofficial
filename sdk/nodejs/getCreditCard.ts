@@ -40,7 +40,6 @@ export interface GetCreditCardResult {
     readonly contactInformation?: outputs.creditCard.ContactInformationSection;
     readonly expiryDate?: string;
     readonly fields?: {[key: string]: outputs.GetField};
-    readonly id?: string;
     readonly notes?: string;
     readonly number?: string;
     readonly sections?: {[key: string]: outputs.GetSection};

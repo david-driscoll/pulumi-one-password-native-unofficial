@@ -19,7 +19,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetPassportResult:
-    def __init__(__self__, category=None, date_of_birth=None, expiry_date=None, fields=None, full_name=None, gender=None, id=None, issued_on=None, issuing_authority=None, issuing_country=None, nationality=None, notes=None, number=None, place_of_birth=None, sections=None, tags=None, title=None, type=None, uuid=None, vault=None):
+    def __init__(__self__, category=None, date_of_birth=None, expiry_date=None, fields=None, full_name=None, gender=None, issued_on=None, issuing_authority=None, issuing_country=None, nationality=None, notes=None, number=None, place_of_birth=None, sections=None, tags=None, title=None, type=None, uuid=None, vault=None):
         if category and not isinstance(category, dict):
             raise TypeError("Expected argument 'category' to be a dict")
         pulumi.set(__self__, "category", category)
@@ -38,9 +38,6 @@ class GetPassportResult:
         if gender and not isinstance(gender, str):
             raise TypeError("Expected argument 'gender' to be a str")
         pulumi.set(__self__, "gender", gender)
-        if id and not isinstance(id, str):
-            raise TypeError("Expected argument 'id' to be a str")
-        pulumi.set(__self__, "id", id)
         if issued_on and not isinstance(issued_on, str):
             raise TypeError("Expected argument 'issued_on' to be a str")
         pulumi.set(__self__, "issued_on", issued_on)
@@ -110,11 +107,6 @@ class GetPassportResult:
     @pulumi.getter
     def gender(self) -> Optional[str]:
         return pulumi.get(self, "gender")
-
-    @property
-    @pulumi.getter
-    def id(self) -> Optional[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter(name="issuedOn")
@@ -206,7 +198,6 @@ class AwaitableGetPassportResult(GetPassportResult):
             fields=self.fields,
             full_name=self.full_name,
             gender=self.gender,
-            id=self.id,
             issued_on=self.issued_on,
             issuing_authority=self.issuing_authority,
             issuing_country=self.issuing_country,
@@ -250,7 +241,6 @@ def get_passport(title: Optional[str] = None,
         fields=__ret__.fields,
         full_name=__ret__.full_name,
         gender=__ret__.gender,
-        id=__ret__.id,
         issued_on=__ret__.issued_on,
         issuing_authority=__ret__.issuing_authority,
         issuing_country=__ret__.issuing_country,

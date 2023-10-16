@@ -36,7 +36,6 @@ type GetBankAccountResult struct {
 	Category          *string                               `pulumi:"category"`
 	Fields            map[string]GetField                   `pulumi:"fields"`
 	Iban              *string                               `pulumi:"iban"`
-	Id                *string                               `pulumi:"id"`
 	NameOnAccount     *string                               `pulumi:"nameOnAccount"`
 	Notes             *string                               `pulumi:"notes"`
 	Pin               *string                               `pulumi:"pin"`
@@ -116,10 +115,6 @@ func (o GetBankAccountResultOutput) Fields() GetFieldMapOutput {
 
 func (o GetBankAccountResultOutput) Iban() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetBankAccountResult) *string { return v.Iban }).(pulumi.StringPtrOutput)
-}
-
-func (o GetBankAccountResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetBankAccountResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
 func (o GetBankAccountResultOutput) NameOnAccount() pulumi.StringPtrOutput {

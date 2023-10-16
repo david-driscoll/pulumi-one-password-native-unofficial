@@ -13,24 +13,28 @@ namespace Pulumi.Onepassword.Outputs
     [OutputType]
     public sealed class GetField
     {
-        public readonly string Id;
         public readonly string Label;
         public readonly Pulumi.Onepassword.FieldPurpose Purpose;
+        public readonly string? Reference;
+        public readonly string Uuid;
         public readonly string Value;
 
         [OutputConstructor]
         private GetField(
-            string id,
-
             string label,
 
             Pulumi.Onepassword.FieldPurpose purpose,
 
+            string? reference,
+
+            string uuid,
+
             string value)
         {
-            Id = id;
             Label = label;
             Purpose = purpose;
+            Reference = reference;
+            Uuid = uuid;
             Value = value;
         }
     }

@@ -37,7 +37,6 @@ export interface GetIdentityResult {
     readonly address?: outputs.identity.AddressSection;
     readonly category?: enums.Category | string;
     readonly fields?: {[key: string]: outputs.GetField};
-    readonly id?: string;
     readonly identification?: outputs.identity.IdentificationSection;
     readonly internetDetails?: outputs.identity.InternetDetailsSection;
     readonly notes?: string;

@@ -20,7 +20,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetServerResult:
-    def __init__(__self__, admin_console=None, category=None, fields=None, hosting_provider=None, id=None, notes=None, password=None, sections=None, tags=None, title=None, url=None, username=None, uuid=None, vault=None):
+    def __init__(__self__, admin_console=None, category=None, fields=None, hosting_provider=None, notes=None, password=None, sections=None, tags=None, title=None, url=None, username=None, uuid=None, vault=None):
         if admin_console and not isinstance(admin_console, dict):
             raise TypeError("Expected argument 'admin_console' to be a dict")
         pulumi.set(__self__, "admin_console", admin_console)
@@ -33,9 +33,6 @@ class GetServerResult:
         if hosting_provider and not isinstance(hosting_provider, dict):
             raise TypeError("Expected argument 'hosting_provider' to be a dict")
         pulumi.set(__self__, "hosting_provider", hosting_provider)
-        if id and not isinstance(id, str):
-            raise TypeError("Expected argument 'id' to be a str")
-        pulumi.set(__self__, "id", id)
         if notes and not isinstance(notes, str):
             raise TypeError("Expected argument 'notes' to be a str")
         pulumi.set(__self__, "notes", notes)
@@ -83,11 +80,6 @@ class GetServerResult:
     @pulumi.getter(name="hostingProvider")
     def hosting_provider(self) -> Optional['_server.outputs.HostingProviderSection']:
         return pulumi.get(self, "hosting_provider")
-
-    @property
-    @pulumi.getter
-    def id(self) -> Optional[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter
@@ -157,7 +149,6 @@ class AwaitableGetServerResult(GetServerResult):
             category=self.category,
             fields=self.fields,
             hosting_provider=self.hosting_provider,
-            id=self.id,
             notes=self.notes,
             password=self.password,
             sections=self.sections,
@@ -195,7 +186,6 @@ def get_server(title: Optional[str] = None,
         category=__ret__.category,
         fields=__ret__.fields,
         hosting_provider=__ret__.hosting_provider,
-        id=__ret__.id,
         notes=__ret__.notes,
         password=__ret__.password,
         sections=__ret__.sections,

@@ -7,16 +7,17 @@ import { input as inputs, output as outputs, enums } from "../types";
 import * as utilities from "../utilities";
 
 export interface GetField {
-    id: string;
     label: string;
     purpose: enums.FieldPurpose;
+    reference?: string;
+    uuid: string;
     value: string;
 }
 
 export interface GetSection {
     fields: {[key: string]: outputs.GetField};
-    id: string;
     label: string;
+    uuid: string;
 }
 
 export namespace bankAccount {

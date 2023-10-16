@@ -31,7 +31,6 @@ type GetPasswordArgs struct {
 type GetPasswordResult struct {
 	Category *string               `pulumi:"category"`
 	Fields   map[string]GetField   `pulumi:"fields"`
-	Id       *string               `pulumi:"id"`
 	Notes    *string               `pulumi:"notes"`
 	Password *string               `pulumi:"password"`
 	Sections map[string]GetSection `pulumi:"sections"`
@@ -91,10 +90,6 @@ func (o GetPasswordResultOutput) Category() pulumi.StringPtrOutput {
 
 func (o GetPasswordResultOutput) Fields() GetFieldMapOutput {
 	return o.ApplyT(func(v GetPasswordResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
-}
-
-func (o GetPasswordResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetPasswordResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
 func (o GetPasswordResultOutput) Notes() pulumi.StringPtrOutput {

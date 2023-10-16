@@ -34,7 +34,6 @@ type GetMedicalRecordResult struct {
 	Date                   *string                          `pulumi:"date"`
 	Fields                 map[string]GetField              `pulumi:"fields"`
 	HealthcareProfessional *string                          `pulumi:"healthcareProfessional"`
-	Id                     *string                          `pulumi:"id"`
 	Location               *string                          `pulumi:"location"`
 	Medication             *medicalrecord.MedicationSection `pulumi:"medication"`
 	Notes                  *string                          `pulumi:"notes"`
@@ -105,10 +104,6 @@ func (o GetMedicalRecordResultOutput) Fields() GetFieldMapOutput {
 
 func (o GetMedicalRecordResultOutput) HealthcareProfessional() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetMedicalRecordResult) *string { return v.HealthcareProfessional }).(pulumi.StringPtrOutput)
-}
-
-func (o GetMedicalRecordResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetMedicalRecordResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
 func (o GetMedicalRecordResultOutput) Location() pulumi.StringPtrOutput {

@@ -31,7 +31,6 @@ type GetDocumentArgs struct {
 type GetDocumentResult struct {
 	Category *string               `pulumi:"category"`
 	Fields   map[string]GetField   `pulumi:"fields"`
-	Id       *string               `pulumi:"id"`
 	Notes    *string               `pulumi:"notes"`
 	Sections map[string]GetSection `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
@@ -90,10 +89,6 @@ func (o GetDocumentResultOutput) Category() pulumi.StringPtrOutput {
 
 func (o GetDocumentResultOutput) Fields() GetFieldMapOutput {
 	return o.ApplyT(func(v GetDocumentResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
-}
-
-func (o GetDocumentResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetDocumentResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
 func (o GetDocumentResultOutput) Notes() pulumi.StringPtrOutput {

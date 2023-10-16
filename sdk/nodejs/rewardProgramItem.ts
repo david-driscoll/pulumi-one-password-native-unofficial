@@ -35,7 +35,6 @@ export class RewardProgramItem extends pulumi.CustomResource {
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly companyName!: pulumi.Output<string | undefined>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
-    public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly memberId!: pulumi.Output<string | undefined>;
     public readonly memberName!: pulumi.Output<string | undefined>;
     public readonly moreInformation!: pulumi.Output<outputs.rewardProgram.MoreInformationSection | undefined>;
@@ -85,13 +84,11 @@ export class RewardProgramItem extends pulumi.CustomResource {
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
             resourceInputs["category"] = undefined /*out*/;
             resourceInputs["companyName"] = undefined /*out*/;
             resourceInputs["fields"] = undefined /*out*/;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["memberId"] = undefined /*out*/;
             resourceInputs["memberName"] = undefined /*out*/;
             resourceInputs["moreInformation"] = undefined /*out*/;

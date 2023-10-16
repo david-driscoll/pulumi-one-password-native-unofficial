@@ -40,7 +40,6 @@ export interface GetAPICredentialResult {
     readonly fields?: {[key: string]: outputs.GetField};
     readonly filename?: string;
     readonly hostname?: string;
-    readonly id?: string;
     readonly notes?: string;
     readonly sections?: {[key: string]: outputs.GetSection};
     /**

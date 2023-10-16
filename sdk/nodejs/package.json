@@ -1,17 +1,17 @@
 {
-  "name": "@pulumi/onepassword",
-  "version": "0.0.1",
-  "scripts": {
-    "build": "tsc",
-    "install": "node scripts/install-pulumi-plugin.js resource onepassword 0.0.1"
-  },
-  "dependencies": {
-    "@pulumi/pulumi": "latest"
-  },
-  "devDependencies": {
-    "typescript": "^5.2.2"
-  },
-  "pulumi": {
-    "resource": true
-  }
+    "name": "@pulumi/onepassword",
+    "version": "${VERSION}",
+    "scripts": {
+        "build": "tsc",
+        "install": "node scripts/install-pulumi-plugin.js resource onepassword ${VERSION}"
+    },
+    "dependencies": {
+        "@pulumi/pulumi": "latest"
+    },
+    "devDependencies": {
+        "typescript": "^5.2.2"
+    },
+    "pulumi": {
+        "resource": true
+    }
 }

@@ -78,7 +78,6 @@ namespace Pulumi.Onepassword
         public readonly string? ConnectionOptions;
         public readonly string? Database;
         public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
-        public readonly string? Id;
         public readonly string? Notes;
         public readonly string? Password;
         public readonly string? Port;
@@ -116,8 +115,6 @@ namespace Pulumi.Onepassword
 
             ImmutableDictionary<string, Outputs.GetField>? fields,
 
-            string? id,
-
             string? notes,
 
             string? password,
@@ -147,7 +144,6 @@ namespace Pulumi.Onepassword
             ConnectionOptions = connectionOptions;
             Database = database;
             Fields = fields;
-            Id = id;
             Notes = notes;
             Password = password;
             Port = port;

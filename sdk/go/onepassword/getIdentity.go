@@ -33,7 +33,6 @@ type GetIdentityResult struct {
 	Address         *identity.AddressSection         `pulumi:"address"`
 	Category        *string                          `pulumi:"category"`
 	Fields          map[string]GetField              `pulumi:"fields"`
-	Id              *string                          `pulumi:"id"`
 	Identification  *identity.IdentificationSection  `pulumi:"identification"`
 	InternetDetails *identity.InternetDetailsSection `pulumi:"internetDetails"`
 	Notes           *string                          `pulumi:"notes"`
@@ -98,10 +97,6 @@ func (o GetIdentityResultOutput) Category() pulumi.StringPtrOutput {
 
 func (o GetIdentityResultOutput) Fields() GetFieldMapOutput {
 	return o.ApplyT(func(v GetIdentityResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
-}
-
-func (o GetIdentityResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetIdentityResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
 func (o GetIdentityResultOutput) Identification() identity.IdentificationSectionPtrOutput {

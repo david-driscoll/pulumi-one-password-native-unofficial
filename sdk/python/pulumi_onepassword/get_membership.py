@@ -19,7 +19,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetMembershipResult:
-    def __init__(__self__, category=None, expiry_date=None, fields=None, group=None, id=None, member_id=None, member_name=None, member_since=None, notes=None, pin=None, sections=None, tags=None, telephone=None, title=None, uuid=None, vault=None, website=None):
+    def __init__(__self__, category=None, expiry_date=None, fields=None, group=None, member_id=None, member_name=None, member_since=None, notes=None, pin=None, sections=None, tags=None, telephone=None, title=None, uuid=None, vault=None, website=None):
         if category and not isinstance(category, dict):
             raise TypeError("Expected argument 'category' to be a dict")
         pulumi.set(__self__, "category", category)
@@ -32,9 +32,6 @@ class GetMembershipResult:
         if group and not isinstance(group, str):
             raise TypeError("Expected argument 'group' to be a str")
         pulumi.set(__self__, "group", group)
-        if id and not isinstance(id, str):
-            raise TypeError("Expected argument 'id' to be a str")
-        pulumi.set(__self__, "id", id)
         if member_id and not isinstance(member_id, str):
             raise TypeError("Expected argument 'member_id' to be a str")
         pulumi.set(__self__, "member_id", member_id)
@@ -91,11 +88,6 @@ class GetMembershipResult:
     @pulumi.getter
     def group(self) -> Optional[str]:
         return pulumi.get(self, "group")
-
-    @property
-    @pulumi.getter
-    def id(self) -> Optional[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter(name="memberId")
@@ -180,7 +172,6 @@ class AwaitableGetMembershipResult(GetMembershipResult):
             expiry_date=self.expiry_date,
             fields=self.fields,
             group=self.group,
-            id=self.id,
             member_id=self.member_id,
             member_name=self.member_name,
             member_since=self.member_since,
@@ -221,7 +212,6 @@ def get_membership(title: Optional[str] = None,
         expiry_date=__ret__.expiry_date,
         fields=__ret__.fields,
         group=__ret__.group,
-        id=__ret__.id,
         member_id=__ret__.member_id,
         member_name=__ret__.member_name,
         member_since=__ret__.member_since,

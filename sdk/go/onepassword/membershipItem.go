@@ -18,7 +18,6 @@ type MembershipItem struct {
 	ExpiryDate  pulumi.StringPtrOutput `pulumi:"expiryDate"`
 	Fields      GetFieldMapOutput      `pulumi:"fields"`
 	Group       pulumi.StringPtrOutput `pulumi:"group"`
-	Id          pulumi.StringOutput    `pulumi:"id"`
 	MemberId    pulumi.StringPtrOutput `pulumi:"memberId"`
 	MemberName  pulumi.StringPtrOutput `pulumi:"memberName"`
 	MemberSince pulumi.StringPtrOutput `pulumi:"memberSince"`
@@ -47,6 +46,7 @@ func NewMembershipItem(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
+	args.Category = pulumi.StringPtr("Membership")
 	var resource MembershipItem
 	err := ctx.RegisterResource("onepassword:index:MembershipItem", name, args, &resource, opts...)
 	if err != nil {
@@ -79,6 +79,8 @@ func (MembershipItemState) ElementType() reflect.Type {
 }
 
 type membershipItemArgs struct {
+	// The category of the vault the item is in.
+	Category    *string            `pulumi:"category"`
 	ExpiryDate  *string            `pulumi:"expiryDate"`
 	Fields      map[string]Field   `pulumi:"fields"`
 	Group       *string            `pulumi:"group"`
@@ -100,6 +102,8 @@ type membershipItemArgs struct {
 
 // The set of arguments for constructing a MembershipItem resource.
 type MembershipItemArgs struct {
+	// The category of the vault the item is in.
+	Category    pulumi.StringPtrInput
 	ExpiryDate  pulumi.StringPtrInput
 	Fields      FieldMapInput
 	Group       pulumi.StringPtrInput

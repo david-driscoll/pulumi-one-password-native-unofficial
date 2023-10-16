@@ -20,6 +20,7 @@ class CreditCardItemArgs:
                  vault: pulumi.Input[str],
                  additional_details: Optional[pulumi.Input['_creditcard.AdditionalDetailsSectionArgs']] = None,
                  cardholder_name: Optional[pulumi.Input[str]] = None,
+                 category: Optional[pulumi.Input[str]] = None,
                  contact_information: Optional[pulumi.Input['_creditcard.ContactInformationSectionArgs']] = None,
                  expiry_date: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
@@ -34,6 +35,7 @@ class CreditCardItemArgs:
         """
         The set of arguments for constructing a CreditCardItem resource.
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
+        :param pulumi.Input[str] category: The category of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         """
@@ -42,6 +44,8 @@ class CreditCardItemArgs:
             pulumi.set(__self__, "additional_details", additional_details)
         if cardholder_name is not None:
             pulumi.set(__self__, "cardholder_name", cardholder_name)
+        if category is not None:
+            pulumi.set(__self__, "category", 'Credit Card')
         if contact_information is not None:
             pulumi.set(__self__, "contact_information", contact_information)
         if expiry_date is not None:
@@ -94,6 +98,18 @@ class CreditCardItemArgs:
     @cardholder_name.setter
     def cardholder_name(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "cardholder_name", value)
+
+    @property
+    @pulumi.getter
+    def category(self) -> Optional[pulumi.Input[str]]:
+        """
+        The category of the vault the item is in.
+        """
+        return pulumi.get(self, "category")
+
+    @category.setter
+    def category(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "category", value)
 
     @property
     @pulumi.getter(name="contactInformation")
@@ -208,6 +224,7 @@ class CreditCardItem(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  additional_details: Optional[pulumi.Input[pulumi.InputType['_creditcard.AdditionalDetailsSectionArgs']]] = None,
                  cardholder_name: Optional[pulumi.Input[str]] = None,
+                 category: Optional[pulumi.Input[str]] = None,
                  contact_information: Optional[pulumi.Input[pulumi.InputType['_creditcard.ContactInformationSectionArgs']]] = None,
                  expiry_date: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
@@ -225,6 +242,7 @@ class CreditCardItem(pulumi.CustomResource):
         Create a CreditCardItem resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] category: The category of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
@@ -254,6 +272,7 @@ class CreditCardItem(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  additional_details: Optional[pulumi.Input[pulumi.InputType['_creditcard.AdditionalDetailsSectionArgs']]] = None,
                  cardholder_name: Optional[pulumi.Input[str]] = None,
+                 category: Optional[pulumi.Input[str]] = None,
                  contact_information: Optional[pulumi.Input[pulumi.InputType['_creditcard.ContactInformationSectionArgs']]] = None,
                  expiry_date: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
@@ -280,6 +299,7 @@ class CreditCardItem(pulumi.CustomResource):
 
             __props__.__dict__["additional_details"] = additional_details
             __props__.__dict__["cardholder_name"] = cardholder_name
+            __props__.__dict__["category"] = 'Credit Card'
             __props__.__dict__["contact_information"] = contact_information
             __props__.__dict__["expiry_date"] = expiry_date
             __props__.__dict__["fields"] = fields
@@ -294,8 +314,6 @@ class CreditCardItem(pulumi.CustomResource):
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
             __props__.__dict__["verification_number"] = verification_number
-            __props__.__dict__["category"] = None
-            __props__.__dict__["id"] = None
             __props__.__dict__["uuid"] = None
         super(CreditCardItem, __self__).__init__(
             'onepassword:index:CreditCardItem',
@@ -325,7 +343,6 @@ class CreditCardItem(pulumi.CustomResource):
         __props__.__dict__["contact_information"] = None
         __props__.__dict__["expiry_date"] = None
         __props__.__dict__["fields"] = None
-        __props__.__dict__["id"] = None
         __props__.__dict__["notes"] = None
         __props__.__dict__["number"] = None
         __props__.__dict__["sections"] = None
@@ -367,11 +384,6 @@ class CreditCardItem(pulumi.CustomResource):
     @pulumi.getter
     def fields(self) -> pulumi.Output[Optional[Mapping[str, 'outputs.GetField']]]:
         return pulumi.get(self, "fields")
-
-    @property
-    @pulumi.getter
-    def id(self) -> pulumi.Output[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter

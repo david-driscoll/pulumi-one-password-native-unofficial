@@ -35,7 +35,6 @@ export class SoftwareLicenseItem extends pulumi.CustomResource {
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly customer!: pulumi.Output<outputs.softwareLicense.CustomerSection | undefined>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
-    public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly licenseKey!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly order!: pulumi.Output<outputs.softwareLicense.OrderSection | undefined>;
@@ -85,13 +84,11 @@ export class SoftwareLicenseItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["version"] = args ? args.version : undefined;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
             resourceInputs["category"] = undefined /*out*/;
             resourceInputs["customer"] = undefined /*out*/;
             resourceInputs["fields"] = undefined /*out*/;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["licenseKey"] = undefined /*out*/;
             resourceInputs["notes"] = undefined /*out*/;
             resourceInputs["order"] = undefined /*out*/;

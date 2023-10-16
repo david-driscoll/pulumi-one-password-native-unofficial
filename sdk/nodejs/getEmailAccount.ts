@@ -38,7 +38,6 @@ export interface GetEmailAccountResult {
     readonly category?: enums.Category | string;
     readonly contactInformation?: outputs.emailAccount.ContactInformationSection;
     readonly fields?: {[key: string]: outputs.GetField};
-    readonly id?: string;
     readonly notes?: string;
     readonly password?: string;
     readonly portNumber?: string;

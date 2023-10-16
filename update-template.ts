@@ -54,9 +54,6 @@ schema.functions = {
                     "type": "string",
                     "description": "The description of the vault.\n"
                 },
-                "id": {
-                    "type": "string"
-                },
                 "name": {
                     "type": "string",
                     "description": "The name of the vault to retrieve. This field will be populated with the name of the vault if the vault it looked up by its UUID.\n"
@@ -109,7 +106,7 @@ schema.types = {
                     "$ref": "#/types/onepassword:index:GetField"
                 }
             },
-            "id": {
+            "uuid": {
                 "type": "string"
             },
             "label": {
@@ -119,7 +116,7 @@ schema.types = {
         "type": "object",
         "required": [
             "fields",
-            "id",
+            "uuid",
             "label"
         ]
     },
@@ -139,7 +136,7 @@ schema.types = {
     },
     "onepassword:index:GetField": {
         "properties": {
-            "id": {
+            "uuid": {
                 "type": "string"
             },
             "label": {
@@ -150,11 +147,14 @@ schema.types = {
             },
             "value": {
                 "type": "string"
+            },
+            "reference": {
+                "type": "string"
             }
         },
         "type": "object",
         "required": [
-            "id",
+            "uuid",
             "label",
             "purpose",
             "value"
@@ -210,12 +210,12 @@ for (const template of templates) {
     };
 
     currentResource.isComponent = false;
-    currentResource.inputProperties ??= {};
-    currentResource.requiredInputs ??= [];
+    currentResource.inputProperties = {};
+    currentResource.requiredInputs = [];
     currentResource.requiredInputs = ['vault'];
-    currentResource.properties ??= {};
-    currentResource.required ??= [];
-    currentResource.required = uniq(currentResource.required.concat('tags', 'id', 'uuid', 'title', 'vault', 'category'));
+    currentResource.properties = {};
+    currentResource.required = [];
+    currentResource.required = uniq(currentResource.required.concat('tags', 'uuid', 'title', 'vault', 'category'));
 
     currentResource.inputProperties['tags'] = {
         type: 'array',
@@ -277,7 +277,7 @@ for (const template of templates) {
         .filter(z => !!z.section)
         .reduce((o, v) => {
             schema.types[getSectionKey(template.name, v.section!)] = o[getSectionKey(template.name, v.section!)] = { "type": "object", "properties": {} };
-            currentResource.inputProperties[camelCase(v.section!.label ?? v.section!.id)] = { '$ref': `#/types/${getSectionKey(template.name, v.section!)}` };
+            currentResource.inputProperties[camelCase(v.section!.label ?? v.section!.id)] = { '$ref': `#/types/${getSectionKey(template.name, v.section!)}`, refName: getSectionKey(template.name, v.section!) };
             currentResource.properties[camelCase(v.section!.label ?? v.section!.id)] = { '$ref': `#/types/${getSectionKey(template.name, v.section!)}` };
             currentFunction.outputs.properties[camelCase(v.section!.label ?? v.section!.id)] = { '$ref': `#/types/${getSectionKey(template.name, v.section!)}` };
             return o;
@@ -293,7 +293,10 @@ for (const template of templates) {
             const sectionProperties = section.properties;
             sectionProperties[fieldInfo.name] = {
                 type: fieldInfo.type,
-                secret: fieldInfo.secret
+                secret: fieldInfo.secret,
+                purpose: fieldInfo.purpose,
+                kind: fieldInfo.kind,
+                onePasswordId: fieldInfo.id,
             }
             if (fieldInfo.default) {
                 sectionProperties[fieldInfo.name].default = fieldInfo.default
@@ -304,15 +307,22 @@ for (const template of templates) {
                 type: fieldInfo.type,
                 secret: fieldInfo.secret,
                 purpose: fieldInfo.purpose,
-                kind: fieldInfo.kind
+                kind: fieldInfo.kind,
+                onePasswordId: fieldInfo.id,
             }
             currentResource.properties[fieldInfo.name] = {
                 type: fieldInfo.type,
-                secret: fieldInfo.secret
+                secret: fieldInfo.secret,
+                purpose: fieldInfo.purpose,
+                kind: fieldInfo.kind,
+                onePasswordId: fieldInfo.id,
             }
             currentFunction.outputs.properties[fieldInfo.name] = {
                 type: fieldInfo.type,
-                secret: fieldInfo.secret
+                secret: fieldInfo.secret,
+                purpose: fieldInfo.purpose,
+                kind: fieldInfo.kind,
+                onePasswordId: fieldInfo.id,
             }
             if (fieldInfo.default) {
                 currentResource.inputProperties[fieldInfo.name].default = fieldInfo.default
@@ -408,6 +418,7 @@ function getFieldType(field: Field) {
     const fieldData = {
         name: camelCase(field.label),
         original: field.label,
+        id: field.id,
         secret: false,
         default: field.value,
         type: 'string',
@@ -457,9 +468,6 @@ function getFieldType(field: Field) {
 
 function applyDefaultOutputProperties(item: any) {
     Object.assign(item.properties, {
-        ['id']: {
-            "type": "string"
-        },
         ['uuid']: {
             "type": "string",
             "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"

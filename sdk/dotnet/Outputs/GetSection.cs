@@ -14,20 +14,20 @@ namespace Pulumi.Onepassword.Outputs
     public sealed class GetSection
     {
         public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
-        public readonly string Id;
         public readonly string Label;
+        public readonly string Uuid;
 
         [OutputConstructor]
         private GetSection(
             ImmutableDictionary<string, Outputs.GetField> fields,
 
-            string id,
+            string label,
 
-            string label)
+            string uuid)
         {
             Fields = fields;
-            Id = id;
             Label = label;
+            Uuid = uuid;
         }
     }
 }

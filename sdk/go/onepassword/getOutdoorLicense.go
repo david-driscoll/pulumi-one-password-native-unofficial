@@ -35,7 +35,6 @@ type GetOutdoorLicenseResult struct {
 	Expires          *string               `pulumi:"expires"`
 	Fields           map[string]GetField   `pulumi:"fields"`
 	FullName         *string               `pulumi:"fullName"`
-	Id               *string               `pulumi:"id"`
 	MaximumQuota     *string               `pulumi:"maximumQuota"`
 	Notes            *string               `pulumi:"notes"`
 	Sections         map[string]GetSection `pulumi:"sections"`
@@ -113,10 +112,6 @@ func (o GetOutdoorLicenseResultOutput) Fields() GetFieldMapOutput {
 
 func (o GetOutdoorLicenseResultOutput) FullName() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetOutdoorLicenseResult) *string { return v.FullName }).(pulumi.StringPtrOutput)
-}
-
-func (o GetOutdoorLicenseResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetOutdoorLicenseResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
 func (o GetOutdoorLicenseResultOutput) MaximumQuota() pulumi.StringPtrOutput {

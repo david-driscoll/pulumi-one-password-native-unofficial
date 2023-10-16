@@ -40,7 +40,6 @@ export interface GetPassportResult {
     readonly fields?: {[key: string]: outputs.GetField};
     readonly fullName?: string;
     readonly gender?: string;
-    readonly id?: string;
     readonly issuedOn?: string;
     readonly issuingAuthority?: string;
     readonly issuingCountry?: string;

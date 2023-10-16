@@ -28,7 +28,6 @@ type GetVaultArgs struct {
 type GetVaultResult struct {
 	// The description of the vault.
 	Description *string `pulumi:"description"`
-	Id          *string `pulumi:"id"`
 	// The name of the vault to retrieve. This field will be populated with the name of the vault if the vault it looked up by its UUID.
 	Name *string `pulumi:"name"`
 	// The UUID of the vault to retrieve. This field will be populated with the UUID of the vault if the vault it looked up by its name.
@@ -74,10 +73,6 @@ func (o GetVaultResultOutput) ToGetVaultResultOutputWithContext(ctx context.Cont
 // The description of the vault.
 func (o GetVaultResultOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetVaultResult) *string { return v.Description }).(pulumi.StringPtrOutput)
-}
-
-func (o GetVaultResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetVaultResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
 // The name of the vault to retrieve. This field will be populated with the name of the vault if the vault it looked up by its UUID.

@@ -32,7 +32,6 @@ type GetCryptoWalletArgs struct {
 type GetCryptoWalletResult struct {
 	Category       *string               `pulumi:"category"`
 	Fields         map[string]GetField   `pulumi:"fields"`
-	Id             *string               `pulumi:"id"`
 	Notes          *string               `pulumi:"notes"`
 	Password       *string               `pulumi:"password"`
 	RecoveryPhrase *string               `pulumi:"recoveryPhrase"`
@@ -94,10 +93,6 @@ func (o GetCryptoWalletResultOutput) Category() pulumi.StringPtrOutput {
 
 func (o GetCryptoWalletResultOutput) Fields() GetFieldMapOutput {
 	return o.ApplyT(func(v GetCryptoWalletResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
-}
-
-func (o GetCryptoWalletResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetCryptoWalletResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
 func (o GetCryptoWalletResultOutput) Notes() pulumi.StringPtrOutput {

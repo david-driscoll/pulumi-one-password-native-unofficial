@@ -19,7 +19,6 @@ type ServerItem struct {
 	Category        pulumi.StringOutput                    `pulumi:"category"`
 	Fields          GetFieldMapOutput                      `pulumi:"fields"`
 	HostingProvider server.HostingProviderSectionPtrOutput `pulumi:"hostingProvider"`
-	Id              pulumi.StringOutput                    `pulumi:"id"`
 	Notes           pulumi.StringPtrOutput                 `pulumi:"notes"`
 	Password        pulumi.StringPtrOutput                 `pulumi:"password"`
 	Sections        GetSectionMapOutput                    `pulumi:"sections"`
@@ -45,6 +44,7 @@ func NewServerItem(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
+	args.Category = pulumi.StringPtr("Server")
 	var resource ServerItem
 	err := ctx.RegisterResource("onepassword:index:ServerItem", name, args, &resource, opts...)
 	if err != nil {
@@ -77,7 +77,9 @@ func (ServerItemState) ElementType() reflect.Type {
 }
 
 type serverItemArgs struct {
-	AdminConsole    *server.AdminConsoleSection    `pulumi:"adminConsole"`
+	AdminConsole *server.AdminConsoleSection `pulumi:"adminConsole"`
+	// The category of the vault the item is in.
+	Category        *string                        `pulumi:"category"`
 	Fields          map[string]Field               `pulumi:"fields"`
 	HostingProvider *server.HostingProviderSection `pulumi:"hostingProvider"`
 	Notes           *string                        `pulumi:"notes"`
@@ -95,7 +97,9 @@ type serverItemArgs struct {
 
 // The set of arguments for constructing a ServerItem resource.
 type ServerItemArgs struct {
-	AdminConsole    server.AdminConsoleSectionPtrInput
+	AdminConsole server.AdminConsoleSectionPtrInput
+	// The category of the vault the item is in.
+	Category        pulumi.StringPtrInput
 	Fields          FieldMapInput
 	HostingProvider server.HostingProviderSectionPtrInput
 	Notes           pulumi.StringPtrInput

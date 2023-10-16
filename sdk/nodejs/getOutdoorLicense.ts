@@ -40,7 +40,6 @@ export interface GetOutdoorLicenseResult {
     readonly expires?: string;
     readonly fields?: {[key: string]: outputs.GetField};
     readonly fullName?: string;
-    readonly id?: string;
     readonly maximumQuota?: string;
     readonly notes?: string;
     readonly sections?: {[key: string]: outputs.GetSection};

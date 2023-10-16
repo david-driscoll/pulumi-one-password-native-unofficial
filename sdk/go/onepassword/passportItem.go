@@ -20,7 +20,6 @@ type PassportItem struct {
 	Fields           GetFieldMapOutput      `pulumi:"fields"`
 	FullName         pulumi.StringPtrOutput `pulumi:"fullName"`
 	Gender           pulumi.StringPtrOutput `pulumi:"gender"`
-	Id               pulumi.StringOutput    `pulumi:"id"`
 	IssuedOn         pulumi.StringPtrOutput `pulumi:"issuedOn"`
 	IssuingAuthority pulumi.StringPtrOutput `pulumi:"issuingAuthority"`
 	IssuingCountry   pulumi.StringPtrOutput `pulumi:"issuingCountry"`
@@ -50,6 +49,7 @@ func NewPassportItem(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
+	args.Category = pulumi.StringPtr("Passport")
 	var resource PassportItem
 	err := ctx.RegisterResource("onepassword:index:PassportItem", name, args, &resource, opts...)
 	if err != nil {
@@ -82,6 +82,8 @@ func (PassportItemState) ElementType() reflect.Type {
 }
 
 type passportItemArgs struct {
+	// The category of the vault the item is in.
+	Category         *string            `pulumi:"category"`
 	DateOfBirth      *string            `pulumi:"dateOfBirth"`
 	ExpiryDate       *string            `pulumi:"expiryDate"`
 	Fields           map[string]Field   `pulumi:"fields"`
@@ -106,6 +108,8 @@ type passportItemArgs struct {
 
 // The set of arguments for constructing a PassportItem resource.
 type PassportItemArgs struct {
+	// The category of the vault the item is in.
+	Category         pulumi.StringPtrInput
 	DateOfBirth      pulumi.StringPtrInput
 	ExpiryDate       pulumi.StringPtrInput
 	Fields           FieldMapInput

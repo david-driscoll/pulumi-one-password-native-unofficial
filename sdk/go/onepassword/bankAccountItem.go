@@ -21,7 +21,6 @@ type BankAccountItem struct {
 	Category          pulumi.StringOutput                           `pulumi:"category"`
 	Fields            GetFieldMapOutput                             `pulumi:"fields"`
 	Iban              pulumi.StringPtrOutput                        `pulumi:"iban"`
-	Id                pulumi.StringOutput                           `pulumi:"id"`
 	NameOnAccount     pulumi.StringPtrOutput                        `pulumi:"nameOnAccount"`
 	Notes             pulumi.StringPtrOutput                        `pulumi:"notes"`
 	Pin               pulumi.StringPtrOutput                        `pulumi:"pin"`
@@ -49,6 +48,7 @@ func NewBankAccountItem(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
+	args.Category = pulumi.StringPtr("Bank Account")
 	var resource BankAccountItem
 	err := ctx.RegisterResource("onepassword:index:BankAccountItem", name, args, &resource, opts...)
 	if err != nil {
@@ -84,14 +84,16 @@ type bankAccountItemArgs struct {
 	AccountNumber     *string                               `pulumi:"accountNumber"`
 	BankName          *string                               `pulumi:"bankName"`
 	BranchInformation *bankaccount.BranchInformationSection `pulumi:"branchInformation"`
-	Fields            map[string]Field                      `pulumi:"fields"`
-	Iban              *string                               `pulumi:"iban"`
-	NameOnAccount     *string                               `pulumi:"nameOnAccount"`
-	Notes             *string                               `pulumi:"notes"`
-	Pin               *string                               `pulumi:"pin"`
-	RoutingNumber     *string                               `pulumi:"routingNumber"`
-	Sections          map[string]Section                    `pulumi:"sections"`
-	Swift             *string                               `pulumi:"swift"`
+	// The category of the vault the item is in.
+	Category      *string            `pulumi:"category"`
+	Fields        map[string]Field   `pulumi:"fields"`
+	Iban          *string            `pulumi:"iban"`
+	NameOnAccount *string            `pulumi:"nameOnAccount"`
+	Notes         *string            `pulumi:"notes"`
+	Pin           *string            `pulumi:"pin"`
+	RoutingNumber *string            `pulumi:"routingNumber"`
+	Sections      map[string]Section `pulumi:"sections"`
+	Swift         *string            `pulumi:"swift"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -106,14 +108,16 @@ type BankAccountItemArgs struct {
 	AccountNumber     pulumi.StringPtrInput
 	BankName          pulumi.StringPtrInput
 	BranchInformation bankaccount.BranchInformationSectionPtrInput
-	Fields            FieldMapInput
-	Iban              pulumi.StringPtrInput
-	NameOnAccount     pulumi.StringPtrInput
-	Notes             pulumi.StringPtrInput
-	Pin               pulumi.StringPtrInput
-	RoutingNumber     pulumi.StringPtrInput
-	Sections          SectionMapInput
-	Swift             pulumi.StringPtrInput
+	// The category of the vault the item is in.
+	Category      pulumi.StringPtrInput
+	Fields        FieldMapInput
+	Iban          pulumi.StringPtrInput
+	NameOnAccount pulumi.StringPtrInput
+	Notes         pulumi.StringPtrInput
+	Pin           pulumi.StringPtrInput
+	RoutingNumber pulumi.StringPtrInput
+	Sections      SectionMapInput
+	Swift         pulumi.StringPtrInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.

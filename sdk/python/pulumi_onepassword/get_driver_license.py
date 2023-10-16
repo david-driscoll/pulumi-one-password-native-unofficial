@@ -19,7 +19,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetDriverLicenseResult:
-    def __init__(__self__, address=None, category=None, conditions_restrictions=None, country=None, date_of_birth=None, expiry_date=None, fields=None, full_name=None, gender=None, height=None, id=None, license_class=None, notes=None, number=None, sections=None, state=None, tags=None, title=None, uuid=None, vault=None):
+    def __init__(__self__, address=None, category=None, conditions_restrictions=None, country=None, date_of_birth=None, expiry_date=None, fields=None, full_name=None, gender=None, height=None, license_class=None, notes=None, number=None, sections=None, state=None, tags=None, title=None, uuid=None, vault=None):
         if address and not isinstance(address, str):
             raise TypeError("Expected argument 'address' to be a str")
         pulumi.set(__self__, "address", address)
@@ -50,9 +50,6 @@ class GetDriverLicenseResult:
         if height and not isinstance(height, str):
             raise TypeError("Expected argument 'height' to be a str")
         pulumi.set(__self__, "height", height)
-        if id and not isinstance(id, str):
-            raise TypeError("Expected argument 'id' to be a str")
-        pulumi.set(__self__, "id", id)
         if license_class and not isinstance(license_class, str):
             raise TypeError("Expected argument 'license_class' to be a str")
         pulumi.set(__self__, "license_class", license_class)
@@ -132,11 +129,6 @@ class GetDriverLicenseResult:
         return pulumi.get(self, "height")
 
     @property
-    @pulumi.getter
-    def id(self) -> Optional[str]:
-        return pulumi.get(self, "id")
-
-    @property
     @pulumi.getter(name="licenseClass")
     def license_class(self) -> Optional[str]:
         return pulumi.get(self, "license_class")
@@ -210,7 +202,6 @@ class AwaitableGetDriverLicenseResult(GetDriverLicenseResult):
             full_name=self.full_name,
             gender=self.gender,
             height=self.height,
-            id=self.id,
             license_class=self.license_class,
             notes=self.notes,
             number=self.number,
@@ -254,7 +245,6 @@ def get_driver_license(title: Optional[str] = None,
         full_name=__ret__.full_name,
         gender=__ret__.gender,
         height=__ret__.height,
-        id=__ret__.id,
         license_class=__ret__.license_class,
         notes=__ret__.notes,
         number=__ret__.number,

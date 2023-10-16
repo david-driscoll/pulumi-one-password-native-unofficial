@@ -21,6 +21,7 @@ class BankAccountItemArgs:
                  account_number: Optional[pulumi.Input[str]] = None,
                  bank_name: Optional[pulumi.Input[str]] = None,
                  branch_information: Optional[pulumi.Input['_bankaccount.BranchInformationSectionArgs']] = None,
+                 category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
                  iban: Optional[pulumi.Input[str]] = None,
                  name_on_account: Optional[pulumi.Input[str]] = None,
@@ -35,6 +36,7 @@ class BankAccountItemArgs:
         """
         The set of arguments for constructing a BankAccountItem resource.
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
+        :param pulumi.Input[str] category: The category of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         """
@@ -45,6 +47,8 @@ class BankAccountItemArgs:
             pulumi.set(__self__, "bank_name", bank_name)
         if branch_information is not None:
             pulumi.set(__self__, "branch_information", branch_information)
+        if category is not None:
+            pulumi.set(__self__, "category", 'Bank Account')
         if fields is not None:
             pulumi.set(__self__, "fields", fields)
         if iban is not None:
@@ -106,6 +110,18 @@ class BankAccountItemArgs:
     @branch_information.setter
     def branch_information(self, value: Optional[pulumi.Input['_bankaccount.BranchInformationSectionArgs']]):
         pulumi.set(self, "branch_information", value)
+
+    @property
+    @pulumi.getter
+    def category(self) -> Optional[pulumi.Input[str]]:
+        """
+        The category of the vault the item is in.
+        """
+        return pulumi.get(self, "category")
+
+    @category.setter
+    def category(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "category", value)
 
     @property
     @pulumi.getter
@@ -221,6 +237,7 @@ class BankAccountItem(pulumi.CustomResource):
                  account_number: Optional[pulumi.Input[str]] = None,
                  bank_name: Optional[pulumi.Input[str]] = None,
                  branch_information: Optional[pulumi.Input[pulumi.InputType['_bankaccount.BranchInformationSectionArgs']]] = None,
+                 category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  iban: Optional[pulumi.Input[str]] = None,
                  name_on_account: Optional[pulumi.Input[str]] = None,
@@ -238,6 +255,7 @@ class BankAccountItem(pulumi.CustomResource):
         Create a BankAccountItem resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] category: The category of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
@@ -268,6 +286,7 @@ class BankAccountItem(pulumi.CustomResource):
                  account_number: Optional[pulumi.Input[str]] = None,
                  bank_name: Optional[pulumi.Input[str]] = None,
                  branch_information: Optional[pulumi.Input[pulumi.InputType['_bankaccount.BranchInformationSectionArgs']]] = None,
+                 category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  iban: Optional[pulumi.Input[str]] = None,
                  name_on_account: Optional[pulumi.Input[str]] = None,
@@ -295,6 +314,7 @@ class BankAccountItem(pulumi.CustomResource):
             __props__.__dict__["account_number"] = account_number
             __props__.__dict__["bank_name"] = bank_name
             __props__.__dict__["branch_information"] = branch_information
+            __props__.__dict__["category"] = 'Bank Account'
             __props__.__dict__["fields"] = fields
             __props__.__dict__["iban"] = iban
             __props__.__dict__["name_on_account"] = name_on_account
@@ -309,8 +329,6 @@ class BankAccountItem(pulumi.CustomResource):
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
-            __props__.__dict__["category"] = None
-            __props__.__dict__["id"] = None
             __props__.__dict__["uuid"] = None
         super(BankAccountItem, __self__).__init__(
             'onepassword:index:BankAccountItem',
@@ -340,7 +358,6 @@ class BankAccountItem(pulumi.CustomResource):
         __props__.__dict__["category"] = None
         __props__.__dict__["fields"] = None
         __props__.__dict__["iban"] = None
-        __props__.__dict__["id"] = None
         __props__.__dict__["name_on_account"] = None
         __props__.__dict__["notes"] = None
         __props__.__dict__["pin"] = None
@@ -383,11 +400,6 @@ class BankAccountItem(pulumi.CustomResource):
     @pulumi.getter
     def iban(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "iban")
-
-    @property
-    @pulumi.getter
-    def id(self) -> pulumi.Output[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter(name="nameOnAccount")

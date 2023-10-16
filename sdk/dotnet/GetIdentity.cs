@@ -76,7 +76,6 @@ namespace Pulumi.Onepassword
         public readonly Pulumi.Onepassword.Identity.Outputs.AddressSection? Address;
         public readonly string? Category;
         public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
-        public readonly string? Id;
         public readonly Pulumi.Onepassword.Identity.Outputs.IdentificationSection? Identification;
         public readonly Pulumi.Onepassword.Identity.Outputs.InternetDetailsSection? InternetDetails;
         public readonly string? Notes;
@@ -106,8 +105,6 @@ namespace Pulumi.Onepassword
 
             ImmutableDictionary<string, Outputs.GetField>? fields,
 
-            string? id,
-
             Pulumi.Onepassword.Identity.Outputs.IdentificationSection? identification,
 
             Pulumi.Onepassword.Identity.Outputs.InternetDetailsSection? internetDetails,
@@ -127,7 +124,6 @@ namespace Pulumi.Onepassword
             Address = address;
             Category = category;
             Fields = fields;
-            Id = id;
             Identification = identification;
             InternetDetails = internetDetails;
             Notes = notes;

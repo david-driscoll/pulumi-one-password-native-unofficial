@@ -19,16 +19,13 @@ __all__ = [
 
 @pulumi.output_type
 class GetSocialSecurityNumberResult:
-    def __init__(__self__, category=None, fields=None, id=None, name=None, notes=None, number=None, sections=None, tags=None, title=None, uuid=None, vault=None):
+    def __init__(__self__, category=None, fields=None, name=None, notes=None, number=None, sections=None, tags=None, title=None, uuid=None, vault=None):
         if category and not isinstance(category, dict):
             raise TypeError("Expected argument 'category' to be a dict")
         pulumi.set(__self__, "category", category)
         if fields and not isinstance(fields, dict):
             raise TypeError("Expected argument 'fields' to be a dict")
         pulumi.set(__self__, "fields", fields)
-        if id and not isinstance(id, str):
-            raise TypeError("Expected argument 'id' to be a str")
-        pulumi.set(__self__, "id", id)
         if name and not isinstance(name, str):
             raise TypeError("Expected argument 'name' to be a str")
         pulumi.set(__self__, "name", name)
@@ -63,11 +60,6 @@ class GetSocialSecurityNumberResult:
     @pulumi.getter
     def fields(self) -> Optional[Mapping[str, 'outputs.GetField']]:
         return pulumi.get(self, "fields")
-
-    @property
-    @pulumi.getter
-    def id(self) -> Optional[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter
@@ -130,7 +122,6 @@ class AwaitableGetSocialSecurityNumberResult(GetSocialSecurityNumberResult):
         return GetSocialSecurityNumberResult(
             category=self.category,
             fields=self.fields,
-            id=self.id,
             name=self.name,
             notes=self.notes,
             number=self.number,
@@ -165,7 +156,6 @@ def get_social_security_number(title: Optional[str] = None,
     return AwaitableGetSocialSecurityNumberResult(
         category=__ret__.category,
         fields=__ret__.fields,
-        id=__ret__.id,
         name=__ret__.name,
         notes=__ret__.notes,
         number=__ret__.number,

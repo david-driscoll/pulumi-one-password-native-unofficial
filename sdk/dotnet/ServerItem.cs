@@ -24,9 +24,6 @@ namespace Pulumi.Onepassword
         [Output("hostingProvider")]
         public Output<Pulumi.Onepassword.Server.Outputs.HostingProviderSection?> HostingProvider { get; private set; } = null!;
 
-        [Output("id")]
-        public Output<string> Id { get; private set; } = null!;
-
         [Output("notes")]
         public Output<string?> Notes { get; private set; } = null!;
 

@@ -19,7 +19,6 @@ type DatabaseItem struct {
 	ConnectionOptions pulumi.StringPtrOutput `pulumi:"connectionOptions"`
 	Database          pulumi.StringPtrOutput `pulumi:"database"`
 	Fields            GetFieldMapOutput      `pulumi:"fields"`
-	Id                pulumi.StringOutput    `pulumi:"id"`
 	Notes             pulumi.StringPtrOutput `pulumi:"notes"`
 	Password          pulumi.StringPtrOutput `pulumi:"password"`
 	Port              pulumi.StringPtrOutput `pulumi:"port"`
@@ -48,6 +47,7 @@ func NewDatabaseItem(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
+	args.Category = pulumi.StringPtr("Database")
 	var resource DatabaseItem
 	err := ctx.RegisterResource("onepassword:index:DatabaseItem", name, args, &resource, opts...)
 	if err != nil {
@@ -80,7 +80,9 @@ func (DatabaseItemState) ElementType() reflect.Type {
 }
 
 type databaseItemArgs struct {
-	Alias             *string            `pulumi:"alias"`
+	Alias *string `pulumi:"alias"`
+	// The category of the vault the item is in.
+	Category          *string            `pulumi:"category"`
 	ConnectionOptions *string            `pulumi:"connectionOptions"`
 	Database          *string            `pulumi:"database"`
 	Fields            map[string]Field   `pulumi:"fields"`
@@ -102,7 +104,9 @@ type databaseItemArgs struct {
 
 // The set of arguments for constructing a DatabaseItem resource.
 type DatabaseItemArgs struct {
-	Alias             pulumi.StringPtrInput
+	Alias pulumi.StringPtrInput
+	// The category of the vault the item is in.
+	Category          pulumi.StringPtrInput
 	ConnectionOptions pulumi.StringPtrInput
 	Database          pulumi.StringPtrInput
 	Fields            FieldMapInput

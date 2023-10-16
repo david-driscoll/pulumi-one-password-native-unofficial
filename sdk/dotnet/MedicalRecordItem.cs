@@ -24,9 +24,6 @@ namespace Pulumi.Onepassword
         [Output("healthcareProfessional")]
         public Output<string?> HealthcareProfessional { get; private set; } = null!;
 
-        [Output("id")]
-        public Output<string> Id { get; private set; } = null!;
-
         [Output("location")]
         public Output<string?> Location { get; private set; } = null!;
 

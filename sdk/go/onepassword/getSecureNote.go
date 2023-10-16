@@ -31,7 +31,6 @@ type GetSecureNoteArgs struct {
 type GetSecureNoteResult struct {
 	Category *string               `pulumi:"category"`
 	Fields   map[string]GetField   `pulumi:"fields"`
-	Id       *string               `pulumi:"id"`
 	Notes    *string               `pulumi:"notes"`
 	Sections map[string]GetSection `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
@@ -90,10 +89,6 @@ func (o GetSecureNoteResultOutput) Category() pulumi.StringPtrOutput {
 
 func (o GetSecureNoteResultOutput) Fields() GetFieldMapOutput {
 	return o.ApplyT(func(v GetSecureNoteResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
-}
-
-func (o GetSecureNoteResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetSecureNoteResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
 func (o GetSecureNoteResultOutput) Notes() pulumi.StringPtrOutput {

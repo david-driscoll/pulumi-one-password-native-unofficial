@@ -18,19 +18,17 @@ __all__ = [
 @pulumi.output_type
 class GetField(dict):
     def __init__(__self__, *,
-                 id: str,
                  label: str,
                  purpose: 'FieldPurpose',
-                 value: str):
-        pulumi.set(__self__, "id", id)
+                 uuid: str,
+                 value: str,
+                 reference: Optional[str] = None):
         pulumi.set(__self__, "label", label)
         pulumi.set(__self__, "purpose", purpose)
+        pulumi.set(__self__, "uuid", uuid)
         pulumi.set(__self__, "value", value)
-
-    @property
-    @pulumi.getter
-    def id(self) -> str:
-        return pulumi.get(self, "id")
+        if reference is not None:
+            pulumi.set(__self__, "reference", reference)
 
     @property
     @pulumi.getter
@@ -44,19 +42,29 @@ class GetField(dict):
 
     @property
     @pulumi.getter
+    def uuid(self) -> str:
+        return pulumi.get(self, "uuid")
+
+    @property
+    @pulumi.getter
     def value(self) -> str:
         return pulumi.get(self, "value")
+
+    @property
+    @pulumi.getter
+    def reference(self) -> Optional[str]:
+        return pulumi.get(self, "reference")
 
 
 @pulumi.output_type
 class GetSection(dict):
     def __init__(__self__, *,
                  fields: Mapping[str, 'outputs.GetField'],
-                 id: str,
-                 label: str):
+                 label: str,
+                 uuid: str):
         pulumi.set(__self__, "fields", fields)
-        pulumi.set(__self__, "id", id)
         pulumi.set(__self__, "label", label)
+        pulumi.set(__self__, "uuid", uuid)
 
     @property
     @pulumi.getter
@@ -65,12 +73,12 @@ class GetSection(dict):
 
     @property
     @pulumi.getter
-    def id(self) -> str:
-        return pulumi.get(self, "id")
+    def label(self) -> str:
+        return pulumi.get(self, "label")
 
     @property
     @pulumi.getter
-    def label(self) -> str:
-        return pulumi.get(self, "label")
+    def uuid(self) -> str:
+        return pulumi.get(self, "uuid")
 
 

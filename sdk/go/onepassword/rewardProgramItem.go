@@ -18,7 +18,6 @@ type RewardProgramItem struct {
 	Category        pulumi.StringOutput                           `pulumi:"category"`
 	CompanyName     pulumi.StringPtrOutput                        `pulumi:"companyName"`
 	Fields          GetFieldMapOutput                             `pulumi:"fields"`
-	Id              pulumi.StringOutput                           `pulumi:"id"`
 	MemberId        pulumi.StringPtrOutput                        `pulumi:"memberId"`
 	MemberName      pulumi.StringPtrOutput                        `pulumi:"memberName"`
 	MoreInformation rewardprogram.MoreInformationSectionPtrOutput `pulumi:"moreInformation"`
@@ -45,6 +44,7 @@ func NewRewardProgramItem(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
+	args.Category = pulumi.StringPtr("Reward Program")
 	var resource RewardProgramItem
 	err := ctx.RegisterResource("onepassword:index:RewardProgramItem", name, args, &resource, opts...)
 	if err != nil {
@@ -77,6 +77,8 @@ func (RewardProgramItemState) ElementType() reflect.Type {
 }
 
 type rewardProgramItemArgs struct {
+	// The category of the vault the item is in.
+	Category        *string                               `pulumi:"category"`
 	CompanyName     *string                               `pulumi:"companyName"`
 	Fields          map[string]Field                      `pulumi:"fields"`
 	MemberId        *string                               `pulumi:"memberId"`
@@ -95,6 +97,8 @@ type rewardProgramItemArgs struct {
 
 // The set of arguments for constructing a RewardProgramItem resource.
 type RewardProgramItemArgs struct {
+	// The category of the vault the item is in.
+	Category        pulumi.StringPtrInput
 	CompanyName     pulumi.StringPtrInput
 	Fields          FieldMapInput
 	MemberId        pulumi.StringPtrInput

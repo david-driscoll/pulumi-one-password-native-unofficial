@@ -20,7 +20,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetRewardProgramResult:
-    def __init__(__self__, category=None, company_name=None, fields=None, id=None, member_id=None, member_name=None, more_information=None, notes=None, pin=None, sections=None, tags=None, title=None, uuid=None, vault=None):
+    def __init__(__self__, category=None, company_name=None, fields=None, member_id=None, member_name=None, more_information=None, notes=None, pin=None, sections=None, tags=None, title=None, uuid=None, vault=None):
         if category and not isinstance(category, dict):
             raise TypeError("Expected argument 'category' to be a dict")
         pulumi.set(__self__, "category", category)
@@ -30,9 +30,6 @@ class GetRewardProgramResult:
         if fields and not isinstance(fields, dict):
             raise TypeError("Expected argument 'fields' to be a dict")
         pulumi.set(__self__, "fields", fields)
-        if id and not isinstance(id, str):
-            raise TypeError("Expected argument 'id' to be a str")
-        pulumi.set(__self__, "id", id)
         if member_id and not isinstance(member_id, str):
             raise TypeError("Expected argument 'member_id' to be a str")
         pulumi.set(__self__, "member_id", member_id)
@@ -78,11 +75,6 @@ class GetRewardProgramResult:
     @pulumi.getter
     def fields(self) -> Optional[Mapping[str, 'outputs.GetField']]:
         return pulumi.get(self, "fields")
-
-    @property
-    @pulumi.getter
-    def id(self) -> Optional[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter(name="memberId")
@@ -156,7 +148,6 @@ class AwaitableGetRewardProgramResult(GetRewardProgramResult):
             category=self.category,
             company_name=self.company_name,
             fields=self.fields,
-            id=self.id,
             member_id=self.member_id,
             member_name=self.member_name,
             more_information=self.more_information,
@@ -194,7 +185,6 @@ def get_reward_program(title: Optional[str] = None,
         category=__ret__.category,
         company_name=__ret__.company_name,
         fields=__ret__.fields,
-        id=__ret__.id,
         member_id=__ret__.member_id,
         member_name=__ret__.member_name,
         more_information=__ret__.more_information,

@@ -30,9 +30,6 @@ namespace Pulumi.Onepassword
         [Output("fields")]
         public Output<ImmutableDictionary<string, Outputs.GetField>?> Fields { get; private set; } = null!;
 
-        [Output("id")]
-        public Output<string> Id { get; private set; } = null!;
-
         [Output("networkName")]
         public Output<string?> NetworkName { get; private set; } = null!;
 

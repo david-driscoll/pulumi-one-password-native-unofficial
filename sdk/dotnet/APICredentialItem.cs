@@ -30,9 +30,6 @@ namespace Pulumi.Onepassword
         [Output("hostname")]
         public Output<string?> Hostname { get; private set; } = null!;
 
-        [Output("id")]
-        public Output<string> Id { get; private set; } = null!;
-
         [Output("notes")]
         public Output<string?> Notes { get; private set; } = null!;
 

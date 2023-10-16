@@ -18,6 +18,7 @@ __all__ = ['SoftwareLicenseItemArgs', 'SoftwareLicenseItem']
 class SoftwareLicenseItemArgs:
     def __init__(__self__, *,
                  vault: pulumi.Input[str],
+                 category: Optional[pulumi.Input[str]] = None,
                  customer: Optional[pulumi.Input['_softwarelicense.CustomerSectionArgs']] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
                  license_key: Optional[pulumi.Input[str]] = None,
@@ -31,10 +32,13 @@ class SoftwareLicenseItemArgs:
         """
         The set of arguments for constructing a SoftwareLicenseItem resource.
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
+        :param pulumi.Input[str] category: The category of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         """
         pulumi.set(__self__, "vault", vault)
+        if category is not None:
+            pulumi.set(__self__, "category", 'Software License')
         if customer is not None:
             pulumi.set(__self__, "customer", customer)
         if fields is not None:
@@ -67,6 +71,18 @@ class SoftwareLicenseItemArgs:
     @vault.setter
     def vault(self, value: pulumi.Input[str]):
         pulumi.set(self, "vault", value)
+
+    @property
+    @pulumi.getter
+    def category(self) -> Optional[pulumi.Input[str]]:
+        """
+        The category of the vault the item is in.
+        """
+        return pulumi.get(self, "category")
+
+    @category.setter
+    def category(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "category", value)
 
     @property
     @pulumi.getter
@@ -170,6 +186,7 @@ class SoftwareLicenseItem(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 category: Optional[pulumi.Input[str]] = None,
                  customer: Optional[pulumi.Input[pulumi.InputType['_softwarelicense.CustomerSectionArgs']]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  license_key: Optional[pulumi.Input[str]] = None,
@@ -186,6 +203,7 @@ class SoftwareLicenseItem(pulumi.CustomResource):
         Create a SoftwareLicenseItem resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] category: The category of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
@@ -213,6 +231,7 @@ class SoftwareLicenseItem(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 category: Optional[pulumi.Input[str]] = None,
                  customer: Optional[pulumi.Input[pulumi.InputType['_softwarelicense.CustomerSectionArgs']]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  license_key: Optional[pulumi.Input[str]] = None,
@@ -236,6 +255,7 @@ class SoftwareLicenseItem(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = SoftwareLicenseItemArgs.__new__(SoftwareLicenseItemArgs)
 
+            __props__.__dict__["category"] = 'Software License'
             __props__.__dict__["customer"] = customer
             __props__.__dict__["fields"] = fields
             __props__.__dict__["license_key"] = license_key
@@ -249,8 +269,6 @@ class SoftwareLicenseItem(pulumi.CustomResource):
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
             __props__.__dict__["version"] = version
-            __props__.__dict__["category"] = None
-            __props__.__dict__["id"] = None
             __props__.__dict__["uuid"] = None
         super(SoftwareLicenseItem, __self__).__init__(
             'onepassword:index:SoftwareLicenseItem',
@@ -277,7 +295,6 @@ class SoftwareLicenseItem(pulumi.CustomResource):
         __props__.__dict__["category"] = None
         __props__.__dict__["customer"] = None
         __props__.__dict__["fields"] = None
-        __props__.__dict__["id"] = None
         __props__.__dict__["license_key"] = None
         __props__.__dict__["notes"] = None
         __props__.__dict__["order"] = None
@@ -304,11 +321,6 @@ class SoftwareLicenseItem(pulumi.CustomResource):
     @pulumi.getter
     def fields(self) -> pulumi.Output[Optional[Mapping[str, 'outputs.GetField']]]:
         return pulumi.get(self, "fields")
-
-    @property
-    @pulumi.getter
-    def id(self) -> pulumi.Output[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter(name="licenseKey")

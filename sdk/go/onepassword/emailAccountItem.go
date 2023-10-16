@@ -19,7 +19,6 @@ type EmailAccountItem struct {
 	Category           pulumi.StringOutput                             `pulumi:"category"`
 	ContactInformation emailaccount.ContactInformationSectionPtrOutput `pulumi:"contactInformation"`
 	Fields             GetFieldMapOutput                               `pulumi:"fields"`
-	Id                 pulumi.StringOutput                             `pulumi:"id"`
 	Notes              pulumi.StringPtrOutput                          `pulumi:"notes"`
 	Password           pulumi.StringPtrOutput                          `pulumi:"password"`
 	PortNumber         pulumi.StringPtrOutput                          `pulumi:"portNumber"`
@@ -49,6 +48,7 @@ func NewEmailAccountItem(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
+	args.Category = pulumi.StringPtr("Email Account")
 	var resource EmailAccountItem
 	err := ctx.RegisterResource("onepassword:index:EmailAccountItem", name, args, &resource, opts...)
 	if err != nil {
@@ -81,7 +81,9 @@ func (EmailAccountItemState) ElementType() reflect.Type {
 }
 
 type emailAccountItemArgs struct {
-	AuthMethod         *string                                 `pulumi:"authMethod"`
+	AuthMethod *string `pulumi:"authMethod"`
+	// The category of the vault the item is in.
+	Category           *string                                 `pulumi:"category"`
 	ContactInformation *emailaccount.ContactInformationSection `pulumi:"contactInformation"`
 	Fields             map[string]Field                        `pulumi:"fields"`
 	Notes              *string                                 `pulumi:"notes"`
@@ -103,7 +105,9 @@ type emailAccountItemArgs struct {
 
 // The set of arguments for constructing a EmailAccountItem resource.
 type EmailAccountItemArgs struct {
-	AuthMethod         pulumi.StringPtrInput
+	AuthMethod pulumi.StringPtrInput
+	// The category of the vault the item is in.
+	Category           pulumi.StringPtrInput
 	ContactInformation emailaccount.ContactInformationSectionPtrInput
 	Fields             FieldMapInput
 	Notes              pulumi.StringPtrInput

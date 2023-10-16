@@ -34,7 +34,6 @@ type GetDatabaseResult struct {
 	ConnectionOptions *string               `pulumi:"connectionOptions"`
 	Database          *string               `pulumi:"database"`
 	Fields            map[string]GetField   `pulumi:"fields"`
-	Id                *string               `pulumi:"id"`
 	Notes             *string               `pulumi:"notes"`
 	Password          *string               `pulumi:"password"`
 	Port              *string               `pulumi:"port"`
@@ -111,10 +110,6 @@ func (o GetDatabaseResultOutput) Database() pulumi.StringPtrOutput {
 
 func (o GetDatabaseResultOutput) Fields() GetFieldMapOutput {
 	return o.ApplyT(func(v GetDatabaseResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
-}
-
-func (o GetDatabaseResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetDatabaseResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
 func (o GetDatabaseResultOutput) Notes() pulumi.StringPtrOutput {

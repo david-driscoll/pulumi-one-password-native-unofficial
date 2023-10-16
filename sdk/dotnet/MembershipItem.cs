@@ -24,9 +24,6 @@ namespace Pulumi.Onepassword
         [Output("group")]
         public Output<string?> Group { get; private set; } = null!;
 
-        [Output("id")]
-        public Output<string> Id { get; private set; } = null!;
-
         [Output("memberId")]
         public Output<string?> MemberId { get; private set; } = null!;
 

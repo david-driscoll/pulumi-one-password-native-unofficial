@@ -18,7 +18,6 @@ type IdentityItem struct {
 	Address         identity.AddressSectionPtrOutput         `pulumi:"address"`
 	Category        pulumi.StringOutput                      `pulumi:"category"`
 	Fields          GetFieldMapOutput                        `pulumi:"fields"`
-	Id              pulumi.StringOutput                      `pulumi:"id"`
 	Identification  identity.IdentificationSectionPtrOutput  `pulumi:"identification"`
 	InternetDetails identity.InternetDetailsSectionPtrOutput `pulumi:"internetDetails"`
 	Notes           pulumi.StringPtrOutput                   `pulumi:"notes"`
@@ -43,6 +42,7 @@ func NewIdentityItem(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
+	args.Category = pulumi.StringPtr("Identity")
 	var resource IdentityItem
 	err := ctx.RegisterResource("onepassword:index:IdentityItem", name, args, &resource, opts...)
 	if err != nil {
@@ -75,7 +75,9 @@ func (IdentityItemState) ElementType() reflect.Type {
 }
 
 type identityItemArgs struct {
-	Address         *identity.AddressSection         `pulumi:"address"`
+	Address *identity.AddressSection `pulumi:"address"`
+	// The category of the vault the item is in.
+	Category        *string                          `pulumi:"category"`
 	Fields          map[string]Field                 `pulumi:"fields"`
 	Identification  *identity.IdentificationSection  `pulumi:"identification"`
 	InternetDetails *identity.InternetDetailsSection `pulumi:"internetDetails"`
@@ -91,7 +93,9 @@ type identityItemArgs struct {
 
 // The set of arguments for constructing a IdentityItem resource.
 type IdentityItemArgs struct {
-	Address         identity.AddressSectionPtrInput
+	Address identity.AddressSectionPtrInput
+	// The category of the vault the item is in.
+	Category        pulumi.StringPtrInput
 	Fields          FieldMapInput
 	Identification  identity.IdentificationSectionPtrInput
 	InternetDetails identity.InternetDetailsSectionPtrInput

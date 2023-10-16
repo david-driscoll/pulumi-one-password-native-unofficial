@@ -33,7 +33,6 @@ type GetSoftwareLicenseResult struct {
 	Category   *string                           `pulumi:"category"`
 	Customer   *softwarelicense.CustomerSection  `pulumi:"customer"`
 	Fields     map[string]GetField               `pulumi:"fields"`
-	Id         *string                           `pulumi:"id"`
 	LicenseKey *string                           `pulumi:"licenseKey"`
 	Notes      *string                           `pulumi:"notes"`
 	Order      *softwarelicense.OrderSection     `pulumi:"order"`
@@ -100,10 +99,6 @@ func (o GetSoftwareLicenseResultOutput) Customer() softwarelicense.CustomerSecti
 
 func (o GetSoftwareLicenseResultOutput) Fields() GetFieldMapOutput {
 	return o.ApplyT(func(v GetSoftwareLicenseResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
-}
-
-func (o GetSoftwareLicenseResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetSoftwareLicenseResult) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
 func (o GetSoftwareLicenseResultOutput) LicenseKey() pulumi.StringPtrOutput {

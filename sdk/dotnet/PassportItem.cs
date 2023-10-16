@@ -30,9 +30,6 @@ namespace Pulumi.Onepassword
         [Output("gender")]
         public Output<string?> Gender { get; private set; } = null!;
 
-        [Output("id")]
-        public Output<string> Id { get; private set; } = null!;
-
         [Output("issuedOn")]
         public Output<string?> IssuedOn { get; private set; } = null!;
 

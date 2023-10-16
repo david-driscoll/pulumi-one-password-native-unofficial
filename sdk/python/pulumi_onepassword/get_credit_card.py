@@ -20,7 +20,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetCreditCardResult:
-    def __init__(__self__, additional_details=None, cardholder_name=None, category=None, contact_information=None, expiry_date=None, fields=None, id=None, notes=None, number=None, sections=None, tags=None, title=None, type=None, uuid=None, valid_from=None, vault=None, verification_number=None):
+    def __init__(__self__, additional_details=None, cardholder_name=None, category=None, contact_information=None, expiry_date=None, fields=None, notes=None, number=None, sections=None, tags=None, title=None, type=None, uuid=None, valid_from=None, vault=None, verification_number=None):
         if additional_details and not isinstance(additional_details, dict):
             raise TypeError("Expected argument 'additional_details' to be a dict")
         pulumi.set(__self__, "additional_details", additional_details)
@@ -39,9 +39,6 @@ class GetCreditCardResult:
         if fields and not isinstance(fields, dict):
             raise TypeError("Expected argument 'fields' to be a dict")
         pulumi.set(__self__, "fields", fields)
-        if id and not isinstance(id, str):
-            raise TypeError("Expected argument 'id' to be a str")
-        pulumi.set(__self__, "id", id)
         if notes and not isinstance(notes, str):
             raise TypeError("Expected argument 'notes' to be a str")
         pulumi.set(__self__, "notes", notes)
@@ -102,11 +99,6 @@ class GetCreditCardResult:
     @pulumi.getter
     def fields(self) -> Optional[Mapping[str, 'outputs.GetField']]:
         return pulumi.get(self, "fields")
-
-    @property
-    @pulumi.getter
-    def id(self) -> Optional[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter
@@ -183,7 +175,6 @@ class AwaitableGetCreditCardResult(GetCreditCardResult):
             contact_information=self.contact_information,
             expiry_date=self.expiry_date,
             fields=self.fields,
-            id=self.id,
             notes=self.notes,
             number=self.number,
             sections=self.sections,
@@ -224,7 +215,6 @@ def get_credit_card(title: Optional[str] = None,
         contact_information=__ret__.contact_information,
         expiry_date=__ret__.expiry_date,
         fields=__ret__.fields,
-        id=__ret__.id,
         notes=__ret__.notes,
         number=__ret__.number,
         sections=__ret__.sections,

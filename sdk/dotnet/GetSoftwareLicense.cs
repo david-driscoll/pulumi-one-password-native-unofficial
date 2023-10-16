@@ -76,7 +76,6 @@ namespace Pulumi.Onepassword
         public readonly string? Category;
         public readonly Pulumi.Onepassword.SoftwareLicense.Outputs.CustomerSection? Customer;
         public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
-        public readonly string? Id;
         public readonly string? LicenseKey;
         public readonly string? Notes;
         public readonly Pulumi.Onepassword.SoftwareLicense.Outputs.OrderSection? Order;
@@ -108,8 +107,6 @@ namespace Pulumi.Onepassword
 
             ImmutableDictionary<string, Outputs.GetField>? fields,
 
-            string? id,
-
             string? licenseKey,
 
             string? notes,
@@ -133,7 +130,6 @@ namespace Pulumi.Onepassword
             Category = category;
             Customer = customer;
             Fields = fields;
-            Id = id;
             LicenseKey = licenseKey;
             Notes = notes;
             Order = order;

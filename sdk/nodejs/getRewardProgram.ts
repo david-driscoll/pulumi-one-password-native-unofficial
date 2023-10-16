@@ -37,7 +37,6 @@ export interface GetRewardProgramResult {
     readonly category?: enums.Category | string;
     readonly companyName?: string;
     readonly fields?: {[key: string]: outputs.GetField};
-    readonly id?: string;
     readonly memberId?: string;
     readonly memberName?: string;
     readonly moreInformation?: outputs.rewardProgram.MoreInformationSection;

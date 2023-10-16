@@ -42,7 +42,6 @@ export class DriverLicenseItem extends pulumi.CustomResource {
     public readonly fullName!: pulumi.Output<string | undefined>;
     public readonly gender!: pulumi.Output<string | undefined>;
     public readonly height!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly licenseClass!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly number!: pulumi.Output<string | undefined>;
@@ -97,7 +96,6 @@ export class DriverLicenseItem extends pulumi.CustomResource {
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         } else {
             resourceInputs["address"] = undefined /*out*/;
@@ -110,7 +108,6 @@ export class DriverLicenseItem extends pulumi.CustomResource {
             resourceInputs["fullName"] = undefined /*out*/;
             resourceInputs["gender"] = undefined /*out*/;
             resourceInputs["height"] = undefined /*out*/;
-            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["licenseClass"] = undefined /*out*/;
             resourceInputs["notes"] = undefined /*out*/;
             resourceInputs["number"] = undefined /*out*/;

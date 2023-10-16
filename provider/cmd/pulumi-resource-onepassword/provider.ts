@@ -1,10 +1,10 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as provider from "@pulumi/pulumi/provider";
 import { ItemType, ResourceTypes, ItemTypeNames } from './types'
-import { FieldAssignment, FieldAssignmentType, FieldPurpose, FieldTypeSelector, item } from "@1password/op-js"
-import { flatMap, isObject, last, max, pick, snakeCase, split } from "lodash";
+import { FieldAssignment, FieldAssignmentType, FieldPurpose, FieldTypeSelector, item, Field as OpField, Section as OpSection } from "@1password/op-js"
 import { createHash, randomBytes } from "crypto";
 import { RNGFactory, Random } from "random/dist/cjs/random";
+import { camelCase } from "lodash";
 
 const propertiesToIgnore = ['category', 'fields', 'sections', 'tags', 'title', 'vault'];
 
@@ -51,43 +51,40 @@ export class Provider implements provider.Provider {
 
         const fields: Record<string, Field> = {}
         const sections: Record<string, Section> = {}
-        if (inputs.fields) {
-            Object.assign(fields, inputs.fields);
-            // assignments.push(...assignFields(inputs.fields));
-        }
-        if (inputs.sections) {
-            Object.assign(sections, inputs.sections);
-            // assignments.push(...assignSections(inputs.sections));
-        }
-
-        assignments.push(...assignFields(fields));
-        assignments.push(...assignSections(sections));
+        const fieldPropPaths: [field: string, section?: string][] = [];
+        Object.assign(fields, inputs.fields ?? {});
+        Object.assign(sections, inputs.sections ?? {});
 
         for (const [name, propScheme] of Object.entries(resourceScheme.inputProperties).filter(z => !propertiesToIgnore.includes(z[0]))) {
             if (inputs[name] != null) {
-                if (propScheme.type === "object") {
+                if (propScheme.refName) {
+                    const sectionScheme = (this.resolvedSchema.types as any)[propScheme.refName];
                     // Can we have deeply nested sections? I dunno.
-                    // sections[name] = { fields: {} };
-                    // for (const [sName, sPropSchema] of Object.entries(propScheme.properties as Record<string, any>)) {
-                    //     if (inputs?.[name]?.fields?.[sName]) {
-                    //         sections[name].fields[sName] = {
-                    //             value: inputs?.[name]?.fields?.[sName],
-                    //             type: sPropSchema.kind,
-                    //             purpose: sPropSchema.purpose
-                    //         };
-                    //     }
-                    // }
+                    sections[name] = { fields: {} };
+                    for (const [sName, sPropSchema] of Object.entries((sectionScheme?.properties ?? {}) as Record<string, any>)) {
+                        if (inputs?.[name]?.[sName]) {
+                            sections[name].fields[sName] = {
+                                value: inputs?.[name]?.[sName],
+                                type: sPropSchema.kind ?? null,
+                                purpose: sPropSchema.purpose ?? null
+                            };
+                            fieldPropPaths.push([sName, name]);
+                        }
+                    }
                 } else {
                     fields[name] = {
                         value: inputs[name],
-                        type: propScheme.kind,
-                        purpose: propScheme.purpose
+                        type: propScheme.kind ?? null,
+                        purpose: propScheme.purpose ?? null
                     };
+                    fieldPropPaths.push([name]);
                 }
             }
         }
+        assignments.push(...assignFields(fields));
+        assignments.push(...assignSections(sections));
 
-        const name = newUniqueName(getNameFromUrn(urn));
+        const name = inputs.title ?? newUniqueName(getNameFromUrn(urn));
 
         const result = item.create(
             assignments,
@@ -95,24 +92,66 @@ export class Provider implements provider.Provider {
                 category: resourceType === ItemType.Item ? 'Secure Note' : ItemTypeNames[resourceType] as any,
                 vault: inputs.vault,
                 tags: inputs.tags ?? [],
-                title: inputs.title ?? newUniqueName(getNameFromUrn(urn)),
+                title: name,
             }
         )
+
+        const output = {
+            fields: result.fields?.reduce((result, value) => {
+                result[camelCase(value.label ?? value.id)] = {
+                    label: value.label ?? null,
+                    uuid: value.id ?? null,
+                    type: value.type as any ?? null,
+                    reference: value.reference ?? null!
+                };
+                if (value.value) {
+                    result[camelCase(value.label ?? value.id)].value = value.value;
+                }
+                return result;
+            }, {} as Record<string, OutField>),
+            sections: result.fields?.filter(z => !!z.section).reduce((result, value) => {
+                result[camelCase(value.section?.label ?? value.section!.id)] ??= {
+                    label: value.section!.label!,
+                    uuid: value.section!.id,
+                    fields: {}
+                };
+                result[camelCase(value.section?.label ?? value.section!.id)].fields[camelCase(value.label ?? value.id)] = {
+                    label: value.label ?? null,
+                    uuid: value.id ?? null,
+                    type: value.type as any ?? null,
+                    reference: value.reference ?? null!
+                }
+                if (value.value) {
+                    result[camelCase(value.section?.label ?? value.section!.id)].fields[camelCase(value.label ?? value.id)].value = value.value;
+                }
+                return result;
+            }, {} as Record<string, OutSection>)
+        } as Record<string, any>
+
+        for (const item of fieldPropPaths) {
+            if (item[1]) {
+                output[item[1]] ??= {};
+                Object.defineProperty(output[item[1]], item[0], {
+                    enumerable: true,
+                    get() {
+                        return output.sections?.[item[1]!]?.fields?.[item[0]]?.value ?? null
+                    }
+                })
+            } else {
+                Object.defineProperty(output, item[0], {
+                    enumerable: true,
+                    get() {
+                        return output.fields?.[item[0]]?.value ?? null
+                    }
+                })
+            }
+        }
 
         return {
             id: result.id,
             outs: {
-                resourceScheme,
-                assignments,
-                fields: JSON.stringify(fields),
-                sections,
-                inputs,
-                id: result.id,
-                result,
-                name,
-                urn,
-                test: 'data',
-                type: resourceType
+                ...output,
+                uuid: result.id
             }
         }
 
@@ -233,7 +272,8 @@ function getResourceTypeFromUrn(urn: pulumi.URN) {
     return ResourceTypes.find(z => urn.includes(`:${z}:`));
 }
 function getNameFromUrn(urn: pulumi.URN) {
-    return last(split(urn, ':'))!;
+    const parts = urn.split(':');
+    return parts[parts.length - 1]
 }
 
 function newUniqueName(prefix: string, randomSeed?: Buffer, randlen = 8, maxlen?: number, charset?: string): string {
@@ -273,14 +313,32 @@ interface Field {
     type?: FieldAssignmentType;
     value: string;
 }
+interface Field {
+    purpose?: FieldPurpose;
+    type?: FieldAssignmentType;
+    value: string;
+}
 interface Section {
     fields: Record<string, Field>;
 }
+interface OutField {
+    type?: FieldAssignmentType;
+    value?: string;
+    uuid: string;
+    label: string;
+    reference?: string;
+}
+interface OutSection {
+    fields: Record<string, OutField>;
+    uuid: string;
+    label: string;
+}
 
-function assignFields(fields: Record<string, Field>) {
+function assignFields(fields: Record<string, Field>, prefix?: string) {
     const assignments: FieldAssignment[] = [];
     for (const field of Object.entries(fields)) {
-        assignments.push([field[0], field[1].purpose === 'PASSWORD' ? 'concealed' : 'text', field[1].value, field[1].purpose])
+        const path = prefix ? `${prefix}.${field[0]}` : field[0];
+        assignments.push([path, field[1].purpose === 'PASSWORD' ? 'concealed' : 'text', field[1].value, field[1].purpose])
     }
     return assignments;
 }
@@ -288,7 +346,7 @@ function assignSections(sections: Record<string, Section>) {
 
     const assignments: FieldAssignment[] = [];
     for (const section of Object.entries(sections)) {
-        assignments.push(...assignFields(section[1].fields))
+        assignments.push(...assignFields(section[1].fields, section[0]))
     }
     return assignments;
 

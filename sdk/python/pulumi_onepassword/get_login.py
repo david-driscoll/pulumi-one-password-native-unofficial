@@ -19,16 +19,13 @@ __all__ = [
 
 @pulumi.output_type
 class GetLoginResult:
-    def __init__(__self__, category=None, fields=None, id=None, notes=None, password=None, sections=None, tags=None, title=None, username=None, uuid=None, vault=None):
+    def __init__(__self__, category=None, fields=None, notes=None, password=None, sections=None, tags=None, title=None, username=None, uuid=None, vault=None):
         if category and not isinstance(category, dict):
             raise TypeError("Expected argument 'category' to be a dict")
         pulumi.set(__self__, "category", category)
         if fields and not isinstance(fields, dict):
             raise TypeError("Expected argument 'fields' to be a dict")
         pulumi.set(__self__, "fields", fields)
-        if id and not isinstance(id, str):
-            raise TypeError("Expected argument 'id' to be a str")
-        pulumi.set(__self__, "id", id)
         if notes and not isinstance(notes, str):
             raise TypeError("Expected argument 'notes' to be a str")
         pulumi.set(__self__, "notes", notes)
@@ -63,11 +60,6 @@ class GetLoginResult:
     @pulumi.getter
     def fields(self) -> Optional[Mapping[str, 'outputs.GetField']]:
         return pulumi.get(self, "fields")
-
-    @property
-    @pulumi.getter
-    def id(self) -> Optional[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter
@@ -130,7 +122,6 @@ class AwaitableGetLoginResult(GetLoginResult):
         return GetLoginResult(
             category=self.category,
             fields=self.fields,
-            id=self.id,
             notes=self.notes,
             password=self.password,
             sections=self.sections,
@@ -165,7 +156,6 @@ def get_login(title: Optional[str] = None,
     return AwaitableGetLoginResult(
         category=__ret__.category,
         fields=__ret__.fields,
-        id=__ret__.id,
         notes=__ret__.notes,
         password=__ret__.password,
         sections=__ret__.sections,

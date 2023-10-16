@@ -16,7 +16,6 @@ type SSHKeyItem struct {
 
 	Category   pulumi.StringOutput    `pulumi:"category"`
 	Fields     GetFieldMapOutput      `pulumi:"fields"`
-	Id         pulumi.StringOutput    `pulumi:"id"`
 	Notes      pulumi.StringPtrOutput `pulumi:"notes"`
 	PrivateKey pulumi.StringPtrOutput `pulumi:"privateKey"`
 	Sections   GetSectionMapOutput    `pulumi:"sections"`
@@ -40,6 +39,7 @@ func NewSSHKeyItem(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
+	args.Category = pulumi.StringPtr("SSH Key")
 	var resource SSHKeyItem
 	err := ctx.RegisterResource("onepassword:index:SSHKeyItem", name, args, &resource, opts...)
 	if err != nil {
@@ -72,6 +72,8 @@ func (SSHKeyItemState) ElementType() reflect.Type {
 }
 
 type sshkeyItemArgs struct {
+	// The category of the vault the item is in.
+	Category   *string            `pulumi:"category"`
 	Fields     map[string]Field   `pulumi:"fields"`
 	Notes      *string            `pulumi:"notes"`
 	PrivateKey *string            `pulumi:"privateKey"`
@@ -86,6 +88,8 @@ type sshkeyItemArgs struct {
 
 // The set of arguments for constructing a SSHKeyItem resource.
 type SSHKeyItemArgs struct {
+	// The category of the vault the item is in.
+	Category   pulumi.StringPtrInput
 	Fields     FieldMapInput
 	Notes      pulumi.StringPtrInput
 	PrivateKey pulumi.StringPtrInput

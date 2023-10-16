@@ -16,7 +16,6 @@ type SocialSecurityNumberItem struct {
 
 	Category pulumi.StringOutput    `pulumi:"category"`
 	Fields   GetFieldMapOutput      `pulumi:"fields"`
-	Id       pulumi.StringOutput    `pulumi:"id"`
 	Name     pulumi.StringPtrOutput `pulumi:"name"`
 	Notes    pulumi.StringPtrOutput `pulumi:"notes"`
 	Number   pulumi.StringPtrOutput `pulumi:"number"`
@@ -41,6 +40,7 @@ func NewSocialSecurityNumberItem(ctx *pulumi.Context,
 	if args.Vault == nil {
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
+	args.Category = pulumi.StringPtr("Social Security Number")
 	var resource SocialSecurityNumberItem
 	err := ctx.RegisterResource("onepassword:index:SocialSecurityNumberItem", name, args, &resource, opts...)
 	if err != nil {
@@ -73,6 +73,8 @@ func (SocialSecurityNumberItemState) ElementType() reflect.Type {
 }
 
 type socialSecurityNumberItemArgs struct {
+	// The category of the vault the item is in.
+	Category *string            `pulumi:"category"`
 	Fields   map[string]Field   `pulumi:"fields"`
 	Name     *string            `pulumi:"name"`
 	Notes    *string            `pulumi:"notes"`
@@ -88,6 +90,8 @@ type socialSecurityNumberItemArgs struct {
 
 // The set of arguments for constructing a SocialSecurityNumberItem resource.
 type SocialSecurityNumberItemArgs struct {
+	// The category of the vault the item is in.
+	Category pulumi.StringPtrInput
 	Fields   FieldMapInput
 	Name     pulumi.StringPtrInput
 	Notes    pulumi.StringPtrInput

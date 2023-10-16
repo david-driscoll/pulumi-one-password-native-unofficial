@@ -17,6 +17,7 @@ __all__ = ['PassportItemArgs', 'PassportItem']
 class PassportItemArgs:
     def __init__(__self__, *,
                  vault: pulumi.Input[str],
+                 category: Optional[pulumi.Input[str]] = None,
                  date_of_birth: Optional[pulumi.Input[str]] = None,
                  expiry_date: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
@@ -36,10 +37,13 @@ class PassportItemArgs:
         """
         The set of arguments for constructing a PassportItem resource.
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
+        :param pulumi.Input[str] category: The category of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         """
         pulumi.set(__self__, "vault", vault)
+        if category is not None:
+            pulumi.set(__self__, "category", 'Passport')
         if date_of_birth is not None:
             pulumi.set(__self__, "date_of_birth", date_of_birth)
         if expiry_date is not None:
@@ -84,6 +88,18 @@ class PassportItemArgs:
     @vault.setter
     def vault(self, value: pulumi.Input[str]):
         pulumi.set(self, "vault", value)
+
+    @property
+    @pulumi.getter
+    def category(self) -> Optional[pulumi.Input[str]]:
+        """
+        The category of the vault the item is in.
+        """
+        return pulumi.get(self, "category")
+
+    @category.setter
+    def category(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "category", value)
 
     @property
     @pulumi.getter(name="dateOfBirth")
@@ -241,6 +257,7 @@ class PassportItem(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 category: Optional[pulumi.Input[str]] = None,
                  date_of_birth: Optional[pulumi.Input[str]] = None,
                  expiry_date: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
@@ -263,6 +280,7 @@ class PassportItem(pulumi.CustomResource):
         Create a PassportItem resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] category: The category of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
@@ -290,6 +308,7 @@ class PassportItem(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 category: Optional[pulumi.Input[str]] = None,
                  date_of_birth: Optional[pulumi.Input[str]] = None,
                  expiry_date: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
@@ -319,6 +338,7 @@ class PassportItem(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = PassportItemArgs.__new__(PassportItemArgs)
 
+            __props__.__dict__["category"] = 'Passport'
             __props__.__dict__["date_of_birth"] = date_of_birth
             __props__.__dict__["expiry_date"] = expiry_date
             __props__.__dict__["fields"] = fields
@@ -338,8 +358,6 @@ class PassportItem(pulumi.CustomResource):
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
-            __props__.__dict__["category"] = None
-            __props__.__dict__["id"] = None
             __props__.__dict__["uuid"] = None
         super(PassportItem, __self__).__init__(
             'onepassword:index:PassportItem',
@@ -369,7 +387,6 @@ class PassportItem(pulumi.CustomResource):
         __props__.__dict__["fields"] = None
         __props__.__dict__["full_name"] = None
         __props__.__dict__["gender"] = None
-        __props__.__dict__["id"] = None
         __props__.__dict__["issued_on"] = None
         __props__.__dict__["issuing_authority"] = None
         __props__.__dict__["issuing_country"] = None
@@ -414,11 +431,6 @@ class PassportItem(pulumi.CustomResource):
     @pulumi.getter
     def gender(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "gender")
-
-    @property
-    @pulumi.getter
-    def id(self) -> pulumi.Output[str]:
-        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter(name="issuedOn")
