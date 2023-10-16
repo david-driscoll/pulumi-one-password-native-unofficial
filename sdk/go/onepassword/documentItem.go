@@ -39,6 +39,11 @@ func NewDocumentItem(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
 	args.Category = pulumi.StringPtr("Document")
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"fields",
+		"sections",
+	})
+	opts = append(opts, secrets)
 	var resource DocumentItem
 	err := ctx.RegisterResource("onepassword:index:DocumentItem", name, args, &resource, opts...)
 	if err != nil {

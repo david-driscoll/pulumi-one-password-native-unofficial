@@ -14,8 +14,8 @@ namespace Pulumi.Onepassword.Outputs
     public sealed class GetField
     {
         public readonly string Label;
-        public readonly Pulumi.Onepassword.FieldPurpose Purpose;
-        public readonly string? Reference;
+        public readonly string Reference;
+        public readonly Pulumi.Onepassword.ResponseFieldType Type;
         public readonly string Uuid;
         public readonly string Value;
 
@@ -23,17 +23,17 @@ namespace Pulumi.Onepassword.Outputs
         private GetField(
             string label,
 
-            Pulumi.Onepassword.FieldPurpose purpose,
+            string reference,
 
-            string? reference,
+            Pulumi.Onepassword.ResponseFieldType type,
 
             string uuid,
 
             string value)
         {
             Label = label;
-            Purpose = purpose;
             Reference = reference;
+            Type = type;
             Uuid = uuid;
             Value = value;
         }

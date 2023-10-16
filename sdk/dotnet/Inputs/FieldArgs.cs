@@ -15,12 +15,25 @@ namespace Pulumi.Onepassword.Inputs
         [Input("purpose", required: true)]
         public Input<Pulumi.Onepassword.FieldPurpose> Purpose { get; set; } = null!;
 
+        [Input("type")]
+        public Input<Pulumi.Onepassword.FieldAssignmentType>? Type { get; set; }
+
         [Input("value", required: true)]
-        public Input<string> Value { get; set; } = null!;
+        private Input<string>? _value;
+        public Input<string>? Value
+        {
+            get => _value;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _value = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         public FieldArgs()
         {
             Purpose = Pulumi.Onepassword.FieldPurpose.Note;
+            Type = Pulumi.Onepassword.FieldAssignmentType.Text;
         }
     }
 }

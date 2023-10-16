@@ -43,6 +43,11 @@ func NewIdentityItem(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
 	args.Category = pulumi.StringPtr("Identity")
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"fields",
+		"sections",
+	})
+	opts = append(opts, secrets)
 	var resource IdentityItem
 	err := ctx.RegisterResource("onepassword:index:IdentityItem", name, args, &resource, opts...)
 	if err != nil {

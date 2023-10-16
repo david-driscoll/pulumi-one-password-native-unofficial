@@ -8,6 +8,7 @@ import * as utilities from "../utilities";
 
 export interface FieldArgs {
     purpose: pulumi.Input<enums.FieldPurpose>;
+    type?: pulumi.Input<enums.FieldAssignmentType>;
     value: pulumi.Input<string>;
 }
 /**
@@ -17,6 +18,7 @@ export function fieldArgsProvideDefaults(val: FieldArgs): FieldArgs {
     return {
         ...val,
         purpose: (val.purpose) ?? "NOTE",
+        type: (val.type) ?? "text",
     };
 }
 

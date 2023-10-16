@@ -140,11 +140,12 @@ schema.types = {
             "label": {
                 "type": "string"
             },
-            "purpose": {
-                "$ref": "#/types/onepassword:index:FieldPurpose"
+            "type": {
+                "$ref": "#/types/onepassword:index:ResponseFieldType"
             },
             "value": {
-                "type": "string"
+                "type": "string",
+                "secret": true
             },
             "reference": {
                 "type": "string"
@@ -154,19 +155,24 @@ schema.types = {
         "required": [
             "uuid",
             "label",
-            "purpose",
-            "value"
+            "type",
+            "value",
+            "reference"
         ]
     },
     "onepassword:index:Field": {
         "properties": {
             "purpose": {
                 "$ref": "#/types/onepassword:index:FieldPurpose",
-                "default": "NOTE",
-                "willReplaceOnChanges": true
+                "default": "NOTE"
+            },
+            "type": {
+                "$ref": "#/types/onepassword:index:FieldAssignmentType",
+                "default": "text"
             },
             "value": {
-                "type": "string"
+                "type": "string",
+                "secret": true
             }
         },
         "type": "object",
@@ -189,6 +195,112 @@ schema.types = {
             {
                 "name": "Note",
                 "value": "NOTE"
+            }
+        ]
+    },
+    "onepassword:index:FieldAssignmentType": {
+        "type": "string",
+        "enum": [
+            {
+                "name": "Concealed",
+                "value": "concealed"
+            },
+            {
+                "name": "Text",
+                "value": "text"
+            },
+            {
+                "name": "Email",
+                "value": "email"
+            },
+            {
+                "name": "Url",
+                "value": "url"
+            },
+            {
+                "name": "Date",
+                "value": "date"
+            },
+            {
+                "name": "MonthYear",
+                "value": "monthYear"
+            },
+            {
+                "name": "Phone",
+                "value": "phone"
+            }
+        ]
+    },
+    "onepassword:index:ResponseFieldType": {
+        "type": "string",
+        "enum": [
+            {
+                "name": "Unknown",
+                "value": "UNKNOWN"
+            },
+            {
+                "name": "Address",
+                "value": "ADDRESS"
+            },
+            {
+                "name": "Concealed",
+                "value": "CONCEALED"
+            },
+            {
+                "name": "CreditCardNumber",
+                "value": "CREDIT_CARD_NUMBER"
+            },
+            {
+                "name": "CreditCardType",
+                "value": "CREDIT_CARD_TYPE"
+            },
+            {
+                "name": "Date",
+                "value": "Date"
+            },
+            {
+                "name": "Email",
+                "value": "EMAIL"
+            },
+            {
+                "name": "Gender",
+                "value": "GENDER"
+            },
+            {
+                "name": "Menu",
+                "value": "MENU"
+            },
+            {
+                "name": "MonthYear",
+                "value": "MONTH_YEAR"
+            },
+            {
+                "name": "Otp",
+                "value": "OTP"
+            },
+            {
+                "name": "Phone",
+                "value": "PHONE"
+            },
+            {
+                "name": "Reference",
+                "value": "REFERENCE"
+            },
+            {
+                "name": "String",
+                "value": "STRING"
+            },
+            {
+                "name": "Url",
+                "value": "URL"
+            },
+            {
+                "name": "File",
+                "value": "FILE"
+            },
+            {
+                "name": "SshKey",
+                "value": "SSHKEY"
             }
         ]
     }
@@ -512,11 +624,13 @@ function applyDefaultOutputProperties(item: any) {
         },
         ['sections']: {
             "type": "object",
-            "additionalProperties": { "$ref": "#/types/onepassword:index:GetSection" }
+            "additionalProperties": { "$ref": "#/types/onepassword:index:GetSection" },
+            secret: true
         },
         ['fields']: {
             "type": "object",
-            "additionalProperties": { "$ref": "#/types/onepassword:index:GetField" }
+            "additionalProperties": { "$ref": "#/types/onepassword:index:GetField" },
+            secret: true
         },
         ['tags']: {
             type: 'array',

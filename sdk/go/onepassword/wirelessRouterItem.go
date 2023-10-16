@@ -47,6 +47,11 @@ func NewWirelessRouterItem(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
 	args.Category = pulumi.StringPtr("Wireless Router")
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"fields",
+		"sections",
+	})
+	opts = append(opts, secrets)
 	var resource WirelessRouterItem
 	err := ctx.RegisterResource("onepassword:index:WirelessRouterItem", name, args, &resource, opts...)
 	if err != nil {

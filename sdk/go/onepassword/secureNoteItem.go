@@ -39,6 +39,11 @@ func NewSecureNoteItem(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
 	args.Category = pulumi.StringPtr("Secure Note")
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"fields",
+		"sections",
+	})
+	opts = append(opts, secrets)
 	var resource SecureNoteItem
 	err := ctx.RegisterResource("onepassword:index:SecureNoteItem", name, args, &resource, opts...)
 	if err != nil {

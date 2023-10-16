@@ -8,8 +8,8 @@ import * as utilities from "../utilities";
 
 export interface GetField {
     label: string;
-    purpose: enums.FieldPurpose;
-    reference?: string;
+    reference: string;
+    type: enums.ResponseFieldType;
     uuid: string;
     value: string;
 }

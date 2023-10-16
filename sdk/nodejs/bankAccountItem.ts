@@ -101,6 +101,8 @@ export class BankAccountItem extends pulumi.CustomResource {
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+        const secretOpts = { additionalSecretOutputs: ["fields", "sections"] };
+        opts = pulumi.mergeOptions(opts, secretOpts);
         super(BankAccountItem.__pulumiType, name, resourceInputs, opts);
     }
 }

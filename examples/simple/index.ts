@@ -95,4 +95,11 @@ new op.MembershipItem('random-membership', {
 
     vault: 'testing-pulumi',
     memberId: "1234567891",
+    pin: "12345"
+})
+
+new op.LoginItem('my-password', {
+    vault: 'testing-pulumi',
+    username: "me",
+    password: "secret1234",
 })

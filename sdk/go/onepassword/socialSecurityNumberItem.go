@@ -41,6 +41,11 @@ func NewSocialSecurityNumberItem(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
 	args.Category = pulumi.StringPtr("Social Security Number")
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"fields",
+		"sections",
+	})
+	opts = append(opts, secrets)
 	var resource SocialSecurityNumberItem
 	err := ctx.RegisterResource("onepassword:index:SocialSecurityNumberItem", name, args, &resource, opts...)
 	if err != nil {

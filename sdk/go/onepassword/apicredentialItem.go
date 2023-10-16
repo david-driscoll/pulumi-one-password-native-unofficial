@@ -46,6 +46,11 @@ func NewAPICredentialItem(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
 	args.Category = pulumi.StringPtr("API Credential")
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"fields",
+		"sections",
+	})
+	opts = append(opts, secrets)
 	var resource APICredentialItem
 	err := ctx.RegisterResource("onepassword:index:APICredentialItem", name, args, &resource, opts...)
 	if err != nil {

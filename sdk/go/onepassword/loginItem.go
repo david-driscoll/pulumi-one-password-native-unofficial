@@ -45,7 +45,9 @@ func NewLoginItem(ctx *pulumi.Context,
 		args.Password = pulumi.ToSecret(args.Password).(pulumi.StringPtrOutput)
 	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"fields",
 		"password",
+		"sections",
 	})
 	opts = append(opts, secrets)
 	var resource LoginItem

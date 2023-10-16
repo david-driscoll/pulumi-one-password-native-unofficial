@@ -247,7 +247,7 @@ class LoginItem(pulumi.CustomResource):
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
             __props__.__dict__["uuid"] = None
-        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["password"])
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["fields", "password", "sections"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(LoginItem, __self__).__init__(
             'onepassword:index:LoginItem',

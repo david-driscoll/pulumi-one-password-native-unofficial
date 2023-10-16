@@ -40,6 +40,11 @@ func NewSSHKeyItem(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
 	args.Category = pulumi.StringPtr("SSH Key")
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"fields",
+		"sections",
+	})
+	opts = append(opts, secrets)
 	var resource SSHKeyItem
 	err := ctx.RegisterResource("onepassword:index:SSHKeyItem", name, args, &resource, opts...)
 	if err != nil {

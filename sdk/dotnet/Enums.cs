@@ -60,6 +60,39 @@ namespace Pulumi.Onepassword
     }
 
     [EnumType]
+    public readonly struct FieldAssignmentType : IEquatable<FieldAssignmentType>
+    {
+        private readonly string _value;
+
+        private FieldAssignmentType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        public static FieldAssignmentType Concealed { get; } = new FieldAssignmentType("concealed");
+        public static FieldAssignmentType Text { get; } = new FieldAssignmentType("text");
+        public static FieldAssignmentType Email { get; } = new FieldAssignmentType("email");
+        public static FieldAssignmentType Url { get; } = new FieldAssignmentType("url");
+        public static FieldAssignmentType Date { get; } = new FieldAssignmentType("date");
+        public static FieldAssignmentType MonthYear { get; } = new FieldAssignmentType("monthYear");
+        public static FieldAssignmentType Phone { get; } = new FieldAssignmentType("phone");
+
+        public static bool operator ==(FieldAssignmentType left, FieldAssignmentType right) => left.Equals(right);
+        public static bool operator !=(FieldAssignmentType left, FieldAssignmentType right) => !left.Equals(right);
+
+        public static explicit operator string(FieldAssignmentType value) => value._value;
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) => obj is FieldAssignmentType other && Equals(other);
+        public bool Equals(FieldAssignmentType other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        public override string ToString() => _value;
+    }
+
+    [EnumType]
     public readonly struct FieldPurpose : IEquatable<FieldPurpose>
     {
         private readonly string _value;
@@ -81,6 +114,49 @@ namespace Pulumi.Onepassword
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object? obj) => obj is FieldPurpose other && Equals(other);
         public bool Equals(FieldPurpose other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        public override string ToString() => _value;
+    }
+
+    [EnumType]
+    public readonly struct ResponseFieldType : IEquatable<ResponseFieldType>
+    {
+        private readonly string _value;
+
+        private ResponseFieldType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        public static ResponseFieldType Unknown { get; } = new ResponseFieldType("UNKNOWN");
+        public static ResponseFieldType Address { get; } = new ResponseFieldType("ADDRESS");
+        public static ResponseFieldType Concealed { get; } = new ResponseFieldType("CONCEALED");
+        public static ResponseFieldType CreditCardNumber { get; } = new ResponseFieldType("CREDIT_CARD_NUMBER");
+        public static ResponseFieldType CreditCardType { get; } = new ResponseFieldType("CREDIT_CARD_TYPE");
+        public static ResponseFieldType Date { get; } = new ResponseFieldType("Date");
+        public static ResponseFieldType Email { get; } = new ResponseFieldType("EMAIL");
+        public static ResponseFieldType Gender { get; } = new ResponseFieldType("GENDER");
+        public static ResponseFieldType Menu { get; } = new ResponseFieldType("MENU");
+        public static ResponseFieldType MonthYear { get; } = new ResponseFieldType("MONTH_YEAR");
+        public static ResponseFieldType Otp { get; } = new ResponseFieldType("OTP");
+        public static ResponseFieldType Phone { get; } = new ResponseFieldType("PHONE");
+        public static ResponseFieldType Reference { get; } = new ResponseFieldType("REFERENCE");
+        public static ResponseFieldType String { get; } = new ResponseFieldType("STRING");
+        public static ResponseFieldType Url { get; } = new ResponseFieldType("URL");
+        public static ResponseFieldType File { get; } = new ResponseFieldType("FILE");
+        public static ResponseFieldType SshKey { get; } = new ResponseFieldType("SSHKEY");
+
+        public static bool operator ==(ResponseFieldType left, ResponseFieldType right) => left.Equals(right);
+        public static bool operator !=(ResponseFieldType left, ResponseFieldType right) => !left.Equals(right);
+
+        public static explicit operator string(ResponseFieldType value) => value._value;
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) => obj is ResponseFieldType other && Equals(other);
+        public bool Equals(ResponseFieldType other) => string.Equals(_value, other._value, StringComparison.Ordinal);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value?.GetHashCode() ?? 0;

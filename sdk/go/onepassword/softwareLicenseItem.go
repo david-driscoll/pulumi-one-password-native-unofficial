@@ -45,6 +45,11 @@ func NewSoftwareLicenseItem(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
 	args.Category = pulumi.StringPtr("Software License")
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"fields",
+		"sections",
+	})
+	opts = append(opts, secrets)
 	var resource SoftwareLicenseItem
 	err := ctx.RegisterResource("onepassword:index:SoftwareLicenseItem", name, args, &resource, opts...)
 	if err != nil {

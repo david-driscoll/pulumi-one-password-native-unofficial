@@ -11,8 +11,9 @@ import (
 )
 
 type Field struct {
-	Purpose FieldPurpose `pulumi:"purpose"`
-	Value   string       `pulumi:"value"`
+	Purpose FieldPurpose         `pulumi:"purpose"`
+	Type    *FieldAssignmentType `pulumi:"type"`
+	Value   string               `pulumi:"value"`
 }
 
 // Defaults sets the appropriate defaults for Field
@@ -23,6 +24,10 @@ func (val *Field) Defaults() *Field {
 	tmp := *val
 	if isZero(tmp.Purpose) {
 		tmp.Purpose = FieldPurpose("NOTE")
+	}
+	if isZero(tmp.Type) {
+		type_ := FieldAssignmentType("text")
+		tmp.Type = &type_
 	}
 	return &tmp
 }
@@ -39,8 +44,9 @@ type FieldInput interface {
 }
 
 type FieldArgs struct {
-	Purpose FieldPurposeInput  `pulumi:"purpose"`
-	Value   pulumi.StringInput `pulumi:"value"`
+	Purpose FieldPurposeInput           `pulumi:"purpose"`
+	Type    FieldAssignmentTypePtrInput `pulumi:"type"`
+	Value   pulumi.StringInput          `pulumi:"value"`
 }
 
 func (FieldArgs) ElementType() reflect.Type {
@@ -98,6 +104,10 @@ func (o FieldOutput) Purpose() FieldPurposeOutput {
 	return o.ApplyT(func(v Field) FieldPurpose { return v.Purpose }).(FieldPurposeOutput)
 }
 
+func (o FieldOutput) Type() FieldAssignmentTypePtrOutput {
+	return o.ApplyT(func(v Field) *FieldAssignmentType { return v.Type }).(FieldAssignmentTypePtrOutput)
+}
+
 func (o FieldOutput) Value() pulumi.StringOutput {
 	return o.ApplyT(func(v Field) string { return v.Value }).(pulumi.StringOutput)
 }
@@ -123,11 +133,11 @@ func (o FieldMapOutput) MapIndex(k pulumi.StringInput) FieldOutput {
 }
 
 type GetField struct {
-	Label     string       `pulumi:"label"`
-	Purpose   FieldPurpose `pulumi:"purpose"`
-	Reference *string      `pulumi:"reference"`
-	Uuid      string       `pulumi:"uuid"`
-	Value     string       `pulumi:"value"`
+	Label     string            `pulumi:"label"`
+	Reference string            `pulumi:"reference"`
+	Type      ResponseFieldType `pulumi:"type"`
+	Uuid      string            `pulumi:"uuid"`
+	Value     string            `pulumi:"value"`
 }
 
 type GetFieldOutput struct{ *pulumi.OutputState }
@@ -148,12 +158,12 @@ func (o GetFieldOutput) Label() pulumi.StringOutput {
 	return o.ApplyT(func(v GetField) string { return v.Label }).(pulumi.StringOutput)
 }
 
-func (o GetFieldOutput) Purpose() FieldPurposeOutput {
-	return o.ApplyT(func(v GetField) FieldPurpose { return v.Purpose }).(FieldPurposeOutput)
+func (o GetFieldOutput) Reference() pulumi.StringOutput {
+	return o.ApplyT(func(v GetField) string { return v.Reference }).(pulumi.StringOutput)
 }
 
-func (o GetFieldOutput) Reference() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetField) *string { return v.Reference }).(pulumi.StringPtrOutput)
+func (o GetFieldOutput) Type() ResponseFieldTypeOutput {
+	return o.ApplyT(func(v GetField) ResponseFieldType { return v.Type }).(ResponseFieldTypeOutput)
 }
 
 func (o GetFieldOutput) Uuid() pulumi.StringOutput {

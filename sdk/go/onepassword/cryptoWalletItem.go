@@ -43,6 +43,11 @@ func NewCryptoWalletItem(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
 	args.Category = pulumi.StringPtr("Crypto Wallet")
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"fields",
+		"sections",
+	})
+	opts = append(opts, secrets)
 	var resource CryptoWalletItem
 	err := ctx.RegisterResource("onepassword:index:CryptoWalletItem", name, args, &resource, opts...)
 	if err != nil {

@@ -85,6 +85,8 @@ export class SSHKeyItem extends pulumi.CustomResource {
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+        const secretOpts = { additionalSecretOutputs: ["fields", "sections"] };
+        opts = pulumi.mergeOptions(opts, secretOpts);
         super(SSHKeyItem.__pulumiType, name, resourceInputs, opts);
     }
 }

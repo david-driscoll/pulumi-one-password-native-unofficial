@@ -83,7 +83,9 @@ namespace Pulumi.Onepassword
                 Version = Utilities.Version,
                 AdditionalSecretOutputs =
                 {
+                    "fields",
                     "password",
+                    "sections",
                 },
             };
             var merged = CustomResourceOptions.Merge(defaultOptions, options);

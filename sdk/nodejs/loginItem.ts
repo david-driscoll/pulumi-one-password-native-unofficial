@@ -87,7 +87,7 @@ export class LoginItem extends pulumi.CustomResource {
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["password"] };
+        const secretOpts = { additionalSecretOutputs: ["fields", "password", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(LoginItem.__pulumiType, name, resourceInputs, opts);
     }

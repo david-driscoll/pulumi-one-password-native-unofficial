@@ -99,6 +99,8 @@ export class CreditCardItem extends pulumi.CustomResource {
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+        const secretOpts = { additionalSecretOutputs: ["fields", "sections"] };
+        opts = pulumi.mergeOptions(opts, secretOpts);
         super(CreditCardItem.__pulumiType, name, resourceInputs, opts);
     }
 }

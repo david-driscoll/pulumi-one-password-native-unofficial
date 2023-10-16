@@ -6,7 +6,9 @@ from enum import Enum
 
 __all__ = [
     'Category',
+    'FieldAssignmentType',
     'FieldPurpose',
+    'ResponseFieldType',
 ]
 
 
@@ -39,7 +41,37 @@ class Category(str, Enum):
     WIRELESS_ROUTER = "Wireless Router"
 
 
+class FieldAssignmentType(str, Enum):
+    CONCEALED = "concealed"
+    TEXT = "text"
+    EMAIL = "email"
+    URL = "url"
+    DATE = "date"
+    MONTH_YEAR = "monthYear"
+    PHONE = "phone"
+
+
 class FieldPurpose(str, Enum):
     USERNAME = "USERNAME"
     PASSWORD = "PASSWORD"
     NOTE = "NOTE"
+
+
+class ResponseFieldType(str, Enum):
+    UNKNOWN = "UNKNOWN"
+    ADDRESS = "ADDRESS"
+    CONCEALED = "CONCEALED"
+    CREDIT_CARD_NUMBER = "CREDIT_CARD_NUMBER"
+    CREDIT_CARD_TYPE = "CREDIT_CARD_TYPE"
+    DATE = "Date"
+    EMAIL = "EMAIL"
+    GENDER = "GENDER"
+    MENU = "MENU"
+    MONTH_YEAR = "MONTH_YEAR"
+    OTP = "OTP"
+    PHONE = "PHONE"
+    REFERENCE = "REFERENCE"
+    STRING = "STRING"
+    URL = "URL"
+    FILE = "FILE"
+    SSH_KEY = "SSHKEY"

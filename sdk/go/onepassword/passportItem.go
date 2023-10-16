@@ -50,6 +50,11 @@ func NewPassportItem(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
 	args.Category = pulumi.StringPtr("Passport")
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"fields",
+		"sections",
+	})
+	opts = append(opts, secrets)
 	var resource PassportItem
 	err := ctx.RegisterResource("onepassword:index:PassportItem", name, args, &resource, opts...)
 	if err != nil {

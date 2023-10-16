@@ -49,6 +49,11 @@ func NewEmailAccountItem(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
 	args.Category = pulumi.StringPtr("Email Account")
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"fields",
+		"sections",
+	})
+	opts = append(opts, secrets)
 	var resource EmailAccountItem
 	err := ctx.RegisterResource("onepassword:index:EmailAccountItem", name, args, &resource, opts...)
 	if err != nil {

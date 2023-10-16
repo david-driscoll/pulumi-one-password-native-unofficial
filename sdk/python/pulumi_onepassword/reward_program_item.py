@@ -293,6 +293,8 @@ class RewardProgramItem(pulumi.CustomResource):
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
             __props__.__dict__["uuid"] = None
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["fields", "sections"])
+        opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(RewardProgramItem, __self__).__init__(
             'onepassword:index:RewardProgramItem',
             resource_name,

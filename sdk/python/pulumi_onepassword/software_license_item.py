@@ -293,6 +293,8 @@ class SoftwareLicenseItem(pulumi.CustomResource):
             __props__.__dict__["vault"] = vault
             __props__.__dict__["version"] = version
             __props__.__dict__["uuid"] = None
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["fields", "sections"])
+        opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(SoftwareLicenseItem, __self__).__init__(
             'onepassword:index:SoftwareLicenseItem',
             resource_name,

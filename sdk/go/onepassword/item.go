@@ -40,6 +40,11 @@ func NewItem(ctx *pulumi.Context,
 	if isZero(args.Category) {
 		args.Category = pulumi.StringPtr("Item")
 	}
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"fields",
+		"sections",
+	})
+	opts = append(opts, secrets)
 	var resource Item
 	err := ctx.RegisterResource("onepassword:index:Item", name, args, &resource, opts...)
 	if err != nil {

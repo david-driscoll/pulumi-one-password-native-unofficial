@@ -39,6 +39,175 @@ const (
 	CategoryWirelessRouter       = Category("Wireless Router")
 )
 
+type FieldAssignmentType string
+
+const (
+	FieldAssignmentTypeConcealed = FieldAssignmentType("concealed")
+	FieldAssignmentTypeText      = FieldAssignmentType("text")
+	FieldAssignmentTypeEmail     = FieldAssignmentType("email")
+	FieldAssignmentTypeUrl       = FieldAssignmentType("url")
+	FieldAssignmentTypeDate      = FieldAssignmentType("date")
+	FieldAssignmentTypeMonthYear = FieldAssignmentType("monthYear")
+	FieldAssignmentTypePhone     = FieldAssignmentType("phone")
+)
+
+func (FieldAssignmentType) ElementType() reflect.Type {
+	return reflect.TypeOf((*FieldAssignmentType)(nil)).Elem()
+}
+
+func (e FieldAssignmentType) ToFieldAssignmentTypeOutput() FieldAssignmentTypeOutput {
+	return pulumi.ToOutput(e).(FieldAssignmentTypeOutput)
+}
+
+func (e FieldAssignmentType) ToFieldAssignmentTypeOutputWithContext(ctx context.Context) FieldAssignmentTypeOutput {
+	return pulumi.ToOutputWithContext(ctx, e).(FieldAssignmentTypeOutput)
+}
+
+func (e FieldAssignmentType) ToFieldAssignmentTypePtrOutput() FieldAssignmentTypePtrOutput {
+	return e.ToFieldAssignmentTypePtrOutputWithContext(context.Background())
+}
+
+func (e FieldAssignmentType) ToFieldAssignmentTypePtrOutputWithContext(ctx context.Context) FieldAssignmentTypePtrOutput {
+	return FieldAssignmentType(e).ToFieldAssignmentTypeOutputWithContext(ctx).ToFieldAssignmentTypePtrOutputWithContext(ctx)
+}
+
+func (e FieldAssignmentType) ToStringOutput() pulumi.StringOutput {
+	return pulumi.ToOutput(pulumi.String(e)).(pulumi.StringOutput)
+}
+
+func (e FieldAssignmentType) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
+	return pulumi.ToOutputWithContext(ctx, pulumi.String(e)).(pulumi.StringOutput)
+}
+
+func (e FieldAssignmentType) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return pulumi.String(e).ToStringPtrOutputWithContext(context.Background())
+}
+
+func (e FieldAssignmentType) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return pulumi.String(e).ToStringOutputWithContext(ctx).ToStringPtrOutputWithContext(ctx)
+}
+
+type FieldAssignmentTypeOutput struct{ *pulumi.OutputState }
+
+func (FieldAssignmentTypeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FieldAssignmentType)(nil)).Elem()
+}
+
+func (o FieldAssignmentTypeOutput) ToFieldAssignmentTypeOutput() FieldAssignmentTypeOutput {
+	return o
+}
+
+func (o FieldAssignmentTypeOutput) ToFieldAssignmentTypeOutputWithContext(ctx context.Context) FieldAssignmentTypeOutput {
+	return o
+}
+
+func (o FieldAssignmentTypeOutput) ToFieldAssignmentTypePtrOutput() FieldAssignmentTypePtrOutput {
+	return o.ToFieldAssignmentTypePtrOutputWithContext(context.Background())
+}
+
+func (o FieldAssignmentTypeOutput) ToFieldAssignmentTypePtrOutputWithContext(ctx context.Context) FieldAssignmentTypePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FieldAssignmentType) *FieldAssignmentType {
+		return &v
+	}).(FieldAssignmentTypePtrOutput)
+}
+
+func (o FieldAssignmentTypeOutput) ToStringOutput() pulumi.StringOutput {
+	return o.ToStringOutputWithContext(context.Background())
+}
+
+func (o FieldAssignmentTypeOutput) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e FieldAssignmentType) string {
+		return string(e)
+	}).(pulumi.StringOutput)
+}
+
+func (o FieldAssignmentTypeOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o FieldAssignmentTypeOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e FieldAssignmentType) *string {
+		v := string(e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
+type FieldAssignmentTypePtrOutput struct{ *pulumi.OutputState }
+
+func (FieldAssignmentTypePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FieldAssignmentType)(nil)).Elem()
+}
+
+func (o FieldAssignmentTypePtrOutput) ToFieldAssignmentTypePtrOutput() FieldAssignmentTypePtrOutput {
+	return o
+}
+
+func (o FieldAssignmentTypePtrOutput) ToFieldAssignmentTypePtrOutputWithContext(ctx context.Context) FieldAssignmentTypePtrOutput {
+	return o
+}
+
+func (o FieldAssignmentTypePtrOutput) Elem() FieldAssignmentTypeOutput {
+	return o.ApplyT(func(v *FieldAssignmentType) FieldAssignmentType {
+		if v != nil {
+			return *v
+		}
+		var ret FieldAssignmentType
+		return ret
+	}).(FieldAssignmentTypeOutput)
+}
+
+func (o FieldAssignmentTypePtrOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o FieldAssignmentTypePtrOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e *FieldAssignmentType) *string {
+		if e == nil {
+			return nil
+		}
+		v := string(*e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
+// FieldAssignmentTypeInput is an input type that accepts FieldAssignmentTypeArgs and FieldAssignmentTypeOutput values.
+// You can construct a concrete instance of `FieldAssignmentTypeInput` via:
+//
+//	FieldAssignmentTypeArgs{...}
+type FieldAssignmentTypeInput interface {
+	pulumi.Input
+
+	ToFieldAssignmentTypeOutput() FieldAssignmentTypeOutput
+	ToFieldAssignmentTypeOutputWithContext(context.Context) FieldAssignmentTypeOutput
+}
+
+var fieldAssignmentTypePtrType = reflect.TypeOf((**FieldAssignmentType)(nil)).Elem()
+
+type FieldAssignmentTypePtrInput interface {
+	pulumi.Input
+
+	ToFieldAssignmentTypePtrOutput() FieldAssignmentTypePtrOutput
+	ToFieldAssignmentTypePtrOutputWithContext(context.Context) FieldAssignmentTypePtrOutput
+}
+
+type fieldAssignmentTypePtr string
+
+func FieldAssignmentTypePtr(v string) FieldAssignmentTypePtrInput {
+	return (*fieldAssignmentTypePtr)(&v)
+}
+
+func (*fieldAssignmentTypePtr) ElementType() reflect.Type {
+	return fieldAssignmentTypePtrType
+}
+
+func (in *fieldAssignmentTypePtr) ToFieldAssignmentTypePtrOutput() FieldAssignmentTypePtrOutput {
+	return pulumi.ToOutput(in).(FieldAssignmentTypePtrOutput)
+}
+
+func (in *fieldAssignmentTypePtr) ToFieldAssignmentTypePtrOutputWithContext(ctx context.Context) FieldAssignmentTypePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, in).(FieldAssignmentTypePtrOutput)
+}
+
 type FieldPurpose string
 
 const (
@@ -204,9 +373,120 @@ func (in *fieldPurposePtr) ToFieldPurposePtrOutputWithContext(ctx context.Contex
 	return pulumi.ToOutputWithContext(ctx, in).(FieldPurposePtrOutput)
 }
 
+type ResponseFieldType string
+
+const (
+	ResponseFieldTypeUnknown          = ResponseFieldType("UNKNOWN")
+	ResponseFieldTypeAddress          = ResponseFieldType("ADDRESS")
+	ResponseFieldTypeConcealed        = ResponseFieldType("CONCEALED")
+	ResponseFieldTypeCreditCardNumber = ResponseFieldType("CREDIT_CARD_NUMBER")
+	ResponseFieldTypeCreditCardType   = ResponseFieldType("CREDIT_CARD_TYPE")
+	ResponseFieldTypeDate             = ResponseFieldType("Date")
+	ResponseFieldTypeEmail            = ResponseFieldType("EMAIL")
+	ResponseFieldTypeGender           = ResponseFieldType("GENDER")
+	ResponseFieldTypeMenu             = ResponseFieldType("MENU")
+	ResponseFieldTypeMonthYear        = ResponseFieldType("MONTH_YEAR")
+	ResponseFieldTypeOtp              = ResponseFieldType("OTP")
+	ResponseFieldTypePhone            = ResponseFieldType("PHONE")
+	ResponseFieldTypeReference        = ResponseFieldType("REFERENCE")
+	ResponseFieldTypeString           = ResponseFieldType("STRING")
+	ResponseFieldTypeUrl              = ResponseFieldType("URL")
+	ResponseFieldTypeFile             = ResponseFieldType("FILE")
+	ResponseFieldTypeSshKey           = ResponseFieldType("SSHKEY")
+)
+
+type ResponseFieldTypeOutput struct{ *pulumi.OutputState }
+
+func (ResponseFieldTypeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ResponseFieldType)(nil)).Elem()
+}
+
+func (o ResponseFieldTypeOutput) ToResponseFieldTypeOutput() ResponseFieldTypeOutput {
+	return o
+}
+
+func (o ResponseFieldTypeOutput) ToResponseFieldTypeOutputWithContext(ctx context.Context) ResponseFieldTypeOutput {
+	return o
+}
+
+func (o ResponseFieldTypeOutput) ToResponseFieldTypePtrOutput() ResponseFieldTypePtrOutput {
+	return o.ToResponseFieldTypePtrOutputWithContext(context.Background())
+}
+
+func (o ResponseFieldTypeOutput) ToResponseFieldTypePtrOutputWithContext(ctx context.Context) ResponseFieldTypePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v ResponseFieldType) *ResponseFieldType {
+		return &v
+	}).(ResponseFieldTypePtrOutput)
+}
+
+func (o ResponseFieldTypeOutput) ToStringOutput() pulumi.StringOutput {
+	return o.ToStringOutputWithContext(context.Background())
+}
+
+func (o ResponseFieldTypeOutput) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e ResponseFieldType) string {
+		return string(e)
+	}).(pulumi.StringOutput)
+}
+
+func (o ResponseFieldTypeOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o ResponseFieldTypeOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e ResponseFieldType) *string {
+		v := string(e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
+type ResponseFieldTypePtrOutput struct{ *pulumi.OutputState }
+
+func (ResponseFieldTypePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**ResponseFieldType)(nil)).Elem()
+}
+
+func (o ResponseFieldTypePtrOutput) ToResponseFieldTypePtrOutput() ResponseFieldTypePtrOutput {
+	return o
+}
+
+func (o ResponseFieldTypePtrOutput) ToResponseFieldTypePtrOutputWithContext(ctx context.Context) ResponseFieldTypePtrOutput {
+	return o
+}
+
+func (o ResponseFieldTypePtrOutput) Elem() ResponseFieldTypeOutput {
+	return o.ApplyT(func(v *ResponseFieldType) ResponseFieldType {
+		if v != nil {
+			return *v
+		}
+		var ret ResponseFieldType
+		return ret
+	}).(ResponseFieldTypeOutput)
+}
+
+func (o ResponseFieldTypePtrOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o ResponseFieldTypePtrOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e *ResponseFieldType) *string {
+		if e == nil {
+			return nil
+		}
+		v := string(*e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
 func init() {
+	pulumi.RegisterInputType(reflect.TypeOf((*FieldAssignmentTypeInput)(nil)).Elem(), FieldAssignmentType("concealed"))
+	pulumi.RegisterInputType(reflect.TypeOf((*FieldAssignmentTypePtrInput)(nil)).Elem(), FieldAssignmentType("concealed"))
 	pulumi.RegisterInputType(reflect.TypeOf((*FieldPurposeInput)(nil)).Elem(), FieldPurpose("USERNAME"))
 	pulumi.RegisterInputType(reflect.TypeOf((*FieldPurposePtrInput)(nil)).Elem(), FieldPurpose("USERNAME"))
+	pulumi.RegisterOutputType(FieldAssignmentTypeOutput{})
+	pulumi.RegisterOutputType(FieldAssignmentTypePtrOutput{})
 	pulumi.RegisterOutputType(FieldPurposeOutput{})
 	pulumi.RegisterOutputType(FieldPurposePtrOutput{})
+	pulumi.RegisterOutputType(ResponseFieldTypeOutput{})
+	pulumi.RegisterOutputType(ResponseFieldTypePtrOutput{})
 }

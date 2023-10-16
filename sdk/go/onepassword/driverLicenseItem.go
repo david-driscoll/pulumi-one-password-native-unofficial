@@ -50,6 +50,11 @@ func NewDriverLicenseItem(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
 	args.Category = pulumi.StringPtr("Driver License")
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"fields",
+		"sections",
+	})
+	opts = append(opts, secrets)
 	var resource DriverLicenseItem
 	err := ctx.RegisterResource("onepassword:index:DriverLicenseItem", name, args, &resource, opts...)
 	if err != nil {

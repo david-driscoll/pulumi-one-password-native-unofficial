@@ -48,6 +48,11 @@ func NewDatabaseItem(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
 	args.Category = pulumi.StringPtr("Database")
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"fields",
+		"sections",
+	})
+	opts = append(opts, secrets)
 	var resource DatabaseItem
 	err := ctx.RegisterResource("onepassword:index:DatabaseItem", name, args, &resource, opts...)
 	if err != nil {

@@ -46,6 +46,11 @@ func NewOutdoorLicenseItem(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
 	args.Category = pulumi.StringPtr("Outdoor License")
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"fields",
+		"sections",
+	})
+	opts = append(opts, secrets)
 	var resource OutdoorLicenseItem
 	err := ctx.RegisterResource("onepassword:index:OutdoorLicenseItem", name, args, &resource, opts...)
 	if err != nil {

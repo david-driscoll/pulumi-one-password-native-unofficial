@@ -45,6 +45,11 @@ func NewRewardProgramItem(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
 	args.Category = pulumi.StringPtr("Reward Program")
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"fields",
+		"sections",
+	})
+	opts = append(opts, secrets)
 	var resource RewardProgramItem
 	err := ctx.RegisterResource("onepassword:index:RewardProgramItem", name, args, &resource, opts...)
 	if err != nil {

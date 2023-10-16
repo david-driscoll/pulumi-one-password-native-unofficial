@@ -48,6 +48,11 @@ func NewCreditCardItem(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
 	args.Category = pulumi.StringPtr("Credit Card")
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"fields",
+		"sections",
+	})
+	opts = append(opts, secrets)
 	var resource CreditCardItem
 	err := ctx.RegisterResource("onepassword:index:CreditCardItem", name, args, &resource, opts...)
 	if err != nil {

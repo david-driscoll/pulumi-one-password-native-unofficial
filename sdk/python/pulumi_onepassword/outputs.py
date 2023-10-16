@@ -19,16 +19,15 @@ __all__ = [
 class GetField(dict):
     def __init__(__self__, *,
                  label: str,
-                 purpose: 'FieldPurpose',
+                 reference: str,
+                 type: 'ResponseFieldType',
                  uuid: str,
-                 value: str,
-                 reference: Optional[str] = None):
+                 value: str):
         pulumi.set(__self__, "label", label)
-        pulumi.set(__self__, "purpose", purpose)
+        pulumi.set(__self__, "reference", reference)
+        pulumi.set(__self__, "type", type)
         pulumi.set(__self__, "uuid", uuid)
         pulumi.set(__self__, "value", value)
-        if reference is not None:
-            pulumi.set(__self__, "reference", reference)
 
     @property
     @pulumi.getter
@@ -37,8 +36,13 @@ class GetField(dict):
 
     @property
     @pulumi.getter
-    def purpose(self) -> 'FieldPurpose':
-        return pulumi.get(self, "purpose")
+    def reference(self) -> str:
+        return pulumi.get(self, "reference")
+
+    @property
+    @pulumi.getter
+    def type(self) -> 'ResponseFieldType':
+        return pulumi.get(self, "type")
 
     @property
     @pulumi.getter
@@ -49,11 +53,6 @@ class GetField(dict):
     @pulumi.getter
     def value(self) -> str:
         return pulumi.get(self, "value")
-
-    @property
-    @pulumi.getter
-    def reference(self) -> Optional[str]:
-        return pulumi.get(self, "reference")
 
 
 @pulumi.output_type

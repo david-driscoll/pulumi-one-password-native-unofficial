@@ -101,6 +101,8 @@ export class DatabaseItem extends pulumi.CustomResource {
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+        const secretOpts = { additionalSecretOutputs: ["fields", "sections"] };
+        opts = pulumi.mergeOptions(opts, secretOpts);
         super(DatabaseItem.__pulumiType, name, resourceInputs, opts);
     }
 }

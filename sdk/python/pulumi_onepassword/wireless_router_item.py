@@ -337,6 +337,8 @@ class WirelessRouterItem(pulumi.CustomResource):
             __props__.__dict__["wireless_network_password"] = wireless_network_password
             __props__.__dict__["wireless_security"] = wireless_security
             __props__.__dict__["uuid"] = None
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["fields", "sections"])
+        opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(WirelessRouterItem, __self__).__init__(
             'onepassword:index:WirelessRouterItem',
             resource_name,

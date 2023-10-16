@@ -47,8 +47,45 @@ export class Provider implements provider.Provider {
         if (!resourceType) throw new Error(`unknown resource type ${urn}`);
         const resourceScheme = this.resolvedSchema.resources[resourceType];
 
-        const assignments: FieldAssignment[] = convertToAssignments(this.resolvedSchema, resourceScheme as any, inputs);
+        const assignments: FieldAssignment[] = [];
+        // TODO: well known fields, sections
+
+        const fields: Record<string, Field> = {}
+        const sections: Record<string, Section> = {}
+        Object.assign(fields, inputs.fields ?? {});
+        Object.assign(sections, inputs.sections ?? {});
+        console.log(JSON.stringify(inputs, null, 4))
+
+
+        for (const [name, propScheme] of Object.entries<any>(resourceScheme.inputProperties).filter(z => !propertiesToIgnore.includes(z[0]))) {
+            if (inputs[name] != null) {
+                if (propScheme.refName) {
+                    const sectionScheme = (this.resolvedSchema.types as any)[propScheme.refName];
+                    // Can we have deeply nested sections? I dunno.
+                    sections[name] = { fields: {} };
+                    for (const [sName, sPropSchema] of Object.entries((sectionScheme?.properties ?? {}) as Record<string, any>)) {
+                        if (inputs?.[name]?.[sName]) {
+                            sections[name].fields[sName] = {
+                                value: inputs?.[name]?.[sName],
+                                type: sPropSchema.kind ?? null,
+                                purpose: sPropSchema.purpose ?? null
+                            };
+                        }
+                    }
+                } else {
+                    fields[name] = {
+                        value: inputs[name],
+                        type: propScheme.kind ?? null,
+                        purpose: propScheme.purpose ?? null
+                    };
+                }
+            }
+        }
+        assignments.push(...assignFields(fields));
+        assignments.push(...assignSections(sections));
         const name = inputs.title ?? newUniqueName(getNameFromUrn(urn));
+
+        console.log(JSON.stringify(assignments, null, 4))
 
         const result = item.create(
             assignments,
@@ -64,10 +101,7 @@ export class Provider implements provider.Provider {
 
         return {
             id: result.id,
-            outs: {
-                ...output,
-                uuid: result.id
-            }
+            outs: output
         }
 
     }
@@ -146,9 +180,9 @@ export class Provider implements provider.Provider {
                 if (propScheme.refName) {
                     const sectionScheme = (this.resolvedSchema.types as any)[propScheme.refName];
                     const sPropSchema = sectionScheme.properties[item.path[1]];
-                    assignments.push([item.path.join('.'), sPropSchema.purpose === 'PASSWORD' ? 'concealed' : 'text', item.value, sPropSchema.purpose ?? null])
+                    assignments.push(createAssignment(item.path.join('.'), { value: item.value, purpose: sPropSchema.purpose, type: sPropSchema.purpose === 'PASSWORD' ? 'concealed' : 'text' }))
                 } else {
-                    assignments.push([item.path.join('.'), propScheme.purpose === 'PASSWORD' ? 'concealed' : 'text', item.value, propScheme.purpose ?? null])
+                    assignments.push(createAssignment(item.path.join('.'), { value: item.value, purpose: propScheme.purpose, type: propScheme.purpose === 'PASSWORD' ? 'concealed' : 'text' }))
                 }
             }
             else if (item.op === "remove") {
@@ -172,10 +206,7 @@ export class Provider implements provider.Provider {
         const output = convertResultToOutputs(resourceType, result);
 
         return {
-            outs: {
-                ...output,
-                uuid: result.id
-            }
+            outs: output
         }
 
         function getFieldPath(path: (string | number)[]) {
@@ -389,11 +420,16 @@ interface OutSection {
     label: string;
 }
 
+function createAssignment(path: string, field: Field): FieldAssignment {
+    const isPassword = field.purpose === 'PASSWORD' || field.type === 'concealed';
+    return [path, field.purpose === 'PASSWORD' ? 'concealed' : 'text', isPassword ? (field.value as any)?.value : field.value, field.purpose];
+}
+
 function assignFields(fields: Record<string, Field>, prefix?: string) {
     const assignments: FieldAssignment[] = [];
     for (const field of Object.entries(fields)) {
         const path = prefix ? `${prefix}.${field[0]}` : field[0];
-        assignments.push([path, field[1].purpose === 'PASSWORD' ? 'concealed' : 'text', field[1].value, field[1].purpose])
+        assignments.push(createAssignment(path, field[1]))
     }
     return assignments;
 }
@@ -407,50 +443,6 @@ function assignSections(sections: Record<string, Section>) {
 
 }
 
-function convertToAssignments(
-    schema: (typeof import('./schema.json')),
-    resourceScheme: (typeof import('./schema.json'))['resources']['onepassword:index:CreditCardItem'],
-    inputs: CommonProperties
-) {
-
-    const assignments: FieldAssignment[] = [];
-    // TODO: well known fields, sections
-
-    const fields: Record<string, Field> = {}
-    const sections: Record<string, Section> = {}
-    Object.assign(fields, inputs.fields ?? {});
-    Object.assign(sections, inputs.sections ?? {});
-
-    for (const [name, propScheme] of Object.entries<any>(resourceScheme.inputProperties).filter(z => !propertiesToIgnore.includes(z[0]))) {
-        if (inputs[name] != null) {
-            if (propScheme.refName) {
-                const sectionScheme = (schema.types as any)[propScheme.refName];
-                // Can we have deeply nested sections? I dunno.
-                sections[name] = { fields: {} };
-                for (const [sName, sPropSchema] of Object.entries((sectionScheme?.properties ?? {}) as Record<string, any>)) {
-                    if (inputs?.[name]?.[sName]) {
-                        sections[name].fields[sName] = {
-                            value: inputs?.[name]?.[sName],
-                            type: sPropSchema.kind ?? null,
-                            purpose: sPropSchema.purpose ?? null
-                        };
-                    }
-                }
-            } else {
-                fields[name] = {
-                    value: inputs[name],
-                    type: propScheme.kind ?? null,
-                    purpose: propScheme.purpose ?? null
-                };
-            }
-        }
-    }
-    assignments.push(...assignFields(fields));
-    assignments.push(...assignSections(sections));
-
-    return assignments;
-}
-
 function convertResultToOutputs(kind: string, result: import('@1password/op-js').Item) {
     const output = {
         fields: result.fields?.reduce((result, value) => {
@@ -461,7 +453,8 @@ function convertResultToOutputs(kind: string, result: import('@1password/op-js')
                 reference: value.reference ?? null!
             };
             if (value.value) {
-                result[camelCase(value.label ?? value.id)].value = value.value;
+                let v: any = value.value;
+                result[camelCase(value.label ?? value.id)].value = v;
             }
             return result;
         }, {} as Record<string, OutField>),
@@ -478,7 +471,8 @@ function convertResultToOutputs(kind: string, result: import('@1password/op-js')
                 reference: value.reference ?? null!
             }
             if (value.value) {
-                result[camelCase(value.section?.label ?? value.section!.id)].fields[camelCase(value.label ?? value.id)].value = value.value;
+                let v: any = value.value;
+                result[camelCase(value.section?.label ?? value.section!.id)].fields[camelCase(value.label ?? value.id)].value = v;
             }
             return result;
         }, {} as Record<string, OutSection>)

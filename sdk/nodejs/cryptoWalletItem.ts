@@ -89,6 +89,8 @@ export class CryptoWalletItem extends pulumi.CustomResource {
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+        const secretOpts = { additionalSecretOutputs: ["fields", "sections"] };
+        opts = pulumi.mergeOptions(opts, secretOpts);
         super(CryptoWalletItem.__pulumiType, name, resourceInputs, opts);
     }
 }
