@@ -17,24 +17,13 @@ __all__ = [
 
 @pulumi.output_type
 class GetVaultResult:
-    def __init__(__self__, description=None, name=None, uuid=None):
-        if description and not isinstance(description, str):
-            raise TypeError("Expected argument 'description' to be a str")
-        pulumi.set(__self__, "description", description)
+    def __init__(__self__, name=None, uuid=None):
         if name and not isinstance(name, str):
             raise TypeError("Expected argument 'name' to be a str")
         pulumi.set(__self__, "name", name)
         if uuid and not isinstance(uuid, str):
             raise TypeError("Expected argument 'uuid' to be a str")
         pulumi.set(__self__, "uuid", uuid)
-
-    @property
-    @pulumi.getter
-    def description(self) -> Optional[str]:
-        """
-        The description of the vault.
-        """
-        return pulumi.get(self, "description")
 
     @property
     @pulumi.getter
@@ -59,7 +48,6 @@ class AwaitableGetVaultResult(GetVaultResult):
         if False:
             yield self
         return GetVaultResult(
-            description=self.description,
             name=self.name,
             uuid=self.uuid)
 
@@ -81,7 +69,6 @@ def get_vault(vault: Optional[str] = None,
     __ret__ = pulumi.runtime.invoke('onepassword:index:GetVault', __args__, opts=opts, typ=GetVaultResult).value
 
     return AwaitableGetVaultResult(
-        description=__ret__.description,
         name=__ret__.name,
         uuid=__ret__.uuid)
 

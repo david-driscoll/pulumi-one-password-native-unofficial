@@ -67,17 +67,23 @@ import * as op from "@pulumi/onepassword";
 //     }
 // })
 
-const account = op.getBankAccountOutput({ vault: 'testing-pulumi', title: 'bank-account-info1a8ac7fc' })
+// const account = op.getBankAccountOutput({ vault: 'testing-pulumi', title: 'bank-account-info1a8ac7fc' })
 
-account.apply(z => {
-    if (z.accountNumber !== '123456789') {
-        throw new Error("wrong account found!!");
-    }
-    console.log(JSON.stringify(z));
-})
+// account.apply(z => {
+//     if (z.accountNumber !== '123456789') {
+//         throw new Error("wrong account found!!");
+//     }
+//     console.log(JSON.stringify(z));
+// })
 
-new op.BankAccountItem('other-account-info', {
+// new op.BankAccountItem('other-account-info', {
 
-    vault: 'testing-pulumi',
-    accountNumber: account.apply(z => Array.from(z.accountNumber ?? '').reverse().join(''))
-})
+//     vault: 'testing-pulumi',
+//     accountNumber: account.apply(z => Array.from(z.accountNumber ?? '').reverse().join(''))
+// })
+
+const vault = op.getVaultOutput({ vault: 'testing-pulumi' });
+vault.apply(z => console.log(JSON.stringify(z)))
+
+const reference = op.getSecretReferenceOutput({ reference: "op://testing-pulumi/test note/password" });
+reference.apply(z => console.log(JSON.stringify(z)))

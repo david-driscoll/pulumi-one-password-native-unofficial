@@ -52,10 +52,6 @@ schema.functions = {
         },
         outputs: {
             properties: {
-                "description": {
-                    "type": "string",
-                    "description": "The description of the vault.\n"
-                },
                 "name": {
                     "type": "string",
                     "description": "The name of the vault to retrieve. This field will be populated with the name of the vault if the vault it looked up by its UUID.\n"

@@ -200,9 +200,8 @@ export class Provider implements provider.Provider {
         const result = vault.get(inputs.vault);
         return {
             outputs: {
-                description: '',
                 name: result.name,
-                uuid: result.id,
+                uuid: result.id
             }
         }
     }
@@ -215,7 +214,11 @@ export class Provider implements provider.Provider {
         }
 
         const result = read.parse(inputs.reference);
-        return { outputs: { value: result } }
+        return {
+            outputs: {
+                value: result
+            }
+        }
     }
 
     private getItem(token: ReturnType<NonNullable<typeof getFunctionType>>, inputs: { title?: string; uuid?: string; vault: string; }): provider.InvokeResult {
