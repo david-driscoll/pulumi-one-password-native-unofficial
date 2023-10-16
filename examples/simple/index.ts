@@ -82,10 +82,17 @@ import * as op from "@pulumi/onepassword";
 //     accountNumber: account.apply(z => Array.from(z.accountNumber ?? '').reverse().join(''))
 // })
 
-op.Item.get('referenced-bank-account', 'bank-account-info1a8ac7fc', { vault: 'testing-pulumi' })
+// op.Item.get('referenced-bank-account', 'bank-account-info1a8ac7fc', { vault: 'testing-pulumi' })
 
 // const vault = op.getVaultOutput({ vault: 'testing-pulumi' });
 // vault.apply(z => console.log(JSON.stringify(z)))
 
 // const reference = op.getSecretReferenceOutput({ reference: "op://testing-pulumi/test note/password" });
 // reference.apply(z => console.log(JSON.stringify(z)))
+
+
+new op.MembershipItem('random-membership', {
+
+    vault: 'testing-pulumi',
+    memberId: "1234567891",
+})

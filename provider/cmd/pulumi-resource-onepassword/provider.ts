@@ -1,12 +1,13 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as provider from "@pulumi/pulumi/provider";
 import { ItemType, ResourceTypes, ItemTypeNames, FunctionTypes, PropertyPaths } from './types'
-import { FieldAssignment, FieldAssignmentType, FieldPurpose, item, vault, read } from "@1password/op-js"
+import { FieldAssignment, FieldAssignmentType, FieldPurpose, item, vault, read, ResponseFieldType } from "@1password/op-js"
 import { createHash, randomBytes } from "crypto";
 import { RNGFactory, Random } from "random/dist/cjs/random";
-import { camelCase } from "lodash";
+import { camelCase, get, set, uniq } from "lodash";
+import { diff } from "just-diff";
 
-const propertiesToIgnore = ['category', 'fields', 'sections', 'tags', 'title', 'vault'];
+const propertiesToIgnore = ['category', 'fields', 'sections', 'tags', 'title', 'vault', 'uuid'];
 
 
 // import { StaticPage, StaticPageArgs } from "./staticPage";
@@ -46,41 +47,7 @@ export class Provider implements provider.Provider {
         if (!resourceType) throw new Error(`unknown resource type ${urn}`);
         const resourceScheme = this.resolvedSchema.resources[resourceType];
 
-        const assignments: FieldAssignment[] = [];
-        // TODO: well known fields, sections
-
-        const fields: Record<string, Field> = {}
-        const sections: Record<string, Section> = {}
-        Object.assign(fields, inputs.fields ?? {});
-        Object.assign(sections, inputs.sections ?? {});
-
-        for (const [name, propScheme] of Object.entries(resourceScheme.inputProperties).filter(z => !propertiesToIgnore.includes(z[0]))) {
-            if (inputs[name] != null) {
-                if (propScheme.refName) {
-                    const sectionScheme = (this.resolvedSchema.types as any)[propScheme.refName];
-                    // Can we have deeply nested sections? I dunno.
-                    sections[name] = { fields: {} };
-                    for (const [sName, sPropSchema] of Object.entries((sectionScheme?.properties ?? {}) as Record<string, any>)) {
-                        if (inputs?.[name]?.[sName]) {
-                            sections[name].fields[sName] = {
-                                value: inputs?.[name]?.[sName],
-                                type: sPropSchema.kind ?? null,
-                                purpose: sPropSchema.purpose ?? null
-                            };
-                        }
-                    }
-                } else {
-                    fields[name] = {
-                        value: inputs[name],
-                        type: propScheme.kind ?? null,
-                        purpose: propScheme.purpose ?? null
-                    };
-                }
-            }
-        }
-        assignments.push(...assignFields(fields));
-        assignments.push(...assignSections(sections));
-
+        const assignments: FieldAssignment[] = convertToAssignments(this.resolvedSchema, resourceScheme as any, inputs);
         const name = inputs.title ?? newUniqueName(getNameFromUrn(urn));
 
         const result = item.create(
@@ -109,16 +76,110 @@ export class Provider implements provider.Provider {
      * Reads the current live state associated with a pulumi.  Enough state must be included in the inputs to uniquely
      * identify the resource; this is typically just the resource ID, but it may also include some properties.
      */
-    async read(id: pulumi.ID, urn: pulumi.URN, props?: any): Promise<provider.ReadResult> {
+    async read(id: pulumi.ID, urn: pulumi.URN, props?: CommonProperties): Promise<provider.ReadResult> {
         const resourceType = getResourceTypeFromUrn(urn);
         if (!resourceType) throw new Error(`unknown resource type ${urn}`);
 
-        const result = item.get(id, { vault: props.vault })
+        const result = item.get(id, { vault: props?.vault })
 
         const outputs = convertResultToOutputs(resourceType, result);
         return {
             id: result.id,
             props: outputs
+        }
+    }
+
+    /**
+     * Invoke calls the indicated function.
+     *
+     * @param token The token of the function to call.
+     * @param inputs The inputs to the function.
+     */
+    async invoke(token: string, inputs: any): Promise<provider.InvokeResult> {
+        const functionType = getFunctionType(token);
+        if (!functionType) throw new Error(`unknown function type ${token}`);
+        switch (functionType) {
+            case 'onepassword:index:GetVault': return this.getVault(inputs)
+            case 'onepassword:index:GetSecretReference': return this.getSecretReference(inputs)
+            default: return this.getItem(functionType, inputs)
+        }
+    }
+
+    /**
+     * Update updates an existing resource with new values.
+     *
+     * @param id The ID of the resource to update.
+     * @param olds The old values of properties to update.
+     * @param news The new values of properties to update.
+     */
+    async update(id: pulumi.ID, urn: pulumi.URN, olds: CommonProperties, news: CommonProperties): Promise<provider.UpdateResult> {
+        const resourceType = getResourceTypeFromUrn(urn);
+        if (!resourceType) throw new Error(`unknown resource type ${urn}`);
+        const resourceScheme = this.resolvedSchema.resources[resourceType];
+
+        const delta = diff(olds, news).filter(item => {
+            return !(item.path.length === 1 && propertiesToIgnore.includes(item.path[0].toString()))
+        });
+        const assignments: FieldAssignment[] = [];
+
+        const replaces: Record<string, Field> = {}
+        const deletes: string[] = []
+        for (const item of delta) {
+            if (item.path.length > 1 && (item.path[0] === 'sections' || item.path[0] === 'fields')) {
+                // do the other thing
+                if (item.op === "add" || item.op === "replace") {
+                    replaces[getFieldPath(item.path)] = get(news, item.path.slice(1).join('.'))
+                }
+                else if (item.op === "remove") {
+                    const field: OutField = get(news, item.path.slice(1).join('.'));
+                    // month tear seems to default to "0" as the default value, in this case do not try to delete it
+                    if (field.value === "0" && field.type === "MONTH_YEAR") {
+                        continue;
+                    }
+                    deletes.push(getFieldPath(item.path));
+                }
+                continue;
+            }
+
+            if (item.op === "add" || item.op === "replace") {
+                const propScheme = (resourceScheme.inputProperties as any)[item.path[0]]!;
+                if (propScheme.refName) {
+                    const sectionScheme = (this.resolvedSchema.types as any)[propScheme.refName];
+                    const sPropSchema = sectionScheme.properties[item.path[1]];
+                    assignments.push([item.path.join('.'), sPropSchema.purpose === 'PASSWORD' ? 'concealed' : 'text', item.value, sPropSchema.purpose ?? null])
+                } else {
+                    assignments.push([item.path.join('.'), propScheme.purpose === 'PASSWORD' ? 'concealed' : 'text', item.value, propScheme.purpose ?? null])
+                }
+            }
+            else if (item.op === "remove") {
+                deletes.push(item.path.join('.'))
+            }
+
+        }
+
+        assignments.push(...assignFields(replaces));
+        for (const item of uniq(deletes)) {
+            assignments.push([item, 'delete', ''])
+        }
+
+        const name = news.title ?? newUniqueName(getNameFromUrn(urn));
+        const result = item.edit(id, assignments, {
+            vault: news.vault,
+            tags: news.tags ?? [],
+            title: name,
+        });
+
+        const output = convertResultToOutputs(resourceType, result);
+
+        return {
+            outs: {
+                ...output,
+                uuid: result.id
+            }
+        }
+
+        function getFieldPath(path: (string | number)[]) {
+            return path.filter(z => z !== 'sections' && z !== 'fields').join('.')
         }
     }
 
@@ -133,16 +194,6 @@ export class Provider implements provider.Provider {
         if (!resourceType) throw new Error(`unknown resource type ${urn}`);
         item.delete(id);
     }
-    /**
-     * Update updates an existing resource with new values.
-     *
-     * @param id The ID of the resource to update.
-     * @param olds The old values of properties to update.
-     * @param news The new values of properties to update.
-     */
-    // async update(id: pulumi.ID, urn: pulumi.URN, olds: any, news: any): Promise<provider.UpdateResult> {
-
-    // }
 
     /**
      * Check validates that the given property bag is valid for a resource of the given type.
@@ -190,19 +241,29 @@ export class Provider implements provider.Provider {
     }
 
     /**
-     * Invoke calls the indicated function.
+     * Diff checks what impacts a hypothetical update will have on the resource's properties.
      *
-     * @param token The token of the function to call.
-     * @param inputs The inputs to the function.
+     * @param id The ID of the resource to diff.
+     * @param olds The old values of properties to diff.
+     * @param news The new values of properties to diff.
      */
-    async invoke(token: string, inputs: any): Promise<provider.InvokeResult> {
-        const functionType = getFunctionType(token);
-        if (!functionType) throw new Error(`unknown function type ${token}`);
-        switch (functionType) {
-            case 'onepassword:index:GetVault': return this.getVault(inputs)
-            case 'onepassword:index:GetSecretReference': return this.getSecretReference(inputs)
-            default: return this.getItem(functionType, inputs)
+    async diff(id: pulumi.ID, urn: pulumi.URN, olds: CommonProperties, news: CommonProperties): Promise<provider.DiffResult> {
+        const resourceType = getResourceTypeFromUrn(urn);
+        if (!resourceType) throw new Error(`unknown resource type ${urn}`);
+
+        const delta = diff(olds, news).filter(item => {
+            return !(item.path.length === 1 && propertiesToIgnore.includes(item.path[0].toString()))
+        });
+        console.log(JSON.stringify({ olds, news, delta }, null, 2))
+
+
+
+        return {
+            changes: delta.length > 0,
+            //deleteBeforeReplace ??
+            // replaces ??
         }
+
     }
 
     private getVault(inputs: { vault: string }): provider.InvokeResult {
@@ -250,14 +311,6 @@ export class Provider implements provider.Provider {
         const outputs = convertResultToOutputs(token!, result);
         return { outputs };
     }
-    // /**
-    //  * Diff checks what impacts a hypothetical update will have on the resource's properties.
-    //  *
-    //  * @param id The ID of the resource to diff.
-    //  * @param olds The old values of properties to diff.
-    //  * @param news The new values of properties to diff.
-    //  */
-    // async diff(id: pulumi.ID, urn: pulumi.URN, olds: any, news: any): Promise<provider.DiffResult> { }
     // /**
     //  * Call calls the indicated method.
     //  *
@@ -324,7 +377,7 @@ interface Section {
     fields: Record<string, Field>;
 }
 interface OutField {
-    type?: FieldAssignmentType;
+    type?: ResponseFieldType;
     value?: string;
     uuid: string;
     label: string;
@@ -352,6 +405,50 @@ function assignSections(sections: Record<string, Section>) {
     }
     return assignments;
 
+}
+
+function convertToAssignments(
+    schema: (typeof import('./schema.json')),
+    resourceScheme: (typeof import('./schema.json'))['resources']['onepassword:index:CreditCardItem'],
+    inputs: CommonProperties
+) {
+
+    const assignments: FieldAssignment[] = [];
+    // TODO: well known fields, sections
+
+    const fields: Record<string, Field> = {}
+    const sections: Record<string, Section> = {}
+    Object.assign(fields, inputs.fields ?? {});
+    Object.assign(sections, inputs.sections ?? {});
+
+    for (const [name, propScheme] of Object.entries<any>(resourceScheme.inputProperties).filter(z => !propertiesToIgnore.includes(z[0]))) {
+        if (inputs[name] != null) {
+            if (propScheme.refName) {
+                const sectionScheme = (schema.types as any)[propScheme.refName];
+                // Can we have deeply nested sections? I dunno.
+                sections[name] = { fields: {} };
+                for (const [sName, sPropSchema] of Object.entries((sectionScheme?.properties ?? {}) as Record<string, any>)) {
+                    if (inputs?.[name]?.[sName]) {
+                        sections[name].fields[sName] = {
+                            value: inputs?.[name]?.[sName],
+                            type: sPropSchema.kind ?? null,
+                            purpose: sPropSchema.purpose ?? null
+                        };
+                    }
+                }
+            } else {
+                fields[name] = {
+                    value: inputs[name],
+                    type: propScheme.kind ?? null,
+                    purpose: propScheme.purpose ?? null
+                };
+            }
+        }
+    }
+    assignments.push(...assignFields(fields));
+    assignments.push(...assignSections(sections));
+
+    return assignments;
 }
 
 function convertResultToOutputs(kind: string, result: import('@1password/op-js').Item) {
@@ -388,21 +485,12 @@ function convertResultToOutputs(kind: string, result: import('@1password/op-js')
     } as Record<string, any>
 
     for (const item of PropertyPaths[kind] ?? []) {
-        if (item[1] && output.sections?.[item[1]!]?.fields?.[item[0]]?.value) {
-            output[item[1]] ??= {};
-            Object.defineProperty(output[item[1]], item[0], {
-                enumerable: true,
-                get() {
-                    return output.sections?.[item[1]!]?.fields?.[item[0]]?.value ?? null
-                }
-            })
-        } else if (!item[1] && output.fields?.[item[0]]?.value) {
-            Object.defineProperty(output, item[0], {
-                enumerable: true,
-                get() {
-                    return output.fields?.[item[0]]?.value ?? null
-                }
-            })
+        const outField: OutField = (item[1] && output.sections?.[item[1]!]?.fields?.[item[0]]) ?? output.fields?.[item[0]];
+        if (!outField || outField.type === "MONTH_YEAR" && outField.value === "0") {
+            continue;
+        }
+        if (outField.value) {
+            set(output, item.reverse().join('.'), outField.value);
         }
     }
 
