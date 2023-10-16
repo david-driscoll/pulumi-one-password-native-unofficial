@@ -74,12 +74,12 @@ namespace Pulumi.Onepassword
     public sealed class GetIdentityResult
     {
         public readonly Pulumi.Onepassword.Identity.Outputs.AddressSection? Address;
-        public readonly string? Category;
-        public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
+        public readonly string Category;
+        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
         public readonly Pulumi.Onepassword.Identity.Outputs.IdentificationSection? Identification;
         public readonly Pulumi.Onepassword.Identity.Outputs.InternetDetailsSection? InternetDetails;
         public readonly string? Notes;
-        public readonly ImmutableDictionary<string, Outputs.GetSection>? Sections;
+        public readonly ImmutableDictionary<string, Outputs.GetSection> Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
         /// </summary>
@@ -87,23 +87,23 @@ namespace Pulumi.Onepassword
         /// <summary>
         /// The title of the item.
         /// </summary>
-        public readonly string? Title;
+        public readonly string Title;
         /// <summary>
         /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
         /// </summary>
-        public readonly string? Uuid;
+        public readonly string Uuid;
         /// <summary>
         /// The UUID of the vault the item is in.
         /// </summary>
-        public readonly string? Vault;
+        public readonly string Vault;
 
         [OutputConstructor]
         private GetIdentityResult(
             Pulumi.Onepassword.Identity.Outputs.AddressSection? address,
 
-            string? category,
+            string category,
 
-            ImmutableDictionary<string, Outputs.GetField>? fields,
+            ImmutableDictionary<string, Outputs.GetField> fields,
 
             Pulumi.Onepassword.Identity.Outputs.IdentificationSection? identification,
 
@@ -111,15 +111,15 @@ namespace Pulumi.Onepassword
 
             string? notes,
 
-            ImmutableDictionary<string, Outputs.GetSection>? sections,
+            ImmutableDictionary<string, Outputs.GetSection> sections,
 
             ImmutableArray<string> tags,
 
-            string? title,
+            string title,
 
-            string? uuid,
+            string uuid,
 
-            string? vault)
+            string vault)
         {
             Address = address;
             Category = category;

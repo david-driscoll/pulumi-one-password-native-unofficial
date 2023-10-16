@@ -25,7 +25,7 @@ namespace Pulumi.Onepassword
         public Output<string?> Database { get; private set; } = null!;
 
         [Output("fields")]
-        public Output<ImmutableDictionary<string, Outputs.GetField>?> Fields { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.GetField>> Fields { get; private set; } = null!;
 
         [Output("notes")]
         public Output<string?> Notes { get; private set; } = null!;
@@ -37,7 +37,7 @@ namespace Pulumi.Onepassword
         public Output<string?> Port { get; private set; } = null!;
 
         [Output("sections")]
-        public Output<ImmutableDictionary<string, Outputs.GetSection>?> Sections { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.GetSection>> Sections { get; private set; } = null!;
 
         [Output("server")]
         public Output<string?> Server { get; private set; } = null!;

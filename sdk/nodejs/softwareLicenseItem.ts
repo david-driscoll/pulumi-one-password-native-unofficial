@@ -35,12 +35,12 @@ export class SoftwareLicenseItem extends pulumi.CustomResource {
 
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly customer!: pulumi.Output<outputs.softwareLicense.CustomerSection | undefined>;
-    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField}>;
     public readonly licenseKey!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly order!: pulumi.Output<outputs.softwareLicense.OrderSection | undefined>;
     public readonly publisher!: pulumi.Output<outputs.softwareLicense.PublisherSection | undefined>;
-    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection} | undefined>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection}>;
     /**
      * An array of strings of the tags assigned to the item.
      */

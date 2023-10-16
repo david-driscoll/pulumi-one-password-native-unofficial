@@ -34,31 +34,31 @@ export interface GetRewardProgramArgs {
 }
 
 export interface GetRewardProgramResult {
-    readonly category?: enums.Category | string;
+    readonly category: enums.Category | string;
     readonly companyName?: string;
-    readonly fields?: {[key: string]: outputs.GetField};
+    readonly fields: {[key: string]: outputs.GetField};
     readonly memberId?: string;
     readonly memberName?: string;
     readonly moreInformation?: outputs.rewardProgram.MoreInformationSection;
     readonly notes?: string;
     readonly pin?: string;
-    readonly sections?: {[key: string]: outputs.GetSection};
+    readonly sections: {[key: string]: outputs.GetSection};
     /**
      * An array of strings of the tags assigned to the item.
      */
-    readonly tags?: string[];
+    readonly tags: string[];
     /**
      * The title of the item.
      */
-    readonly title?: string;
+    readonly title: string;
     /**
      * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
      */
-    readonly uuid?: string;
+    readonly uuid: string;
     /**
      * The UUID of the vault the item is in.
      */
-    readonly vault?: string;
+    readonly vault: string;
 }
 
 export function getRewardProgramOutput(args: GetRewardProgramOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetRewardProgramResult> {

@@ -74,12 +74,12 @@ namespace Pulumi.Onepassword
     public sealed class GetServerResult
     {
         public readonly Pulumi.Onepassword.Server.Outputs.AdminConsoleSection? AdminConsole;
-        public readonly string? Category;
-        public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
+        public readonly string Category;
+        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
         public readonly Pulumi.Onepassword.Server.Outputs.HostingProviderSection? HostingProvider;
         public readonly string? Notes;
         public readonly string? Password;
-        public readonly ImmutableDictionary<string, Outputs.GetSection>? Sections;
+        public readonly ImmutableDictionary<string, Outputs.GetSection> Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
         /// </summary>
@@ -87,25 +87,25 @@ namespace Pulumi.Onepassword
         /// <summary>
         /// The title of the item.
         /// </summary>
-        public readonly string? Title;
+        public readonly string Title;
         public readonly string? Url;
         public readonly string? Username;
         /// <summary>
         /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
         /// </summary>
-        public readonly string? Uuid;
+        public readonly string Uuid;
         /// <summary>
         /// The UUID of the vault the item is in.
         /// </summary>
-        public readonly string? Vault;
+        public readonly string Vault;
 
         [OutputConstructor]
         private GetServerResult(
             Pulumi.Onepassword.Server.Outputs.AdminConsoleSection? adminConsole,
 
-            string? category,
+            string category,
 
-            ImmutableDictionary<string, Outputs.GetField>? fields,
+            ImmutableDictionary<string, Outputs.GetField> fields,
 
             Pulumi.Onepassword.Server.Outputs.HostingProviderSection? hostingProvider,
 
@@ -113,19 +113,19 @@ namespace Pulumi.Onepassword
 
             string? password,
 
-            ImmutableDictionary<string, Outputs.GetSection>? sections,
+            ImmutableDictionary<string, Outputs.GetSection> sections,
 
             ImmutableArray<string> tags,
 
-            string? title,
+            string title,
 
             string? url,
 
             string? username,
 
-            string? uuid,
+            string uuid,
 
-            string? vault)
+            string vault)
         {
             AdminConsole = adminConsole;
             Category = category;

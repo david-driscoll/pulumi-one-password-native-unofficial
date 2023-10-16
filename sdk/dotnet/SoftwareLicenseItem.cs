@@ -19,7 +19,7 @@ namespace Pulumi.Onepassword
         public Output<Pulumi.Onepassword.SoftwareLicense.Outputs.CustomerSection?> Customer { get; private set; } = null!;
 
         [Output("fields")]
-        public Output<ImmutableDictionary<string, Outputs.GetField>?> Fields { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.GetField>> Fields { get; private set; } = null!;
 
         [Output("licenseKey")]
         public Output<string?> LicenseKey { get; private set; } = null!;
@@ -34,7 +34,7 @@ namespace Pulumi.Onepassword
         public Output<Pulumi.Onepassword.SoftwareLicense.Outputs.PublisherSection?> Publisher { get; private set; } = null!;
 
         [Output("sections")]
-        public Output<ImmutableDictionary<string, Outputs.GetSection>?> Sections { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.GetSection>> Sections { get; private set; } = null!;
 
         /// <summary>
         /// An array of strings of the tags assigned to the item.

@@ -31,7 +31,7 @@ type GetServerArgs struct {
 
 type GetServerResult struct {
 	AdminConsole    *server.AdminConsoleSection    `pulumi:"adminConsole"`
-	Category        *string                        `pulumi:"category"`
+	Category        string                         `pulumi:"category"`
 	Fields          map[string]GetField            `pulumi:"fields"`
 	HostingProvider *server.HostingProviderSection `pulumi:"hostingProvider"`
 	Notes           *string                        `pulumi:"notes"`
@@ -40,13 +40,13 @@ type GetServerResult struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title    *string `pulumi:"title"`
+	Title    string  `pulumi:"title"`
 	Url      *string `pulumi:"url"`
 	Username *string `pulumi:"username"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid *string `pulumi:"uuid"`
+	Uuid string `pulumi:"uuid"`
 	// The UUID of the vault the item is in.
-	Vault *string `pulumi:"vault"`
+	Vault string `pulumi:"vault"`
 }
 
 func GetServerOutput(ctx *pulumi.Context, args GetServerOutputArgs, opts ...pulumi.InvokeOption) GetServerResultOutput {
@@ -93,8 +93,8 @@ func (o GetServerResultOutput) AdminConsole() server.AdminConsoleSectionPtrOutpu
 	return o.ApplyT(func(v GetServerResult) *server.AdminConsoleSection { return v.AdminConsole }).(server.AdminConsoleSectionPtrOutput)
 }
 
-func (o GetServerResultOutput) Category() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetServerResult) *string { return v.Category }).(pulumi.StringPtrOutput)
+func (o GetServerResultOutput) Category() pulumi.StringOutput {
+	return o.ApplyT(func(v GetServerResult) string { return v.Category }).(pulumi.StringOutput)
 }
 
 func (o GetServerResultOutput) Fields() GetFieldMapOutput {
@@ -123,8 +123,8 @@ func (o GetServerResultOutput) Tags() pulumi.StringArrayOutput {
 }
 
 // The title of the item.
-func (o GetServerResultOutput) Title() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetServerResult) *string { return v.Title }).(pulumi.StringPtrOutput)
+func (o GetServerResultOutput) Title() pulumi.StringOutput {
+	return o.ApplyT(func(v GetServerResult) string { return v.Title }).(pulumi.StringOutput)
 }
 
 func (o GetServerResultOutput) Url() pulumi.StringPtrOutput {
@@ -136,13 +136,13 @@ func (o GetServerResultOutput) Username() pulumi.StringPtrOutput {
 }
 
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o GetServerResultOutput) Uuid() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetServerResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
+func (o GetServerResultOutput) Uuid() pulumi.StringOutput {
+	return o.ApplyT(func(v GetServerResult) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
 // The UUID of the vault the item is in.
-func (o GetServerResultOutput) Vault() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetServerResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
+func (o GetServerResultOutput) Vault() pulumi.StringOutput {
+	return o.ApplyT(func(v GetServerResult) string { return v.Vault }).(pulumi.StringOutput)
 }
 
 func init() {

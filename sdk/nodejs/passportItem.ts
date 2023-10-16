@@ -36,7 +36,7 @@ export class PassportItem extends pulumi.CustomResource {
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly dateOfBirth!: pulumi.Output<string | undefined>;
     public readonly expiryDate!: pulumi.Output<string | undefined>;
-    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField}>;
     public readonly fullName!: pulumi.Output<string | undefined>;
     public readonly gender!: pulumi.Output<string | undefined>;
     public readonly issuedOn!: pulumi.Output<string | undefined>;
@@ -46,7 +46,7 @@ export class PassportItem extends pulumi.CustomResource {
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly number!: pulumi.Output<string | undefined>;
     public readonly placeOfBirth!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection} | undefined>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection}>;
     /**
      * An array of strings of the tags assigned to the item.
      */

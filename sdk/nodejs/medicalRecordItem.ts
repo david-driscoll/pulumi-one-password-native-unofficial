@@ -35,14 +35,14 @@ export class MedicalRecordItem extends pulumi.CustomResource {
 
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly date!: pulumi.Output<string | undefined>;
-    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField}>;
     public readonly healthcareProfessional!: pulumi.Output<string | undefined>;
     public readonly location!: pulumi.Output<string | undefined>;
     public readonly medication!: pulumi.Output<outputs.medicalRecord.MedicationSection | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly patient!: pulumi.Output<string | undefined>;
     public readonly reasonForVisit!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection} | undefined>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection}>;
     /**
      * An array of strings of the tags assigned to the item.
      */

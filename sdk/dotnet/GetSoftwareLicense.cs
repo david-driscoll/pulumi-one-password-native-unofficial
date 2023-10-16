@@ -73,14 +73,14 @@ namespace Pulumi.Onepassword
     [OutputType]
     public sealed class GetSoftwareLicenseResult
     {
-        public readonly string? Category;
+        public readonly string Category;
         public readonly Pulumi.Onepassword.SoftwareLicense.Outputs.CustomerSection? Customer;
-        public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
+        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
         public readonly string? LicenseKey;
         public readonly string? Notes;
         public readonly Pulumi.Onepassword.SoftwareLicense.Outputs.OrderSection? Order;
         public readonly Pulumi.Onepassword.SoftwareLicense.Outputs.PublisherSection? Publisher;
-        public readonly ImmutableDictionary<string, Outputs.GetSection>? Sections;
+        public readonly ImmutableDictionary<string, Outputs.GetSection> Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
         /// </summary>
@@ -88,24 +88,24 @@ namespace Pulumi.Onepassword
         /// <summary>
         /// The title of the item.
         /// </summary>
-        public readonly string? Title;
+        public readonly string Title;
         /// <summary>
         /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
         /// </summary>
-        public readonly string? Uuid;
+        public readonly string Uuid;
         /// <summary>
         /// The UUID of the vault the item is in.
         /// </summary>
-        public readonly string? Vault;
+        public readonly string Vault;
         public readonly string? Version;
 
         [OutputConstructor]
         private GetSoftwareLicenseResult(
-            string? category,
+            string category,
 
             Pulumi.Onepassword.SoftwareLicense.Outputs.CustomerSection? customer,
 
-            ImmutableDictionary<string, Outputs.GetField>? fields,
+            ImmutableDictionary<string, Outputs.GetField> fields,
 
             string? licenseKey,
 
@@ -115,15 +115,15 @@ namespace Pulumi.Onepassword
 
             Pulumi.Onepassword.SoftwareLicense.Outputs.PublisherSection? publisher,
 
-            ImmutableDictionary<string, Outputs.GetSection>? sections,
+            ImmutableDictionary<string, Outputs.GetSection> sections,
 
             ImmutableArray<string> tags,
 
-            string? title,
+            string title,
 
-            string? uuid,
+            string uuid,
 
-            string? vault,
+            string vault,
 
             string? version)
         {

@@ -74,19 +74,19 @@ namespace Pulumi.Onepassword
     public sealed class GetDriverLicenseResult
     {
         public readonly string? Address;
-        public readonly string? Category;
+        public readonly string Category;
         public readonly string? ConditionsRestrictions;
         public readonly string? Country;
         public readonly string? DateOfBirth;
         public readonly string? ExpiryDate;
-        public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
+        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
         public readonly string? FullName;
         public readonly string? Gender;
         public readonly string? Height;
         public readonly string? LicenseClass;
         public readonly string? Notes;
         public readonly string? Number;
-        public readonly ImmutableDictionary<string, Outputs.GetSection>? Sections;
+        public readonly ImmutableDictionary<string, Outputs.GetSection> Sections;
         public readonly string? State;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
@@ -95,21 +95,21 @@ namespace Pulumi.Onepassword
         /// <summary>
         /// The title of the item.
         /// </summary>
-        public readonly string? Title;
+        public readonly string Title;
         /// <summary>
         /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
         /// </summary>
-        public readonly string? Uuid;
+        public readonly string Uuid;
         /// <summary>
         /// The UUID of the vault the item is in.
         /// </summary>
-        public readonly string? Vault;
+        public readonly string Vault;
 
         [OutputConstructor]
         private GetDriverLicenseResult(
             string? address,
 
-            string? category,
+            string category,
 
             string? conditionsRestrictions,
 
@@ -119,7 +119,7 @@ namespace Pulumi.Onepassword
 
             string? expiryDate,
 
-            ImmutableDictionary<string, Outputs.GetField>? fields,
+            ImmutableDictionary<string, Outputs.GetField> fields,
 
             string? fullName,
 
@@ -133,17 +133,17 @@ namespace Pulumi.Onepassword
 
             string? number,
 
-            ImmutableDictionary<string, Outputs.GetSection>? sections,
+            ImmutableDictionary<string, Outputs.GetSection> sections,
 
             string? state,
 
             ImmutableArray<string> tags,
 
-            string? title,
+            string title,
 
-            string? uuid,
+            string uuid,
 
-            string? vault)
+            string vault)
         {
             Address = address;
             Category = category;

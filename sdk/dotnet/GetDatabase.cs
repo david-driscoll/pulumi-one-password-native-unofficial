@@ -74,14 +74,14 @@ namespace Pulumi.Onepassword
     public sealed class GetDatabaseResult
     {
         public readonly string? Alias;
-        public readonly string? Category;
+        public readonly string Category;
         public readonly string? ConnectionOptions;
         public readonly string? Database;
-        public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
+        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
         public readonly string? Notes;
         public readonly string? Password;
         public readonly string? Port;
-        public readonly ImmutableDictionary<string, Outputs.GetSection>? Sections;
+        public readonly ImmutableDictionary<string, Outputs.GetSection> Sections;
         public readonly string? Server;
         public readonly string? Sid;
         /// <summary>
@@ -91,29 +91,29 @@ namespace Pulumi.Onepassword
         /// <summary>
         /// The title of the item.
         /// </summary>
-        public readonly string? Title;
+        public readonly string Title;
         public readonly string? Type;
         public readonly string? Username;
         /// <summary>
         /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
         /// </summary>
-        public readonly string? Uuid;
+        public readonly string Uuid;
         /// <summary>
         /// The UUID of the vault the item is in.
         /// </summary>
-        public readonly string? Vault;
+        public readonly string Vault;
 
         [OutputConstructor]
         private GetDatabaseResult(
             string? alias,
 
-            string? category,
+            string category,
 
             string? connectionOptions,
 
             string? database,
 
-            ImmutableDictionary<string, Outputs.GetField>? fields,
+            ImmutableDictionary<string, Outputs.GetField> fields,
 
             string? notes,
 
@@ -121,7 +121,7 @@ namespace Pulumi.Onepassword
 
             string? port,
 
-            ImmutableDictionary<string, Outputs.GetSection>? sections,
+            ImmutableDictionary<string, Outputs.GetSection> sections,
 
             string? server,
 
@@ -129,15 +129,15 @@ namespace Pulumi.Onepassword
 
             ImmutableArray<string> tags,
 
-            string? title,
+            string title,
 
             string? type,
 
             string? username,
 
-            string? uuid,
+            string uuid,
 
-            string? vault)
+            string vault)
         {
             Alias = alias;
             Category = category;

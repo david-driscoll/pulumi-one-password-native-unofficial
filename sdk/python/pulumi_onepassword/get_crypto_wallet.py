@@ -57,12 +57,12 @@ class GetCryptoWalletResult:
 
     @property
     @pulumi.getter
-    def category(self) -> Optional[str]:
+    def category(self) -> str:
         return pulumi.get(self, "category")
 
     @property
     @pulumi.getter
-    def fields(self) -> Optional[Mapping[str, 'outputs.GetField']]:
+    def fields(self) -> Mapping[str, 'outputs.GetField']:
         return pulumi.get(self, "fields")
 
     @property
@@ -82,12 +82,12 @@ class GetCryptoWalletResult:
 
     @property
     @pulumi.getter
-    def sections(self) -> Optional[Mapping[str, 'outputs.GetSection']]:
+    def sections(self) -> Mapping[str, 'outputs.GetSection']:
         return pulumi.get(self, "sections")
 
     @property
     @pulumi.getter
-    def tags(self) -> Optional[Sequence[str]]:
+    def tags(self) -> Sequence[str]:
         """
         An array of strings of the tags assigned to the item.
         """
@@ -95,7 +95,7 @@ class GetCryptoWalletResult:
 
     @property
     @pulumi.getter
-    def title(self) -> Optional[str]:
+    def title(self) -> str:
         """
         The title of the item.
         """
@@ -103,7 +103,7 @@ class GetCryptoWalletResult:
 
     @property
     @pulumi.getter
-    def uuid(self) -> Optional[str]:
+    def uuid(self) -> str:
         """
         The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
         """
@@ -111,7 +111,7 @@ class GetCryptoWalletResult:
 
     @property
     @pulumi.getter
-    def vault(self) -> Optional[str]:
+    def vault(self) -> str:
         """
         The UUID of the vault the item is in.
         """

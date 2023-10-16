@@ -30,7 +30,7 @@ type GetDriverLicenseArgs struct {
 
 type GetDriverLicenseResult struct {
 	Address                *string               `pulumi:"address"`
-	Category               *string               `pulumi:"category"`
+	Category               string                `pulumi:"category"`
 	ConditionsRestrictions *string               `pulumi:"conditionsRestrictions"`
 	Country                *string               `pulumi:"country"`
 	DateOfBirth            *string               `pulumi:"dateOfBirth"`
@@ -47,11 +47,11 @@ type GetDriverLicenseResult struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title *string `pulumi:"title"`
+	Title string `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid *string `pulumi:"uuid"`
+	Uuid string `pulumi:"uuid"`
 	// The UUID of the vault the item is in.
-	Vault *string `pulumi:"vault"`
+	Vault string `pulumi:"vault"`
 }
 
 func GetDriverLicenseOutput(ctx *pulumi.Context, args GetDriverLicenseOutputArgs, opts ...pulumi.InvokeOption) GetDriverLicenseResultOutput {
@@ -98,8 +98,8 @@ func (o GetDriverLicenseResultOutput) Address() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetDriverLicenseResult) *string { return v.Address }).(pulumi.StringPtrOutput)
 }
 
-func (o GetDriverLicenseResultOutput) Category() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetDriverLicenseResult) *string { return v.Category }).(pulumi.StringPtrOutput)
+func (o GetDriverLicenseResultOutput) Category() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDriverLicenseResult) string { return v.Category }).(pulumi.StringOutput)
 }
 
 func (o GetDriverLicenseResultOutput) ConditionsRestrictions() pulumi.StringPtrOutput {
@@ -160,18 +160,18 @@ func (o GetDriverLicenseResultOutput) Tags() pulumi.StringArrayOutput {
 }
 
 // The title of the item.
-func (o GetDriverLicenseResultOutput) Title() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetDriverLicenseResult) *string { return v.Title }).(pulumi.StringPtrOutput)
+func (o GetDriverLicenseResultOutput) Title() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDriverLicenseResult) string { return v.Title }).(pulumi.StringOutput)
 }
 
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o GetDriverLicenseResultOutput) Uuid() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetDriverLicenseResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
+func (o GetDriverLicenseResultOutput) Uuid() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDriverLicenseResult) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
 // The UUID of the vault the item is in.
-func (o GetDriverLicenseResultOutput) Vault() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetDriverLicenseResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
+func (o GetDriverLicenseResultOutput) Vault() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDriverLicenseResult) string { return v.Vault }).(pulumi.StringOutput)
 }
 
 func init() {

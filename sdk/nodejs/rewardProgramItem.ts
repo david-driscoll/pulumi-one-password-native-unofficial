@@ -35,13 +35,13 @@ export class RewardProgramItem extends pulumi.CustomResource {
 
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly companyName!: pulumi.Output<string | undefined>;
-    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField}>;
     public readonly memberId!: pulumi.Output<string | undefined>;
     public readonly memberName!: pulumi.Output<string | undefined>;
     public readonly moreInformation!: pulumi.Output<outputs.rewardProgram.MoreInformationSection | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly pin!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection} | undefined>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection}>;
     /**
      * An array of strings of the tags assigned to the item.
      */

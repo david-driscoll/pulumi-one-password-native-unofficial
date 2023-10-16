@@ -75,13 +75,13 @@ namespace Pulumi.Onepassword
     {
         public readonly Pulumi.Onepassword.CreditCard.Outputs.AdditionalDetailsSection? AdditionalDetails;
         public readonly string? CardholderName;
-        public readonly string? Category;
+        public readonly string Category;
         public readonly Pulumi.Onepassword.CreditCard.Outputs.ContactInformationSection? ContactInformation;
         public readonly string? ExpiryDate;
-        public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
+        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
         public readonly string? Notes;
         public readonly string? Number;
-        public readonly ImmutableDictionary<string, Outputs.GetSection>? Sections;
+        public readonly ImmutableDictionary<string, Outputs.GetSection> Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
         /// </summary>
@@ -89,17 +89,17 @@ namespace Pulumi.Onepassword
         /// <summary>
         /// The title of the item.
         /// </summary>
-        public readonly string? Title;
+        public readonly string Title;
         public readonly string? Type;
         /// <summary>
         /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
         /// </summary>
-        public readonly string? Uuid;
+        public readonly string Uuid;
         public readonly string? ValidFrom;
         /// <summary>
         /// The UUID of the vault the item is in.
         /// </summary>
-        public readonly string? Vault;
+        public readonly string Vault;
         public readonly string? VerificationNumber;
 
         [OutputConstructor]
@@ -108,31 +108,31 @@ namespace Pulumi.Onepassword
 
             string? cardholderName,
 
-            string? category,
+            string category,
 
             Pulumi.Onepassword.CreditCard.Outputs.ContactInformationSection? contactInformation,
 
             string? expiryDate,
 
-            ImmutableDictionary<string, Outputs.GetField>? fields,
+            ImmutableDictionary<string, Outputs.GetField> fields,
 
             string? notes,
 
             string? number,
 
-            ImmutableDictionary<string, Outputs.GetSection>? sections,
+            ImmutableDictionary<string, Outputs.GetSection> sections,
 
             ImmutableArray<string> tags,
 
-            string? title,
+            string title,
 
             string? type,
 
-            string? uuid,
+            string uuid,
 
             string? validFrom,
 
-            string? vault,
+            string vault,
 
             string? verificationNumber)
         {

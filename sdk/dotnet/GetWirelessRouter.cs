@@ -77,11 +77,11 @@ namespace Pulumi.Onepassword
         public readonly string? AttachedStoragePassword;
         public readonly string? BaseStationName;
         public readonly string? BaseStationPassword;
-        public readonly string? Category;
-        public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
+        public readonly string Category;
+        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
         public readonly string? NetworkName;
         public readonly string? Notes;
-        public readonly ImmutableDictionary<string, Outputs.GetSection>? Sections;
+        public readonly ImmutableDictionary<string, Outputs.GetSection> Sections;
         public readonly string? ServerIpAddress;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
@@ -90,15 +90,15 @@ namespace Pulumi.Onepassword
         /// <summary>
         /// The title of the item.
         /// </summary>
-        public readonly string? Title;
+        public readonly string Title;
         /// <summary>
         /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
         /// </summary>
-        public readonly string? Uuid;
+        public readonly string Uuid;
         /// <summary>
         /// The UUID of the vault the item is in.
         /// </summary>
-        public readonly string? Vault;
+        public readonly string Vault;
         public readonly string? WirelessNetworkPassword;
         public readonly string? WirelessSecurity;
 
@@ -112,25 +112,25 @@ namespace Pulumi.Onepassword
 
             string? baseStationPassword,
 
-            string? category,
+            string category,
 
-            ImmutableDictionary<string, Outputs.GetField>? fields,
+            ImmutableDictionary<string, Outputs.GetField> fields,
 
             string? networkName,
 
             string? notes,
 
-            ImmutableDictionary<string, Outputs.GetSection>? sections,
+            ImmutableDictionary<string, Outputs.GetSection> sections,
 
             string? serverIpAddress,
 
             ImmutableArray<string> tags,
 
-            string? title,
+            string title,
 
-            string? uuid,
+            string uuid,
 
-            string? vault,
+            string vault,
 
             string? wirelessNetworkPassword,
 

@@ -33,7 +33,7 @@ type GetBankAccountResult struct {
 	AccountNumber     *string                               `pulumi:"accountNumber"`
 	BankName          *string                               `pulumi:"bankName"`
 	BranchInformation *bankaccount.BranchInformationSection `pulumi:"branchInformation"`
-	Category          *string                               `pulumi:"category"`
+	Category          string                                `pulumi:"category"`
 	Fields            map[string]GetField                   `pulumi:"fields"`
 	Iban              *string                               `pulumi:"iban"`
 	NameOnAccount     *string                               `pulumi:"nameOnAccount"`
@@ -45,12 +45,12 @@ type GetBankAccountResult struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title *string `pulumi:"title"`
+	Title string  `pulumi:"title"`
 	Type  *string `pulumi:"type"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid *string `pulumi:"uuid"`
+	Uuid string `pulumi:"uuid"`
 	// The UUID of the vault the item is in.
-	Vault *string `pulumi:"vault"`
+	Vault string `pulumi:"vault"`
 }
 
 func GetBankAccountOutput(ctx *pulumi.Context, args GetBankAccountOutputArgs, opts ...pulumi.InvokeOption) GetBankAccountResultOutput {
@@ -105,8 +105,8 @@ func (o GetBankAccountResultOutput) BranchInformation() bankaccount.BranchInform
 	return o.ApplyT(func(v GetBankAccountResult) *bankaccount.BranchInformationSection { return v.BranchInformation }).(bankaccount.BranchInformationSectionPtrOutput)
 }
 
-func (o GetBankAccountResultOutput) Category() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetBankAccountResult) *string { return v.Category }).(pulumi.StringPtrOutput)
+func (o GetBankAccountResultOutput) Category() pulumi.StringOutput {
+	return o.ApplyT(func(v GetBankAccountResult) string { return v.Category }).(pulumi.StringOutput)
 }
 
 func (o GetBankAccountResultOutput) Fields() GetFieldMapOutput {
@@ -147,8 +147,8 @@ func (o GetBankAccountResultOutput) Tags() pulumi.StringArrayOutput {
 }
 
 // The title of the item.
-func (o GetBankAccountResultOutput) Title() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetBankAccountResult) *string { return v.Title }).(pulumi.StringPtrOutput)
+func (o GetBankAccountResultOutput) Title() pulumi.StringOutput {
+	return o.ApplyT(func(v GetBankAccountResult) string { return v.Title }).(pulumi.StringOutput)
 }
 
 func (o GetBankAccountResultOutput) Type() pulumi.StringPtrOutput {
@@ -156,13 +156,13 @@ func (o GetBankAccountResultOutput) Type() pulumi.StringPtrOutput {
 }
 
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o GetBankAccountResultOutput) Uuid() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetBankAccountResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
+func (o GetBankAccountResultOutput) Uuid() pulumi.StringOutput {
+	return o.ApplyT(func(v GetBankAccountResult) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
 // The UUID of the vault the item is in.
-func (o GetBankAccountResultOutput) Vault() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetBankAccountResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
+func (o GetBankAccountResultOutput) Vault() pulumi.StringOutput {
+	return o.ApplyT(func(v GetBankAccountResult) string { return v.Vault }).(pulumi.StringOutput)
 }
 
 func init() {

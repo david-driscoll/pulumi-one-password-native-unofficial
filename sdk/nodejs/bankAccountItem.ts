@@ -37,13 +37,13 @@ export class BankAccountItem extends pulumi.CustomResource {
     public readonly bankName!: pulumi.Output<string | undefined>;
     public readonly branchInformation!: pulumi.Output<outputs.bankAccount.BranchInformationSection | undefined>;
     public readonly category!: pulumi.Output<enums.Category | string>;
-    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField}>;
     public readonly iban!: pulumi.Output<string | undefined>;
     public readonly nameOnAccount!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly pin!: pulumi.Output<string | undefined>;
     public readonly routingNumber!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection} | undefined>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection}>;
     public readonly swift!: pulumi.Output<string | undefined>;
     /**
      * An array of strings of the tags assigned to the item.

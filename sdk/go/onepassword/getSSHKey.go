@@ -29,7 +29,7 @@ type GetSSHKeyArgs struct {
 }
 
 type GetSSHKeyResult struct {
-	Category   *string               `pulumi:"category"`
+	Category   string                `pulumi:"category"`
 	Fields     map[string]GetField   `pulumi:"fields"`
 	Notes      *string               `pulumi:"notes"`
 	PrivateKey *string               `pulumi:"privateKey"`
@@ -37,11 +37,11 @@ type GetSSHKeyResult struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title *string `pulumi:"title"`
+	Title string `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid *string `pulumi:"uuid"`
+	Uuid string `pulumi:"uuid"`
 	// The UUID of the vault the item is in.
-	Vault *string `pulumi:"vault"`
+	Vault string `pulumi:"vault"`
 }
 
 func GetSSHKeyOutput(ctx *pulumi.Context, args GetSSHKeyOutputArgs, opts ...pulumi.InvokeOption) GetSSHKeyResultOutput {
@@ -84,8 +84,8 @@ func (o GetSSHKeyResultOutput) ToGetSSHKeyResultOutputWithContext(ctx context.Co
 	return o
 }
 
-func (o GetSSHKeyResultOutput) Category() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetSSHKeyResult) *string { return v.Category }).(pulumi.StringPtrOutput)
+func (o GetSSHKeyResultOutput) Category() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSSHKeyResult) string { return v.Category }).(pulumi.StringOutput)
 }
 
 func (o GetSSHKeyResultOutput) Fields() GetFieldMapOutput {
@@ -110,18 +110,18 @@ func (o GetSSHKeyResultOutput) Tags() pulumi.StringArrayOutput {
 }
 
 // The title of the item.
-func (o GetSSHKeyResultOutput) Title() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetSSHKeyResult) *string { return v.Title }).(pulumi.StringPtrOutput)
+func (o GetSSHKeyResultOutput) Title() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSSHKeyResult) string { return v.Title }).(pulumi.StringOutput)
 }
 
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o GetSSHKeyResultOutput) Uuid() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetSSHKeyResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
+func (o GetSSHKeyResultOutput) Uuid() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSSHKeyResult) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
 // The UUID of the vault the item is in.
-func (o GetSSHKeyResultOutput) Vault() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetSSHKeyResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
+func (o GetSSHKeyResultOutput) Vault() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSSHKeyResult) string { return v.Vault }).(pulumi.StringOutput)
 }
 
 func init() {

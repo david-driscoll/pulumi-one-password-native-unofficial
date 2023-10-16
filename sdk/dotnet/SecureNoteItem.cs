@@ -16,13 +16,13 @@ namespace Pulumi.Onepassword
         public Output<string> Category { get; private set; } = null!;
 
         [Output("fields")]
-        public Output<ImmutableDictionary<string, Outputs.GetField>?> Fields { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.GetField>> Fields { get; private set; } = null!;
 
         [Output("notes")]
         public Output<string?> Notes { get; private set; } = null!;
 
         [Output("sections")]
-        public Output<ImmutableDictionary<string, Outputs.GetSection>?> Sections { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.GetSection>> Sections { get; private set; } = null!;
 
         /// <summary>
         /// An array of strings of the tags assigned to the item.

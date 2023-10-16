@@ -29,7 +29,7 @@ type GetSocialSecurityNumberArgs struct {
 }
 
 type GetSocialSecurityNumberResult struct {
-	Category *string               `pulumi:"category"`
+	Category string                `pulumi:"category"`
 	Fields   map[string]GetField   `pulumi:"fields"`
 	Name     *string               `pulumi:"name"`
 	Notes    *string               `pulumi:"notes"`
@@ -38,11 +38,11 @@ type GetSocialSecurityNumberResult struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title *string `pulumi:"title"`
+	Title string `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid *string `pulumi:"uuid"`
+	Uuid string `pulumi:"uuid"`
 	// The UUID of the vault the item is in.
-	Vault *string `pulumi:"vault"`
+	Vault string `pulumi:"vault"`
 }
 
 func GetSocialSecurityNumberOutput(ctx *pulumi.Context, args GetSocialSecurityNumberOutputArgs, opts ...pulumi.InvokeOption) GetSocialSecurityNumberResultOutput {
@@ -85,8 +85,8 @@ func (o GetSocialSecurityNumberResultOutput) ToGetSocialSecurityNumberResultOutp
 	return o
 }
 
-func (o GetSocialSecurityNumberResultOutput) Category() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetSocialSecurityNumberResult) *string { return v.Category }).(pulumi.StringPtrOutput)
+func (o GetSocialSecurityNumberResultOutput) Category() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSocialSecurityNumberResult) string { return v.Category }).(pulumi.StringOutput)
 }
 
 func (o GetSocialSecurityNumberResultOutput) Fields() GetFieldMapOutput {
@@ -115,18 +115,18 @@ func (o GetSocialSecurityNumberResultOutput) Tags() pulumi.StringArrayOutput {
 }
 
 // The title of the item.
-func (o GetSocialSecurityNumberResultOutput) Title() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetSocialSecurityNumberResult) *string { return v.Title }).(pulumi.StringPtrOutput)
+func (o GetSocialSecurityNumberResultOutput) Title() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSocialSecurityNumberResult) string { return v.Title }).(pulumi.StringOutput)
 }
 
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o GetSocialSecurityNumberResultOutput) Uuid() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetSocialSecurityNumberResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
+func (o GetSocialSecurityNumberResultOutput) Uuid() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSocialSecurityNumberResult) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
 // The UUID of the vault the item is in.
-func (o GetSocialSecurityNumberResultOutput) Vault() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetSocialSecurityNumberResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
+func (o GetSocialSecurityNumberResultOutput) Vault() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSocialSecurityNumberResult) string { return v.Vault }).(pulumi.StringOutput)
 }
 
 func init() {

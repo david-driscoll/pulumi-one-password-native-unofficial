@@ -25,7 +25,7 @@ namespace Pulumi.Onepassword
         public Output<string> Category { get; private set; } = null!;
 
         [Output("fields")]
-        public Output<ImmutableDictionary<string, Outputs.GetField>?> Fields { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.GetField>> Fields { get; private set; } = null!;
 
         [Output("iban")]
         public Output<string?> Iban { get; private set; } = null!;
@@ -43,7 +43,7 @@ namespace Pulumi.Onepassword
         public Output<string?> RoutingNumber { get; private set; } = null!;
 
         [Output("sections")]
-        public Output<ImmutableDictionary<string, Outputs.GetSection>?> Sections { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.GetSection>> Sections { get; private set; } = null!;
 
         [Output("swift")]
         public Output<string?> Swift { get; private set; } = null!;

@@ -37,11 +37,11 @@ export class DatabaseItem extends pulumi.CustomResource {
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly connectionOptions!: pulumi.Output<string | undefined>;
     public readonly database!: pulumi.Output<string | undefined>;
-    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField}>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly password!: pulumi.Output<string | undefined>;
     public readonly port!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection} | undefined>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection}>;
     public readonly server!: pulumi.Output<string | undefined>;
     public readonly sid!: pulumi.Output<string | undefined>;
     /**

@@ -29,7 +29,7 @@ type GetMembershipArgs struct {
 }
 
 type GetMembershipResult struct {
-	Category    *string               `pulumi:"category"`
+	Category    string                `pulumi:"category"`
 	ExpiryDate  *string               `pulumi:"expiryDate"`
 	Fields      map[string]GetField   `pulumi:"fields"`
 	Group       *string               `pulumi:"group"`
@@ -43,11 +43,11 @@ type GetMembershipResult struct {
 	Tags      []string `pulumi:"tags"`
 	Telephone *string  `pulumi:"telephone"`
 	// The title of the item.
-	Title *string `pulumi:"title"`
+	Title string `pulumi:"title"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid *string `pulumi:"uuid"`
+	Uuid string `pulumi:"uuid"`
 	// The UUID of the vault the item is in.
-	Vault   *string `pulumi:"vault"`
+	Vault   string  `pulumi:"vault"`
 	Website *string `pulumi:"website"`
 }
 
@@ -91,8 +91,8 @@ func (o GetMembershipResultOutput) ToGetMembershipResultOutputWithContext(ctx co
 	return o
 }
 
-func (o GetMembershipResultOutput) Category() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetMembershipResult) *string { return v.Category }).(pulumi.StringPtrOutput)
+func (o GetMembershipResultOutput) Category() pulumi.StringOutput {
+	return o.ApplyT(func(v GetMembershipResult) string { return v.Category }).(pulumi.StringOutput)
 }
 
 func (o GetMembershipResultOutput) ExpiryDate() pulumi.StringPtrOutput {
@@ -141,18 +141,18 @@ func (o GetMembershipResultOutput) Telephone() pulumi.StringPtrOutput {
 }
 
 // The title of the item.
-func (o GetMembershipResultOutput) Title() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetMembershipResult) *string { return v.Title }).(pulumi.StringPtrOutput)
+func (o GetMembershipResultOutput) Title() pulumi.StringOutput {
+	return o.ApplyT(func(v GetMembershipResult) string { return v.Title }).(pulumi.StringOutput)
 }
 
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o GetMembershipResultOutput) Uuid() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetMembershipResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
+func (o GetMembershipResultOutput) Uuid() pulumi.StringOutput {
+	return o.ApplyT(func(v GetMembershipResult) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
 // The UUID of the vault the item is in.
-func (o GetMembershipResultOutput) Vault() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetMembershipResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
+func (o GetMembershipResultOutput) Vault() pulumi.StringOutput {
+	return o.ApplyT(func(v GetMembershipResult) string { return v.Vault }).(pulumi.StringOutput)
 }
 
 func (o GetMembershipResultOutput) Website() pulumi.StringPtrOutput {

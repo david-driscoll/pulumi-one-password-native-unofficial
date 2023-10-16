@@ -73,10 +73,10 @@ namespace Pulumi.Onepassword
     [OutputType]
     public sealed class GetPassportResult
     {
-        public readonly string? Category;
+        public readonly string Category;
         public readonly string? DateOfBirth;
         public readonly string? ExpiryDate;
-        public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
+        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
         public readonly string? FullName;
         public readonly string? Gender;
         public readonly string? IssuedOn;
@@ -86,7 +86,7 @@ namespace Pulumi.Onepassword
         public readonly string? Notes;
         public readonly string? Number;
         public readonly string? PlaceOfBirth;
-        public readonly ImmutableDictionary<string, Outputs.GetSection>? Sections;
+        public readonly ImmutableDictionary<string, Outputs.GetSection> Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
         /// </summary>
@@ -94,26 +94,26 @@ namespace Pulumi.Onepassword
         /// <summary>
         /// The title of the item.
         /// </summary>
-        public readonly string? Title;
+        public readonly string Title;
         public readonly string? Type;
         /// <summary>
         /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
         /// </summary>
-        public readonly string? Uuid;
+        public readonly string Uuid;
         /// <summary>
         /// The UUID of the vault the item is in.
         /// </summary>
-        public readonly string? Vault;
+        public readonly string Vault;
 
         [OutputConstructor]
         private GetPassportResult(
-            string? category,
+            string category,
 
             string? dateOfBirth,
 
             string? expiryDate,
 
-            ImmutableDictionary<string, Outputs.GetField>? fields,
+            ImmutableDictionary<string, Outputs.GetField> fields,
 
             string? fullName,
 
@@ -133,17 +133,17 @@ namespace Pulumi.Onepassword
 
             string? placeOfBirth,
 
-            ImmutableDictionary<string, Outputs.GetSection>? sections,
+            ImmutableDictionary<string, Outputs.GetSection> sections,
 
             ImmutableArray<string> tags,
 
-            string? title,
+            string title,
 
             string? type,
 
-            string? uuid,
+            string uuid,
 
-            string? vault)
+            string vault)
         {
             Category = category;
             DateOfBirth = dateOfBirth;

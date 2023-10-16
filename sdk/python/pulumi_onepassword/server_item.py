@@ -346,7 +346,7 @@ class ServerItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def fields(self) -> pulumi.Output[Optional[Mapping[str, 'outputs.GetField']]]:
+    def fields(self) -> pulumi.Output[Mapping[str, 'outputs.GetField']]:
         return pulumi.get(self, "fields")
 
     @property
@@ -366,7 +366,7 @@ class ServerItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def sections(self) -> pulumi.Output[Optional[Mapping[str, 'outputs.GetSection']]]:
+    def sections(self) -> pulumi.Output[Mapping[str, 'outputs.GetSection']]:
         return pulumi.get(self, "sections")
 
     @property

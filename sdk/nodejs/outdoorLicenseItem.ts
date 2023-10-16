@@ -37,11 +37,11 @@ export class OutdoorLicenseItem extends pulumi.CustomResource {
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly country!: pulumi.Output<string | undefined>;
     public readonly expires!: pulumi.Output<string | undefined>;
-    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField} | undefined>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField}>;
     public readonly fullName!: pulumi.Output<string | undefined>;
     public readonly maximumQuota!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection} | undefined>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection}>;
     public readonly state!: pulumi.Output<string | undefined>;
     /**
      * An array of strings of the tags assigned to the item.

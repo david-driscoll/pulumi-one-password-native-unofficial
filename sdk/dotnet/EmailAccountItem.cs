@@ -22,7 +22,7 @@ namespace Pulumi.Onepassword
         public Output<Pulumi.Onepassword.EmailAccount.Outputs.ContactInformationSection?> ContactInformation { get; private set; } = null!;
 
         [Output("fields")]
-        public Output<ImmutableDictionary<string, Outputs.GetField>?> Fields { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.GetField>> Fields { get; private set; } = null!;
 
         [Output("notes")]
         public Output<string?> Notes { get; private set; } = null!;
@@ -34,7 +34,7 @@ namespace Pulumi.Onepassword
         public Output<string?> PortNumber { get; private set; } = null!;
 
         [Output("sections")]
-        public Output<ImmutableDictionary<string, Outputs.GetSection>?> Sections { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.GetSection>> Sections { get; private set; } = null!;
 
         [Output("security")]
         public Output<string?> Security { get; private set; } = null!;

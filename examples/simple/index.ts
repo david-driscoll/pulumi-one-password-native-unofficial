@@ -98,8 +98,15 @@ new op.MembershipItem('random-membership', {
     pin: "12345"
 })
 
-new op.LoginItem('my-password', {
+const login = new op.LoginItem('my-password', {
     vault: 'testing-pulumi',
     username: "me",
     password: "secret1234",
+})
+
+login.password.apply(z => {
+    console.log('password:' + z)
+})
+login.fields.apply(z => {
+    console.log('field password:' + z['password'].value)
 })

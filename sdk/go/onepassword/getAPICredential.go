@@ -29,7 +29,7 @@ type GetAPICredentialArgs struct {
 }
 
 type GetAPICredentialResult struct {
-	Category   *string               `pulumi:"category"`
+	Category   string                `pulumi:"category"`
 	Credential *string               `pulumi:"credential"`
 	Expires    *string               `pulumi:"expires"`
 	Fields     map[string]GetField   `pulumi:"fields"`
@@ -40,14 +40,14 @@ type GetAPICredentialResult struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title    *string `pulumi:"title"`
+	Title    string  `pulumi:"title"`
 	Type     *string `pulumi:"type"`
 	Username *string `pulumi:"username"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid      *string `pulumi:"uuid"`
+	Uuid      string  `pulumi:"uuid"`
 	ValidFrom *string `pulumi:"validFrom"`
 	// The UUID of the vault the item is in.
-	Vault *string `pulumi:"vault"`
+	Vault string `pulumi:"vault"`
 }
 
 func GetAPICredentialOutput(ctx *pulumi.Context, args GetAPICredentialOutputArgs, opts ...pulumi.InvokeOption) GetAPICredentialResultOutput {
@@ -90,8 +90,8 @@ func (o GetAPICredentialResultOutput) ToGetAPICredentialResultOutputWithContext(
 	return o
 }
 
-func (o GetAPICredentialResultOutput) Category() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetAPICredentialResult) *string { return v.Category }).(pulumi.StringPtrOutput)
+func (o GetAPICredentialResultOutput) Category() pulumi.StringOutput {
+	return o.ApplyT(func(v GetAPICredentialResult) string { return v.Category }).(pulumi.StringOutput)
 }
 
 func (o GetAPICredentialResultOutput) Credential() pulumi.StringPtrOutput {
@@ -128,8 +128,8 @@ func (o GetAPICredentialResultOutput) Tags() pulumi.StringArrayOutput {
 }
 
 // The title of the item.
-func (o GetAPICredentialResultOutput) Title() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetAPICredentialResult) *string { return v.Title }).(pulumi.StringPtrOutput)
+func (o GetAPICredentialResultOutput) Title() pulumi.StringOutput {
+	return o.ApplyT(func(v GetAPICredentialResult) string { return v.Title }).(pulumi.StringOutput)
 }
 
 func (o GetAPICredentialResultOutput) Type() pulumi.StringPtrOutput {
@@ -141,8 +141,8 @@ func (o GetAPICredentialResultOutput) Username() pulumi.StringPtrOutput {
 }
 
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o GetAPICredentialResultOutput) Uuid() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetAPICredentialResult) *string { return v.Uuid }).(pulumi.StringPtrOutput)
+func (o GetAPICredentialResultOutput) Uuid() pulumi.StringOutput {
+	return o.ApplyT(func(v GetAPICredentialResult) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
 func (o GetAPICredentialResultOutput) ValidFrom() pulumi.StringPtrOutput {
@@ -150,8 +150,8 @@ func (o GetAPICredentialResultOutput) ValidFrom() pulumi.StringPtrOutput {
 }
 
 // The UUID of the vault the item is in.
-func (o GetAPICredentialResultOutput) Vault() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetAPICredentialResult) *string { return v.Vault }).(pulumi.StringPtrOutput)
+func (o GetAPICredentialResultOutput) Vault() pulumi.StringOutput {
+	return o.ApplyT(func(v GetAPICredentialResult) string { return v.Vault }).(pulumi.StringOutput)
 }
 
 func init() {

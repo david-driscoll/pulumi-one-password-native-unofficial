@@ -36,7 +36,8 @@ schema.functions = {
             required: ['vault']
         },
         outputs: applyDefaultOutputProperties({
-            properties: {}
+            properties: {},
+            required: []
         })
     },
     "onepassword:index:GetVault": {
@@ -388,7 +389,7 @@ for (const template of templates) {
             "vault"
         ]
     };
-    currentFunction.outputs = applyDefaultOutputProperties({ properties: {} });
+    currentFunction.outputs = applyDefaultOutputProperties({ properties: {}, required: [] });
 
     const sections = templateSchema.fields
         .filter(z => !!z.section)
@@ -609,6 +610,7 @@ function getFieldType(field: Field) {
 }
 
 function applyDefaultOutputProperties(item: any) {
+    item.required.push('tags', 'uuid', 'title', 'vault', 'category', 'fields', 'sections');
     Object.assign(item.properties, {
         ['uuid']: {
             "type": "string",

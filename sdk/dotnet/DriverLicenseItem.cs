@@ -31,7 +31,7 @@ namespace Pulumi.Onepassword
         public Output<string?> ExpiryDate { get; private set; } = null!;
 
         [Output("fields")]
-        public Output<ImmutableDictionary<string, Outputs.GetField>?> Fields { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.GetField>> Fields { get; private set; } = null!;
 
         [Output("fullName")]
         public Output<string?> FullName { get; private set; } = null!;
@@ -52,7 +52,7 @@ namespace Pulumi.Onepassword
         public Output<string?> Number { get; private set; } = null!;
 
         [Output("sections")]
-        public Output<ImmutableDictionary<string, Outputs.GetSection>?> Sections { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.GetSection>> Sections { get; private set; } = null!;
 
         [Output("state")]
         public Output<string?> State { get; private set; } = null!;

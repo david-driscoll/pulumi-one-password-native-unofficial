@@ -74,13 +74,13 @@ namespace Pulumi.Onepassword
     public sealed class GetEmailAccountResult
     {
         public readonly string? AuthMethod;
-        public readonly string? Category;
+        public readonly string Category;
         public readonly Pulumi.Onepassword.EmailAccount.Outputs.ContactInformationSection? ContactInformation;
-        public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
+        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
         public readonly string? Notes;
         public readonly string? Password;
         public readonly string? PortNumber;
-        public readonly ImmutableDictionary<string, Outputs.GetSection>? Sections;
+        public readonly ImmutableDictionary<string, Outputs.GetSection> Sections;
         public readonly string? Security;
         public readonly string? Server;
         public readonly Pulumi.Onepassword.EmailAccount.Outputs.SmtpSection? Smtp;
@@ -91,27 +91,27 @@ namespace Pulumi.Onepassword
         /// <summary>
         /// The title of the item.
         /// </summary>
-        public readonly string? Title;
+        public readonly string Title;
         public readonly string? Type;
         public readonly string? Username;
         /// <summary>
         /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
         /// </summary>
-        public readonly string? Uuid;
+        public readonly string Uuid;
         /// <summary>
         /// The UUID of the vault the item is in.
         /// </summary>
-        public readonly string? Vault;
+        public readonly string Vault;
 
         [OutputConstructor]
         private GetEmailAccountResult(
             string? authMethod,
 
-            string? category,
+            string category,
 
             Pulumi.Onepassword.EmailAccount.Outputs.ContactInformationSection? contactInformation,
 
-            ImmutableDictionary<string, Outputs.GetField>? fields,
+            ImmutableDictionary<string, Outputs.GetField> fields,
 
             string? notes,
 
@@ -119,7 +119,7 @@ namespace Pulumi.Onepassword
 
             string? portNumber,
 
-            ImmutableDictionary<string, Outputs.GetSection>? sections,
+            ImmutableDictionary<string, Outputs.GetSection> sections,
 
             string? security,
 
@@ -129,15 +129,15 @@ namespace Pulumi.Onepassword
 
             ImmutableArray<string> tags,
 
-            string? title,
+            string title,
 
             string? type,
 
             string? username,
 
-            string? uuid,
+            string uuid,
 
-            string? vault)
+            string vault)
         {
             AuthMethod = authMethod;
             Category = category;

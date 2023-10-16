@@ -35,32 +35,32 @@ export interface GetOutdoorLicenseArgs {
 
 export interface GetOutdoorLicenseResult {
     readonly approvedWildlife?: string;
-    readonly category?: enums.Category | string;
+    readonly category: enums.Category | string;
     readonly country?: string;
     readonly expires?: string;
-    readonly fields?: {[key: string]: outputs.GetField};
+    readonly fields: {[key: string]: outputs.GetField};
     readonly fullName?: string;
     readonly maximumQuota?: string;
     readonly notes?: string;
-    readonly sections?: {[key: string]: outputs.GetSection};
+    readonly sections: {[key: string]: outputs.GetSection};
     readonly state?: string;
     /**
      * An array of strings of the tags assigned to the item.
      */
-    readonly tags?: string[];
+    readonly tags: string[];
     /**
      * The title of the item.
      */
-    readonly title?: string;
+    readonly title: string;
     /**
      * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
      */
-    readonly uuid?: string;
+    readonly uuid: string;
     readonly validFrom?: string;
     /**
      * The UUID of the vault the item is in.
      */
-    readonly vault?: string;
+    readonly vault: string;
 }
 
 export function getOutdoorLicenseOutput(args: GetOutdoorLicenseOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetOutdoorLicenseResult> {

@@ -35,36 +35,36 @@ export interface GetDriverLicenseArgs {
 
 export interface GetDriverLicenseResult {
     readonly address?: string;
-    readonly category?: enums.Category | string;
+    readonly category: enums.Category | string;
     readonly conditionsRestrictions?: string;
     readonly country?: string;
     readonly dateOfBirth?: string;
     readonly expiryDate?: string;
-    readonly fields?: {[key: string]: outputs.GetField};
+    readonly fields: {[key: string]: outputs.GetField};
     readonly fullName?: string;
     readonly gender?: string;
     readonly height?: string;
     readonly licenseClass?: string;
     readonly notes?: string;
     readonly number?: string;
-    readonly sections?: {[key: string]: outputs.GetSection};
+    readonly sections: {[key: string]: outputs.GetSection};
     readonly state?: string;
     /**
      * An array of strings of the tags assigned to the item.
      */
-    readonly tags?: string[];
+    readonly tags: string[];
     /**
      * The title of the item.
      */
-    readonly title?: string;
+    readonly title: string;
     /**
      * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
      */
-    readonly uuid?: string;
+    readonly uuid: string;
     /**
      * The UUID of the vault the item is in.
      */
-    readonly vault?: string;
+    readonly vault: string;
 }
 
 export function getDriverLicenseOutput(args: GetDriverLicenseOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetDriverLicenseResult> {

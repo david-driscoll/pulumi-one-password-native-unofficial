@@ -76,14 +76,14 @@ namespace Pulumi.Onepassword
         public readonly string? AccountNumber;
         public readonly string? BankName;
         public readonly Pulumi.Onepassword.BankAccount.Outputs.BranchInformationSection? BranchInformation;
-        public readonly string? Category;
-        public readonly ImmutableDictionary<string, Outputs.GetField>? Fields;
+        public readonly string Category;
+        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
         public readonly string? Iban;
         public readonly string? NameOnAccount;
         public readonly string? Notes;
         public readonly string? Pin;
         public readonly string? RoutingNumber;
-        public readonly ImmutableDictionary<string, Outputs.GetSection>? Sections;
+        public readonly ImmutableDictionary<string, Outputs.GetSection> Sections;
         public readonly string? Swift;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
@@ -92,16 +92,16 @@ namespace Pulumi.Onepassword
         /// <summary>
         /// The title of the item.
         /// </summary>
-        public readonly string? Title;
+        public readonly string Title;
         public readonly string? Type;
         /// <summary>
         /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
         /// </summary>
-        public readonly string? Uuid;
+        public readonly string Uuid;
         /// <summary>
         /// The UUID of the vault the item is in.
         /// </summary>
-        public readonly string? Vault;
+        public readonly string Vault;
 
         [OutputConstructor]
         private GetBankAccountResult(
@@ -111,9 +111,9 @@ namespace Pulumi.Onepassword
 
             Pulumi.Onepassword.BankAccount.Outputs.BranchInformationSection? branchInformation,
 
-            string? category,
+            string category,
 
-            ImmutableDictionary<string, Outputs.GetField>? fields,
+            ImmutableDictionary<string, Outputs.GetField> fields,
 
             string? iban,
 
@@ -125,19 +125,19 @@ namespace Pulumi.Onepassword
 
             string? routingNumber,
 
-            ImmutableDictionary<string, Outputs.GetSection>? sections,
+            ImmutableDictionary<string, Outputs.GetSection> sections,
 
             string? swift,
 
             ImmutableArray<string> tags,
 
-            string? title,
+            string title,
 
             string? type,
 
-            string? uuid,
+            string uuid,
 
-            string? vault)
+            string vault)
         {
             AccountNumber = accountNumber;
             BankName = bankName;
