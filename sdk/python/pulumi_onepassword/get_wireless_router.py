@@ -19,13 +19,16 @@ __all__ = [
 
 @pulumi.output_type
 class GetWirelessRouterResult:
-    def __init__(__self__, air_port_id=None, attached_storage_password=None, base_station_name=None, base_station_password=None, category=None, fields=None, network_name=None, notes=None, sections=None, server_ip_address=None, tags=None, title=None, uuid=None, vault=None, wireless_network_password=None, wireless_security=None):
+    def __init__(__self__, air_port_id=None, attached_storage_password=None, attachments=None, base_station_name=None, base_station_password=None, category=None, fields=None, network_name=None, notes=None, references=None, sections=None, server_ip_address=None, tags=None, title=None, uuid=None, vault=None, wireless_network_password=None, wireless_security=None):
         if air_port_id and not isinstance(air_port_id, str):
             raise TypeError("Expected argument 'air_port_id' to be a str")
         pulumi.set(__self__, "air_port_id", air_port_id)
         if attached_storage_password and not isinstance(attached_storage_password, str):
             raise TypeError("Expected argument 'attached_storage_password' to be a str")
         pulumi.set(__self__, "attached_storage_password", attached_storage_password)
+        if attachments and not isinstance(attachments, dict):
+            raise TypeError("Expected argument 'attachments' to be a dict")
+        pulumi.set(__self__, "attachments", attachments)
         if base_station_name and not isinstance(base_station_name, str):
             raise TypeError("Expected argument 'base_station_name' to be a str")
         pulumi.set(__self__, "base_station_name", base_station_name)
@@ -44,6 +47,9 @@ class GetWirelessRouterResult:
         if notes and not isinstance(notes, str):
             raise TypeError("Expected argument 'notes' to be a str")
         pulumi.set(__self__, "notes", notes)
+        if references and not isinstance(references, dict):
+            raise TypeError("Expected argument 'references' to be a dict")
+        pulumi.set(__self__, "references", references)
         if sections and not isinstance(sections, dict):
             raise TypeError("Expected argument 'sections' to be a dict")
         pulumi.set(__self__, "sections", sections)
@@ -80,6 +86,11 @@ class GetWirelessRouterResult:
         return pulumi.get(self, "attached_storage_password")
 
     @property
+    @pulumi.getter
+    def attachments(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "attachments")
+
+    @property
     @pulumi.getter(name="baseStationName")
     def base_station_name(self) -> Optional[str]:
         return pulumi.get(self, "base_station_name")
@@ -96,7 +107,7 @@ class GetWirelessRouterResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.GetField']:
+    def fields(self) -> Mapping[str, 'outputs.OutField']:
         return pulumi.get(self, "fields")
 
     @property
@@ -111,7 +122,12 @@ class GetWirelessRouterResult:
 
     @property
     @pulumi.getter
-    def sections(self) -> Mapping[str, 'outputs.GetSection']:
+    def references(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "references")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> Mapping[str, 'outputs.OutSection']:
         return pulumi.get(self, "sections")
 
     @property
@@ -170,12 +186,14 @@ class AwaitableGetWirelessRouterResult(GetWirelessRouterResult):
         return GetWirelessRouterResult(
             air_port_id=self.air_port_id,
             attached_storage_password=self.attached_storage_password,
+            attachments=self.attachments,
             base_station_name=self.base_station_name,
             base_station_password=self.base_station_password,
             category=self.category,
             fields=self.fields,
             network_name=self.network_name,
             notes=self.notes,
+            references=self.references,
             sections=self.sections,
             server_ip_address=self.server_ip_address,
             tags=self.tags,
@@ -210,12 +228,14 @@ def get_wireless_router(title: Optional[str] = None,
     return AwaitableGetWirelessRouterResult(
         air_port_id=__ret__.air_port_id,
         attached_storage_password=__ret__.attached_storage_password,
+        attachments=__ret__.attachments,
         base_station_name=__ret__.base_station_name,
         base_station_password=__ret__.base_station_password,
         category=__ret__.category,
         fields=__ret__.fields,
         network_name=__ret__.network_name,
         notes=__ret__.notes,
+        references=__ret__.references,
         sections=__ret__.sections,
         server_ip_address=__ret__.server_ip_address,
         tags=__ret__.tags,

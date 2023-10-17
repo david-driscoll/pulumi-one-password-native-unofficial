@@ -74,16 +74,18 @@ namespace Pulumi.Onepassword
     public sealed class GetBankAccountResult
     {
         public readonly string? AccountNumber;
+        public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
         public readonly string? BankName;
         public readonly Pulumi.Onepassword.BankAccount.Outputs.BranchInformationSection? BranchInformation;
         public readonly string Category;
-        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
         public readonly string? Iban;
         public readonly string? NameOnAccount;
         public readonly string? Notes;
         public readonly string? Pin;
+        public readonly ImmutableDictionary<string, Outputs.OutField> References;
         public readonly string? RoutingNumber;
-        public readonly ImmutableDictionary<string, Outputs.GetSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.OutSection> Sections;
         public readonly string? Swift;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
@@ -107,13 +109,15 @@ namespace Pulumi.Onepassword
         private GetBankAccountResult(
             string? accountNumber,
 
+            ImmutableDictionary<string, Outputs.OutField> attachments,
+
             string? bankName,
 
             Pulumi.Onepassword.BankAccount.Outputs.BranchInformationSection? branchInformation,
 
             string category,
 
-            ImmutableDictionary<string, Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.OutField> fields,
 
             string? iban,
 
@@ -123,9 +127,11 @@ namespace Pulumi.Onepassword
 
             string? pin,
 
+            ImmutableDictionary<string, Outputs.OutField> references,
+
             string? routingNumber,
 
-            ImmutableDictionary<string, Outputs.GetSection> sections,
+            ImmutableDictionary<string, Outputs.OutSection> sections,
 
             string? swift,
 
@@ -140,6 +146,7 @@ namespace Pulumi.Onepassword
             string vault)
         {
             AccountNumber = accountNumber;
+            Attachments = attachments;
             BankName = bankName;
             BranchInformation = branchInformation;
             Category = category;
@@ -148,6 +155,7 @@ namespace Pulumi.Onepassword
             NameOnAccount = nameOnAccount;
             Notes = notes;
             Pin = pin;
+            References = references;
             RoutingNumber = routingNumber;
             Sections = sections;
             Swift = swift;

@@ -35,14 +35,16 @@ export interface GetOutdoorLicenseArgs {
 
 export interface GetOutdoorLicenseResult {
     readonly approvedWildlife?: string;
+    readonly attachments: {[key: string]: outputs.OutField};
     readonly category: enums.Category | string;
     readonly country?: string;
     readonly expires?: string;
-    readonly fields: {[key: string]: outputs.GetField};
+    readonly fields: {[key: string]: outputs.OutField};
     readonly fullName?: string;
     readonly maximumQuota?: string;
     readonly notes?: string;
-    readonly sections: {[key: string]: outputs.GetSection};
+    readonly references: {[key: string]: outputs.OutField};
+    readonly sections: {[key: string]: outputs.OutSection};
     readonly state?: string;
     /**
      * An array of strings of the tags assigned to the item.

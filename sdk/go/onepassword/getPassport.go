@@ -29,10 +29,11 @@ type GetPassportArgs struct {
 }
 
 type GetPassportResult struct {
+	Attachments      map[string]OutField   `pulumi:"attachments"`
 	Category         string                `pulumi:"category"`
 	DateOfBirth      *string               `pulumi:"dateOfBirth"`
 	ExpiryDate       *string               `pulumi:"expiryDate"`
-	Fields           map[string]GetField   `pulumi:"fields"`
+	Fields           map[string]OutField   `pulumi:"fields"`
 	FullName         *string               `pulumi:"fullName"`
 	Gender           *string               `pulumi:"gender"`
 	IssuedOn         *string               `pulumi:"issuedOn"`
@@ -42,7 +43,8 @@ type GetPassportResult struct {
 	Notes            *string               `pulumi:"notes"`
 	Number           *string               `pulumi:"number"`
 	PlaceOfBirth     *string               `pulumi:"placeOfBirth"`
-	Sections         map[string]GetSection `pulumi:"sections"`
+	References       map[string]OutField   `pulumi:"references"`
+	Sections         map[string]OutSection `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -94,6 +96,10 @@ func (o GetPassportResultOutput) ToGetPassportResultOutputWithContext(ctx contex
 	return o
 }
 
+func (o GetPassportResultOutput) Attachments() OutFieldMapOutput {
+	return o.ApplyT(func(v GetPassportResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+}
+
 func (o GetPassportResultOutput) Category() pulumi.StringOutput {
 	return o.ApplyT(func(v GetPassportResult) string { return v.Category }).(pulumi.StringOutput)
 }
@@ -106,8 +112,8 @@ func (o GetPassportResultOutput) ExpiryDate() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetPassportResult) *string { return v.ExpiryDate }).(pulumi.StringPtrOutput)
 }
 
-func (o GetPassportResultOutput) Fields() GetFieldMapOutput {
-	return o.ApplyT(func(v GetPassportResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
+func (o GetPassportResultOutput) Fields() OutFieldMapOutput {
+	return o.ApplyT(func(v GetPassportResult) map[string]OutField { return v.Fields }).(OutFieldMapOutput)
 }
 
 func (o GetPassportResultOutput) FullName() pulumi.StringPtrOutput {
@@ -146,8 +152,12 @@ func (o GetPassportResultOutput) PlaceOfBirth() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetPassportResult) *string { return v.PlaceOfBirth }).(pulumi.StringPtrOutput)
 }
 
-func (o GetPassportResultOutput) Sections() GetSectionMapOutput {
-	return o.ApplyT(func(v GetPassportResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
+func (o GetPassportResultOutput) References() OutFieldMapOutput {
+	return o.ApplyT(func(v GetPassportResult) map[string]OutField { return v.References }).(OutFieldMapOutput)
+}
+
+func (o GetPassportResultOutput) Sections() OutSectionMapOutput {
+	return o.ApplyT(func(v GetPassportResult) map[string]OutSection { return v.Sections }).(OutSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.

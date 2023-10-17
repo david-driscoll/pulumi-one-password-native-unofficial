@@ -14,10 +14,11 @@ import (
 type PassportItem struct {
 	pulumi.CustomResourceState
 
+	Attachments      OutFieldMapOutput      `pulumi:"attachments"`
 	Category         pulumi.StringOutput    `pulumi:"category"`
 	DateOfBirth      pulumi.StringPtrOutput `pulumi:"dateOfBirth"`
 	ExpiryDate       pulumi.StringPtrOutput `pulumi:"expiryDate"`
-	Fields           GetFieldMapOutput      `pulumi:"fields"`
+	Fields           OutFieldMapOutput      `pulumi:"fields"`
 	FullName         pulumi.StringPtrOutput `pulumi:"fullName"`
 	Gender           pulumi.StringPtrOutput `pulumi:"gender"`
 	IssuedOn         pulumi.StringPtrOutput `pulumi:"issuedOn"`
@@ -27,7 +28,8 @@ type PassportItem struct {
 	Notes            pulumi.StringPtrOutput `pulumi:"notes"`
 	Number           pulumi.StringPtrOutput `pulumi:"number"`
 	PlaceOfBirth     pulumi.StringPtrOutput `pulumi:"placeOfBirth"`
-	Sections         GetSectionMapOutput    `pulumi:"sections"`
+	References       OutFieldMapOutput      `pulumi:"references"`
+	Sections         OutSectionMapOutput    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -51,7 +53,9 @@ func NewPassportItem(ctx *pulumi.Context,
 	}
 	args.Category = pulumi.StringPtr("Passport")
 	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"attachments",
 		"fields",
+		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)
@@ -91,6 +95,7 @@ func (PassportItemState) ElementType() reflect.Type {
 }
 
 type passportItemArgs struct {
+	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
 	Category         *string            `pulumi:"category"`
 	DateOfBirth      *string            `pulumi:"dateOfBirth"`
@@ -117,6 +122,7 @@ type passportItemArgs struct {
 
 // The set of arguments for constructing a PassportItem resource.
 type PassportItemArgs struct {
+	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
 	Category         pulumi.StringPtrInput
 	DateOfBirth      pulumi.StringPtrInput
@@ -143,6 +149,46 @@ type PassportItemArgs struct {
 
 func (PassportItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*passportItemArgs)(nil)).Elem()
+}
+
+func (r *PassportItem) Attachment(ctx *pulumi.Context, args *PassportItemAttachmentArgs) (PassportItemAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:PassportItem/attachment", args, PassportItemAttachmentResultOutput{}, r)
+	if err != nil {
+		return PassportItemAttachmentResultOutput{}, err
+	}
+	return out.(PassportItemAttachmentResultOutput), nil
+}
+
+type passportItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name string `pulumi:"name"`
+}
+
+// The set of arguments for the Attachment method of the PassportItem resource.
+type PassportItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name pulumi.StringInput
+}
+
+func (PassportItemAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*passportItemAttachmentArgs)(nil)).Elem()
+}
+
+// The resolved reference value
+type PassportItemAttachmentResult struct {
+	// the value of the attachment
+	Value string `pulumi:"value"`
+}
+
+type PassportItemAttachmentResultOutput struct{ *pulumi.OutputState }
+
+func (PassportItemAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*PassportItemAttachmentResult)(nil)).Elem()
+}
+
+// the value of the attachment
+func (o PassportItemAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v PassportItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type PassportItemInput interface {
@@ -273,6 +319,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*PassportItemArrayInput)(nil)).Elem(), PassportItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*PassportItemMapInput)(nil)).Elem(), PassportItemMap{})
 	pulumi.RegisterOutputType(PassportItemOutput{})
+	pulumi.RegisterOutputType(PassportItemAttachmentResultOutput{})
 	pulumi.RegisterOutputType(PassportItemArrayOutput{})
 	pulumi.RegisterOutputType(PassportItemMapOutput{})
 }

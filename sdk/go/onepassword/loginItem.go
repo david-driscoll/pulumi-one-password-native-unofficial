@@ -14,11 +14,13 @@ import (
 type LoginItem struct {
 	pulumi.CustomResourceState
 
-	Category pulumi.StringOutput    `pulumi:"category"`
-	Fields   GetFieldMapOutput      `pulumi:"fields"`
-	Notes    pulumi.StringPtrOutput `pulumi:"notes"`
-	Password pulumi.StringPtrOutput `pulumi:"password"`
-	Sections GetSectionMapOutput    `pulumi:"sections"`
+	Attachments OutFieldMapOutput      `pulumi:"attachments"`
+	Category    pulumi.StringOutput    `pulumi:"category"`
+	Fields      OutFieldMapOutput      `pulumi:"fields"`
+	Notes       pulumi.StringPtrOutput `pulumi:"notes"`
+	Password    pulumi.StringPtrOutput `pulumi:"password"`
+	References  OutFieldMapOutput      `pulumi:"references"`
+	Sections    OutSectionMapOutput    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -45,8 +47,10 @@ func NewLoginItem(ctx *pulumi.Context,
 		args.Password = pulumi.ToSecret(args.Password).(pulumi.StringPtrOutput)
 	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"attachments",
 		"fields",
 		"password",
+		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)
@@ -86,12 +90,14 @@ func (LoginItemState) ElementType() reflect.Type {
 }
 
 type loginItemArgs struct {
+	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
-	Category *string            `pulumi:"category"`
-	Fields   map[string]Field   `pulumi:"fields"`
-	Notes    *string            `pulumi:"notes"`
-	Password *string            `pulumi:"password"`
-	Sections map[string]Section `pulumi:"sections"`
+	Category         *string            `pulumi:"category"`
+	Fields           map[string]Field   `pulumi:"fields"`
+	GeneratePassword interface{}        `pulumi:"generatePassword"`
+	Notes            *string            `pulumi:"notes"`
+	Password         *string            `pulumi:"password"`
+	Sections         map[string]Section `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -103,12 +109,14 @@ type loginItemArgs struct {
 
 // The set of arguments for constructing a LoginItem resource.
 type LoginItemArgs struct {
+	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
-	Category pulumi.StringPtrInput
-	Fields   FieldMapInput
-	Notes    pulumi.StringPtrInput
-	Password pulumi.StringPtrInput
-	Sections SectionMapInput
+	Category         pulumi.StringPtrInput
+	Fields           FieldMapInput
+	GeneratePassword pulumi.Input
+	Notes            pulumi.StringPtrInput
+	Password         pulumi.StringPtrInput
+	Sections         SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -120,6 +128,46 @@ type LoginItemArgs struct {
 
 func (LoginItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*loginItemArgs)(nil)).Elem()
+}
+
+func (r *LoginItem) Attachment(ctx *pulumi.Context, args *LoginItemAttachmentArgs) (LoginItemAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:LoginItem/attachment", args, LoginItemAttachmentResultOutput{}, r)
+	if err != nil {
+		return LoginItemAttachmentResultOutput{}, err
+	}
+	return out.(LoginItemAttachmentResultOutput), nil
+}
+
+type loginItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name string `pulumi:"name"`
+}
+
+// The set of arguments for the Attachment method of the LoginItem resource.
+type LoginItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name pulumi.StringInput
+}
+
+func (LoginItemAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*loginItemAttachmentArgs)(nil)).Elem()
+}
+
+// The resolved reference value
+type LoginItemAttachmentResult struct {
+	// the value of the attachment
+	Value string `pulumi:"value"`
+}
+
+type LoginItemAttachmentResultOutput struct{ *pulumi.OutputState }
+
+func (LoginItemAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*LoginItemAttachmentResult)(nil)).Elem()
+}
+
+// the value of the attachment
+func (o LoginItemAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v LoginItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type LoginItemInput interface {
@@ -250,6 +298,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*LoginItemArrayInput)(nil)).Elem(), LoginItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*LoginItemMapInput)(nil)).Elem(), LoginItemMap{})
 	pulumi.RegisterOutputType(LoginItemOutput{})
+	pulumi.RegisterOutputType(LoginItemAttachmentResultOutput{})
 	pulumi.RegisterOutputType(LoginItemArrayOutput{})
 	pulumi.RegisterOutputType(LoginItemMapOutput{})
 }

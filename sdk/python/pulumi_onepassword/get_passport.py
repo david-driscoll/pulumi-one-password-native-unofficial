@@ -19,7 +19,10 @@ __all__ = [
 
 @pulumi.output_type
 class GetPassportResult:
-    def __init__(__self__, category=None, date_of_birth=None, expiry_date=None, fields=None, full_name=None, gender=None, issued_on=None, issuing_authority=None, issuing_country=None, nationality=None, notes=None, number=None, place_of_birth=None, sections=None, tags=None, title=None, type=None, uuid=None, vault=None):
+    def __init__(__self__, attachments=None, category=None, date_of_birth=None, expiry_date=None, fields=None, full_name=None, gender=None, issued_on=None, issuing_authority=None, issuing_country=None, nationality=None, notes=None, number=None, place_of_birth=None, references=None, sections=None, tags=None, title=None, type=None, uuid=None, vault=None):
+        if attachments and not isinstance(attachments, dict):
+            raise TypeError("Expected argument 'attachments' to be a dict")
+        pulumi.set(__self__, "attachments", attachments)
         if category and not isinstance(category, dict):
             raise TypeError("Expected argument 'category' to be a dict")
         pulumi.set(__self__, "category", category)
@@ -59,6 +62,9 @@ class GetPassportResult:
         if place_of_birth and not isinstance(place_of_birth, str):
             raise TypeError("Expected argument 'place_of_birth' to be a str")
         pulumi.set(__self__, "place_of_birth", place_of_birth)
+        if references and not isinstance(references, dict):
+            raise TypeError("Expected argument 'references' to be a dict")
+        pulumi.set(__self__, "references", references)
         if sections and not isinstance(sections, dict):
             raise TypeError("Expected argument 'sections' to be a dict")
         pulumi.set(__self__, "sections", sections)
@@ -80,6 +86,11 @@ class GetPassportResult:
 
     @property
     @pulumi.getter
+    def attachments(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "attachments")
+
+    @property
+    @pulumi.getter
     def category(self) -> str:
         return pulumi.get(self, "category")
 
@@ -95,7 +106,7 @@ class GetPassportResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.GetField']:
+    def fields(self) -> Mapping[str, 'outputs.OutField']:
         return pulumi.get(self, "fields")
 
     @property
@@ -145,7 +156,12 @@ class GetPassportResult:
 
     @property
     @pulumi.getter
-    def sections(self) -> Mapping[str, 'outputs.GetSection']:
+    def references(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "references")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> Mapping[str, 'outputs.OutSection']:
         return pulumi.get(self, "sections")
 
     @property
@@ -192,6 +208,7 @@ class AwaitableGetPassportResult(GetPassportResult):
         if False:
             yield self
         return GetPassportResult(
+            attachments=self.attachments,
             category=self.category,
             date_of_birth=self.date_of_birth,
             expiry_date=self.expiry_date,
@@ -205,6 +222,7 @@ class AwaitableGetPassportResult(GetPassportResult):
             notes=self.notes,
             number=self.number,
             place_of_birth=self.place_of_birth,
+            references=self.references,
             sections=self.sections,
             tags=self.tags,
             title=self.title,
@@ -235,6 +253,7 @@ def get_passport(title: Optional[str] = None,
     __ret__ = pulumi.runtime.invoke('onepassword:index:GetPassport', __args__, opts=opts, typ=GetPassportResult).value
 
     return AwaitableGetPassportResult(
+        attachments=__ret__.attachments,
         category=__ret__.category,
         date_of_birth=__ret__.date_of_birth,
         expiry_date=__ret__.expiry_date,
@@ -248,6 +267,7 @@ def get_passport(title: Optional[str] = None,
         notes=__ret__.notes,
         number=__ret__.number,
         place_of_birth=__ret__.place_of_birth,
+        references=__ret__.references,
         sections=__ret__.sections,
         tags=__ret__.tags,
         title=__ret__.title,

@@ -31,14 +31,16 @@ type GetCreditCardArgs struct {
 
 type GetCreditCardResult struct {
 	AdditionalDetails  *creditcard.AdditionalDetailsSection  `pulumi:"additionalDetails"`
+	Attachments        map[string]OutField                   `pulumi:"attachments"`
 	CardholderName     *string                               `pulumi:"cardholderName"`
 	Category           string                                `pulumi:"category"`
 	ContactInformation *creditcard.ContactInformationSection `pulumi:"contactInformation"`
 	ExpiryDate         *string                               `pulumi:"expiryDate"`
-	Fields             map[string]GetField                   `pulumi:"fields"`
+	Fields             map[string]OutField                   `pulumi:"fields"`
 	Notes              *string                               `pulumi:"notes"`
 	Number             *string                               `pulumi:"number"`
-	Sections           map[string]GetSection                 `pulumi:"sections"`
+	References         map[string]OutField                   `pulumi:"references"`
+	Sections           map[string]OutSection                 `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -96,6 +98,10 @@ func (o GetCreditCardResultOutput) AdditionalDetails() creditcard.AdditionalDeta
 	return o.ApplyT(func(v GetCreditCardResult) *creditcard.AdditionalDetailsSection { return v.AdditionalDetails }).(creditcard.AdditionalDetailsSectionPtrOutput)
 }
 
+func (o GetCreditCardResultOutput) Attachments() OutFieldMapOutput {
+	return o.ApplyT(func(v GetCreditCardResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+}
+
 func (o GetCreditCardResultOutput) CardholderName() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetCreditCardResult) *string { return v.CardholderName }).(pulumi.StringPtrOutput)
 }
@@ -112,8 +118,8 @@ func (o GetCreditCardResultOutput) ExpiryDate() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetCreditCardResult) *string { return v.ExpiryDate }).(pulumi.StringPtrOutput)
 }
 
-func (o GetCreditCardResultOutput) Fields() GetFieldMapOutput {
-	return o.ApplyT(func(v GetCreditCardResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
+func (o GetCreditCardResultOutput) Fields() OutFieldMapOutput {
+	return o.ApplyT(func(v GetCreditCardResult) map[string]OutField { return v.Fields }).(OutFieldMapOutput)
 }
 
 func (o GetCreditCardResultOutput) Notes() pulumi.StringPtrOutput {
@@ -124,8 +130,12 @@ func (o GetCreditCardResultOutput) Number() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetCreditCardResult) *string { return v.Number }).(pulumi.StringPtrOutput)
 }
 
-func (o GetCreditCardResultOutput) Sections() GetSectionMapOutput {
-	return o.ApplyT(func(v GetCreditCardResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
+func (o GetCreditCardResultOutput) References() OutFieldMapOutput {
+	return o.ApplyT(func(v GetCreditCardResult) map[string]OutField { return v.References }).(OutFieldMapOutput)
+}
+
+func (o GetCreditCardResultOutput) Sections() OutSectionMapOutput {
+	return o.ApplyT(func(v GetCreditCardResult) map[string]OutSection { return v.Sections }).(OutSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.

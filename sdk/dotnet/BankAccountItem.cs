@@ -15,6 +15,9 @@ namespace Pulumi.Onepassword
         [Output("accountNumber")]
         public Output<string?> AccountNumber { get; private set; } = null!;
 
+        [Output("attachments")]
+        public Output<ImmutableDictionary<string, Outputs.OutField>> Attachments { get; private set; } = null!;
+
         [Output("bankName")]
         public Output<string?> BankName { get; private set; } = null!;
 
@@ -25,7 +28,7 @@ namespace Pulumi.Onepassword
         public Output<string> Category { get; private set; } = null!;
 
         [Output("fields")]
-        public Output<ImmutableDictionary<string, Outputs.GetField>> Fields { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutField>> Fields { get; private set; } = null!;
 
         [Output("iban")]
         public Output<string?> Iban { get; private set; } = null!;
@@ -39,11 +42,14 @@ namespace Pulumi.Onepassword
         [Output("pin")]
         public Output<string?> Pin { get; private set; } = null!;
 
+        [Output("references")]
+        public Output<ImmutableDictionary<string, Outputs.OutField>> References { get; private set; } = null!;
+
         [Output("routingNumber")]
         public Output<string?> RoutingNumber { get; private set; } = null!;
 
         [Output("sections")]
-        public Output<ImmutableDictionary<string, Outputs.GetSection>> Sections { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutSection>> Sections { get; private set; } = null!;
 
         [Output("swift")]
         public Output<string?> Swift { get; private set; } = null!;
@@ -107,8 +113,10 @@ namespace Pulumi.Onepassword
                 Version = Utilities.Version,
                 AdditionalSecretOutputs =
                 {
+                    "attachments",
                     "fields",
                     "pin",
+                    "references",
                     "sections",
                 },
             };
@@ -130,12 +138,23 @@ namespace Pulumi.Onepassword
         {
             return new BankAccountItem(name, id, state, options);
         }
+
+        public Pulumi.Output<BankAccountItemAttachmentResult> Attachment(BankAccountItemAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<BankAccountItemAttachmentResult>("onepassword:index:BankAccountItem/attachment", args ?? new BankAccountItemAttachmentArgs(), this);
     }
 
     public sealed class BankAccountItemArgs : Pulumi.ResourceArgs
     {
         [Input("accountNumber")]
         public Input<string>? AccountNumber { get; set; }
+
+        [Input("attachments")]
+        private InputMap<AssetOrArchive>? _attachments;
+        public InputMap<AssetOrArchive> Attachments
+        {
+            get => _attachments ?? (_attachments = new InputMap<AssetOrArchive>());
+            set => _attachments = value;
+        }
 
         [Input("bankName")]
         public Input<string>? BankName { get; set; }
@@ -234,6 +253,40 @@ namespace Pulumi.Onepassword
 
         public BankAccountItemState()
         {
+        }
+    }
+
+    /// <summary>
+    /// The set of arguments for the <see cref="BankAccountItem.Attachment"/> method.
+    /// </summary>
+    public sealed class BankAccountItemAttachmentArgs : Pulumi.CallArgs
+    {
+        /// <summary>
+        /// The name or uuid of the attachment to get
+        /// </summary>
+        [Input("name", required: true)]
+        public Input<string> Name { get; set; } = null!;
+
+        public BankAccountItemAttachmentArgs()
+        {
+        }
+    }
+
+    /// <summary>
+    /// The results of the <see cref="BankAccountItem.Attachment"/> method.
+    /// </summary>
+    [OutputType]
+    public sealed class BankAccountItemAttachmentResult
+    {
+        /// <summary>
+        /// the value of the attachment
+        /// </summary>
+        public readonly string Value;
+
+        [OutputConstructor]
+        private BankAccountItemAttachmentResult(string value)
+        {
+            Value = value;
         }
     }
 }

@@ -34,15 +34,17 @@ export interface GetRewardProgramArgs {
 }
 
 export interface GetRewardProgramResult {
+    readonly attachments: {[key: string]: outputs.OutField};
     readonly category: enums.Category | string;
     readonly companyName?: string;
-    readonly fields: {[key: string]: outputs.GetField};
+    readonly fields: {[key: string]: outputs.OutField};
     readonly memberId?: string;
     readonly memberName?: string;
     readonly moreInformation?: outputs.rewardProgram.MoreInformationSection;
     readonly notes?: string;
     readonly pin?: string;
-    readonly sections: {[key: string]: outputs.GetSection};
+    readonly references: {[key: string]: outputs.OutField};
+    readonly sections: {[key: string]: outputs.OutSection};
     /**
      * An array of strings of the tags assigned to the item.
      */

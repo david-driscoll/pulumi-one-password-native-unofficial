@@ -29,10 +29,12 @@ type GetSecureNoteArgs struct {
 }
 
 type GetSecureNoteResult struct {
-	Category string                `pulumi:"category"`
-	Fields   map[string]GetField   `pulumi:"fields"`
-	Notes    *string               `pulumi:"notes"`
-	Sections map[string]GetSection `pulumi:"sections"`
+	Attachments map[string]OutField   `pulumi:"attachments"`
+	Category    string                `pulumi:"category"`
+	Fields      map[string]OutField   `pulumi:"fields"`
+	Notes       *string               `pulumi:"notes"`
+	References  map[string]OutField   `pulumi:"references"`
+	Sections    map[string]OutSection `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -83,20 +85,28 @@ func (o GetSecureNoteResultOutput) ToGetSecureNoteResultOutputWithContext(ctx co
 	return o
 }
 
+func (o GetSecureNoteResultOutput) Attachments() OutFieldMapOutput {
+	return o.ApplyT(func(v GetSecureNoteResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+}
+
 func (o GetSecureNoteResultOutput) Category() pulumi.StringOutput {
 	return o.ApplyT(func(v GetSecureNoteResult) string { return v.Category }).(pulumi.StringOutput)
 }
 
-func (o GetSecureNoteResultOutput) Fields() GetFieldMapOutput {
-	return o.ApplyT(func(v GetSecureNoteResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
+func (o GetSecureNoteResultOutput) Fields() OutFieldMapOutput {
+	return o.ApplyT(func(v GetSecureNoteResult) map[string]OutField { return v.Fields }).(OutFieldMapOutput)
 }
 
 func (o GetSecureNoteResultOutput) Notes() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetSecureNoteResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o GetSecureNoteResultOutput) Sections() GetSectionMapOutput {
-	return o.ApplyT(func(v GetSecureNoteResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
+func (o GetSecureNoteResultOutput) References() OutFieldMapOutput {
+	return o.ApplyT(func(v GetSecureNoteResult) map[string]OutField { return v.References }).(OutFieldMapOutput)
+}
+
+func (o GetSecureNoteResultOutput) Sections() OutSectionMapOutput {
+	return o.ApplyT(func(v GetSecureNoteResult) map[string]OutSection { return v.Sections }).(OutSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.

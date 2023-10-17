@@ -16,12 +16,14 @@ type ServerItem struct {
 	pulumi.CustomResourceState
 
 	AdminConsole    server.AdminConsoleSectionPtrOutput    `pulumi:"adminConsole"`
+	Attachments     OutFieldMapOutput                      `pulumi:"attachments"`
 	Category        pulumi.StringOutput                    `pulumi:"category"`
-	Fields          GetFieldMapOutput                      `pulumi:"fields"`
+	Fields          OutFieldMapOutput                      `pulumi:"fields"`
 	HostingProvider server.HostingProviderSectionPtrOutput `pulumi:"hostingProvider"`
 	Notes           pulumi.StringPtrOutput                 `pulumi:"notes"`
 	Password        pulumi.StringPtrOutput                 `pulumi:"password"`
-	Sections        GetSectionMapOutput                    `pulumi:"sections"`
+	References      OutFieldMapOutput                      `pulumi:"references"`
+	Sections        OutSectionMapOutput                    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -50,8 +52,10 @@ func NewServerItem(ctx *pulumi.Context,
 	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"adminConsole",
+		"attachments",
 		"fields",
 		"password",
+		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)
@@ -91,7 +95,8 @@ func (ServerItemState) ElementType() reflect.Type {
 }
 
 type serverItemArgs struct {
-	AdminConsole *server.AdminConsoleSection `pulumi:"adminConsole"`
+	AdminConsole *server.AdminConsoleSection      `pulumi:"adminConsole"`
+	Attachments  map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
 	Category        *string                        `pulumi:"category"`
 	Fields          map[string]Field               `pulumi:"fields"`
@@ -112,6 +117,7 @@ type serverItemArgs struct {
 // The set of arguments for constructing a ServerItem resource.
 type ServerItemArgs struct {
 	AdminConsole server.AdminConsoleSectionPtrInput
+	Attachments  pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
 	Category        pulumi.StringPtrInput
 	Fields          FieldMapInput
@@ -131,6 +137,46 @@ type ServerItemArgs struct {
 
 func (ServerItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*serverItemArgs)(nil)).Elem()
+}
+
+func (r *ServerItem) Attachment(ctx *pulumi.Context, args *ServerItemAttachmentArgs) (ServerItemAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:ServerItem/attachment", args, ServerItemAttachmentResultOutput{}, r)
+	if err != nil {
+		return ServerItemAttachmentResultOutput{}, err
+	}
+	return out.(ServerItemAttachmentResultOutput), nil
+}
+
+type serverItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name string `pulumi:"name"`
+}
+
+// The set of arguments for the Attachment method of the ServerItem resource.
+type ServerItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name pulumi.StringInput
+}
+
+func (ServerItemAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*serverItemAttachmentArgs)(nil)).Elem()
+}
+
+// The resolved reference value
+type ServerItemAttachmentResult struct {
+	// the value of the attachment
+	Value string `pulumi:"value"`
+}
+
+type ServerItemAttachmentResultOutput struct{ *pulumi.OutputState }
+
+func (ServerItemAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ServerItemAttachmentResult)(nil)).Elem()
+}
+
+// the value of the attachment
+func (o ServerItemAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v ServerItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type ServerItemInput interface {
@@ -261,6 +307,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*ServerItemArrayInput)(nil)).Elem(), ServerItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ServerItemMapInput)(nil)).Elem(), ServerItemMap{})
 	pulumi.RegisterOutputType(ServerItemOutput{})
+	pulumi.RegisterOutputType(ServerItemAttachmentResultOutput{})
 	pulumi.RegisterOutputType(ServerItemArrayOutput{})
 	pulumi.RegisterOutputType(ServerItemMapOutput{})
 }

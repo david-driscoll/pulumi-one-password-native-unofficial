@@ -29,11 +29,13 @@ type GetPasswordArgs struct {
 }
 
 type GetPasswordResult struct {
-	Category string                `pulumi:"category"`
-	Fields   map[string]GetField   `pulumi:"fields"`
-	Notes    *string               `pulumi:"notes"`
-	Password *string               `pulumi:"password"`
-	Sections map[string]GetSection `pulumi:"sections"`
+	Attachments map[string]OutField   `pulumi:"attachments"`
+	Category    string                `pulumi:"category"`
+	Fields      map[string]OutField   `pulumi:"fields"`
+	Notes       *string               `pulumi:"notes"`
+	Password    *string               `pulumi:"password"`
+	References  map[string]OutField   `pulumi:"references"`
+	Sections    map[string]OutSection `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -84,12 +86,16 @@ func (o GetPasswordResultOutput) ToGetPasswordResultOutputWithContext(ctx contex
 	return o
 }
 
+func (o GetPasswordResultOutput) Attachments() OutFieldMapOutput {
+	return o.ApplyT(func(v GetPasswordResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+}
+
 func (o GetPasswordResultOutput) Category() pulumi.StringOutput {
 	return o.ApplyT(func(v GetPasswordResult) string { return v.Category }).(pulumi.StringOutput)
 }
 
-func (o GetPasswordResultOutput) Fields() GetFieldMapOutput {
-	return o.ApplyT(func(v GetPasswordResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
+func (o GetPasswordResultOutput) Fields() OutFieldMapOutput {
+	return o.ApplyT(func(v GetPasswordResult) map[string]OutField { return v.Fields }).(OutFieldMapOutput)
 }
 
 func (o GetPasswordResultOutput) Notes() pulumi.StringPtrOutput {
@@ -100,8 +106,12 @@ func (o GetPasswordResultOutput) Password() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetPasswordResult) *string { return v.Password }).(pulumi.StringPtrOutput)
 }
 
-func (o GetPasswordResultOutput) Sections() GetSectionMapOutput {
-	return o.ApplyT(func(v GetPasswordResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
+func (o GetPasswordResultOutput) References() OutFieldMapOutput {
+	return o.ApplyT(func(v GetPasswordResult) map[string]OutField { return v.References }).(OutFieldMapOutput)
+}
+
+func (o GetPasswordResultOutput) Sections() OutSectionMapOutput {
+	return o.ApplyT(func(v GetPasswordResult) map[string]OutSection { return v.Sections }).(OutSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.

@@ -12,6 +12,9 @@ namespace Pulumi.Onepassword
     [OnepasswordResourceType("onepassword:index:MedicalRecordItem")]
     public partial class MedicalRecordItem : Pulumi.CustomResource
     {
+        [Output("attachments")]
+        public Output<ImmutableDictionary<string, Outputs.OutField>> Attachments { get; private set; } = null!;
+
         [Output("category")]
         public Output<string> Category { get; private set; } = null!;
 
@@ -19,7 +22,7 @@ namespace Pulumi.Onepassword
         public Output<string?> Date { get; private set; } = null!;
 
         [Output("fields")]
-        public Output<ImmutableDictionary<string, Outputs.GetField>> Fields { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutField>> Fields { get; private set; } = null!;
 
         [Output("healthcareProfessional")]
         public Output<string?> HealthcareProfessional { get; private set; } = null!;
@@ -39,8 +42,11 @@ namespace Pulumi.Onepassword
         [Output("reasonForVisit")]
         public Output<string?> ReasonForVisit { get; private set; } = null!;
 
+        [Output("references")]
+        public Output<ImmutableDictionary<string, Outputs.OutField>> References { get; private set; } = null!;
+
         [Output("sections")]
-        public Output<ImmutableDictionary<string, Outputs.GetSection>> Sections { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutSection>> Sections { get; private set; } = null!;
 
         /// <summary>
         /// An array of strings of the tags assigned to the item.
@@ -98,7 +104,9 @@ namespace Pulumi.Onepassword
                 Version = Utilities.Version,
                 AdditionalSecretOutputs =
                 {
+                    "attachments",
                     "fields",
+                    "references",
                     "sections",
                 },
             };
@@ -120,10 +128,21 @@ namespace Pulumi.Onepassword
         {
             return new MedicalRecordItem(name, id, state, options);
         }
+
+        public Pulumi.Output<MedicalRecordItemAttachmentResult> Attachment(MedicalRecordItemAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<MedicalRecordItemAttachmentResult>("onepassword:index:MedicalRecordItem/attachment", args ?? new MedicalRecordItemAttachmentArgs(), this);
     }
 
     public sealed class MedicalRecordItemArgs : Pulumi.ResourceArgs
     {
+        [Input("attachments")]
+        private InputMap<AssetOrArchive>? _attachments;
+        public InputMap<AssetOrArchive> Attachments
+        {
+            get => _attachments ?? (_attachments = new InputMap<AssetOrArchive>());
+            set => _attachments = value;
+        }
+
         /// <summary>
         /// The category of the vault the item is in.
         /// </summary>
@@ -206,6 +225,40 @@ namespace Pulumi.Onepassword
 
         public MedicalRecordItemState()
         {
+        }
+    }
+
+    /// <summary>
+    /// The set of arguments for the <see cref="MedicalRecordItem.Attachment"/> method.
+    /// </summary>
+    public sealed class MedicalRecordItemAttachmentArgs : Pulumi.CallArgs
+    {
+        /// <summary>
+        /// The name or uuid of the attachment to get
+        /// </summary>
+        [Input("name", required: true)]
+        public Input<string> Name { get; set; } = null!;
+
+        public MedicalRecordItemAttachmentArgs()
+        {
+        }
+    }
+
+    /// <summary>
+    /// The results of the <see cref="MedicalRecordItem.Attachment"/> method.
+    /// </summary>
+    [OutputType]
+    public sealed class MedicalRecordItemAttachmentResult
+    {
+        /// <summary>
+        /// the value of the attachment
+        /// </summary>
+        public readonly string Value;
+
+        [OutputConstructor]
+        private MedicalRecordItemAttachmentResult(string value)
+        {
+            Value = value;
         }
     }
 }

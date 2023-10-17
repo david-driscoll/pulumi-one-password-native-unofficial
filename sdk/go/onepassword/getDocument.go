@@ -29,10 +29,12 @@ type GetDocumentArgs struct {
 }
 
 type GetDocumentResult struct {
-	Category string                `pulumi:"category"`
-	Fields   map[string]GetField   `pulumi:"fields"`
-	Notes    *string               `pulumi:"notes"`
-	Sections map[string]GetSection `pulumi:"sections"`
+	Attachments map[string]OutField   `pulumi:"attachments"`
+	Category    string                `pulumi:"category"`
+	Fields      map[string]OutField   `pulumi:"fields"`
+	Notes       *string               `pulumi:"notes"`
+	References  map[string]OutField   `pulumi:"references"`
+	Sections    map[string]OutSection `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -83,20 +85,28 @@ func (o GetDocumentResultOutput) ToGetDocumentResultOutputWithContext(ctx contex
 	return o
 }
 
+func (o GetDocumentResultOutput) Attachments() OutFieldMapOutput {
+	return o.ApplyT(func(v GetDocumentResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+}
+
 func (o GetDocumentResultOutput) Category() pulumi.StringOutput {
 	return o.ApplyT(func(v GetDocumentResult) string { return v.Category }).(pulumi.StringOutput)
 }
 
-func (o GetDocumentResultOutput) Fields() GetFieldMapOutput {
-	return o.ApplyT(func(v GetDocumentResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
+func (o GetDocumentResultOutput) Fields() OutFieldMapOutput {
+	return o.ApplyT(func(v GetDocumentResult) map[string]OutField { return v.Fields }).(OutFieldMapOutput)
 }
 
 func (o GetDocumentResultOutput) Notes() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetDocumentResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o GetDocumentResultOutput) Sections() GetSectionMapOutput {
-	return o.ApplyT(func(v GetDocumentResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
+func (o GetDocumentResultOutput) References() OutFieldMapOutput {
+	return o.ApplyT(func(v GetDocumentResult) map[string]OutField { return v.References }).(OutFieldMapOutput)
+}
+
+func (o GetDocumentResultOutput) Sections() OutSectionMapOutput {
+	return o.ApplyT(func(v GetDocumentResult) map[string]OutSection { return v.Sections }).(OutSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.

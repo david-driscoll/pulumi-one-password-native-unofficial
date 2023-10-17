@@ -73,14 +73,16 @@ namespace Pulumi.Onepassword
     [OutputType]
     public sealed class GetEmailAccountResult
     {
+        public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
         public readonly string? AuthMethod;
         public readonly string Category;
         public readonly Pulumi.Onepassword.EmailAccount.Outputs.ContactInformationSection? ContactInformation;
-        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
         public readonly string? Notes;
         public readonly string? Password;
         public readonly string? PortNumber;
-        public readonly ImmutableDictionary<string, Outputs.GetSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.OutField> References;
+        public readonly ImmutableDictionary<string, Outputs.OutSection> Sections;
         public readonly string? Security;
         public readonly string? Server;
         public readonly Pulumi.Onepassword.EmailAccount.Outputs.SmtpSection? Smtp;
@@ -105,13 +107,15 @@ namespace Pulumi.Onepassword
 
         [OutputConstructor]
         private GetEmailAccountResult(
+            ImmutableDictionary<string, Outputs.OutField> attachments,
+
             string? authMethod,
 
             string category,
 
             Pulumi.Onepassword.EmailAccount.Outputs.ContactInformationSection? contactInformation,
 
-            ImmutableDictionary<string, Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.OutField> fields,
 
             string? notes,
 
@@ -119,7 +123,9 @@ namespace Pulumi.Onepassword
 
             string? portNumber,
 
-            ImmutableDictionary<string, Outputs.GetSection> sections,
+            ImmutableDictionary<string, Outputs.OutField> references,
+
+            ImmutableDictionary<string, Outputs.OutSection> sections,
 
             string? security,
 
@@ -139,6 +145,7 @@ namespace Pulumi.Onepassword
 
             string vault)
         {
+            Attachments = attachments;
             AuthMethod = authMethod;
             Category = category;
             ContactInformation = contactInformation;
@@ -146,6 +153,7 @@ namespace Pulumi.Onepassword
             Notes = notes;
             Password = password;
             PortNumber = portNumber;
+            References = references;
             Sections = sections;
             Security = security;
             Server = server;

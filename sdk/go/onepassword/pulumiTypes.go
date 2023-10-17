@@ -123,7 +123,14 @@ func (o FieldMapOutput) MapIndex(k pulumi.StringInput) FieldOutput {
 	}).(FieldOutput)
 }
 
-type GetField struct {
+type OutAttachment struct {
+	Name      string `pulumi:"name"`
+	Reference string `pulumi:"reference"`
+	Size      int    `pulumi:"size"`
+	Uuid      string `pulumi:"uuid"`
+}
+
+type OutField struct {
 	Label     string            `pulumi:"label"`
 	Reference string            `pulumi:"reference"`
 	Type      ResponseFieldType `pulumi:"type"`
@@ -131,110 +138,117 @@ type GetField struct {
 	Value     string            `pulumi:"value"`
 }
 
-type GetFieldOutput struct{ *pulumi.OutputState }
+type OutFieldOutput struct{ *pulumi.OutputState }
 
-func (GetFieldOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*GetField)(nil)).Elem()
+func (OutFieldOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*OutField)(nil)).Elem()
 }
 
-func (o GetFieldOutput) ToGetFieldOutput() GetFieldOutput {
+func (o OutFieldOutput) ToOutFieldOutput() OutFieldOutput {
 	return o
 }
 
-func (o GetFieldOutput) ToGetFieldOutputWithContext(ctx context.Context) GetFieldOutput {
+func (o OutFieldOutput) ToOutFieldOutputWithContext(ctx context.Context) OutFieldOutput {
 	return o
 }
 
-func (o GetFieldOutput) Label() pulumi.StringOutput {
-	return o.ApplyT(func(v GetField) string { return v.Label }).(pulumi.StringOutput)
+func (o OutFieldOutput) Label() pulumi.StringOutput {
+	return o.ApplyT(func(v OutField) string { return v.Label }).(pulumi.StringOutput)
 }
 
-func (o GetFieldOutput) Reference() pulumi.StringOutput {
-	return o.ApplyT(func(v GetField) string { return v.Reference }).(pulumi.StringOutput)
+func (o OutFieldOutput) Reference() pulumi.StringOutput {
+	return o.ApplyT(func(v OutField) string { return v.Reference }).(pulumi.StringOutput)
 }
 
-func (o GetFieldOutput) Type() ResponseFieldTypeOutput {
-	return o.ApplyT(func(v GetField) ResponseFieldType { return v.Type }).(ResponseFieldTypeOutput)
+func (o OutFieldOutput) Type() ResponseFieldTypeOutput {
+	return o.ApplyT(func(v OutField) ResponseFieldType { return v.Type }).(ResponseFieldTypeOutput)
 }
 
-func (o GetFieldOutput) Uuid() pulumi.StringOutput {
-	return o.ApplyT(func(v GetField) string { return v.Uuid }).(pulumi.StringOutput)
+func (o OutFieldOutput) Uuid() pulumi.StringOutput {
+	return o.ApplyT(func(v OutField) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
-func (o GetFieldOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v GetField) string { return v.Value }).(pulumi.StringOutput)
+func (o OutFieldOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v OutField) string { return v.Value }).(pulumi.StringOutput)
 }
 
-type GetFieldMapOutput struct{ *pulumi.OutputState }
+type OutFieldMapOutput struct{ *pulumi.OutputState }
 
-func (GetFieldMapOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*map[string]GetField)(nil)).Elem()
+func (OutFieldMapOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]OutField)(nil)).Elem()
 }
 
-func (o GetFieldMapOutput) ToGetFieldMapOutput() GetFieldMapOutput {
+func (o OutFieldMapOutput) ToOutFieldMapOutput() OutFieldMapOutput {
 	return o
 }
 
-func (o GetFieldMapOutput) ToGetFieldMapOutputWithContext(ctx context.Context) GetFieldMapOutput {
+func (o OutFieldMapOutput) ToOutFieldMapOutputWithContext(ctx context.Context) OutFieldMapOutput {
 	return o
 }
 
-func (o GetFieldMapOutput) MapIndex(k pulumi.StringInput) GetFieldOutput {
-	return pulumi.All(o, k).ApplyT(func(vs []interface{}) GetField {
-		return vs[0].(map[string]GetField)[vs[1].(string)]
-	}).(GetFieldOutput)
+func (o OutFieldMapOutput) MapIndex(k pulumi.StringInput) OutFieldOutput {
+	return pulumi.All(o, k).ApplyT(func(vs []interface{}) OutField {
+		return vs[0].(map[string]OutField)[vs[1].(string)]
+	}).(OutFieldOutput)
 }
 
-type GetSection struct {
-	Fields map[string]GetField `pulumi:"fields"`
+type OutSection struct {
+	Fields map[string]OutField `pulumi:"fields"`
 	Label  string              `pulumi:"label"`
 	Uuid   string              `pulumi:"uuid"`
 }
 
-type GetSectionOutput struct{ *pulumi.OutputState }
+type OutSectionOutput struct{ *pulumi.OutputState }
 
-func (GetSectionOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*GetSection)(nil)).Elem()
+func (OutSectionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*OutSection)(nil)).Elem()
 }
 
-func (o GetSectionOutput) ToGetSectionOutput() GetSectionOutput {
+func (o OutSectionOutput) ToOutSectionOutput() OutSectionOutput {
 	return o
 }
 
-func (o GetSectionOutput) ToGetSectionOutputWithContext(ctx context.Context) GetSectionOutput {
+func (o OutSectionOutput) ToOutSectionOutputWithContext(ctx context.Context) OutSectionOutput {
 	return o
 }
 
-func (o GetSectionOutput) Fields() GetFieldMapOutput {
-	return o.ApplyT(func(v GetSection) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
+func (o OutSectionOutput) Fields() OutFieldMapOutput {
+	return o.ApplyT(func(v OutSection) map[string]OutField { return v.Fields }).(OutFieldMapOutput)
 }
 
-func (o GetSectionOutput) Label() pulumi.StringOutput {
-	return o.ApplyT(func(v GetSection) string { return v.Label }).(pulumi.StringOutput)
+func (o OutSectionOutput) Label() pulumi.StringOutput {
+	return o.ApplyT(func(v OutSection) string { return v.Label }).(pulumi.StringOutput)
 }
 
-func (o GetSectionOutput) Uuid() pulumi.StringOutput {
-	return o.ApplyT(func(v GetSection) string { return v.Uuid }).(pulumi.StringOutput)
+func (o OutSectionOutput) Uuid() pulumi.StringOutput {
+	return o.ApplyT(func(v OutSection) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
-type GetSectionMapOutput struct{ *pulumi.OutputState }
+type OutSectionMapOutput struct{ *pulumi.OutputState }
 
-func (GetSectionMapOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*map[string]GetSection)(nil)).Elem()
+func (OutSectionMapOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]OutSection)(nil)).Elem()
 }
 
-func (o GetSectionMapOutput) ToGetSectionMapOutput() GetSectionMapOutput {
+func (o OutSectionMapOutput) ToOutSectionMapOutput() OutSectionMapOutput {
 	return o
 }
 
-func (o GetSectionMapOutput) ToGetSectionMapOutputWithContext(ctx context.Context) GetSectionMapOutput {
+func (o OutSectionMapOutput) ToOutSectionMapOutputWithContext(ctx context.Context) OutSectionMapOutput {
 	return o
 }
 
-func (o GetSectionMapOutput) MapIndex(k pulumi.StringInput) GetSectionOutput {
-	return pulumi.All(o, k).ApplyT(func(vs []interface{}) GetSection {
-		return vs[0].(map[string]GetSection)[vs[1].(string)]
-	}).(GetSectionOutput)
+func (o OutSectionMapOutput) MapIndex(k pulumi.StringInput) OutSectionOutput {
+	return pulumi.All(o, k).ApplyT(func(vs []interface{}) OutSection {
+		return vs[0].(map[string]OutSection)[vs[1].(string)]
+	}).(OutSectionOutput)
+}
+
+type PasswordRecipe struct {
+	Digits  *bool `pulumi:"digits"`
+	Length  int   `pulumi:"length"`
+	Letters *bool `pulumi:"letters"`
+	Symbols *bool `pulumi:"symbols"`
 }
 
 type Section struct {
@@ -338,10 +352,10 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*SectionMapInput)(nil)).Elem(), SectionMap{})
 	pulumi.RegisterOutputType(FieldOutput{})
 	pulumi.RegisterOutputType(FieldMapOutput{})
-	pulumi.RegisterOutputType(GetFieldOutput{})
-	pulumi.RegisterOutputType(GetFieldMapOutput{})
-	pulumi.RegisterOutputType(GetSectionOutput{})
-	pulumi.RegisterOutputType(GetSectionMapOutput{})
+	pulumi.RegisterOutputType(OutFieldOutput{})
+	pulumi.RegisterOutputType(OutFieldMapOutput{})
+	pulumi.RegisterOutputType(OutSectionOutput{})
+	pulumi.RegisterOutputType(OutSectionMapOutput{})
 	pulumi.RegisterOutputType(SectionOutput{})
 	pulumi.RegisterOutputType(SectionMapOutput{})
 }

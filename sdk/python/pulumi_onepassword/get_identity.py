@@ -20,10 +20,13 @@ __all__ = [
 
 @pulumi.output_type
 class GetIdentityResult:
-    def __init__(__self__, address=None, category=None, fields=None, identification=None, internet_details=None, notes=None, sections=None, tags=None, title=None, uuid=None, vault=None):
+    def __init__(__self__, address=None, attachments=None, category=None, fields=None, identification=None, internet_details=None, notes=None, references=None, sections=None, tags=None, title=None, uuid=None, vault=None):
         if address and not isinstance(address, dict):
             raise TypeError("Expected argument 'address' to be a dict")
         pulumi.set(__self__, "address", address)
+        if attachments and not isinstance(attachments, dict):
+            raise TypeError("Expected argument 'attachments' to be a dict")
+        pulumi.set(__self__, "attachments", attachments)
         if category and not isinstance(category, dict):
             raise TypeError("Expected argument 'category' to be a dict")
         pulumi.set(__self__, "category", category)
@@ -39,6 +42,9 @@ class GetIdentityResult:
         if notes and not isinstance(notes, str):
             raise TypeError("Expected argument 'notes' to be a str")
         pulumi.set(__self__, "notes", notes)
+        if references and not isinstance(references, dict):
+            raise TypeError("Expected argument 'references' to be a dict")
+        pulumi.set(__self__, "references", references)
         if sections and not isinstance(sections, dict):
             raise TypeError("Expected argument 'sections' to be a dict")
         pulumi.set(__self__, "sections", sections)
@@ -62,12 +68,17 @@ class GetIdentityResult:
 
     @property
     @pulumi.getter
+    def attachments(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "attachments")
+
+    @property
+    @pulumi.getter
     def category(self) -> str:
         return pulumi.get(self, "category")
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.GetField']:
+    def fields(self) -> Mapping[str, 'outputs.OutField']:
         return pulumi.get(self, "fields")
 
     @property
@@ -87,7 +98,12 @@ class GetIdentityResult:
 
     @property
     @pulumi.getter
-    def sections(self) -> Mapping[str, 'outputs.GetSection']:
+    def references(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "references")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> Mapping[str, 'outputs.OutSection']:
         return pulumi.get(self, "sections")
 
     @property
@@ -130,11 +146,13 @@ class AwaitableGetIdentityResult(GetIdentityResult):
             yield self
         return GetIdentityResult(
             address=self.address,
+            attachments=self.attachments,
             category=self.category,
             fields=self.fields,
             identification=self.identification,
             internet_details=self.internet_details,
             notes=self.notes,
+            references=self.references,
             sections=self.sections,
             tags=self.tags,
             title=self.title,
@@ -165,11 +183,13 @@ def get_identity(title: Optional[str] = None,
 
     return AwaitableGetIdentityResult(
         address=__ret__.address,
+        attachments=__ret__.attachments,
         category=__ret__.category,
         fields=__ret__.fields,
         identification=__ret__.identification,
         internet_details=__ret__.internet_details,
         notes=__ret__.notes,
+        references=__ret__.references,
         sections=__ret__.sections,
         tags=__ret__.tags,
         title=__ret__.title,

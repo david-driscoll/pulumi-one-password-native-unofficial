@@ -20,10 +20,13 @@ __all__ = [
 
 @pulumi.output_type
 class GetServerResult:
-    def __init__(__self__, admin_console=None, category=None, fields=None, hosting_provider=None, notes=None, password=None, sections=None, tags=None, title=None, url=None, username=None, uuid=None, vault=None):
+    def __init__(__self__, admin_console=None, attachments=None, category=None, fields=None, hosting_provider=None, notes=None, password=None, references=None, sections=None, tags=None, title=None, url=None, username=None, uuid=None, vault=None):
         if admin_console and not isinstance(admin_console, dict):
             raise TypeError("Expected argument 'admin_console' to be a dict")
         pulumi.set(__self__, "admin_console", admin_console)
+        if attachments and not isinstance(attachments, dict):
+            raise TypeError("Expected argument 'attachments' to be a dict")
+        pulumi.set(__self__, "attachments", attachments)
         if category and not isinstance(category, dict):
             raise TypeError("Expected argument 'category' to be a dict")
         pulumi.set(__self__, "category", category)
@@ -39,6 +42,9 @@ class GetServerResult:
         if password and not isinstance(password, str):
             raise TypeError("Expected argument 'password' to be a str")
         pulumi.set(__self__, "password", password)
+        if references and not isinstance(references, dict):
+            raise TypeError("Expected argument 'references' to be a dict")
+        pulumi.set(__self__, "references", references)
         if sections and not isinstance(sections, dict):
             raise TypeError("Expected argument 'sections' to be a dict")
         pulumi.set(__self__, "sections", sections)
@@ -68,12 +74,17 @@ class GetServerResult:
 
     @property
     @pulumi.getter
+    def attachments(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "attachments")
+
+    @property
+    @pulumi.getter
     def category(self) -> str:
         return pulumi.get(self, "category")
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.GetField']:
+    def fields(self) -> Mapping[str, 'outputs.OutField']:
         return pulumi.get(self, "fields")
 
     @property
@@ -93,7 +104,12 @@ class GetServerResult:
 
     @property
     @pulumi.getter
-    def sections(self) -> Mapping[str, 'outputs.GetSection']:
+    def references(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "references")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> Mapping[str, 'outputs.OutSection']:
         return pulumi.get(self, "sections")
 
     @property
@@ -146,11 +162,13 @@ class AwaitableGetServerResult(GetServerResult):
             yield self
         return GetServerResult(
             admin_console=self.admin_console,
+            attachments=self.attachments,
             category=self.category,
             fields=self.fields,
             hosting_provider=self.hosting_provider,
             notes=self.notes,
             password=self.password,
+            references=self.references,
             sections=self.sections,
             tags=self.tags,
             title=self.title,
@@ -183,11 +201,13 @@ def get_server(title: Optional[str] = None,
 
     return AwaitableGetServerResult(
         admin_console=__ret__.admin_console,
+        attachments=__ret__.attachments,
         category=__ret__.category,
         fields=__ret__.fields,
         hosting_provider=__ret__.hosting_provider,
         notes=__ret__.notes,
         password=__ret__.password,
+        references=__ret__.references,
         sections=__ret__.sections,
         tags=__ret__.tags,
         title=__ret__.title,

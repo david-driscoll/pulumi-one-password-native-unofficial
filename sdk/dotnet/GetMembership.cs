@@ -73,16 +73,18 @@ namespace Pulumi.Onepassword
     [OutputType]
     public sealed class GetMembershipResult
     {
+        public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
         public readonly string Category;
         public readonly string? ExpiryDate;
-        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
         public readonly string? Group;
         public readonly string? MemberId;
         public readonly string? MemberName;
         public readonly string? MemberSince;
         public readonly string? Notes;
         public readonly string? Pin;
-        public readonly ImmutableDictionary<string, Outputs.GetSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.OutField> References;
+        public readonly ImmutableDictionary<string, Outputs.OutSection> Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
         /// </summary>
@@ -104,11 +106,13 @@ namespace Pulumi.Onepassword
 
         [OutputConstructor]
         private GetMembershipResult(
+            ImmutableDictionary<string, Outputs.OutField> attachments,
+
             string category,
 
             string? expiryDate,
 
-            ImmutableDictionary<string, Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.OutField> fields,
 
             string? group,
 
@@ -122,7 +126,9 @@ namespace Pulumi.Onepassword
 
             string? pin,
 
-            ImmutableDictionary<string, Outputs.GetSection> sections,
+            ImmutableDictionary<string, Outputs.OutField> references,
+
+            ImmutableDictionary<string, Outputs.OutSection> sections,
 
             ImmutableArray<string> tags,
 
@@ -136,6 +142,7 @@ namespace Pulumi.Onepassword
 
             string? website)
         {
+            Attachments = attachments;
             Category = category;
             ExpiryDate = expiryDate;
             Fields = fields;
@@ -145,6 +152,7 @@ namespace Pulumi.Onepassword
             MemberSince = memberSince;
             Notes = notes;
             Pin = pin;
+            References = references;
             Sections = sections;
             Tags = tags;
             Telephone = telephone;

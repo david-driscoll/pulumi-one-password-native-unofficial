@@ -31,16 +31,18 @@ type GetBankAccountArgs struct {
 
 type GetBankAccountResult struct {
 	AccountNumber     *string                               `pulumi:"accountNumber"`
+	Attachments       map[string]OutField                   `pulumi:"attachments"`
 	BankName          *string                               `pulumi:"bankName"`
 	BranchInformation *bankaccount.BranchInformationSection `pulumi:"branchInformation"`
 	Category          string                                `pulumi:"category"`
-	Fields            map[string]GetField                   `pulumi:"fields"`
+	Fields            map[string]OutField                   `pulumi:"fields"`
 	Iban              *string                               `pulumi:"iban"`
 	NameOnAccount     *string                               `pulumi:"nameOnAccount"`
 	Notes             *string                               `pulumi:"notes"`
 	Pin               *string                               `pulumi:"pin"`
+	References        map[string]OutField                   `pulumi:"references"`
 	RoutingNumber     *string                               `pulumi:"routingNumber"`
-	Sections          map[string]GetSection                 `pulumi:"sections"`
+	Sections          map[string]OutSection                 `pulumi:"sections"`
 	Swift             *string                               `pulumi:"swift"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
@@ -97,6 +99,10 @@ func (o GetBankAccountResultOutput) AccountNumber() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetBankAccountResult) *string { return v.AccountNumber }).(pulumi.StringPtrOutput)
 }
 
+func (o GetBankAccountResultOutput) Attachments() OutFieldMapOutput {
+	return o.ApplyT(func(v GetBankAccountResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+}
+
 func (o GetBankAccountResultOutput) BankName() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetBankAccountResult) *string { return v.BankName }).(pulumi.StringPtrOutput)
 }
@@ -109,8 +115,8 @@ func (o GetBankAccountResultOutput) Category() pulumi.StringOutput {
 	return o.ApplyT(func(v GetBankAccountResult) string { return v.Category }).(pulumi.StringOutput)
 }
 
-func (o GetBankAccountResultOutput) Fields() GetFieldMapOutput {
-	return o.ApplyT(func(v GetBankAccountResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
+func (o GetBankAccountResultOutput) Fields() OutFieldMapOutput {
+	return o.ApplyT(func(v GetBankAccountResult) map[string]OutField { return v.Fields }).(OutFieldMapOutput)
 }
 
 func (o GetBankAccountResultOutput) Iban() pulumi.StringPtrOutput {
@@ -129,12 +135,16 @@ func (o GetBankAccountResultOutput) Pin() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetBankAccountResult) *string { return v.Pin }).(pulumi.StringPtrOutput)
 }
 
+func (o GetBankAccountResultOutput) References() OutFieldMapOutput {
+	return o.ApplyT(func(v GetBankAccountResult) map[string]OutField { return v.References }).(OutFieldMapOutput)
+}
+
 func (o GetBankAccountResultOutput) RoutingNumber() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetBankAccountResult) *string { return v.RoutingNumber }).(pulumi.StringPtrOutput)
 }
 
-func (o GetBankAccountResultOutput) Sections() GetSectionMapOutput {
-	return o.ApplyT(func(v GetBankAccountResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
+func (o GetBankAccountResultOutput) Sections() OutSectionMapOutput {
+	return o.ApplyT(func(v GetBankAccountResult) map[string]OutSection { return v.Sections }).(OutSectionMapOutput)
 }
 
 func (o GetBankAccountResultOutput) Swift() pulumi.StringPtrOutput {

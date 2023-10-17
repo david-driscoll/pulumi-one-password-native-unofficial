@@ -74,14 +74,16 @@ namespace Pulumi.Onepassword
     public sealed class GetCreditCardResult
     {
         public readonly Pulumi.Onepassword.CreditCard.Outputs.AdditionalDetailsSection? AdditionalDetails;
+        public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
         public readonly string? CardholderName;
         public readonly string Category;
         public readonly Pulumi.Onepassword.CreditCard.Outputs.ContactInformationSection? ContactInformation;
         public readonly string? ExpiryDate;
-        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
         public readonly string? Notes;
         public readonly string? Number;
-        public readonly ImmutableDictionary<string, Outputs.GetSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.OutField> References;
+        public readonly ImmutableDictionary<string, Outputs.OutSection> Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
         /// </summary>
@@ -106,6 +108,8 @@ namespace Pulumi.Onepassword
         private GetCreditCardResult(
             Pulumi.Onepassword.CreditCard.Outputs.AdditionalDetailsSection? additionalDetails,
 
+            ImmutableDictionary<string, Outputs.OutField> attachments,
+
             string? cardholderName,
 
             string category,
@@ -114,13 +118,15 @@ namespace Pulumi.Onepassword
 
             string? expiryDate,
 
-            ImmutableDictionary<string, Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.OutField> fields,
 
             string? notes,
 
             string? number,
 
-            ImmutableDictionary<string, Outputs.GetSection> sections,
+            ImmutableDictionary<string, Outputs.OutField> references,
+
+            ImmutableDictionary<string, Outputs.OutSection> sections,
 
             ImmutableArray<string> tags,
 
@@ -137,6 +143,7 @@ namespace Pulumi.Onepassword
             string? verificationNumber)
         {
             AdditionalDetails = additionalDetails;
+            Attachments = attachments;
             CardholderName = cardholderName;
             Category = category;
             ContactInformation = contactInformation;
@@ -144,6 +151,7 @@ namespace Pulumi.Onepassword
             Fields = fields;
             Notes = notes;
             Number = number;
+            References = references;
             Sections = sections;
             Tags = tags;
             Title = title;

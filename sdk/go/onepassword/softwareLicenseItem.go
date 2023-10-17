@@ -15,14 +15,16 @@ import (
 type SoftwareLicenseItem struct {
 	pulumi.CustomResourceState
 
-	Category   pulumi.StringOutput                       `pulumi:"category"`
-	Customer   softwarelicense.CustomerSectionPtrOutput  `pulumi:"customer"`
-	Fields     GetFieldMapOutput                         `pulumi:"fields"`
-	LicenseKey pulumi.StringPtrOutput                    `pulumi:"licenseKey"`
-	Notes      pulumi.StringPtrOutput                    `pulumi:"notes"`
-	Order      softwarelicense.OrderSectionPtrOutput     `pulumi:"order"`
-	Publisher  softwarelicense.PublisherSectionPtrOutput `pulumi:"publisher"`
-	Sections   GetSectionMapOutput                       `pulumi:"sections"`
+	Attachments OutFieldMapOutput                         `pulumi:"attachments"`
+	Category    pulumi.StringOutput                       `pulumi:"category"`
+	Customer    softwarelicense.CustomerSectionPtrOutput  `pulumi:"customer"`
+	Fields      OutFieldMapOutput                         `pulumi:"fields"`
+	LicenseKey  pulumi.StringPtrOutput                    `pulumi:"licenseKey"`
+	Notes       pulumi.StringPtrOutput                    `pulumi:"notes"`
+	Order       softwarelicense.OrderSectionPtrOutput     `pulumi:"order"`
+	Publisher   softwarelicense.PublisherSectionPtrOutput `pulumi:"publisher"`
+	References  OutFieldMapOutput                         `pulumi:"references"`
+	Sections    OutSectionMapOutput                       `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -46,7 +48,9 @@ func NewSoftwareLicenseItem(ctx *pulumi.Context,
 	}
 	args.Category = pulumi.StringPtr("Software License")
 	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"attachments",
 		"fields",
+		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)
@@ -86,6 +90,7 @@ func (SoftwareLicenseItemState) ElementType() reflect.Type {
 }
 
 type softwareLicenseItemArgs struct {
+	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
 	Category   *string                           `pulumi:"category"`
 	Customer   *softwarelicense.CustomerSection  `pulumi:"customer"`
@@ -106,6 +111,7 @@ type softwareLicenseItemArgs struct {
 
 // The set of arguments for constructing a SoftwareLicenseItem resource.
 type SoftwareLicenseItemArgs struct {
+	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
 	Category   pulumi.StringPtrInput
 	Customer   softwarelicense.CustomerSectionPtrInput
@@ -126,6 +132,46 @@ type SoftwareLicenseItemArgs struct {
 
 func (SoftwareLicenseItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*softwareLicenseItemArgs)(nil)).Elem()
+}
+
+func (r *SoftwareLicenseItem) Attachment(ctx *pulumi.Context, args *SoftwareLicenseItemAttachmentArgs) (SoftwareLicenseItemAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:SoftwareLicenseItem/attachment", args, SoftwareLicenseItemAttachmentResultOutput{}, r)
+	if err != nil {
+		return SoftwareLicenseItemAttachmentResultOutput{}, err
+	}
+	return out.(SoftwareLicenseItemAttachmentResultOutput), nil
+}
+
+type softwareLicenseItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name string `pulumi:"name"`
+}
+
+// The set of arguments for the Attachment method of the SoftwareLicenseItem resource.
+type SoftwareLicenseItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name pulumi.StringInput
+}
+
+func (SoftwareLicenseItemAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*softwareLicenseItemAttachmentArgs)(nil)).Elem()
+}
+
+// The resolved reference value
+type SoftwareLicenseItemAttachmentResult struct {
+	// the value of the attachment
+	Value string `pulumi:"value"`
+}
+
+type SoftwareLicenseItemAttachmentResultOutput struct{ *pulumi.OutputState }
+
+func (SoftwareLicenseItemAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SoftwareLicenseItemAttachmentResult)(nil)).Elem()
+}
+
+// the value of the attachment
+func (o SoftwareLicenseItemAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v SoftwareLicenseItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type SoftwareLicenseItemInput interface {
@@ -256,6 +302,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*SoftwareLicenseItemArrayInput)(nil)).Elem(), SoftwareLicenseItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SoftwareLicenseItemMapInput)(nil)).Elem(), SoftwareLicenseItemMap{})
 	pulumi.RegisterOutputType(SoftwareLicenseItemOutput{})
+	pulumi.RegisterOutputType(SoftwareLicenseItemAttachmentResultOutput{})
 	pulumi.RegisterOutputType(SoftwareLicenseItemArrayOutput{})
 	pulumi.RegisterOutputType(SoftwareLicenseItemMapOutput{})
 }

@@ -29,11 +29,13 @@ type GetLoginArgs struct {
 }
 
 type GetLoginResult struct {
-	Category string                `pulumi:"category"`
-	Fields   map[string]GetField   `pulumi:"fields"`
-	Notes    *string               `pulumi:"notes"`
-	Password *string               `pulumi:"password"`
-	Sections map[string]GetSection `pulumi:"sections"`
+	Attachments map[string]OutField   `pulumi:"attachments"`
+	Category    string                `pulumi:"category"`
+	Fields      map[string]OutField   `pulumi:"fields"`
+	Notes       *string               `pulumi:"notes"`
+	Password    *string               `pulumi:"password"`
+	References  map[string]OutField   `pulumi:"references"`
+	Sections    map[string]OutSection `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -85,12 +87,16 @@ func (o GetLoginResultOutput) ToGetLoginResultOutputWithContext(ctx context.Cont
 	return o
 }
 
+func (o GetLoginResultOutput) Attachments() OutFieldMapOutput {
+	return o.ApplyT(func(v GetLoginResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+}
+
 func (o GetLoginResultOutput) Category() pulumi.StringOutput {
 	return o.ApplyT(func(v GetLoginResult) string { return v.Category }).(pulumi.StringOutput)
 }
 
-func (o GetLoginResultOutput) Fields() GetFieldMapOutput {
-	return o.ApplyT(func(v GetLoginResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
+func (o GetLoginResultOutput) Fields() OutFieldMapOutput {
+	return o.ApplyT(func(v GetLoginResult) map[string]OutField { return v.Fields }).(OutFieldMapOutput)
 }
 
 func (o GetLoginResultOutput) Notes() pulumi.StringPtrOutput {
@@ -101,8 +107,12 @@ func (o GetLoginResultOutput) Password() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetLoginResult) *string { return v.Password }).(pulumi.StringPtrOutput)
 }
 
-func (o GetLoginResultOutput) Sections() GetSectionMapOutput {
-	return o.ApplyT(func(v GetLoginResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
+func (o GetLoginResultOutput) References() OutFieldMapOutput {
+	return o.ApplyT(func(v GetLoginResult) map[string]OutField { return v.References }).(OutFieldMapOutput)
+}
+
+func (o GetLoginResultOutput) Sections() OutSectionMapOutput {
+	return o.ApplyT(func(v GetLoginResult) map[string]OutSection { return v.Sections }).(OutSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.

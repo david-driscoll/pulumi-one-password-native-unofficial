@@ -20,7 +20,10 @@ __all__ = [
 
 @pulumi.output_type
 class GetSoftwareLicenseResult:
-    def __init__(__self__, category=None, customer=None, fields=None, license_key=None, notes=None, order=None, publisher=None, sections=None, tags=None, title=None, uuid=None, vault=None, version=None):
+    def __init__(__self__, attachments=None, category=None, customer=None, fields=None, license_key=None, notes=None, order=None, publisher=None, references=None, sections=None, tags=None, title=None, uuid=None, vault=None, version=None):
+        if attachments and not isinstance(attachments, dict):
+            raise TypeError("Expected argument 'attachments' to be a dict")
+        pulumi.set(__self__, "attachments", attachments)
         if category and not isinstance(category, dict):
             raise TypeError("Expected argument 'category' to be a dict")
         pulumi.set(__self__, "category", category)
@@ -42,6 +45,9 @@ class GetSoftwareLicenseResult:
         if publisher and not isinstance(publisher, dict):
             raise TypeError("Expected argument 'publisher' to be a dict")
         pulumi.set(__self__, "publisher", publisher)
+        if references and not isinstance(references, dict):
+            raise TypeError("Expected argument 'references' to be a dict")
+        pulumi.set(__self__, "references", references)
         if sections and not isinstance(sections, dict):
             raise TypeError("Expected argument 'sections' to be a dict")
         pulumi.set(__self__, "sections", sections)
@@ -63,6 +69,11 @@ class GetSoftwareLicenseResult:
 
     @property
     @pulumi.getter
+    def attachments(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "attachments")
+
+    @property
+    @pulumi.getter
     def category(self) -> str:
         return pulumi.get(self, "category")
 
@@ -73,7 +84,7 @@ class GetSoftwareLicenseResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.GetField']:
+    def fields(self) -> Mapping[str, 'outputs.OutField']:
         return pulumi.get(self, "fields")
 
     @property
@@ -98,7 +109,12 @@ class GetSoftwareLicenseResult:
 
     @property
     @pulumi.getter
-    def sections(self) -> Mapping[str, 'outputs.GetSection']:
+    def references(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "references")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> Mapping[str, 'outputs.OutSection']:
         return pulumi.get(self, "sections")
 
     @property
@@ -145,6 +161,7 @@ class AwaitableGetSoftwareLicenseResult(GetSoftwareLicenseResult):
         if False:
             yield self
         return GetSoftwareLicenseResult(
+            attachments=self.attachments,
             category=self.category,
             customer=self.customer,
             fields=self.fields,
@@ -152,6 +169,7 @@ class AwaitableGetSoftwareLicenseResult(GetSoftwareLicenseResult):
             notes=self.notes,
             order=self.order,
             publisher=self.publisher,
+            references=self.references,
             sections=self.sections,
             tags=self.tags,
             title=self.title,
@@ -182,6 +200,7 @@ def get_software_license(title: Optional[str] = None,
     __ret__ = pulumi.runtime.invoke('onepassword:index:GetSoftwareLicense', __args__, opts=opts, typ=GetSoftwareLicenseResult).value
 
     return AwaitableGetSoftwareLicenseResult(
+        attachments=__ret__.attachments,
         category=__ret__.category,
         customer=__ret__.customer,
         fields=__ret__.fields,
@@ -189,6 +208,7 @@ def get_software_license(title: Optional[str] = None,
         notes=__ret__.notes,
         order=__ret__.order,
         publisher=__ret__.publisher,
+        references=__ret__.references,
         sections=__ret__.sections,
         tags=__ret__.tags,
         title=__ret__.title,

@@ -35,16 +35,18 @@ export interface GetBankAccountArgs {
 
 export interface GetBankAccountResult {
     readonly accountNumber?: string;
+    readonly attachments: {[key: string]: outputs.OutField};
     readonly bankName?: string;
     readonly branchInformation?: outputs.bankAccount.BranchInformationSection;
     readonly category: enums.Category | string;
-    readonly fields: {[key: string]: outputs.GetField};
+    readonly fields: {[key: string]: outputs.OutField};
     readonly iban?: string;
     readonly nameOnAccount?: string;
     readonly notes?: string;
     readonly pin?: string;
+    readonly references: {[key: string]: outputs.OutField};
     readonly routingNumber?: string;
-    readonly sections: {[key: string]: outputs.GetSection};
+    readonly sections: {[key: string]: outputs.OutSection};
     readonly swift?: string;
     /**
      * An array of strings of the tags assigned to the item.

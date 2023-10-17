@@ -33,11 +33,13 @@ export class PasswordItem extends pulumi.CustomResource {
         return obj['__pulumiType'] === PasswordItem.__pulumiType;
     }
 
+    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly category!: pulumi.Output<enums.Category | string>;
-    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField}>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly password!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection}>;
+    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.OutSection}>;
     /**
      * An array of strings of the tags assigned to the item.
      */
@@ -74,20 +76,30 @@ export class PasswordItem extends pulumi.CustomResource {
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
+            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "Password";
             resourceInputs["fields"] = args ? args.fields : undefined;
+            resourceInputs["generatePassword"] = args ? args.generatePassword : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["password"] = args?.password ? pulumi.secret(args.password) : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["fields", "password", "sections"] };
+        const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "password", "references", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(PasswordItem.__pulumiType, name, resourceInputs, opts);
+    }
+
+    attachment(args: PasswordItem.AttachmentArgs): pulumi.Output<PasswordItem.AttachmentResult> {
+        return pulumi.runtime.call("onepassword:index:PasswordItem/attachment", {
+            "__self__": this,
+            "name": args.name,
+        }, this);
     }
 }
 
@@ -102,11 +114,13 @@ export interface PasswordItemState {
  * The set of arguments for constructing a PasswordItem resource.
  */
 export interface PasswordItemArgs {
+    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     /**
      * The category of the vault the item is in.
      */
     category?: pulumi.Input<"Password">;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
+    generatePassword?: pulumi.Input<boolean | inputs.PasswordRecipeArgs>;
     notes?: pulumi.Input<string>;
     password?: pulumi.Input<string>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
@@ -122,4 +136,27 @@ export interface PasswordItemArgs {
      * The UUID of the vault the item is in.
      */
     vault: pulumi.Input<string>;
+}
+
+export namespace PasswordItem {
+    /**
+     * The set of arguments for the PasswordItem.attachment method.
+     */
+    export interface AttachmentArgs {
+        /**
+         * The name or uuid of the attachment to get
+         */
+        name: pulumi.Input<string>;
+    }
+
+    /**
+     * The results of the PasswordItem.attachment method.
+     */
+    export interface AttachmentResult {
+        /**
+         * the value of the attachment
+         */
+        readonly value: string;
+    }
+
 }

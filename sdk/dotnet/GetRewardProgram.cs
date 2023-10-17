@@ -73,15 +73,17 @@ namespace Pulumi.Onepassword
     [OutputType]
     public sealed class GetRewardProgramResult
     {
+        public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
         public readonly string Category;
         public readonly string? CompanyName;
-        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
         public readonly string? MemberId;
         public readonly string? MemberName;
         public readonly Pulumi.Onepassword.RewardProgram.Outputs.MoreInformationSection? MoreInformation;
         public readonly string? Notes;
         public readonly string? Pin;
-        public readonly ImmutableDictionary<string, Outputs.GetSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.OutField> References;
+        public readonly ImmutableDictionary<string, Outputs.OutSection> Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
         /// </summary>
@@ -101,11 +103,13 @@ namespace Pulumi.Onepassword
 
         [OutputConstructor]
         private GetRewardProgramResult(
+            ImmutableDictionary<string, Outputs.OutField> attachments,
+
             string category,
 
             string? companyName,
 
-            ImmutableDictionary<string, Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.OutField> fields,
 
             string? memberId,
 
@@ -117,7 +121,9 @@ namespace Pulumi.Onepassword
 
             string? pin,
 
-            ImmutableDictionary<string, Outputs.GetSection> sections,
+            ImmutableDictionary<string, Outputs.OutField> references,
+
+            ImmutableDictionary<string, Outputs.OutSection> sections,
 
             ImmutableArray<string> tags,
 
@@ -127,6 +133,7 @@ namespace Pulumi.Onepassword
 
             string vault)
         {
+            Attachments = attachments;
             Category = category;
             CompanyName = companyName;
             Fields = fields;
@@ -135,6 +142,7 @@ namespace Pulumi.Onepassword
             MoreInformation = moreInformation;
             Notes = notes;
             Pin = pin;
+            References = references;
             Sections = sections;
             Tags = tags;
             Title = title;

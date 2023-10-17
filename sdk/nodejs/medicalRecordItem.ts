@@ -33,16 +33,18 @@ export class MedicalRecordItem extends pulumi.CustomResource {
         return obj['__pulumiType'] === MedicalRecordItem.__pulumiType;
     }
 
+    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly date!: pulumi.Output<string | undefined>;
-    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField}>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly healthcareProfessional!: pulumi.Output<string | undefined>;
     public readonly location!: pulumi.Output<string | undefined>;
     public readonly medication!: pulumi.Output<outputs.medicalRecord.MedicationSection | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly patient!: pulumi.Output<string | undefined>;
     public readonly reasonForVisit!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection}>;
+    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.OutSection}>;
     /**
      * An array of strings of the tags assigned to the item.
      */
@@ -79,6 +81,7 @@ export class MedicalRecordItem extends pulumi.CustomResource {
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
+            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "Medical Record";
             resourceInputs["date"] = args ? args.date : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
@@ -92,12 +95,20 @@ export class MedicalRecordItem extends pulumi.CustomResource {
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["fields", "sections"] };
+        const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "references", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(MedicalRecordItem.__pulumiType, name, resourceInputs, opts);
+    }
+
+    attachment(args: MedicalRecordItem.AttachmentArgs): pulumi.Output<MedicalRecordItem.AttachmentResult> {
+        return pulumi.runtime.call("onepassword:index:MedicalRecordItem/attachment", {
+            "__self__": this,
+            "name": args.name,
+        }, this);
     }
 }
 
@@ -112,6 +123,7 @@ export interface MedicalRecordItemState {
  * The set of arguments for constructing a MedicalRecordItem resource.
  */
 export interface MedicalRecordItemArgs {
+    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     /**
      * The category of the vault the item is in.
      */
@@ -137,4 +149,27 @@ export interface MedicalRecordItemArgs {
      * The UUID of the vault the item is in.
      */
     vault: pulumi.Input<string>;
+}
+
+export namespace MedicalRecordItem {
+    /**
+     * The set of arguments for the MedicalRecordItem.attachment method.
+     */
+    export interface AttachmentArgs {
+        /**
+         * The name or uuid of the attachment to get
+         */
+        name: pulumi.Input<string>;
+    }
+
+    /**
+     * The results of the MedicalRecordItem.attachment method.
+     */
+    export interface AttachmentResult {
+        /**
+         * the value of the attachment
+         */
+        readonly value: string;
+    }
+
 }

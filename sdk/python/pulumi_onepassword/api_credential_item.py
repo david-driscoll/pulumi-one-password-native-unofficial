@@ -17,6 +17,7 @@ __all__ = ['APICredentialItemArgs', 'APICredentialItem']
 class APICredentialItemArgs:
     def __init__(__self__, *,
                  vault: pulumi.Input[str],
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  credential: Optional[pulumi.Input[str]] = None,
                  expires: Optional[pulumi.Input[str]] = None,
@@ -38,6 +39,8 @@ class APICredentialItemArgs:
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         """
         pulumi.set(__self__, "vault", vault)
+        if attachments is not None:
+            pulumi.set(__self__, "attachments", attachments)
         if category is not None:
             pulumi.set(__self__, "category", 'API Credential')
         if credential is not None:
@@ -76,6 +79,15 @@ class APICredentialItemArgs:
     @vault.setter
     def vault(self, value: pulumi.Input[str]):
         pulumi.set(self, "vault", value)
+
+    @property
+    @pulumi.getter
+    def attachments(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]:
+        return pulumi.get(self, "attachments")
+
+    @attachments.setter
+    def attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
+        pulumi.set(self, "attachments", value)
 
     @property
     @pulumi.getter
@@ -232,6 +244,7 @@ class APICredentialItem(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  credential: Optional[pulumi.Input[str]] = None,
                  expires: Optional[pulumi.Input[str]] = None,
@@ -279,6 +292,7 @@ class APICredentialItem(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  credential: Optional[pulumi.Input[str]] = None,
                  expires: Optional[pulumi.Input[str]] = None,
@@ -305,6 +319,7 @@ class APICredentialItem(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = APICredentialItemArgs.__new__(APICredentialItemArgs)
 
+            __props__.__dict__["attachments"] = attachments
             __props__.__dict__["category"] = 'API Credential'
             __props__.__dict__["credential"] = None if credential is None else pulumi.Output.secret(credential)
             __props__.__dict__["expires"] = expires
@@ -321,8 +336,9 @@ class APICredentialItem(pulumi.CustomResource):
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
+            __props__.__dict__["references"] = None
             __props__.__dict__["uuid"] = None
-        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["credential", "fields", "sections"])
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachments", "credential", "fields", "references", "sections"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(APICredentialItem, __self__).__init__(
             'onepassword:index:APICredentialItem',
@@ -349,6 +365,7 @@ class APICredentialItem(pulumi.CustomResource):
         __props__ = _APICredentialItemState.__new__(_APICredentialItemState)
 
         __props__.__dict__["vault"] = vault
+        __props__.__dict__["attachments"] = None
         __props__.__dict__["category"] = None
         __props__.__dict__["credential"] = None
         __props__.__dict__["expires"] = None
@@ -356,6 +373,7 @@ class APICredentialItem(pulumi.CustomResource):
         __props__.__dict__["filename"] = None
         __props__.__dict__["hostname"] = None
         __props__.__dict__["notes"] = None
+        __props__.__dict__["references"] = None
         __props__.__dict__["sections"] = None
         __props__.__dict__["tags"] = None
         __props__.__dict__["title"] = None
@@ -364,6 +382,11 @@ class APICredentialItem(pulumi.CustomResource):
         __props__.__dict__["uuid"] = None
         __props__.__dict__["valid_from"] = None
         return APICredentialItem(resource_name, opts=opts, __props__=__props__)
+
+    @property
+    @pulumi.getter
+    def attachments(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+        return pulumi.get(self, "attachments")
 
     @property
     @pulumi.getter
@@ -382,7 +405,7 @@ class APICredentialItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def fields(self) -> pulumi.Output[Mapping[str, 'outputs.GetField']]:
+    def fields(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
         return pulumi.get(self, "fields")
 
     @property
@@ -402,7 +425,12 @@ class APICredentialItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def sections(self) -> pulumi.Output[Mapping[str, 'outputs.GetSection']]:
+    def references(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+        return pulumi.get(self, "references")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> pulumi.Output[Mapping[str, 'outputs.OutSection']]:
         return pulumi.get(self, "sections")
 
     @property
@@ -451,4 +479,33 @@ class APICredentialItem(pulumi.CustomResource):
         The UUID of the vault the item is in.
         """
         return pulumi.get(self, "vault")
+
+    @pulumi.output_type
+    class AttachmentResult:
+        """
+        The resolved reference value
+        """
+        def __init__(__self__, value=None):
+            if value and not isinstance(value, str):
+                raise TypeError("Expected argument 'value' to be a str")
+            pulumi.set(__self__, "value", value)
+
+        @property
+        @pulumi.getter
+        def value(self) -> str:
+            """
+            the value of the attachment
+            """
+            return pulumi.get(self, "value")
+
+    def attachment(__self__, *,
+                   name: pulumi.Input[str]) -> pulumi.Output['APICredentialItem.AttachmentResult']:
+        """
+
+        :param pulumi.Input[str] name: The name or uuid of the attachment to get
+        """
+        __args__ = dict()
+        __args__['__self__'] = __self__
+        __args__['name'] = name
+        return pulumi.runtime.call('onepassword:index:APICredentialItem/attachment', __args__, res=__self__, typ=APICredentialItem.AttachmentResult)
 

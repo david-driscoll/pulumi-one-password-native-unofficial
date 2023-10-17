@@ -19,7 +19,10 @@ __all__ = [
 
 @pulumi.output_type
 class GetMembershipResult:
-    def __init__(__self__, category=None, expiry_date=None, fields=None, group=None, member_id=None, member_name=None, member_since=None, notes=None, pin=None, sections=None, tags=None, telephone=None, title=None, uuid=None, vault=None, website=None):
+    def __init__(__self__, attachments=None, category=None, expiry_date=None, fields=None, group=None, member_id=None, member_name=None, member_since=None, notes=None, pin=None, references=None, sections=None, tags=None, telephone=None, title=None, uuid=None, vault=None, website=None):
+        if attachments and not isinstance(attachments, dict):
+            raise TypeError("Expected argument 'attachments' to be a dict")
+        pulumi.set(__self__, "attachments", attachments)
         if category and not isinstance(category, dict):
             raise TypeError("Expected argument 'category' to be a dict")
         pulumi.set(__self__, "category", category)
@@ -47,6 +50,9 @@ class GetMembershipResult:
         if pin and not isinstance(pin, str):
             raise TypeError("Expected argument 'pin' to be a str")
         pulumi.set(__self__, "pin", pin)
+        if references and not isinstance(references, dict):
+            raise TypeError("Expected argument 'references' to be a dict")
+        pulumi.set(__self__, "references", references)
         if sections and not isinstance(sections, dict):
             raise TypeError("Expected argument 'sections' to be a dict")
         pulumi.set(__self__, "sections", sections)
@@ -71,6 +77,11 @@ class GetMembershipResult:
 
     @property
     @pulumi.getter
+    def attachments(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "attachments")
+
+    @property
+    @pulumi.getter
     def category(self) -> str:
         return pulumi.get(self, "category")
 
@@ -81,7 +92,7 @@ class GetMembershipResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.GetField']:
+    def fields(self) -> Mapping[str, 'outputs.OutField']:
         return pulumi.get(self, "fields")
 
     @property
@@ -116,7 +127,12 @@ class GetMembershipResult:
 
     @property
     @pulumi.getter
-    def sections(self) -> Mapping[str, 'outputs.GetSection']:
+    def references(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "references")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> Mapping[str, 'outputs.OutSection']:
         return pulumi.get(self, "sections")
 
     @property
@@ -168,6 +184,7 @@ class AwaitableGetMembershipResult(GetMembershipResult):
         if False:
             yield self
         return GetMembershipResult(
+            attachments=self.attachments,
             category=self.category,
             expiry_date=self.expiry_date,
             fields=self.fields,
@@ -177,6 +194,7 @@ class AwaitableGetMembershipResult(GetMembershipResult):
             member_since=self.member_since,
             notes=self.notes,
             pin=self.pin,
+            references=self.references,
             sections=self.sections,
             tags=self.tags,
             telephone=self.telephone,
@@ -208,6 +226,7 @@ def get_membership(title: Optional[str] = None,
     __ret__ = pulumi.runtime.invoke('onepassword:index:GetMembership', __args__, opts=opts, typ=GetMembershipResult).value
 
     return AwaitableGetMembershipResult(
+        attachments=__ret__.attachments,
         category=__ret__.category,
         expiry_date=__ret__.expiry_date,
         fields=__ret__.fields,
@@ -217,6 +236,7 @@ def get_membership(title: Optional[str] = None,
         member_since=__ret__.member_since,
         notes=__ret__.notes,
         pin=__ret__.pin,
+        references=__ret__.references,
         sections=__ret__.sections,
         tags=__ret__.tags,
         telephone=__ret__.telephone,

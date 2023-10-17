@@ -29,11 +29,13 @@ type GetSSHKeyArgs struct {
 }
 
 type GetSSHKeyResult struct {
-	Category   string                `pulumi:"category"`
-	Fields     map[string]GetField   `pulumi:"fields"`
-	Notes      *string               `pulumi:"notes"`
-	PrivateKey *string               `pulumi:"privateKey"`
-	Sections   map[string]GetSection `pulumi:"sections"`
+	Attachments map[string]OutField   `pulumi:"attachments"`
+	Category    string                `pulumi:"category"`
+	Fields      map[string]OutField   `pulumi:"fields"`
+	Notes       *string               `pulumi:"notes"`
+	PrivateKey  *string               `pulumi:"privateKey"`
+	References  map[string]OutField   `pulumi:"references"`
+	Sections    map[string]OutSection `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -84,12 +86,16 @@ func (o GetSSHKeyResultOutput) ToGetSSHKeyResultOutputWithContext(ctx context.Co
 	return o
 }
 
+func (o GetSSHKeyResultOutput) Attachments() OutFieldMapOutput {
+	return o.ApplyT(func(v GetSSHKeyResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+}
+
 func (o GetSSHKeyResultOutput) Category() pulumi.StringOutput {
 	return o.ApplyT(func(v GetSSHKeyResult) string { return v.Category }).(pulumi.StringOutput)
 }
 
-func (o GetSSHKeyResultOutput) Fields() GetFieldMapOutput {
-	return o.ApplyT(func(v GetSSHKeyResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
+func (o GetSSHKeyResultOutput) Fields() OutFieldMapOutput {
+	return o.ApplyT(func(v GetSSHKeyResult) map[string]OutField { return v.Fields }).(OutFieldMapOutput)
 }
 
 func (o GetSSHKeyResultOutput) Notes() pulumi.StringPtrOutput {
@@ -100,8 +106,12 @@ func (o GetSSHKeyResultOutput) PrivateKey() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetSSHKeyResult) *string { return v.PrivateKey }).(pulumi.StringPtrOutput)
 }
 
-func (o GetSSHKeyResultOutput) Sections() GetSectionMapOutput {
-	return o.ApplyT(func(v GetSSHKeyResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
+func (o GetSSHKeyResultOutput) References() OutFieldMapOutput {
+	return o.ApplyT(func(v GetSSHKeyResult) map[string]OutField { return v.References }).(OutFieldMapOutput)
+}
+
+func (o GetSSHKeyResultOutput) Sections() OutSectionMapOutput {
+	return o.ApplyT(func(v GetSSHKeyResult) map[string]OutSection { return v.Sections }).(OutSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.

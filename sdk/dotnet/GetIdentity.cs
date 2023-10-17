@@ -74,12 +74,14 @@ namespace Pulumi.Onepassword
     public sealed class GetIdentityResult
     {
         public readonly Pulumi.Onepassword.Identity.Outputs.AddressSection? Address;
+        public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
         public readonly string Category;
-        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
         public readonly Pulumi.Onepassword.Identity.Outputs.IdentificationSection? Identification;
         public readonly Pulumi.Onepassword.Identity.Outputs.InternetDetailsSection? InternetDetails;
         public readonly string? Notes;
-        public readonly ImmutableDictionary<string, Outputs.GetSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.OutField> References;
+        public readonly ImmutableDictionary<string, Outputs.OutSection> Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
         /// </summary>
@@ -101,9 +103,11 @@ namespace Pulumi.Onepassword
         private GetIdentityResult(
             Pulumi.Onepassword.Identity.Outputs.AddressSection? address,
 
+            ImmutableDictionary<string, Outputs.OutField> attachments,
+
             string category,
 
-            ImmutableDictionary<string, Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.OutField> fields,
 
             Pulumi.Onepassword.Identity.Outputs.IdentificationSection? identification,
 
@@ -111,7 +115,9 @@ namespace Pulumi.Onepassword
 
             string? notes,
 
-            ImmutableDictionary<string, Outputs.GetSection> sections,
+            ImmutableDictionary<string, Outputs.OutField> references,
+
+            ImmutableDictionary<string, Outputs.OutSection> sections,
 
             ImmutableArray<string> tags,
 
@@ -122,11 +128,13 @@ namespace Pulumi.Onepassword
             string vault)
         {
             Address = address;
+            Attachments = attachments;
             Category = category;
             Fields = fields;
             Identification = identification;
             InternetDetails = internetDetails;
             Notes = notes;
+            References = references;
             Sections = sections;
             Tags = tags;
             Title = title;

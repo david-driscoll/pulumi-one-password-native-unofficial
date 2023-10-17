@@ -19,6 +19,7 @@ class IdentityItemArgs:
     def __init__(__self__, *,
                  vault: pulumi.Input[str],
                  address: Optional[pulumi.Input['_identity.AddressSectionArgs']] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
                  identification: Optional[pulumi.Input['_identity.IdentificationSectionArgs']] = None,
@@ -37,6 +38,8 @@ class IdentityItemArgs:
         pulumi.set(__self__, "vault", vault)
         if address is not None:
             pulumi.set(__self__, "address", address)
+        if attachments is not None:
+            pulumi.set(__self__, "attachments", attachments)
         if category is not None:
             pulumi.set(__self__, "category", 'Identity')
         if fields is not None:
@@ -74,6 +77,15 @@ class IdentityItemArgs:
     @address.setter
     def address(self, value: Optional[pulumi.Input['_identity.AddressSectionArgs']]):
         pulumi.set(self, "address", value)
+
+    @property
+    @pulumi.getter
+    def attachments(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]:
+        return pulumi.get(self, "attachments")
+
+    @attachments.setter
+    def attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
+        pulumi.set(self, "attachments", value)
 
     @property
     @pulumi.getter
@@ -186,6 +198,7 @@ class IdentityItem(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  address: Optional[pulumi.Input[pulumi.InputType['_identity.AddressSectionArgs']]] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  identification: Optional[pulumi.Input[pulumi.InputType['_identity.IdentificationSectionArgs']]] = None,
@@ -229,6 +242,7 @@ class IdentityItem(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  address: Optional[pulumi.Input[pulumi.InputType['_identity.AddressSectionArgs']]] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  identification: Optional[pulumi.Input[pulumi.InputType['_identity.IdentificationSectionArgs']]] = None,
@@ -251,6 +265,7 @@ class IdentityItem(pulumi.CustomResource):
             __props__ = IdentityItemArgs.__new__(IdentityItemArgs)
 
             __props__.__dict__["address"] = address
+            __props__.__dict__["attachments"] = attachments
             __props__.__dict__["category"] = 'Identity'
             __props__.__dict__["fields"] = fields
             __props__.__dict__["identification"] = identification
@@ -262,8 +277,9 @@ class IdentityItem(pulumi.CustomResource):
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
+            __props__.__dict__["references"] = None
             __props__.__dict__["uuid"] = None
-        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["fields", "sections"])
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachments", "fields", "references", "sections"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(IdentityItem, __self__).__init__(
             'onepassword:index:IdentityItem',
@@ -291,11 +307,13 @@ class IdentityItem(pulumi.CustomResource):
 
         __props__.__dict__["vault"] = vault
         __props__.__dict__["address"] = None
+        __props__.__dict__["attachments"] = None
         __props__.__dict__["category"] = None
         __props__.__dict__["fields"] = None
         __props__.__dict__["identification"] = None
         __props__.__dict__["internet_details"] = None
         __props__.__dict__["notes"] = None
+        __props__.__dict__["references"] = None
         __props__.__dict__["sections"] = None
         __props__.__dict__["tags"] = None
         __props__.__dict__["title"] = None
@@ -309,12 +327,17 @@ class IdentityItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
+    def attachments(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+        return pulumi.get(self, "attachments")
+
+    @property
+    @pulumi.getter
     def category(self) -> pulumi.Output[str]:
         return pulumi.get(self, "category")
 
     @property
     @pulumi.getter
-    def fields(self) -> pulumi.Output[Mapping[str, 'outputs.GetField']]:
+    def fields(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
         return pulumi.get(self, "fields")
 
     @property
@@ -334,7 +357,12 @@ class IdentityItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def sections(self) -> pulumi.Output[Mapping[str, 'outputs.GetSection']]:
+    def references(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+        return pulumi.get(self, "references")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> pulumi.Output[Mapping[str, 'outputs.OutSection']]:
         return pulumi.get(self, "sections")
 
     @property
@@ -368,4 +396,33 @@ class IdentityItem(pulumi.CustomResource):
         The UUID of the vault the item is in.
         """
         return pulumi.get(self, "vault")
+
+    @pulumi.output_type
+    class AttachmentResult:
+        """
+        The resolved reference value
+        """
+        def __init__(__self__, value=None):
+            if value and not isinstance(value, str):
+                raise TypeError("Expected argument 'value' to be a str")
+            pulumi.set(__self__, "value", value)
+
+        @property
+        @pulumi.getter
+        def value(self) -> str:
+            """
+            the value of the attachment
+            """
+            return pulumi.get(self, "value")
+
+    def attachment(__self__, *,
+                   name: pulumi.Input[str]) -> pulumi.Output['IdentityItem.AttachmentResult']:
+        """
+
+        :param pulumi.Input[str] name: The name or uuid of the attachment to get
+        """
+        __args__ = dict()
+        __args__['__self__'] = __self__
+        __args__['name'] = name
+        return pulumi.runtime.call('onepassword:index:IdentityItem/attachment', __args__, res=__self__, typ=IdentityItem.AttachmentResult)
 

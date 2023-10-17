@@ -15,6 +15,9 @@ namespace Pulumi.Onepassword
         [Output("address")]
         public Output<string?> Address { get; private set; } = null!;
 
+        [Output("attachments")]
+        public Output<ImmutableDictionary<string, Outputs.OutField>> Attachments { get; private set; } = null!;
+
         [Output("category")]
         public Output<string> Category { get; private set; } = null!;
 
@@ -31,7 +34,7 @@ namespace Pulumi.Onepassword
         public Output<string?> ExpiryDate { get; private set; } = null!;
 
         [Output("fields")]
-        public Output<ImmutableDictionary<string, Outputs.GetField>> Fields { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutField>> Fields { get; private set; } = null!;
 
         [Output("fullName")]
         public Output<string?> FullName { get; private set; } = null!;
@@ -51,8 +54,11 @@ namespace Pulumi.Onepassword
         [Output("number")]
         public Output<string?> Number { get; private set; } = null!;
 
+        [Output("references")]
+        public Output<ImmutableDictionary<string, Outputs.OutField>> References { get; private set; } = null!;
+
         [Output("sections")]
-        public Output<ImmutableDictionary<string, Outputs.GetSection>> Sections { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutSection>> Sections { get; private set; } = null!;
 
         [Output("state")]
         public Output<string?> State { get; private set; } = null!;
@@ -113,7 +119,9 @@ namespace Pulumi.Onepassword
                 Version = Utilities.Version,
                 AdditionalSecretOutputs =
                 {
+                    "attachments",
                     "fields",
+                    "references",
                     "sections",
                 },
             };
@@ -135,12 +143,23 @@ namespace Pulumi.Onepassword
         {
             return new DriverLicenseItem(name, id, state, options);
         }
+
+        public Pulumi.Output<DriverLicenseItemAttachmentResult> Attachment(DriverLicenseItemAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<DriverLicenseItemAttachmentResult>("onepassword:index:DriverLicenseItem/attachment", args ?? new DriverLicenseItemAttachmentArgs(), this);
     }
 
     public sealed class DriverLicenseItemArgs : Pulumi.ResourceArgs
     {
         [Input("address")]
         public Input<string>? Address { get; set; }
+
+        [Input("attachments")]
+        private InputMap<AssetOrArchive>? _attachments;
+        public InputMap<AssetOrArchive> Attachments
+        {
+            get => _attachments ?? (_attachments = new InputMap<AssetOrArchive>());
+            set => _attachments = value;
+        }
 
         /// <summary>
         /// The category of the vault the item is in.
@@ -236,6 +255,40 @@ namespace Pulumi.Onepassword
 
         public DriverLicenseItemState()
         {
+        }
+    }
+
+    /// <summary>
+    /// The set of arguments for the <see cref="DriverLicenseItem.Attachment"/> method.
+    /// </summary>
+    public sealed class DriverLicenseItemAttachmentArgs : Pulumi.CallArgs
+    {
+        /// <summary>
+        /// The name or uuid of the attachment to get
+        /// </summary>
+        [Input("name", required: true)]
+        public Input<string> Name { get; set; } = null!;
+
+        public DriverLicenseItemAttachmentArgs()
+        {
+        }
+    }
+
+    /// <summary>
+    /// The results of the <see cref="DriverLicenseItem.Attachment"/> method.
+    /// </summary>
+    [OutputType]
+    public sealed class DriverLicenseItemAttachmentResult
+    {
+        /// <summary>
+        /// the value of the attachment
+        /// </summary>
+        public readonly string Value;
+
+        [OutputConstructor]
+        private DriverLicenseItemAttachmentResult(string value)
+        {
+            Value = value;
         }
     }
 }

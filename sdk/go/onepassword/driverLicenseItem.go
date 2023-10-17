@@ -15,19 +15,21 @@ type DriverLicenseItem struct {
 	pulumi.CustomResourceState
 
 	Address                pulumi.StringPtrOutput `pulumi:"address"`
+	Attachments            OutFieldMapOutput      `pulumi:"attachments"`
 	Category               pulumi.StringOutput    `pulumi:"category"`
 	ConditionsRestrictions pulumi.StringPtrOutput `pulumi:"conditionsRestrictions"`
 	Country                pulumi.StringPtrOutput `pulumi:"country"`
 	DateOfBirth            pulumi.StringPtrOutput `pulumi:"dateOfBirth"`
 	ExpiryDate             pulumi.StringPtrOutput `pulumi:"expiryDate"`
-	Fields                 GetFieldMapOutput      `pulumi:"fields"`
+	Fields                 OutFieldMapOutput      `pulumi:"fields"`
 	FullName               pulumi.StringPtrOutput `pulumi:"fullName"`
 	Gender                 pulumi.StringPtrOutput `pulumi:"gender"`
 	Height                 pulumi.StringPtrOutput `pulumi:"height"`
 	LicenseClass           pulumi.StringPtrOutput `pulumi:"licenseClass"`
 	Notes                  pulumi.StringPtrOutput `pulumi:"notes"`
 	Number                 pulumi.StringPtrOutput `pulumi:"number"`
-	Sections               GetSectionMapOutput    `pulumi:"sections"`
+	References             OutFieldMapOutput      `pulumi:"references"`
+	Sections               OutSectionMapOutput    `pulumi:"sections"`
 	State                  pulumi.StringPtrOutput `pulumi:"state"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
@@ -51,7 +53,9 @@ func NewDriverLicenseItem(ctx *pulumi.Context,
 	}
 	args.Category = pulumi.StringPtr("Driver License")
 	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"attachments",
 		"fields",
+		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)
@@ -91,7 +95,8 @@ func (DriverLicenseItemState) ElementType() reflect.Type {
 }
 
 type driverLicenseItemArgs struct {
-	Address *string `pulumi:"address"`
+	Address     *string                          `pulumi:"address"`
+	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
 	Category               *string            `pulumi:"category"`
 	ConditionsRestrictions *string            `pulumi:"conditionsRestrictions"`
@@ -117,7 +122,8 @@ type driverLicenseItemArgs struct {
 
 // The set of arguments for constructing a DriverLicenseItem resource.
 type DriverLicenseItemArgs struct {
-	Address pulumi.StringPtrInput
+	Address     pulumi.StringPtrInput
+	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
 	Category               pulumi.StringPtrInput
 	ConditionsRestrictions pulumi.StringPtrInput
@@ -143,6 +149,46 @@ type DriverLicenseItemArgs struct {
 
 func (DriverLicenseItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*driverLicenseItemArgs)(nil)).Elem()
+}
+
+func (r *DriverLicenseItem) Attachment(ctx *pulumi.Context, args *DriverLicenseItemAttachmentArgs) (DriverLicenseItemAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:DriverLicenseItem/attachment", args, DriverLicenseItemAttachmentResultOutput{}, r)
+	if err != nil {
+		return DriverLicenseItemAttachmentResultOutput{}, err
+	}
+	return out.(DriverLicenseItemAttachmentResultOutput), nil
+}
+
+type driverLicenseItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name string `pulumi:"name"`
+}
+
+// The set of arguments for the Attachment method of the DriverLicenseItem resource.
+type DriverLicenseItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name pulumi.StringInput
+}
+
+func (DriverLicenseItemAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*driverLicenseItemAttachmentArgs)(nil)).Elem()
+}
+
+// The resolved reference value
+type DriverLicenseItemAttachmentResult struct {
+	// the value of the attachment
+	Value string `pulumi:"value"`
+}
+
+type DriverLicenseItemAttachmentResultOutput struct{ *pulumi.OutputState }
+
+func (DriverLicenseItemAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*DriverLicenseItemAttachmentResult)(nil)).Elem()
+}
+
+// the value of the attachment
+func (o DriverLicenseItemAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v DriverLicenseItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type DriverLicenseItemInput interface {
@@ -273,6 +319,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*DriverLicenseItemArrayInput)(nil)).Elem(), DriverLicenseItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DriverLicenseItemMapInput)(nil)).Elem(), DriverLicenseItemMap{})
 	pulumi.RegisterOutputType(DriverLicenseItemOutput{})
+	pulumi.RegisterOutputType(DriverLicenseItemAttachmentResultOutput{})
 	pulumi.RegisterOutputType(DriverLicenseItemArrayOutput{})
 	pulumi.RegisterOutputType(DriverLicenseItemMapOutput{})
 }

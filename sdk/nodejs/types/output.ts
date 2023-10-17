@@ -6,7 +6,7 @@ import { input as inputs, output as outputs, enums } from "../types";
 
 import * as utilities from "../utilities";
 
-export interface GetField {
+export interface OutField {
     label: string;
     reference: string;
     type: enums.ResponseFieldType;
@@ -14,8 +14,8 @@ export interface GetField {
     value: string;
 }
 
-export interface GetSection {
-    fields: {[key: string]: outputs.GetField};
+export interface OutSection {
+    fields: {[key: string]: outputs.OutField};
     label: string;
     uuid: string;
 }

@@ -15,14 +15,16 @@ import (
 type EmailAccountItem struct {
 	pulumi.CustomResourceState
 
+	Attachments        OutFieldMapOutput                               `pulumi:"attachments"`
 	AuthMethod         pulumi.StringPtrOutput                          `pulumi:"authMethod"`
 	Category           pulumi.StringOutput                             `pulumi:"category"`
 	ContactInformation emailaccount.ContactInformationSectionPtrOutput `pulumi:"contactInformation"`
-	Fields             GetFieldMapOutput                               `pulumi:"fields"`
+	Fields             OutFieldMapOutput                               `pulumi:"fields"`
 	Notes              pulumi.StringPtrOutput                          `pulumi:"notes"`
 	Password           pulumi.StringPtrOutput                          `pulumi:"password"`
 	PortNumber         pulumi.StringPtrOutput                          `pulumi:"portNumber"`
-	Sections           GetSectionMapOutput                             `pulumi:"sections"`
+	References         OutFieldMapOutput                               `pulumi:"references"`
+	Sections           OutSectionMapOutput                             `pulumi:"sections"`
 	Security           pulumi.StringPtrOutput                          `pulumi:"security"`
 	Server             pulumi.StringPtrOutput                          `pulumi:"server"`
 	Smtp               emailaccount.SmtpSectionPtrOutput               `pulumi:"smtp"`
@@ -53,8 +55,10 @@ func NewEmailAccountItem(ctx *pulumi.Context,
 		args.Password = pulumi.ToSecret(args.Password).(pulumi.StringPtrOutput)
 	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"attachments",
 		"fields",
 		"password",
+		"references",
 		"sections",
 		"smtp",
 	})
@@ -95,7 +99,8 @@ func (EmailAccountItemState) ElementType() reflect.Type {
 }
 
 type emailAccountItemArgs struct {
-	AuthMethod *string `pulumi:"authMethod"`
+	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
+	AuthMethod  *string                          `pulumi:"authMethod"`
 	// The category of the vault the item is in.
 	Category           *string                                 `pulumi:"category"`
 	ContactInformation *emailaccount.ContactInformationSection `pulumi:"contactInformation"`
@@ -119,7 +124,8 @@ type emailAccountItemArgs struct {
 
 // The set of arguments for constructing a EmailAccountItem resource.
 type EmailAccountItemArgs struct {
-	AuthMethod pulumi.StringPtrInput
+	Attachments pulumi.AssetOrArchiveMapInput
+	AuthMethod  pulumi.StringPtrInput
 	// The category of the vault the item is in.
 	Category           pulumi.StringPtrInput
 	ContactInformation emailaccount.ContactInformationSectionPtrInput
@@ -143,6 +149,46 @@ type EmailAccountItemArgs struct {
 
 func (EmailAccountItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*emailAccountItemArgs)(nil)).Elem()
+}
+
+func (r *EmailAccountItem) Attachment(ctx *pulumi.Context, args *EmailAccountItemAttachmentArgs) (EmailAccountItemAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:EmailAccountItem/attachment", args, EmailAccountItemAttachmentResultOutput{}, r)
+	if err != nil {
+		return EmailAccountItemAttachmentResultOutput{}, err
+	}
+	return out.(EmailAccountItemAttachmentResultOutput), nil
+}
+
+type emailAccountItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name string `pulumi:"name"`
+}
+
+// The set of arguments for the Attachment method of the EmailAccountItem resource.
+type EmailAccountItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name pulumi.StringInput
+}
+
+func (EmailAccountItemAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*emailAccountItemAttachmentArgs)(nil)).Elem()
+}
+
+// The resolved reference value
+type EmailAccountItemAttachmentResult struct {
+	// the value of the attachment
+	Value string `pulumi:"value"`
+}
+
+type EmailAccountItemAttachmentResultOutput struct{ *pulumi.OutputState }
+
+func (EmailAccountItemAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*EmailAccountItemAttachmentResult)(nil)).Elem()
+}
+
+// the value of the attachment
+func (o EmailAccountItemAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v EmailAccountItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type EmailAccountItemInput interface {
@@ -273,6 +319,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*EmailAccountItemArrayInput)(nil)).Elem(), EmailAccountItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*EmailAccountItemMapInput)(nil)).Elem(), EmailAccountItemMap{})
 	pulumi.RegisterOutputType(EmailAccountItemOutput{})
+	pulumi.RegisterOutputType(EmailAccountItemAttachmentResultOutput{})
 	pulumi.RegisterOutputType(EmailAccountItemArrayOutput{})
 	pulumi.RegisterOutputType(EmailAccountItemMapOutput{})
 }

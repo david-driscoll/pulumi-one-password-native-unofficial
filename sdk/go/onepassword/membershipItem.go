@@ -14,16 +14,18 @@ import (
 type MembershipItem struct {
 	pulumi.CustomResourceState
 
+	Attachments OutFieldMapOutput      `pulumi:"attachments"`
 	Category    pulumi.StringOutput    `pulumi:"category"`
 	ExpiryDate  pulumi.StringPtrOutput `pulumi:"expiryDate"`
-	Fields      GetFieldMapOutput      `pulumi:"fields"`
+	Fields      OutFieldMapOutput      `pulumi:"fields"`
 	Group       pulumi.StringPtrOutput `pulumi:"group"`
 	MemberId    pulumi.StringPtrOutput `pulumi:"memberId"`
 	MemberName  pulumi.StringPtrOutput `pulumi:"memberName"`
 	MemberSince pulumi.StringPtrOutput `pulumi:"memberSince"`
 	Notes       pulumi.StringPtrOutput `pulumi:"notes"`
 	Pin         pulumi.StringPtrOutput `pulumi:"pin"`
-	Sections    GetSectionMapOutput    `pulumi:"sections"`
+	References  OutFieldMapOutput      `pulumi:"references"`
+	Sections    OutSectionMapOutput    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags      pulumi.StringArrayOutput `pulumi:"tags"`
 	Telephone pulumi.StringPtrOutput   `pulumi:"telephone"`
@@ -51,8 +53,10 @@ func NewMembershipItem(ctx *pulumi.Context,
 		args.Pin = pulumi.ToSecret(args.Pin).(pulumi.StringPtrOutput)
 	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"attachments",
 		"fields",
 		"pin",
+		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)
@@ -92,6 +96,7 @@ func (MembershipItemState) ElementType() reflect.Type {
 }
 
 type membershipItemArgs struct {
+	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
 	Category    *string            `pulumi:"category"`
 	ExpiryDate  *string            `pulumi:"expiryDate"`
@@ -115,6 +120,7 @@ type membershipItemArgs struct {
 
 // The set of arguments for constructing a MembershipItem resource.
 type MembershipItemArgs struct {
+	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
 	Category    pulumi.StringPtrInput
 	ExpiryDate  pulumi.StringPtrInput
@@ -138,6 +144,46 @@ type MembershipItemArgs struct {
 
 func (MembershipItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*membershipItemArgs)(nil)).Elem()
+}
+
+func (r *MembershipItem) Attachment(ctx *pulumi.Context, args *MembershipItemAttachmentArgs) (MembershipItemAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:MembershipItem/attachment", args, MembershipItemAttachmentResultOutput{}, r)
+	if err != nil {
+		return MembershipItemAttachmentResultOutput{}, err
+	}
+	return out.(MembershipItemAttachmentResultOutput), nil
+}
+
+type membershipItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name string `pulumi:"name"`
+}
+
+// The set of arguments for the Attachment method of the MembershipItem resource.
+type MembershipItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name pulumi.StringInput
+}
+
+func (MembershipItemAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*membershipItemAttachmentArgs)(nil)).Elem()
+}
+
+// The resolved reference value
+type MembershipItemAttachmentResult struct {
+	// the value of the attachment
+	Value string `pulumi:"value"`
+}
+
+type MembershipItemAttachmentResultOutput struct{ *pulumi.OutputState }
+
+func (MembershipItemAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*MembershipItemAttachmentResult)(nil)).Elem()
+}
+
+// the value of the attachment
+func (o MembershipItemAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v MembershipItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type MembershipItemInput interface {
@@ -268,6 +314,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*MembershipItemArrayInput)(nil)).Elem(), MembershipItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*MembershipItemMapInput)(nil)).Elem(), MembershipItemMap{})
 	pulumi.RegisterOutputType(MembershipItemOutput{})
+	pulumi.RegisterOutputType(MembershipItemAttachmentResultOutput{})
 	pulumi.RegisterOutputType(MembershipItemArrayOutput{})
 	pulumi.RegisterOutputType(MembershipItemMapOutput{})
 }

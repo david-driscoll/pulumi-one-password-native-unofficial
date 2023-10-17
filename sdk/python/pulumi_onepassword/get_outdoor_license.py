@@ -19,10 +19,13 @@ __all__ = [
 
 @pulumi.output_type
 class GetOutdoorLicenseResult:
-    def __init__(__self__, approved_wildlife=None, category=None, country=None, expires=None, fields=None, full_name=None, maximum_quota=None, notes=None, sections=None, state=None, tags=None, title=None, uuid=None, valid_from=None, vault=None):
+    def __init__(__self__, approved_wildlife=None, attachments=None, category=None, country=None, expires=None, fields=None, full_name=None, maximum_quota=None, notes=None, references=None, sections=None, state=None, tags=None, title=None, uuid=None, valid_from=None, vault=None):
         if approved_wildlife and not isinstance(approved_wildlife, str):
             raise TypeError("Expected argument 'approved_wildlife' to be a str")
         pulumi.set(__self__, "approved_wildlife", approved_wildlife)
+        if attachments and not isinstance(attachments, dict):
+            raise TypeError("Expected argument 'attachments' to be a dict")
+        pulumi.set(__self__, "attachments", attachments)
         if category and not isinstance(category, dict):
             raise TypeError("Expected argument 'category' to be a dict")
         pulumi.set(__self__, "category", category)
@@ -44,6 +47,9 @@ class GetOutdoorLicenseResult:
         if notes and not isinstance(notes, str):
             raise TypeError("Expected argument 'notes' to be a str")
         pulumi.set(__self__, "notes", notes)
+        if references and not isinstance(references, dict):
+            raise TypeError("Expected argument 'references' to be a dict")
+        pulumi.set(__self__, "references", references)
         if sections and not isinstance(sections, dict):
             raise TypeError("Expected argument 'sections' to be a dict")
         pulumi.set(__self__, "sections", sections)
@@ -73,6 +79,11 @@ class GetOutdoorLicenseResult:
 
     @property
     @pulumi.getter
+    def attachments(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "attachments")
+
+    @property
+    @pulumi.getter
     def category(self) -> str:
         return pulumi.get(self, "category")
 
@@ -88,7 +99,7 @@ class GetOutdoorLicenseResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.GetField']:
+    def fields(self) -> Mapping[str, 'outputs.OutField']:
         return pulumi.get(self, "fields")
 
     @property
@@ -108,7 +119,12 @@ class GetOutdoorLicenseResult:
 
     @property
     @pulumi.getter
-    def sections(self) -> Mapping[str, 'outputs.GetSection']:
+    def references(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "references")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> Mapping[str, 'outputs.OutSection']:
         return pulumi.get(self, "sections")
 
     @property
@@ -161,6 +177,7 @@ class AwaitableGetOutdoorLicenseResult(GetOutdoorLicenseResult):
             yield self
         return GetOutdoorLicenseResult(
             approved_wildlife=self.approved_wildlife,
+            attachments=self.attachments,
             category=self.category,
             country=self.country,
             expires=self.expires,
@@ -168,6 +185,7 @@ class AwaitableGetOutdoorLicenseResult(GetOutdoorLicenseResult):
             full_name=self.full_name,
             maximum_quota=self.maximum_quota,
             notes=self.notes,
+            references=self.references,
             sections=self.sections,
             state=self.state,
             tags=self.tags,
@@ -200,6 +218,7 @@ def get_outdoor_license(title: Optional[str] = None,
 
     return AwaitableGetOutdoorLicenseResult(
         approved_wildlife=__ret__.approved_wildlife,
+        attachments=__ret__.attachments,
         category=__ret__.category,
         country=__ret__.country,
         expires=__ret__.expires,
@@ -207,6 +226,7 @@ def get_outdoor_license(title: Optional[str] = None,
         full_name=__ret__.full_name,
         maximum_quota=__ret__.maximum_quota,
         notes=__ret__.notes,
+        references=__ret__.references,
         sections=__ret__.sections,
         state=__ret__.state,
         tags=__ret__.tags,

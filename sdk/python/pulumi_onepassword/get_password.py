@@ -19,7 +19,10 @@ __all__ = [
 
 @pulumi.output_type
 class GetPasswordResult:
-    def __init__(__self__, category=None, fields=None, notes=None, password=None, sections=None, tags=None, title=None, uuid=None, vault=None):
+    def __init__(__self__, attachments=None, category=None, fields=None, notes=None, password=None, references=None, sections=None, tags=None, title=None, uuid=None, vault=None):
+        if attachments and not isinstance(attachments, dict):
+            raise TypeError("Expected argument 'attachments' to be a dict")
+        pulumi.set(__self__, "attachments", attachments)
         if category and not isinstance(category, dict):
             raise TypeError("Expected argument 'category' to be a dict")
         pulumi.set(__self__, "category", category)
@@ -32,6 +35,9 @@ class GetPasswordResult:
         if password and not isinstance(password, str):
             raise TypeError("Expected argument 'password' to be a str")
         pulumi.set(__self__, "password", password)
+        if references and not isinstance(references, dict):
+            raise TypeError("Expected argument 'references' to be a dict")
+        pulumi.set(__self__, "references", references)
         if sections and not isinstance(sections, dict):
             raise TypeError("Expected argument 'sections' to be a dict")
         pulumi.set(__self__, "sections", sections)
@@ -50,12 +56,17 @@ class GetPasswordResult:
 
     @property
     @pulumi.getter
+    def attachments(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "attachments")
+
+    @property
+    @pulumi.getter
     def category(self) -> str:
         return pulumi.get(self, "category")
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.GetField']:
+    def fields(self) -> Mapping[str, 'outputs.OutField']:
         return pulumi.get(self, "fields")
 
     @property
@@ -70,7 +81,12 @@ class GetPasswordResult:
 
     @property
     @pulumi.getter
-    def sections(self) -> Mapping[str, 'outputs.GetSection']:
+    def references(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "references")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> Mapping[str, 'outputs.OutSection']:
         return pulumi.get(self, "sections")
 
     @property
@@ -112,10 +128,12 @@ class AwaitableGetPasswordResult(GetPasswordResult):
         if False:
             yield self
         return GetPasswordResult(
+            attachments=self.attachments,
             category=self.category,
             fields=self.fields,
             notes=self.notes,
             password=self.password,
+            references=self.references,
             sections=self.sections,
             tags=self.tags,
             title=self.title,
@@ -145,10 +163,12 @@ def get_password(title: Optional[str] = None,
     __ret__ = pulumi.runtime.invoke('onepassword:index:GetPassword', __args__, opts=opts, typ=GetPasswordResult).value
 
     return AwaitableGetPasswordResult(
+        attachments=__ret__.attachments,
         category=__ret__.category,
         fields=__ret__.fields,
         notes=__ret__.notes,
         password=__ret__.password,
+        references=__ret__.references,
         sections=__ret__.sections,
         tags=__ret__.tags,
         title=__ret__.title,

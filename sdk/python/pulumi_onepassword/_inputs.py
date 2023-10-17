@@ -11,6 +11,7 @@ from ._enums import *
 
 __all__ = [
     'FieldArgs',
+    'PasswordRecipeArgs',
     'SectionArgs',
 ]
 
@@ -42,6 +43,58 @@ class FieldArgs:
     @type.setter
     def type(self, value: Optional[pulumi.Input['FieldAssignmentType']]):
         pulumi.set(self, "type", value)
+
+
+@pulumi.input_type
+class PasswordRecipeArgs:
+    def __init__(__self__, *,
+                 length: pulumi.Input[int],
+                 digits: Optional[pulumi.Input[bool]] = None,
+                 letters: Optional[pulumi.Input[bool]] = None,
+                 symbols: Optional[pulumi.Input[bool]] = None):
+        pulumi.set(__self__, "length", length)
+        if digits is not None:
+            pulumi.set(__self__, "digits", digits)
+        if letters is not None:
+            pulumi.set(__self__, "letters", letters)
+        if symbols is not None:
+            pulumi.set(__self__, "symbols", symbols)
+
+    @property
+    @pulumi.getter
+    def length(self) -> pulumi.Input[int]:
+        return pulumi.get(self, "length")
+
+    @length.setter
+    def length(self, value: pulumi.Input[int]):
+        pulumi.set(self, "length", value)
+
+    @property
+    @pulumi.getter
+    def digits(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "digits")
+
+    @digits.setter
+    def digits(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "digits", value)
+
+    @property
+    @pulumi.getter
+    def letters(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "letters")
+
+    @letters.setter
+    def letters(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "letters", value)
+
+    @property
+    @pulumi.getter
+    def symbols(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "symbols")
+
+    @symbols.setter
+    def symbols(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "symbols", value)
 
 
 @pulumi.input_type

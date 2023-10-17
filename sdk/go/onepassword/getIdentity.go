@@ -31,12 +31,14 @@ type GetIdentityArgs struct {
 
 type GetIdentityResult struct {
 	Address         *identity.AddressSection         `pulumi:"address"`
+	Attachments     map[string]OutField              `pulumi:"attachments"`
 	Category        string                           `pulumi:"category"`
-	Fields          map[string]GetField              `pulumi:"fields"`
+	Fields          map[string]OutField              `pulumi:"fields"`
 	Identification  *identity.IdentificationSection  `pulumi:"identification"`
 	InternetDetails *identity.InternetDetailsSection `pulumi:"internetDetails"`
 	Notes           *string                          `pulumi:"notes"`
-	Sections        map[string]GetSection            `pulumi:"sections"`
+	References      map[string]OutField              `pulumi:"references"`
+	Sections        map[string]OutSection            `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -91,12 +93,16 @@ func (o GetIdentityResultOutput) Address() identity.AddressSectionPtrOutput {
 	return o.ApplyT(func(v GetIdentityResult) *identity.AddressSection { return v.Address }).(identity.AddressSectionPtrOutput)
 }
 
+func (o GetIdentityResultOutput) Attachments() OutFieldMapOutput {
+	return o.ApplyT(func(v GetIdentityResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+}
+
 func (o GetIdentityResultOutput) Category() pulumi.StringOutput {
 	return o.ApplyT(func(v GetIdentityResult) string { return v.Category }).(pulumi.StringOutput)
 }
 
-func (o GetIdentityResultOutput) Fields() GetFieldMapOutput {
-	return o.ApplyT(func(v GetIdentityResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
+func (o GetIdentityResultOutput) Fields() OutFieldMapOutput {
+	return o.ApplyT(func(v GetIdentityResult) map[string]OutField { return v.Fields }).(OutFieldMapOutput)
 }
 
 func (o GetIdentityResultOutput) Identification() identity.IdentificationSectionPtrOutput {
@@ -111,8 +117,12 @@ func (o GetIdentityResultOutput) Notes() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetIdentityResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o GetIdentityResultOutput) Sections() GetSectionMapOutput {
-	return o.ApplyT(func(v GetIdentityResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
+func (o GetIdentityResultOutput) References() OutFieldMapOutput {
+	return o.ApplyT(func(v GetIdentityResult) map[string]OutField { return v.References }).(OutFieldMapOutput)
+}
+
+func (o GetIdentityResultOutput) Sections() OutSectionMapOutput {
+	return o.ApplyT(func(v GetIdentityResult) map[string]OutSection { return v.Sections }).(OutSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.

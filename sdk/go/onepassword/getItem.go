@@ -10,7 +10,6 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-// Use this data source to get details of an item by its vault uuid and either the title or the uuid of the item.
 func LookupItem(ctx *pulumi.Context, args *LookupItemArgs, opts ...pulumi.InvokeOption) (*LookupItemResult, error) {
 	var rv LookupItemResult
 	err := ctx.Invoke("onepassword:index:GetItem", args, &rv, opts...)
@@ -30,9 +29,11 @@ type LookupItemArgs struct {
 }
 
 type LookupItemResult struct {
-	Category string                `pulumi:"category"`
-	Fields   map[string]GetField   `pulumi:"fields"`
-	Sections map[string]GetSection `pulumi:"sections"`
+	Attachments map[string]OutField   `pulumi:"attachments"`
+	Category    string                `pulumi:"category"`
+	Fields      map[string]OutField   `pulumi:"fields"`
+	References  map[string]OutField   `pulumi:"references"`
+	Sections    map[string]OutSection `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -83,16 +84,24 @@ func (o LookupItemResultOutput) ToLookupItemResultOutputWithContext(ctx context.
 	return o
 }
 
+func (o LookupItemResultOutput) Attachments() OutFieldMapOutput {
+	return o.ApplyT(func(v LookupItemResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+}
+
 func (o LookupItemResultOutput) Category() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupItemResult) string { return v.Category }).(pulumi.StringOutput)
 }
 
-func (o LookupItemResultOutput) Fields() GetFieldMapOutput {
-	return o.ApplyT(func(v LookupItemResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
+func (o LookupItemResultOutput) Fields() OutFieldMapOutput {
+	return o.ApplyT(func(v LookupItemResult) map[string]OutField { return v.Fields }).(OutFieldMapOutput)
 }
 
-func (o LookupItemResultOutput) Sections() GetSectionMapOutput {
-	return o.ApplyT(func(v LookupItemResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
+func (o LookupItemResultOutput) References() OutFieldMapOutput {
+	return o.ApplyT(func(v LookupItemResult) map[string]OutField { return v.References }).(OutFieldMapOutput)
+}
+
+func (o LookupItemResultOutput) Sections() OutSectionMapOutput {
+	return o.ApplyT(func(v LookupItemResult) map[string]OutSection { return v.Sections }).(OutSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.

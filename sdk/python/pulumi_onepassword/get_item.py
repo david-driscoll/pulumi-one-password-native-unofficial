@@ -19,13 +19,19 @@ __all__ = [
 
 @pulumi.output_type
 class GetItemResult:
-    def __init__(__self__, category=None, fields=None, sections=None, tags=None, title=None, uuid=None, vault=None):
+    def __init__(__self__, attachments=None, category=None, fields=None, references=None, sections=None, tags=None, title=None, uuid=None, vault=None):
+        if attachments and not isinstance(attachments, dict):
+            raise TypeError("Expected argument 'attachments' to be a dict")
+        pulumi.set(__self__, "attachments", attachments)
         if category and not isinstance(category, dict):
             raise TypeError("Expected argument 'category' to be a dict")
         pulumi.set(__self__, "category", category)
         if fields and not isinstance(fields, dict):
             raise TypeError("Expected argument 'fields' to be a dict")
         pulumi.set(__self__, "fields", fields)
+        if references and not isinstance(references, dict):
+            raise TypeError("Expected argument 'references' to be a dict")
+        pulumi.set(__self__, "references", references)
         if sections and not isinstance(sections, dict):
             raise TypeError("Expected argument 'sections' to be a dict")
         pulumi.set(__self__, "sections", sections)
@@ -44,17 +50,27 @@ class GetItemResult:
 
     @property
     @pulumi.getter
+    def attachments(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "attachments")
+
+    @property
+    @pulumi.getter
     def category(self) -> str:
         return pulumi.get(self, "category")
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.GetField']:
+    def fields(self) -> Mapping[str, 'outputs.OutField']:
         return pulumi.get(self, "fields")
 
     @property
     @pulumi.getter
-    def sections(self) -> Mapping[str, 'outputs.GetSection']:
+    def references(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "references")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> Mapping[str, 'outputs.OutSection']:
         return pulumi.get(self, "sections")
 
     @property
@@ -96,8 +112,10 @@ class AwaitableGetItemResult(GetItemResult):
         if False:
             yield self
         return GetItemResult(
+            attachments=self.attachments,
             category=self.category,
             fields=self.fields,
+            references=self.references,
             sections=self.sections,
             tags=self.tags,
             title=self.title,
@@ -110,8 +128,7 @@ def get_item(title: Optional[str] = None,
              vault: Optional[str] = None,
              opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetItemResult:
     """
-    Use this data source to get details of an item by its vault uuid and either the title or the uuid of the item.
-
+    Use this data source to access information about an existing resource.
 
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
     :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -128,8 +145,10 @@ def get_item(title: Optional[str] = None,
     __ret__ = pulumi.runtime.invoke('onepassword:index:GetItem', __args__, opts=opts, typ=GetItemResult).value
 
     return AwaitableGetItemResult(
+        attachments=__ret__.attachments,
         category=__ret__.category,
         fields=__ret__.fields,
+        references=__ret__.references,
         sections=__ret__.sections,
         tags=__ret__.tags,
         title=__ret__.title,
@@ -143,8 +162,7 @@ def get_item_output(title: Optional[pulumi.Input[Optional[str]]] = None,
                     vault: Optional[pulumi.Input[str]] = None,
                     opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetItemResult]:
     """
-    Use this data source to get details of an item by its vault uuid and either the title or the uuid of the item.
-
+    Use this data source to access information about an existing resource.
 
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
     :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.

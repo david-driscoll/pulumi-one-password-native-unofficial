@@ -34,14 +34,16 @@ export interface GetEmailAccountArgs {
 }
 
 export interface GetEmailAccountResult {
+    readonly attachments: {[key: string]: outputs.OutField};
     readonly authMethod?: string;
     readonly category: enums.Category | string;
     readonly contactInformation?: outputs.emailAccount.ContactInformationSection;
-    readonly fields: {[key: string]: outputs.GetField};
+    readonly fields: {[key: string]: outputs.OutField};
     readonly notes?: string;
     readonly password?: string;
     readonly portNumber?: string;
-    readonly sections: {[key: string]: outputs.GetSection};
+    readonly references: {[key: string]: outputs.OutField};
+    readonly sections: {[key: string]: outputs.OutSection};
     readonly security?: string;
     readonly server?: string;
     readonly smtp?: outputs.emailAccount.SmtpSection;

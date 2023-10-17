@@ -15,6 +15,9 @@ namespace Pulumi.Onepassword
         [Output("additionalDetails")]
         public Output<Pulumi.Onepassword.CreditCard.Outputs.AdditionalDetailsSection?> AdditionalDetails { get; private set; } = null!;
 
+        [Output("attachments")]
+        public Output<ImmutableDictionary<string, Outputs.OutField>> Attachments { get; private set; } = null!;
+
         [Output("cardholderName")]
         public Output<string?> CardholderName { get; private set; } = null!;
 
@@ -28,7 +31,7 @@ namespace Pulumi.Onepassword
         public Output<string?> ExpiryDate { get; private set; } = null!;
 
         [Output("fields")]
-        public Output<ImmutableDictionary<string, Outputs.GetField>> Fields { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutField>> Fields { get; private set; } = null!;
 
         [Output("notes")]
         public Output<string?> Notes { get; private set; } = null!;
@@ -36,8 +39,11 @@ namespace Pulumi.Onepassword
         [Output("number")]
         public Output<string?> Number { get; private set; } = null!;
 
+        [Output("references")]
+        public Output<ImmutableDictionary<string, Outputs.OutField>> References { get; private set; } = null!;
+
         [Output("sections")]
-        public Output<ImmutableDictionary<string, Outputs.GetSection>> Sections { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutSection>> Sections { get; private set; } = null!;
 
         /// <summary>
         /// An array of strings of the tags assigned to the item.
@@ -105,7 +111,9 @@ namespace Pulumi.Onepassword
                 AdditionalSecretOutputs =
                 {
                     "additionalDetails",
+                    "attachments",
                     "fields",
+                    "references",
                     "sections",
                     "verificationNumber",
                 },
@@ -128,12 +136,23 @@ namespace Pulumi.Onepassword
         {
             return new CreditCardItem(name, id, state, options);
         }
+
+        public Pulumi.Output<CreditCardItemAttachmentResult> Attachment(CreditCardItemAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<CreditCardItemAttachmentResult>("onepassword:index:CreditCardItem/attachment", args ?? new CreditCardItemAttachmentArgs(), this);
     }
 
     public sealed class CreditCardItemArgs : Pulumi.ResourceArgs
     {
         [Input("additionalDetails")]
         public Input<Pulumi.Onepassword.CreditCard.Inputs.AdditionalDetailsSectionArgs>? AdditionalDetails { get; set; }
+
+        [Input("attachments")]
+        private InputMap<AssetOrArchive>? _attachments;
+        public InputMap<AssetOrArchive> Attachments
+        {
+            get => _attachments ?? (_attachments = new InputMap<AssetOrArchive>());
+            set => _attachments = value;
+        }
 
         [Input("cardholderName")]
         public Input<string>? CardholderName { get; set; }
@@ -229,6 +248,40 @@ namespace Pulumi.Onepassword
 
         public CreditCardItemState()
         {
+        }
+    }
+
+    /// <summary>
+    /// The set of arguments for the <see cref="CreditCardItem.Attachment"/> method.
+    /// </summary>
+    public sealed class CreditCardItemAttachmentArgs : Pulumi.CallArgs
+    {
+        /// <summary>
+        /// The name or uuid of the attachment to get
+        /// </summary>
+        [Input("name", required: true)]
+        public Input<string> Name { get; set; } = null!;
+
+        public CreditCardItemAttachmentArgs()
+        {
+        }
+    }
+
+    /// <summary>
+    /// The results of the <see cref="CreditCardItem.Attachment"/> method.
+    /// </summary>
+    [OutputType]
+    public sealed class CreditCardItemAttachmentResult
+    {
+        /// <summary>
+        /// the value of the attachment
+        /// </summary>
+        public readonly string Value;
+
+        [OutputConstructor]
+        private CreditCardItemAttachmentResult(string value)
+        {
+            Value = value;
         }
     }
 }

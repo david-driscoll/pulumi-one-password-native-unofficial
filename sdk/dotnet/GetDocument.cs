@@ -73,10 +73,12 @@ namespace Pulumi.Onepassword
     [OutputType]
     public sealed class GetDocumentResult
     {
+        public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
         public readonly string Category;
-        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
         public readonly string? Notes;
-        public readonly ImmutableDictionary<string, Outputs.GetSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.OutField> References;
+        public readonly ImmutableDictionary<string, Outputs.OutSection> Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
         /// </summary>
@@ -96,13 +98,17 @@ namespace Pulumi.Onepassword
 
         [OutputConstructor]
         private GetDocumentResult(
+            ImmutableDictionary<string, Outputs.OutField> attachments,
+
             string category,
 
-            ImmutableDictionary<string, Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.OutField> fields,
 
             string? notes,
 
-            ImmutableDictionary<string, Outputs.GetSection> sections,
+            ImmutableDictionary<string, Outputs.OutField> references,
+
+            ImmutableDictionary<string, Outputs.OutSection> sections,
 
             ImmutableArray<string> tags,
 
@@ -112,9 +118,11 @@ namespace Pulumi.Onepassword
 
             string vault)
         {
+            Attachments = attachments;
             Category = category;
             Fields = fields;
             Notes = notes;
+            References = references;
             Sections = sections;
             Tags = tags;
             Title = title;

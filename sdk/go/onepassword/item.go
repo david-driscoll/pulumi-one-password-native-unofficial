@@ -14,9 +14,11 @@ import (
 type Item struct {
 	pulumi.CustomResourceState
 
-	Category pulumi.StringOutput `pulumi:"category"`
-	Fields   GetFieldMapOutput   `pulumi:"fields"`
-	Sections GetSectionMapOutput `pulumi:"sections"`
+	Attachments OutFieldMapOutput   `pulumi:"attachments"`
+	Category    pulumi.StringOutput `pulumi:"category"`
+	Fields      OutFieldMapOutput   `pulumi:"fields"`
+	References  OutFieldMapOutput   `pulumi:"references"`
+	Sections    OutSectionMapOutput `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -41,7 +43,9 @@ func NewItem(ctx *pulumi.Context,
 		args.Category = pulumi.StringPtr("Item")
 	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"attachments",
 		"fields",
+		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)
@@ -81,9 +85,10 @@ func (ItemState) ElementType() reflect.Type {
 }
 
 type itemArgs struct {
-	Category *string            `pulumi:"category"`
-	Fields   map[string]Field   `pulumi:"fields"`
-	Sections map[string]Section `pulumi:"sections"`
+	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
+	Category    *string                          `pulumi:"category"`
+	Fields      map[string]Field                 `pulumi:"fields"`
+	Sections    map[string]Section               `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -94,9 +99,10 @@ type itemArgs struct {
 
 // The set of arguments for constructing a Item resource.
 type ItemArgs struct {
-	Category pulumi.StringPtrInput
-	Fields   FieldMapInput
-	Sections SectionMapInput
+	Attachments pulumi.AssetOrArchiveMapInput
+	Category    pulumi.StringPtrInput
+	Fields      FieldMapInput
+	Sections    SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -107,6 +113,46 @@ type ItemArgs struct {
 
 func (ItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*itemArgs)(nil)).Elem()
+}
+
+func (r *Item) Attachment(ctx *pulumi.Context, args *ItemAttachmentArgs) (ItemAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:Item/attachment", args, ItemAttachmentResultOutput{}, r)
+	if err != nil {
+		return ItemAttachmentResultOutput{}, err
+	}
+	return out.(ItemAttachmentResultOutput), nil
+}
+
+type itemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name string `pulumi:"name"`
+}
+
+// The set of arguments for the Attachment method of the Item resource.
+type ItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name pulumi.StringInput
+}
+
+func (ItemAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*itemAttachmentArgs)(nil)).Elem()
+}
+
+// The resolved reference value
+type ItemAttachmentResult struct {
+	// the value of the attachment
+	Value string `pulumi:"value"`
+}
+
+type ItemAttachmentResultOutput struct{ *pulumi.OutputState }
+
+func (ItemAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ItemAttachmentResult)(nil)).Elem()
+}
+
+// the value of the attachment
+func (o ItemAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v ItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type ItemInput interface {
@@ -237,6 +283,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*ItemArrayInput)(nil)).Elem(), ItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ItemMapInput)(nil)).Elem(), ItemMap{})
 	pulumi.RegisterOutputType(ItemOutput{})
+	pulumi.RegisterOutputType(ItemAttachmentResultOutput{})
 	pulumi.RegisterOutputType(ItemArrayOutput{})
 	pulumi.RegisterOutputType(ItemMapOutput{})
 }

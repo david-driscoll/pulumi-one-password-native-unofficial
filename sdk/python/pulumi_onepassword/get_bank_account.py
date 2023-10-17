@@ -20,10 +20,13 @@ __all__ = [
 
 @pulumi.output_type
 class GetBankAccountResult:
-    def __init__(__self__, account_number=None, bank_name=None, branch_information=None, category=None, fields=None, iban=None, name_on_account=None, notes=None, pin=None, routing_number=None, sections=None, swift=None, tags=None, title=None, type=None, uuid=None, vault=None):
+    def __init__(__self__, account_number=None, attachments=None, bank_name=None, branch_information=None, category=None, fields=None, iban=None, name_on_account=None, notes=None, pin=None, references=None, routing_number=None, sections=None, swift=None, tags=None, title=None, type=None, uuid=None, vault=None):
         if account_number and not isinstance(account_number, str):
             raise TypeError("Expected argument 'account_number' to be a str")
         pulumi.set(__self__, "account_number", account_number)
+        if attachments and not isinstance(attachments, dict):
+            raise TypeError("Expected argument 'attachments' to be a dict")
+        pulumi.set(__self__, "attachments", attachments)
         if bank_name and not isinstance(bank_name, str):
             raise TypeError("Expected argument 'bank_name' to be a str")
         pulumi.set(__self__, "bank_name", bank_name)
@@ -48,6 +51,9 @@ class GetBankAccountResult:
         if pin and not isinstance(pin, str):
             raise TypeError("Expected argument 'pin' to be a str")
         pulumi.set(__self__, "pin", pin)
+        if references and not isinstance(references, dict):
+            raise TypeError("Expected argument 'references' to be a dict")
+        pulumi.set(__self__, "references", references)
         if routing_number and not isinstance(routing_number, str):
             raise TypeError("Expected argument 'routing_number' to be a str")
         pulumi.set(__self__, "routing_number", routing_number)
@@ -79,6 +85,11 @@ class GetBankAccountResult:
         return pulumi.get(self, "account_number")
 
     @property
+    @pulumi.getter
+    def attachments(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "attachments")
+
+    @property
     @pulumi.getter(name="bankName")
     def bank_name(self) -> Optional[str]:
         return pulumi.get(self, "bank_name")
@@ -95,7 +106,7 @@ class GetBankAccountResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.GetField']:
+    def fields(self) -> Mapping[str, 'outputs.OutField']:
         return pulumi.get(self, "fields")
 
     @property
@@ -119,13 +130,18 @@ class GetBankAccountResult:
         return pulumi.get(self, "pin")
 
     @property
+    @pulumi.getter
+    def references(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "references")
+
+    @property
     @pulumi.getter(name="routingNumber")
     def routing_number(self) -> Optional[str]:
         return pulumi.get(self, "routing_number")
 
     @property
     @pulumi.getter
-    def sections(self) -> Mapping[str, 'outputs.GetSection']:
+    def sections(self) -> Mapping[str, 'outputs.OutSection']:
         return pulumi.get(self, "sections")
 
     @property
@@ -178,6 +194,7 @@ class AwaitableGetBankAccountResult(GetBankAccountResult):
             yield self
         return GetBankAccountResult(
             account_number=self.account_number,
+            attachments=self.attachments,
             bank_name=self.bank_name,
             branch_information=self.branch_information,
             category=self.category,
@@ -186,6 +203,7 @@ class AwaitableGetBankAccountResult(GetBankAccountResult):
             name_on_account=self.name_on_account,
             notes=self.notes,
             pin=self.pin,
+            references=self.references,
             routing_number=self.routing_number,
             sections=self.sections,
             swift=self.swift,
@@ -219,6 +237,7 @@ def get_bank_account(title: Optional[str] = None,
 
     return AwaitableGetBankAccountResult(
         account_number=__ret__.account_number,
+        attachments=__ret__.attachments,
         bank_name=__ret__.bank_name,
         branch_information=__ret__.branch_information,
         category=__ret__.category,
@@ -227,6 +246,7 @@ def get_bank_account(title: Optional[str] = None,
         name_on_account=__ret__.name_on_account,
         notes=__ret__.notes,
         pin=__ret__.pin,
+        references=__ret__.references,
         routing_number=__ret__.routing_number,
         sections=__ret__.sections,
         swift=__ret__.swift,

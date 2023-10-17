@@ -19,6 +19,7 @@ class ServerItemArgs:
     def __init__(__self__, *,
                  vault: pulumi.Input[str],
                  admin_console: Optional[pulumi.Input['_server.AdminConsoleSectionArgs']] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
                  hosting_provider: Optional[pulumi.Input['_server.HostingProviderSectionArgs']] = None,
@@ -39,6 +40,8 @@ class ServerItemArgs:
         pulumi.set(__self__, "vault", vault)
         if admin_console is not None:
             pulumi.set(__self__, "admin_console", admin_console)
+        if attachments is not None:
+            pulumi.set(__self__, "attachments", attachments)
         if category is not None:
             pulumi.set(__self__, "category", 'Server')
         if fields is not None:
@@ -80,6 +83,15 @@ class ServerItemArgs:
     @admin_console.setter
     def admin_console(self, value: Optional[pulumi.Input['_server.AdminConsoleSectionArgs']]):
         pulumi.set(self, "admin_console", value)
+
+    @property
+    @pulumi.getter
+    def attachments(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]:
+        return pulumi.get(self, "attachments")
+
+    @attachments.setter
+    def attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
+        pulumi.set(self, "attachments", value)
 
     @property
     @pulumi.getter
@@ -210,6 +222,7 @@ class ServerItem(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  admin_console: Optional[pulumi.Input[pulumi.InputType['_server.AdminConsoleSectionArgs']]] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  hosting_provider: Optional[pulumi.Input[pulumi.InputType['_server.HostingProviderSectionArgs']]] = None,
@@ -255,6 +268,7 @@ class ServerItem(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  admin_console: Optional[pulumi.Input[pulumi.InputType['_server.AdminConsoleSectionArgs']]] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  hosting_provider: Optional[pulumi.Input[pulumi.InputType['_server.HostingProviderSectionArgs']]] = None,
@@ -279,6 +293,7 @@ class ServerItem(pulumi.CustomResource):
             __props__ = ServerItemArgs.__new__(ServerItemArgs)
 
             __props__.__dict__["admin_console"] = admin_console
+            __props__.__dict__["attachments"] = attachments
             __props__.__dict__["category"] = 'Server'
             __props__.__dict__["fields"] = fields
             __props__.__dict__["hosting_provider"] = hosting_provider
@@ -292,8 +307,9 @@ class ServerItem(pulumi.CustomResource):
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
+            __props__.__dict__["references"] = None
             __props__.__dict__["uuid"] = None
-        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["adminConsole", "fields", "password", "sections"])
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["adminConsole", "attachments", "fields", "password", "references", "sections"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(ServerItem, __self__).__init__(
             'onepassword:index:ServerItem',
@@ -321,11 +337,13 @@ class ServerItem(pulumi.CustomResource):
 
         __props__.__dict__["vault"] = vault
         __props__.__dict__["admin_console"] = None
+        __props__.__dict__["attachments"] = None
         __props__.__dict__["category"] = None
         __props__.__dict__["fields"] = None
         __props__.__dict__["hosting_provider"] = None
         __props__.__dict__["notes"] = None
         __props__.__dict__["password"] = None
+        __props__.__dict__["references"] = None
         __props__.__dict__["sections"] = None
         __props__.__dict__["tags"] = None
         __props__.__dict__["title"] = None
@@ -341,12 +359,17 @@ class ServerItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
+    def attachments(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+        return pulumi.get(self, "attachments")
+
+    @property
+    @pulumi.getter
     def category(self) -> pulumi.Output[str]:
         return pulumi.get(self, "category")
 
     @property
     @pulumi.getter
-    def fields(self) -> pulumi.Output[Mapping[str, 'outputs.GetField']]:
+    def fields(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
         return pulumi.get(self, "fields")
 
     @property
@@ -366,7 +389,12 @@ class ServerItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def sections(self) -> pulumi.Output[Mapping[str, 'outputs.GetSection']]:
+    def references(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+        return pulumi.get(self, "references")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> pulumi.Output[Mapping[str, 'outputs.OutSection']]:
         return pulumi.get(self, "sections")
 
     @property
@@ -410,4 +438,33 @@ class ServerItem(pulumi.CustomResource):
         The UUID of the vault the item is in.
         """
         return pulumi.get(self, "vault")
+
+    @pulumi.output_type
+    class AttachmentResult:
+        """
+        The resolved reference value
+        """
+        def __init__(__self__, value=None):
+            if value and not isinstance(value, str):
+                raise TypeError("Expected argument 'value' to be a str")
+            pulumi.set(__self__, "value", value)
+
+        @property
+        @pulumi.getter
+        def value(self) -> str:
+            """
+            the value of the attachment
+            """
+            return pulumi.get(self, "value")
+
+    def attachment(__self__, *,
+                   name: pulumi.Input[str]) -> pulumi.Output['ServerItem.AttachmentResult']:
+        """
+
+        :param pulumi.Input[str] name: The name or uuid of the attachment to get
+        """
+        __args__ = dict()
+        __args__['__self__'] = __self__
+        __args__['name'] = name
+        return pulumi.runtime.call('onepassword:index:ServerItem/attachment', __args__, res=__self__, typ=ServerItem.AttachmentResult)
 

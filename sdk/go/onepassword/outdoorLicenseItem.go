@@ -15,14 +15,16 @@ type OutdoorLicenseItem struct {
 	pulumi.CustomResourceState
 
 	ApprovedWildlife pulumi.StringPtrOutput `pulumi:"approvedWildlife"`
+	Attachments      OutFieldMapOutput      `pulumi:"attachments"`
 	Category         pulumi.StringOutput    `pulumi:"category"`
 	Country          pulumi.StringPtrOutput `pulumi:"country"`
 	Expires          pulumi.StringPtrOutput `pulumi:"expires"`
-	Fields           GetFieldMapOutput      `pulumi:"fields"`
+	Fields           OutFieldMapOutput      `pulumi:"fields"`
 	FullName         pulumi.StringPtrOutput `pulumi:"fullName"`
 	MaximumQuota     pulumi.StringPtrOutput `pulumi:"maximumQuota"`
 	Notes            pulumi.StringPtrOutput `pulumi:"notes"`
-	Sections         GetSectionMapOutput    `pulumi:"sections"`
+	References       OutFieldMapOutput      `pulumi:"references"`
+	Sections         OutSectionMapOutput    `pulumi:"sections"`
 	State            pulumi.StringPtrOutput `pulumi:"state"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
@@ -47,7 +49,9 @@ func NewOutdoorLicenseItem(ctx *pulumi.Context,
 	}
 	args.Category = pulumi.StringPtr("Outdoor License")
 	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"attachments",
 		"fields",
+		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)
@@ -87,7 +91,8 @@ func (OutdoorLicenseItemState) ElementType() reflect.Type {
 }
 
 type outdoorLicenseItemArgs struct {
-	ApprovedWildlife *string `pulumi:"approvedWildlife"`
+	ApprovedWildlife *string                          `pulumi:"approvedWildlife"`
+	Attachments      map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
 	Category     *string            `pulumi:"category"`
 	Country      *string            `pulumi:"country"`
@@ -110,6 +115,7 @@ type outdoorLicenseItemArgs struct {
 // The set of arguments for constructing a OutdoorLicenseItem resource.
 type OutdoorLicenseItemArgs struct {
 	ApprovedWildlife pulumi.StringPtrInput
+	Attachments      pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
 	Category     pulumi.StringPtrInput
 	Country      pulumi.StringPtrInput
@@ -131,6 +137,46 @@ type OutdoorLicenseItemArgs struct {
 
 func (OutdoorLicenseItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*outdoorLicenseItemArgs)(nil)).Elem()
+}
+
+func (r *OutdoorLicenseItem) Attachment(ctx *pulumi.Context, args *OutdoorLicenseItemAttachmentArgs) (OutdoorLicenseItemAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:OutdoorLicenseItem/attachment", args, OutdoorLicenseItemAttachmentResultOutput{}, r)
+	if err != nil {
+		return OutdoorLicenseItemAttachmentResultOutput{}, err
+	}
+	return out.(OutdoorLicenseItemAttachmentResultOutput), nil
+}
+
+type outdoorLicenseItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name string `pulumi:"name"`
+}
+
+// The set of arguments for the Attachment method of the OutdoorLicenseItem resource.
+type OutdoorLicenseItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name pulumi.StringInput
+}
+
+func (OutdoorLicenseItemAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*outdoorLicenseItemAttachmentArgs)(nil)).Elem()
+}
+
+// The resolved reference value
+type OutdoorLicenseItemAttachmentResult struct {
+	// the value of the attachment
+	Value string `pulumi:"value"`
+}
+
+type OutdoorLicenseItemAttachmentResultOutput struct{ *pulumi.OutputState }
+
+func (OutdoorLicenseItemAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*OutdoorLicenseItemAttachmentResult)(nil)).Elem()
+}
+
+// the value of the attachment
+func (o OutdoorLicenseItemAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v OutdoorLicenseItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type OutdoorLicenseItemInput interface {
@@ -261,6 +307,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*OutdoorLicenseItemArrayInput)(nil)).Elem(), OutdoorLicenseItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OutdoorLicenseItemMapInput)(nil)).Elem(), OutdoorLicenseItemMap{})
 	pulumi.RegisterOutputType(OutdoorLicenseItemOutput{})
+	pulumi.RegisterOutputType(OutdoorLicenseItemAttachmentResultOutput{})
 	pulumi.RegisterOutputType(OutdoorLicenseItemArrayOutput{})
 	pulumi.RegisterOutputType(OutdoorLicenseItemMapOutput{})
 }

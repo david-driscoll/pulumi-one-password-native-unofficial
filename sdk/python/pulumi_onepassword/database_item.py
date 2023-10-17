@@ -18,6 +18,7 @@ class DatabaseItemArgs:
     def __init__(__self__, *,
                  vault: pulumi.Input[str],
                  alias: Optional[pulumi.Input[str]] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  connection_options: Optional[pulumi.Input[str]] = None,
                  database: Optional[pulumi.Input[str]] = None,
@@ -42,6 +43,8 @@ class DatabaseItemArgs:
         pulumi.set(__self__, "vault", vault)
         if alias is not None:
             pulumi.set(__self__, "alias", alias)
+        if attachments is not None:
+            pulumi.set(__self__, "attachments", attachments)
         if category is not None:
             pulumi.set(__self__, "category", 'Database')
         if connection_options is not None:
@@ -91,6 +94,15 @@ class DatabaseItemArgs:
     @alias.setter
     def alias(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "alias", value)
+
+    @property
+    @pulumi.getter
+    def attachments(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]:
+        return pulumi.get(self, "attachments")
+
+    @attachments.setter
+    def attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
+        pulumi.set(self, "attachments", value)
 
     @property
     @pulumi.getter
@@ -257,6 +269,7 @@ class DatabaseItem(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  alias: Optional[pulumi.Input[str]] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  connection_options: Optional[pulumi.Input[str]] = None,
                  database: Optional[pulumi.Input[str]] = None,
@@ -306,6 +319,7 @@ class DatabaseItem(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  alias: Optional[pulumi.Input[str]] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  connection_options: Optional[pulumi.Input[str]] = None,
                  database: Optional[pulumi.Input[str]] = None,
@@ -334,6 +348,7 @@ class DatabaseItem(pulumi.CustomResource):
             __props__ = DatabaseItemArgs.__new__(DatabaseItemArgs)
 
             __props__.__dict__["alias"] = alias
+            __props__.__dict__["attachments"] = attachments
             __props__.__dict__["category"] = 'Database'
             __props__.__dict__["connection_options"] = connection_options
             __props__.__dict__["database"] = database
@@ -351,8 +366,9 @@ class DatabaseItem(pulumi.CustomResource):
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
+            __props__.__dict__["references"] = None
             __props__.__dict__["uuid"] = None
-        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["fields", "password", "sections"])
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachments", "fields", "password", "references", "sections"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(DatabaseItem, __self__).__init__(
             'onepassword:index:DatabaseItem',
@@ -380,6 +396,7 @@ class DatabaseItem(pulumi.CustomResource):
 
         __props__.__dict__["vault"] = vault
         __props__.__dict__["alias"] = None
+        __props__.__dict__["attachments"] = None
         __props__.__dict__["category"] = None
         __props__.__dict__["connection_options"] = None
         __props__.__dict__["database"] = None
@@ -387,6 +404,7 @@ class DatabaseItem(pulumi.CustomResource):
         __props__.__dict__["notes"] = None
         __props__.__dict__["password"] = None
         __props__.__dict__["port"] = None
+        __props__.__dict__["references"] = None
         __props__.__dict__["sections"] = None
         __props__.__dict__["server"] = None
         __props__.__dict__["sid"] = None
@@ -401,6 +419,11 @@ class DatabaseItem(pulumi.CustomResource):
     @pulumi.getter
     def alias(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "alias")
+
+    @property
+    @pulumi.getter
+    def attachments(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+        return pulumi.get(self, "attachments")
 
     @property
     @pulumi.getter
@@ -419,7 +442,7 @@ class DatabaseItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def fields(self) -> pulumi.Output[Mapping[str, 'outputs.GetField']]:
+    def fields(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
         return pulumi.get(self, "fields")
 
     @property
@@ -439,7 +462,12 @@ class DatabaseItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def sections(self) -> pulumi.Output[Mapping[str, 'outputs.GetSection']]:
+    def references(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+        return pulumi.get(self, "references")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> pulumi.Output[Mapping[str, 'outputs.OutSection']]:
         return pulumi.get(self, "sections")
 
     @property
@@ -493,4 +521,33 @@ class DatabaseItem(pulumi.CustomResource):
         The UUID of the vault the item is in.
         """
         return pulumi.get(self, "vault")
+
+    @pulumi.output_type
+    class AttachmentResult:
+        """
+        The resolved reference value
+        """
+        def __init__(__self__, value=None):
+            if value and not isinstance(value, str):
+                raise TypeError("Expected argument 'value' to be a str")
+            pulumi.set(__self__, "value", value)
+
+        @property
+        @pulumi.getter
+        def value(self) -> str:
+            """
+            the value of the attachment
+            """
+            return pulumi.get(self, "value")
+
+    def attachment(__self__, *,
+                   name: pulumi.Input[str]) -> pulumi.Output['DatabaseItem.AttachmentResult']:
+        """
+
+        :param pulumi.Input[str] name: The name or uuid of the attachment to get
+        """
+        __args__ = dict()
+        __args__['__self__'] = __self__
+        __args__['name'] = name
+        return pulumi.runtime.call('onepassword:index:DatabaseItem/attachment', __args__, res=__self__, typ=DatabaseItem.AttachmentResult)
 

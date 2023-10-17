@@ -5,9 +5,6 @@ import * as pulumi from "@pulumi/pulumi";
 import { input as inputs, output as outputs, enums } from "./types";
 import * as utilities from "./utilities";
 
-/**
- * Use this data source to get details of an item by its vault uuid and either the title or the uuid of the item.
- */
 export function getItem(args: GetItemArgs, opts?: pulumi.InvokeOptions): Promise<GetItemResult> {
     if (!opts) {
         opts = {}
@@ -37,9 +34,11 @@ export interface GetItemArgs {
 }
 
 export interface GetItemResult {
+    readonly attachments: {[key: string]: outputs.OutField};
     readonly category: enums.Category | string;
-    readonly fields: {[key: string]: outputs.GetField};
-    readonly sections: {[key: string]: outputs.GetSection};
+    readonly fields: {[key: string]: outputs.OutField};
+    readonly references: {[key: string]: outputs.OutField};
+    readonly sections: {[key: string]: outputs.OutSection};
     /**
      * An array of strings of the tags assigned to the item.
      */

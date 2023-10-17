@@ -35,12 +35,14 @@ export interface GetServerArgs {
 
 export interface GetServerResult {
     readonly adminConsole?: outputs.server.AdminConsoleSection;
+    readonly attachments: {[key: string]: outputs.OutField};
     readonly category: enums.Category | string;
-    readonly fields: {[key: string]: outputs.GetField};
+    readonly fields: {[key: string]: outputs.OutField};
     readonly hostingProvider?: outputs.server.HostingProviderSection;
     readonly notes?: string;
     readonly password?: string;
-    readonly sections: {[key: string]: outputs.GetSection};
+    readonly references: {[key: string]: outputs.OutField};
+    readonly sections: {[key: string]: outputs.OutSection};
     /**
      * An array of strings of the tags assigned to the item.
      */

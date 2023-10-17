@@ -19,7 +19,10 @@ __all__ = [
 
 @pulumi.output_type
 class GetAPICredentialResult:
-    def __init__(__self__, category=None, credential=None, expires=None, fields=None, filename=None, hostname=None, notes=None, sections=None, tags=None, title=None, type=None, username=None, uuid=None, valid_from=None, vault=None):
+    def __init__(__self__, attachments=None, category=None, credential=None, expires=None, fields=None, filename=None, hostname=None, notes=None, references=None, sections=None, tags=None, title=None, type=None, username=None, uuid=None, valid_from=None, vault=None):
+        if attachments and not isinstance(attachments, dict):
+            raise TypeError("Expected argument 'attachments' to be a dict")
+        pulumi.set(__self__, "attachments", attachments)
         if category and not isinstance(category, dict):
             raise TypeError("Expected argument 'category' to be a dict")
         pulumi.set(__self__, "category", category)
@@ -41,6 +44,9 @@ class GetAPICredentialResult:
         if notes and not isinstance(notes, str):
             raise TypeError("Expected argument 'notes' to be a str")
         pulumi.set(__self__, "notes", notes)
+        if references and not isinstance(references, dict):
+            raise TypeError("Expected argument 'references' to be a dict")
+        pulumi.set(__self__, "references", references)
         if sections and not isinstance(sections, dict):
             raise TypeError("Expected argument 'sections' to be a dict")
         pulumi.set(__self__, "sections", sections)
@@ -68,6 +74,11 @@ class GetAPICredentialResult:
 
     @property
     @pulumi.getter
+    def attachments(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "attachments")
+
+    @property
+    @pulumi.getter
     def category(self) -> str:
         return pulumi.get(self, "category")
 
@@ -83,7 +94,7 @@ class GetAPICredentialResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.GetField']:
+    def fields(self) -> Mapping[str, 'outputs.OutField']:
         return pulumi.get(self, "fields")
 
     @property
@@ -103,7 +114,12 @@ class GetAPICredentialResult:
 
     @property
     @pulumi.getter
-    def sections(self) -> Mapping[str, 'outputs.GetSection']:
+    def references(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "references")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> Mapping[str, 'outputs.OutSection']:
         return pulumi.get(self, "sections")
 
     @property
@@ -160,6 +176,7 @@ class AwaitableGetAPICredentialResult(GetAPICredentialResult):
         if False:
             yield self
         return GetAPICredentialResult(
+            attachments=self.attachments,
             category=self.category,
             credential=self.credential,
             expires=self.expires,
@@ -167,6 +184,7 @@ class AwaitableGetAPICredentialResult(GetAPICredentialResult):
             filename=self.filename,
             hostname=self.hostname,
             notes=self.notes,
+            references=self.references,
             sections=self.sections,
             tags=self.tags,
             title=self.title,
@@ -199,6 +217,7 @@ def get_api_credential(title: Optional[str] = None,
     __ret__ = pulumi.runtime.invoke('onepassword:index:GetAPICredential', __args__, opts=opts, typ=GetAPICredentialResult).value
 
     return AwaitableGetAPICredentialResult(
+        attachments=__ret__.attachments,
         category=__ret__.category,
         credential=__ret__.credential,
         expires=__ret__.expires,
@@ -206,6 +225,7 @@ def get_api_credential(title: Optional[str] = None,
         filename=__ret__.filename,
         hostname=__ret__.hostname,
         notes=__ret__.notes,
+        references=__ret__.references,
         sections=__ret__.sections,
         tags=__ret__.tags,
         title=__ret__.title,

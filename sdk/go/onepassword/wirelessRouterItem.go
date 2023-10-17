@@ -16,13 +16,15 @@ type WirelessRouterItem struct {
 
 	AirPortId               pulumi.StringPtrOutput `pulumi:"airPortId"`
 	AttachedStoragePassword pulumi.StringPtrOutput `pulumi:"attachedStoragePassword"`
+	Attachments             OutFieldMapOutput      `pulumi:"attachments"`
 	BaseStationName         pulumi.StringPtrOutput `pulumi:"baseStationName"`
 	BaseStationPassword     pulumi.StringPtrOutput `pulumi:"baseStationPassword"`
 	Category                pulumi.StringOutput    `pulumi:"category"`
-	Fields                  GetFieldMapOutput      `pulumi:"fields"`
+	Fields                  OutFieldMapOutput      `pulumi:"fields"`
 	NetworkName             pulumi.StringPtrOutput `pulumi:"networkName"`
 	Notes                   pulumi.StringPtrOutput `pulumi:"notes"`
-	Sections                GetSectionMapOutput    `pulumi:"sections"`
+	References              OutFieldMapOutput      `pulumi:"references"`
+	Sections                OutSectionMapOutput    `pulumi:"sections"`
 	ServerIpAddress         pulumi.StringPtrOutput `pulumi:"serverIpAddress"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
@@ -58,8 +60,10 @@ func NewWirelessRouterItem(ctx *pulumi.Context,
 	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"attachedStoragePassword",
+		"attachments",
 		"baseStationPassword",
 		"fields",
+		"references",
 		"sections",
 		"wirelessNetworkPassword",
 	})
@@ -100,10 +104,11 @@ func (WirelessRouterItemState) ElementType() reflect.Type {
 }
 
 type wirelessRouterItemArgs struct {
-	AirPortId               *string `pulumi:"airPortId"`
-	AttachedStoragePassword *string `pulumi:"attachedStoragePassword"`
-	BaseStationName         *string `pulumi:"baseStationName"`
-	BaseStationPassword     *string `pulumi:"baseStationPassword"`
+	AirPortId               *string                          `pulumi:"airPortId"`
+	AttachedStoragePassword *string                          `pulumi:"attachedStoragePassword"`
+	Attachments             map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
+	BaseStationName         *string                          `pulumi:"baseStationName"`
+	BaseStationPassword     *string                          `pulumi:"baseStationPassword"`
 	// The category of the vault the item is in.
 	Category        *string            `pulumi:"category"`
 	Fields          map[string]Field   `pulumi:"fields"`
@@ -125,6 +130,7 @@ type wirelessRouterItemArgs struct {
 type WirelessRouterItemArgs struct {
 	AirPortId               pulumi.StringPtrInput
 	AttachedStoragePassword pulumi.StringPtrInput
+	Attachments             pulumi.AssetOrArchiveMapInput
 	BaseStationName         pulumi.StringPtrInput
 	BaseStationPassword     pulumi.StringPtrInput
 	// The category of the vault the item is in.
@@ -146,6 +152,46 @@ type WirelessRouterItemArgs struct {
 
 func (WirelessRouterItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*wirelessRouterItemArgs)(nil)).Elem()
+}
+
+func (r *WirelessRouterItem) Attachment(ctx *pulumi.Context, args *WirelessRouterItemAttachmentArgs) (WirelessRouterItemAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:WirelessRouterItem/attachment", args, WirelessRouterItemAttachmentResultOutput{}, r)
+	if err != nil {
+		return WirelessRouterItemAttachmentResultOutput{}, err
+	}
+	return out.(WirelessRouterItemAttachmentResultOutput), nil
+}
+
+type wirelessRouterItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name string `pulumi:"name"`
+}
+
+// The set of arguments for the Attachment method of the WirelessRouterItem resource.
+type WirelessRouterItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name pulumi.StringInput
+}
+
+func (WirelessRouterItemAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*wirelessRouterItemAttachmentArgs)(nil)).Elem()
+}
+
+// The resolved reference value
+type WirelessRouterItemAttachmentResult struct {
+	// the value of the attachment
+	Value string `pulumi:"value"`
+}
+
+type WirelessRouterItemAttachmentResultOutput struct{ *pulumi.OutputState }
+
+func (WirelessRouterItemAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WirelessRouterItemAttachmentResult)(nil)).Elem()
+}
+
+// the value of the attachment
+func (o WirelessRouterItemAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v WirelessRouterItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type WirelessRouterItemInput interface {
@@ -276,6 +322,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*WirelessRouterItemArrayInput)(nil)).Elem(), WirelessRouterItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WirelessRouterItemMapInput)(nil)).Elem(), WirelessRouterItemMap{})
 	pulumi.RegisterOutputType(WirelessRouterItemOutput{})
+	pulumi.RegisterOutputType(WirelessRouterItemAttachmentResultOutput{})
 	pulumi.RegisterOutputType(WirelessRouterItemArrayOutput{})
 	pulumi.RegisterOutputType(WirelessRouterItemMapOutput{})
 }

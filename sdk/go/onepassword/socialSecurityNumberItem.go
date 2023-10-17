@@ -14,12 +14,14 @@ import (
 type SocialSecurityNumberItem struct {
 	pulumi.CustomResourceState
 
-	Category pulumi.StringOutput    `pulumi:"category"`
-	Fields   GetFieldMapOutput      `pulumi:"fields"`
-	Name     pulumi.StringPtrOutput `pulumi:"name"`
-	Notes    pulumi.StringPtrOutput `pulumi:"notes"`
-	Number   pulumi.StringPtrOutput `pulumi:"number"`
-	Sections GetSectionMapOutput    `pulumi:"sections"`
+	Attachments OutFieldMapOutput      `pulumi:"attachments"`
+	Category    pulumi.StringOutput    `pulumi:"category"`
+	Fields      OutFieldMapOutput      `pulumi:"fields"`
+	Name        pulumi.StringPtrOutput `pulumi:"name"`
+	Notes       pulumi.StringPtrOutput `pulumi:"notes"`
+	Number      pulumi.StringPtrOutput `pulumi:"number"`
+	References  OutFieldMapOutput      `pulumi:"references"`
+	Sections    OutSectionMapOutput    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -45,8 +47,10 @@ func NewSocialSecurityNumberItem(ctx *pulumi.Context,
 		args.Number = pulumi.ToSecret(args.Number).(pulumi.StringPtrOutput)
 	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"attachments",
 		"fields",
 		"number",
+		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)
@@ -86,6 +90,7 @@ func (SocialSecurityNumberItemState) ElementType() reflect.Type {
 }
 
 type socialSecurityNumberItemArgs struct {
+	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
 	Category *string            `pulumi:"category"`
 	Fields   map[string]Field   `pulumi:"fields"`
@@ -103,6 +108,7 @@ type socialSecurityNumberItemArgs struct {
 
 // The set of arguments for constructing a SocialSecurityNumberItem resource.
 type SocialSecurityNumberItemArgs struct {
+	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
 	Category pulumi.StringPtrInput
 	Fields   FieldMapInput
@@ -120,6 +126,46 @@ type SocialSecurityNumberItemArgs struct {
 
 func (SocialSecurityNumberItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*socialSecurityNumberItemArgs)(nil)).Elem()
+}
+
+func (r *SocialSecurityNumberItem) Attachment(ctx *pulumi.Context, args *SocialSecurityNumberItemAttachmentArgs) (SocialSecurityNumberItemAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:SocialSecurityNumberItem/attachment", args, SocialSecurityNumberItemAttachmentResultOutput{}, r)
+	if err != nil {
+		return SocialSecurityNumberItemAttachmentResultOutput{}, err
+	}
+	return out.(SocialSecurityNumberItemAttachmentResultOutput), nil
+}
+
+type socialSecurityNumberItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name string `pulumi:"name"`
+}
+
+// The set of arguments for the Attachment method of the SocialSecurityNumberItem resource.
+type SocialSecurityNumberItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name pulumi.StringInput
+}
+
+func (SocialSecurityNumberItemAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*socialSecurityNumberItemAttachmentArgs)(nil)).Elem()
+}
+
+// The resolved reference value
+type SocialSecurityNumberItemAttachmentResult struct {
+	// the value of the attachment
+	Value string `pulumi:"value"`
+}
+
+type SocialSecurityNumberItemAttachmentResultOutput struct{ *pulumi.OutputState }
+
+func (SocialSecurityNumberItemAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SocialSecurityNumberItemAttachmentResult)(nil)).Elem()
+}
+
+// the value of the attachment
+func (o SocialSecurityNumberItemAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v SocialSecurityNumberItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type SocialSecurityNumberItemInput interface {
@@ -250,6 +296,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*SocialSecurityNumberItemArrayInput)(nil)).Elem(), SocialSecurityNumberItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SocialSecurityNumberItemMapInput)(nil)).Elem(), SocialSecurityNumberItemMap{})
 	pulumi.RegisterOutputType(SocialSecurityNumberItemOutput{})
+	pulumi.RegisterOutputType(SocialSecurityNumberItemAttachmentResultOutput{})
 	pulumi.RegisterOutputType(SocialSecurityNumberItemArrayOutput{})
 	pulumi.RegisterOutputType(SocialSecurityNumberItemMapOutput{})
 }

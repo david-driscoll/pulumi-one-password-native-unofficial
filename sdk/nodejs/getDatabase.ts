@@ -35,14 +35,16 @@ export interface GetDatabaseArgs {
 
 export interface GetDatabaseResult {
     readonly alias?: string;
+    readonly attachments: {[key: string]: outputs.OutField};
     readonly category: enums.Category | string;
     readonly connectionOptions?: string;
     readonly database?: string;
-    readonly fields: {[key: string]: outputs.GetField};
+    readonly fields: {[key: string]: outputs.OutField};
     readonly notes?: string;
     readonly password?: string;
     readonly port?: string;
-    readonly sections: {[key: string]: outputs.GetSection};
+    readonly references: {[key: string]: outputs.OutField};
+    readonly sections: {[key: string]: outputs.OutSection};
     readonly server?: string;
     readonly sid?: string;
     /**

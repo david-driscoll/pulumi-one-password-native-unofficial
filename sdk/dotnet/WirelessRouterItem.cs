@@ -18,6 +18,9 @@ namespace Pulumi.Onepassword
         [Output("attachedStoragePassword")]
         public Output<string?> AttachedStoragePassword { get; private set; } = null!;
 
+        [Output("attachments")]
+        public Output<ImmutableDictionary<string, Outputs.OutField>> Attachments { get; private set; } = null!;
+
         [Output("baseStationName")]
         public Output<string?> BaseStationName { get; private set; } = null!;
 
@@ -28,7 +31,7 @@ namespace Pulumi.Onepassword
         public Output<string> Category { get; private set; } = null!;
 
         [Output("fields")]
-        public Output<ImmutableDictionary<string, Outputs.GetField>> Fields { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutField>> Fields { get; private set; } = null!;
 
         [Output("networkName")]
         public Output<string?> NetworkName { get; private set; } = null!;
@@ -36,8 +39,11 @@ namespace Pulumi.Onepassword
         [Output("notes")]
         public Output<string?> Notes { get; private set; } = null!;
 
+        [Output("references")]
+        public Output<ImmutableDictionary<string, Outputs.OutField>> References { get; private set; } = null!;
+
         [Output("sections")]
-        public Output<ImmutableDictionary<string, Outputs.GetSection>> Sections { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutSection>> Sections { get; private set; } = null!;
 
         [Output("serverIpAddress")]
         public Output<string?> ServerIpAddress { get; private set; } = null!;
@@ -105,8 +111,10 @@ namespace Pulumi.Onepassword
                 AdditionalSecretOutputs =
                 {
                     "attachedStoragePassword",
+                    "attachments",
                     "baseStationPassword",
                     "fields",
+                    "references",
                     "sections",
                     "wirelessNetworkPassword",
                 },
@@ -129,6 +137,9 @@ namespace Pulumi.Onepassword
         {
             return new WirelessRouterItem(name, id, state, options);
         }
+
+        public Pulumi.Output<WirelessRouterItemAttachmentResult> Attachment(WirelessRouterItemAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<WirelessRouterItemAttachmentResult>("onepassword:index:WirelessRouterItem/attachment", args ?? new WirelessRouterItemAttachmentArgs(), this);
     }
 
     public sealed class WirelessRouterItemArgs : Pulumi.ResourceArgs
@@ -146,6 +157,14 @@ namespace Pulumi.Onepassword
                 var emptySecret = Output.CreateSecret(0);
                 _attachedStoragePassword = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
             }
+        }
+
+        [Input("attachments")]
+        private InputMap<AssetOrArchive>? _attachments;
+        public InputMap<AssetOrArchive> Attachments
+        {
+            get => _attachments ?? (_attachments = new InputMap<AssetOrArchive>());
+            set => _attachments = value;
         }
 
         [Input("baseStationName")]
@@ -248,6 +267,40 @@ namespace Pulumi.Onepassword
 
         public WirelessRouterItemState()
         {
+        }
+    }
+
+    /// <summary>
+    /// The set of arguments for the <see cref="WirelessRouterItem.Attachment"/> method.
+    /// </summary>
+    public sealed class WirelessRouterItemAttachmentArgs : Pulumi.CallArgs
+    {
+        /// <summary>
+        /// The name or uuid of the attachment to get
+        /// </summary>
+        [Input("name", required: true)]
+        public Input<string> Name { get; set; } = null!;
+
+        public WirelessRouterItemAttachmentArgs()
+        {
+        }
+    }
+
+    /// <summary>
+    /// The results of the <see cref="WirelessRouterItem.Attachment"/> method.
+    /// </summary>
+    [OutputType]
+    public sealed class WirelessRouterItemAttachmentResult
+    {
+        /// <summary>
+        /// the value of the attachment
+        /// </summary>
+        public readonly string Value;
+
+        [OutputConstructor]
+        private WirelessRouterItemAttachmentResult(string value)
+        {
+            Value = value;
         }
     }
 }

@@ -19,6 +19,7 @@ class CreditCardItemArgs:
     def __init__(__self__, *,
                  vault: pulumi.Input[str],
                  additional_details: Optional[pulumi.Input['_creditcard.AdditionalDetailsSectionArgs']] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  cardholder_name: Optional[pulumi.Input[str]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  contact_information: Optional[pulumi.Input['_creditcard.ContactInformationSectionArgs']] = None,
@@ -42,6 +43,8 @@ class CreditCardItemArgs:
         pulumi.set(__self__, "vault", vault)
         if additional_details is not None:
             pulumi.set(__self__, "additional_details", additional_details)
+        if attachments is not None:
+            pulumi.set(__self__, "attachments", attachments)
         if cardholder_name is not None:
             pulumi.set(__self__, "cardholder_name", cardholder_name)
         if category is not None:
@@ -89,6 +92,15 @@ class CreditCardItemArgs:
     @additional_details.setter
     def additional_details(self, value: Optional[pulumi.Input['_creditcard.AdditionalDetailsSectionArgs']]):
         pulumi.set(self, "additional_details", value)
+
+    @property
+    @pulumi.getter
+    def attachments(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]:
+        return pulumi.get(self, "attachments")
+
+    @attachments.setter
+    def attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
+        pulumi.set(self, "attachments", value)
 
     @property
     @pulumi.getter(name="cardholderName")
@@ -246,6 +258,7 @@ class CreditCardItem(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  additional_details: Optional[pulumi.Input[pulumi.InputType['_creditcard.AdditionalDetailsSectionArgs']]] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  cardholder_name: Optional[pulumi.Input[str]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  contact_information: Optional[pulumi.Input[pulumi.InputType['_creditcard.ContactInformationSectionArgs']]] = None,
@@ -294,6 +307,7 @@ class CreditCardItem(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  additional_details: Optional[pulumi.Input[pulumi.InputType['_creditcard.AdditionalDetailsSectionArgs']]] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  cardholder_name: Optional[pulumi.Input[str]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  contact_information: Optional[pulumi.Input[pulumi.InputType['_creditcard.ContactInformationSectionArgs']]] = None,
@@ -321,6 +335,7 @@ class CreditCardItem(pulumi.CustomResource):
             __props__ = CreditCardItemArgs.__new__(CreditCardItemArgs)
 
             __props__.__dict__["additional_details"] = additional_details
+            __props__.__dict__["attachments"] = attachments
             __props__.__dict__["cardholder_name"] = cardholder_name
             __props__.__dict__["category"] = 'Credit Card'
             __props__.__dict__["contact_information"] = contact_information
@@ -337,8 +352,9 @@ class CreditCardItem(pulumi.CustomResource):
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
             __props__.__dict__["verification_number"] = None if verification_number is None else pulumi.Output.secret(verification_number)
+            __props__.__dict__["references"] = None
             __props__.__dict__["uuid"] = None
-        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["additionalDetails", "fields", "sections", "verificationNumber"])
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["additionalDetails", "attachments", "fields", "references", "sections", "verificationNumber"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(CreditCardItem, __self__).__init__(
             'onepassword:index:CreditCardItem',
@@ -366,6 +382,7 @@ class CreditCardItem(pulumi.CustomResource):
 
         __props__.__dict__["vault"] = vault
         __props__.__dict__["additional_details"] = None
+        __props__.__dict__["attachments"] = None
         __props__.__dict__["cardholder_name"] = None
         __props__.__dict__["category"] = None
         __props__.__dict__["contact_information"] = None
@@ -373,6 +390,7 @@ class CreditCardItem(pulumi.CustomResource):
         __props__.__dict__["fields"] = None
         __props__.__dict__["notes"] = None
         __props__.__dict__["number"] = None
+        __props__.__dict__["references"] = None
         __props__.__dict__["sections"] = None
         __props__.__dict__["tags"] = None
         __props__.__dict__["title"] = None
@@ -386,6 +404,11 @@ class CreditCardItem(pulumi.CustomResource):
     @pulumi.getter(name="additionalDetails")
     def additional_details(self) -> pulumi.Output[Optional['_creditcard.outputs.AdditionalDetailsSection']]:
         return pulumi.get(self, "additional_details")
+
+    @property
+    @pulumi.getter
+    def attachments(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+        return pulumi.get(self, "attachments")
 
     @property
     @pulumi.getter(name="cardholderName")
@@ -409,7 +432,7 @@ class CreditCardItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def fields(self) -> pulumi.Output[Mapping[str, 'outputs.GetField']]:
+    def fields(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
         return pulumi.get(self, "fields")
 
     @property
@@ -424,7 +447,12 @@ class CreditCardItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def sections(self) -> pulumi.Output[Mapping[str, 'outputs.GetSection']]:
+    def references(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+        return pulumi.get(self, "references")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> pulumi.Output[Mapping[str, 'outputs.OutSection']]:
         return pulumi.get(self, "sections")
 
     @property
@@ -473,4 +501,33 @@ class CreditCardItem(pulumi.CustomResource):
     @pulumi.getter(name="verificationNumber")
     def verification_number(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "verification_number")
+
+    @pulumi.output_type
+    class AttachmentResult:
+        """
+        The resolved reference value
+        """
+        def __init__(__self__, value=None):
+            if value and not isinstance(value, str):
+                raise TypeError("Expected argument 'value' to be a str")
+            pulumi.set(__self__, "value", value)
+
+        @property
+        @pulumi.getter
+        def value(self) -> str:
+            """
+            the value of the attachment
+            """
+            return pulumi.get(self, "value")
+
+    def attachment(__self__, *,
+                   name: pulumi.Input[str]) -> pulumi.Output['CreditCardItem.AttachmentResult']:
+        """
+
+        :param pulumi.Input[str] name: The name or uuid of the attachment to get
+        """
+        __args__ = dict()
+        __args__['__self__'] = __self__
+        __args__['name'] = name
+        return pulumi.runtime.call('onepassword:index:CreditCardItem/attachment', __args__, res=__self__, typ=CreditCardItem.AttachmentResult)
 

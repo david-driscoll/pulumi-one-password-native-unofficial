@@ -35,13 +35,15 @@ export class WirelessRouterItem extends pulumi.CustomResource {
 
     public readonly airPortId!: pulumi.Output<string | undefined>;
     public readonly attachedStoragePassword!: pulumi.Output<string | undefined>;
+    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly baseStationName!: pulumi.Output<string | undefined>;
     public readonly baseStationPassword!: pulumi.Output<string | undefined>;
     public readonly category!: pulumi.Output<enums.Category | string>;
-    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField}>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly networkName!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection}>;
+    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.OutSection}>;
     public readonly serverIpAddress!: pulumi.Output<string | undefined>;
     /**
      * An array of strings of the tags assigned to the item.
@@ -83,6 +85,7 @@ export class WirelessRouterItem extends pulumi.CustomResource {
             }
             resourceInputs["airPortId"] = args ? args.airPortId : undefined;
             resourceInputs["attachedStoragePassword"] = args?.attachedStoragePassword ? pulumi.secret(args.attachedStoragePassword) : undefined;
+            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["baseStationName"] = args ? args.baseStationName : undefined;
             resourceInputs["baseStationPassword"] = args?.baseStationPassword ? pulumi.secret(args.baseStationPassword) : undefined;
             resourceInputs["category"] = "Wireless Router";
@@ -96,12 +99,20 @@ export class WirelessRouterItem extends pulumi.CustomResource {
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["wirelessNetworkPassword"] = args?.wirelessNetworkPassword ? pulumi.secret(args.wirelessNetworkPassword) : undefined;
             resourceInputs["wirelessSecurity"] = args ? args.wirelessSecurity : undefined;
+            resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["attachedStoragePassword", "baseStationPassword", "fields", "sections", "wirelessNetworkPassword"] };
+        const secretOpts = { additionalSecretOutputs: ["attachedStoragePassword", "attachments", "baseStationPassword", "fields", "references", "sections", "wirelessNetworkPassword"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(WirelessRouterItem.__pulumiType, name, resourceInputs, opts);
+    }
+
+    attachment(args: WirelessRouterItem.AttachmentArgs): pulumi.Output<WirelessRouterItem.AttachmentResult> {
+        return pulumi.runtime.call("onepassword:index:WirelessRouterItem/attachment", {
+            "__self__": this,
+            "name": args.name,
+        }, this);
     }
 }
 
@@ -118,6 +129,7 @@ export interface WirelessRouterItemState {
 export interface WirelessRouterItemArgs {
     airPortId?: pulumi.Input<string>;
     attachedStoragePassword?: pulumi.Input<string>;
+    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     baseStationName?: pulumi.Input<string>;
     baseStationPassword?: pulumi.Input<string>;
     /**
@@ -143,4 +155,27 @@ export interface WirelessRouterItemArgs {
     vault: pulumi.Input<string>;
     wirelessNetworkPassword?: pulumi.Input<string>;
     wirelessSecurity?: pulumi.Input<string>;
+}
+
+export namespace WirelessRouterItem {
+    /**
+     * The set of arguments for the WirelessRouterItem.attachment method.
+     */
+    export interface AttachmentArgs {
+        /**
+         * The name or uuid of the attachment to get
+         */
+        name: pulumi.Input<string>;
+    }
+
+    /**
+     * The results of the WirelessRouterItem.attachment method.
+     */
+    export interface AttachmentResult {
+        /**
+         * the value of the attachment
+         */
+        readonly value: string;
+    }
+
 }

@@ -11,7 +11,7 @@ namespace Pulumi.Onepassword.Outputs
 {
 
     [OutputType]
-    public sealed class GetField
+    public sealed class OutField
     {
         public readonly string Label;
         public readonly string Reference;
@@ -20,7 +20,7 @@ namespace Pulumi.Onepassword.Outputs
         public readonly string Value;
 
         [OutputConstructor]
-        private GetField(
+        private OutField(
             string label,
 
             string reference,

@@ -12,11 +12,14 @@ namespace Pulumi.Onepassword
     [OnepasswordResourceType("onepassword:index:LoginItem")]
     public partial class LoginItem : Pulumi.CustomResource
     {
+        [Output("attachments")]
+        public Output<ImmutableDictionary<string, Outputs.OutField>> Attachments { get; private set; } = null!;
+
         [Output("category")]
         public Output<string> Category { get; private set; } = null!;
 
         [Output("fields")]
-        public Output<ImmutableDictionary<string, Outputs.GetField>> Fields { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutField>> Fields { get; private set; } = null!;
 
         [Output("notes")]
         public Output<string?> Notes { get; private set; } = null!;
@@ -24,8 +27,11 @@ namespace Pulumi.Onepassword
         [Output("password")]
         public Output<string?> Password { get; private set; } = null!;
 
+        [Output("references")]
+        public Output<ImmutableDictionary<string, Outputs.OutField>> References { get; private set; } = null!;
+
         [Output("sections")]
-        public Output<ImmutableDictionary<string, Outputs.GetSection>> Sections { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutSection>> Sections { get; private set; } = null!;
 
         /// <summary>
         /// An array of strings of the tags assigned to the item.
@@ -86,8 +92,10 @@ namespace Pulumi.Onepassword
                 Version = Utilities.Version,
                 AdditionalSecretOutputs =
                 {
+                    "attachments",
                     "fields",
                     "password",
+                    "references",
                     "sections",
                 },
             };
@@ -109,10 +117,21 @@ namespace Pulumi.Onepassword
         {
             return new LoginItem(name, id, state, options);
         }
+
+        public Pulumi.Output<LoginItemAttachmentResult> Attachment(LoginItemAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<LoginItemAttachmentResult>("onepassword:index:LoginItem/attachment", args ?? new LoginItemAttachmentArgs(), this);
     }
 
     public sealed class LoginItemArgs : Pulumi.ResourceArgs
     {
+        [Input("attachments")]
+        private InputMap<AssetOrArchive>? _attachments;
+        public InputMap<AssetOrArchive> Attachments
+        {
+            get => _attachments ?? (_attachments = new InputMap<AssetOrArchive>());
+            set => _attachments = value;
+        }
+
         /// <summary>
         /// The category of the vault the item is in.
         /// </summary>
@@ -126,6 +145,9 @@ namespace Pulumi.Onepassword
             get => _fields ?? (_fields = new InputMap<Inputs.FieldArgs>());
             set => _fields = value;
         }
+
+        [Input("generatePassword")]
+        public InputUnion<bool, Inputs.PasswordRecipeArgs>? GeneratePassword { get; set; }
 
         [Input("notes")]
         public Input<string>? Notes { get; set; }
@@ -192,6 +214,40 @@ namespace Pulumi.Onepassword
 
         public LoginItemState()
         {
+        }
+    }
+
+    /// <summary>
+    /// The set of arguments for the <see cref="LoginItem.Attachment"/> method.
+    /// </summary>
+    public sealed class LoginItemAttachmentArgs : Pulumi.CallArgs
+    {
+        /// <summary>
+        /// The name or uuid of the attachment to get
+        /// </summary>
+        [Input("name", required: true)]
+        public Input<string> Name { get; set; } = null!;
+
+        public LoginItemAttachmentArgs()
+        {
+        }
+    }
+
+    /// <summary>
+    /// The results of the <see cref="LoginItem.Attachment"/> method.
+    /// </summary>
+    [OutputType]
+    public sealed class LoginItemAttachmentResult
+    {
+        /// <summary>
+        /// the value of the attachment
+        /// </summary>
+        public readonly string Value;
+
+        [OutputConstructor]
+        private LoginItemAttachmentResult(string value)
+        {
+            Value = value;
         }
     }
 }

@@ -30,15 +30,17 @@ type GetRewardProgramArgs struct {
 }
 
 type GetRewardProgramResult struct {
+	Attachments     map[string]OutField                   `pulumi:"attachments"`
 	Category        string                                `pulumi:"category"`
 	CompanyName     *string                               `pulumi:"companyName"`
-	Fields          map[string]GetField                   `pulumi:"fields"`
+	Fields          map[string]OutField                   `pulumi:"fields"`
 	MemberId        *string                               `pulumi:"memberId"`
 	MemberName      *string                               `pulumi:"memberName"`
 	MoreInformation *rewardprogram.MoreInformationSection `pulumi:"moreInformation"`
 	Notes           *string                               `pulumi:"notes"`
 	Pin             *string                               `pulumi:"pin"`
-	Sections        map[string]GetSection                 `pulumi:"sections"`
+	References      map[string]OutField                   `pulumi:"references"`
+	Sections        map[string]OutSection                 `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -89,6 +91,10 @@ func (o GetRewardProgramResultOutput) ToGetRewardProgramResultOutputWithContext(
 	return o
 }
 
+func (o GetRewardProgramResultOutput) Attachments() OutFieldMapOutput {
+	return o.ApplyT(func(v GetRewardProgramResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+}
+
 func (o GetRewardProgramResultOutput) Category() pulumi.StringOutput {
 	return o.ApplyT(func(v GetRewardProgramResult) string { return v.Category }).(pulumi.StringOutput)
 }
@@ -97,8 +103,8 @@ func (o GetRewardProgramResultOutput) CompanyName() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetRewardProgramResult) *string { return v.CompanyName }).(pulumi.StringPtrOutput)
 }
 
-func (o GetRewardProgramResultOutput) Fields() GetFieldMapOutput {
-	return o.ApplyT(func(v GetRewardProgramResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
+func (o GetRewardProgramResultOutput) Fields() OutFieldMapOutput {
+	return o.ApplyT(func(v GetRewardProgramResult) map[string]OutField { return v.Fields }).(OutFieldMapOutput)
 }
 
 func (o GetRewardProgramResultOutput) MemberId() pulumi.StringPtrOutput {
@@ -121,8 +127,12 @@ func (o GetRewardProgramResultOutput) Pin() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetRewardProgramResult) *string { return v.Pin }).(pulumi.StringPtrOutput)
 }
 
-func (o GetRewardProgramResultOutput) Sections() GetSectionMapOutput {
-	return o.ApplyT(func(v GetRewardProgramResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
+func (o GetRewardProgramResultOutput) References() OutFieldMapOutput {
+	return o.ApplyT(func(v GetRewardProgramResult) map[string]OutField { return v.References }).(OutFieldMapOutput)
+}
+
+func (o GetRewardProgramResultOutput) Sections() OutSectionMapOutput {
+	return o.ApplyT(func(v GetRewardProgramResult) map[string]OutSection { return v.Sections }).(OutSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.

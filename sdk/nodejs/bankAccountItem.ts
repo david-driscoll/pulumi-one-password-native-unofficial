@@ -34,16 +34,18 @@ export class BankAccountItem extends pulumi.CustomResource {
     }
 
     public readonly accountNumber!: pulumi.Output<string | undefined>;
+    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly bankName!: pulumi.Output<string | undefined>;
     public readonly branchInformation!: pulumi.Output<outputs.bankAccount.BranchInformationSection | undefined>;
     public readonly category!: pulumi.Output<enums.Category | string>;
-    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField}>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly iban!: pulumi.Output<string | undefined>;
     public readonly nameOnAccount!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly pin!: pulumi.Output<string | undefined>;
+    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly routingNumber!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection}>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.OutSection}>;
     public readonly swift!: pulumi.Output<string | undefined>;
     /**
      * An array of strings of the tags assigned to the item.
@@ -83,6 +85,7 @@ export class BankAccountItem extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vault'");
             }
             resourceInputs["accountNumber"] = args ? args.accountNumber : undefined;
+            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["bankName"] = args ? args.bankName : undefined;
             resourceInputs["branchInformation"] = args ? args.branchInformation : undefined;
             resourceInputs["category"] = "Bank Account";
@@ -98,12 +101,20 @@ export class BankAccountItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["type"] = args ? args.type : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["fields", "pin", "sections"] };
+        const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "pin", "references", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(BankAccountItem.__pulumiType, name, resourceInputs, opts);
+    }
+
+    attachment(args: BankAccountItem.AttachmentArgs): pulumi.Output<BankAccountItem.AttachmentResult> {
+        return pulumi.runtime.call("onepassword:index:BankAccountItem/attachment", {
+            "__self__": this,
+            "name": args.name,
+        }, this);
     }
 }
 
@@ -119,6 +130,7 @@ export interface BankAccountItemState {
  */
 export interface BankAccountItemArgs {
     accountNumber?: pulumi.Input<string>;
+    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     bankName?: pulumi.Input<string>;
     branchInformation?: pulumi.Input<inputs.bankAccount.BranchInformationSectionArgs>;
     /**
@@ -146,4 +158,27 @@ export interface BankAccountItemArgs {
      * The UUID of the vault the item is in.
      */
     vault: pulumi.Input<string>;
+}
+
+export namespace BankAccountItem {
+    /**
+     * The set of arguments for the BankAccountItem.attachment method.
+     */
+    export interface AttachmentArgs {
+        /**
+         * The name or uuid of the attachment to get
+         */
+        name: pulumi.Input<string>;
+    }
+
+    /**
+     * The results of the BankAccountItem.attachment method.
+     */
+    export interface AttachmentResult {
+        /**
+         * the value of the attachment
+         */
+        readonly value: string;
+    }
+
 }

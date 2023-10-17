@@ -73,16 +73,18 @@ namespace Pulumi.Onepassword
     [OutputType]
     public sealed class GetMedicalRecordResult
     {
+        public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
         public readonly string Category;
         public readonly string? Date;
-        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
         public readonly string? HealthcareProfessional;
         public readonly string? Location;
         public readonly Pulumi.Onepassword.MedicalRecord.Outputs.MedicationSection? Medication;
         public readonly string? Notes;
         public readonly string? Patient;
         public readonly string? ReasonForVisit;
-        public readonly ImmutableDictionary<string, Outputs.GetSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.OutField> References;
+        public readonly ImmutableDictionary<string, Outputs.OutSection> Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
         /// </summary>
@@ -102,11 +104,13 @@ namespace Pulumi.Onepassword
 
         [OutputConstructor]
         private GetMedicalRecordResult(
+            ImmutableDictionary<string, Outputs.OutField> attachments,
+
             string category,
 
             string? date,
 
-            ImmutableDictionary<string, Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.OutField> fields,
 
             string? healthcareProfessional,
 
@@ -120,7 +124,9 @@ namespace Pulumi.Onepassword
 
             string? reasonForVisit,
 
-            ImmutableDictionary<string, Outputs.GetSection> sections,
+            ImmutableDictionary<string, Outputs.OutField> references,
+
+            ImmutableDictionary<string, Outputs.OutSection> sections,
 
             ImmutableArray<string> tags,
 
@@ -130,6 +136,7 @@ namespace Pulumi.Onepassword
 
             string vault)
         {
+            Attachments = attachments;
             Category = category;
             Date = date;
             Fields = fields;
@@ -139,6 +146,7 @@ namespace Pulumi.Onepassword
             Notes = notes;
             Patient = patient;
             ReasonForVisit = reasonForVisit;
+            References = references;
             Sections = sections;
             Tags = tags;
             Title = title;

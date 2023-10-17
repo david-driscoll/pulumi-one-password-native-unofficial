@@ -75,13 +75,15 @@ namespace Pulumi.Onepassword
     {
         public readonly string? AirPortId;
         public readonly string? AttachedStoragePassword;
+        public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
         public readonly string? BaseStationName;
         public readonly string? BaseStationPassword;
         public readonly string Category;
-        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
         public readonly string? NetworkName;
         public readonly string? Notes;
-        public readonly ImmutableDictionary<string, Outputs.GetSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.OutField> References;
+        public readonly ImmutableDictionary<string, Outputs.OutSection> Sections;
         public readonly string? ServerIpAddress;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
@@ -108,19 +110,23 @@ namespace Pulumi.Onepassword
 
             string? attachedStoragePassword,
 
+            ImmutableDictionary<string, Outputs.OutField> attachments,
+
             string? baseStationName,
 
             string? baseStationPassword,
 
             string category,
 
-            ImmutableDictionary<string, Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.OutField> fields,
 
             string? networkName,
 
             string? notes,
 
-            ImmutableDictionary<string, Outputs.GetSection> sections,
+            ImmutableDictionary<string, Outputs.OutField> references,
+
+            ImmutableDictionary<string, Outputs.OutSection> sections,
 
             string? serverIpAddress,
 
@@ -138,12 +144,14 @@ namespace Pulumi.Onepassword
         {
             AirPortId = airPortId;
             AttachedStoragePassword = attachedStoragePassword;
+            Attachments = attachments;
             BaseStationName = baseStationName;
             BaseStationPassword = baseStationPassword;
             Category = category;
             Fields = fields;
             NetworkName = networkName;
             Notes = notes;
+            References = references;
             Sections = sections;
             ServerIpAddress = serverIpAddress;
             Tags = tags;

@@ -33,14 +33,16 @@ export class EmailAccountItem extends pulumi.CustomResource {
         return obj['__pulumiType'] === EmailAccountItem.__pulumiType;
     }
 
+    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly authMethod!: pulumi.Output<string | undefined>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly contactInformation!: pulumi.Output<outputs.emailAccount.ContactInformationSection | undefined>;
-    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField}>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly password!: pulumi.Output<string | undefined>;
     public readonly portNumber!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection}>;
+    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.OutSection}>;
     public readonly security!: pulumi.Output<string | undefined>;
     public readonly server!: pulumi.Output<string | undefined>;
     public readonly smtp!: pulumi.Output<outputs.emailAccount.SmtpSection | undefined>;
@@ -82,6 +84,7 @@ export class EmailAccountItem extends pulumi.CustomResource {
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
+            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["authMethod"] = args ? args.authMethod : undefined;
             resourceInputs["category"] = "Email Account";
             resourceInputs["contactInformation"] = args ? args.contactInformation : undefined;
@@ -98,12 +101,20 @@ export class EmailAccountItem extends pulumi.CustomResource {
             resourceInputs["type"] = args ? args.type : undefined;
             resourceInputs["username"] = args ? args.username : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["fields", "password", "sections", "smtp"] };
+        const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "password", "references", "sections", "smtp"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(EmailAccountItem.__pulumiType, name, resourceInputs, opts);
+    }
+
+    attachment(args: EmailAccountItem.AttachmentArgs): pulumi.Output<EmailAccountItem.AttachmentResult> {
+        return pulumi.runtime.call("onepassword:index:EmailAccountItem/attachment", {
+            "__self__": this,
+            "name": args.name,
+        }, this);
     }
 }
 
@@ -118,6 +129,7 @@ export interface EmailAccountItemState {
  * The set of arguments for constructing a EmailAccountItem resource.
  */
 export interface EmailAccountItemArgs {
+    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     authMethod?: pulumi.Input<string>;
     /**
      * The category of the vault the item is in.
@@ -146,4 +158,27 @@ export interface EmailAccountItemArgs {
      * The UUID of the vault the item is in.
      */
     vault: pulumi.Input<string>;
+}
+
+export namespace EmailAccountItem {
+    /**
+     * The set of arguments for the EmailAccountItem.attachment method.
+     */
+    export interface AttachmentArgs {
+        /**
+         * The name or uuid of the attachment to get
+         */
+        name: pulumi.Input<string>;
+    }
+
+    /**
+     * The results of the EmailAccountItem.attachment method.
+     */
+    export interface AttachmentResult {
+        /**
+         * the value of the attachment
+         */
+        readonly value: string;
+    }
+
 }

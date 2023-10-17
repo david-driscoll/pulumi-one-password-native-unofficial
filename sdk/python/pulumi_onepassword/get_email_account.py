@@ -20,7 +20,10 @@ __all__ = [
 
 @pulumi.output_type
 class GetEmailAccountResult:
-    def __init__(__self__, auth_method=None, category=None, contact_information=None, fields=None, notes=None, password=None, port_number=None, sections=None, security=None, server=None, smtp=None, tags=None, title=None, type=None, username=None, uuid=None, vault=None):
+    def __init__(__self__, attachments=None, auth_method=None, category=None, contact_information=None, fields=None, notes=None, password=None, port_number=None, references=None, sections=None, security=None, server=None, smtp=None, tags=None, title=None, type=None, username=None, uuid=None, vault=None):
+        if attachments and not isinstance(attachments, dict):
+            raise TypeError("Expected argument 'attachments' to be a dict")
+        pulumi.set(__self__, "attachments", attachments)
         if auth_method and not isinstance(auth_method, str):
             raise TypeError("Expected argument 'auth_method' to be a str")
         pulumi.set(__self__, "auth_method", auth_method)
@@ -42,6 +45,9 @@ class GetEmailAccountResult:
         if port_number and not isinstance(port_number, str):
             raise TypeError("Expected argument 'port_number' to be a str")
         pulumi.set(__self__, "port_number", port_number)
+        if references and not isinstance(references, dict):
+            raise TypeError("Expected argument 'references' to be a dict")
+        pulumi.set(__self__, "references", references)
         if sections and not isinstance(sections, dict):
             raise TypeError("Expected argument 'sections' to be a dict")
         pulumi.set(__self__, "sections", sections)
@@ -74,6 +80,11 @@ class GetEmailAccountResult:
         pulumi.set(__self__, "vault", vault)
 
     @property
+    @pulumi.getter
+    def attachments(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "attachments")
+
+    @property
     @pulumi.getter(name="authMethod")
     def auth_method(self) -> Optional[str]:
         return pulumi.get(self, "auth_method")
@@ -90,7 +101,7 @@ class GetEmailAccountResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.GetField']:
+    def fields(self) -> Mapping[str, 'outputs.OutField']:
         return pulumi.get(self, "fields")
 
     @property
@@ -110,7 +121,12 @@ class GetEmailAccountResult:
 
     @property
     @pulumi.getter
-    def sections(self) -> Mapping[str, 'outputs.GetSection']:
+    def references(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "references")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> Mapping[str, 'outputs.OutSection']:
         return pulumi.get(self, "sections")
 
     @property
@@ -177,6 +193,7 @@ class AwaitableGetEmailAccountResult(GetEmailAccountResult):
         if False:
             yield self
         return GetEmailAccountResult(
+            attachments=self.attachments,
             auth_method=self.auth_method,
             category=self.category,
             contact_information=self.contact_information,
@@ -184,6 +201,7 @@ class AwaitableGetEmailAccountResult(GetEmailAccountResult):
             notes=self.notes,
             password=self.password,
             port_number=self.port_number,
+            references=self.references,
             sections=self.sections,
             security=self.security,
             server=self.server,
@@ -218,6 +236,7 @@ def get_email_account(title: Optional[str] = None,
     __ret__ = pulumi.runtime.invoke('onepassword:index:GetEmailAccount', __args__, opts=opts, typ=GetEmailAccountResult).value
 
     return AwaitableGetEmailAccountResult(
+        attachments=__ret__.attachments,
         auth_method=__ret__.auth_method,
         category=__ret__.category,
         contact_information=__ret__.contact_information,
@@ -225,6 +244,7 @@ def get_email_account(title: Optional[str] = None,
         notes=__ret__.notes,
         password=__ret__.password,
         port_number=__ret__.port_number,
+        references=__ret__.references,
         sections=__ret__.sections,
         security=__ret__.security,
         server=__ret__.server,

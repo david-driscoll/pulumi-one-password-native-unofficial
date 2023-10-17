@@ -33,10 +33,11 @@ export class PassportItem extends pulumi.CustomResource {
         return obj['__pulumiType'] === PassportItem.__pulumiType;
     }
 
+    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly dateOfBirth!: pulumi.Output<string | undefined>;
     public readonly expiryDate!: pulumi.Output<string | undefined>;
-    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField}>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly fullName!: pulumi.Output<string | undefined>;
     public readonly gender!: pulumi.Output<string | undefined>;
     public readonly issuedOn!: pulumi.Output<string | undefined>;
@@ -46,7 +47,8 @@ export class PassportItem extends pulumi.CustomResource {
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly number!: pulumi.Output<string | undefined>;
     public readonly placeOfBirth!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection}>;
+    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.OutSection}>;
     /**
      * An array of strings of the tags assigned to the item.
      */
@@ -84,6 +86,7 @@ export class PassportItem extends pulumi.CustomResource {
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
+            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "Passport";
             resourceInputs["dateOfBirth"] = args ? args.dateOfBirth : undefined;
             resourceInputs["expiryDate"] = args ? args.expiryDate : undefined;
@@ -102,12 +105,20 @@ export class PassportItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["type"] = args ? args.type : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["fields", "sections"] };
+        const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "references", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(PassportItem.__pulumiType, name, resourceInputs, opts);
+    }
+
+    attachment(args: PassportItem.AttachmentArgs): pulumi.Output<PassportItem.AttachmentResult> {
+        return pulumi.runtime.call("onepassword:index:PassportItem/attachment", {
+            "__self__": this,
+            "name": args.name,
+        }, this);
     }
 }
 
@@ -122,6 +133,7 @@ export interface PassportItemState {
  * The set of arguments for constructing a PassportItem resource.
  */
 export interface PassportItemArgs {
+    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     /**
      * The category of the vault the item is in.
      */
@@ -152,4 +164,27 @@ export interface PassportItemArgs {
      * The UUID of the vault the item is in.
      */
     vault: pulumi.Input<string>;
+}
+
+export namespace PassportItem {
+    /**
+     * The set of arguments for the PassportItem.attachment method.
+     */
+    export interface AttachmentArgs {
+        /**
+         * The name or uuid of the attachment to get
+         */
+        name: pulumi.Input<string>;
+    }
+
+    /**
+     * The results of the PassportItem.attachment method.
+     */
+    export interface AttachmentResult {
+        /**
+         * the value of the attachment
+         */
+        readonly value: string;
+    }
+
 }

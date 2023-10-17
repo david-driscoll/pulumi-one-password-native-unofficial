@@ -31,12 +31,14 @@ type GetServerArgs struct {
 
 type GetServerResult struct {
 	AdminConsole    *server.AdminConsoleSection    `pulumi:"adminConsole"`
+	Attachments     map[string]OutField            `pulumi:"attachments"`
 	Category        string                         `pulumi:"category"`
-	Fields          map[string]GetField            `pulumi:"fields"`
+	Fields          map[string]OutField            `pulumi:"fields"`
 	HostingProvider *server.HostingProviderSection `pulumi:"hostingProvider"`
 	Notes           *string                        `pulumi:"notes"`
 	Password        *string                        `pulumi:"password"`
-	Sections        map[string]GetSection          `pulumi:"sections"`
+	References      map[string]OutField            `pulumi:"references"`
+	Sections        map[string]OutSection          `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -93,12 +95,16 @@ func (o GetServerResultOutput) AdminConsole() server.AdminConsoleSectionPtrOutpu
 	return o.ApplyT(func(v GetServerResult) *server.AdminConsoleSection { return v.AdminConsole }).(server.AdminConsoleSectionPtrOutput)
 }
 
+func (o GetServerResultOutput) Attachments() OutFieldMapOutput {
+	return o.ApplyT(func(v GetServerResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+}
+
 func (o GetServerResultOutput) Category() pulumi.StringOutput {
 	return o.ApplyT(func(v GetServerResult) string { return v.Category }).(pulumi.StringOutput)
 }
 
-func (o GetServerResultOutput) Fields() GetFieldMapOutput {
-	return o.ApplyT(func(v GetServerResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
+func (o GetServerResultOutput) Fields() OutFieldMapOutput {
+	return o.ApplyT(func(v GetServerResult) map[string]OutField { return v.Fields }).(OutFieldMapOutput)
 }
 
 func (o GetServerResultOutput) HostingProvider() server.HostingProviderSectionPtrOutput {
@@ -113,8 +119,12 @@ func (o GetServerResultOutput) Password() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetServerResult) *string { return v.Password }).(pulumi.StringPtrOutput)
 }
 
-func (o GetServerResultOutput) Sections() GetSectionMapOutput {
-	return o.ApplyT(func(v GetServerResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
+func (o GetServerResultOutput) References() OutFieldMapOutput {
+	return o.ApplyT(func(v GetServerResult) map[string]OutField { return v.References }).(OutFieldMapOutput)
+}
+
+func (o GetServerResultOutput) Sections() OutSectionMapOutput {
+	return o.ApplyT(func(v GetServerResult) map[string]OutSection { return v.Sections }).(OutSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.

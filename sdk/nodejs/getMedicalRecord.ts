@@ -34,16 +34,18 @@ export interface GetMedicalRecordArgs {
 }
 
 export interface GetMedicalRecordResult {
+    readonly attachments: {[key: string]: outputs.OutField};
     readonly category: enums.Category | string;
     readonly date?: string;
-    readonly fields: {[key: string]: outputs.GetField};
+    readonly fields: {[key: string]: outputs.OutField};
     readonly healthcareProfessional?: string;
     readonly location?: string;
     readonly medication?: outputs.medicalRecord.MedicationSection;
     readonly notes?: string;
     readonly patient?: string;
     readonly reasonForVisit?: string;
-    readonly sections: {[key: string]: outputs.GetSection};
+    readonly references: {[key: string]: outputs.OutField};
+    readonly sections: {[key: string]: outputs.OutSection};
     /**
      * An array of strings of the tags assigned to the item.
      */

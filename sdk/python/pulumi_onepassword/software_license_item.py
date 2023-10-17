@@ -18,6 +18,7 @@ __all__ = ['SoftwareLicenseItemArgs', 'SoftwareLicenseItem']
 class SoftwareLicenseItemArgs:
     def __init__(__self__, *,
                  vault: pulumi.Input[str],
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  customer: Optional[pulumi.Input['_softwarelicense.CustomerSectionArgs']] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
@@ -37,6 +38,8 @@ class SoftwareLicenseItemArgs:
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         """
         pulumi.set(__self__, "vault", vault)
+        if attachments is not None:
+            pulumi.set(__self__, "attachments", attachments)
         if category is not None:
             pulumi.set(__self__, "category", 'Software License')
         if customer is not None:
@@ -71,6 +74,15 @@ class SoftwareLicenseItemArgs:
     @vault.setter
     def vault(self, value: pulumi.Input[str]):
         pulumi.set(self, "vault", value)
+
+    @property
+    @pulumi.getter
+    def attachments(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]:
+        return pulumi.get(self, "attachments")
+
+    @attachments.setter
+    def attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
+        pulumi.set(self, "attachments", value)
 
     @property
     @pulumi.getter
@@ -209,6 +221,7 @@ class SoftwareLicenseItem(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  customer: Optional[pulumi.Input[pulumi.InputType['_softwarelicense.CustomerSectionArgs']]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
@@ -254,6 +267,7 @@ class SoftwareLicenseItem(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  customer: Optional[pulumi.Input[pulumi.InputType['_softwarelicense.CustomerSectionArgs']]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
@@ -278,6 +292,7 @@ class SoftwareLicenseItem(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = SoftwareLicenseItemArgs.__new__(SoftwareLicenseItemArgs)
 
+            __props__.__dict__["attachments"] = attachments
             __props__.__dict__["category"] = 'Software License'
             __props__.__dict__["customer"] = customer
             __props__.__dict__["fields"] = fields
@@ -292,8 +307,9 @@ class SoftwareLicenseItem(pulumi.CustomResource):
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
             __props__.__dict__["version"] = version
+            __props__.__dict__["references"] = None
             __props__.__dict__["uuid"] = None
-        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["fields", "sections"])
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachments", "fields", "references", "sections"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(SoftwareLicenseItem, __self__).__init__(
             'onepassword:index:SoftwareLicenseItem',
@@ -320,6 +336,7 @@ class SoftwareLicenseItem(pulumi.CustomResource):
         __props__ = _SoftwareLicenseItemState.__new__(_SoftwareLicenseItemState)
 
         __props__.__dict__["vault"] = vault
+        __props__.__dict__["attachments"] = None
         __props__.__dict__["category"] = None
         __props__.__dict__["customer"] = None
         __props__.__dict__["fields"] = None
@@ -327,12 +344,18 @@ class SoftwareLicenseItem(pulumi.CustomResource):
         __props__.__dict__["notes"] = None
         __props__.__dict__["order"] = None
         __props__.__dict__["publisher"] = None
+        __props__.__dict__["references"] = None
         __props__.__dict__["sections"] = None
         __props__.__dict__["tags"] = None
         __props__.__dict__["title"] = None
         __props__.__dict__["uuid"] = None
         __props__.__dict__["version"] = None
         return SoftwareLicenseItem(resource_name, opts=opts, __props__=__props__)
+
+    @property
+    @pulumi.getter
+    def attachments(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+        return pulumi.get(self, "attachments")
 
     @property
     @pulumi.getter
@@ -346,7 +369,7 @@ class SoftwareLicenseItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def fields(self) -> pulumi.Output[Mapping[str, 'outputs.GetField']]:
+    def fields(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
         return pulumi.get(self, "fields")
 
     @property
@@ -371,7 +394,12 @@ class SoftwareLicenseItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def sections(self) -> pulumi.Output[Mapping[str, 'outputs.GetSection']]:
+    def references(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+        return pulumi.get(self, "references")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> pulumi.Output[Mapping[str, 'outputs.OutSection']]:
         return pulumi.get(self, "sections")
 
     @property
@@ -410,4 +438,33 @@ class SoftwareLicenseItem(pulumi.CustomResource):
     @pulumi.getter
     def version(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "version")
+
+    @pulumi.output_type
+    class AttachmentResult:
+        """
+        The resolved reference value
+        """
+        def __init__(__self__, value=None):
+            if value and not isinstance(value, str):
+                raise TypeError("Expected argument 'value' to be a str")
+            pulumi.set(__self__, "value", value)
+
+        @property
+        @pulumi.getter
+        def value(self) -> str:
+            """
+            the value of the attachment
+            """
+            return pulumi.get(self, "value")
+
+    def attachment(__self__, *,
+                   name: pulumi.Input[str]) -> pulumi.Output['SoftwareLicenseItem.AttachmentResult']:
+        """
+
+        :param pulumi.Input[str] name: The name or uuid of the attachment to get
+        """
+        __args__ = dict()
+        __args__['__self__'] = __self__
+        __args__['name'] = name
+        return pulumi.runtime.call('onepassword:index:SoftwareLicenseItem/attachment', __args__, res=__self__, typ=SoftwareLicenseItem.AttachmentResult)
 

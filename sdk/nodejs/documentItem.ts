@@ -33,10 +33,12 @@ export class DocumentItem extends pulumi.CustomResource {
         return obj['__pulumiType'] === DocumentItem.__pulumiType;
     }
 
+    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly category!: pulumi.Output<enums.Category | string>;
-    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField}>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly notes!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection}>;
+    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.OutSection}>;
     /**
      * An array of strings of the tags assigned to the item.
      */
@@ -73,6 +75,7 @@ export class DocumentItem extends pulumi.CustomResource {
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
+            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "Document";
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
@@ -80,12 +83,20 @@ export class DocumentItem extends pulumi.CustomResource {
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["fields", "sections"] };
+        const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "references", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(DocumentItem.__pulumiType, name, resourceInputs, opts);
+    }
+
+    attachment(args: DocumentItem.AttachmentArgs): pulumi.Output<DocumentItem.AttachmentResult> {
+        return pulumi.runtime.call("onepassword:index:DocumentItem/attachment", {
+            "__self__": this,
+            "name": args.name,
+        }, this);
     }
 }
 
@@ -100,6 +111,7 @@ export interface DocumentItemState {
  * The set of arguments for constructing a DocumentItem resource.
  */
 export interface DocumentItemArgs {
+    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     /**
      * The category of the vault the item is in.
      */
@@ -119,4 +131,27 @@ export interface DocumentItemArgs {
      * The UUID of the vault the item is in.
      */
     vault: pulumi.Input<string>;
+}
+
+export namespace DocumentItem {
+    /**
+     * The set of arguments for the DocumentItem.attachment method.
+     */
+    export interface AttachmentArgs {
+        /**
+         * The name or uuid of the attachment to get
+         */
+        name: pulumi.Input<string>;
+    }
+
+    /**
+     * The results of the DocumentItem.attachment method.
+     */
+    export interface AttachmentResult {
+        /**
+         * the value of the attachment
+         */
+        readonly value: string;
+    }
+
 }

@@ -34,14 +34,16 @@ export class CreditCardItem extends pulumi.CustomResource {
     }
 
     public readonly additionalDetails!: pulumi.Output<outputs.creditCard.AdditionalDetailsSection | undefined>;
+    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly cardholderName!: pulumi.Output<string | undefined>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly contactInformation!: pulumi.Output<outputs.creditCard.ContactInformationSection | undefined>;
     public readonly expiryDate!: pulumi.Output<string | undefined>;
-    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField}>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly number!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection}>;
+    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.OutSection}>;
     /**
      * An array of strings of the tags assigned to the item.
      */
@@ -82,6 +84,7 @@ export class CreditCardItem extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vault'");
             }
             resourceInputs["additionalDetails"] = args ? args.additionalDetails : undefined;
+            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["cardholderName"] = args ? args.cardholderName : undefined;
             resourceInputs["category"] = "Credit Card";
             resourceInputs["contactInformation"] = args ? args.contactInformation : undefined;
@@ -96,12 +99,20 @@ export class CreditCardItem extends pulumi.CustomResource {
             resourceInputs["validFrom"] = args ? args.validFrom : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["verificationNumber"] = args?.verificationNumber ? pulumi.secret(args.verificationNumber) : undefined;
+            resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["additionalDetails", "fields", "sections", "verificationNumber"] };
+        const secretOpts = { additionalSecretOutputs: ["additionalDetails", "attachments", "fields", "references", "sections", "verificationNumber"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(CreditCardItem.__pulumiType, name, resourceInputs, opts);
+    }
+
+    attachment(args: CreditCardItem.AttachmentArgs): pulumi.Output<CreditCardItem.AttachmentResult> {
+        return pulumi.runtime.call("onepassword:index:CreditCardItem/attachment", {
+            "__self__": this,
+            "name": args.name,
+        }, this);
     }
 }
 
@@ -117,6 +128,7 @@ export interface CreditCardItemState {
  */
 export interface CreditCardItemArgs {
     additionalDetails?: pulumi.Input<inputs.creditCard.AdditionalDetailsSectionArgs>;
+    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     cardholderName?: pulumi.Input<string>;
     /**
      * The category of the vault the item is in.
@@ -143,4 +155,27 @@ export interface CreditCardItemArgs {
      */
     vault: pulumi.Input<string>;
     verificationNumber?: pulumi.Input<string>;
+}
+
+export namespace CreditCardItem {
+    /**
+     * The set of arguments for the CreditCardItem.attachment method.
+     */
+    export interface AttachmentArgs {
+        /**
+         * The name or uuid of the attachment to get
+         */
+        name: pulumi.Input<string>;
+    }
+
+    /**
+     * The results of the CreditCardItem.attachment method.
+     */
+    export interface AttachmentResult {
+        /**
+         * the value of the attachment
+         */
+        readonly value: string;
+    }
+
 }

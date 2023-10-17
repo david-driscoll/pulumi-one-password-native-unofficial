@@ -15,12 +15,14 @@ import (
 type CryptoWalletItem struct {
 	pulumi.CustomResourceState
 
+	Attachments    OutFieldMapOutput      `pulumi:"attachments"`
 	Category       pulumi.StringOutput    `pulumi:"category"`
-	Fields         GetFieldMapOutput      `pulumi:"fields"`
+	Fields         OutFieldMapOutput      `pulumi:"fields"`
 	Notes          pulumi.StringPtrOutput `pulumi:"notes"`
 	Password       pulumi.StringPtrOutput `pulumi:"password"`
 	RecoveryPhrase pulumi.StringPtrOutput `pulumi:"recoveryPhrase"`
-	Sections       GetSectionMapOutput    `pulumi:"sections"`
+	References     OutFieldMapOutput      `pulumi:"references"`
+	Sections       OutSectionMapOutput    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -50,9 +52,11 @@ func NewCryptoWalletItem(ctx *pulumi.Context,
 		args.RecoveryPhrase = pulumi.ToSecret(args.RecoveryPhrase).(pulumi.StringPtrOutput)
 	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"attachments",
 		"fields",
 		"password",
 		"recoveryPhrase",
+		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)
@@ -92,6 +96,7 @@ func (CryptoWalletItemState) ElementType() reflect.Type {
 }
 
 type cryptoWalletItemArgs struct {
+	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
 	Category       *string            `pulumi:"category"`
 	Fields         map[string]Field   `pulumi:"fields"`
@@ -110,6 +115,7 @@ type cryptoWalletItemArgs struct {
 
 // The set of arguments for constructing a CryptoWalletItem resource.
 type CryptoWalletItemArgs struct {
+	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
 	Category       pulumi.StringPtrInput
 	Fields         FieldMapInput
@@ -128,6 +134,46 @@ type CryptoWalletItemArgs struct {
 
 func (CryptoWalletItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*cryptoWalletItemArgs)(nil)).Elem()
+}
+
+func (r *CryptoWalletItem) Attachment(ctx *pulumi.Context, args *CryptoWalletItemAttachmentArgs) (CryptoWalletItemAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:CryptoWalletItem/attachment", args, CryptoWalletItemAttachmentResultOutput{}, r)
+	if err != nil {
+		return CryptoWalletItemAttachmentResultOutput{}, err
+	}
+	return out.(CryptoWalletItemAttachmentResultOutput), nil
+}
+
+type cryptoWalletItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name string `pulumi:"name"`
+}
+
+// The set of arguments for the Attachment method of the CryptoWalletItem resource.
+type CryptoWalletItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name pulumi.StringInput
+}
+
+func (CryptoWalletItemAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*cryptoWalletItemAttachmentArgs)(nil)).Elem()
+}
+
+// The resolved reference value
+type CryptoWalletItemAttachmentResult struct {
+	// the value of the attachment
+	Value string `pulumi:"value"`
+}
+
+type CryptoWalletItemAttachmentResultOutput struct{ *pulumi.OutputState }
+
+func (CryptoWalletItemAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CryptoWalletItemAttachmentResult)(nil)).Elem()
+}
+
+// the value of the attachment
+func (o CryptoWalletItemAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v CryptoWalletItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type CryptoWalletItemInput interface {
@@ -258,6 +304,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*CryptoWalletItemArrayInput)(nil)).Elem(), CryptoWalletItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CryptoWalletItemMapInput)(nil)).Elem(), CryptoWalletItemMap{})
 	pulumi.RegisterOutputType(CryptoWalletItemOutput{})
+	pulumi.RegisterOutputType(CryptoWalletItemAttachmentResultOutput{})
 	pulumi.RegisterOutputType(CryptoWalletItemArrayOutput{})
 	pulumi.RegisterOutputType(CryptoWalletItemMapOutput{})
 }

@@ -33,12 +33,14 @@ export class CryptoWalletItem extends pulumi.CustomResource {
         return obj['__pulumiType'] === CryptoWalletItem.__pulumiType;
     }
 
+    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly category!: pulumi.Output<enums.Category | string>;
-    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField}>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly password!: pulumi.Output<string | undefined>;
     public readonly recoveryPhrase!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection}>;
+    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.OutSection}>;
     /**
      * An array of strings of the tags assigned to the item.
      */
@@ -76,6 +78,7 @@ export class CryptoWalletItem extends pulumi.CustomResource {
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
+            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "Crypto Wallet";
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
@@ -86,12 +89,20 @@ export class CryptoWalletItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["wallet"] = args ? args.wallet : undefined;
+            resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["fields", "password", "recoveryPhrase", "sections"] };
+        const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "password", "recoveryPhrase", "references", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(CryptoWalletItem.__pulumiType, name, resourceInputs, opts);
+    }
+
+    attachment(args: CryptoWalletItem.AttachmentArgs): pulumi.Output<CryptoWalletItem.AttachmentResult> {
+        return pulumi.runtime.call("onepassword:index:CryptoWalletItem/attachment", {
+            "__self__": this,
+            "name": args.name,
+        }, this);
     }
 }
 
@@ -106,6 +117,7 @@ export interface CryptoWalletItemState {
  * The set of arguments for constructing a CryptoWalletItem resource.
  */
 export interface CryptoWalletItemArgs {
+    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     /**
      * The category of the vault the item is in.
      */
@@ -128,4 +140,27 @@ export interface CryptoWalletItemArgs {
      */
     vault: pulumi.Input<string>;
     wallet?: pulumi.Input<inputs.cryptoWallet.WalletSectionArgs>;
+}
+
+export namespace CryptoWalletItem {
+    /**
+     * The set of arguments for the CryptoWalletItem.attachment method.
+     */
+    export interface AttachmentArgs {
+        /**
+         * The name or uuid of the attachment to get
+         */
+        name: pulumi.Input<string>;
+    }
+
+    /**
+     * The results of the CryptoWalletItem.attachment method.
+     */
+    export interface AttachmentResult {
+        /**
+         * the value of the attachment
+         */
+        readonly value: string;
+    }
+
 }

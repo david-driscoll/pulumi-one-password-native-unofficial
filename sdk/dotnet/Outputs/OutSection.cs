@@ -11,15 +11,15 @@ namespace Pulumi.Onepassword.Outputs
 {
 
     [OutputType]
-    public sealed class GetSection
+    public sealed class OutSection
     {
-        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
         public readonly string Label;
         public readonly string Uuid;
 
         [OutputConstructor]
-        private GetSection(
-            ImmutableDictionary<string, Outputs.GetField> fields,
+        private OutSection(
+            ImmutableDictionary<string, Outputs.OutField> fields,
 
             string label,
 

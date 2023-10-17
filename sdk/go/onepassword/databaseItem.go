@@ -15,14 +15,16 @@ type DatabaseItem struct {
 	pulumi.CustomResourceState
 
 	Alias             pulumi.StringPtrOutput `pulumi:"alias"`
+	Attachments       OutFieldMapOutput      `pulumi:"attachments"`
 	Category          pulumi.StringOutput    `pulumi:"category"`
 	ConnectionOptions pulumi.StringPtrOutput `pulumi:"connectionOptions"`
 	Database          pulumi.StringPtrOutput `pulumi:"database"`
-	Fields            GetFieldMapOutput      `pulumi:"fields"`
+	Fields            OutFieldMapOutput      `pulumi:"fields"`
 	Notes             pulumi.StringPtrOutput `pulumi:"notes"`
 	Password          pulumi.StringPtrOutput `pulumi:"password"`
 	Port              pulumi.StringPtrOutput `pulumi:"port"`
-	Sections          GetSectionMapOutput    `pulumi:"sections"`
+	References        OutFieldMapOutput      `pulumi:"references"`
+	Sections          OutSectionMapOutput    `pulumi:"sections"`
 	Server            pulumi.StringPtrOutput `pulumi:"server"`
 	Sid               pulumi.StringPtrOutput `pulumi:"sid"`
 	// An array of strings of the tags assigned to the item.
@@ -52,8 +54,10 @@ func NewDatabaseItem(ctx *pulumi.Context,
 		args.Password = pulumi.ToSecret(args.Password).(pulumi.StringPtrOutput)
 	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"attachments",
 		"fields",
 		"password",
+		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)
@@ -93,7 +97,8 @@ func (DatabaseItemState) ElementType() reflect.Type {
 }
 
 type databaseItemArgs struct {
-	Alias *string `pulumi:"alias"`
+	Alias       *string                          `pulumi:"alias"`
+	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
 	Category          *string            `pulumi:"category"`
 	ConnectionOptions *string            `pulumi:"connectionOptions"`
@@ -117,7 +122,8 @@ type databaseItemArgs struct {
 
 // The set of arguments for constructing a DatabaseItem resource.
 type DatabaseItemArgs struct {
-	Alias pulumi.StringPtrInput
+	Alias       pulumi.StringPtrInput
+	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
 	Category          pulumi.StringPtrInput
 	ConnectionOptions pulumi.StringPtrInput
@@ -141,6 +147,46 @@ type DatabaseItemArgs struct {
 
 func (DatabaseItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*databaseItemArgs)(nil)).Elem()
+}
+
+func (r *DatabaseItem) Attachment(ctx *pulumi.Context, args *DatabaseItemAttachmentArgs) (DatabaseItemAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:DatabaseItem/attachment", args, DatabaseItemAttachmentResultOutput{}, r)
+	if err != nil {
+		return DatabaseItemAttachmentResultOutput{}, err
+	}
+	return out.(DatabaseItemAttachmentResultOutput), nil
+}
+
+type databaseItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name string `pulumi:"name"`
+}
+
+// The set of arguments for the Attachment method of the DatabaseItem resource.
+type DatabaseItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name pulumi.StringInput
+}
+
+func (DatabaseItemAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*databaseItemAttachmentArgs)(nil)).Elem()
+}
+
+// The resolved reference value
+type DatabaseItemAttachmentResult struct {
+	// the value of the attachment
+	Value string `pulumi:"value"`
+}
+
+type DatabaseItemAttachmentResultOutput struct{ *pulumi.OutputState }
+
+func (DatabaseItemAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*DatabaseItemAttachmentResult)(nil)).Elem()
+}
+
+// the value of the attachment
+func (o DatabaseItemAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v DatabaseItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type DatabaseItemInput interface {
@@ -271,6 +317,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*DatabaseItemArrayInput)(nil)).Elem(), DatabaseItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DatabaseItemMapInput)(nil)).Elem(), DatabaseItemMap{})
 	pulumi.RegisterOutputType(DatabaseItemOutput{})
+	pulumi.RegisterOutputType(DatabaseItemAttachmentResultOutput{})
 	pulumi.RegisterOutputType(DatabaseItemArrayOutput{})
 	pulumi.RegisterOutputType(DatabaseItemMapOutput{})
 }

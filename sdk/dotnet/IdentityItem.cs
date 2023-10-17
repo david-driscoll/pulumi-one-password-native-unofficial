@@ -15,11 +15,14 @@ namespace Pulumi.Onepassword
         [Output("address")]
         public Output<Pulumi.Onepassword.Identity.Outputs.AddressSection?> Address { get; private set; } = null!;
 
+        [Output("attachments")]
+        public Output<ImmutableDictionary<string, Outputs.OutField>> Attachments { get; private set; } = null!;
+
         [Output("category")]
         public Output<string> Category { get; private set; } = null!;
 
         [Output("fields")]
-        public Output<ImmutableDictionary<string, Outputs.GetField>> Fields { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutField>> Fields { get; private set; } = null!;
 
         [Output("identification")]
         public Output<Pulumi.Onepassword.Identity.Outputs.IdentificationSection?> Identification { get; private set; } = null!;
@@ -30,8 +33,11 @@ namespace Pulumi.Onepassword
         [Output("notes")]
         public Output<string?> Notes { get; private set; } = null!;
 
+        [Output("references")]
+        public Output<ImmutableDictionary<string, Outputs.OutField>> References { get; private set; } = null!;
+
         [Output("sections")]
-        public Output<ImmutableDictionary<string, Outputs.GetSection>> Sections { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutSection>> Sections { get; private set; } = null!;
 
         /// <summary>
         /// An array of strings of the tags assigned to the item.
@@ -89,7 +95,9 @@ namespace Pulumi.Onepassword
                 Version = Utilities.Version,
                 AdditionalSecretOutputs =
                 {
+                    "attachments",
                     "fields",
+                    "references",
                     "sections",
                 },
             };
@@ -111,12 +119,23 @@ namespace Pulumi.Onepassword
         {
             return new IdentityItem(name, id, state, options);
         }
+
+        public Pulumi.Output<IdentityItemAttachmentResult> Attachment(IdentityItemAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<IdentityItemAttachmentResult>("onepassword:index:IdentityItem/attachment", args ?? new IdentityItemAttachmentArgs(), this);
     }
 
     public sealed class IdentityItemArgs : Pulumi.ResourceArgs
     {
         [Input("address")]
         public Input<Pulumi.Onepassword.Identity.Inputs.AddressSectionArgs>? Address { get; set; }
+
+        [Input("attachments")]
+        private InputMap<AssetOrArchive>? _attachments;
+        public InputMap<AssetOrArchive> Attachments
+        {
+            get => _attachments ?? (_attachments = new InputMap<AssetOrArchive>());
+            set => _attachments = value;
+        }
 
         /// <summary>
         /// The category of the vault the item is in.
@@ -188,6 +207,40 @@ namespace Pulumi.Onepassword
 
         public IdentityItemState()
         {
+        }
+    }
+
+    /// <summary>
+    /// The set of arguments for the <see cref="IdentityItem.Attachment"/> method.
+    /// </summary>
+    public sealed class IdentityItemAttachmentArgs : Pulumi.CallArgs
+    {
+        /// <summary>
+        /// The name or uuid of the attachment to get
+        /// </summary>
+        [Input("name", required: true)]
+        public Input<string> Name { get; set; } = null!;
+
+        public IdentityItemAttachmentArgs()
+        {
+        }
+    }
+
+    /// <summary>
+    /// The results of the <see cref="IdentityItem.Attachment"/> method.
+    /// </summary>
+    [OutputType]
+    public sealed class IdentityItemAttachmentResult
+    {
+        /// <summary>
+        /// the value of the attachment
+        /// </summary>
+        public readonly string Value;
+
+        [OutputConstructor]
+        private IdentityItemAttachmentResult(string value)
+        {
+            Value = value;
         }
     }
 }

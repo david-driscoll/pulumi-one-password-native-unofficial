@@ -14,11 +14,13 @@ import (
 type SSHKeyItem struct {
 	pulumi.CustomResourceState
 
-	Category   pulumi.StringOutput    `pulumi:"category"`
-	Fields     GetFieldMapOutput      `pulumi:"fields"`
-	Notes      pulumi.StringPtrOutput `pulumi:"notes"`
-	PrivateKey pulumi.StringPtrOutput `pulumi:"privateKey"`
-	Sections   GetSectionMapOutput    `pulumi:"sections"`
+	Attachments OutFieldMapOutput      `pulumi:"attachments"`
+	Category    pulumi.StringOutput    `pulumi:"category"`
+	Fields      OutFieldMapOutput      `pulumi:"fields"`
+	Notes       pulumi.StringPtrOutput `pulumi:"notes"`
+	PrivateKey  pulumi.StringPtrOutput `pulumi:"privateKey"`
+	References  OutFieldMapOutput      `pulumi:"references"`
+	Sections    OutSectionMapOutput    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -41,7 +43,9 @@ func NewSSHKeyItem(ctx *pulumi.Context,
 	}
 	args.Category = pulumi.StringPtr("SSH Key")
 	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"attachments",
 		"fields",
+		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)
@@ -81,6 +85,7 @@ func (SSHKeyItemState) ElementType() reflect.Type {
 }
 
 type sshkeyItemArgs struct {
+	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
 	Category   *string            `pulumi:"category"`
 	Fields     map[string]Field   `pulumi:"fields"`
@@ -97,6 +102,7 @@ type sshkeyItemArgs struct {
 
 // The set of arguments for constructing a SSHKeyItem resource.
 type SSHKeyItemArgs struct {
+	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
 	Category   pulumi.StringPtrInput
 	Fields     FieldMapInput
@@ -113,6 +119,46 @@ type SSHKeyItemArgs struct {
 
 func (SSHKeyItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*sshkeyItemArgs)(nil)).Elem()
+}
+
+func (r *SSHKeyItem) Attachment(ctx *pulumi.Context, args *SSHKeyItemAttachmentArgs) (SSHKeyItemAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:SSHKeyItem/attachment", args, SSHKeyItemAttachmentResultOutput{}, r)
+	if err != nil {
+		return SSHKeyItemAttachmentResultOutput{}, err
+	}
+	return out.(SSHKeyItemAttachmentResultOutput), nil
+}
+
+type sshkeyItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name string `pulumi:"name"`
+}
+
+// The set of arguments for the Attachment method of the SSHKeyItem resource.
+type SSHKeyItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name pulumi.StringInput
+}
+
+func (SSHKeyItemAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*sshkeyItemAttachmentArgs)(nil)).Elem()
+}
+
+// The resolved reference value
+type SSHKeyItemAttachmentResult struct {
+	// the value of the attachment
+	Value string `pulumi:"value"`
+}
+
+type SSHKeyItemAttachmentResultOutput struct{ *pulumi.OutputState }
+
+func (SSHKeyItemAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SSHKeyItemAttachmentResult)(nil)).Elem()
+}
+
+// the value of the attachment
+func (o SSHKeyItemAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v SSHKeyItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type SSHKeyItemInput interface {
@@ -243,6 +289,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*SSHKeyItemArrayInput)(nil)).Elem(), SSHKeyItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SSHKeyItemMapInput)(nil)).Elem(), SSHKeyItemMap{})
 	pulumi.RegisterOutputType(SSHKeyItemOutput{})
+	pulumi.RegisterOutputType(SSHKeyItemAttachmentResultOutput{})
 	pulumi.RegisterOutputType(SSHKeyItemArrayOutput{})
 	pulumi.RegisterOutputType(SSHKeyItemMapOutput{})
 }

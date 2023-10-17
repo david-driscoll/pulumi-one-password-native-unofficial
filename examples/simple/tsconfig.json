@@ -2,7 +2,7 @@
     "compilerOptions": {
         "strict": true,
         "outDir": "bin",
-        "target": "es2017",
+        "target": "ESNext",
         "module": "commonjs",
         "moduleResolution": "node",
         "sourceMap": true,

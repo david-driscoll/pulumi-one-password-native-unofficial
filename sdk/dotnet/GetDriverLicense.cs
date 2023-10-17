@@ -74,19 +74,21 @@ namespace Pulumi.Onepassword
     public sealed class GetDriverLicenseResult
     {
         public readonly string? Address;
+        public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
         public readonly string Category;
         public readonly string? ConditionsRestrictions;
         public readonly string? Country;
         public readonly string? DateOfBirth;
         public readonly string? ExpiryDate;
-        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
         public readonly string? FullName;
         public readonly string? Gender;
         public readonly string? Height;
         public readonly string? LicenseClass;
         public readonly string? Notes;
         public readonly string? Number;
-        public readonly ImmutableDictionary<string, Outputs.GetSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.OutField> References;
+        public readonly ImmutableDictionary<string, Outputs.OutSection> Sections;
         public readonly string? State;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
@@ -109,6 +111,8 @@ namespace Pulumi.Onepassword
         private GetDriverLicenseResult(
             string? address,
 
+            ImmutableDictionary<string, Outputs.OutField> attachments,
+
             string category,
 
             string? conditionsRestrictions,
@@ -119,7 +123,7 @@ namespace Pulumi.Onepassword
 
             string? expiryDate,
 
-            ImmutableDictionary<string, Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.OutField> fields,
 
             string? fullName,
 
@@ -133,7 +137,9 @@ namespace Pulumi.Onepassword
 
             string? number,
 
-            ImmutableDictionary<string, Outputs.GetSection> sections,
+            ImmutableDictionary<string, Outputs.OutField> references,
+
+            ImmutableDictionary<string, Outputs.OutSection> sections,
 
             string? state,
 
@@ -146,6 +152,7 @@ namespace Pulumi.Onepassword
             string vault)
         {
             Address = address;
+            Attachments = attachments;
             Category = category;
             ConditionsRestrictions = conditionsRestrictions;
             Country = country;
@@ -158,6 +165,7 @@ namespace Pulumi.Onepassword
             LicenseClass = licenseClass;
             Notes = notes;
             Number = number;
+            References = references;
             Sections = sections;
             State = state;
             Tags = tags;

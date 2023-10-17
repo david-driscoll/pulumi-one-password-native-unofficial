@@ -20,6 +20,13 @@ export function fieldArgsProvideDefaults(val: FieldArgs): FieldArgs {
     };
 }
 
+export interface PasswordRecipeArgs {
+    digits?: pulumi.Input<boolean>;
+    length: pulumi.Input<number>;
+    letters?: pulumi.Input<boolean>;
+    symbols?: pulumi.Input<boolean>;
+}
+
 export interface SectionArgs {
     fields: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
 }

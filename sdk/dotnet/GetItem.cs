@@ -11,15 +11,9 @@ namespace Pulumi.Onepassword
 {
     public static class GetItem
     {
-        /// <summary>
-        /// Use this data source to get details of an item by its vault uuid and either the title or the uuid of the item.
-        /// </summary>
         public static Task<GetItemResult> InvokeAsync(GetItemArgs args, InvokeOptions? options = null)
             => Pulumi.Deployment.Instance.InvokeAsync<GetItemResult>("onepassword:index:GetItem", args ?? new GetItemArgs(), options.WithDefaults());
 
-        /// <summary>
-        /// Use this data source to get details of an item by its vault uuid and either the title or the uuid of the item.
-        /// </summary>
         public static Output<GetItemResult> Invoke(GetItemInvokeArgs args, InvokeOptions? options = null)
             => Pulumi.Deployment.Instance.Invoke<GetItemResult>("onepassword:index:GetItem", args ?? new GetItemInvokeArgs(), options.WithDefaults());
     }
@@ -79,9 +73,11 @@ namespace Pulumi.Onepassword
     [OutputType]
     public sealed class GetItemResult
     {
+        public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
         public readonly string Category;
-        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
-        public readonly ImmutableDictionary<string, Outputs.GetSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.OutField> References;
+        public readonly ImmutableDictionary<string, Outputs.OutSection> Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
         /// </summary>
@@ -101,11 +97,15 @@ namespace Pulumi.Onepassword
 
         [OutputConstructor]
         private GetItemResult(
+            ImmutableDictionary<string, Outputs.OutField> attachments,
+
             string category,
 
-            ImmutableDictionary<string, Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.OutField> fields,
 
-            ImmutableDictionary<string, Outputs.GetSection> sections,
+            ImmutableDictionary<string, Outputs.OutField> references,
+
+            ImmutableDictionary<string, Outputs.OutSection> sections,
 
             ImmutableArray<string> tags,
 
@@ -115,8 +115,10 @@ namespace Pulumi.Onepassword
 
             string vault)
         {
+            Attachments = attachments;
             Category = category;
             Fields = fields;
+            References = references;
             Sections = sections;
             Tags = tags;
             Title = title;

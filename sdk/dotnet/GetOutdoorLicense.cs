@@ -74,14 +74,16 @@ namespace Pulumi.Onepassword
     public sealed class GetOutdoorLicenseResult
     {
         public readonly string? ApprovedWildlife;
+        public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
         public readonly string Category;
         public readonly string? Country;
         public readonly string? Expires;
-        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
         public readonly string? FullName;
         public readonly string? MaximumQuota;
         public readonly string? Notes;
-        public readonly ImmutableDictionary<string, Outputs.GetSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.OutField> References;
+        public readonly ImmutableDictionary<string, Outputs.OutSection> Sections;
         public readonly string? State;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
@@ -105,13 +107,15 @@ namespace Pulumi.Onepassword
         private GetOutdoorLicenseResult(
             string? approvedWildlife,
 
+            ImmutableDictionary<string, Outputs.OutField> attachments,
+
             string category,
 
             string? country,
 
             string? expires,
 
-            ImmutableDictionary<string, Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.OutField> fields,
 
             string? fullName,
 
@@ -119,7 +123,9 @@ namespace Pulumi.Onepassword
 
             string? notes,
 
-            ImmutableDictionary<string, Outputs.GetSection> sections,
+            ImmutableDictionary<string, Outputs.OutField> references,
+
+            ImmutableDictionary<string, Outputs.OutSection> sections,
 
             string? state,
 
@@ -134,6 +140,7 @@ namespace Pulumi.Onepassword
             string vault)
         {
             ApprovedWildlife = approvedWildlife;
+            Attachments = attachments;
             Category = category;
             Country = country;
             Expires = expires;
@@ -141,6 +148,7 @@ namespace Pulumi.Onepassword
             FullName = fullName;
             MaximumQuota = maximumQuota;
             Notes = notes;
+            References = references;
             Sections = sections;
             State = state;
             Tags = tags;

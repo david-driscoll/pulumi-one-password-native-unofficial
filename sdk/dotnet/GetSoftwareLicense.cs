@@ -73,14 +73,16 @@ namespace Pulumi.Onepassword
     [OutputType]
     public sealed class GetSoftwareLicenseResult
     {
+        public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
         public readonly string Category;
         public readonly Pulumi.Onepassword.SoftwareLicense.Outputs.CustomerSection? Customer;
-        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
         public readonly string? LicenseKey;
         public readonly string? Notes;
         public readonly Pulumi.Onepassword.SoftwareLicense.Outputs.OrderSection? Order;
         public readonly Pulumi.Onepassword.SoftwareLicense.Outputs.PublisherSection? Publisher;
-        public readonly ImmutableDictionary<string, Outputs.GetSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.OutField> References;
+        public readonly ImmutableDictionary<string, Outputs.OutSection> Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
         /// </summary>
@@ -101,11 +103,13 @@ namespace Pulumi.Onepassword
 
         [OutputConstructor]
         private GetSoftwareLicenseResult(
+            ImmutableDictionary<string, Outputs.OutField> attachments,
+
             string category,
 
             Pulumi.Onepassword.SoftwareLicense.Outputs.CustomerSection? customer,
 
-            ImmutableDictionary<string, Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.OutField> fields,
 
             string? licenseKey,
 
@@ -115,7 +119,9 @@ namespace Pulumi.Onepassword
 
             Pulumi.Onepassword.SoftwareLicense.Outputs.PublisherSection? publisher,
 
-            ImmutableDictionary<string, Outputs.GetSection> sections,
+            ImmutableDictionary<string, Outputs.OutField> references,
+
+            ImmutableDictionary<string, Outputs.OutSection> sections,
 
             ImmutableArray<string> tags,
 
@@ -127,6 +133,7 @@ namespace Pulumi.Onepassword
 
             string? version)
         {
+            Attachments = attachments;
             Category = category;
             Customer = customer;
             Fields = fields;
@@ -134,6 +141,7 @@ namespace Pulumi.Onepassword
             Notes = notes;
             Order = order;
             Publisher = publisher;
+            References = references;
             Sections = sections;
             Tags = tags;
             Title = title;

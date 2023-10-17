@@ -97,12 +97,12 @@ schema.types = {
             "value": t.name
         }))
     },
-    "onepassword:index:GetSection": {
+    "onepassword:index:OutSection": {
         "properties": {
             "fields": {
                 "type": "object",
                 "additionalProperties": {
-                    "$ref": "#/types/onepassword:index:GetField"
+                    "$ref": "#/types/onepassword:index:OutField"
                 }
             },
             "uuid": {
@@ -133,7 +133,19 @@ schema.types = {
             "fields"
         ]
     },
-    "onepassword:index:GetField": {
+    "onepassword:index:OutAttachment": {
+        "properties": {
+            "uuid": { "type": "string" },
+            "name": { "type": "string" },
+            "reference": { "type": "string" },
+            "size": { "type": "integer" },
+        },
+        "type": "object",
+        "required": [
+            "uuid", "name", "size", "reference"
+        ]
+    },
+    "onepassword:index:OutField": {
         "properties": {
             "uuid": {
                 "type": "string"
@@ -224,7 +236,20 @@ schema.types = {
             {
                 "name": "Phone",
                 "value": "phone"
-            }
+            },
+            // not currently supported for input
+            // {
+            //     "name": "Reference",
+            //     "value": "reference"
+            // },
+            // {
+            //     "name": "Otp",
+            //     "value": "otp"
+            // },
+            // {
+            //     "name": "SshKey",
+            //     "value": "sshkey"
+            // }
         ]
     },
     "onepassword:index:ResponseFieldType": {
@@ -299,7 +324,27 @@ schema.types = {
                 "value": "SSHKEY"
             }
         ]
-    }
+    },
+    "onepassword:index:PasswordRecipe": {
+        "properties": {
+            "letters": {
+                type: "boolean"
+            },
+            "digits": {
+                type: "boolean"
+            },
+            "symbols": {
+                type: "boolean"
+            },
+            "length": {
+                type: "integer"
+            },
+        },
+        "type": "object",
+        "required": [
+            "length"
+        ]
+    },
 }
 
 for (const template of templates) {
@@ -342,6 +387,10 @@ for (const template of templates) {
         "type": "object",
         "additionalProperties": { "$ref": "#/types/onepassword:index:Field" }
     };
+    currentResource.inputProperties['attachments'] = {
+        "type": "object",
+        "additionalProperties": { "$ref": "pulumi.json#/Asset" }
+    };
     currentResource.inputProperties['vault'] = {
         "type": "string",
         "description": "The UUID of the vault the item is in.\n",
@@ -364,7 +413,7 @@ for (const template of templates) {
 
     const functionName = `onepassword:index:Get${template.name.replace(/ /g, '')}`;
     (template as any).functionName = functionName
-    const currentFunction = schema.functions[functionName] ??= {};
+    const currentFunction = schema.functions[functionName] = {} as any;
     currentFunction.inputs = {
         "properties": {
             "title": {
@@ -385,6 +434,33 @@ for (const template of templates) {
         ]
     };
     currentFunction.outputs = applyDefaultOutputProperties({ properties: {}, required: [] });
+
+    schema.functions[resourceName + '/attachment'] = {
+        inputs: {
+            properties: {
+                "__self__": {
+                    "$ref": `#/resources/${resourceName}`
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name or uuid of the attachment to get"
+                }
+            },
+            required: ['__self__', 'name']
+        },
+        outputs: {
+            "properties": {
+                "value": {
+                    description: 'the value of the attachment',
+                    "type": "string",
+                    "secret": true
+                }
+            },
+            required: ['value'],
+            "description": "The resolved reference value"
+        }
+    }
+    currentResource.methods = { attachment: resourceName + '/attachment' }
 
     const sections = templateSchema.fields
         .filter(z => !!z.section)
@@ -432,6 +508,12 @@ for (const template of templates) {
                 purpose: fieldInfo.purpose,
                 kind: fieldInfo.kind,
                 onePasswordId: fieldInfo.id,
+            }
+            if (fieldInfo.purpose === 'PASSWORD' && fieldInfo.name === 'password') {
+                currentResource.inputProperties['generatePassword'] = {
+                    description: '',
+                    oneOf: [{ type: "boolean" }, { '$ref': '#/types/onepassword:index:PasswordRecipe' }]
+                }
             }
             currentResource.properties[fieldInfo.name] = {
                 type: fieldInfo.type,
@@ -587,11 +669,6 @@ function getFieldType(field: Field) {
                         "object"
                          */
     switch (field.type) {
-        case "ADDRESS":
-        case "REFERENCE":
-        case "STRING":
-            fieldData.kind = "text"
-            break;
         case "DATE":
             fieldData.kind = "date"
             break;
@@ -607,6 +684,11 @@ function getFieldType(field: Field) {
         case "URL":
             fieldData.kind = "url"
             break;
+        case "ADDRESS":
+        case "REFERENCE":
+        case "STRING":
+            fieldData.kind = "text"
+            break;
     }
 
     fieldData.secret = fieldData.secret || fieldData.kind === 'concealed'
@@ -615,7 +697,7 @@ function getFieldType(field: Field) {
 }
 
 function applyDefaultOutputProperties(item: any) {
-    item.required.push('tags', 'uuid', 'title', 'vault', 'category', 'fields', 'sections');
+    item.required.push('tags', 'uuid', 'title', 'vault', 'category', 'fields', 'sections', 'attachments', 'references');
     Object.assign(item.properties, {
         ['uuid']: {
             "type": "string",
@@ -631,12 +713,22 @@ function applyDefaultOutputProperties(item: any) {
         },
         ['sections']: {
             "type": "object",
-            "additionalProperties": { "$ref": "#/types/onepassword:index:GetSection" },
+            "additionalProperties": { "$ref": "#/types/onepassword:index:OutSection" },
             secret: true
         },
         ['fields']: {
             "type": "object",
-            "additionalProperties": { "$ref": "#/types/onepassword:index:GetField" },
+            "additionalProperties": { "$ref": "#/types/onepassword:index:OutField" },
+            secret: true
+        },
+        ['attachments']: {
+            "type": "object",
+            "additionalProperties": { "$ref": "#/types/onepassword:index:OutField" },
+            secret: true
+        },
+        ['references']: {
+            "type": "object",
+            "additionalProperties": { "$ref": "#/types/onepassword:index:OutField" },
             secret: true
         },
         ['tags']: {

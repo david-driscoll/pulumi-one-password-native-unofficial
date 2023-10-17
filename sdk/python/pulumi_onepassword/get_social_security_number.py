@@ -19,7 +19,10 @@ __all__ = [
 
 @pulumi.output_type
 class GetSocialSecurityNumberResult:
-    def __init__(__self__, category=None, fields=None, name=None, notes=None, number=None, sections=None, tags=None, title=None, uuid=None, vault=None):
+    def __init__(__self__, attachments=None, category=None, fields=None, name=None, notes=None, number=None, references=None, sections=None, tags=None, title=None, uuid=None, vault=None):
+        if attachments and not isinstance(attachments, dict):
+            raise TypeError("Expected argument 'attachments' to be a dict")
+        pulumi.set(__self__, "attachments", attachments)
         if category and not isinstance(category, dict):
             raise TypeError("Expected argument 'category' to be a dict")
         pulumi.set(__self__, "category", category)
@@ -35,6 +38,9 @@ class GetSocialSecurityNumberResult:
         if number and not isinstance(number, str):
             raise TypeError("Expected argument 'number' to be a str")
         pulumi.set(__self__, "number", number)
+        if references and not isinstance(references, dict):
+            raise TypeError("Expected argument 'references' to be a dict")
+        pulumi.set(__self__, "references", references)
         if sections and not isinstance(sections, dict):
             raise TypeError("Expected argument 'sections' to be a dict")
         pulumi.set(__self__, "sections", sections)
@@ -53,12 +59,17 @@ class GetSocialSecurityNumberResult:
 
     @property
     @pulumi.getter
+    def attachments(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "attachments")
+
+    @property
+    @pulumi.getter
     def category(self) -> str:
         return pulumi.get(self, "category")
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.GetField']:
+    def fields(self) -> Mapping[str, 'outputs.OutField']:
         return pulumi.get(self, "fields")
 
     @property
@@ -78,7 +89,12 @@ class GetSocialSecurityNumberResult:
 
     @property
     @pulumi.getter
-    def sections(self) -> Mapping[str, 'outputs.GetSection']:
+    def references(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "references")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> Mapping[str, 'outputs.OutSection']:
         return pulumi.get(self, "sections")
 
     @property
@@ -120,11 +136,13 @@ class AwaitableGetSocialSecurityNumberResult(GetSocialSecurityNumberResult):
         if False:
             yield self
         return GetSocialSecurityNumberResult(
+            attachments=self.attachments,
             category=self.category,
             fields=self.fields,
             name=self.name,
             notes=self.notes,
             number=self.number,
+            references=self.references,
             sections=self.sections,
             tags=self.tags,
             title=self.title,
@@ -154,11 +172,13 @@ def get_social_security_number(title: Optional[str] = None,
     __ret__ = pulumi.runtime.invoke('onepassword:index:GetSocialSecurityNumber', __args__, opts=opts, typ=GetSocialSecurityNumberResult).value
 
     return AwaitableGetSocialSecurityNumberResult(
+        attachments=__ret__.attachments,
         category=__ret__.category,
         fields=__ret__.fields,
         name=__ret__.name,
         notes=__ret__.notes,
         number=__ret__.number,
+        references=__ret__.references,
         sections=__ret__.sections,
         tags=__ret__.tags,
         title=__ret__.title,

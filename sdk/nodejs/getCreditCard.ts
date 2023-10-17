@@ -35,14 +35,16 @@ export interface GetCreditCardArgs {
 
 export interface GetCreditCardResult {
     readonly additionalDetails?: outputs.creditCard.AdditionalDetailsSection;
+    readonly attachments: {[key: string]: outputs.OutField};
     readonly cardholderName?: string;
     readonly category: enums.Category | string;
     readonly contactInformation?: outputs.creditCard.ContactInformationSection;
     readonly expiryDate?: string;
-    readonly fields: {[key: string]: outputs.GetField};
+    readonly fields: {[key: string]: outputs.OutField};
     readonly notes?: string;
     readonly number?: string;
-    readonly sections: {[key: string]: outputs.GetSection};
+    readonly references: {[key: string]: outputs.OutField};
+    readonly sections: {[key: string]: outputs.OutSection};
     /**
      * An array of strings of the tags assigned to the item.
      */

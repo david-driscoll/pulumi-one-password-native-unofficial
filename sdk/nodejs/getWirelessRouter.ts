@@ -36,13 +36,15 @@ export interface GetWirelessRouterArgs {
 export interface GetWirelessRouterResult {
     readonly airPortId?: string;
     readonly attachedStoragePassword?: string;
+    readonly attachments: {[key: string]: outputs.OutField};
     readonly baseStationName?: string;
     readonly baseStationPassword?: string;
     readonly category: enums.Category | string;
-    readonly fields: {[key: string]: outputs.GetField};
+    readonly fields: {[key: string]: outputs.OutField};
     readonly networkName?: string;
     readonly notes?: string;
-    readonly sections: {[key: string]: outputs.GetSection};
+    readonly references: {[key: string]: outputs.OutField};
+    readonly sections: {[key: string]: outputs.OutSection};
     readonly serverIpAddress?: string;
     /**
      * An array of strings of the tags assigned to the item.

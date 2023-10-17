@@ -29,12 +29,14 @@ type GetSocialSecurityNumberArgs struct {
 }
 
 type GetSocialSecurityNumberResult struct {
-	Category string                `pulumi:"category"`
-	Fields   map[string]GetField   `pulumi:"fields"`
-	Name     *string               `pulumi:"name"`
-	Notes    *string               `pulumi:"notes"`
-	Number   *string               `pulumi:"number"`
-	Sections map[string]GetSection `pulumi:"sections"`
+	Attachments map[string]OutField   `pulumi:"attachments"`
+	Category    string                `pulumi:"category"`
+	Fields      map[string]OutField   `pulumi:"fields"`
+	Name        *string               `pulumi:"name"`
+	Notes       *string               `pulumi:"notes"`
+	Number      *string               `pulumi:"number"`
+	References  map[string]OutField   `pulumi:"references"`
+	Sections    map[string]OutSection `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -85,12 +87,16 @@ func (o GetSocialSecurityNumberResultOutput) ToGetSocialSecurityNumberResultOutp
 	return o
 }
 
+func (o GetSocialSecurityNumberResultOutput) Attachments() OutFieldMapOutput {
+	return o.ApplyT(func(v GetSocialSecurityNumberResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+}
+
 func (o GetSocialSecurityNumberResultOutput) Category() pulumi.StringOutput {
 	return o.ApplyT(func(v GetSocialSecurityNumberResult) string { return v.Category }).(pulumi.StringOutput)
 }
 
-func (o GetSocialSecurityNumberResultOutput) Fields() GetFieldMapOutput {
-	return o.ApplyT(func(v GetSocialSecurityNumberResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
+func (o GetSocialSecurityNumberResultOutput) Fields() OutFieldMapOutput {
+	return o.ApplyT(func(v GetSocialSecurityNumberResult) map[string]OutField { return v.Fields }).(OutFieldMapOutput)
 }
 
 func (o GetSocialSecurityNumberResultOutput) Name() pulumi.StringPtrOutput {
@@ -105,8 +111,12 @@ func (o GetSocialSecurityNumberResultOutput) Number() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetSocialSecurityNumberResult) *string { return v.Number }).(pulumi.StringPtrOutput)
 }
 
-func (o GetSocialSecurityNumberResultOutput) Sections() GetSectionMapOutput {
-	return o.ApplyT(func(v GetSocialSecurityNumberResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
+func (o GetSocialSecurityNumberResultOutput) References() OutFieldMapOutput {
+	return o.ApplyT(func(v GetSocialSecurityNumberResult) map[string]OutField { return v.References }).(OutFieldMapOutput)
+}
+
+func (o GetSocialSecurityNumberResultOutput) Sections() OutSectionMapOutput {
+	return o.ApplyT(func(v GetSocialSecurityNumberResult) map[string]OutSection { return v.Sections }).(OutSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.

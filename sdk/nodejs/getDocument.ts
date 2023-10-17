@@ -34,10 +34,12 @@ export interface GetDocumentArgs {
 }
 
 export interface GetDocumentResult {
+    readonly attachments: {[key: string]: outputs.OutField};
     readonly category: enums.Category | string;
-    readonly fields: {[key: string]: outputs.GetField};
+    readonly fields: {[key: string]: outputs.OutField};
     readonly notes?: string;
-    readonly sections: {[key: string]: outputs.GetSection};
+    readonly references: {[key: string]: outputs.OutField};
+    readonly sections: {[key: string]: outputs.OutSection};
     /**
      * An array of strings of the tags assigned to the item.
      */

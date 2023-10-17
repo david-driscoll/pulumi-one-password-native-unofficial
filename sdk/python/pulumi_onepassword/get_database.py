@@ -19,10 +19,13 @@ __all__ = [
 
 @pulumi.output_type
 class GetDatabaseResult:
-    def __init__(__self__, alias=None, category=None, connection_options=None, database=None, fields=None, notes=None, password=None, port=None, sections=None, server=None, sid=None, tags=None, title=None, type=None, username=None, uuid=None, vault=None):
+    def __init__(__self__, alias=None, attachments=None, category=None, connection_options=None, database=None, fields=None, notes=None, password=None, port=None, references=None, sections=None, server=None, sid=None, tags=None, title=None, type=None, username=None, uuid=None, vault=None):
         if alias and not isinstance(alias, str):
             raise TypeError("Expected argument 'alias' to be a str")
         pulumi.set(__self__, "alias", alias)
+        if attachments and not isinstance(attachments, dict):
+            raise TypeError("Expected argument 'attachments' to be a dict")
+        pulumi.set(__self__, "attachments", attachments)
         if category and not isinstance(category, dict):
             raise TypeError("Expected argument 'category' to be a dict")
         pulumi.set(__self__, "category", category)
@@ -44,6 +47,9 @@ class GetDatabaseResult:
         if port and not isinstance(port, str):
             raise TypeError("Expected argument 'port' to be a str")
         pulumi.set(__self__, "port", port)
+        if references and not isinstance(references, dict):
+            raise TypeError("Expected argument 'references' to be a dict")
+        pulumi.set(__self__, "references", references)
         if sections and not isinstance(sections, dict):
             raise TypeError("Expected argument 'sections' to be a dict")
         pulumi.set(__self__, "sections", sections)
@@ -79,6 +85,11 @@ class GetDatabaseResult:
 
     @property
     @pulumi.getter
+    def attachments(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "attachments")
+
+    @property
+    @pulumi.getter
     def category(self) -> str:
         return pulumi.get(self, "category")
 
@@ -94,7 +105,7 @@ class GetDatabaseResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.GetField']:
+    def fields(self) -> Mapping[str, 'outputs.OutField']:
         return pulumi.get(self, "fields")
 
     @property
@@ -114,7 +125,12 @@ class GetDatabaseResult:
 
     @property
     @pulumi.getter
-    def sections(self) -> Mapping[str, 'outputs.GetSection']:
+    def references(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "references")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> Mapping[str, 'outputs.OutSection']:
         return pulumi.get(self, "sections")
 
     @property
@@ -177,6 +193,7 @@ class AwaitableGetDatabaseResult(GetDatabaseResult):
             yield self
         return GetDatabaseResult(
             alias=self.alias,
+            attachments=self.attachments,
             category=self.category,
             connection_options=self.connection_options,
             database=self.database,
@@ -184,6 +201,7 @@ class AwaitableGetDatabaseResult(GetDatabaseResult):
             notes=self.notes,
             password=self.password,
             port=self.port,
+            references=self.references,
             sections=self.sections,
             server=self.server,
             sid=self.sid,
@@ -218,6 +236,7 @@ def get_database(title: Optional[str] = None,
 
     return AwaitableGetDatabaseResult(
         alias=__ret__.alias,
+        attachments=__ret__.attachments,
         category=__ret__.category,
         connection_options=__ret__.connection_options,
         database=__ret__.database,
@@ -225,6 +244,7 @@ def get_database(title: Optional[str] = None,
         notes=__ret__.notes,
         password=__ret__.password,
         port=__ret__.port,
+        references=__ret__.references,
         sections=__ret__.sections,
         server=__ret__.server,
         sid=__ret__.sid,

@@ -11,12 +11,12 @@ from . import outputs
 from ._enums import *
 
 __all__ = [
-    'GetField',
-    'GetSection',
+    'OutField',
+    'OutSection',
 ]
 
 @pulumi.output_type
-class GetField(dict):
+class OutField(dict):
     def __init__(__self__, *,
                  label: str,
                  reference: str,
@@ -56,9 +56,9 @@ class GetField(dict):
 
 
 @pulumi.output_type
-class GetSection(dict):
+class OutSection(dict):
     def __init__(__self__, *,
-                 fields: Mapping[str, 'outputs.GetField'],
+                 fields: Mapping[str, 'outputs.OutField'],
                  label: str,
                  uuid: str):
         pulumi.set(__self__, "fields", fields)
@@ -67,7 +67,7 @@ class GetSection(dict):
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.GetField']:
+    def fields(self) -> Mapping[str, 'outputs.OutField']:
         return pulumi.get(self, "fields")
 
     @property

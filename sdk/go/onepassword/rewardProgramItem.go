@@ -15,15 +15,17 @@ import (
 type RewardProgramItem struct {
 	pulumi.CustomResourceState
 
+	Attachments     OutFieldMapOutput                             `pulumi:"attachments"`
 	Category        pulumi.StringOutput                           `pulumi:"category"`
 	CompanyName     pulumi.StringPtrOutput                        `pulumi:"companyName"`
-	Fields          GetFieldMapOutput                             `pulumi:"fields"`
+	Fields          OutFieldMapOutput                             `pulumi:"fields"`
 	MemberId        pulumi.StringPtrOutput                        `pulumi:"memberId"`
 	MemberName      pulumi.StringPtrOutput                        `pulumi:"memberName"`
 	MoreInformation rewardprogram.MoreInformationSectionPtrOutput `pulumi:"moreInformation"`
 	Notes           pulumi.StringPtrOutput                        `pulumi:"notes"`
 	Pin             pulumi.StringPtrOutput                        `pulumi:"pin"`
-	Sections        GetSectionMapOutput                           `pulumi:"sections"`
+	References      OutFieldMapOutput                             `pulumi:"references"`
+	Sections        OutSectionMapOutput                           `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -49,8 +51,10 @@ func NewRewardProgramItem(ctx *pulumi.Context,
 		args.Pin = pulumi.ToSecret(args.Pin).(pulumi.StringPtrOutput)
 	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"attachments",
 		"fields",
 		"pin",
+		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)
@@ -90,6 +94,7 @@ func (RewardProgramItemState) ElementType() reflect.Type {
 }
 
 type rewardProgramItemArgs struct {
+	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
 	Category        *string                               `pulumi:"category"`
 	CompanyName     *string                               `pulumi:"companyName"`
@@ -110,6 +115,7 @@ type rewardProgramItemArgs struct {
 
 // The set of arguments for constructing a RewardProgramItem resource.
 type RewardProgramItemArgs struct {
+	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
 	Category        pulumi.StringPtrInput
 	CompanyName     pulumi.StringPtrInput
@@ -130,6 +136,46 @@ type RewardProgramItemArgs struct {
 
 func (RewardProgramItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*rewardProgramItemArgs)(nil)).Elem()
+}
+
+func (r *RewardProgramItem) Attachment(ctx *pulumi.Context, args *RewardProgramItemAttachmentArgs) (RewardProgramItemAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:RewardProgramItem/attachment", args, RewardProgramItemAttachmentResultOutput{}, r)
+	if err != nil {
+		return RewardProgramItemAttachmentResultOutput{}, err
+	}
+	return out.(RewardProgramItemAttachmentResultOutput), nil
+}
+
+type rewardProgramItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name string `pulumi:"name"`
+}
+
+// The set of arguments for the Attachment method of the RewardProgramItem resource.
+type RewardProgramItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name pulumi.StringInput
+}
+
+func (RewardProgramItemAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*rewardProgramItemAttachmentArgs)(nil)).Elem()
+}
+
+// The resolved reference value
+type RewardProgramItemAttachmentResult struct {
+	// the value of the attachment
+	Value string `pulumi:"value"`
+}
+
+type RewardProgramItemAttachmentResultOutput struct{ *pulumi.OutputState }
+
+func (RewardProgramItemAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*RewardProgramItemAttachmentResult)(nil)).Elem()
+}
+
+// the value of the attachment
+func (o RewardProgramItemAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v RewardProgramItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type RewardProgramItemInput interface {
@@ -260,6 +306,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*RewardProgramItemArrayInput)(nil)).Elem(), RewardProgramItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*RewardProgramItemMapInput)(nil)).Elem(), RewardProgramItemMap{})
 	pulumi.RegisterOutputType(RewardProgramItemOutput{})
+	pulumi.RegisterOutputType(RewardProgramItemAttachmentResultOutput{})
 	pulumi.RegisterOutputType(RewardProgramItemArrayOutput{})
 	pulumi.RegisterOutputType(RewardProgramItemMapOutput{})
 }

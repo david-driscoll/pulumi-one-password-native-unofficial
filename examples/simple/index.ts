@@ -1,4 +1,5 @@
 import * as op from "@pulumi/onepassword";
+import * as pulumi from '@pulumi/pulumi'
 
 // const page = new op.StaticPage("page", {
 //     indexContent: "<html><body><p>Hello world!</p></body></html>",
@@ -91,20 +92,17 @@ import * as op from "@pulumi/onepassword";
 // reference.apply(z => console.log(JSON.stringify(z)))
 
 
-new op.MembershipItem('random-membership', {
-
-    vault: 'testing-pulumi',
-    memberId: "1234567891",
-    pin: "12345"
-})
 
 const login = new op.LoginItem('my-password', {
     vault: 'testing-pulumi',
     username: "me",
+    attachments: {
+        'my-attachment': new pulumi.asset.StringAsset("this is an attachment"),
+        'package.json': new pulumi.asset.FileAsset("./package.json")
+    },
     fields: {
         "password": {
             value: "secret1234",
-            // purpose: 'PASSWORD',
             type: 'concealed'
         }
     },
@@ -113,7 +111,6 @@ const login = new op.LoginItem('my-password', {
             fields: {
                 "password": {
                     value: "secret1235!",
-                    // purpose: 'PASSWORD',
                     type: 'concealed'
                 }
             }
@@ -121,9 +118,20 @@ const login = new op.LoginItem('my-password', {
     }
 })
 
+const member = new op.MembershipItem('random-membership', {
+    vault: 'testing-pulumi',
+    memberId: login.uuid,
+    pin: "12345"
+})
+
 login.password.apply(z => {
     console.log('password:' + z)
 })
 login.fields.apply(z => {
     console.log('field password:' + z['password'].value)
+})
+
+login.attachment({ name: 'my-attachment' }).apply(z => {
+    console.log(z.value)
+    return Promise.resolve(z.value);
 })

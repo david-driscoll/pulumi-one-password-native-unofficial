@@ -16,12 +16,14 @@ type IdentityItem struct {
 	pulumi.CustomResourceState
 
 	Address         identity.AddressSectionPtrOutput         `pulumi:"address"`
+	Attachments     OutFieldMapOutput                        `pulumi:"attachments"`
 	Category        pulumi.StringOutput                      `pulumi:"category"`
-	Fields          GetFieldMapOutput                        `pulumi:"fields"`
+	Fields          OutFieldMapOutput                        `pulumi:"fields"`
 	Identification  identity.IdentificationSectionPtrOutput  `pulumi:"identification"`
 	InternetDetails identity.InternetDetailsSectionPtrOutput `pulumi:"internetDetails"`
 	Notes           pulumi.StringPtrOutput                   `pulumi:"notes"`
-	Sections        GetSectionMapOutput                      `pulumi:"sections"`
+	References      OutFieldMapOutput                        `pulumi:"references"`
+	Sections        OutSectionMapOutput                      `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -44,7 +46,9 @@ func NewIdentityItem(ctx *pulumi.Context,
 	}
 	args.Category = pulumi.StringPtr("Identity")
 	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"attachments",
 		"fields",
+		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)
@@ -84,7 +88,8 @@ func (IdentityItemState) ElementType() reflect.Type {
 }
 
 type identityItemArgs struct {
-	Address *identity.AddressSection `pulumi:"address"`
+	Address     *identity.AddressSection         `pulumi:"address"`
+	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
 	Category        *string                          `pulumi:"category"`
 	Fields          map[string]Field                 `pulumi:"fields"`
@@ -102,7 +107,8 @@ type identityItemArgs struct {
 
 // The set of arguments for constructing a IdentityItem resource.
 type IdentityItemArgs struct {
-	Address identity.AddressSectionPtrInput
+	Address     identity.AddressSectionPtrInput
+	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
 	Category        pulumi.StringPtrInput
 	Fields          FieldMapInput
@@ -120,6 +126,46 @@ type IdentityItemArgs struct {
 
 func (IdentityItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*identityItemArgs)(nil)).Elem()
+}
+
+func (r *IdentityItem) Attachment(ctx *pulumi.Context, args *IdentityItemAttachmentArgs) (IdentityItemAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:IdentityItem/attachment", args, IdentityItemAttachmentResultOutput{}, r)
+	if err != nil {
+		return IdentityItemAttachmentResultOutput{}, err
+	}
+	return out.(IdentityItemAttachmentResultOutput), nil
+}
+
+type identityItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name string `pulumi:"name"`
+}
+
+// The set of arguments for the Attachment method of the IdentityItem resource.
+type IdentityItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name pulumi.StringInput
+}
+
+func (IdentityItemAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*identityItemAttachmentArgs)(nil)).Elem()
+}
+
+// The resolved reference value
+type IdentityItemAttachmentResult struct {
+	// the value of the attachment
+	Value string `pulumi:"value"`
+}
+
+type IdentityItemAttachmentResultOutput struct{ *pulumi.OutputState }
+
+func (IdentityItemAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*IdentityItemAttachmentResult)(nil)).Elem()
+}
+
+// the value of the attachment
+func (o IdentityItemAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v IdentityItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type IdentityItemInput interface {
@@ -250,6 +296,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*IdentityItemArrayInput)(nil)).Elem(), IdentityItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*IdentityItemMapInput)(nil)).Elem(), IdentityItemMap{})
 	pulumi.RegisterOutputType(IdentityItemOutput{})
+	pulumi.RegisterOutputType(IdentityItemAttachmentResultOutput{})
 	pulumi.RegisterOutputType(IdentityItemArrayOutput{})
 	pulumi.RegisterOutputType(IdentityItemMapOutput{})
 }

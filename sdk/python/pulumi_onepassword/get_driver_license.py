@@ -19,10 +19,13 @@ __all__ = [
 
 @pulumi.output_type
 class GetDriverLicenseResult:
-    def __init__(__self__, address=None, category=None, conditions_restrictions=None, country=None, date_of_birth=None, expiry_date=None, fields=None, full_name=None, gender=None, height=None, license_class=None, notes=None, number=None, sections=None, state=None, tags=None, title=None, uuid=None, vault=None):
+    def __init__(__self__, address=None, attachments=None, category=None, conditions_restrictions=None, country=None, date_of_birth=None, expiry_date=None, fields=None, full_name=None, gender=None, height=None, license_class=None, notes=None, number=None, references=None, sections=None, state=None, tags=None, title=None, uuid=None, vault=None):
         if address and not isinstance(address, str):
             raise TypeError("Expected argument 'address' to be a str")
         pulumi.set(__self__, "address", address)
+        if attachments and not isinstance(attachments, dict):
+            raise TypeError("Expected argument 'attachments' to be a dict")
+        pulumi.set(__self__, "attachments", attachments)
         if category and not isinstance(category, dict):
             raise TypeError("Expected argument 'category' to be a dict")
         pulumi.set(__self__, "category", category)
@@ -59,6 +62,9 @@ class GetDriverLicenseResult:
         if number and not isinstance(number, str):
             raise TypeError("Expected argument 'number' to be a str")
         pulumi.set(__self__, "number", number)
+        if references and not isinstance(references, dict):
+            raise TypeError("Expected argument 'references' to be a dict")
+        pulumi.set(__self__, "references", references)
         if sections and not isinstance(sections, dict):
             raise TypeError("Expected argument 'sections' to be a dict")
         pulumi.set(__self__, "sections", sections)
@@ -82,6 +88,11 @@ class GetDriverLicenseResult:
     @pulumi.getter
     def address(self) -> Optional[str]:
         return pulumi.get(self, "address")
+
+    @property
+    @pulumi.getter
+    def attachments(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "attachments")
 
     @property
     @pulumi.getter
@@ -110,7 +121,7 @@ class GetDriverLicenseResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.GetField']:
+    def fields(self) -> Mapping[str, 'outputs.OutField']:
         return pulumi.get(self, "fields")
 
     @property
@@ -145,7 +156,12 @@ class GetDriverLicenseResult:
 
     @property
     @pulumi.getter
-    def sections(self) -> Mapping[str, 'outputs.GetSection']:
+    def references(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "references")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> Mapping[str, 'outputs.OutSection']:
         return pulumi.get(self, "sections")
 
     @property
@@ -193,6 +209,7 @@ class AwaitableGetDriverLicenseResult(GetDriverLicenseResult):
             yield self
         return GetDriverLicenseResult(
             address=self.address,
+            attachments=self.attachments,
             category=self.category,
             conditions_restrictions=self.conditions_restrictions,
             country=self.country,
@@ -205,6 +222,7 @@ class AwaitableGetDriverLicenseResult(GetDriverLicenseResult):
             license_class=self.license_class,
             notes=self.notes,
             number=self.number,
+            references=self.references,
             sections=self.sections,
             state=self.state,
             tags=self.tags,
@@ -236,6 +254,7 @@ def get_driver_license(title: Optional[str] = None,
 
     return AwaitableGetDriverLicenseResult(
         address=__ret__.address,
+        attachments=__ret__.attachments,
         category=__ret__.category,
         conditions_restrictions=__ret__.conditions_restrictions,
         country=__ret__.country,
@@ -248,6 +267,7 @@ def get_driver_license(title: Optional[str] = None,
         license_class=__ret__.license_class,
         notes=__ret__.notes,
         number=__ret__.number,
+        references=__ret__.references,
         sections=__ret__.sections,
         state=__ret__.state,
         tags=__ret__.tags,

@@ -73,10 +73,11 @@ namespace Pulumi.Onepassword
     [OutputType]
     public sealed class GetPassportResult
     {
+        public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
         public readonly string Category;
         public readonly string? DateOfBirth;
         public readonly string? ExpiryDate;
-        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
         public readonly string? FullName;
         public readonly string? Gender;
         public readonly string? IssuedOn;
@@ -86,7 +87,8 @@ namespace Pulumi.Onepassword
         public readonly string? Notes;
         public readonly string? Number;
         public readonly string? PlaceOfBirth;
-        public readonly ImmutableDictionary<string, Outputs.GetSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.OutField> References;
+        public readonly ImmutableDictionary<string, Outputs.OutSection> Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
         /// </summary>
@@ -107,13 +109,15 @@ namespace Pulumi.Onepassword
 
         [OutputConstructor]
         private GetPassportResult(
+            ImmutableDictionary<string, Outputs.OutField> attachments,
+
             string category,
 
             string? dateOfBirth,
 
             string? expiryDate,
 
-            ImmutableDictionary<string, Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.OutField> fields,
 
             string? fullName,
 
@@ -133,7 +137,9 @@ namespace Pulumi.Onepassword
 
             string? placeOfBirth,
 
-            ImmutableDictionary<string, Outputs.GetSection> sections,
+            ImmutableDictionary<string, Outputs.OutField> references,
+
+            ImmutableDictionary<string, Outputs.OutSection> sections,
 
             ImmutableArray<string> tags,
 
@@ -145,6 +151,7 @@ namespace Pulumi.Onepassword
 
             string vault)
         {
+            Attachments = attachments;
             Category = category;
             DateOfBirth = dateOfBirth;
             ExpiryDate = expiryDate;
@@ -158,6 +165,7 @@ namespace Pulumi.Onepassword
             Notes = notes;
             Number = number;
             PlaceOfBirth = placeOfBirth;
+            References = references;
             Sections = sections;
             Tags = tags;
             Title = title;

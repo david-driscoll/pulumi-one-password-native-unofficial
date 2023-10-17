@@ -20,7 +20,10 @@ __all__ = [
 
 @pulumi.output_type
 class GetMedicalRecordResult:
-    def __init__(__self__, category=None, date=None, fields=None, healthcare_professional=None, location=None, medication=None, notes=None, patient=None, reason_for_visit=None, sections=None, tags=None, title=None, uuid=None, vault=None):
+    def __init__(__self__, attachments=None, category=None, date=None, fields=None, healthcare_professional=None, location=None, medication=None, notes=None, patient=None, reason_for_visit=None, references=None, sections=None, tags=None, title=None, uuid=None, vault=None):
+        if attachments and not isinstance(attachments, dict):
+            raise TypeError("Expected argument 'attachments' to be a dict")
+        pulumi.set(__self__, "attachments", attachments)
         if category and not isinstance(category, dict):
             raise TypeError("Expected argument 'category' to be a dict")
         pulumi.set(__self__, "category", category)
@@ -48,6 +51,9 @@ class GetMedicalRecordResult:
         if reason_for_visit and not isinstance(reason_for_visit, str):
             raise TypeError("Expected argument 'reason_for_visit' to be a str")
         pulumi.set(__self__, "reason_for_visit", reason_for_visit)
+        if references and not isinstance(references, dict):
+            raise TypeError("Expected argument 'references' to be a dict")
+        pulumi.set(__self__, "references", references)
         if sections and not isinstance(sections, dict):
             raise TypeError("Expected argument 'sections' to be a dict")
         pulumi.set(__self__, "sections", sections)
@@ -66,6 +72,11 @@ class GetMedicalRecordResult:
 
     @property
     @pulumi.getter
+    def attachments(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "attachments")
+
+    @property
+    @pulumi.getter
     def category(self) -> str:
         return pulumi.get(self, "category")
 
@@ -76,7 +87,7 @@ class GetMedicalRecordResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.GetField']:
+    def fields(self) -> Mapping[str, 'outputs.OutField']:
         return pulumi.get(self, "fields")
 
     @property
@@ -111,7 +122,12 @@ class GetMedicalRecordResult:
 
     @property
     @pulumi.getter
-    def sections(self) -> Mapping[str, 'outputs.GetSection']:
+    def references(self) -> Mapping[str, 'outputs.OutField']:
+        return pulumi.get(self, "references")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> Mapping[str, 'outputs.OutSection']:
         return pulumi.get(self, "sections")
 
     @property
@@ -153,6 +169,7 @@ class AwaitableGetMedicalRecordResult(GetMedicalRecordResult):
         if False:
             yield self
         return GetMedicalRecordResult(
+            attachments=self.attachments,
             category=self.category,
             date=self.date,
             fields=self.fields,
@@ -162,6 +179,7 @@ class AwaitableGetMedicalRecordResult(GetMedicalRecordResult):
             notes=self.notes,
             patient=self.patient,
             reason_for_visit=self.reason_for_visit,
+            references=self.references,
             sections=self.sections,
             tags=self.tags,
             title=self.title,
@@ -191,6 +209,7 @@ def get_medical_record(title: Optional[str] = None,
     __ret__ = pulumi.runtime.invoke('onepassword:index:GetMedicalRecord', __args__, opts=opts, typ=GetMedicalRecordResult).value
 
     return AwaitableGetMedicalRecordResult(
+        attachments=__ret__.attachments,
         category=__ret__.category,
         date=__ret__.date,
         fields=__ret__.fields,
@@ -200,6 +219,7 @@ def get_medical_record(title: Optional[str] = None,
         notes=__ret__.notes,
         patient=__ret__.patient,
         reason_for_visit=__ret__.reason_for_visit,
+        references=__ret__.references,
         sections=__ret__.sections,
         tags=__ret__.tags,
         title=__ret__.title,

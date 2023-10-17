@@ -33,14 +33,16 @@ export class APICredentialItem extends pulumi.CustomResource {
         return obj['__pulumiType'] === APICredentialItem.__pulumiType;
     }
 
+    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly credential!: pulumi.Output<string | undefined>;
     public readonly expires!: pulumi.Output<string | undefined>;
-    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField}>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly filename!: pulumi.Output<string | undefined>;
     public readonly hostname!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection}>;
+    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.OutSection}>;
     /**
      * An array of strings of the tags assigned to the item.
      */
@@ -80,6 +82,7 @@ export class APICredentialItem extends pulumi.CustomResource {
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
+            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "API Credential";
             resourceInputs["credential"] = args?.credential ? pulumi.secret(args.credential) : undefined;
             resourceInputs["expires"] = args ? args.expires : undefined;
@@ -94,12 +97,20 @@ export class APICredentialItem extends pulumi.CustomResource {
             resourceInputs["username"] = args ? args.username : undefined;
             resourceInputs["validFrom"] = args ? args.validFrom : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["credential", "fields", "sections"] };
+        const secretOpts = { additionalSecretOutputs: ["attachments", "credential", "fields", "references", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(APICredentialItem.__pulumiType, name, resourceInputs, opts);
+    }
+
+    attachment(args: APICredentialItem.AttachmentArgs): pulumi.Output<APICredentialItem.AttachmentResult> {
+        return pulumi.runtime.call("onepassword:index:APICredentialItem/attachment", {
+            "__self__": this,
+            "name": args.name,
+        }, this);
     }
 }
 
@@ -114,6 +125,7 @@ export interface APICredentialItemState {
  * The set of arguments for constructing a APICredentialItem resource.
  */
 export interface APICredentialItemArgs {
+    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     /**
      * The category of the vault the item is in.
      */
@@ -140,4 +152,27 @@ export interface APICredentialItemArgs {
      * The UUID of the vault the item is in.
      */
     vault: pulumi.Input<string>;
+}
+
+export namespace APICredentialItem {
+    /**
+     * The set of arguments for the APICredentialItem.attachment method.
+     */
+    export interface AttachmentArgs {
+        /**
+         * The name or uuid of the attachment to get
+         */
+        name: pulumi.Input<string>;
+    }
+
+    /**
+     * The results of the APICredentialItem.attachment method.
+     */
+    export interface AttachmentResult {
+        /**
+         * the value of the attachment
+         */
+        readonly value: string;
+    }
+
 }

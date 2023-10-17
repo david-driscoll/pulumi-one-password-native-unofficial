@@ -14,14 +14,16 @@ import (
 type APICredentialItem struct {
 	pulumi.CustomResourceState
 
-	Category   pulumi.StringOutput    `pulumi:"category"`
-	Credential pulumi.StringPtrOutput `pulumi:"credential"`
-	Expires    pulumi.StringPtrOutput `pulumi:"expires"`
-	Fields     GetFieldMapOutput      `pulumi:"fields"`
-	Filename   pulumi.StringPtrOutput `pulumi:"filename"`
-	Hostname   pulumi.StringPtrOutput `pulumi:"hostname"`
-	Notes      pulumi.StringPtrOutput `pulumi:"notes"`
-	Sections   GetSectionMapOutput    `pulumi:"sections"`
+	Attachments OutFieldMapOutput      `pulumi:"attachments"`
+	Category    pulumi.StringOutput    `pulumi:"category"`
+	Credential  pulumi.StringPtrOutput `pulumi:"credential"`
+	Expires     pulumi.StringPtrOutput `pulumi:"expires"`
+	Fields      OutFieldMapOutput      `pulumi:"fields"`
+	Filename    pulumi.StringPtrOutput `pulumi:"filename"`
+	Hostname    pulumi.StringPtrOutput `pulumi:"hostname"`
+	Notes       pulumi.StringPtrOutput `pulumi:"notes"`
+	References  OutFieldMapOutput      `pulumi:"references"`
+	Sections    OutSectionMapOutput    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -50,8 +52,10 @@ func NewAPICredentialItem(ctx *pulumi.Context,
 		args.Credential = pulumi.ToSecret(args.Credential).(pulumi.StringPtrOutput)
 	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"attachments",
 		"credential",
 		"fields",
+		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)
@@ -91,6 +95,7 @@ func (APICredentialItemState) ElementType() reflect.Type {
 }
 
 type apicredentialItemArgs struct {
+	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
 	Category   *string            `pulumi:"category"`
 	Credential *string            `pulumi:"credential"`
@@ -113,6 +118,7 @@ type apicredentialItemArgs struct {
 
 // The set of arguments for constructing a APICredentialItem resource.
 type APICredentialItemArgs struct {
+	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
 	Category   pulumi.StringPtrInput
 	Credential pulumi.StringPtrInput
@@ -135,6 +141,46 @@ type APICredentialItemArgs struct {
 
 func (APICredentialItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*apicredentialItemArgs)(nil)).Elem()
+}
+
+func (r *APICredentialItem) Attachment(ctx *pulumi.Context, args *APICredentialItemAttachmentArgs) (APICredentialItemAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:APICredentialItem/attachment", args, APICredentialItemAttachmentResultOutput{}, r)
+	if err != nil {
+		return APICredentialItemAttachmentResultOutput{}, err
+	}
+	return out.(APICredentialItemAttachmentResultOutput), nil
+}
+
+type apicredentialItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name string `pulumi:"name"`
+}
+
+// The set of arguments for the Attachment method of the APICredentialItem resource.
+type APICredentialItemAttachmentArgs struct {
+	// The name or uuid of the attachment to get
+	Name pulumi.StringInput
+}
+
+func (APICredentialItemAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*apicredentialItemAttachmentArgs)(nil)).Elem()
+}
+
+// The resolved reference value
+type APICredentialItemAttachmentResult struct {
+	// the value of the attachment
+	Value string `pulumi:"value"`
+}
+
+type APICredentialItemAttachmentResultOutput struct{ *pulumi.OutputState }
+
+func (APICredentialItemAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*APICredentialItemAttachmentResult)(nil)).Elem()
+}
+
+// the value of the attachment
+func (o APICredentialItemAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v APICredentialItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type APICredentialItemInput interface {
@@ -265,6 +311,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*APICredentialItemArrayInput)(nil)).Elem(), APICredentialItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*APICredentialItemMapInput)(nil)).Elem(), APICredentialItemMap{})
 	pulumi.RegisterOutputType(APICredentialItemOutput{})
+	pulumi.RegisterOutputType(APICredentialItemAttachmentResultOutput{})
 	pulumi.RegisterOutputType(APICredentialItemArrayOutput{})
 	pulumi.RegisterOutputType(APICredentialItemMapOutput{})
 }

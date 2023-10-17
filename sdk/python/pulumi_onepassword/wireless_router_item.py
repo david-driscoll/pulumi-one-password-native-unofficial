@@ -19,6 +19,7 @@ class WirelessRouterItemArgs:
                  vault: pulumi.Input[str],
                  air_port_id: Optional[pulumi.Input[str]] = None,
                  attached_storage_password: Optional[pulumi.Input[str]] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  base_station_name: Optional[pulumi.Input[str]] = None,
                  base_station_password: Optional[pulumi.Input[str]] = None,
                  category: Optional[pulumi.Input[str]] = None,
@@ -43,6 +44,8 @@ class WirelessRouterItemArgs:
             pulumi.set(__self__, "air_port_id", air_port_id)
         if attached_storage_password is not None:
             pulumi.set(__self__, "attached_storage_password", attached_storage_password)
+        if attachments is not None:
+            pulumi.set(__self__, "attachments", attachments)
         if base_station_name is not None:
             pulumi.set(__self__, "base_station_name", base_station_name)
         if base_station_password is not None:
@@ -97,6 +100,15 @@ class WirelessRouterItemArgs:
     @attached_storage_password.setter
     def attached_storage_password(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "attached_storage_password", value)
+
+    @property
+    @pulumi.getter
+    def attachments(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]:
+        return pulumi.get(self, "attachments")
+
+    @attachments.setter
+    def attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
+        pulumi.set(self, "attachments", value)
 
     @property
     @pulumi.getter(name="baseStationName")
@@ -246,6 +258,7 @@ class WirelessRouterItem(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  air_port_id: Optional[pulumi.Input[str]] = None,
                  attached_storage_password: Optional[pulumi.Input[str]] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  base_station_name: Optional[pulumi.Input[str]] = None,
                  base_station_password: Optional[pulumi.Input[str]] = None,
                  category: Optional[pulumi.Input[str]] = None,
@@ -294,6 +307,7 @@ class WirelessRouterItem(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  air_port_id: Optional[pulumi.Input[str]] = None,
                  attached_storage_password: Optional[pulumi.Input[str]] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  base_station_name: Optional[pulumi.Input[str]] = None,
                  base_station_password: Optional[pulumi.Input[str]] = None,
                  category: Optional[pulumi.Input[str]] = None,
@@ -321,6 +335,7 @@ class WirelessRouterItem(pulumi.CustomResource):
 
             __props__.__dict__["air_port_id"] = air_port_id
             __props__.__dict__["attached_storage_password"] = None if attached_storage_password is None else pulumi.Output.secret(attached_storage_password)
+            __props__.__dict__["attachments"] = attachments
             __props__.__dict__["base_station_name"] = base_station_name
             __props__.__dict__["base_station_password"] = None if base_station_password is None else pulumi.Output.secret(base_station_password)
             __props__.__dict__["category"] = 'Wireless Router'
@@ -336,8 +351,9 @@ class WirelessRouterItem(pulumi.CustomResource):
             __props__.__dict__["vault"] = vault
             __props__.__dict__["wireless_network_password"] = None if wireless_network_password is None else pulumi.Output.secret(wireless_network_password)
             __props__.__dict__["wireless_security"] = wireless_security
+            __props__.__dict__["references"] = None
             __props__.__dict__["uuid"] = None
-        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachedStoragePassword", "baseStationPassword", "fields", "sections", "wirelessNetworkPassword"])
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachedStoragePassword", "attachments", "baseStationPassword", "fields", "references", "sections", "wirelessNetworkPassword"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(WirelessRouterItem, __self__).__init__(
             'onepassword:index:WirelessRouterItem',
@@ -366,12 +382,14 @@ class WirelessRouterItem(pulumi.CustomResource):
         __props__.__dict__["vault"] = vault
         __props__.__dict__["air_port_id"] = None
         __props__.__dict__["attached_storage_password"] = None
+        __props__.__dict__["attachments"] = None
         __props__.__dict__["base_station_name"] = None
         __props__.__dict__["base_station_password"] = None
         __props__.__dict__["category"] = None
         __props__.__dict__["fields"] = None
         __props__.__dict__["network_name"] = None
         __props__.__dict__["notes"] = None
+        __props__.__dict__["references"] = None
         __props__.__dict__["sections"] = None
         __props__.__dict__["server_ip_address"] = None
         __props__.__dict__["tags"] = None
@@ -392,6 +410,11 @@ class WirelessRouterItem(pulumi.CustomResource):
         return pulumi.get(self, "attached_storage_password")
 
     @property
+    @pulumi.getter
+    def attachments(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+        return pulumi.get(self, "attachments")
+
+    @property
     @pulumi.getter(name="baseStationName")
     def base_station_name(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "base_station_name")
@@ -408,7 +431,7 @@ class WirelessRouterItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def fields(self) -> pulumi.Output[Mapping[str, 'outputs.GetField']]:
+    def fields(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
         return pulumi.get(self, "fields")
 
     @property
@@ -423,7 +446,12 @@ class WirelessRouterItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def sections(self) -> pulumi.Output[Mapping[str, 'outputs.GetSection']]:
+    def references(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+        return pulumi.get(self, "references")
+
+    @property
+    @pulumi.getter
+    def sections(self) -> pulumi.Output[Mapping[str, 'outputs.OutSection']]:
         return pulumi.get(self, "sections")
 
     @property
@@ -472,4 +500,33 @@ class WirelessRouterItem(pulumi.CustomResource):
     @pulumi.getter(name="wirelessSecurity")
     def wireless_security(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "wireless_security")
+
+    @pulumi.output_type
+    class AttachmentResult:
+        """
+        The resolved reference value
+        """
+        def __init__(__self__, value=None):
+            if value and not isinstance(value, str):
+                raise TypeError("Expected argument 'value' to be a str")
+            pulumi.set(__self__, "value", value)
+
+        @property
+        @pulumi.getter
+        def value(self) -> str:
+            """
+            the value of the attachment
+            """
+            return pulumi.get(self, "value")
+
+    def attachment(__self__, *,
+                   name: pulumi.Input[str]) -> pulumi.Output['WirelessRouterItem.AttachmentResult']:
+        """
+
+        :param pulumi.Input[str] name: The name or uuid of the attachment to get
+        """
+        __args__ = dict()
+        __args__['__self__'] = __self__
+        __args__['name'] = name
+        return pulumi.runtime.call('onepassword:index:WirelessRouterItem/attachment', __args__, res=__self__, typ=WirelessRouterItem.AttachmentResult)
 

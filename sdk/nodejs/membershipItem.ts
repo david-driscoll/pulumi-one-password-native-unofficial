@@ -33,16 +33,18 @@ export class MembershipItem extends pulumi.CustomResource {
         return obj['__pulumiType'] === MembershipItem.__pulumiType;
     }
 
+    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly expiryDate!: pulumi.Output<string | undefined>;
-    public readonly fields!: pulumi.Output<{[key: string]: outputs.GetField}>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly group!: pulumi.Output<string | undefined>;
     public readonly memberId!: pulumi.Output<string | undefined>;
     public readonly memberName!: pulumi.Output<string | undefined>;
     public readonly memberSince!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly pin!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<{[key: string]: outputs.GetSection}>;
+    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.OutSection}>;
     /**
      * An array of strings of the tags assigned to the item.
      */
@@ -81,6 +83,7 @@ export class MembershipItem extends pulumi.CustomResource {
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
+            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "Membership";
             resourceInputs["expiryDate"] = args ? args.expiryDate : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
@@ -96,12 +99,20 @@ export class MembershipItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["website"] = args ? args.website : undefined;
+            resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["fields", "pin", "sections"] };
+        const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "pin", "references", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(MembershipItem.__pulumiType, name, resourceInputs, opts);
+    }
+
+    attachment(args: MembershipItem.AttachmentArgs): pulumi.Output<MembershipItem.AttachmentResult> {
+        return pulumi.runtime.call("onepassword:index:MembershipItem/attachment", {
+            "__self__": this,
+            "name": args.name,
+        }, this);
     }
 }
 
@@ -116,6 +127,7 @@ export interface MembershipItemState {
  * The set of arguments for constructing a MembershipItem resource.
  */
 export interface MembershipItemArgs {
+    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     /**
      * The category of the vault the item is in.
      */
@@ -143,4 +155,27 @@ export interface MembershipItemArgs {
      */
     vault: pulumi.Input<string>;
     website?: pulumi.Input<string>;
+}
+
+export namespace MembershipItem {
+    /**
+     * The set of arguments for the MembershipItem.attachment method.
+     */
+    export interface AttachmentArgs {
+        /**
+         * The name or uuid of the attachment to get
+         */
+        name: pulumi.Input<string>;
+    }
+
+    /**
+     * The results of the MembershipItem.attachment method.
+     */
+    export interface AttachmentResult {
+        /**
+         * the value of the attachment
+         */
+        readonly value: string;
+    }
+
 }

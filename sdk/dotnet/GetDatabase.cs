@@ -74,14 +74,16 @@ namespace Pulumi.Onepassword
     public sealed class GetDatabaseResult
     {
         public readonly string? Alias;
+        public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
         public readonly string Category;
         public readonly string? ConnectionOptions;
         public readonly string? Database;
-        public readonly ImmutableDictionary<string, Outputs.GetField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
         public readonly string? Notes;
         public readonly string? Password;
         public readonly string? Port;
-        public readonly ImmutableDictionary<string, Outputs.GetSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.OutField> References;
+        public readonly ImmutableDictionary<string, Outputs.OutSection> Sections;
         public readonly string? Server;
         public readonly string? Sid;
         /// <summary>
@@ -107,13 +109,15 @@ namespace Pulumi.Onepassword
         private GetDatabaseResult(
             string? alias,
 
+            ImmutableDictionary<string, Outputs.OutField> attachments,
+
             string category,
 
             string? connectionOptions,
 
             string? database,
 
-            ImmutableDictionary<string, Outputs.GetField> fields,
+            ImmutableDictionary<string, Outputs.OutField> fields,
 
             string? notes,
 
@@ -121,7 +125,9 @@ namespace Pulumi.Onepassword
 
             string? port,
 
-            ImmutableDictionary<string, Outputs.GetSection> sections,
+            ImmutableDictionary<string, Outputs.OutField> references,
+
+            ImmutableDictionary<string, Outputs.OutSection> sections,
 
             string? server,
 
@@ -140,6 +146,7 @@ namespace Pulumi.Onepassword
             string vault)
         {
             Alias = alias;
+            Attachments = attachments;
             Category = category;
             ConnectionOptions = connectionOptions;
             Database = database;
@@ -147,6 +154,7 @@ namespace Pulumi.Onepassword
             Notes = notes;
             Password = password;
             Port = port;
+            References = references;
             Sections = sections;
             Server = server;
             Sid = sid;

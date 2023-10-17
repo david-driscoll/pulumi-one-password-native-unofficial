@@ -30,16 +30,18 @@ type GetMedicalRecordArgs struct {
 }
 
 type GetMedicalRecordResult struct {
+	Attachments            map[string]OutField              `pulumi:"attachments"`
 	Category               string                           `pulumi:"category"`
 	Date                   *string                          `pulumi:"date"`
-	Fields                 map[string]GetField              `pulumi:"fields"`
+	Fields                 map[string]OutField              `pulumi:"fields"`
 	HealthcareProfessional *string                          `pulumi:"healthcareProfessional"`
 	Location               *string                          `pulumi:"location"`
 	Medication             *medicalrecord.MedicationSection `pulumi:"medication"`
 	Notes                  *string                          `pulumi:"notes"`
 	Patient                *string                          `pulumi:"patient"`
 	ReasonForVisit         *string                          `pulumi:"reasonForVisit"`
-	Sections               map[string]GetSection            `pulumi:"sections"`
+	References             map[string]OutField              `pulumi:"references"`
+	Sections               map[string]OutSection            `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -90,6 +92,10 @@ func (o GetMedicalRecordResultOutput) ToGetMedicalRecordResultOutputWithContext(
 	return o
 }
 
+func (o GetMedicalRecordResultOutput) Attachments() OutFieldMapOutput {
+	return o.ApplyT(func(v GetMedicalRecordResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+}
+
 func (o GetMedicalRecordResultOutput) Category() pulumi.StringOutput {
 	return o.ApplyT(func(v GetMedicalRecordResult) string { return v.Category }).(pulumi.StringOutput)
 }
@@ -98,8 +104,8 @@ func (o GetMedicalRecordResultOutput) Date() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetMedicalRecordResult) *string { return v.Date }).(pulumi.StringPtrOutput)
 }
 
-func (o GetMedicalRecordResultOutput) Fields() GetFieldMapOutput {
-	return o.ApplyT(func(v GetMedicalRecordResult) map[string]GetField { return v.Fields }).(GetFieldMapOutput)
+func (o GetMedicalRecordResultOutput) Fields() OutFieldMapOutput {
+	return o.ApplyT(func(v GetMedicalRecordResult) map[string]OutField { return v.Fields }).(OutFieldMapOutput)
 }
 
 func (o GetMedicalRecordResultOutput) HealthcareProfessional() pulumi.StringPtrOutput {
@@ -126,8 +132,12 @@ func (o GetMedicalRecordResultOutput) ReasonForVisit() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetMedicalRecordResult) *string { return v.ReasonForVisit }).(pulumi.StringPtrOutput)
 }
 
-func (o GetMedicalRecordResultOutput) Sections() GetSectionMapOutput {
-	return o.ApplyT(func(v GetMedicalRecordResult) map[string]GetSection { return v.Sections }).(GetSectionMapOutput)
+func (o GetMedicalRecordResultOutput) References() OutFieldMapOutput {
+	return o.ApplyT(func(v GetMedicalRecordResult) map[string]OutField { return v.References }).(OutFieldMapOutput)
+}
+
+func (o GetMedicalRecordResultOutput) Sections() OutSectionMapOutput {
+	return o.ApplyT(func(v GetMedicalRecordResult) map[string]OutSection { return v.Sections }).(OutSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.
