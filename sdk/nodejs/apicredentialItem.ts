@@ -81,7 +81,7 @@ export class APICredentialItem extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vault'");
             }
             resourceInputs["category"] = "API Credential";
-            resourceInputs["credential"] = args ? args.credential : undefined;
+            resourceInputs["credential"] = args?.credential ? pulumi.secret(args.credential) : undefined;
             resourceInputs["expires"] = args ? args.expires : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["filename"] = args ? args.filename : undefined;
@@ -97,7 +97,7 @@ export class APICredentialItem extends pulumi.CustomResource {
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["fields", "sections"] };
+        const secretOpts = { additionalSecretOutputs: ["credential", "fields", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(APICredentialItem.__pulumiType, name, resourceInputs, opts);
     }

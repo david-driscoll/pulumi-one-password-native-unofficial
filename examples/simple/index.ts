@@ -101,7 +101,24 @@ new op.MembershipItem('random-membership', {
 const login = new op.LoginItem('my-password', {
     vault: 'testing-pulumi',
     username: "me",
-    password: "secret1234",
+    fields: {
+        "password": {
+            value: "secret1234",
+            // purpose: 'PASSWORD',
+            type: 'concealed'
+        }
+    },
+    sections: {
+        "mysection": {
+            fields: {
+                "password": {
+                    value: "secret1235!",
+                    // purpose: 'PASSWORD',
+                    type: 'concealed'
+                }
+            }
+        }
+    }
 })
 
 login.password.apply(z => {

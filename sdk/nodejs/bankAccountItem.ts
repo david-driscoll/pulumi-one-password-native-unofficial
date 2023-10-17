@@ -90,7 +90,7 @@ export class BankAccountItem extends pulumi.CustomResource {
             resourceInputs["iban"] = args ? args.iban : undefined;
             resourceInputs["nameOnAccount"] = args ? args.nameOnAccount : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
-            resourceInputs["pin"] = args ? args.pin : undefined;
+            resourceInputs["pin"] = args?.pin ? pulumi.secret(args.pin) : undefined;
             resourceInputs["routingNumber"] = args ? args.routingNumber : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
             resourceInputs["swift"] = args ? args.swift : undefined;
@@ -101,7 +101,7 @@ export class BankAccountItem extends pulumi.CustomResource {
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["fields", "sections"] };
+        const secretOpts = { additionalSecretOutputs: ["fields", "pin", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(BankAccountItem.__pulumiType, name, resourceInputs, opts);
     }

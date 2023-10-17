@@ -19,7 +19,16 @@ namespace Pulumi.Onepassword.Server.Inputs
         public Input<string>? AdminConsoleUsername { get; set; }
 
         [Input("consolePassword")]
-        public Input<string>? ConsolePassword { get; set; }
+        private Input<string>? _consolePassword;
+        public Input<string>? ConsolePassword
+        {
+            get => _consolePassword;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _consolePassword = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         public AdminConsoleSectionArgs()
         {

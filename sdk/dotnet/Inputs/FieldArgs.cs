@@ -12,9 +12,6 @@ namespace Pulumi.Onepassword.Inputs
 
     public sealed class FieldArgs : Pulumi.ResourceArgs
     {
-        [Input("purpose", required: true)]
-        public Input<Pulumi.Onepassword.FieldPurpose> Purpose { get; set; } = null!;
-
         [Input("type")]
         public Input<Pulumi.Onepassword.FieldAssignmentType>? Type { get; set; }
 
@@ -32,7 +29,6 @@ namespace Pulumi.Onepassword.Inputs
 
         public FieldArgs()
         {
-            Purpose = Pulumi.Onepassword.FieldPurpose.Note;
             Type = Pulumi.Onepassword.FieldAssignmentType.Text;
         }
     }

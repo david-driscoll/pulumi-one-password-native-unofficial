@@ -336,9 +336,9 @@ class CreditCardItem(pulumi.CustomResource):
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
-            __props__.__dict__["verification_number"] = verification_number
+            __props__.__dict__["verification_number"] = None if verification_number is None else pulumi.Output.secret(verification_number)
             __props__.__dict__["uuid"] = None
-        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["fields", "sections"])
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["additionalDetails", "fields", "sections", "verificationNumber"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(CreditCardItem, __self__).__init__(
             'onepassword:index:CreditCardItem',

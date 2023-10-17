@@ -320,9 +320,9 @@ class WirelessRouterItem(pulumi.CustomResource):
             __props__ = WirelessRouterItemArgs.__new__(WirelessRouterItemArgs)
 
             __props__.__dict__["air_port_id"] = air_port_id
-            __props__.__dict__["attached_storage_password"] = attached_storage_password
+            __props__.__dict__["attached_storage_password"] = None if attached_storage_password is None else pulumi.Output.secret(attached_storage_password)
             __props__.__dict__["base_station_name"] = base_station_name
-            __props__.__dict__["base_station_password"] = base_station_password
+            __props__.__dict__["base_station_password"] = None if base_station_password is None else pulumi.Output.secret(base_station_password)
             __props__.__dict__["category"] = 'Wireless Router'
             __props__.__dict__["fields"] = fields
             __props__.__dict__["network_name"] = network_name
@@ -334,10 +334,10 @@ class WirelessRouterItem(pulumi.CustomResource):
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
-            __props__.__dict__["wireless_network_password"] = wireless_network_password
+            __props__.__dict__["wireless_network_password"] = None if wireless_network_password is None else pulumi.Output.secret(wireless_network_password)
             __props__.__dict__["wireless_security"] = wireless_security
             __props__.__dict__["uuid"] = None
-        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["fields", "sections"])
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachedStoragePassword", "baseStationPassword", "fields", "sections", "wirelessNetworkPassword"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(WirelessRouterItem, __self__).__init__(
             'onepassword:index:WirelessRouterItem',

@@ -253,8 +253,8 @@ class CryptoWalletItem(pulumi.CustomResource):
             __props__.__dict__["category"] = 'Crypto Wallet'
             __props__.__dict__["fields"] = fields
             __props__.__dict__["notes"] = notes
-            __props__.__dict__["password"] = password
-            __props__.__dict__["recovery_phrase"] = recovery_phrase
+            __props__.__dict__["password"] = None if password is None else pulumi.Output.secret(password)
+            __props__.__dict__["recovery_phrase"] = None if recovery_phrase is None else pulumi.Output.secret(recovery_phrase)
             __props__.__dict__["sections"] = sections
             __props__.__dict__["tags"] = tags
             __props__.__dict__["title"] = title
@@ -263,7 +263,7 @@ class CryptoWalletItem(pulumi.CustomResource):
             __props__.__dict__["vault"] = vault
             __props__.__dict__["wallet"] = wallet
             __props__.__dict__["uuid"] = None
-        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["fields", "sections"])
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["fields", "password", "recoveryPhrase", "sections"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(CryptoWalletItem, __self__).__init__(
             'onepassword:index:CryptoWalletItem',

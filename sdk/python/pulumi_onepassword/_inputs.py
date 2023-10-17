@@ -17,26 +17,13 @@ __all__ = [
 @pulumi.input_type
 class FieldArgs:
     def __init__(__self__, *,
-                 purpose: pulumi.Input['FieldPurpose'],
                  value: pulumi.Input[str],
                  type: Optional[pulumi.Input['FieldAssignmentType']] = None):
-        if purpose is None:
-            purpose = 'NOTE'
-        pulumi.set(__self__, "purpose", purpose)
         pulumi.set(__self__, "value", value)
         if type is None:
             type = 'text'
         if type is not None:
             pulumi.set(__self__, "type", type)
-
-    @property
-    @pulumi.getter
-    def purpose(self) -> pulumi.Input['FieldPurpose']:
-        return pulumi.get(self, "purpose")
-
-    @purpose.setter
-    def purpose(self, value: pulumi.Input['FieldPurpose']):
-        pulumi.set(self, "purpose", value)
 
     @property
     @pulumi.getter

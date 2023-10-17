@@ -88,7 +88,7 @@ export class DatabaseItem extends pulumi.CustomResource {
             resourceInputs["database"] = args ? args.database : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
-            resourceInputs["password"] = args ? args.password : undefined;
+            resourceInputs["password"] = args?.password ? pulumi.secret(args.password) : undefined;
             resourceInputs["port"] = args ? args.port : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
             resourceInputs["server"] = args ? args.server : undefined;
@@ -101,7 +101,7 @@ export class DatabaseItem extends pulumi.CustomResource {
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["fields", "sections"] };
+        const secretOpts = { additionalSecretOutputs: ["fields", "password", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(DatabaseItem.__pulumiType, name, resourceInputs, opts);
     }

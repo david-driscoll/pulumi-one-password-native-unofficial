@@ -45,8 +45,13 @@ func NewServerItem(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
 	args.Category = pulumi.StringPtr("Server")
+	if args.Password != nil {
+		args.Password = pulumi.ToSecret(args.Password).(pulumi.StringPtrOutput)
+	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"adminConsole",
 		"fields",
+		"password",
 		"sections",
 	})
 	opts = append(opts, secrets)

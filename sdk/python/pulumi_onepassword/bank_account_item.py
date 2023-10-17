@@ -342,7 +342,7 @@ class BankAccountItem(pulumi.CustomResource):
             __props__.__dict__["iban"] = iban
             __props__.__dict__["name_on_account"] = name_on_account
             __props__.__dict__["notes"] = notes
-            __props__.__dict__["pin"] = pin
+            __props__.__dict__["pin"] = None if pin is None else pulumi.Output.secret(pin)
             __props__.__dict__["routing_number"] = routing_number
             __props__.__dict__["sections"] = sections
             __props__.__dict__["swift"] = swift
@@ -353,7 +353,7 @@ class BankAccountItem(pulumi.CustomResource):
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
             __props__.__dict__["uuid"] = None
-        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["fields", "sections"])
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["fields", "pin", "sections"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(BankAccountItem, __self__).__init__(
             'onepassword:index:BankAccountItem',

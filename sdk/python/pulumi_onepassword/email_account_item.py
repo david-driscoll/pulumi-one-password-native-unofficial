@@ -339,7 +339,7 @@ class EmailAccountItem(pulumi.CustomResource):
             __props__.__dict__["contact_information"] = contact_information
             __props__.__dict__["fields"] = fields
             __props__.__dict__["notes"] = notes
-            __props__.__dict__["password"] = password
+            __props__.__dict__["password"] = None if password is None else pulumi.Output.secret(password)
             __props__.__dict__["port_number"] = port_number
             __props__.__dict__["sections"] = sections
             __props__.__dict__["security"] = security
@@ -353,7 +353,7 @@ class EmailAccountItem(pulumi.CustomResource):
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
             __props__.__dict__["uuid"] = None
-        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["fields", "sections"])
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["fields", "password", "sections", "smtp"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(EmailAccountItem, __self__).__init__(
             'onepassword:index:EmailAccountItem',

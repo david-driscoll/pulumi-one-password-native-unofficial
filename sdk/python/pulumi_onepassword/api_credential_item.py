@@ -306,7 +306,7 @@ class APICredentialItem(pulumi.CustomResource):
             __props__ = APICredentialItemArgs.__new__(APICredentialItemArgs)
 
             __props__.__dict__["category"] = 'API Credential'
-            __props__.__dict__["credential"] = credential
+            __props__.__dict__["credential"] = None if credential is None else pulumi.Output.secret(credential)
             __props__.__dict__["expires"] = expires
             __props__.__dict__["fields"] = fields
             __props__.__dict__["filename"] = filename
@@ -322,7 +322,7 @@ class APICredentialItem(pulumi.CustomResource):
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
             __props__.__dict__["uuid"] = None
-        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["fields", "sections"])
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["credential", "fields", "sections"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(APICredentialItem, __self__).__init__(
             'onepassword:index:APICredentialItem',

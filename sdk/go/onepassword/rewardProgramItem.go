@@ -45,8 +45,12 @@ func NewRewardProgramItem(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
 	args.Category = pulumi.StringPtr("Reward Program")
+	if args.Pin != nil {
+		args.Pin = pulumi.ToSecret(args.Pin).(pulumi.StringPtrOutput)
+	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"fields",
+		"pin",
 		"sections",
 	})
 	opts = append(opts, secrets)

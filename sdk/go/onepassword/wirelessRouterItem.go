@@ -47,9 +47,21 @@ func NewWirelessRouterItem(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
 	args.Category = pulumi.StringPtr("Wireless Router")
+	if args.AttachedStoragePassword != nil {
+		args.AttachedStoragePassword = pulumi.ToSecret(args.AttachedStoragePassword).(pulumi.StringPtrOutput)
+	}
+	if args.BaseStationPassword != nil {
+		args.BaseStationPassword = pulumi.ToSecret(args.BaseStationPassword).(pulumi.StringPtrOutput)
+	}
+	if args.WirelessNetworkPassword != nil {
+		args.WirelessNetworkPassword = pulumi.ToSecret(args.WirelessNetworkPassword).(pulumi.StringPtrOutput)
+	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"attachedStoragePassword",
+		"baseStationPassword",
 		"fields",
 		"sections",
+		"wirelessNetworkPassword",
 	})
 	opts = append(opts, secrets)
 	var resource WirelessRouterItem

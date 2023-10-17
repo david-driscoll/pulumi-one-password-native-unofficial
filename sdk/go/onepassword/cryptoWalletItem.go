@@ -43,8 +43,16 @@ func NewCryptoWalletItem(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
 	args.Category = pulumi.StringPtr("Crypto Wallet")
+	if args.Password != nil {
+		args.Password = pulumi.ToSecret(args.Password).(pulumi.StringPtrOutput)
+	}
+	if args.RecoveryPhrase != nil {
+		args.RecoveryPhrase = pulumi.ToSecret(args.RecoveryPhrase).(pulumi.StringPtrOutput)
+	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"fields",
+		"password",
+		"recoveryPhrase",
 		"sections",
 	})
 	opts = append(opts, secrets)

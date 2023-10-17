@@ -87,7 +87,7 @@ export class EmailAccountItem extends pulumi.CustomResource {
             resourceInputs["contactInformation"] = args ? args.contactInformation : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
-            resourceInputs["password"] = args ? args.password : undefined;
+            resourceInputs["password"] = args?.password ? pulumi.secret(args.password) : undefined;
             resourceInputs["portNumber"] = args ? args.portNumber : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
             resourceInputs["security"] = args ? args.security : undefined;
@@ -101,7 +101,7 @@ export class EmailAccountItem extends pulumi.CustomResource {
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["fields", "sections"] };
+        const secretOpts = { additionalSecretOutputs: ["fields", "password", "sections", "smtp"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(EmailAccountItem.__pulumiType, name, resourceInputs, opts);
     }

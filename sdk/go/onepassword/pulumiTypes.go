@@ -11,9 +11,8 @@ import (
 )
 
 type Field struct {
-	Purpose FieldPurpose         `pulumi:"purpose"`
-	Type    *FieldAssignmentType `pulumi:"type"`
-	Value   string               `pulumi:"value"`
+	Type  *FieldAssignmentType `pulumi:"type"`
+	Value string               `pulumi:"value"`
 }
 
 // Defaults sets the appropriate defaults for Field
@@ -22,9 +21,6 @@ func (val *Field) Defaults() *Field {
 		return nil
 	}
 	tmp := *val
-	if isZero(tmp.Purpose) {
-		tmp.Purpose = FieldPurpose("NOTE")
-	}
 	if isZero(tmp.Type) {
 		type_ := FieldAssignmentType("text")
 		tmp.Type = &type_
@@ -44,9 +40,8 @@ type FieldInput interface {
 }
 
 type FieldArgs struct {
-	Purpose FieldPurposeInput           `pulumi:"purpose"`
-	Type    FieldAssignmentTypePtrInput `pulumi:"type"`
-	Value   pulumi.StringInput          `pulumi:"value"`
+	Type  FieldAssignmentTypePtrInput `pulumi:"type"`
+	Value pulumi.StringInput          `pulumi:"value"`
 }
 
 func (FieldArgs) ElementType() reflect.Type {
@@ -98,10 +93,6 @@ func (o FieldOutput) ToFieldOutput() FieldOutput {
 
 func (o FieldOutput) ToFieldOutputWithContext(ctx context.Context) FieldOutput {
 	return o
-}
-
-func (o FieldOutput) Purpose() FieldPurposeOutput {
-	return o.ApplyT(func(v Field) FieldPurpose { return v.Purpose }).(FieldPurposeOutput)
 }
 
 func (o FieldOutput) Type() FieldAssignmentTypePtrOutput {

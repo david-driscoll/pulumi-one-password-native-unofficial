@@ -25,7 +25,16 @@ namespace Pulumi.Onepassword.CreditCard.Inputs
         public Input<string>? IssueNumber { get; set; }
 
         [Input("pin")]
-        public Input<string>? Pin { get; set; }
+        private Input<string>? _pin;
+        public Input<string>? Pin
+        {
+            get => _pin;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _pin = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         public AdditionalDetailsSectionArgs()
         {

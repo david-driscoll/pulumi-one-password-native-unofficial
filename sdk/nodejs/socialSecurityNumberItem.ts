@@ -79,7 +79,7 @@ export class SocialSecurityNumberItem extends pulumi.CustomResource {
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["name"] = args ? args.name : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
-            resourceInputs["number"] = args ? args.number : undefined;
+            resourceInputs["number"] = args?.number ? pulumi.secret(args.number) : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
@@ -87,7 +87,7 @@ export class SocialSecurityNumberItem extends pulumi.CustomResource {
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["fields", "sections"] };
+        const secretOpts = { additionalSecretOutputs: ["fields", "number", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(SocialSecurityNumberItem.__pulumiType, name, resourceInputs, opts);
     }

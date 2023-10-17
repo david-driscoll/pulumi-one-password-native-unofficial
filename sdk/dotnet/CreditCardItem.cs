@@ -104,8 +104,10 @@ namespace Pulumi.Onepassword
                 Version = Utilities.Version,
                 AdditionalSecretOutputs =
                 {
+                    "additionalDetails",
                     "fields",
                     "sections",
+                    "verificationNumber",
                 },
             };
             var merged = CustomResourceOptions.Merge(defaultOptions, options);
@@ -201,7 +203,16 @@ namespace Pulumi.Onepassword
         public Input<string> Vault { get; set; } = null!;
 
         [Input("verificationNumber")]
-        public Input<string>? VerificationNumber { get; set; }
+        private Input<string>? _verificationNumber;
+        public Input<string>? VerificationNumber
+        {
+            get => _verificationNumber;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _verificationNumber = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         public CreditCardItemArgs()
         {

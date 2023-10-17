@@ -1,4 +1,4 @@
-import { Field, FieldPurpose, GenericField, ItemTemplate, NotesField, OtpField, PasswordField, Section, UsernameField, item } from "@1password/op-js"
+import { Field, FieldAssignmentType, FieldPurpose, GenericField, ItemTemplate, NotesField, OtpField, PasswordField, Section, UsernameField, item } from "@1password/op-js"
 import { readFileSync, writeFileSync } from 'fs';
 import { camelCase, uniq, orderBy, cloneDeep, last } from 'lodash'
 
@@ -163,10 +163,6 @@ schema.types = {
     },
     "onepassword:index:Field": {
         "properties": {
-            "purpose": {
-                "$ref": "#/types/onepassword:index:FieldPurpose",
-                "default": "NOTE"
-            },
             "type": {
                 "$ref": "#/types/onepassword:index:FieldAssignmentType",
                 "default": "text"
@@ -178,7 +174,6 @@ schema.types = {
         },
         "type": "object",
         "required": [
-            "purpose",
             "value"
         ]
     },
@@ -398,9 +393,11 @@ for (const template of templates) {
             const sectionKey = getSectionKey(template.name, v.section!);
             const objectKey = camelCase(v.section!.label ?? v.section!.id);
             schema.types[sectionKey] = o[sectionKey] = { "type": "object", "properties": {} };
-            currentResource.inputProperties[objectKey] = { '$ref': `#/types/${sectionKey}`, refName: sectionKey };
-            currentResource.properties[objectKey] = { '$ref': `#/types/${sectionKey}` };
-            currentFunction.outputs.properties[objectKey] = { '$ref': `#/types/${sectionKey}` };
+            currentResource.inputProperties[objectKey] ??= { '$ref': `#/types/${sectionKey}`, refName: sectionKey };
+            currentResource.properties[objectKey] ??= { '$ref': `#/types/${sectionKey}`, refName: sectionKey };
+            currentResource.properties[objectKey].secret = currentResource.properties[objectKey].secret || fieldInfo.secret;
+            currentFunction.outputs.properties[objectKey] ??= { '$ref': `#/types/${sectionKey}`, refName: sectionKey };
+            currentFunction.outputs.properties[objectKey].secret = currentFunction.outputs.properties[objectKey].secret || fieldInfo.secret;
             return o;
         }, {} as Record<string, any>);
 
@@ -565,9 +562,11 @@ function getFieldType(field: Field) {
         secret: false,
         default: field.value,
         type: 'string',
-        kind: field.type,
+        kind: field.type?.toLowerCase() as FieldAssignmentType,
         purpose: (field as any).purpose as FieldPurpose
     };
+
+    // "concealed" | "text" | "email" | "url" | "date" | "monthYear" | "phone"
 
     if (isUserNameField(field)) {
     }
@@ -589,22 +588,28 @@ function getFieldType(field: Field) {
                          */
     switch (field.type) {
         case "ADDRESS":
+        case "REFERENCE":
+        case "STRING":
+            fieldData.kind = "text"
             break;
         case "DATE":
+            fieldData.kind = "date"
             break;
         case "EMAIL":
+            fieldData.kind = "email"
             break;
         case "MONTH_YEAR":
+            fieldData.kind = "monthYear"
             break;
         case "PHONE":
-            break;
-        case "REFERENCE":
-            break;
-        case "STRING":
+            fieldData.kind = "phone"
             break;
         case "URL":
+            fieldData.kind = "url"
             break;
     }
+
+    fieldData.secret = fieldData.secret || fieldData.kind === 'concealed'
 
     return fieldData;
 }

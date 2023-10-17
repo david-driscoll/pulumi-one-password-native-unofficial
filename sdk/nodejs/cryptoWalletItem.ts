@@ -79,8 +79,8 @@ export class CryptoWalletItem extends pulumi.CustomResource {
             resourceInputs["category"] = "Crypto Wallet";
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
-            resourceInputs["password"] = args ? args.password : undefined;
-            resourceInputs["recoveryPhrase"] = args ? args.recoveryPhrase : undefined;
+            resourceInputs["password"] = args?.password ? pulumi.secret(args.password) : undefined;
+            resourceInputs["recoveryPhrase"] = args?.recoveryPhrase ? pulumi.secret(args.recoveryPhrase) : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
@@ -89,7 +89,7 @@ export class CryptoWalletItem extends pulumi.CustomResource {
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["fields", "sections"] };
+        const secretOpts = { additionalSecretOutputs: ["fields", "password", "recoveryPhrase", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(CryptoWalletItem.__pulumiType, name, resourceInputs, opts);
     }

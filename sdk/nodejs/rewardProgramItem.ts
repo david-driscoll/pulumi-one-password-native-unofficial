@@ -85,7 +85,7 @@ export class RewardProgramItem extends pulumi.CustomResource {
             resourceInputs["memberName"] = args ? args.memberName : undefined;
             resourceInputs["moreInformation"] = args ? args.moreInformation : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
-            resourceInputs["pin"] = args ? args.pin : undefined;
+            resourceInputs["pin"] = args?.pin ? pulumi.secret(args.pin) : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
@@ -93,7 +93,7 @@ export class RewardProgramItem extends pulumi.CustomResource {
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["fields", "sections"] };
+        const secretOpts = { additionalSecretOutputs: ["fields", "pin", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(RewardProgramItem.__pulumiType, name, resourceInputs, opts);
     }

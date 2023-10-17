@@ -41,8 +41,12 @@ func NewSocialSecurityNumberItem(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Vault'")
 	}
 	args.Category = pulumi.StringPtr("Social Security Number")
+	if args.Number != nil {
+		args.Number = pulumi.ToSecret(args.Number).(pulumi.StringPtrOutput)
+	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"fields",
+		"number",
 		"sections",
 	})
 	opts = append(opts, secrets)

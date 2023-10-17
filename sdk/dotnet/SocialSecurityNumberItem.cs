@@ -87,6 +87,7 @@ namespace Pulumi.Onepassword
                 AdditionalSecretOutputs =
                 {
                     "fields",
+                    "number",
                     "sections",
                 },
             };
@@ -133,7 +134,16 @@ namespace Pulumi.Onepassword
         public Input<string>? Notes { get; set; }
 
         [Input("number")]
-        public Input<string>? Number { get; set; }
+        private Input<string>? _number;
+        public Input<string>? Number
+        {
+            get => _number;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _number = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         [Input("sections")]
         private InputMap<Inputs.SectionArgs>? _sections;

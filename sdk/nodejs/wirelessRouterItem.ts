@@ -82,9 +82,9 @@ export class WirelessRouterItem extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vault'");
             }
             resourceInputs["airPortId"] = args ? args.airPortId : undefined;
-            resourceInputs["attachedStoragePassword"] = args ? args.attachedStoragePassword : undefined;
+            resourceInputs["attachedStoragePassword"] = args?.attachedStoragePassword ? pulumi.secret(args.attachedStoragePassword) : undefined;
             resourceInputs["baseStationName"] = args ? args.baseStationName : undefined;
-            resourceInputs["baseStationPassword"] = args ? args.baseStationPassword : undefined;
+            resourceInputs["baseStationPassword"] = args?.baseStationPassword ? pulumi.secret(args.baseStationPassword) : undefined;
             resourceInputs["category"] = "Wireless Router";
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["networkName"] = args ? args.networkName : undefined;
@@ -94,12 +94,12 @@ export class WirelessRouterItem extends pulumi.CustomResource {
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
-            resourceInputs["wirelessNetworkPassword"] = args ? args.wirelessNetworkPassword : undefined;
+            resourceInputs["wirelessNetworkPassword"] = args?.wirelessNetworkPassword ? pulumi.secret(args.wirelessNetworkPassword) : undefined;
             resourceInputs["wirelessSecurity"] = args ? args.wirelessSecurity : undefined;
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["fields", "sections"] };
+        const secretOpts = { additionalSecretOutputs: ["attachedStoragePassword", "baseStationPassword", "fields", "sections", "wirelessNetworkPassword"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(WirelessRouterItem.__pulumiType, name, resourceInputs, opts);
     }

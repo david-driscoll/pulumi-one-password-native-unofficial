@@ -104,8 +104,11 @@ namespace Pulumi.Onepassword
                 Version = Utilities.Version,
                 AdditionalSecretOutputs =
                 {
+                    "attachedStoragePassword",
+                    "baseStationPassword",
                     "fields",
                     "sections",
+                    "wirelessNetworkPassword",
                 },
             };
             var merged = CustomResourceOptions.Merge(defaultOptions, options);
@@ -134,13 +137,31 @@ namespace Pulumi.Onepassword
         public Input<string>? AirPortId { get; set; }
 
         [Input("attachedStoragePassword")]
-        public Input<string>? AttachedStoragePassword { get; set; }
+        private Input<string>? _attachedStoragePassword;
+        public Input<string>? AttachedStoragePassword
+        {
+            get => _attachedStoragePassword;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _attachedStoragePassword = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         [Input("baseStationName")]
         public Input<string>? BaseStationName { get; set; }
 
         [Input("baseStationPassword")]
-        public Input<string>? BaseStationPassword { get; set; }
+        private Input<string>? _baseStationPassword;
+        public Input<string>? BaseStationPassword
+        {
+            get => _baseStationPassword;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _baseStationPassword = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         /// <summary>
         /// The category of the vault the item is in.
@@ -198,7 +219,16 @@ namespace Pulumi.Onepassword
         public Input<string> Vault { get; set; } = null!;
 
         [Input("wirelessNetworkPassword")]
-        public Input<string>? WirelessNetworkPassword { get; set; }
+        private Input<string>? _wirelessNetworkPassword;
+        public Input<string>? WirelessNetworkPassword
+        {
+            get => _wirelessNetworkPassword;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _wirelessNetworkPassword = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         [Input("wirelessSecurity")]
         public Input<string>? WirelessSecurity { get; set; }

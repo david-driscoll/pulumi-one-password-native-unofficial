@@ -101,6 +101,7 @@ namespace Pulumi.Onepassword
                 Version = Utilities.Version,
                 AdditionalSecretOutputs =
                 {
+                    "credential",
                     "fields",
                     "sections",
                 },
@@ -134,7 +135,16 @@ namespace Pulumi.Onepassword
         public Input<string>? Category { get; set; }
 
         [Input("credential")]
-        public Input<string>? Credential { get; set; }
+        private Input<string>? _credential;
+        public Input<string>? Credential
+        {
+            get => _credential;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _credential = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         [Input("expires")]
         public Input<string>? Expires { get; set; }
