@@ -14,6 +14,7 @@ export * from "./documentItem";
 export * from "./driverLicenseItem";
 export * from "./emailAccountItem";
 export * from "./getAPICredential";
+export * from "./getAttachment";
 export * from "./getBankAccount";
 export * from "./getCreditCard";
 export * from "./getCryptoWallet";

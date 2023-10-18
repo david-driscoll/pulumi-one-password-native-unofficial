@@ -131,7 +131,9 @@ login.fields.apply(z => {
     console.log('field password:' + z['password'].value)
 })
 
-login.attachment({ name: 'my-attachment' }).apply(z => {
-    console.log(z.value)
-    return Promise.resolve(z.value);
-})
+login.attachments.apply(z => z['my-attachment'].reference).apply(reference => op.getAttachment({ reference }))
+    // login.attachment({ name: 'my-attachment' })
+    .apply(z => {
+        console.log(z.value)
+        return Promise.resolve(z.value);
+    })

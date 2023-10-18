@@ -83,6 +83,26 @@ schema.functions = {
             },
             "description": "The resolved reference value"
         }
+    },
+    "onepassword:index:GetAttachment": {
+        inputs: {
+            properties: {
+                "reference": {
+                    "type": "string",
+                    "description": "The 1Password secret reference path to the item.  eg: op://vault/item/[section]/file \n"
+                },
+            },
+            required: ['reference']
+        },
+        outputs: {
+            "properties": {
+                "value": {
+                    "type": "string",
+                    "secret": true
+                }
+            },
+            "description": "The resolved reference value"
+        }
     }
 }
 
@@ -460,7 +480,7 @@ for (const template of templates) {
             "description": "The resolved reference value"
         }
     }
-    currentResource.methods = { attachment: resourceName + '/attachment' }
+    currentResource.methods = { getAttachment: resourceName + '/attachment' }
 
     const sections = templateSchema.fields
         .filter(z => !!z.section)
@@ -570,7 +590,8 @@ ${templates.map(z => `"${(z as any).resourceName}": "${z.name}"`)
         )
         .concat([
             `"onepassword:index:GetVault": "Vault"`,
-            `"onepassword:index:GetSecretReference": "Secret Reference"`
+            `"onepassword:index:GetSecretReference": "Secret Reference"`,
+            `"onepassword:index:GetAttachment": "Attachment"`
         ])
         .join(',\n')}
 } as const;

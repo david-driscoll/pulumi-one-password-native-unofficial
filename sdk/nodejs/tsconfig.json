@@ -22,6 +22,7 @@
         "driverLicenseItem.ts",
         "emailAccountItem.ts",
         "getAPICredential.ts",
+        "getAttachment.ts",
         "getBankAccount.ts",
         "getCreditCard.ts",
         "getCryptoWallet.ts",

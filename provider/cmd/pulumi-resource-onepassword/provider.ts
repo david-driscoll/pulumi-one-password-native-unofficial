@@ -381,6 +381,7 @@ export class Provider implements provider.Provider {
         switch (functionType) {
             case 'onepassword:index:GetVault': return this.getVault(inputs);
             case 'onepassword:index:GetSecretReference': return this.getSecretReference(inputs);
+            case 'onepassword:index:GetAttachment': return this.getAttachment(inputs);
             default: return this.getItem(functionType, inputs)
         }
     }
@@ -391,16 +392,30 @@ export class Provider implements provider.Provider {
      * @param inputs The inputs to the method.
      */
     async call(token: string, inputs: any): Promise<provider.InvokeResult> {
-        console.log('call', token, inputs)
-        return {};
-        // const functionType = getMethodType(token);
-        // if (!functionType) throw new Error(`unknown function type ${token}`);
-        // if (functionType.name === "attachment") {
-        //     const reference = `op://${inputs?.__self__?.vault}/${inputs?.__self__?.uuid}/${inputs?.name}`;
-        //     return this.getAttachment({ reference });
-        // }
+        const functionType = getMethodType(token);
+        if (!functionType) throw new Error(`unknown function type ${token}`);
+        if (functionType.name === "attachment") {
+            const hasSection = findSection(inputs?.name);
+            const reference = hasSection ? makeReference(inputs?.__self__?.vault, inputs?.__self__?.uuid, hasSection[0], hasSection[1]) : makeReference(inputs?.__self__?.vault, inputs?.__self__?.uuid, inputs?.name)
+            return this.getAttachment({ reference });
+        }
 
         throw new Error(`unknown method type ${token}`);
+
+        function findSection(name: string) {
+            let escaped = false
+            for (let i = 0; i < name.length; i++) {
+                if (name[i] === '\\') {
+                    escaped = true;
+                    continue
+                }
+                if (!escaped && name[i] === '.') {
+                    return [name.substring(0, i), name.substring(i + 1)] as const;
+                }
+                escaped = false
+            }
+            return undefined;
+        }
     }
 
     private getVault(inputs: { vault: string }): provider.InvokeResult {

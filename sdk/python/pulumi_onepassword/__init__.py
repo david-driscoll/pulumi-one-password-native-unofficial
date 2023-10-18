@@ -15,6 +15,7 @@ from .document_item import *
 from .driver_license_item import *
 from .email_account_item import *
 from .get_api_credential import *
+from .get_attachment import *
 from .get_bank_account import *
 from .get_credit_card import *
 from .get_crypto_wallet import *

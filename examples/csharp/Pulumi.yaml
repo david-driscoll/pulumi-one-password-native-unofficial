@@ -1,0 +1,8 @@
+name: csharp
+runtime: dotnet
+description: A minimal C# Pulumi program
+plugins:
+  providers:
+    - name: onepassword
+      path: ../../provider/cmd/pulumi-resource-onepassword/
+
