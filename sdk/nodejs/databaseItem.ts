@@ -110,7 +110,7 @@ export class DatabaseItem extends pulumi.CustomResource {
         super(DatabaseItem.__pulumiType, name, resourceInputs, opts);
     }
 
-    attachment(args: DatabaseItem.AttachmentArgs): pulumi.Output<DatabaseItem.AttachmentResult> {
+    getAttachment(args: DatabaseItem.GetAttachmentArgs): pulumi.Output<DatabaseItem.GetAttachmentResult> {
         return pulumi.runtime.call("onepassword:index:DatabaseItem/attachment", {
             "__self__": this,
             "name": args.name,
@@ -162,9 +162,9 @@ export interface DatabaseItemArgs {
 
 export namespace DatabaseItem {
     /**
-     * The set of arguments for the DatabaseItem.attachment method.
+     * The set of arguments for the DatabaseItem.getAttachment method.
      */
-    export interface AttachmentArgs {
+    export interface GetAttachmentArgs {
         /**
          * The name or uuid of the attachment to get
          */
@@ -172,9 +172,9 @@ export namespace DatabaseItem {
     }
 
     /**
-     * The results of the DatabaseItem.attachment method.
+     * The results of the DatabaseItem.getAttachment method.
      */
-    export interface AttachmentResult {
+    export interface GetAttachmentResult {
         /**
          * the value of the attachment
          */

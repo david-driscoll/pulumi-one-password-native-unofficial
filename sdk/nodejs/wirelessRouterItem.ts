@@ -108,7 +108,7 @@ export class WirelessRouterItem extends pulumi.CustomResource {
         super(WirelessRouterItem.__pulumiType, name, resourceInputs, opts);
     }
 
-    attachment(args: WirelessRouterItem.AttachmentArgs): pulumi.Output<WirelessRouterItem.AttachmentResult> {
+    getAttachment(args: WirelessRouterItem.GetAttachmentArgs): pulumi.Output<WirelessRouterItem.GetAttachmentResult> {
         return pulumi.runtime.call("onepassword:index:WirelessRouterItem/attachment", {
             "__self__": this,
             "name": args.name,
@@ -159,9 +159,9 @@ export interface WirelessRouterItemArgs {
 
 export namespace WirelessRouterItem {
     /**
-     * The set of arguments for the WirelessRouterItem.attachment method.
+     * The set of arguments for the WirelessRouterItem.getAttachment method.
      */
-    export interface AttachmentArgs {
+    export interface GetAttachmentArgs {
         /**
          * The name or uuid of the attachment to get
          */
@@ -169,9 +169,9 @@ export namespace WirelessRouterItem {
     }
 
     /**
-     * The results of the WirelessRouterItem.attachment method.
+     * The results of the WirelessRouterItem.getAttachment method.
      */
-    export interface AttachmentResult {
+    export interface GetAttachmentResult {
         /**
          * the value of the attachment
          */

@@ -440,7 +440,7 @@ class RewardProgramItem(pulumi.CustomResource):
         return pulumi.get(self, "vault")
 
     @pulumi.output_type
-    class AttachmentResult:
+    class GetAttachmentResult:
         """
         The resolved reference value
         """
@@ -457,8 +457,8 @@ class RewardProgramItem(pulumi.CustomResource):
             """
             return pulumi.get(self, "value")
 
-    def attachment(__self__, *,
-                   name: pulumi.Input[str]) -> pulumi.Output['RewardProgramItem.AttachmentResult']:
+    def get_attachment(__self__, *,
+                       name: pulumi.Input[str]) -> pulumi.Output['RewardProgramItem.GetAttachmentResult']:
         """
 
         :param pulumi.Input[str] name: The name or uuid of the attachment to get
@@ -466,5 +466,5 @@ class RewardProgramItem(pulumi.CustomResource):
         __args__ = dict()
         __args__['__self__'] = __self__
         __args__['name'] = name
-        return pulumi.runtime.call('onepassword:index:RewardProgramItem/attachment', __args__, res=__self__, typ=RewardProgramItem.AttachmentResult)
+        return pulumi.runtime.call('onepassword:index:RewardProgramItem/attachment', __args__, res=__self__, typ=RewardProgramItem.GetAttachmentResult)
 

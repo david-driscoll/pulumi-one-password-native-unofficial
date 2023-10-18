@@ -122,8 +122,8 @@ namespace Pulumi.Onepassword
             return new CryptoWalletItem(name, id, state, options);
         }
 
-        public Pulumi.Output<CryptoWalletItemAttachmentResult> Attachment(CryptoWalletItemAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<CryptoWalletItemAttachmentResult>("onepassword:index:CryptoWalletItem/attachment", args ?? new CryptoWalletItemAttachmentArgs(), this);
+        public Pulumi.Output<CryptoWalletItemGetAttachmentResult> GetAttachment(CryptoWalletItemGetAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<CryptoWalletItemGetAttachmentResult>("onepassword:index:CryptoWalletItem/attachment", args ?? new CryptoWalletItemGetAttachmentArgs(), this);
     }
 
     public sealed class CryptoWalletItemArgs : Pulumi.ResourceArgs
@@ -231,9 +231,9 @@ namespace Pulumi.Onepassword
     }
 
     /// <summary>
-    /// The set of arguments for the <see cref="CryptoWalletItem.Attachment"/> method.
+    /// The set of arguments for the <see cref="CryptoWalletItem.GetAttachment"/> method.
     /// </summary>
-    public sealed class CryptoWalletItemAttachmentArgs : Pulumi.CallArgs
+    public sealed class CryptoWalletItemGetAttachmentArgs : Pulumi.CallArgs
     {
         /// <summary>
         /// The name or uuid of the attachment to get
@@ -241,16 +241,16 @@ namespace Pulumi.Onepassword
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        public CryptoWalletItemAttachmentArgs()
+        public CryptoWalletItemGetAttachmentArgs()
         {
         }
     }
 
     /// <summary>
-    /// The results of the <see cref="CryptoWalletItem.Attachment"/> method.
+    /// The results of the <see cref="CryptoWalletItem.GetAttachment"/> method.
     /// </summary>
     [OutputType]
-    public sealed class CryptoWalletItemAttachmentResult
+    public sealed class CryptoWalletItemGetAttachmentResult
     {
         /// <summary>
         /// the value of the attachment
@@ -258,7 +258,7 @@ namespace Pulumi.Onepassword
         public readonly string Value;
 
         [OutputConstructor]
-        private CryptoWalletItemAttachmentResult(string value)
+        private CryptoWalletItemGetAttachmentResult(string value)
         {
             Value = value;
         }

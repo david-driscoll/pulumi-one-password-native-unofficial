@@ -106,7 +106,7 @@ export class APICredentialItem extends pulumi.CustomResource {
         super(APICredentialItem.__pulumiType, name, resourceInputs, opts);
     }
 
-    attachment(args: APICredentialItem.AttachmentArgs): pulumi.Output<APICredentialItem.AttachmentResult> {
+    getAttachment(args: APICredentialItem.GetAttachmentArgs): pulumi.Output<APICredentialItem.GetAttachmentResult> {
         return pulumi.runtime.call("onepassword:index:APICredentialItem/attachment", {
             "__self__": this,
             "name": args.name,
@@ -156,9 +156,9 @@ export interface APICredentialItemArgs {
 
 export namespace APICredentialItem {
     /**
-     * The set of arguments for the APICredentialItem.attachment method.
+     * The set of arguments for the APICredentialItem.getAttachment method.
      */
-    export interface AttachmentArgs {
+    export interface GetAttachmentArgs {
         /**
          * The name or uuid of the attachment to get
          */
@@ -166,9 +166,9 @@ export namespace APICredentialItem {
     }
 
     /**
-     * The results of the APICredentialItem.attachment method.
+     * The results of the APICredentialItem.getAttachment method.
      */
-    export interface AttachmentResult {
+    export interface GetAttachmentResult {
         /**
          * the value of the attachment
          */

@@ -144,8 +144,8 @@ namespace Pulumi.Onepassword
             return new PassportItem(name, id, state, options);
         }
 
-        public Pulumi.Output<PassportItemAttachmentResult> Attachment(PassportItemAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<PassportItemAttachmentResult>("onepassword:index:PassportItem/attachment", args ?? new PassportItemAttachmentArgs(), this);
+        public Pulumi.Output<PassportItemGetAttachmentResult> GetAttachment(PassportItemGetAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<PassportItemGetAttachmentResult>("onepassword:index:PassportItem/attachment", args ?? new PassportItemGetAttachmentArgs(), this);
     }
 
     public sealed class PassportItemArgs : Pulumi.ResourceArgs
@@ -259,9 +259,9 @@ namespace Pulumi.Onepassword
     }
 
     /// <summary>
-    /// The set of arguments for the <see cref="PassportItem.Attachment"/> method.
+    /// The set of arguments for the <see cref="PassportItem.GetAttachment"/> method.
     /// </summary>
-    public sealed class PassportItemAttachmentArgs : Pulumi.CallArgs
+    public sealed class PassportItemGetAttachmentArgs : Pulumi.CallArgs
     {
         /// <summary>
         /// The name or uuid of the attachment to get
@@ -269,16 +269,16 @@ namespace Pulumi.Onepassword
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        public PassportItemAttachmentArgs()
+        public PassportItemGetAttachmentArgs()
         {
         }
     }
 
     /// <summary>
-    /// The results of the <see cref="PassportItem.Attachment"/> method.
+    /// The results of the <see cref="PassportItem.GetAttachment"/> method.
     /// </summary>
     [OutputType]
-    public sealed class PassportItemAttachmentResult
+    public sealed class PassportItemGetAttachmentResult
     {
         /// <summary>
         /// the value of the attachment
@@ -286,7 +286,7 @@ namespace Pulumi.Onepassword
         public readonly string Value;
 
         [OutputConstructor]
-        private PassportItemAttachmentResult(string value)
+        private PassportItemGetAttachmentResult(string value)
         {
             Value = value;
         }

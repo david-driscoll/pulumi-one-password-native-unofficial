@@ -92,7 +92,7 @@ export class SecureNoteItem extends pulumi.CustomResource {
         super(SecureNoteItem.__pulumiType, name, resourceInputs, opts);
     }
 
-    attachment(args: SecureNoteItem.AttachmentArgs): pulumi.Output<SecureNoteItem.AttachmentResult> {
+    getAttachment(args: SecureNoteItem.GetAttachmentArgs): pulumi.Output<SecureNoteItem.GetAttachmentResult> {
         return pulumi.runtime.call("onepassword:index:SecureNoteItem/attachment", {
             "__self__": this,
             "name": args.name,
@@ -135,9 +135,9 @@ export interface SecureNoteItemArgs {
 
 export namespace SecureNoteItem {
     /**
-     * The set of arguments for the SecureNoteItem.attachment method.
+     * The set of arguments for the SecureNoteItem.getAttachment method.
      */
-    export interface AttachmentArgs {
+    export interface GetAttachmentArgs {
         /**
          * The name or uuid of the attachment to get
          */
@@ -145,9 +145,9 @@ export namespace SecureNoteItem {
     }
 
     /**
-     * The results of the SecureNoteItem.attachment method.
+     * The results of the SecureNoteItem.getAttachment method.
      */
-    export interface AttachmentResult {
+    export interface GetAttachmentResult {
         /**
          * the value of the attachment
          */

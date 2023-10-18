@@ -136,8 +136,8 @@ namespace Pulumi.Onepassword
             return new MembershipItem(name, id, state, options);
         }
 
-        public Pulumi.Output<MembershipItemAttachmentResult> Attachment(MembershipItemAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<MembershipItemAttachmentResult>("onepassword:index:MembershipItem/attachment", args ?? new MembershipItemAttachmentArgs(), this);
+        public Pulumi.Output<MembershipItemGetAttachmentResult> GetAttachment(MembershipItemGetAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<MembershipItemGetAttachmentResult>("onepassword:index:MembershipItem/attachment", args ?? new MembershipItemGetAttachmentArgs(), this);
     }
 
     public sealed class MembershipItemArgs : Pulumi.ResourceArgs
@@ -251,9 +251,9 @@ namespace Pulumi.Onepassword
     }
 
     /// <summary>
-    /// The set of arguments for the <see cref="MembershipItem.Attachment"/> method.
+    /// The set of arguments for the <see cref="MembershipItem.GetAttachment"/> method.
     /// </summary>
-    public sealed class MembershipItemAttachmentArgs : Pulumi.CallArgs
+    public sealed class MembershipItemGetAttachmentArgs : Pulumi.CallArgs
     {
         /// <summary>
         /// The name or uuid of the attachment to get
@@ -261,16 +261,16 @@ namespace Pulumi.Onepassword
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        public MembershipItemAttachmentArgs()
+        public MembershipItemGetAttachmentArgs()
         {
         }
     }
 
     /// <summary>
-    /// The results of the <see cref="MembershipItem.Attachment"/> method.
+    /// The results of the <see cref="MembershipItem.GetAttachment"/> method.
     /// </summary>
     [OutputType]
-    public sealed class MembershipItemAttachmentResult
+    public sealed class MembershipItemGetAttachmentResult
     {
         /// <summary>
         /// the value of the attachment
@@ -278,7 +278,7 @@ namespace Pulumi.Onepassword
         public readonly string Value;
 
         [OutputConstructor]
-        private MembershipItemAttachmentResult(string value)
+        private MembershipItemGetAttachmentResult(string value)
         {
             Value = value;
         }

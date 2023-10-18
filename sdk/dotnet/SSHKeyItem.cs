@@ -114,8 +114,8 @@ namespace Pulumi.Onepassword
             return new SSHKeyItem(name, id, state, options);
         }
 
-        public Pulumi.Output<SSHKeyItemAttachmentResult> Attachment(SSHKeyItemAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<SSHKeyItemAttachmentResult>("onepassword:index:SSHKeyItem/attachment", args ?? new SSHKeyItemAttachmentArgs(), this);
+        public Pulumi.Output<SSHKeyItemGetAttachmentResult> GetAttachment(SSHKeyItemGetAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<SSHKeyItemGetAttachmentResult>("onepassword:index:SSHKeyItem/attachment", args ?? new SSHKeyItemGetAttachmentArgs(), this);
     }
 
     public sealed class SSHKeyItemArgs : Pulumi.ResourceArgs
@@ -199,9 +199,9 @@ namespace Pulumi.Onepassword
     }
 
     /// <summary>
-    /// The set of arguments for the <see cref="SSHKeyItem.Attachment"/> method.
+    /// The set of arguments for the <see cref="SSHKeyItem.GetAttachment"/> method.
     /// </summary>
-    public sealed class SSHKeyItemAttachmentArgs : Pulumi.CallArgs
+    public sealed class SSHKeyItemGetAttachmentArgs : Pulumi.CallArgs
     {
         /// <summary>
         /// The name or uuid of the attachment to get
@@ -209,16 +209,16 @@ namespace Pulumi.Onepassword
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        public SSHKeyItemAttachmentArgs()
+        public SSHKeyItemGetAttachmentArgs()
         {
         }
     }
 
     /// <summary>
-    /// The results of the <see cref="SSHKeyItem.Attachment"/> method.
+    /// The results of the <see cref="SSHKeyItem.GetAttachment"/> method.
     /// </summary>
     [OutputType]
-    public sealed class SSHKeyItemAttachmentResult
+    public sealed class SSHKeyItemGetAttachmentResult
     {
         /// <summary>
         /// the value of the attachment
@@ -226,7 +226,7 @@ namespace Pulumi.Onepassword
         public readonly string Value;
 
         [OutputConstructor]
-        private SSHKeyItemAttachmentResult(string value)
+        private SSHKeyItemGetAttachmentResult(string value)
         {
             Value = value;
         }

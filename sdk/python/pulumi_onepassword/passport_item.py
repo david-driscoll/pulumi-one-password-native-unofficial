@@ -565,7 +565,7 @@ class PassportItem(pulumi.CustomResource):
         return pulumi.get(self, "vault")
 
     @pulumi.output_type
-    class AttachmentResult:
+    class GetAttachmentResult:
         """
         The resolved reference value
         """
@@ -582,8 +582,8 @@ class PassportItem(pulumi.CustomResource):
             """
             return pulumi.get(self, "value")
 
-    def attachment(__self__, *,
-                   name: pulumi.Input[str]) -> pulumi.Output['PassportItem.AttachmentResult']:
+    def get_attachment(__self__, *,
+                       name: pulumi.Input[str]) -> pulumi.Output['PassportItem.GetAttachmentResult']:
         """
 
         :param pulumi.Input[str] name: The name or uuid of the attachment to get
@@ -591,5 +591,5 @@ class PassportItem(pulumi.CustomResource):
         __args__ = dict()
         __args__['__self__'] = __self__
         __args__['name'] = name
-        return pulumi.runtime.call('onepassword:index:PassportItem/attachment', __args__, res=__self__, typ=PassportItem.AttachmentResult)
+        return pulumi.runtime.call('onepassword:index:PassportItem/attachment', __args__, res=__self__, typ=PassportItem.GetAttachmentResult)
 

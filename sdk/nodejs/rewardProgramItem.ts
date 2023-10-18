@@ -102,7 +102,7 @@ export class RewardProgramItem extends pulumi.CustomResource {
         super(RewardProgramItem.__pulumiType, name, resourceInputs, opts);
     }
 
-    attachment(args: RewardProgramItem.AttachmentArgs): pulumi.Output<RewardProgramItem.AttachmentResult> {
+    getAttachment(args: RewardProgramItem.GetAttachmentArgs): pulumi.Output<RewardProgramItem.GetAttachmentResult> {
         return pulumi.runtime.call("onepassword:index:RewardProgramItem/attachment", {
             "__self__": this,
             "name": args.name,
@@ -150,9 +150,9 @@ export interface RewardProgramItemArgs {
 
 export namespace RewardProgramItem {
     /**
-     * The set of arguments for the RewardProgramItem.attachment method.
+     * The set of arguments for the RewardProgramItem.getAttachment method.
      */
-    export interface AttachmentArgs {
+    export interface GetAttachmentArgs {
         /**
          * The name or uuid of the attachment to get
          */
@@ -160,9 +160,9 @@ export namespace RewardProgramItem {
     }
 
     /**
-     * The results of the RewardProgramItem.attachment method.
+     * The results of the RewardProgramItem.getAttachment method.
      */
-    export interface AttachmentResult {
+    export interface GetAttachmentResult {
         /**
          * the value of the attachment
          */

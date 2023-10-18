@@ -108,7 +108,7 @@ export class CreditCardItem extends pulumi.CustomResource {
         super(CreditCardItem.__pulumiType, name, resourceInputs, opts);
     }
 
-    attachment(args: CreditCardItem.AttachmentArgs): pulumi.Output<CreditCardItem.AttachmentResult> {
+    getAttachment(args: CreditCardItem.GetAttachmentArgs): pulumi.Output<CreditCardItem.GetAttachmentResult> {
         return pulumi.runtime.call("onepassword:index:CreditCardItem/attachment", {
             "__self__": this,
             "name": args.name,
@@ -159,9 +159,9 @@ export interface CreditCardItemArgs {
 
 export namespace CreditCardItem {
     /**
-     * The set of arguments for the CreditCardItem.attachment method.
+     * The set of arguments for the CreditCardItem.getAttachment method.
      */
-    export interface AttachmentArgs {
+    export interface GetAttachmentArgs {
         /**
          * The name or uuid of the attachment to get
          */
@@ -169,9 +169,9 @@ export namespace CreditCardItem {
     }
 
     /**
-     * The results of the CreditCardItem.attachment method.
+     * The results of the CreditCardItem.getAttachment method.
      */
-    export interface AttachmentResult {
+    export interface GetAttachmentResult {
         /**
          * the value of the attachment
          */

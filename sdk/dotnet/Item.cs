@@ -101,8 +101,8 @@ namespace Pulumi.Onepassword
             return new Item(name, id, state, options);
         }
 
-        public Pulumi.Output<ItemAttachmentResult> Attachment(ItemAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<ItemAttachmentResult>("onepassword:index:Item/attachment", args ?? new ItemAttachmentArgs(), this);
+        public Pulumi.Output<ItemGetAttachmentResult> GetAttachment(ItemGetAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<ItemGetAttachmentResult>("onepassword:index:Item/attachment", args ?? new ItemGetAttachmentArgs(), this);
     }
 
     public sealed class ItemArgs : Pulumi.ResourceArgs
@@ -178,9 +178,9 @@ namespace Pulumi.Onepassword
     }
 
     /// <summary>
-    /// The set of arguments for the <see cref="Item.Attachment"/> method.
+    /// The set of arguments for the <see cref="Item.GetAttachment"/> method.
     /// </summary>
-    public sealed class ItemAttachmentArgs : Pulumi.CallArgs
+    public sealed class ItemGetAttachmentArgs : Pulumi.CallArgs
     {
         /// <summary>
         /// The name or uuid of the attachment to get
@@ -188,16 +188,16 @@ namespace Pulumi.Onepassword
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        public ItemAttachmentArgs()
+        public ItemGetAttachmentArgs()
         {
         }
     }
 
     /// <summary>
-    /// The results of the <see cref="Item.Attachment"/> method.
+    /// The results of the <see cref="Item.GetAttachment"/> method.
     /// </summary>
     [OutputType]
-    public sealed class ItemAttachmentResult
+    public sealed class ItemGetAttachmentResult
     {
         /// <summary>
         /// the value of the attachment
@@ -205,7 +205,7 @@ namespace Pulumi.Onepassword
         public readonly string Value;
 
         [OutputConstructor]
-        private ItemAttachmentResult(string value)
+        private ItemGetAttachmentResult(string value)
         {
             Value = value;
         }

@@ -129,8 +129,8 @@ namespace Pulumi.Onepassword
             return new MedicalRecordItem(name, id, state, options);
         }
 
-        public Pulumi.Output<MedicalRecordItemAttachmentResult> Attachment(MedicalRecordItemAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<MedicalRecordItemAttachmentResult>("onepassword:index:MedicalRecordItem/attachment", args ?? new MedicalRecordItemAttachmentArgs(), this);
+        public Pulumi.Output<MedicalRecordItemGetAttachmentResult> GetAttachment(MedicalRecordItemGetAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<MedicalRecordItemGetAttachmentResult>("onepassword:index:MedicalRecordItem/attachment", args ?? new MedicalRecordItemGetAttachmentArgs(), this);
     }
 
     public sealed class MedicalRecordItemArgs : Pulumi.ResourceArgs
@@ -229,9 +229,9 @@ namespace Pulumi.Onepassword
     }
 
     /// <summary>
-    /// The set of arguments for the <see cref="MedicalRecordItem.Attachment"/> method.
+    /// The set of arguments for the <see cref="MedicalRecordItem.GetAttachment"/> method.
     /// </summary>
-    public sealed class MedicalRecordItemAttachmentArgs : Pulumi.CallArgs
+    public sealed class MedicalRecordItemGetAttachmentArgs : Pulumi.CallArgs
     {
         /// <summary>
         /// The name or uuid of the attachment to get
@@ -239,16 +239,16 @@ namespace Pulumi.Onepassword
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        public MedicalRecordItemAttachmentArgs()
+        public MedicalRecordItemGetAttachmentArgs()
         {
         }
     }
 
     /// <summary>
-    /// The results of the <see cref="MedicalRecordItem.Attachment"/> method.
+    /// The results of the <see cref="MedicalRecordItem.GetAttachment"/> method.
     /// </summary>
     [OutputType]
-    public sealed class MedicalRecordItemAttachmentResult
+    public sealed class MedicalRecordItemGetAttachmentResult
     {
         /// <summary>
         /// the value of the attachment
@@ -256,7 +256,7 @@ namespace Pulumi.Onepassword
         public readonly string Value;
 
         [OutputConstructor]
-        private MedicalRecordItemAttachmentResult(string value)
+        private MedicalRecordItemGetAttachmentResult(string value)
         {
             Value = value;
         }

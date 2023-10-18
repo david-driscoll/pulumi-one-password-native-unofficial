@@ -398,7 +398,7 @@ class CryptoWalletItem(pulumi.CustomResource):
         return pulumi.get(self, "wallet")
 
     @pulumi.output_type
-    class AttachmentResult:
+    class GetAttachmentResult:
         """
         The resolved reference value
         """
@@ -415,8 +415,8 @@ class CryptoWalletItem(pulumi.CustomResource):
             """
             return pulumi.get(self, "value")
 
-    def attachment(__self__, *,
-                   name: pulumi.Input[str]) -> pulumi.Output['CryptoWalletItem.AttachmentResult']:
+    def get_attachment(__self__, *,
+                       name: pulumi.Input[str]) -> pulumi.Output['CryptoWalletItem.GetAttachmentResult']:
         """
 
         :param pulumi.Input[str] name: The name or uuid of the attachment to get
@@ -424,5 +424,5 @@ class CryptoWalletItem(pulumi.CustomResource):
         __args__ = dict()
         __args__['__self__'] = __self__
         __args__['name'] = name
-        return pulumi.runtime.call('onepassword:index:CryptoWalletItem/attachment', __args__, res=__self__, typ=CryptoWalletItem.AttachmentResult)
+        return pulumi.runtime.call('onepassword:index:CryptoWalletItem/attachment', __args__, res=__self__, typ=CryptoWalletItem.GetAttachmentResult)
 

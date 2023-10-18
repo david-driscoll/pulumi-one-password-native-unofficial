@@ -106,7 +106,7 @@ export class OutdoorLicenseItem extends pulumi.CustomResource {
         super(OutdoorLicenseItem.__pulumiType, name, resourceInputs, opts);
     }
 
-    attachment(args: OutdoorLicenseItem.AttachmentArgs): pulumi.Output<OutdoorLicenseItem.AttachmentResult> {
+    getAttachment(args: OutdoorLicenseItem.GetAttachmentArgs): pulumi.Output<OutdoorLicenseItem.GetAttachmentResult> {
         return pulumi.runtime.call("onepassword:index:OutdoorLicenseItem/attachment", {
             "__self__": this,
             "name": args.name,
@@ -156,9 +156,9 @@ export interface OutdoorLicenseItemArgs {
 
 export namespace OutdoorLicenseItem {
     /**
-     * The set of arguments for the OutdoorLicenseItem.attachment method.
+     * The set of arguments for the OutdoorLicenseItem.getAttachment method.
      */
-    export interface AttachmentArgs {
+    export interface GetAttachmentArgs {
         /**
          * The name or uuid of the attachment to get
          */
@@ -166,9 +166,9 @@ export namespace OutdoorLicenseItem {
     }
 
     /**
-     * The results of the OutdoorLicenseItem.attachment method.
+     * The results of the OutdoorLicenseItem.getAttachment method.
      */
-    export interface AttachmentResult {
+    export interface GetAttachmentResult {
         /**
          * the value of the attachment
          */

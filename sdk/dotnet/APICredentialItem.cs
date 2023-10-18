@@ -133,8 +133,8 @@ namespace Pulumi.Onepassword
             return new APICredentialItem(name, id, state, options);
         }
 
-        public Pulumi.Output<APICredentialItemAttachmentResult> Attachment(APICredentialItemAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<APICredentialItemAttachmentResult>("onepassword:index:APICredentialItem/attachment", args ?? new APICredentialItemAttachmentArgs(), this);
+        public Pulumi.Output<APICredentialItemGetAttachmentResult> GetAttachment(APICredentialItemGetAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<APICredentialItemGetAttachmentResult>("onepassword:index:APICredentialItem/attachment", args ?? new APICredentialItemGetAttachmentArgs(), this);
     }
 
     public sealed class APICredentialItemArgs : Pulumi.ResourceArgs
@@ -245,9 +245,9 @@ namespace Pulumi.Onepassword
     }
 
     /// <summary>
-    /// The set of arguments for the <see cref="APICredentialItem.Attachment"/> method.
+    /// The set of arguments for the <see cref="APICredentialItem.GetAttachment"/> method.
     /// </summary>
-    public sealed class APICredentialItemAttachmentArgs : Pulumi.CallArgs
+    public sealed class APICredentialItemGetAttachmentArgs : Pulumi.CallArgs
     {
         /// <summary>
         /// The name or uuid of the attachment to get
@@ -255,16 +255,16 @@ namespace Pulumi.Onepassword
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        public APICredentialItemAttachmentArgs()
+        public APICredentialItemGetAttachmentArgs()
         {
         }
     }
 
     /// <summary>
-    /// The results of the <see cref="APICredentialItem.Attachment"/> method.
+    /// The results of the <see cref="APICredentialItem.GetAttachment"/> method.
     /// </summary>
     [OutputType]
-    public sealed class APICredentialItemAttachmentResult
+    public sealed class APICredentialItemGetAttachmentResult
     {
         /// <summary>
         /// the value of the attachment
@@ -272,7 +272,7 @@ namespace Pulumi.Onepassword
         public readonly string Value;
 
         [OutputConstructor]
-        private APICredentialItemAttachmentResult(string value)
+        private APICredentialItemGetAttachmentResult(string value)
         {
             Value = value;
         }

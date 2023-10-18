@@ -151,44 +151,44 @@ func (DriverLicenseItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*driverLicenseItemArgs)(nil)).Elem()
 }
 
-func (r *DriverLicenseItem) Attachment(ctx *pulumi.Context, args *DriverLicenseItemAttachmentArgs) (DriverLicenseItemAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:DriverLicenseItem/attachment", args, DriverLicenseItemAttachmentResultOutput{}, r)
+func (r *DriverLicenseItem) GetAttachment(ctx *pulumi.Context, args *DriverLicenseItemGetAttachmentArgs) (DriverLicenseItemGetAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:DriverLicenseItem/attachment", args, DriverLicenseItemGetAttachmentResultOutput{}, r)
 	if err != nil {
-		return DriverLicenseItemAttachmentResultOutput{}, err
+		return DriverLicenseItemGetAttachmentResultOutput{}, err
 	}
-	return out.(DriverLicenseItemAttachmentResultOutput), nil
+	return out.(DriverLicenseItemGetAttachmentResultOutput), nil
 }
 
-type driverLicenseItemAttachmentArgs struct {
+type driverLicenseItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name string `pulumi:"name"`
 }
 
-// The set of arguments for the Attachment method of the DriverLicenseItem resource.
-type DriverLicenseItemAttachmentArgs struct {
+// The set of arguments for the GetAttachment method of the DriverLicenseItem resource.
+type DriverLicenseItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name pulumi.StringInput
 }
 
-func (DriverLicenseItemAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*driverLicenseItemAttachmentArgs)(nil)).Elem()
+func (DriverLicenseItemGetAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*driverLicenseItemGetAttachmentArgs)(nil)).Elem()
 }
 
 // The resolved reference value
-type DriverLicenseItemAttachmentResult struct {
+type DriverLicenseItemGetAttachmentResult struct {
 	// the value of the attachment
 	Value string `pulumi:"value"`
 }
 
-type DriverLicenseItemAttachmentResultOutput struct{ *pulumi.OutputState }
+type DriverLicenseItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
 
-func (DriverLicenseItemAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*DriverLicenseItemAttachmentResult)(nil)).Elem()
+func (DriverLicenseItemGetAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*DriverLicenseItemGetAttachmentResult)(nil)).Elem()
 }
 
 // the value of the attachment
-func (o DriverLicenseItemAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v DriverLicenseItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
+func (o DriverLicenseItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v DriverLicenseItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type DriverLicenseItemInput interface {
@@ -319,7 +319,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*DriverLicenseItemArrayInput)(nil)).Elem(), DriverLicenseItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DriverLicenseItemMapInput)(nil)).Elem(), DriverLicenseItemMap{})
 	pulumi.RegisterOutputType(DriverLicenseItemOutput{})
-	pulumi.RegisterOutputType(DriverLicenseItemAttachmentResultOutput{})
+	pulumi.RegisterOutputType(DriverLicenseItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(DriverLicenseItemArrayOutput{})
 	pulumi.RegisterOutputType(DriverLicenseItemMapOutput{})
 }

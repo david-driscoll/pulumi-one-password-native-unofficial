@@ -137,8 +137,8 @@ namespace Pulumi.Onepassword
             return new CreditCardItem(name, id, state, options);
         }
 
-        public Pulumi.Output<CreditCardItemAttachmentResult> Attachment(CreditCardItemAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<CreditCardItemAttachmentResult>("onepassword:index:CreditCardItem/attachment", args ?? new CreditCardItemAttachmentArgs(), this);
+        public Pulumi.Output<CreditCardItemGetAttachmentResult> GetAttachment(CreditCardItemGetAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<CreditCardItemGetAttachmentResult>("onepassword:index:CreditCardItem/attachment", args ?? new CreditCardItemGetAttachmentArgs(), this);
     }
 
     public sealed class CreditCardItemArgs : Pulumi.ResourceArgs
@@ -252,9 +252,9 @@ namespace Pulumi.Onepassword
     }
 
     /// <summary>
-    /// The set of arguments for the <see cref="CreditCardItem.Attachment"/> method.
+    /// The set of arguments for the <see cref="CreditCardItem.GetAttachment"/> method.
     /// </summary>
-    public sealed class CreditCardItemAttachmentArgs : Pulumi.CallArgs
+    public sealed class CreditCardItemGetAttachmentArgs : Pulumi.CallArgs
     {
         /// <summary>
         /// The name or uuid of the attachment to get
@@ -262,16 +262,16 @@ namespace Pulumi.Onepassword
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        public CreditCardItemAttachmentArgs()
+        public CreditCardItemGetAttachmentArgs()
         {
         }
     }
 
     /// <summary>
-    /// The results of the <see cref="CreditCardItem.Attachment"/> method.
+    /// The results of the <see cref="CreditCardItem.GetAttachment"/> method.
     /// </summary>
     [OutputType]
-    public sealed class CreditCardItemAttachmentResult
+    public sealed class CreditCardItemGetAttachmentResult
     {
         /// <summary>
         /// the value of the attachment
@@ -279,7 +279,7 @@ namespace Pulumi.Onepassword
         public readonly string Value;
 
         [OutputConstructor]
-        private CreditCardItemAttachmentResult(string value)
+        private CreditCardItemGetAttachmentResult(string value)
         {
             Value = value;
         }

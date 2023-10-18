@@ -128,8 +128,8 @@ namespace Pulumi.Onepassword
             return new ServerItem(name, id, state, options);
         }
 
-        public Pulumi.Output<ServerItemAttachmentResult> Attachment(ServerItemAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<ServerItemAttachmentResult>("onepassword:index:ServerItem/attachment", args ?? new ServerItemAttachmentArgs(), this);
+        public Pulumi.Output<ServerItemGetAttachmentResult> GetAttachment(ServerItemGetAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<ServerItemGetAttachmentResult>("onepassword:index:ServerItem/attachment", args ?? new ServerItemGetAttachmentArgs(), this);
     }
 
     public sealed class ServerItemArgs : Pulumi.ResourceArgs
@@ -234,9 +234,9 @@ namespace Pulumi.Onepassword
     }
 
     /// <summary>
-    /// The set of arguments for the <see cref="ServerItem.Attachment"/> method.
+    /// The set of arguments for the <see cref="ServerItem.GetAttachment"/> method.
     /// </summary>
-    public sealed class ServerItemAttachmentArgs : Pulumi.CallArgs
+    public sealed class ServerItemGetAttachmentArgs : Pulumi.CallArgs
     {
         /// <summary>
         /// The name or uuid of the attachment to get
@@ -244,16 +244,16 @@ namespace Pulumi.Onepassword
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        public ServerItemAttachmentArgs()
+        public ServerItemGetAttachmentArgs()
         {
         }
     }
 
     /// <summary>
-    /// The results of the <see cref="ServerItem.Attachment"/> method.
+    /// The results of the <see cref="ServerItem.GetAttachment"/> method.
     /// </summary>
     [OutputType]
-    public sealed class ServerItemAttachmentResult
+    public sealed class ServerItemGetAttachmentResult
     {
         /// <summary>
         /// the value of the attachment
@@ -261,7 +261,7 @@ namespace Pulumi.Onepassword
         public readonly string Value;
 
         [OutputConstructor]
-        private ServerItemAttachmentResult(string value)
+        private ServerItemGetAttachmentResult(string value)
         {
             Value = value;
         }

@@ -127,8 +127,8 @@ namespace Pulumi.Onepassword
             return new RewardProgramItem(name, id, state, options);
         }
 
-        public Pulumi.Output<RewardProgramItemAttachmentResult> Attachment(RewardProgramItemAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<RewardProgramItemAttachmentResult>("onepassword:index:RewardProgramItem/attachment", args ?? new RewardProgramItemAttachmentArgs(), this);
+        public Pulumi.Output<RewardProgramItemGetAttachmentResult> GetAttachment(RewardProgramItemGetAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<RewardProgramItemGetAttachmentResult>("onepassword:index:RewardProgramItem/attachment", args ?? new RewardProgramItemGetAttachmentArgs(), this);
     }
 
     public sealed class RewardProgramItemArgs : Pulumi.ResourceArgs
@@ -233,9 +233,9 @@ namespace Pulumi.Onepassword
     }
 
     /// <summary>
-    /// The set of arguments for the <see cref="RewardProgramItem.Attachment"/> method.
+    /// The set of arguments for the <see cref="RewardProgramItem.GetAttachment"/> method.
     /// </summary>
-    public sealed class RewardProgramItemAttachmentArgs : Pulumi.CallArgs
+    public sealed class RewardProgramItemGetAttachmentArgs : Pulumi.CallArgs
     {
         /// <summary>
         /// The name or uuid of the attachment to get
@@ -243,16 +243,16 @@ namespace Pulumi.Onepassword
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        public RewardProgramItemAttachmentArgs()
+        public RewardProgramItemGetAttachmentArgs()
         {
         }
     }
 
     /// <summary>
-    /// The results of the <see cref="RewardProgramItem.Attachment"/> method.
+    /// The results of the <see cref="RewardProgramItem.GetAttachment"/> method.
     /// </summary>
     [OutputType]
-    public sealed class RewardProgramItemAttachmentResult
+    public sealed class RewardProgramItemGetAttachmentResult
     {
         /// <summary>
         /// the value of the attachment
@@ -260,7 +260,7 @@ namespace Pulumi.Onepassword
         public readonly string Value;
 
         [OutputConstructor]
-        private RewardProgramItemAttachmentResult(string value)
+        private RewardProgramItemGetAttachmentResult(string value)
         {
             Value = value;
         }

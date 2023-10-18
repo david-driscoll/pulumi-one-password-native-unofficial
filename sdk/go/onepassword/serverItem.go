@@ -139,44 +139,44 @@ func (ServerItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*serverItemArgs)(nil)).Elem()
 }
 
-func (r *ServerItem) Attachment(ctx *pulumi.Context, args *ServerItemAttachmentArgs) (ServerItemAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:ServerItem/attachment", args, ServerItemAttachmentResultOutput{}, r)
+func (r *ServerItem) GetAttachment(ctx *pulumi.Context, args *ServerItemGetAttachmentArgs) (ServerItemGetAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:ServerItem/attachment", args, ServerItemGetAttachmentResultOutput{}, r)
 	if err != nil {
-		return ServerItemAttachmentResultOutput{}, err
+		return ServerItemGetAttachmentResultOutput{}, err
 	}
-	return out.(ServerItemAttachmentResultOutput), nil
+	return out.(ServerItemGetAttachmentResultOutput), nil
 }
 
-type serverItemAttachmentArgs struct {
+type serverItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name string `pulumi:"name"`
 }
 
-// The set of arguments for the Attachment method of the ServerItem resource.
-type ServerItemAttachmentArgs struct {
+// The set of arguments for the GetAttachment method of the ServerItem resource.
+type ServerItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name pulumi.StringInput
 }
 
-func (ServerItemAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*serverItemAttachmentArgs)(nil)).Elem()
+func (ServerItemGetAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*serverItemGetAttachmentArgs)(nil)).Elem()
 }
 
 // The resolved reference value
-type ServerItemAttachmentResult struct {
+type ServerItemGetAttachmentResult struct {
 	// the value of the attachment
 	Value string `pulumi:"value"`
 }
 
-type ServerItemAttachmentResultOutput struct{ *pulumi.OutputState }
+type ServerItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
 
-func (ServerItemAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*ServerItemAttachmentResult)(nil)).Elem()
+func (ServerItemGetAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ServerItemGetAttachmentResult)(nil)).Elem()
 }
 
 // the value of the attachment
-func (o ServerItemAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v ServerItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
+func (o ServerItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v ServerItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type ServerItemInput interface {
@@ -307,7 +307,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*ServerItemArrayInput)(nil)).Elem(), ServerItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ServerItemMapInput)(nil)).Elem(), ServerItemMap{})
 	pulumi.RegisterOutputType(ServerItemOutput{})
-	pulumi.RegisterOutputType(ServerItemAttachmentResultOutput{})
+	pulumi.RegisterOutputType(ServerItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(ServerItemArrayOutput{})
 	pulumi.RegisterOutputType(ServerItemMapOutput{})
 }

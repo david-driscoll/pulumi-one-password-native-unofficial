@@ -94,7 +94,7 @@ export class SSHKeyItem extends pulumi.CustomResource {
         super(SSHKeyItem.__pulumiType, name, resourceInputs, opts);
     }
 
-    attachment(args: SSHKeyItem.AttachmentArgs): pulumi.Output<SSHKeyItem.AttachmentResult> {
+    getAttachment(args: SSHKeyItem.GetAttachmentArgs): pulumi.Output<SSHKeyItem.GetAttachmentResult> {
         return pulumi.runtime.call("onepassword:index:SSHKeyItem/attachment", {
             "__self__": this,
             "name": args.name,
@@ -138,9 +138,9 @@ export interface SSHKeyItemArgs {
 
 export namespace SSHKeyItem {
     /**
-     * The set of arguments for the SSHKeyItem.attachment method.
+     * The set of arguments for the SSHKeyItem.getAttachment method.
      */
-    export interface AttachmentArgs {
+    export interface GetAttachmentArgs {
         /**
          * The name or uuid of the attachment to get
          */
@@ -148,9 +148,9 @@ export namespace SSHKeyItem {
     }
 
     /**
-     * The results of the SSHKeyItem.attachment method.
+     * The results of the SSHKeyItem.getAttachment method.
      */
-    export interface AttachmentResult {
+    export interface GetAttachmentResult {
         /**
          * the value of the attachment
          */

@@ -97,7 +97,7 @@ export class LoginItem extends pulumi.CustomResource {
         super(LoginItem.__pulumiType, name, resourceInputs, opts);
     }
 
-    attachment(args: LoginItem.AttachmentArgs): pulumi.Output<LoginItem.AttachmentResult> {
+    getAttachment(args: LoginItem.GetAttachmentArgs): pulumi.Output<LoginItem.GetAttachmentResult> {
         return pulumi.runtime.call("onepassword:index:LoginItem/attachment", {
             "__self__": this,
             "name": args.name,
@@ -143,9 +143,9 @@ export interface LoginItemArgs {
 
 export namespace LoginItem {
     /**
-     * The set of arguments for the LoginItem.attachment method.
+     * The set of arguments for the LoginItem.getAttachment method.
      */
-    export interface AttachmentArgs {
+    export interface GetAttachmentArgs {
         /**
          * The name or uuid of the attachment to get
          */
@@ -153,9 +153,9 @@ export namespace LoginItem {
     }
 
     /**
-     * The results of the LoginItem.attachment method.
+     * The results of the LoginItem.getAttachment method.
      */
-    export interface AttachmentResult {
+    export interface GetAttachmentResult {
         /**
          * the value of the attachment
          */

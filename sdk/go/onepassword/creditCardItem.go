@@ -148,44 +148,44 @@ func (CreditCardItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*creditCardItemArgs)(nil)).Elem()
 }
 
-func (r *CreditCardItem) Attachment(ctx *pulumi.Context, args *CreditCardItemAttachmentArgs) (CreditCardItemAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:CreditCardItem/attachment", args, CreditCardItemAttachmentResultOutput{}, r)
+func (r *CreditCardItem) GetAttachment(ctx *pulumi.Context, args *CreditCardItemGetAttachmentArgs) (CreditCardItemGetAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:CreditCardItem/attachment", args, CreditCardItemGetAttachmentResultOutput{}, r)
 	if err != nil {
-		return CreditCardItemAttachmentResultOutput{}, err
+		return CreditCardItemGetAttachmentResultOutput{}, err
 	}
-	return out.(CreditCardItemAttachmentResultOutput), nil
+	return out.(CreditCardItemGetAttachmentResultOutput), nil
 }
 
-type creditCardItemAttachmentArgs struct {
+type creditCardItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name string `pulumi:"name"`
 }
 
-// The set of arguments for the Attachment method of the CreditCardItem resource.
-type CreditCardItemAttachmentArgs struct {
+// The set of arguments for the GetAttachment method of the CreditCardItem resource.
+type CreditCardItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name pulumi.StringInput
 }
 
-func (CreditCardItemAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*creditCardItemAttachmentArgs)(nil)).Elem()
+func (CreditCardItemGetAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*creditCardItemGetAttachmentArgs)(nil)).Elem()
 }
 
 // The resolved reference value
-type CreditCardItemAttachmentResult struct {
+type CreditCardItemGetAttachmentResult struct {
 	// the value of the attachment
 	Value string `pulumi:"value"`
 }
 
-type CreditCardItemAttachmentResultOutput struct{ *pulumi.OutputState }
+type CreditCardItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
 
-func (CreditCardItemAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*CreditCardItemAttachmentResult)(nil)).Elem()
+func (CreditCardItemGetAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CreditCardItemGetAttachmentResult)(nil)).Elem()
 }
 
 // the value of the attachment
-func (o CreditCardItemAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v CreditCardItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
+func (o CreditCardItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v CreditCardItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type CreditCardItemInput interface {
@@ -316,7 +316,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*CreditCardItemArrayInput)(nil)).Elem(), CreditCardItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CreditCardItemMapInput)(nil)).Elem(), CreditCardItemMap{})
 	pulumi.RegisterOutputType(CreditCardItemOutput{})
-	pulumi.RegisterOutputType(CreditCardItemAttachmentResultOutput{})
+	pulumi.RegisterOutputType(CreditCardItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(CreditCardItemArrayOutput{})
 	pulumi.RegisterOutputType(CreditCardItemMapOutput{})
 }

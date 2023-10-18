@@ -102,7 +102,7 @@ export class ServerItem extends pulumi.CustomResource {
         super(ServerItem.__pulumiType, name, resourceInputs, opts);
     }
 
-    attachment(args: ServerItem.AttachmentArgs): pulumi.Output<ServerItem.AttachmentResult> {
+    getAttachment(args: ServerItem.GetAttachmentArgs): pulumi.Output<ServerItem.GetAttachmentResult> {
         return pulumi.runtime.call("onepassword:index:ServerItem/attachment", {
             "__self__": this,
             "name": args.name,
@@ -150,9 +150,9 @@ export interface ServerItemArgs {
 
 export namespace ServerItem {
     /**
-     * The set of arguments for the ServerItem.attachment method.
+     * The set of arguments for the ServerItem.getAttachment method.
      */
-    export interface AttachmentArgs {
+    export interface GetAttachmentArgs {
         /**
          * The name or uuid of the attachment to get
          */
@@ -160,9 +160,9 @@ export namespace ServerItem {
     }
 
     /**
-     * The results of the ServerItem.attachment method.
+     * The results of the ServerItem.getAttachment method.
      */
-    export interface AttachmentResult {
+    export interface GetAttachmentResult {
         /**
          * the value of the attachment
          */

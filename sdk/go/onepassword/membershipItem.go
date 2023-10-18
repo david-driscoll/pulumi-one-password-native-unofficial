@@ -146,44 +146,44 @@ func (MembershipItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*membershipItemArgs)(nil)).Elem()
 }
 
-func (r *MembershipItem) Attachment(ctx *pulumi.Context, args *MembershipItemAttachmentArgs) (MembershipItemAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:MembershipItem/attachment", args, MembershipItemAttachmentResultOutput{}, r)
+func (r *MembershipItem) GetAttachment(ctx *pulumi.Context, args *MembershipItemGetAttachmentArgs) (MembershipItemGetAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:MembershipItem/attachment", args, MembershipItemGetAttachmentResultOutput{}, r)
 	if err != nil {
-		return MembershipItemAttachmentResultOutput{}, err
+		return MembershipItemGetAttachmentResultOutput{}, err
 	}
-	return out.(MembershipItemAttachmentResultOutput), nil
+	return out.(MembershipItemGetAttachmentResultOutput), nil
 }
 
-type membershipItemAttachmentArgs struct {
+type membershipItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name string `pulumi:"name"`
 }
 
-// The set of arguments for the Attachment method of the MembershipItem resource.
-type MembershipItemAttachmentArgs struct {
+// The set of arguments for the GetAttachment method of the MembershipItem resource.
+type MembershipItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name pulumi.StringInput
 }
 
-func (MembershipItemAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*membershipItemAttachmentArgs)(nil)).Elem()
+func (MembershipItemGetAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*membershipItemGetAttachmentArgs)(nil)).Elem()
 }
 
 // The resolved reference value
-type MembershipItemAttachmentResult struct {
+type MembershipItemGetAttachmentResult struct {
 	// the value of the attachment
 	Value string `pulumi:"value"`
 }
 
-type MembershipItemAttachmentResultOutput struct{ *pulumi.OutputState }
+type MembershipItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
 
-func (MembershipItemAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*MembershipItemAttachmentResult)(nil)).Elem()
+func (MembershipItemGetAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*MembershipItemGetAttachmentResult)(nil)).Elem()
 }
 
 // the value of the attachment
-func (o MembershipItemAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v MembershipItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
+func (o MembershipItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v MembershipItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type MembershipItemInput interface {
@@ -314,7 +314,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*MembershipItemArrayInput)(nil)).Elem(), MembershipItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*MembershipItemMapInput)(nil)).Elem(), MembershipItemMap{})
 	pulumi.RegisterOutputType(MembershipItemOutput{})
-	pulumi.RegisterOutputType(MembershipItemAttachmentResultOutput{})
+	pulumi.RegisterOutputType(MembershipItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(MembershipItemArrayOutput{})
 	pulumi.RegisterOutputType(MembershipItemMapOutput{})
 }

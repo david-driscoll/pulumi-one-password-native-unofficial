@@ -111,8 +111,8 @@ namespace Pulumi.Onepassword
             return new SecureNoteItem(name, id, state, options);
         }
 
-        public Pulumi.Output<SecureNoteItemAttachmentResult> Attachment(SecureNoteItemAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<SecureNoteItemAttachmentResult>("onepassword:index:SecureNoteItem/attachment", args ?? new SecureNoteItemAttachmentArgs(), this);
+        public Pulumi.Output<SecureNoteItemGetAttachmentResult> GetAttachment(SecureNoteItemGetAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<SecureNoteItemGetAttachmentResult>("onepassword:index:SecureNoteItem/attachment", args ?? new SecureNoteItemGetAttachmentArgs(), this);
     }
 
     public sealed class SecureNoteItemArgs : Pulumi.ResourceArgs
@@ -193,9 +193,9 @@ namespace Pulumi.Onepassword
     }
 
     /// <summary>
-    /// The set of arguments for the <see cref="SecureNoteItem.Attachment"/> method.
+    /// The set of arguments for the <see cref="SecureNoteItem.GetAttachment"/> method.
     /// </summary>
-    public sealed class SecureNoteItemAttachmentArgs : Pulumi.CallArgs
+    public sealed class SecureNoteItemGetAttachmentArgs : Pulumi.CallArgs
     {
         /// <summary>
         /// The name or uuid of the attachment to get
@@ -203,16 +203,16 @@ namespace Pulumi.Onepassword
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        public SecureNoteItemAttachmentArgs()
+        public SecureNoteItemGetAttachmentArgs()
         {
         }
     }
 
     /// <summary>
-    /// The results of the <see cref="SecureNoteItem.Attachment"/> method.
+    /// The results of the <see cref="SecureNoteItem.GetAttachment"/> method.
     /// </summary>
     [OutputType]
-    public sealed class SecureNoteItemAttachmentResult
+    public sealed class SecureNoteItemGetAttachmentResult
     {
         /// <summary>
         /// the value of the attachment
@@ -220,7 +220,7 @@ namespace Pulumi.Onepassword
         public readonly string Value;
 
         [OutputConstructor]
-        private SecureNoteItemAttachmentResult(string value)
+        private SecureNoteItemGetAttachmentResult(string value)
         {
             Value = value;
         }

@@ -149,44 +149,44 @@ func (DatabaseItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*databaseItemArgs)(nil)).Elem()
 }
 
-func (r *DatabaseItem) Attachment(ctx *pulumi.Context, args *DatabaseItemAttachmentArgs) (DatabaseItemAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:DatabaseItem/attachment", args, DatabaseItemAttachmentResultOutput{}, r)
+func (r *DatabaseItem) GetAttachment(ctx *pulumi.Context, args *DatabaseItemGetAttachmentArgs) (DatabaseItemGetAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:DatabaseItem/attachment", args, DatabaseItemGetAttachmentResultOutput{}, r)
 	if err != nil {
-		return DatabaseItemAttachmentResultOutput{}, err
+		return DatabaseItemGetAttachmentResultOutput{}, err
 	}
-	return out.(DatabaseItemAttachmentResultOutput), nil
+	return out.(DatabaseItemGetAttachmentResultOutput), nil
 }
 
-type databaseItemAttachmentArgs struct {
+type databaseItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name string `pulumi:"name"`
 }
 
-// The set of arguments for the Attachment method of the DatabaseItem resource.
-type DatabaseItemAttachmentArgs struct {
+// The set of arguments for the GetAttachment method of the DatabaseItem resource.
+type DatabaseItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name pulumi.StringInput
 }
 
-func (DatabaseItemAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*databaseItemAttachmentArgs)(nil)).Elem()
+func (DatabaseItemGetAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*databaseItemGetAttachmentArgs)(nil)).Elem()
 }
 
 // The resolved reference value
-type DatabaseItemAttachmentResult struct {
+type DatabaseItemGetAttachmentResult struct {
 	// the value of the attachment
 	Value string `pulumi:"value"`
 }
 
-type DatabaseItemAttachmentResultOutput struct{ *pulumi.OutputState }
+type DatabaseItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
 
-func (DatabaseItemAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*DatabaseItemAttachmentResult)(nil)).Elem()
+func (DatabaseItemGetAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*DatabaseItemGetAttachmentResult)(nil)).Elem()
 }
 
 // the value of the attachment
-func (o DatabaseItemAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v DatabaseItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
+func (o DatabaseItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v DatabaseItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type DatabaseItemInput interface {
@@ -317,7 +317,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*DatabaseItemArrayInput)(nil)).Elem(), DatabaseItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DatabaseItemMapInput)(nil)).Elem(), DatabaseItemMap{})
 	pulumi.RegisterOutputType(DatabaseItemOutput{})
-	pulumi.RegisterOutputType(DatabaseItemAttachmentResultOutput{})
+	pulumi.RegisterOutputType(DatabaseItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(DatabaseItemArrayOutput{})
 	pulumi.RegisterOutputType(DatabaseItemMapOutput{})
 }

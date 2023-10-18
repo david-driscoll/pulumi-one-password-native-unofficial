@@ -139,8 +139,8 @@ namespace Pulumi.Onepassword
             return new DatabaseItem(name, id, state, options);
         }
 
-        public Pulumi.Output<DatabaseItemAttachmentResult> Attachment(DatabaseItemAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<DatabaseItemAttachmentResult>("onepassword:index:DatabaseItem/attachment", args ?? new DatabaseItemAttachmentArgs(), this);
+        public Pulumi.Output<DatabaseItemGetAttachmentResult> GetAttachment(DatabaseItemGetAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<DatabaseItemGetAttachmentResult>("onepassword:index:DatabaseItem/attachment", args ?? new DatabaseItemGetAttachmentArgs(), this);
     }
 
     public sealed class DatabaseItemArgs : Pulumi.ResourceArgs
@@ -257,9 +257,9 @@ namespace Pulumi.Onepassword
     }
 
     /// <summary>
-    /// The set of arguments for the <see cref="DatabaseItem.Attachment"/> method.
+    /// The set of arguments for the <see cref="DatabaseItem.GetAttachment"/> method.
     /// </summary>
-    public sealed class DatabaseItemAttachmentArgs : Pulumi.CallArgs
+    public sealed class DatabaseItemGetAttachmentArgs : Pulumi.CallArgs
     {
         /// <summary>
         /// The name or uuid of the attachment to get
@@ -267,16 +267,16 @@ namespace Pulumi.Onepassword
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        public DatabaseItemAttachmentArgs()
+        public DatabaseItemGetAttachmentArgs()
         {
         }
     }
 
     /// <summary>
-    /// The results of the <see cref="DatabaseItem.Attachment"/> method.
+    /// The results of the <see cref="DatabaseItem.GetAttachment"/> method.
     /// </summary>
     [OutputType]
-    public sealed class DatabaseItemAttachmentResult
+    public sealed class DatabaseItemGetAttachmentResult
     {
         /// <summary>
         /// the value of the attachment
@@ -284,7 +284,7 @@ namespace Pulumi.Onepassword
         public readonly string Value;
 
         [OutputConstructor]
-        private DatabaseItemAttachmentResult(string value)
+        private DatabaseItemGetAttachmentResult(string value)
         {
             Value = value;
         }

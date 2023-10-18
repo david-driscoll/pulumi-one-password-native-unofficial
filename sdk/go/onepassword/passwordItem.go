@@ -127,44 +127,44 @@ func (PasswordItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*passwordItemArgs)(nil)).Elem()
 }
 
-func (r *PasswordItem) Attachment(ctx *pulumi.Context, args *PasswordItemAttachmentArgs) (PasswordItemAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:PasswordItem/attachment", args, PasswordItemAttachmentResultOutput{}, r)
+func (r *PasswordItem) GetAttachment(ctx *pulumi.Context, args *PasswordItemGetAttachmentArgs) (PasswordItemGetAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:PasswordItem/attachment", args, PasswordItemGetAttachmentResultOutput{}, r)
 	if err != nil {
-		return PasswordItemAttachmentResultOutput{}, err
+		return PasswordItemGetAttachmentResultOutput{}, err
 	}
-	return out.(PasswordItemAttachmentResultOutput), nil
+	return out.(PasswordItemGetAttachmentResultOutput), nil
 }
 
-type passwordItemAttachmentArgs struct {
+type passwordItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name string `pulumi:"name"`
 }
 
-// The set of arguments for the Attachment method of the PasswordItem resource.
-type PasswordItemAttachmentArgs struct {
+// The set of arguments for the GetAttachment method of the PasswordItem resource.
+type PasswordItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name pulumi.StringInput
 }
 
-func (PasswordItemAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*passwordItemAttachmentArgs)(nil)).Elem()
+func (PasswordItemGetAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*passwordItemGetAttachmentArgs)(nil)).Elem()
 }
 
 // The resolved reference value
-type PasswordItemAttachmentResult struct {
+type PasswordItemGetAttachmentResult struct {
 	// the value of the attachment
 	Value string `pulumi:"value"`
 }
 
-type PasswordItemAttachmentResultOutput struct{ *pulumi.OutputState }
+type PasswordItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
 
-func (PasswordItemAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*PasswordItemAttachmentResult)(nil)).Elem()
+func (PasswordItemGetAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*PasswordItemGetAttachmentResult)(nil)).Elem()
 }
 
 // the value of the attachment
-func (o PasswordItemAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v PasswordItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
+func (o PasswordItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v PasswordItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type PasswordItemInput interface {
@@ -295,7 +295,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*PasswordItemArrayInput)(nil)).Elem(), PasswordItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*PasswordItemMapInput)(nil)).Elem(), PasswordItemMap{})
 	pulumi.RegisterOutputType(PasswordItemOutput{})
-	pulumi.RegisterOutputType(PasswordItemAttachmentResultOutput{})
+	pulumi.RegisterOutputType(PasswordItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(PasswordItemArrayOutput{})
 	pulumi.RegisterOutputType(PasswordItemMapOutput{})
 }

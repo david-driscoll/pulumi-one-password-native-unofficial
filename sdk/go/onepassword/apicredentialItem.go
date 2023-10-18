@@ -143,44 +143,44 @@ func (APICredentialItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*apicredentialItemArgs)(nil)).Elem()
 }
 
-func (r *APICredentialItem) Attachment(ctx *pulumi.Context, args *APICredentialItemAttachmentArgs) (APICredentialItemAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:APICredentialItem/attachment", args, APICredentialItemAttachmentResultOutput{}, r)
+func (r *APICredentialItem) GetAttachment(ctx *pulumi.Context, args *APICredentialItemGetAttachmentArgs) (APICredentialItemGetAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:APICredentialItem/attachment", args, APICredentialItemGetAttachmentResultOutput{}, r)
 	if err != nil {
-		return APICredentialItemAttachmentResultOutput{}, err
+		return APICredentialItemGetAttachmentResultOutput{}, err
 	}
-	return out.(APICredentialItemAttachmentResultOutput), nil
+	return out.(APICredentialItemGetAttachmentResultOutput), nil
 }
 
-type apicredentialItemAttachmentArgs struct {
+type apicredentialItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name string `pulumi:"name"`
 }
 
-// The set of arguments for the Attachment method of the APICredentialItem resource.
-type APICredentialItemAttachmentArgs struct {
+// The set of arguments for the GetAttachment method of the APICredentialItem resource.
+type APICredentialItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name pulumi.StringInput
 }
 
-func (APICredentialItemAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*apicredentialItemAttachmentArgs)(nil)).Elem()
+func (APICredentialItemGetAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*apicredentialItemGetAttachmentArgs)(nil)).Elem()
 }
 
 // The resolved reference value
-type APICredentialItemAttachmentResult struct {
+type APICredentialItemGetAttachmentResult struct {
 	// the value of the attachment
 	Value string `pulumi:"value"`
 }
 
-type APICredentialItemAttachmentResultOutput struct{ *pulumi.OutputState }
+type APICredentialItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
 
-func (APICredentialItemAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*APICredentialItemAttachmentResult)(nil)).Elem()
+func (APICredentialItemGetAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*APICredentialItemGetAttachmentResult)(nil)).Elem()
 }
 
 // the value of the attachment
-func (o APICredentialItemAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v APICredentialItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
+func (o APICredentialItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v APICredentialItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type APICredentialItemInput interface {
@@ -311,7 +311,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*APICredentialItemArrayInput)(nil)).Elem(), APICredentialItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*APICredentialItemMapInput)(nil)).Elem(), APICredentialItemMap{})
 	pulumi.RegisterOutputType(APICredentialItemOutput{})
-	pulumi.RegisterOutputType(APICredentialItemAttachmentResultOutput{})
+	pulumi.RegisterOutputType(APICredentialItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(APICredentialItemArrayOutput{})
 	pulumi.RegisterOutputType(APICredentialItemMapOutput{})
 }

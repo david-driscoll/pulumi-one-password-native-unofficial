@@ -138,8 +138,8 @@ namespace Pulumi.Onepassword
             return new WirelessRouterItem(name, id, state, options);
         }
 
-        public Pulumi.Output<WirelessRouterItemAttachmentResult> Attachment(WirelessRouterItemAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<WirelessRouterItemAttachmentResult>("onepassword:index:WirelessRouterItem/attachment", args ?? new WirelessRouterItemAttachmentArgs(), this);
+        public Pulumi.Output<WirelessRouterItemGetAttachmentResult> GetAttachment(WirelessRouterItemGetAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<WirelessRouterItemGetAttachmentResult>("onepassword:index:WirelessRouterItem/attachment", args ?? new WirelessRouterItemGetAttachmentArgs(), this);
     }
 
     public sealed class WirelessRouterItemArgs : Pulumi.ResourceArgs
@@ -271,9 +271,9 @@ namespace Pulumi.Onepassword
     }
 
     /// <summary>
-    /// The set of arguments for the <see cref="WirelessRouterItem.Attachment"/> method.
+    /// The set of arguments for the <see cref="WirelessRouterItem.GetAttachment"/> method.
     /// </summary>
-    public sealed class WirelessRouterItemAttachmentArgs : Pulumi.CallArgs
+    public sealed class WirelessRouterItemGetAttachmentArgs : Pulumi.CallArgs
     {
         /// <summary>
         /// The name or uuid of the attachment to get
@@ -281,16 +281,16 @@ namespace Pulumi.Onepassword
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        public WirelessRouterItemAttachmentArgs()
+        public WirelessRouterItemGetAttachmentArgs()
         {
         }
     }
 
     /// <summary>
-    /// The results of the <see cref="WirelessRouterItem.Attachment"/> method.
+    /// The results of the <see cref="WirelessRouterItem.GetAttachment"/> method.
     /// </summary>
     [OutputType]
-    public sealed class WirelessRouterItemAttachmentResult
+    public sealed class WirelessRouterItemGetAttachmentResult
     {
         /// <summary>
         /// the value of the attachment
@@ -298,7 +298,7 @@ namespace Pulumi.Onepassword
         public readonly string Value;
 
         [OutputConstructor]
-        private WirelessRouterItemAttachmentResult(string value)
+        private WirelessRouterItemGetAttachmentResult(string value)
         {
             Value = value;
         }

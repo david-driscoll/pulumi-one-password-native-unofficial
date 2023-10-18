@@ -96,7 +96,7 @@ export class SocialSecurityNumberItem extends pulumi.CustomResource {
         super(SocialSecurityNumberItem.__pulumiType, name, resourceInputs, opts);
     }
 
-    attachment(args: SocialSecurityNumberItem.AttachmentArgs): pulumi.Output<SocialSecurityNumberItem.AttachmentResult> {
+    getAttachment(args: SocialSecurityNumberItem.GetAttachmentArgs): pulumi.Output<SocialSecurityNumberItem.GetAttachmentResult> {
         return pulumi.runtime.call("onepassword:index:SocialSecurityNumberItem/attachment", {
             "__self__": this,
             "name": args.name,
@@ -141,9 +141,9 @@ export interface SocialSecurityNumberItemArgs {
 
 export namespace SocialSecurityNumberItem {
     /**
-     * The set of arguments for the SocialSecurityNumberItem.attachment method.
+     * The set of arguments for the SocialSecurityNumberItem.getAttachment method.
      */
-    export interface AttachmentArgs {
+    export interface GetAttachmentArgs {
         /**
          * The name or uuid of the attachment to get
          */
@@ -151,9 +151,9 @@ export namespace SocialSecurityNumberItem {
     }
 
     /**
-     * The results of the SocialSecurityNumberItem.attachment method.
+     * The results of the SocialSecurityNumberItem.getAttachment method.
      */
-    export interface AttachmentResult {
+    export interface GetAttachmentResult {
         /**
          * the value of the attachment
          */

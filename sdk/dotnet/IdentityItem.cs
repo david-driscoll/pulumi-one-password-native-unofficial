@@ -120,8 +120,8 @@ namespace Pulumi.Onepassword
             return new IdentityItem(name, id, state, options);
         }
 
-        public Pulumi.Output<IdentityItemAttachmentResult> Attachment(IdentityItemAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<IdentityItemAttachmentResult>("onepassword:index:IdentityItem/attachment", args ?? new IdentityItemAttachmentArgs(), this);
+        public Pulumi.Output<IdentityItemGetAttachmentResult> GetAttachment(IdentityItemGetAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<IdentityItemGetAttachmentResult>("onepassword:index:IdentityItem/attachment", args ?? new IdentityItemGetAttachmentArgs(), this);
     }
 
     public sealed class IdentityItemArgs : Pulumi.ResourceArgs
@@ -211,9 +211,9 @@ namespace Pulumi.Onepassword
     }
 
     /// <summary>
-    /// The set of arguments for the <see cref="IdentityItem.Attachment"/> method.
+    /// The set of arguments for the <see cref="IdentityItem.GetAttachment"/> method.
     /// </summary>
-    public sealed class IdentityItemAttachmentArgs : Pulumi.CallArgs
+    public sealed class IdentityItemGetAttachmentArgs : Pulumi.CallArgs
     {
         /// <summary>
         /// The name or uuid of the attachment to get
@@ -221,16 +221,16 @@ namespace Pulumi.Onepassword
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        public IdentityItemAttachmentArgs()
+        public IdentityItemGetAttachmentArgs()
         {
         }
     }
 
     /// <summary>
-    /// The results of the <see cref="IdentityItem.Attachment"/> method.
+    /// The results of the <see cref="IdentityItem.GetAttachment"/> method.
     /// </summary>
     [OutputType]
-    public sealed class IdentityItemAttachmentResult
+    public sealed class IdentityItemGetAttachmentResult
     {
         /// <summary>
         /// the value of the attachment
@@ -238,7 +238,7 @@ namespace Pulumi.Onepassword
         public readonly string Value;
 
         [OutputConstructor]
-        private IdentityItemAttachmentResult(string value)
+        private IdentityItemGetAttachmentResult(string value)
         {
             Value = value;
         }

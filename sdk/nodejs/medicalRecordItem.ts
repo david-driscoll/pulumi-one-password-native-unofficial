@@ -104,7 +104,7 @@ export class MedicalRecordItem extends pulumi.CustomResource {
         super(MedicalRecordItem.__pulumiType, name, resourceInputs, opts);
     }
 
-    attachment(args: MedicalRecordItem.AttachmentArgs): pulumi.Output<MedicalRecordItem.AttachmentResult> {
+    getAttachment(args: MedicalRecordItem.GetAttachmentArgs): pulumi.Output<MedicalRecordItem.GetAttachmentResult> {
         return pulumi.runtime.call("onepassword:index:MedicalRecordItem/attachment", {
             "__self__": this,
             "name": args.name,
@@ -153,9 +153,9 @@ export interface MedicalRecordItemArgs {
 
 export namespace MedicalRecordItem {
     /**
-     * The set of arguments for the MedicalRecordItem.attachment method.
+     * The set of arguments for the MedicalRecordItem.getAttachment method.
      */
-    export interface AttachmentArgs {
+    export interface GetAttachmentArgs {
         /**
          * The name or uuid of the attachment to get
          */
@@ -163,9 +163,9 @@ export namespace MedicalRecordItem {
     }
 
     /**
-     * The results of the MedicalRecordItem.attachment method.
+     * The results of the MedicalRecordItem.getAttachment method.
      */
-    export interface AttachmentResult {
+    export interface GetAttachmentResult {
         /**
          * the value of the attachment
          */

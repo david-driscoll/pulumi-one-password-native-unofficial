@@ -118,44 +118,44 @@ func (SecureNoteItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*secureNoteItemArgs)(nil)).Elem()
 }
 
-func (r *SecureNoteItem) Attachment(ctx *pulumi.Context, args *SecureNoteItemAttachmentArgs) (SecureNoteItemAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:SecureNoteItem/attachment", args, SecureNoteItemAttachmentResultOutput{}, r)
+func (r *SecureNoteItem) GetAttachment(ctx *pulumi.Context, args *SecureNoteItemGetAttachmentArgs) (SecureNoteItemGetAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:SecureNoteItem/attachment", args, SecureNoteItemGetAttachmentResultOutput{}, r)
 	if err != nil {
-		return SecureNoteItemAttachmentResultOutput{}, err
+		return SecureNoteItemGetAttachmentResultOutput{}, err
 	}
-	return out.(SecureNoteItemAttachmentResultOutput), nil
+	return out.(SecureNoteItemGetAttachmentResultOutput), nil
 }
 
-type secureNoteItemAttachmentArgs struct {
+type secureNoteItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name string `pulumi:"name"`
 }
 
-// The set of arguments for the Attachment method of the SecureNoteItem resource.
-type SecureNoteItemAttachmentArgs struct {
+// The set of arguments for the GetAttachment method of the SecureNoteItem resource.
+type SecureNoteItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name pulumi.StringInput
 }
 
-func (SecureNoteItemAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*secureNoteItemAttachmentArgs)(nil)).Elem()
+func (SecureNoteItemGetAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*secureNoteItemGetAttachmentArgs)(nil)).Elem()
 }
 
 // The resolved reference value
-type SecureNoteItemAttachmentResult struct {
+type SecureNoteItemGetAttachmentResult struct {
 	// the value of the attachment
 	Value string `pulumi:"value"`
 }
 
-type SecureNoteItemAttachmentResultOutput struct{ *pulumi.OutputState }
+type SecureNoteItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
 
-func (SecureNoteItemAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*SecureNoteItemAttachmentResult)(nil)).Elem()
+func (SecureNoteItemGetAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SecureNoteItemGetAttachmentResult)(nil)).Elem()
 }
 
 // the value of the attachment
-func (o SecureNoteItemAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v SecureNoteItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
+func (o SecureNoteItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v SecureNoteItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type SecureNoteItemInput interface {
@@ -286,7 +286,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*SecureNoteItemArrayInput)(nil)).Elem(), SecureNoteItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SecureNoteItemMapInput)(nil)).Elem(), SecureNoteItemMap{})
 	pulumi.RegisterOutputType(SecureNoteItemOutput{})
-	pulumi.RegisterOutputType(SecureNoteItemAttachmentResultOutput{})
+	pulumi.RegisterOutputType(SecureNoteItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(SecureNoteItemArrayOutput{})
 	pulumi.RegisterOutputType(SecureNoteItemMapOutput{})
 }

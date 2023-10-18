@@ -144,8 +144,8 @@ namespace Pulumi.Onepassword
             return new DriverLicenseItem(name, id, state, options);
         }
 
-        public Pulumi.Output<DriverLicenseItemAttachmentResult> Attachment(DriverLicenseItemAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<DriverLicenseItemAttachmentResult>("onepassword:index:DriverLicenseItem/attachment", args ?? new DriverLicenseItemAttachmentArgs(), this);
+        public Pulumi.Output<DriverLicenseItemGetAttachmentResult> GetAttachment(DriverLicenseItemGetAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<DriverLicenseItemGetAttachmentResult>("onepassword:index:DriverLicenseItem/attachment", args ?? new DriverLicenseItemGetAttachmentArgs(), this);
     }
 
     public sealed class DriverLicenseItemArgs : Pulumi.ResourceArgs
@@ -259,9 +259,9 @@ namespace Pulumi.Onepassword
     }
 
     /// <summary>
-    /// The set of arguments for the <see cref="DriverLicenseItem.Attachment"/> method.
+    /// The set of arguments for the <see cref="DriverLicenseItem.GetAttachment"/> method.
     /// </summary>
-    public sealed class DriverLicenseItemAttachmentArgs : Pulumi.CallArgs
+    public sealed class DriverLicenseItemGetAttachmentArgs : Pulumi.CallArgs
     {
         /// <summary>
         /// The name or uuid of the attachment to get
@@ -269,16 +269,16 @@ namespace Pulumi.Onepassword
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        public DriverLicenseItemAttachmentArgs()
+        public DriverLicenseItemGetAttachmentArgs()
         {
         }
     }
 
     /// <summary>
-    /// The results of the <see cref="DriverLicenseItem.Attachment"/> method.
+    /// The results of the <see cref="DriverLicenseItem.GetAttachment"/> method.
     /// </summary>
     [OutputType]
-    public sealed class DriverLicenseItemAttachmentResult
+    public sealed class DriverLicenseItemGetAttachmentResult
     {
         /// <summary>
         /// the value of the attachment
@@ -286,7 +286,7 @@ namespace Pulumi.Onepassword
         public readonly string Value;
 
         [OutputConstructor]
-        private DriverLicenseItemAttachmentResult(string value)
+        private DriverLicenseItemGetAttachmentResult(string value)
         {
             Value = value;
         }

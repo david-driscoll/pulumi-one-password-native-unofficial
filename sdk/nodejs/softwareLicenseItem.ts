@@ -102,7 +102,7 @@ export class SoftwareLicenseItem extends pulumi.CustomResource {
         super(SoftwareLicenseItem.__pulumiType, name, resourceInputs, opts);
     }
 
-    attachment(args: SoftwareLicenseItem.AttachmentArgs): pulumi.Output<SoftwareLicenseItem.AttachmentResult> {
+    getAttachment(args: SoftwareLicenseItem.GetAttachmentArgs): pulumi.Output<SoftwareLicenseItem.GetAttachmentResult> {
         return pulumi.runtime.call("onepassword:index:SoftwareLicenseItem/attachment", {
             "__self__": this,
             "name": args.name,
@@ -150,9 +150,9 @@ export interface SoftwareLicenseItemArgs {
 
 export namespace SoftwareLicenseItem {
     /**
-     * The set of arguments for the SoftwareLicenseItem.attachment method.
+     * The set of arguments for the SoftwareLicenseItem.getAttachment method.
      */
-    export interface AttachmentArgs {
+    export interface GetAttachmentArgs {
         /**
          * The name or uuid of the attachment to get
          */
@@ -160,9 +160,9 @@ export namespace SoftwareLicenseItem {
     }
 
     /**
-     * The results of the SoftwareLicenseItem.attachment method.
+     * The results of the SoftwareLicenseItem.getAttachment method.
      */
-    export interface AttachmentResult {
+    export interface GetAttachmentResult {
         /**
          * the value of the attachment
          */

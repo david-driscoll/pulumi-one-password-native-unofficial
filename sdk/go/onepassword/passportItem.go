@@ -151,44 +151,44 @@ func (PassportItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*passportItemArgs)(nil)).Elem()
 }
 
-func (r *PassportItem) Attachment(ctx *pulumi.Context, args *PassportItemAttachmentArgs) (PassportItemAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:PassportItem/attachment", args, PassportItemAttachmentResultOutput{}, r)
+func (r *PassportItem) GetAttachment(ctx *pulumi.Context, args *PassportItemGetAttachmentArgs) (PassportItemGetAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:PassportItem/attachment", args, PassportItemGetAttachmentResultOutput{}, r)
 	if err != nil {
-		return PassportItemAttachmentResultOutput{}, err
+		return PassportItemGetAttachmentResultOutput{}, err
 	}
-	return out.(PassportItemAttachmentResultOutput), nil
+	return out.(PassportItemGetAttachmentResultOutput), nil
 }
 
-type passportItemAttachmentArgs struct {
+type passportItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name string `pulumi:"name"`
 }
 
-// The set of arguments for the Attachment method of the PassportItem resource.
-type PassportItemAttachmentArgs struct {
+// The set of arguments for the GetAttachment method of the PassportItem resource.
+type PassportItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name pulumi.StringInput
 }
 
-func (PassportItemAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*passportItemAttachmentArgs)(nil)).Elem()
+func (PassportItemGetAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*passportItemGetAttachmentArgs)(nil)).Elem()
 }
 
 // The resolved reference value
-type PassportItemAttachmentResult struct {
+type PassportItemGetAttachmentResult struct {
 	// the value of the attachment
 	Value string `pulumi:"value"`
 }
 
-type PassportItemAttachmentResultOutput struct{ *pulumi.OutputState }
+type PassportItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
 
-func (PassportItemAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*PassportItemAttachmentResult)(nil)).Elem()
+func (PassportItemGetAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*PassportItemGetAttachmentResult)(nil)).Elem()
 }
 
 // the value of the attachment
-func (o PassportItemAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v PassportItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
+func (o PassportItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v PassportItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type PassportItemInput interface {
@@ -319,7 +319,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*PassportItemArrayInput)(nil)).Elem(), PassportItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*PassportItemMapInput)(nil)).Elem(), PassportItemMap{})
 	pulumi.RegisterOutputType(PassportItemOutput{})
-	pulumi.RegisterOutputType(PassportItemAttachmentResultOutput{})
+	pulumi.RegisterOutputType(PassportItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(PassportItemArrayOutput{})
 	pulumi.RegisterOutputType(PassportItemMapOutput{})
 }

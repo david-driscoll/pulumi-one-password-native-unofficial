@@ -121,44 +121,44 @@ func (SSHKeyItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*sshkeyItemArgs)(nil)).Elem()
 }
 
-func (r *SSHKeyItem) Attachment(ctx *pulumi.Context, args *SSHKeyItemAttachmentArgs) (SSHKeyItemAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:SSHKeyItem/attachment", args, SSHKeyItemAttachmentResultOutput{}, r)
+func (r *SSHKeyItem) GetAttachment(ctx *pulumi.Context, args *SSHKeyItemGetAttachmentArgs) (SSHKeyItemGetAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:SSHKeyItem/attachment", args, SSHKeyItemGetAttachmentResultOutput{}, r)
 	if err != nil {
-		return SSHKeyItemAttachmentResultOutput{}, err
+		return SSHKeyItemGetAttachmentResultOutput{}, err
 	}
-	return out.(SSHKeyItemAttachmentResultOutput), nil
+	return out.(SSHKeyItemGetAttachmentResultOutput), nil
 }
 
-type sshkeyItemAttachmentArgs struct {
+type sshkeyItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name string `pulumi:"name"`
 }
 
-// The set of arguments for the Attachment method of the SSHKeyItem resource.
-type SSHKeyItemAttachmentArgs struct {
+// The set of arguments for the GetAttachment method of the SSHKeyItem resource.
+type SSHKeyItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name pulumi.StringInput
 }
 
-func (SSHKeyItemAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*sshkeyItemAttachmentArgs)(nil)).Elem()
+func (SSHKeyItemGetAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*sshkeyItemGetAttachmentArgs)(nil)).Elem()
 }
 
 // The resolved reference value
-type SSHKeyItemAttachmentResult struct {
+type SSHKeyItemGetAttachmentResult struct {
 	// the value of the attachment
 	Value string `pulumi:"value"`
 }
 
-type SSHKeyItemAttachmentResultOutput struct{ *pulumi.OutputState }
+type SSHKeyItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
 
-func (SSHKeyItemAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*SSHKeyItemAttachmentResult)(nil)).Elem()
+func (SSHKeyItemGetAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SSHKeyItemGetAttachmentResult)(nil)).Elem()
 }
 
 // the value of the attachment
-func (o SSHKeyItemAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v SSHKeyItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
+func (o SSHKeyItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v SSHKeyItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type SSHKeyItemInput interface {
@@ -289,7 +289,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*SSHKeyItemArrayInput)(nil)).Elem(), SSHKeyItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SSHKeyItemMapInput)(nil)).Elem(), SSHKeyItemMap{})
 	pulumi.RegisterOutputType(SSHKeyItemOutput{})
-	pulumi.RegisterOutputType(SSHKeyItemAttachmentResultOutput{})
+	pulumi.RegisterOutputType(SSHKeyItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(SSHKeyItemArrayOutput{})
 	pulumi.RegisterOutputType(SSHKeyItemMapOutput{})
 }

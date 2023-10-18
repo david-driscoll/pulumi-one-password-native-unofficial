@@ -114,7 +114,7 @@ export class PassportItem extends pulumi.CustomResource {
         super(PassportItem.__pulumiType, name, resourceInputs, opts);
     }
 
-    attachment(args: PassportItem.AttachmentArgs): pulumi.Output<PassportItem.AttachmentResult> {
+    getAttachment(args: PassportItem.GetAttachmentArgs): pulumi.Output<PassportItem.GetAttachmentResult> {
         return pulumi.runtime.call("onepassword:index:PassportItem/attachment", {
             "__self__": this,
             "name": args.name,
@@ -168,9 +168,9 @@ export interface PassportItemArgs {
 
 export namespace PassportItem {
     /**
-     * The set of arguments for the PassportItem.attachment method.
+     * The set of arguments for the PassportItem.getAttachment method.
      */
-    export interface AttachmentArgs {
+    export interface GetAttachmentArgs {
         /**
          * The name or uuid of the attachment to get
          */
@@ -178,9 +178,9 @@ export namespace PassportItem {
     }
 
     /**
-     * The results of the PassportItem.attachment method.
+     * The results of the PassportItem.getAttachment method.
      */
-    export interface AttachmentResult {
+    export interface GetAttachmentResult {
         /**
          * the value of the attachment
          */

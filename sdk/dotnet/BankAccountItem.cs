@@ -139,8 +139,8 @@ namespace Pulumi.Onepassword
             return new BankAccountItem(name, id, state, options);
         }
 
-        public Pulumi.Output<BankAccountItemAttachmentResult> Attachment(BankAccountItemAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<BankAccountItemAttachmentResult>("onepassword:index:BankAccountItem/attachment", args ?? new BankAccountItemAttachmentArgs(), this);
+        public Pulumi.Output<BankAccountItemGetAttachmentResult> GetAttachment(BankAccountItemGetAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<BankAccountItemGetAttachmentResult>("onepassword:index:BankAccountItem/attachment", args ?? new BankAccountItemGetAttachmentArgs(), this);
     }
 
     public sealed class BankAccountItemArgs : Pulumi.ResourceArgs
@@ -257,9 +257,9 @@ namespace Pulumi.Onepassword
     }
 
     /// <summary>
-    /// The set of arguments for the <see cref="BankAccountItem.Attachment"/> method.
+    /// The set of arguments for the <see cref="BankAccountItem.GetAttachment"/> method.
     /// </summary>
-    public sealed class BankAccountItemAttachmentArgs : Pulumi.CallArgs
+    public sealed class BankAccountItemGetAttachmentArgs : Pulumi.CallArgs
     {
         /// <summary>
         /// The name or uuid of the attachment to get
@@ -267,16 +267,16 @@ namespace Pulumi.Onepassword
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        public BankAccountItemAttachmentArgs()
+        public BankAccountItemGetAttachmentArgs()
         {
         }
     }
 
     /// <summary>
-    /// The results of the <see cref="BankAccountItem.Attachment"/> method.
+    /// The results of the <see cref="BankAccountItem.GetAttachment"/> method.
     /// </summary>
     [OutputType]
-    public sealed class BankAccountItemAttachmentResult
+    public sealed class BankAccountItemGetAttachmentResult
     {
         /// <summary>
         /// the value of the attachment
@@ -284,7 +284,7 @@ namespace Pulumi.Onepassword
         public readonly string Value;
 
         [OutputConstructor]
-        private BankAccountItemAttachmentResult(string value)
+        private BankAccountItemGetAttachmentResult(string value)
         {
             Value = value;
         }

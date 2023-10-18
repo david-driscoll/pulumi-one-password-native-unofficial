@@ -126,8 +126,8 @@ namespace Pulumi.Onepassword
             return new SoftwareLicenseItem(name, id, state, options);
         }
 
-        public Pulumi.Output<SoftwareLicenseItemAttachmentResult> Attachment(SoftwareLicenseItemAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<SoftwareLicenseItemAttachmentResult>("onepassword:index:SoftwareLicenseItem/attachment", args ?? new SoftwareLicenseItemAttachmentArgs(), this);
+        public Pulumi.Output<SoftwareLicenseItemGetAttachmentResult> GetAttachment(SoftwareLicenseItemGetAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<SoftwareLicenseItemGetAttachmentResult>("onepassword:index:SoftwareLicenseItem/attachment", args ?? new SoftwareLicenseItemGetAttachmentArgs(), this);
     }
 
     public sealed class SoftwareLicenseItemArgs : Pulumi.ResourceArgs
@@ -223,9 +223,9 @@ namespace Pulumi.Onepassword
     }
 
     /// <summary>
-    /// The set of arguments for the <see cref="SoftwareLicenseItem.Attachment"/> method.
+    /// The set of arguments for the <see cref="SoftwareLicenseItem.GetAttachment"/> method.
     /// </summary>
-    public sealed class SoftwareLicenseItemAttachmentArgs : Pulumi.CallArgs
+    public sealed class SoftwareLicenseItemGetAttachmentArgs : Pulumi.CallArgs
     {
         /// <summary>
         /// The name or uuid of the attachment to get
@@ -233,16 +233,16 @@ namespace Pulumi.Onepassword
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        public SoftwareLicenseItemAttachmentArgs()
+        public SoftwareLicenseItemGetAttachmentArgs()
         {
         }
     }
 
     /// <summary>
-    /// The results of the <see cref="SoftwareLicenseItem.Attachment"/> method.
+    /// The results of the <see cref="SoftwareLicenseItem.GetAttachment"/> method.
     /// </summary>
     [OutputType]
-    public sealed class SoftwareLicenseItemAttachmentResult
+    public sealed class SoftwareLicenseItemGetAttachmentResult
     {
         /// <summary>
         /// the value of the attachment
@@ -250,7 +250,7 @@ namespace Pulumi.Onepassword
         public readonly string Value;
 
         [OutputConstructor]
-        private SoftwareLicenseItemAttachmentResult(string value)
+        private SoftwareLicenseItemGetAttachmentResult(string value)
         {
             Value = value;
         }

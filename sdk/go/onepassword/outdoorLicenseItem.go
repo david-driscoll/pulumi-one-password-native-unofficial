@@ -139,44 +139,44 @@ func (OutdoorLicenseItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*outdoorLicenseItemArgs)(nil)).Elem()
 }
 
-func (r *OutdoorLicenseItem) Attachment(ctx *pulumi.Context, args *OutdoorLicenseItemAttachmentArgs) (OutdoorLicenseItemAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:OutdoorLicenseItem/attachment", args, OutdoorLicenseItemAttachmentResultOutput{}, r)
+func (r *OutdoorLicenseItem) GetAttachment(ctx *pulumi.Context, args *OutdoorLicenseItemGetAttachmentArgs) (OutdoorLicenseItemGetAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:OutdoorLicenseItem/attachment", args, OutdoorLicenseItemGetAttachmentResultOutput{}, r)
 	if err != nil {
-		return OutdoorLicenseItemAttachmentResultOutput{}, err
+		return OutdoorLicenseItemGetAttachmentResultOutput{}, err
 	}
-	return out.(OutdoorLicenseItemAttachmentResultOutput), nil
+	return out.(OutdoorLicenseItemGetAttachmentResultOutput), nil
 }
 
-type outdoorLicenseItemAttachmentArgs struct {
+type outdoorLicenseItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name string `pulumi:"name"`
 }
 
-// The set of arguments for the Attachment method of the OutdoorLicenseItem resource.
-type OutdoorLicenseItemAttachmentArgs struct {
+// The set of arguments for the GetAttachment method of the OutdoorLicenseItem resource.
+type OutdoorLicenseItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name pulumi.StringInput
 }
 
-func (OutdoorLicenseItemAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*outdoorLicenseItemAttachmentArgs)(nil)).Elem()
+func (OutdoorLicenseItemGetAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*outdoorLicenseItemGetAttachmentArgs)(nil)).Elem()
 }
 
 // The resolved reference value
-type OutdoorLicenseItemAttachmentResult struct {
+type OutdoorLicenseItemGetAttachmentResult struct {
 	// the value of the attachment
 	Value string `pulumi:"value"`
 }
 
-type OutdoorLicenseItemAttachmentResultOutput struct{ *pulumi.OutputState }
+type OutdoorLicenseItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
 
-func (OutdoorLicenseItemAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*OutdoorLicenseItemAttachmentResult)(nil)).Elem()
+func (OutdoorLicenseItemGetAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*OutdoorLicenseItemGetAttachmentResult)(nil)).Elem()
 }
 
 // the value of the attachment
-func (o OutdoorLicenseItemAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v OutdoorLicenseItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
+func (o OutdoorLicenseItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v OutdoorLicenseItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type OutdoorLicenseItemInput interface {
@@ -307,7 +307,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*OutdoorLicenseItemArrayInput)(nil)).Elem(), OutdoorLicenseItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OutdoorLicenseItemMapInput)(nil)).Elem(), OutdoorLicenseItemMap{})
 	pulumi.RegisterOutputType(OutdoorLicenseItemOutput{})
-	pulumi.RegisterOutputType(OutdoorLicenseItemAttachmentResultOutput{})
+	pulumi.RegisterOutputType(OutdoorLicenseItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(OutdoorLicenseItemArrayOutput{})
 	pulumi.RegisterOutputType(OutdoorLicenseItemMapOutput{})
 }

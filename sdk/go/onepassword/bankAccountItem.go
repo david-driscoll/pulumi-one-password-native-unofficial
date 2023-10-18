@@ -150,44 +150,44 @@ func (BankAccountItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*bankAccountItemArgs)(nil)).Elem()
 }
 
-func (r *BankAccountItem) Attachment(ctx *pulumi.Context, args *BankAccountItemAttachmentArgs) (BankAccountItemAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:BankAccountItem/attachment", args, BankAccountItemAttachmentResultOutput{}, r)
+func (r *BankAccountItem) GetAttachment(ctx *pulumi.Context, args *BankAccountItemGetAttachmentArgs) (BankAccountItemGetAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:BankAccountItem/attachment", args, BankAccountItemGetAttachmentResultOutput{}, r)
 	if err != nil {
-		return BankAccountItemAttachmentResultOutput{}, err
+		return BankAccountItemGetAttachmentResultOutput{}, err
 	}
-	return out.(BankAccountItemAttachmentResultOutput), nil
+	return out.(BankAccountItemGetAttachmentResultOutput), nil
 }
 
-type bankAccountItemAttachmentArgs struct {
+type bankAccountItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name string `pulumi:"name"`
 }
 
-// The set of arguments for the Attachment method of the BankAccountItem resource.
-type BankAccountItemAttachmentArgs struct {
+// The set of arguments for the GetAttachment method of the BankAccountItem resource.
+type BankAccountItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name pulumi.StringInput
 }
 
-func (BankAccountItemAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*bankAccountItemAttachmentArgs)(nil)).Elem()
+func (BankAccountItemGetAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*bankAccountItemGetAttachmentArgs)(nil)).Elem()
 }
 
 // The resolved reference value
-type BankAccountItemAttachmentResult struct {
+type BankAccountItemGetAttachmentResult struct {
 	// the value of the attachment
 	Value string `pulumi:"value"`
 }
 
-type BankAccountItemAttachmentResultOutput struct{ *pulumi.OutputState }
+type BankAccountItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
 
-func (BankAccountItemAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*BankAccountItemAttachmentResult)(nil)).Elem()
+func (BankAccountItemGetAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BankAccountItemGetAttachmentResult)(nil)).Elem()
 }
 
 // the value of the attachment
-func (o BankAccountItemAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v BankAccountItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
+func (o BankAccountItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v BankAccountItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type BankAccountItemInput interface {
@@ -318,7 +318,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*BankAccountItemArrayInput)(nil)).Elem(), BankAccountItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*BankAccountItemMapInput)(nil)).Elem(), BankAccountItemMap{})
 	pulumi.RegisterOutputType(BankAccountItemOutput{})
-	pulumi.RegisterOutputType(BankAccountItemAttachmentResultOutput{})
+	pulumi.RegisterOutputType(BankAccountItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(BankAccountItemArrayOutput{})
 	pulumi.RegisterOutputType(BankAccountItemMapOutput{})
 }

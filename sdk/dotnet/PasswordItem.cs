@@ -115,8 +115,8 @@ namespace Pulumi.Onepassword
             return new PasswordItem(name, id, state, options);
         }
 
-        public Pulumi.Output<PasswordItemAttachmentResult> Attachment(PasswordItemAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<PasswordItemAttachmentResult>("onepassword:index:PasswordItem/attachment", args ?? new PasswordItemAttachmentArgs(), this);
+        public Pulumi.Output<PasswordItemGetAttachmentResult> GetAttachment(PasswordItemGetAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<PasswordItemGetAttachmentResult>("onepassword:index:PasswordItem/attachment", args ?? new PasswordItemGetAttachmentArgs(), this);
     }
 
     public sealed class PasswordItemArgs : Pulumi.ResourceArgs
@@ -212,9 +212,9 @@ namespace Pulumi.Onepassword
     }
 
     /// <summary>
-    /// The set of arguments for the <see cref="PasswordItem.Attachment"/> method.
+    /// The set of arguments for the <see cref="PasswordItem.GetAttachment"/> method.
     /// </summary>
-    public sealed class PasswordItemAttachmentArgs : Pulumi.CallArgs
+    public sealed class PasswordItemGetAttachmentArgs : Pulumi.CallArgs
     {
         /// <summary>
         /// The name or uuid of the attachment to get
@@ -222,16 +222,16 @@ namespace Pulumi.Onepassword
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        public PasswordItemAttachmentArgs()
+        public PasswordItemGetAttachmentArgs()
         {
         }
     }
 
     /// <summary>
-    /// The results of the <see cref="PasswordItem.Attachment"/> method.
+    /// The results of the <see cref="PasswordItem.GetAttachment"/> method.
     /// </summary>
     [OutputType]
-    public sealed class PasswordItemAttachmentResult
+    public sealed class PasswordItemGetAttachmentResult
     {
         /// <summary>
         /// the value of the attachment
@@ -239,7 +239,7 @@ namespace Pulumi.Onepassword
         public readonly string Value;
 
         [OutputConstructor]
-        private PasswordItemAttachmentResult(string value)
+        private PasswordItemGetAttachmentResult(string value)
         {
             Value = value;
         }

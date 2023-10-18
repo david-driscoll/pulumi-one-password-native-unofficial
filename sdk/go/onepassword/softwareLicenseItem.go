@@ -134,44 +134,44 @@ func (SoftwareLicenseItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*softwareLicenseItemArgs)(nil)).Elem()
 }
 
-func (r *SoftwareLicenseItem) Attachment(ctx *pulumi.Context, args *SoftwareLicenseItemAttachmentArgs) (SoftwareLicenseItemAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:SoftwareLicenseItem/attachment", args, SoftwareLicenseItemAttachmentResultOutput{}, r)
+func (r *SoftwareLicenseItem) GetAttachment(ctx *pulumi.Context, args *SoftwareLicenseItemGetAttachmentArgs) (SoftwareLicenseItemGetAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:SoftwareLicenseItem/attachment", args, SoftwareLicenseItemGetAttachmentResultOutput{}, r)
 	if err != nil {
-		return SoftwareLicenseItemAttachmentResultOutput{}, err
+		return SoftwareLicenseItemGetAttachmentResultOutput{}, err
 	}
-	return out.(SoftwareLicenseItemAttachmentResultOutput), nil
+	return out.(SoftwareLicenseItemGetAttachmentResultOutput), nil
 }
 
-type softwareLicenseItemAttachmentArgs struct {
+type softwareLicenseItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name string `pulumi:"name"`
 }
 
-// The set of arguments for the Attachment method of the SoftwareLicenseItem resource.
-type SoftwareLicenseItemAttachmentArgs struct {
+// The set of arguments for the GetAttachment method of the SoftwareLicenseItem resource.
+type SoftwareLicenseItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name pulumi.StringInput
 }
 
-func (SoftwareLicenseItemAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*softwareLicenseItemAttachmentArgs)(nil)).Elem()
+func (SoftwareLicenseItemGetAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*softwareLicenseItemGetAttachmentArgs)(nil)).Elem()
 }
 
 // The resolved reference value
-type SoftwareLicenseItemAttachmentResult struct {
+type SoftwareLicenseItemGetAttachmentResult struct {
 	// the value of the attachment
 	Value string `pulumi:"value"`
 }
 
-type SoftwareLicenseItemAttachmentResultOutput struct{ *pulumi.OutputState }
+type SoftwareLicenseItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
 
-func (SoftwareLicenseItemAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*SoftwareLicenseItemAttachmentResult)(nil)).Elem()
+func (SoftwareLicenseItemGetAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SoftwareLicenseItemGetAttachmentResult)(nil)).Elem()
 }
 
 // the value of the attachment
-func (o SoftwareLicenseItemAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v SoftwareLicenseItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
+func (o SoftwareLicenseItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v SoftwareLicenseItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type SoftwareLicenseItemInput interface {
@@ -302,7 +302,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*SoftwareLicenseItemArrayInput)(nil)).Elem(), SoftwareLicenseItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SoftwareLicenseItemMapInput)(nil)).Elem(), SoftwareLicenseItemMap{})
 	pulumi.RegisterOutputType(SoftwareLicenseItemOutput{})
-	pulumi.RegisterOutputType(SoftwareLicenseItemAttachmentResultOutput{})
+	pulumi.RegisterOutputType(SoftwareLicenseItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(SoftwareLicenseItemArrayOutput{})
 	pulumi.RegisterOutputType(SoftwareLicenseItemMapOutput{})
 }

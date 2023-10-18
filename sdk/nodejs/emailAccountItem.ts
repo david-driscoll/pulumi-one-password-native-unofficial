@@ -110,7 +110,7 @@ export class EmailAccountItem extends pulumi.CustomResource {
         super(EmailAccountItem.__pulumiType, name, resourceInputs, opts);
     }
 
-    attachment(args: EmailAccountItem.AttachmentArgs): pulumi.Output<EmailAccountItem.AttachmentResult> {
+    getAttachment(args: EmailAccountItem.GetAttachmentArgs): pulumi.Output<EmailAccountItem.GetAttachmentResult> {
         return pulumi.runtime.call("onepassword:index:EmailAccountItem/attachment", {
             "__self__": this,
             "name": args.name,
@@ -162,9 +162,9 @@ export interface EmailAccountItemArgs {
 
 export namespace EmailAccountItem {
     /**
-     * The set of arguments for the EmailAccountItem.attachment method.
+     * The set of arguments for the EmailAccountItem.getAttachment method.
      */
-    export interface AttachmentArgs {
+    export interface GetAttachmentArgs {
         /**
          * The name or uuid of the attachment to get
          */
@@ -172,9 +172,9 @@ export namespace EmailAccountItem {
     }
 
     /**
-     * The results of the EmailAccountItem.attachment method.
+     * The results of the EmailAccountItem.getAttachment method.
      */
-    export interface AttachmentResult {
+    export interface GetAttachmentResult {
         /**
          * the value of the attachment
          */

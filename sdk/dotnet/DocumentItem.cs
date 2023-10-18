@@ -111,8 +111,8 @@ namespace Pulumi.Onepassword
             return new DocumentItem(name, id, state, options);
         }
 
-        public Pulumi.Output<DocumentItemAttachmentResult> Attachment(DocumentItemAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<DocumentItemAttachmentResult>("onepassword:index:DocumentItem/attachment", args ?? new DocumentItemAttachmentArgs(), this);
+        public Pulumi.Output<DocumentItemGetAttachmentResult> GetAttachment(DocumentItemGetAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<DocumentItemGetAttachmentResult>("onepassword:index:DocumentItem/attachment", args ?? new DocumentItemGetAttachmentArgs(), this);
     }
 
     public sealed class DocumentItemArgs : Pulumi.ResourceArgs
@@ -193,9 +193,9 @@ namespace Pulumi.Onepassword
     }
 
     /// <summary>
-    /// The set of arguments for the <see cref="DocumentItem.Attachment"/> method.
+    /// The set of arguments for the <see cref="DocumentItem.GetAttachment"/> method.
     /// </summary>
-    public sealed class DocumentItemAttachmentArgs : Pulumi.CallArgs
+    public sealed class DocumentItemGetAttachmentArgs : Pulumi.CallArgs
     {
         /// <summary>
         /// The name or uuid of the attachment to get
@@ -203,16 +203,16 @@ namespace Pulumi.Onepassword
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        public DocumentItemAttachmentArgs()
+        public DocumentItemGetAttachmentArgs()
         {
         }
     }
 
     /// <summary>
-    /// The results of the <see cref="DocumentItem.Attachment"/> method.
+    /// The results of the <see cref="DocumentItem.GetAttachment"/> method.
     /// </summary>
     [OutputType]
-    public sealed class DocumentItemAttachmentResult
+    public sealed class DocumentItemGetAttachmentResult
     {
         /// <summary>
         /// the value of the attachment
@@ -220,7 +220,7 @@ namespace Pulumi.Onepassword
         public readonly string Value;
 
         [OutputConstructor]
-        private DocumentItemAttachmentResult(string value)
+        private DocumentItemGetAttachmentResult(string value)
         {
             Value = value;
         }

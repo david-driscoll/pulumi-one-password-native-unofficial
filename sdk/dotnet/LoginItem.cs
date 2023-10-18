@@ -118,8 +118,8 @@ namespace Pulumi.Onepassword
             return new LoginItem(name, id, state, options);
         }
 
-        public Pulumi.Output<LoginItemAttachmentResult> Attachment(LoginItemAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<LoginItemAttachmentResult>("onepassword:index:LoginItem/attachment", args ?? new LoginItemAttachmentArgs(), this);
+        public Pulumi.Output<LoginItemGetAttachmentResult> GetAttachment(LoginItemGetAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<LoginItemGetAttachmentResult>("onepassword:index:LoginItem/attachment", args ?? new LoginItemGetAttachmentArgs(), this);
     }
 
     public sealed class LoginItemArgs : Pulumi.ResourceArgs
@@ -218,9 +218,9 @@ namespace Pulumi.Onepassword
     }
 
     /// <summary>
-    /// The set of arguments for the <see cref="LoginItem.Attachment"/> method.
+    /// The set of arguments for the <see cref="LoginItem.GetAttachment"/> method.
     /// </summary>
-    public sealed class LoginItemAttachmentArgs : Pulumi.CallArgs
+    public sealed class LoginItemGetAttachmentArgs : Pulumi.CallArgs
     {
         /// <summary>
         /// The name or uuid of the attachment to get
@@ -228,16 +228,16 @@ namespace Pulumi.Onepassword
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        public LoginItemAttachmentArgs()
+        public LoginItemGetAttachmentArgs()
         {
         }
     }
 
     /// <summary>
-    /// The results of the <see cref="LoginItem.Attachment"/> method.
+    /// The results of the <see cref="LoginItem.GetAttachment"/> method.
     /// </summary>
     [OutputType]
-    public sealed class LoginItemAttachmentResult
+    public sealed class LoginItemGetAttachmentResult
     {
         /// <summary>
         /// the value of the attachment
@@ -245,7 +245,7 @@ namespace Pulumi.Onepassword
         public readonly string Value;
 
         [OutputConstructor]
-        private LoginItemAttachmentResult(string value)
+        private LoginItemGetAttachmentResult(string value)
         {
             Value = value;
         }

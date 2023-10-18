@@ -376,7 +376,7 @@ class SocialSecurityNumberItem(pulumi.CustomResource):
         return pulumi.get(self, "vault")
 
     @pulumi.output_type
-    class AttachmentResult:
+    class GetAttachmentResult:
         """
         The resolved reference value
         """
@@ -393,8 +393,8 @@ class SocialSecurityNumberItem(pulumi.CustomResource):
             """
             return pulumi.get(self, "value")
 
-    def attachment(__self__, *,
-                   name: pulumi.Input[str]) -> pulumi.Output['SocialSecurityNumberItem.AttachmentResult']:
+    def get_attachment(__self__, *,
+                       name: pulumi.Input[str]) -> pulumi.Output['SocialSecurityNumberItem.GetAttachmentResult']:
         """
 
         :param pulumi.Input[str] name: The name or uuid of the attachment to get
@@ -402,5 +402,5 @@ class SocialSecurityNumberItem(pulumi.CustomResource):
         __args__ = dict()
         __args__['__self__'] = __self__
         __args__['name'] = name
-        return pulumi.runtime.call('onepassword:index:SocialSecurityNumberItem/attachment', __args__, res=__self__, typ=SocialSecurityNumberItem.AttachmentResult)
+        return pulumi.runtime.call('onepassword:index:SocialSecurityNumberItem/attachment', __args__, res=__self__, typ=SocialSecurityNumberItem.GetAttachmentResult)
 

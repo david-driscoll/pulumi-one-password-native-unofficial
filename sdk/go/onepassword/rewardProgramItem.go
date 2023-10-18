@@ -138,44 +138,44 @@ func (RewardProgramItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*rewardProgramItemArgs)(nil)).Elem()
 }
 
-func (r *RewardProgramItem) Attachment(ctx *pulumi.Context, args *RewardProgramItemAttachmentArgs) (RewardProgramItemAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:RewardProgramItem/attachment", args, RewardProgramItemAttachmentResultOutput{}, r)
+func (r *RewardProgramItem) GetAttachment(ctx *pulumi.Context, args *RewardProgramItemGetAttachmentArgs) (RewardProgramItemGetAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:RewardProgramItem/attachment", args, RewardProgramItemGetAttachmentResultOutput{}, r)
 	if err != nil {
-		return RewardProgramItemAttachmentResultOutput{}, err
+		return RewardProgramItemGetAttachmentResultOutput{}, err
 	}
-	return out.(RewardProgramItemAttachmentResultOutput), nil
+	return out.(RewardProgramItemGetAttachmentResultOutput), nil
 }
 
-type rewardProgramItemAttachmentArgs struct {
+type rewardProgramItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name string `pulumi:"name"`
 }
 
-// The set of arguments for the Attachment method of the RewardProgramItem resource.
-type RewardProgramItemAttachmentArgs struct {
+// The set of arguments for the GetAttachment method of the RewardProgramItem resource.
+type RewardProgramItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name pulumi.StringInput
 }
 
-func (RewardProgramItemAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*rewardProgramItemAttachmentArgs)(nil)).Elem()
+func (RewardProgramItemGetAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*rewardProgramItemGetAttachmentArgs)(nil)).Elem()
 }
 
 // The resolved reference value
-type RewardProgramItemAttachmentResult struct {
+type RewardProgramItemGetAttachmentResult struct {
 	// the value of the attachment
 	Value string `pulumi:"value"`
 }
 
-type RewardProgramItemAttachmentResultOutput struct{ *pulumi.OutputState }
+type RewardProgramItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
 
-func (RewardProgramItemAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*RewardProgramItemAttachmentResult)(nil)).Elem()
+func (RewardProgramItemGetAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*RewardProgramItemGetAttachmentResult)(nil)).Elem()
 }
 
 // the value of the attachment
-func (o RewardProgramItemAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v RewardProgramItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
+func (o RewardProgramItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v RewardProgramItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type RewardProgramItemInput interface {
@@ -306,7 +306,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*RewardProgramItemArrayInput)(nil)).Elem(), RewardProgramItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*RewardProgramItemMapInput)(nil)).Elem(), RewardProgramItemMap{})
 	pulumi.RegisterOutputType(RewardProgramItemOutput{})
-	pulumi.RegisterOutputType(RewardProgramItemAttachmentResultOutput{})
+	pulumi.RegisterOutputType(RewardProgramItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(RewardProgramItemArrayOutput{})
 	pulumi.RegisterOutputType(RewardProgramItemMapOutput{})
 }

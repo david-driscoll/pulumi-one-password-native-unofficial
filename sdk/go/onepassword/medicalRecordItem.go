@@ -137,44 +137,44 @@ func (MedicalRecordItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*medicalRecordItemArgs)(nil)).Elem()
 }
 
-func (r *MedicalRecordItem) Attachment(ctx *pulumi.Context, args *MedicalRecordItemAttachmentArgs) (MedicalRecordItemAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:MedicalRecordItem/attachment", args, MedicalRecordItemAttachmentResultOutput{}, r)
+func (r *MedicalRecordItem) GetAttachment(ctx *pulumi.Context, args *MedicalRecordItemGetAttachmentArgs) (MedicalRecordItemGetAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:MedicalRecordItem/attachment", args, MedicalRecordItemGetAttachmentResultOutput{}, r)
 	if err != nil {
-		return MedicalRecordItemAttachmentResultOutput{}, err
+		return MedicalRecordItemGetAttachmentResultOutput{}, err
 	}
-	return out.(MedicalRecordItemAttachmentResultOutput), nil
+	return out.(MedicalRecordItemGetAttachmentResultOutput), nil
 }
 
-type medicalRecordItemAttachmentArgs struct {
+type medicalRecordItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name string `pulumi:"name"`
 }
 
-// The set of arguments for the Attachment method of the MedicalRecordItem resource.
-type MedicalRecordItemAttachmentArgs struct {
+// The set of arguments for the GetAttachment method of the MedicalRecordItem resource.
+type MedicalRecordItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name pulumi.StringInput
 }
 
-func (MedicalRecordItemAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*medicalRecordItemAttachmentArgs)(nil)).Elem()
+func (MedicalRecordItemGetAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*medicalRecordItemGetAttachmentArgs)(nil)).Elem()
 }
 
 // The resolved reference value
-type MedicalRecordItemAttachmentResult struct {
+type MedicalRecordItemGetAttachmentResult struct {
 	// the value of the attachment
 	Value string `pulumi:"value"`
 }
 
-type MedicalRecordItemAttachmentResultOutput struct{ *pulumi.OutputState }
+type MedicalRecordItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
 
-func (MedicalRecordItemAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*MedicalRecordItemAttachmentResult)(nil)).Elem()
+func (MedicalRecordItemGetAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*MedicalRecordItemGetAttachmentResult)(nil)).Elem()
 }
 
 // the value of the attachment
-func (o MedicalRecordItemAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v MedicalRecordItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
+func (o MedicalRecordItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v MedicalRecordItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type MedicalRecordItemInput interface {
@@ -305,7 +305,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*MedicalRecordItemArrayInput)(nil)).Elem(), MedicalRecordItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*MedicalRecordItemMapInput)(nil)).Elem(), MedicalRecordItemMap{})
 	pulumi.RegisterOutputType(MedicalRecordItemOutput{})
-	pulumi.RegisterOutputType(MedicalRecordItemAttachmentResultOutput{})
+	pulumi.RegisterOutputType(MedicalRecordItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(MedicalRecordItemArrayOutput{})
 	pulumi.RegisterOutputType(MedicalRecordItemMapOutput{})
 }

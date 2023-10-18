@@ -151,44 +151,44 @@ func (EmailAccountItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*emailAccountItemArgs)(nil)).Elem()
 }
 
-func (r *EmailAccountItem) Attachment(ctx *pulumi.Context, args *EmailAccountItemAttachmentArgs) (EmailAccountItemAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:EmailAccountItem/attachment", args, EmailAccountItemAttachmentResultOutput{}, r)
+func (r *EmailAccountItem) GetAttachment(ctx *pulumi.Context, args *EmailAccountItemGetAttachmentArgs) (EmailAccountItemGetAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:EmailAccountItem/attachment", args, EmailAccountItemGetAttachmentResultOutput{}, r)
 	if err != nil {
-		return EmailAccountItemAttachmentResultOutput{}, err
+		return EmailAccountItemGetAttachmentResultOutput{}, err
 	}
-	return out.(EmailAccountItemAttachmentResultOutput), nil
+	return out.(EmailAccountItemGetAttachmentResultOutput), nil
 }
 
-type emailAccountItemAttachmentArgs struct {
+type emailAccountItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name string `pulumi:"name"`
 }
 
-// The set of arguments for the Attachment method of the EmailAccountItem resource.
-type EmailAccountItemAttachmentArgs struct {
+// The set of arguments for the GetAttachment method of the EmailAccountItem resource.
+type EmailAccountItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name pulumi.StringInput
 }
 
-func (EmailAccountItemAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*emailAccountItemAttachmentArgs)(nil)).Elem()
+func (EmailAccountItemGetAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*emailAccountItemGetAttachmentArgs)(nil)).Elem()
 }
 
 // The resolved reference value
-type EmailAccountItemAttachmentResult struct {
+type EmailAccountItemGetAttachmentResult struct {
 	// the value of the attachment
 	Value string `pulumi:"value"`
 }
 
-type EmailAccountItemAttachmentResultOutput struct{ *pulumi.OutputState }
+type EmailAccountItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
 
-func (EmailAccountItemAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*EmailAccountItemAttachmentResult)(nil)).Elem()
+func (EmailAccountItemGetAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*EmailAccountItemGetAttachmentResult)(nil)).Elem()
 }
 
 // the value of the attachment
-func (o EmailAccountItemAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v EmailAccountItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
+func (o EmailAccountItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v EmailAccountItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type EmailAccountItemInput interface {
@@ -319,7 +319,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*EmailAccountItemArrayInput)(nil)).Elem(), EmailAccountItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*EmailAccountItemMapInput)(nil)).Elem(), EmailAccountItemMap{})
 	pulumi.RegisterOutputType(EmailAccountItemOutput{})
-	pulumi.RegisterOutputType(EmailAccountItemAttachmentResultOutput{})
+	pulumi.RegisterOutputType(EmailAccountItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(EmailAccountItemArrayOutput{})
 	pulumi.RegisterOutputType(EmailAccountItemMapOutput{})
 }

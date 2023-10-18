@@ -114,7 +114,7 @@ export class DriverLicenseItem extends pulumi.CustomResource {
         super(DriverLicenseItem.__pulumiType, name, resourceInputs, opts);
     }
 
-    attachment(args: DriverLicenseItem.AttachmentArgs): pulumi.Output<DriverLicenseItem.AttachmentResult> {
+    getAttachment(args: DriverLicenseItem.GetAttachmentArgs): pulumi.Output<DriverLicenseItem.GetAttachmentResult> {
         return pulumi.runtime.call("onepassword:index:DriverLicenseItem/attachment", {
             "__self__": this,
             "name": args.name,
@@ -168,9 +168,9 @@ export interface DriverLicenseItemArgs {
 
 export namespace DriverLicenseItem {
     /**
-     * The set of arguments for the DriverLicenseItem.attachment method.
+     * The set of arguments for the DriverLicenseItem.getAttachment method.
      */
-    export interface AttachmentArgs {
+    export interface GetAttachmentArgs {
         /**
          * The name or uuid of the attachment to get
          */
@@ -178,9 +178,9 @@ export namespace DriverLicenseItem {
     }
 
     /**
-     * The results of the DriverLicenseItem.attachment method.
+     * The results of the DriverLicenseItem.getAttachment method.
      */
-    export interface AttachmentResult {
+    export interface GetAttachmentResult {
         /**
          * the value of the attachment
          */

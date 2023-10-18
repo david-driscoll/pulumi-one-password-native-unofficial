@@ -118,8 +118,8 @@ namespace Pulumi.Onepassword
             return new SocialSecurityNumberItem(name, id, state, options);
         }
 
-        public Pulumi.Output<SocialSecurityNumberItemAttachmentResult> Attachment(SocialSecurityNumberItemAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<SocialSecurityNumberItemAttachmentResult>("onepassword:index:SocialSecurityNumberItem/attachment", args ?? new SocialSecurityNumberItemAttachmentArgs(), this);
+        public Pulumi.Output<SocialSecurityNumberItemGetAttachmentResult> GetAttachment(SocialSecurityNumberItemGetAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<SocialSecurityNumberItemGetAttachmentResult>("onepassword:index:SocialSecurityNumberItem/attachment", args ?? new SocialSecurityNumberItemGetAttachmentArgs(), this);
     }
 
     public sealed class SocialSecurityNumberItemArgs : Pulumi.ResourceArgs
@@ -215,9 +215,9 @@ namespace Pulumi.Onepassword
     }
 
     /// <summary>
-    /// The set of arguments for the <see cref="SocialSecurityNumberItem.Attachment"/> method.
+    /// The set of arguments for the <see cref="SocialSecurityNumberItem.GetAttachment"/> method.
     /// </summary>
-    public sealed class SocialSecurityNumberItemAttachmentArgs : Pulumi.CallArgs
+    public sealed class SocialSecurityNumberItemGetAttachmentArgs : Pulumi.CallArgs
     {
         /// <summary>
         /// The name or uuid of the attachment to get
@@ -225,16 +225,16 @@ namespace Pulumi.Onepassword
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        public SocialSecurityNumberItemAttachmentArgs()
+        public SocialSecurityNumberItemGetAttachmentArgs()
         {
         }
     }
 
     /// <summary>
-    /// The results of the <see cref="SocialSecurityNumberItem.Attachment"/> method.
+    /// The results of the <see cref="SocialSecurityNumberItem.GetAttachment"/> method.
     /// </summary>
     [OutputType]
-    public sealed class SocialSecurityNumberItemAttachmentResult
+    public sealed class SocialSecurityNumberItemGetAttachmentResult
     {
         /// <summary>
         /// the value of the attachment
@@ -242,7 +242,7 @@ namespace Pulumi.Onepassword
         public readonly string Value;
 
         [OutputConstructor]
-        private SocialSecurityNumberItemAttachmentResult(string value)
+        private SocialSecurityNumberItemGetAttachmentResult(string value)
         {
             Value = value;
         }

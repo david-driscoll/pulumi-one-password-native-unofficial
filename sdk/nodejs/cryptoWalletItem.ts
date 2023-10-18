@@ -98,7 +98,7 @@ export class CryptoWalletItem extends pulumi.CustomResource {
         super(CryptoWalletItem.__pulumiType, name, resourceInputs, opts);
     }
 
-    attachment(args: CryptoWalletItem.AttachmentArgs): pulumi.Output<CryptoWalletItem.AttachmentResult> {
+    getAttachment(args: CryptoWalletItem.GetAttachmentArgs): pulumi.Output<CryptoWalletItem.GetAttachmentResult> {
         return pulumi.runtime.call("onepassword:index:CryptoWalletItem/attachment", {
             "__self__": this,
             "name": args.name,
@@ -144,9 +144,9 @@ export interface CryptoWalletItemArgs {
 
 export namespace CryptoWalletItem {
     /**
-     * The set of arguments for the CryptoWalletItem.attachment method.
+     * The set of arguments for the CryptoWalletItem.getAttachment method.
      */
-    export interface AttachmentArgs {
+    export interface GetAttachmentArgs {
         /**
          * The name or uuid of the attachment to get
          */
@@ -154,9 +154,9 @@ export namespace CryptoWalletItem {
     }
 
     /**
-     * The results of the CryptoWalletItem.attachment method.
+     * The results of the CryptoWalletItem.getAttachment method.
      */
-    export interface AttachmentResult {
+    export interface GetAttachmentResult {
         /**
          * the value of the attachment
          */

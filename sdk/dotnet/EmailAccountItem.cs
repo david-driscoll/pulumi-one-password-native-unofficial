@@ -140,8 +140,8 @@ namespace Pulumi.Onepassword
             return new EmailAccountItem(name, id, state, options);
         }
 
-        public Pulumi.Output<EmailAccountItemAttachmentResult> Attachment(EmailAccountItemAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<EmailAccountItemAttachmentResult>("onepassword:index:EmailAccountItem/attachment", args ?? new EmailAccountItemAttachmentArgs(), this);
+        public Pulumi.Output<EmailAccountItemGetAttachmentResult> GetAttachment(EmailAccountItemGetAttachmentArgs args)
+            => Pulumi.Deployment.Instance.Call<EmailAccountItemGetAttachmentResult>("onepassword:index:EmailAccountItem/attachment", args ?? new EmailAccountItemGetAttachmentArgs(), this);
     }
 
     public sealed class EmailAccountItemArgs : Pulumi.ResourceArgs
@@ -258,9 +258,9 @@ namespace Pulumi.Onepassword
     }
 
     /// <summary>
-    /// The set of arguments for the <see cref="EmailAccountItem.Attachment"/> method.
+    /// The set of arguments for the <see cref="EmailAccountItem.GetAttachment"/> method.
     /// </summary>
-    public sealed class EmailAccountItemAttachmentArgs : Pulumi.CallArgs
+    public sealed class EmailAccountItemGetAttachmentArgs : Pulumi.CallArgs
     {
         /// <summary>
         /// The name or uuid of the attachment to get
@@ -268,16 +268,16 @@ namespace Pulumi.Onepassword
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        public EmailAccountItemAttachmentArgs()
+        public EmailAccountItemGetAttachmentArgs()
         {
         }
     }
 
     /// <summary>
-    /// The results of the <see cref="EmailAccountItem.Attachment"/> method.
+    /// The results of the <see cref="EmailAccountItem.GetAttachment"/> method.
     /// </summary>
     [OutputType]
-    public sealed class EmailAccountItemAttachmentResult
+    public sealed class EmailAccountItemGetAttachmentResult
     {
         /// <summary>
         /// the value of the attachment
@@ -285,7 +285,7 @@ namespace Pulumi.Onepassword
         public readonly string Value;
 
         [OutputConstructor]
-        private EmailAccountItemAttachmentResult(string value)
+        private EmailAccountItemGetAttachmentResult(string value)
         {
             Value = value;
         }

@@ -115,44 +115,44 @@ func (ItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*itemArgs)(nil)).Elem()
 }
 
-func (r *Item) Attachment(ctx *pulumi.Context, args *ItemAttachmentArgs) (ItemAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:Item/attachment", args, ItemAttachmentResultOutput{}, r)
+func (r *Item) GetAttachment(ctx *pulumi.Context, args *ItemGetAttachmentArgs) (ItemGetAttachmentResultOutput, error) {
+	out, err := ctx.Call("onepassword:index:Item/attachment", args, ItemGetAttachmentResultOutput{}, r)
 	if err != nil {
-		return ItemAttachmentResultOutput{}, err
+		return ItemGetAttachmentResultOutput{}, err
 	}
-	return out.(ItemAttachmentResultOutput), nil
+	return out.(ItemGetAttachmentResultOutput), nil
 }
 
-type itemAttachmentArgs struct {
+type itemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name string `pulumi:"name"`
 }
 
-// The set of arguments for the Attachment method of the Item resource.
-type ItemAttachmentArgs struct {
+// The set of arguments for the GetAttachment method of the Item resource.
+type ItemGetAttachmentArgs struct {
 	// The name or uuid of the attachment to get
 	Name pulumi.StringInput
 }
 
-func (ItemAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*itemAttachmentArgs)(nil)).Elem()
+func (ItemGetAttachmentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*itemGetAttachmentArgs)(nil)).Elem()
 }
 
 // The resolved reference value
-type ItemAttachmentResult struct {
+type ItemGetAttachmentResult struct {
 	// the value of the attachment
 	Value string `pulumi:"value"`
 }
 
-type ItemAttachmentResultOutput struct{ *pulumi.OutputState }
+type ItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
 
-func (ItemAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*ItemAttachmentResult)(nil)).Elem()
+func (ItemGetAttachmentResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ItemGetAttachmentResult)(nil)).Elem()
 }
 
 // the value of the attachment
-func (o ItemAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v ItemAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
+func (o ItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v ItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type ItemInput interface {
@@ -283,7 +283,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*ItemArrayInput)(nil)).Elem(), ItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ItemMapInput)(nil)).Elem(), ItemMap{})
 	pulumi.RegisterOutputType(ItemOutput{})
-	pulumi.RegisterOutputType(ItemAttachmentResultOutput{})
+	pulumi.RegisterOutputType(ItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(ItemArrayOutput{})
 	pulumi.RegisterOutputType(ItemMapOutput{})
 }

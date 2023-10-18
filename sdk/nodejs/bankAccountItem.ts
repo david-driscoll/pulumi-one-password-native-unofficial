@@ -110,7 +110,7 @@ export class BankAccountItem extends pulumi.CustomResource {
         super(BankAccountItem.__pulumiType, name, resourceInputs, opts);
     }
 
-    attachment(args: BankAccountItem.AttachmentArgs): pulumi.Output<BankAccountItem.AttachmentResult> {
+    getAttachment(args: BankAccountItem.GetAttachmentArgs): pulumi.Output<BankAccountItem.GetAttachmentResult> {
         return pulumi.runtime.call("onepassword:index:BankAccountItem/attachment", {
             "__self__": this,
             "name": args.name,
@@ -162,9 +162,9 @@ export interface BankAccountItemArgs {
 
 export namespace BankAccountItem {
     /**
-     * The set of arguments for the BankAccountItem.attachment method.
+     * The set of arguments for the BankAccountItem.getAttachment method.
      */
-    export interface AttachmentArgs {
+    export interface GetAttachmentArgs {
         /**
          * The name or uuid of the attachment to get
          */
@@ -172,9 +172,9 @@ export namespace BankAccountItem {
     }
 
     /**
-     * The results of the BankAccountItem.attachment method.
+     * The results of the BankAccountItem.getAttachment method.
      */
-    export interface AttachmentResult {
+    export interface GetAttachmentResult {
         /**
          * the value of the attachment
          */
