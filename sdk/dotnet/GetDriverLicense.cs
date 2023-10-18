@@ -7,15 +7,15 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword
+namespace Pulumi.OnePasswordNative
 {
     public static class GetDriverLicense
     {
         public static Task<GetDriverLicenseResult> InvokeAsync(GetDriverLicenseArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.InvokeAsync<GetDriverLicenseResult>("onepassword:index:GetDriverLicense", args ?? new GetDriverLicenseArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.InvokeAsync<GetDriverLicenseResult>("one-password-native:index:GetDriverLicense", args ?? new GetDriverLicenseArgs(), options.WithDefaults());
 
         public static Output<GetDriverLicenseResult> Invoke(GetDriverLicenseInvokeArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.Invoke<GetDriverLicenseResult>("onepassword:index:GetDriverLicense", args ?? new GetDriverLicenseInvokeArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.Invoke<GetDriverLicenseResult>("one-password-native:index:GetDriverLicense", args ?? new GetDriverLicenseInvokeArgs(), options.WithDefaults());
     }
 
 

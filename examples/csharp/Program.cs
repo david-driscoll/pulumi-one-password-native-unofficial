@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Google.Protobuf.WellKnownTypes;
 using Pulumi;
-using Pulumi.Onepassword;
-using Pulumi.Onepassword.Inputs;
+using Pulumi.OnePasswordNative;
+using Pulumi.OnePasswordNative.Inputs;
 
 return await Deployment.RunAsync(() =>
 {
@@ -10,12 +10,12 @@ return await Deployment.RunAsync(() =>
    {
       Vault = "testing-pulumi",
       Username = "me",
-      Attachments = new Dictionary<string, AssetOrArchive>()
+      Attachments = new()
       {
          ["my-attachment"] = new StringAsset("this is an attachment"),
          ["package.json"] = new FileAsset("./Pulumi.yaml")
       },
-      Fields = new Dictionary<string, FieldArgs>()
+      Fields = new()
       {
          ["password"] = new FieldArgs()
          {
@@ -23,11 +23,11 @@ return await Deployment.RunAsync(() =>
             Type = FieldAssignmentType.Concealed
          }
       },
-      Sections = new Dictionary<string, SectionArgs>()
+      Sections = new()
       {
          ["mysection"] = new SectionArgs()
          {
-            Fields = new InputMap<FieldArgs>()
+            Fields = new()
             {
                ["password"] = new FieldArgs()
                {

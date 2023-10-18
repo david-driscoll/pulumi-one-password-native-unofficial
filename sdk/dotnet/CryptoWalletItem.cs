@@ -7,9 +7,9 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword
+namespace Pulumi.OnePasswordNative
 {
-    [OnepasswordResourceType("onepassword:index:CryptoWalletItem")]
+    [OnePasswordNativeResourceType("one-password-native:index:CryptoWalletItem")]
     public partial class CryptoWalletItem : Pulumi.CustomResource
     {
         [Output("attachments")]
@@ -61,7 +61,7 @@ namespace Pulumi.Onepassword
         public Output<string> Vault { get; private set; } = null!;
 
         [Output("wallet")]
-        public Output<Pulumi.Onepassword.CryptoWallet.Outputs.WalletSection?> Wallet { get; private set; } = null!;
+        public Output<Pulumi.OnePasswordNative.CryptoWallet.Outputs.WalletSection?> Wallet { get; private set; } = null!;
 
 
         /// <summary>
@@ -72,12 +72,12 @@ namespace Pulumi.Onepassword
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public CryptoWalletItem(string name, CryptoWalletItemArgs args, CustomResourceOptions? options = null)
-            : base("onepassword:index:CryptoWalletItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
+            : base("one-password-native:index:CryptoWalletItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private CryptoWalletItem(string name, Input<string> id, CryptoWalletItemState? state = null, CustomResourceOptions? options = null)
-            : base("onepassword:index:CryptoWalletItem", name, state, MakeResourceOptions(options, id))
+            : base("one-password-native:index:CryptoWalletItem", name, state, MakeResourceOptions(options, id))
         {
         }
 
@@ -123,7 +123,7 @@ namespace Pulumi.Onepassword
         }
 
         public Pulumi.Output<CryptoWalletItemGetAttachmentResult> GetAttachment(CryptoWalletItemGetAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<CryptoWalletItemGetAttachmentResult>("onepassword:index:CryptoWalletItem/attachment", args ?? new CryptoWalletItemGetAttachmentArgs(), this);
+            => Pulumi.Deployment.Instance.Call<CryptoWalletItemGetAttachmentResult>("one-password-native:index:CryptoWalletItem/attachment", args ?? new CryptoWalletItemGetAttachmentArgs(), this);
     }
 
     public sealed class CryptoWalletItemArgs : Pulumi.ResourceArgs
@@ -210,7 +210,7 @@ namespace Pulumi.Onepassword
         public Input<string> Vault { get; set; } = null!;
 
         [Input("wallet")]
-        public Input<Pulumi.Onepassword.CryptoWallet.Inputs.WalletSectionArgs>? Wallet { get; set; }
+        public Input<Pulumi.OnePasswordNative.CryptoWallet.Inputs.WalletSectionArgs>? Wallet { get; set; }
 
         public CryptoWalletItemArgs()
         {

@@ -20,7 +20,7 @@ export class EmailAccountItem extends pulumi.CustomResource {
     }
 
     /** @internal */
-    public static readonly __pulumiType = 'onepassword:index:EmailAccountItem';
+    public static readonly __pulumiType = 'one-password-native:index:EmailAccountItem';
 
     /**
      * Returns true if the given object is an instance of EmailAccountItem.  This is designed to work even
@@ -111,7 +111,7 @@ export class EmailAccountItem extends pulumi.CustomResource {
     }
 
     getAttachment(args: EmailAccountItem.GetAttachmentArgs): pulumi.Output<EmailAccountItem.GetAttachmentResult> {
-        return pulumi.runtime.call("onepassword:index:EmailAccountItem/attachment", {
+        return pulumi.runtime.call("one-password-native:index:EmailAccountItem/attachment", {
             "__self__": this,
             "name": args.name,
         }, this);

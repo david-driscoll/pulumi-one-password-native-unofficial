@@ -69,7 +69,7 @@ func NewWirelessRouterItem(ctx *pulumi.Context,
 	})
 	opts = append(opts, secrets)
 	var resource WirelessRouterItem
-	err := ctx.RegisterResource("onepassword:index:WirelessRouterItem", name, args, &resource, opts...)
+	err := ctx.RegisterResource("one-password-native:index:WirelessRouterItem", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -81,7 +81,7 @@ func NewWirelessRouterItem(ctx *pulumi.Context,
 func GetWirelessRouterItem(ctx *pulumi.Context,
 	name string, id pulumi.IDInput, state *WirelessRouterItemState, opts ...pulumi.ResourceOption) (*WirelessRouterItem, error) {
 	var resource WirelessRouterItem
-	err := ctx.ReadResource("onepassword:index:WirelessRouterItem", name, id, state, &resource, opts...)
+	err := ctx.ReadResource("one-password-native:index:WirelessRouterItem", name, id, state, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -155,7 +155,7 @@ func (WirelessRouterItemArgs) ElementType() reflect.Type {
 }
 
 func (r *WirelessRouterItem) GetAttachment(ctx *pulumi.Context, args *WirelessRouterItemGetAttachmentArgs) (WirelessRouterItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:WirelessRouterItem/attachment", args, WirelessRouterItemGetAttachmentResultOutput{}, r)
+	out, err := ctx.Call("one-password-native:index:WirelessRouterItem/attachment", args, WirelessRouterItemGetAttachmentResultOutput{}, r)
 	if err != nil {
 		return WirelessRouterItemGetAttachmentResultOutput{}, err
 	}

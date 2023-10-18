@@ -7,15 +7,15 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword
+namespace Pulumi.OnePasswordNative
 {
     public static class GetEmailAccount
     {
         public static Task<GetEmailAccountResult> InvokeAsync(GetEmailAccountArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.InvokeAsync<GetEmailAccountResult>("onepassword:index:GetEmailAccount", args ?? new GetEmailAccountArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.InvokeAsync<GetEmailAccountResult>("one-password-native:index:GetEmailAccount", args ?? new GetEmailAccountArgs(), options.WithDefaults());
 
         public static Output<GetEmailAccountResult> Invoke(GetEmailAccountInvokeArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.Invoke<GetEmailAccountResult>("onepassword:index:GetEmailAccount", args ?? new GetEmailAccountInvokeArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.Invoke<GetEmailAccountResult>("one-password-native:index:GetEmailAccount", args ?? new GetEmailAccountInvokeArgs(), options.WithDefaults());
     }
 
 
@@ -76,7 +76,7 @@ namespace Pulumi.Onepassword
         public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
         public readonly string? AuthMethod;
         public readonly string Category;
-        public readonly Pulumi.Onepassword.EmailAccount.Outputs.ContactInformationSection? ContactInformation;
+        public readonly Pulumi.OnePasswordNative.EmailAccount.Outputs.ContactInformationSection? ContactInformation;
         public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
         public readonly string? Notes;
         public readonly string? Password;
@@ -85,7 +85,7 @@ namespace Pulumi.Onepassword
         public readonly ImmutableDictionary<string, Outputs.OutSection> Sections;
         public readonly string? Security;
         public readonly string? Server;
-        public readonly Pulumi.Onepassword.EmailAccount.Outputs.SmtpSection? Smtp;
+        public readonly Pulumi.OnePasswordNative.EmailAccount.Outputs.SmtpSection? Smtp;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
         /// </summary>
@@ -113,7 +113,7 @@ namespace Pulumi.Onepassword
 
             string category,
 
-            Pulumi.Onepassword.EmailAccount.Outputs.ContactInformationSection? contactInformation,
+            Pulumi.OnePasswordNative.EmailAccount.Outputs.ContactInformationSection? contactInformation,
 
             ImmutableDictionary<string, Outputs.OutField> fields,
 
@@ -131,7 +131,7 @@ namespace Pulumi.Onepassword
 
             string? server,
 
-            Pulumi.Onepassword.EmailAccount.Outputs.SmtpSection? smtp,
+            Pulumi.OnePasswordNative.EmailAccount.Outputs.SmtpSection? smtp,
 
             ImmutableArray<string> tags,
 

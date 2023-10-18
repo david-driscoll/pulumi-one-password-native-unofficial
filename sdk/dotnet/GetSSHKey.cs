@@ -7,15 +7,15 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword
+namespace Pulumi.OnePasswordNative
 {
     public static class GetSSHKey
     {
         public static Task<GetSSHKeyResult> InvokeAsync(GetSSHKeyArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.InvokeAsync<GetSSHKeyResult>("onepassword:index:GetSSHKey", args ?? new GetSSHKeyArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.InvokeAsync<GetSSHKeyResult>("one-password-native:index:GetSSHKey", args ?? new GetSSHKeyArgs(), options.WithDefaults());
 
         public static Output<GetSSHKeyResult> Invoke(GetSSHKeyInvokeArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.Invoke<GetSSHKeyResult>("onepassword:index:GetSSHKey", args ?? new GetSSHKeyInvokeArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.Invoke<GetSSHKeyResult>("one-password-native:index:GetSSHKey", args ?? new GetSSHKeyInvokeArgs(), options.WithDefaults());
     }
 
 

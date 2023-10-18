@@ -1,9 +1,9 @@
 {
-    "name": "@pulumi/onepassword",
+    "name": "@pulumi/one-password-native",
     "version": "${VERSION}",
     "scripts": {
         "build": "tsc",
-        "install": "node scripts/install-pulumi-plugin.js resource onepassword ${VERSION}"
+        "install": "node scripts/install-pulumi-plugin.js resource one-password-native ${VERSION}"
     },
     "dependencies": {
         "@pulumi/pulumi": "^3.89.0"

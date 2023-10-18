@@ -11,7 +11,7 @@ export function getLogin(args: GetLoginArgs, opts?: pulumi.InvokeOptions): Promi
     }
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-    return pulumi.runtime.invoke("onepassword:index:GetLogin", {
+    return pulumi.runtime.invoke("one-password-native:index:GetLogin", {
         "title": args.title,
         "uuid": args.uuid,
         "vault": args.vault,

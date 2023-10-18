@@ -7,9 +7,9 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword
+namespace Pulumi.OnePasswordNative
 {
-    [OnepasswordResourceType("onepassword:index:MedicalRecordItem")]
+    [OnePasswordNativeResourceType("one-password-native:index:MedicalRecordItem")]
     public partial class MedicalRecordItem : Pulumi.CustomResource
     {
         [Output("attachments")]
@@ -31,7 +31,7 @@ namespace Pulumi.Onepassword
         public Output<string?> Location { get; private set; } = null!;
 
         [Output("medication")]
-        public Output<Pulumi.Onepassword.MedicalRecord.Outputs.MedicationSection?> Medication { get; private set; } = null!;
+        public Output<Pulumi.OnePasswordNative.MedicalRecord.Outputs.MedicationSection?> Medication { get; private set; } = null!;
 
         [Output("notes")]
         public Output<string?> Notes { get; private set; } = null!;
@@ -81,12 +81,12 @@ namespace Pulumi.Onepassword
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public MedicalRecordItem(string name, MedicalRecordItemArgs args, CustomResourceOptions? options = null)
-            : base("onepassword:index:MedicalRecordItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
+            : base("one-password-native:index:MedicalRecordItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private MedicalRecordItem(string name, Input<string> id, MedicalRecordItemState? state = null, CustomResourceOptions? options = null)
-            : base("onepassword:index:MedicalRecordItem", name, state, MakeResourceOptions(options, id))
+            : base("one-password-native:index:MedicalRecordItem", name, state, MakeResourceOptions(options, id))
         {
         }
 
@@ -130,7 +130,7 @@ namespace Pulumi.Onepassword
         }
 
         public Pulumi.Output<MedicalRecordItemGetAttachmentResult> GetAttachment(MedicalRecordItemGetAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<MedicalRecordItemGetAttachmentResult>("onepassword:index:MedicalRecordItem/attachment", args ?? new MedicalRecordItemGetAttachmentArgs(), this);
+            => Pulumi.Deployment.Instance.Call<MedicalRecordItemGetAttachmentResult>("one-password-native:index:MedicalRecordItem/attachment", args ?? new MedicalRecordItemGetAttachmentArgs(), this);
     }
 
     public sealed class MedicalRecordItemArgs : Pulumi.ResourceArgs
@@ -167,7 +167,7 @@ namespace Pulumi.Onepassword
         public Input<string>? Location { get; set; }
 
         [Input("medication")]
-        public Input<Pulumi.Onepassword.MedicalRecord.Inputs.MedicationSectionArgs>? Medication { get; set; }
+        public Input<Pulumi.OnePasswordNative.MedicalRecord.Inputs.MedicationSectionArgs>? Medication { get; set; }
 
         [Input("notes")]
         public Input<string>? Notes { get; set; }

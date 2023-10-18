@@ -7,9 +7,9 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword
+namespace Pulumi.OnePasswordNative
 {
-    [OnepasswordResourceType("onepassword:index:PassportItem")]
+    [OnePasswordNativeResourceType("one-password-native:index:PassportItem")]
     public partial class PassportItem : Pulumi.CustomResource
     {
         [Output("attachments")]
@@ -96,12 +96,12 @@ namespace Pulumi.Onepassword
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public PassportItem(string name, PassportItemArgs args, CustomResourceOptions? options = null)
-            : base("onepassword:index:PassportItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
+            : base("one-password-native:index:PassportItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private PassportItem(string name, Input<string> id, PassportItemState? state = null, CustomResourceOptions? options = null)
-            : base("onepassword:index:PassportItem", name, state, MakeResourceOptions(options, id))
+            : base("one-password-native:index:PassportItem", name, state, MakeResourceOptions(options, id))
         {
         }
 
@@ -145,7 +145,7 @@ namespace Pulumi.Onepassword
         }
 
         public Pulumi.Output<PassportItemGetAttachmentResult> GetAttachment(PassportItemGetAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<PassportItemGetAttachmentResult>("onepassword:index:PassportItem/attachment", args ?? new PassportItemGetAttachmentArgs(), this);
+            => Pulumi.Deployment.Instance.Call<PassportItemGetAttachmentResult>("one-password-native:index:PassportItem/attachment", args ?? new PassportItemGetAttachmentArgs(), this);
     }
 
     public sealed class PassportItemArgs : Pulumi.ResourceArgs

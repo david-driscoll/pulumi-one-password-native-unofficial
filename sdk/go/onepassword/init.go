@@ -20,51 +20,51 @@ func (m *module) Version() semver.Version {
 
 func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi.Resource, err error) {
 	switch typ {
-	case "onepassword:index:APICredentialItem":
+	case "one-password-native:index:APICredentialItem":
 		r = &APICredentialItem{}
-	case "onepassword:index:BankAccountItem":
+	case "one-password-native:index:BankAccountItem":
 		r = &BankAccountItem{}
-	case "onepassword:index:CreditCardItem":
+	case "one-password-native:index:CreditCardItem":
 		r = &CreditCardItem{}
-	case "onepassword:index:CryptoWalletItem":
+	case "one-password-native:index:CryptoWalletItem":
 		r = &CryptoWalletItem{}
-	case "onepassword:index:DatabaseItem":
+	case "one-password-native:index:DatabaseItem":
 		r = &DatabaseItem{}
-	case "onepassword:index:DocumentItem":
+	case "one-password-native:index:DocumentItem":
 		r = &DocumentItem{}
-	case "onepassword:index:DriverLicenseItem":
+	case "one-password-native:index:DriverLicenseItem":
 		r = &DriverLicenseItem{}
-	case "onepassword:index:EmailAccountItem":
+	case "one-password-native:index:EmailAccountItem":
 		r = &EmailAccountItem{}
-	case "onepassword:index:IdentityItem":
+	case "one-password-native:index:IdentityItem":
 		r = &IdentityItem{}
-	case "onepassword:index:Item":
+	case "one-password-native:index:Item":
 		r = &Item{}
-	case "onepassword:index:LoginItem":
+	case "one-password-native:index:LoginItem":
 		r = &LoginItem{}
-	case "onepassword:index:MedicalRecordItem":
+	case "one-password-native:index:MedicalRecordItem":
 		r = &MedicalRecordItem{}
-	case "onepassword:index:MembershipItem":
+	case "one-password-native:index:MembershipItem":
 		r = &MembershipItem{}
-	case "onepassword:index:OutdoorLicenseItem":
+	case "one-password-native:index:OutdoorLicenseItem":
 		r = &OutdoorLicenseItem{}
-	case "onepassword:index:PassportItem":
+	case "one-password-native:index:PassportItem":
 		r = &PassportItem{}
-	case "onepassword:index:PasswordItem":
+	case "one-password-native:index:PasswordItem":
 		r = &PasswordItem{}
-	case "onepassword:index:RewardProgramItem":
+	case "one-password-native:index:RewardProgramItem":
 		r = &RewardProgramItem{}
-	case "onepassword:index:SSHKeyItem":
+	case "one-password-native:index:SSHKeyItem":
 		r = &SSHKeyItem{}
-	case "onepassword:index:SecureNoteItem":
+	case "one-password-native:index:SecureNoteItem":
 		r = &SecureNoteItem{}
-	case "onepassword:index:ServerItem":
+	case "one-password-native:index:ServerItem":
 		r = &ServerItem{}
-	case "onepassword:index:SocialSecurityNumberItem":
+	case "one-password-native:index:SocialSecurityNumberItem":
 		r = &SocialSecurityNumberItem{}
-	case "onepassword:index:SoftwareLicenseItem":
+	case "one-password-native:index:SoftwareLicenseItem":
 		r = &SoftwareLicenseItem{}
-	case "onepassword:index:WirelessRouterItem":
+	case "one-password-native:index:WirelessRouterItem":
 		r = &WirelessRouterItem{}
 	default:
 		return nil, fmt.Errorf("unknown resource type: %s", typ)
@@ -83,7 +83,7 @@ func (p *pkg) Version() semver.Version {
 }
 
 func (p *pkg) ConstructProvider(ctx *pulumi.Context, name, typ, urn string) (pulumi.ProviderResource, error) {
-	if typ != "pulumi:providers:onepassword" {
+	if typ != "pulumi:providers:one-password-native" {
 		return nil, fmt.Errorf("unknown provider type: %s", typ)
 	}
 
@@ -95,12 +95,12 @@ func (p *pkg) ConstructProvider(ctx *pulumi.Context, name, typ, urn string) (pul
 func init() {
 	version, _ := PkgVersion()
 	pulumi.RegisterResourceModule(
-		"onepassword",
+		"one-password-native",
 		"index",
 		&module{version},
 	)
 	pulumi.RegisterResourcePackage(
-		"onepassword",
+		"one-password-native",
 		&pkg{version},
 	)
 }

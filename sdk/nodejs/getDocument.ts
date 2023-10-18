@@ -11,7 +11,7 @@ export function getDocument(args: GetDocumentArgs, opts?: pulumi.InvokeOptions):
     }
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-    return pulumi.runtime.invoke("onepassword:index:GetDocument", {
+    return pulumi.runtime.invoke("one-password-native:index:GetDocument", {
         "title": args.title,
         "uuid": args.uuid,
         "vault": args.vault,

@@ -20,7 +20,7 @@ export class CreditCardItem extends pulumi.CustomResource {
     }
 
     /** @internal */
-    public static readonly __pulumiType = 'onepassword:index:CreditCardItem';
+    public static readonly __pulumiType = 'one-password-native:index:CreditCardItem';
 
     /**
      * Returns true if the given object is an instance of CreditCardItem.  This is designed to work even
@@ -109,7 +109,7 @@ export class CreditCardItem extends pulumi.CustomResource {
     }
 
     getAttachment(args: CreditCardItem.GetAttachmentArgs): pulumi.Output<CreditCardItem.GetAttachmentResult> {
-        return pulumi.runtime.call("onepassword:index:CreditCardItem/attachment", {
+        return pulumi.runtime.call("one-password-native:index:CreditCardItem/attachment", {
             "__self__": this,
             "name": args.name,
         }, this);

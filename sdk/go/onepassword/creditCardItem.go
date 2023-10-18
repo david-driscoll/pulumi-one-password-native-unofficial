@@ -63,7 +63,7 @@ func NewCreditCardItem(ctx *pulumi.Context,
 	})
 	opts = append(opts, secrets)
 	var resource CreditCardItem
-	err := ctx.RegisterResource("onepassword:index:CreditCardItem", name, args, &resource, opts...)
+	err := ctx.RegisterResource("one-password-native:index:CreditCardItem", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +75,7 @@ func NewCreditCardItem(ctx *pulumi.Context,
 func GetCreditCardItem(ctx *pulumi.Context,
 	name string, id pulumi.IDInput, state *CreditCardItemState, opts ...pulumi.ResourceOption) (*CreditCardItem, error) {
 	var resource CreditCardItem
-	err := ctx.ReadResource("onepassword:index:CreditCardItem", name, id, state, &resource, opts...)
+	err := ctx.ReadResource("one-password-native:index:CreditCardItem", name, id, state, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -149,7 +149,7 @@ func (CreditCardItemArgs) ElementType() reflect.Type {
 }
 
 func (r *CreditCardItem) GetAttachment(ctx *pulumi.Context, args *CreditCardItemGetAttachmentArgs) (CreditCardItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:CreditCardItem/attachment", args, CreditCardItemGetAttachmentResultOutput{}, r)
+	out, err := ctx.Call("one-password-native:index:CreditCardItem/attachment", args, CreditCardItemGetAttachmentResultOutput{}, r)
 	if err != nil {
 		return CreditCardItemGetAttachmentResultOutput{}, err
 	}

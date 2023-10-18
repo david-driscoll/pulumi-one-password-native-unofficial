@@ -50,7 +50,7 @@ func NewSSHKeyItem(ctx *pulumi.Context,
 	})
 	opts = append(opts, secrets)
 	var resource SSHKeyItem
-	err := ctx.RegisterResource("onepassword:index:SSHKeyItem", name, args, &resource, opts...)
+	err := ctx.RegisterResource("one-password-native:index:SSHKeyItem", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -62,7 +62,7 @@ func NewSSHKeyItem(ctx *pulumi.Context,
 func GetSSHKeyItem(ctx *pulumi.Context,
 	name string, id pulumi.IDInput, state *SSHKeyItemState, opts ...pulumi.ResourceOption) (*SSHKeyItem, error) {
 	var resource SSHKeyItem
-	err := ctx.ReadResource("onepassword:index:SSHKeyItem", name, id, state, &resource, opts...)
+	err := ctx.ReadResource("one-password-native:index:SSHKeyItem", name, id, state, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -122,7 +122,7 @@ func (SSHKeyItemArgs) ElementType() reflect.Type {
 }
 
 func (r *SSHKeyItem) GetAttachment(ctx *pulumi.Context, args *SSHKeyItemGetAttachmentArgs) (SSHKeyItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:SSHKeyItem/attachment", args, SSHKeyItemGetAttachmentResultOutput{}, r)
+	out, err := ctx.Call("one-password-native:index:SSHKeyItem/attachment", args, SSHKeyItemGetAttachmentResultOutput{}, r)
 	if err != nil {
 		return SSHKeyItemGetAttachmentResultOutput{}, err
 	}

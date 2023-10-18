@@ -7,15 +7,15 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword
+namespace Pulumi.OnePasswordNative
 {
     public static class GetItem
     {
         public static Task<GetItemResult> InvokeAsync(GetItemArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.InvokeAsync<GetItemResult>("onepassword:index:GetItem", args ?? new GetItemArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.InvokeAsync<GetItemResult>("one-password-native:index:GetItem", args ?? new GetItemArgs(), options.WithDefaults());
 
         public static Output<GetItemResult> Invoke(GetItemInvokeArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.Invoke<GetItemResult>("onepassword:index:GetItem", args ?? new GetItemInvokeArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.Invoke<GetItemResult>("one-password-native:index:GetItem", args ?? new GetItemInvokeArgs(), options.WithDefaults());
     }
 
 

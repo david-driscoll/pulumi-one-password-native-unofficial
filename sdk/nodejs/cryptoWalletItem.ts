@@ -20,7 +20,7 @@ export class CryptoWalletItem extends pulumi.CustomResource {
     }
 
     /** @internal */
-    public static readonly __pulumiType = 'onepassword:index:CryptoWalletItem';
+    public static readonly __pulumiType = 'one-password-native:index:CryptoWalletItem';
 
     /**
      * Returns true if the given object is an instance of CryptoWalletItem.  This is designed to work even
@@ -99,7 +99,7 @@ export class CryptoWalletItem extends pulumi.CustomResource {
     }
 
     getAttachment(args: CryptoWalletItem.GetAttachmentArgs): pulumi.Output<CryptoWalletItem.GetAttachmentResult> {
-        return pulumi.runtime.call("onepassword:index:CryptoWalletItem/attachment", {
+        return pulumi.runtime.call("one-password-native:index:CryptoWalletItem/attachment", {
             "__self__": this,
             "name": args.name,
         }, this);

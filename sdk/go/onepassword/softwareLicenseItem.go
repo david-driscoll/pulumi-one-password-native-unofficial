@@ -55,7 +55,7 @@ func NewSoftwareLicenseItem(ctx *pulumi.Context,
 	})
 	opts = append(opts, secrets)
 	var resource SoftwareLicenseItem
-	err := ctx.RegisterResource("onepassword:index:SoftwareLicenseItem", name, args, &resource, opts...)
+	err := ctx.RegisterResource("one-password-native:index:SoftwareLicenseItem", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +67,7 @@ func NewSoftwareLicenseItem(ctx *pulumi.Context,
 func GetSoftwareLicenseItem(ctx *pulumi.Context,
 	name string, id pulumi.IDInput, state *SoftwareLicenseItemState, opts ...pulumi.ResourceOption) (*SoftwareLicenseItem, error) {
 	var resource SoftwareLicenseItem
-	err := ctx.ReadResource("onepassword:index:SoftwareLicenseItem", name, id, state, &resource, opts...)
+	err := ctx.ReadResource("one-password-native:index:SoftwareLicenseItem", name, id, state, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -135,7 +135,7 @@ func (SoftwareLicenseItemArgs) ElementType() reflect.Type {
 }
 
 func (r *SoftwareLicenseItem) GetAttachment(ctx *pulumi.Context, args *SoftwareLicenseItemGetAttachmentArgs) (SoftwareLicenseItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:SoftwareLicenseItem/attachment", args, SoftwareLicenseItemGetAttachmentResultOutput{}, r)
+	out, err := ctx.Call("one-password-native:index:SoftwareLicenseItem/attachment", args, SoftwareLicenseItemGetAttachmentResultOutput{}, r)
 	if err != nil {
 		return SoftwareLicenseItemGetAttachmentResultOutput{}, err
 	}

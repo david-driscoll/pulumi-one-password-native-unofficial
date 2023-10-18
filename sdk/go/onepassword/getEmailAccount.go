@@ -13,7 +13,7 @@ import (
 
 func GetEmailAccount(ctx *pulumi.Context, args *GetEmailAccountArgs, opts ...pulumi.InvokeOption) (*GetEmailAccountResult, error) {
 	var rv GetEmailAccountResult
-	err := ctx.Invoke("onepassword:index:GetEmailAccount", args, &rv, opts...)
+	err := ctx.Invoke("one-password-native:index:GetEmailAccount", args, &rv, opts...)
 	if err != nil {
 		return nil, err
 	}

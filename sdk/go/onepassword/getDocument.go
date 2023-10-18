@@ -12,7 +12,7 @@ import (
 
 func GetDocument(ctx *pulumi.Context, args *GetDocumentArgs, opts ...pulumi.InvokeOption) (*GetDocumentResult, error) {
 	var rv GetDocumentResult
-	err := ctx.Invoke("onepassword:index:GetDocument", args, &rv, opts...)
+	err := ctx.Invoke("one-password-native:index:GetDocument", args, &rv, opts...)
 	if err != nil {
 		return nil, err
 	}

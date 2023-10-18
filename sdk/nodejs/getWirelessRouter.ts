@@ -11,7 +11,7 @@ export function getWirelessRouter(args: GetWirelessRouterArgs, opts?: pulumi.Inv
     }
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-    return pulumi.runtime.invoke("onepassword:index:GetWirelessRouter", {
+    return pulumi.runtime.invoke("one-password-native:index:GetWirelessRouter", {
         "title": args.title,
         "uuid": args.uuid,
         "vault": args.vault,

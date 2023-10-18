@@ -49,7 +49,7 @@ func NewSecureNoteItem(ctx *pulumi.Context,
 	})
 	opts = append(opts, secrets)
 	var resource SecureNoteItem
-	err := ctx.RegisterResource("onepassword:index:SecureNoteItem", name, args, &resource, opts...)
+	err := ctx.RegisterResource("one-password-native:index:SecureNoteItem", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -61,7 +61,7 @@ func NewSecureNoteItem(ctx *pulumi.Context,
 func GetSecureNoteItem(ctx *pulumi.Context,
 	name string, id pulumi.IDInput, state *SecureNoteItemState, opts ...pulumi.ResourceOption) (*SecureNoteItem, error) {
 	var resource SecureNoteItem
-	err := ctx.ReadResource("onepassword:index:SecureNoteItem", name, id, state, &resource, opts...)
+	err := ctx.ReadResource("one-password-native:index:SecureNoteItem", name, id, state, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -119,7 +119,7 @@ func (SecureNoteItemArgs) ElementType() reflect.Type {
 }
 
 func (r *SecureNoteItem) GetAttachment(ctx *pulumi.Context, args *SecureNoteItemGetAttachmentArgs) (SecureNoteItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:SecureNoteItem/attachment", args, SecureNoteItemGetAttachmentResultOutput{}, r)
+	out, err := ctx.Call("one-password-native:index:SecureNoteItem/attachment", args, SecureNoteItemGetAttachmentResultOutput{}, r)
 	if err != nil {
 		return SecureNoteItemGetAttachmentResultOutput{}, err
 	}

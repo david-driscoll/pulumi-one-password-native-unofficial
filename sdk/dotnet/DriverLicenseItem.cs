@@ -7,9 +7,9 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword
+namespace Pulumi.OnePasswordNative
 {
-    [OnepasswordResourceType("onepassword:index:DriverLicenseItem")]
+    [OnePasswordNativeResourceType("one-password-native:index:DriverLicenseItem")]
     public partial class DriverLicenseItem : Pulumi.CustomResource
     {
         [Output("address")]
@@ -96,12 +96,12 @@ namespace Pulumi.Onepassword
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public DriverLicenseItem(string name, DriverLicenseItemArgs args, CustomResourceOptions? options = null)
-            : base("onepassword:index:DriverLicenseItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
+            : base("one-password-native:index:DriverLicenseItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private DriverLicenseItem(string name, Input<string> id, DriverLicenseItemState? state = null, CustomResourceOptions? options = null)
-            : base("onepassword:index:DriverLicenseItem", name, state, MakeResourceOptions(options, id))
+            : base("one-password-native:index:DriverLicenseItem", name, state, MakeResourceOptions(options, id))
         {
         }
 
@@ -145,7 +145,7 @@ namespace Pulumi.Onepassword
         }
 
         public Pulumi.Output<DriverLicenseItemGetAttachmentResult> GetAttachment(DriverLicenseItemGetAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<DriverLicenseItemGetAttachmentResult>("onepassword:index:DriverLicenseItem/attachment", args ?? new DriverLicenseItemGetAttachmentArgs(), this);
+            => Pulumi.Deployment.Instance.Call<DriverLicenseItemGetAttachmentResult>("one-password-native:index:DriverLicenseItem/attachment", args ?? new DriverLicenseItemGetAttachmentArgs(), this);
     }
 
     public sealed class DriverLicenseItemArgs : Pulumi.ResourceArgs

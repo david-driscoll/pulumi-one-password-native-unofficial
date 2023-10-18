@@ -7,13 +7,13 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword
+namespace Pulumi.OnePasswordNative
 {
-    [OnepasswordResourceType("onepassword:index:IdentityItem")]
+    [OnePasswordNativeResourceType("one-password-native:index:IdentityItem")]
     public partial class IdentityItem : Pulumi.CustomResource
     {
         [Output("address")]
-        public Output<Pulumi.Onepassword.Identity.Outputs.AddressSection?> Address { get; private set; } = null!;
+        public Output<Pulumi.OnePasswordNative.Identity.Outputs.AddressSection?> Address { get; private set; } = null!;
 
         [Output("attachments")]
         public Output<ImmutableDictionary<string, Outputs.OutField>> Attachments { get; private set; } = null!;
@@ -25,10 +25,10 @@ namespace Pulumi.Onepassword
         public Output<ImmutableDictionary<string, Outputs.OutField>> Fields { get; private set; } = null!;
 
         [Output("identification")]
-        public Output<Pulumi.Onepassword.Identity.Outputs.IdentificationSection?> Identification { get; private set; } = null!;
+        public Output<Pulumi.OnePasswordNative.Identity.Outputs.IdentificationSection?> Identification { get; private set; } = null!;
 
         [Output("internetDetails")]
-        public Output<Pulumi.Onepassword.Identity.Outputs.InternetDetailsSection?> InternetDetails { get; private set; } = null!;
+        public Output<Pulumi.OnePasswordNative.Identity.Outputs.InternetDetailsSection?> InternetDetails { get; private set; } = null!;
 
         [Output("notes")]
         public Output<string?> Notes { get; private set; } = null!;
@@ -72,12 +72,12 @@ namespace Pulumi.Onepassword
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public IdentityItem(string name, IdentityItemArgs args, CustomResourceOptions? options = null)
-            : base("onepassword:index:IdentityItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
+            : base("one-password-native:index:IdentityItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private IdentityItem(string name, Input<string> id, IdentityItemState? state = null, CustomResourceOptions? options = null)
-            : base("onepassword:index:IdentityItem", name, state, MakeResourceOptions(options, id))
+            : base("one-password-native:index:IdentityItem", name, state, MakeResourceOptions(options, id))
         {
         }
 
@@ -121,13 +121,13 @@ namespace Pulumi.Onepassword
         }
 
         public Pulumi.Output<IdentityItemGetAttachmentResult> GetAttachment(IdentityItemGetAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<IdentityItemGetAttachmentResult>("onepassword:index:IdentityItem/attachment", args ?? new IdentityItemGetAttachmentArgs(), this);
+            => Pulumi.Deployment.Instance.Call<IdentityItemGetAttachmentResult>("one-password-native:index:IdentityItem/attachment", args ?? new IdentityItemGetAttachmentArgs(), this);
     }
 
     public sealed class IdentityItemArgs : Pulumi.ResourceArgs
     {
         [Input("address")]
-        public Input<Pulumi.Onepassword.Identity.Inputs.AddressSectionArgs>? Address { get; set; }
+        public Input<Pulumi.OnePasswordNative.Identity.Inputs.AddressSectionArgs>? Address { get; set; }
 
         [Input("attachments")]
         private InputMap<AssetOrArchive>? _attachments;
@@ -152,10 +152,10 @@ namespace Pulumi.Onepassword
         }
 
         [Input("identification")]
-        public Input<Pulumi.Onepassword.Identity.Inputs.IdentificationSectionArgs>? Identification { get; set; }
+        public Input<Pulumi.OnePasswordNative.Identity.Inputs.IdentificationSectionArgs>? Identification { get; set; }
 
         [Input("internetDetails")]
-        public Input<Pulumi.Onepassword.Identity.Inputs.InternetDetailsSectionArgs>? InternetDetails { get; set; }
+        public Input<Pulumi.OnePasswordNative.Identity.Inputs.InternetDetailsSectionArgs>? InternetDetails { get; set; }
 
         [Input("notes")]
         public Input<string>? Notes { get; set; }

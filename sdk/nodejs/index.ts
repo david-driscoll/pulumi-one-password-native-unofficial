@@ -95,65 +95,65 @@ const _module = {
     version: utilities.getVersion(),
     construct: (name: string, type: string, urn: string): pulumi.Resource => {
         switch (type) {
-            case "onepassword:index:APICredentialItem":
+            case "one-password-native:index:APICredentialItem":
                 return new APICredentialItem(name, <any>undefined, { urn })
-            case "onepassword:index:BankAccountItem":
+            case "one-password-native:index:BankAccountItem":
                 return new BankAccountItem(name, <any>undefined, { urn })
-            case "onepassword:index:CreditCardItem":
+            case "one-password-native:index:CreditCardItem":
                 return new CreditCardItem(name, <any>undefined, { urn })
-            case "onepassword:index:CryptoWalletItem":
+            case "one-password-native:index:CryptoWalletItem":
                 return new CryptoWalletItem(name, <any>undefined, { urn })
-            case "onepassword:index:DatabaseItem":
+            case "one-password-native:index:DatabaseItem":
                 return new DatabaseItem(name, <any>undefined, { urn })
-            case "onepassword:index:DocumentItem":
+            case "one-password-native:index:DocumentItem":
                 return new DocumentItem(name, <any>undefined, { urn })
-            case "onepassword:index:DriverLicenseItem":
+            case "one-password-native:index:DriverLicenseItem":
                 return new DriverLicenseItem(name, <any>undefined, { urn })
-            case "onepassword:index:EmailAccountItem":
+            case "one-password-native:index:EmailAccountItem":
                 return new EmailAccountItem(name, <any>undefined, { urn })
-            case "onepassword:index:IdentityItem":
+            case "one-password-native:index:IdentityItem":
                 return new IdentityItem(name, <any>undefined, { urn })
-            case "onepassword:index:Item":
+            case "one-password-native:index:Item":
                 return new Item(name, <any>undefined, { urn })
-            case "onepassword:index:LoginItem":
+            case "one-password-native:index:LoginItem":
                 return new LoginItem(name, <any>undefined, { urn })
-            case "onepassword:index:MedicalRecordItem":
+            case "one-password-native:index:MedicalRecordItem":
                 return new MedicalRecordItem(name, <any>undefined, { urn })
-            case "onepassword:index:MembershipItem":
+            case "one-password-native:index:MembershipItem":
                 return new MembershipItem(name, <any>undefined, { urn })
-            case "onepassword:index:OutdoorLicenseItem":
+            case "one-password-native:index:OutdoorLicenseItem":
                 return new OutdoorLicenseItem(name, <any>undefined, { urn })
-            case "onepassword:index:PassportItem":
+            case "one-password-native:index:PassportItem":
                 return new PassportItem(name, <any>undefined, { urn })
-            case "onepassword:index:PasswordItem":
+            case "one-password-native:index:PasswordItem":
                 return new PasswordItem(name, <any>undefined, { urn })
-            case "onepassword:index:RewardProgramItem":
+            case "one-password-native:index:RewardProgramItem":
                 return new RewardProgramItem(name, <any>undefined, { urn })
-            case "onepassword:index:SSHKeyItem":
+            case "one-password-native:index:SSHKeyItem":
                 return new SSHKeyItem(name, <any>undefined, { urn })
-            case "onepassword:index:SecureNoteItem":
+            case "one-password-native:index:SecureNoteItem":
                 return new SecureNoteItem(name, <any>undefined, { urn })
-            case "onepassword:index:ServerItem":
+            case "one-password-native:index:ServerItem":
                 return new ServerItem(name, <any>undefined, { urn })
-            case "onepassword:index:SocialSecurityNumberItem":
+            case "one-password-native:index:SocialSecurityNumberItem":
                 return new SocialSecurityNumberItem(name, <any>undefined, { urn })
-            case "onepassword:index:SoftwareLicenseItem":
+            case "one-password-native:index:SoftwareLicenseItem":
                 return new SoftwareLicenseItem(name, <any>undefined, { urn })
-            case "onepassword:index:WirelessRouterItem":
+            case "one-password-native:index:WirelessRouterItem":
                 return new WirelessRouterItem(name, <any>undefined, { urn })
             default:
                 throw new Error(`unknown resource type ${type}`);
         }
     },
 };
-pulumi.runtime.registerResourceModule("onepassword", "index", _module)
+pulumi.runtime.registerResourceModule("one-password-native", "index", _module)
 
 import { Provider } from "./provider";
 
-pulumi.runtime.registerResourcePackage("onepassword", {
+pulumi.runtime.registerResourcePackage("one-password-native", {
     version: utilities.getVersion(),
     constructProvider: (name: string, type: string, urn: string): pulumi.ProviderResource => {
-        if (type !== "pulumi:providers:onepassword") {
+        if (type !== "pulumi:providers:one-password-native") {
             throw new Error(`unknown provider type ${type}`);
         }
         return new Provider(name, <any>undefined, { urn });

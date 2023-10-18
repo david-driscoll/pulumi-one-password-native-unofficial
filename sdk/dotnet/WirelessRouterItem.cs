@@ -7,9 +7,9 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword
+namespace Pulumi.OnePasswordNative
 {
-    [OnepasswordResourceType("onepassword:index:WirelessRouterItem")]
+    [OnePasswordNativeResourceType("one-password-native:index:WirelessRouterItem")]
     public partial class WirelessRouterItem : Pulumi.CustomResource
     {
         [Output("airPortId")]
@@ -87,12 +87,12 @@ namespace Pulumi.Onepassword
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public WirelessRouterItem(string name, WirelessRouterItemArgs args, CustomResourceOptions? options = null)
-            : base("onepassword:index:WirelessRouterItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
+            : base("one-password-native:index:WirelessRouterItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private WirelessRouterItem(string name, Input<string> id, WirelessRouterItemState? state = null, CustomResourceOptions? options = null)
-            : base("onepassword:index:WirelessRouterItem", name, state, MakeResourceOptions(options, id))
+            : base("one-password-native:index:WirelessRouterItem", name, state, MakeResourceOptions(options, id))
         {
         }
 
@@ -139,7 +139,7 @@ namespace Pulumi.Onepassword
         }
 
         public Pulumi.Output<WirelessRouterItemGetAttachmentResult> GetAttachment(WirelessRouterItemGetAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<WirelessRouterItemGetAttachmentResult>("onepassword:index:WirelessRouterItem/attachment", args ?? new WirelessRouterItemGetAttachmentArgs(), this);
+            => Pulumi.Deployment.Instance.Call<WirelessRouterItemGetAttachmentResult>("one-password-native:index:WirelessRouterItem/attachment", args ?? new WirelessRouterItemGetAttachmentArgs(), this);
     }
 
     public sealed class WirelessRouterItemArgs : Pulumi.ResourceArgs

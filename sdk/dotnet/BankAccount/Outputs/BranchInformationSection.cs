@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword.BankAccount.Outputs
+namespace Pulumi.OnePasswordNative.BankAccount.Outputs
 {
 
     [OutputType]

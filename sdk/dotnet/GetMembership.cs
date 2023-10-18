@@ -7,15 +7,15 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword
+namespace Pulumi.OnePasswordNative
 {
     public static class GetMembership
     {
         public static Task<GetMembershipResult> InvokeAsync(GetMembershipArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.InvokeAsync<GetMembershipResult>("onepassword:index:GetMembership", args ?? new GetMembershipArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.InvokeAsync<GetMembershipResult>("one-password-native:index:GetMembership", args ?? new GetMembershipArgs(), options.WithDefaults());
 
         public static Output<GetMembershipResult> Invoke(GetMembershipInvokeArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.Invoke<GetMembershipResult>("onepassword:index:GetMembership", args ?? new GetMembershipInvokeArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.Invoke<GetMembershipResult>("one-password-native:index:GetMembership", args ?? new GetMembershipInvokeArgs(), options.WithDefaults());
     }
 
 

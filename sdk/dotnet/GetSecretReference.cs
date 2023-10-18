@@ -7,15 +7,15 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword
+namespace Pulumi.OnePasswordNative
 {
     public static class GetSecretReference
     {
         public static Task<GetSecretReferenceResult> InvokeAsync(GetSecretReferenceArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.InvokeAsync<GetSecretReferenceResult>("onepassword:index:GetSecretReference", args ?? new GetSecretReferenceArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.InvokeAsync<GetSecretReferenceResult>("one-password-native:index:GetSecretReference", args ?? new GetSecretReferenceArgs(), options.WithDefaults());
 
         public static Output<GetSecretReferenceResult> Invoke(GetSecretReferenceInvokeArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.Invoke<GetSecretReferenceResult>("onepassword:index:GetSecretReference", args ?? new GetSecretReferenceInvokeArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.Invoke<GetSecretReferenceResult>("one-password-native:index:GetSecretReference", args ?? new GetSecretReferenceInvokeArgs(), options.WithDefaults());
     }
 
 

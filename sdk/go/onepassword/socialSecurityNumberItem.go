@@ -55,7 +55,7 @@ func NewSocialSecurityNumberItem(ctx *pulumi.Context,
 	})
 	opts = append(opts, secrets)
 	var resource SocialSecurityNumberItem
-	err := ctx.RegisterResource("onepassword:index:SocialSecurityNumberItem", name, args, &resource, opts...)
+	err := ctx.RegisterResource("one-password-native:index:SocialSecurityNumberItem", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +67,7 @@ func NewSocialSecurityNumberItem(ctx *pulumi.Context,
 func GetSocialSecurityNumberItem(ctx *pulumi.Context,
 	name string, id pulumi.IDInput, state *SocialSecurityNumberItemState, opts ...pulumi.ResourceOption) (*SocialSecurityNumberItem, error) {
 	var resource SocialSecurityNumberItem
-	err := ctx.ReadResource("onepassword:index:SocialSecurityNumberItem", name, id, state, &resource, opts...)
+	err := ctx.ReadResource("one-password-native:index:SocialSecurityNumberItem", name, id, state, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +129,7 @@ func (SocialSecurityNumberItemArgs) ElementType() reflect.Type {
 }
 
 func (r *SocialSecurityNumberItem) GetAttachment(ctx *pulumi.Context, args *SocialSecurityNumberItemGetAttachmentArgs) (SocialSecurityNumberItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:SocialSecurityNumberItem/attachment", args, SocialSecurityNumberItemGetAttachmentResultOutput{}, r)
+	out, err := ctx.Call("one-password-native:index:SocialSecurityNumberItem/attachment", args, SocialSecurityNumberItemGetAttachmentResultOutput{}, r)
 	if err != nil {
 		return SocialSecurityNumberItemGetAttachmentResultOutput{}, err
 	}

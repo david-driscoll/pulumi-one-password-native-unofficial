@@ -7,15 +7,15 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword
+namespace Pulumi.OnePasswordNative
 {
     public static class GetCryptoWallet
     {
         public static Task<GetCryptoWalletResult> InvokeAsync(GetCryptoWalletArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.InvokeAsync<GetCryptoWalletResult>("onepassword:index:GetCryptoWallet", args ?? new GetCryptoWalletArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.InvokeAsync<GetCryptoWalletResult>("one-password-native:index:GetCryptoWallet", args ?? new GetCryptoWalletArgs(), options.WithDefaults());
 
         public static Output<GetCryptoWalletResult> Invoke(GetCryptoWalletInvokeArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.Invoke<GetCryptoWalletResult>("onepassword:index:GetCryptoWallet", args ?? new GetCryptoWalletInvokeArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.Invoke<GetCryptoWalletResult>("one-password-native:index:GetCryptoWallet", args ?? new GetCryptoWalletInvokeArgs(), options.WithDefaults());
     }
 
 
@@ -97,7 +97,7 @@ namespace Pulumi.Onepassword
         /// The UUID of the vault the item is in.
         /// </summary>
         public readonly string Vault;
-        public readonly Pulumi.Onepassword.CryptoWallet.Outputs.WalletSection? Wallet;
+        public readonly Pulumi.OnePasswordNative.CryptoWallet.Outputs.WalletSection? Wallet;
 
         [OutputConstructor]
         private GetCryptoWalletResult(
@@ -125,7 +125,7 @@ namespace Pulumi.Onepassword
 
             string vault,
 
-            Pulumi.Onepassword.CryptoWallet.Outputs.WalletSection? wallet)
+            Pulumi.OnePasswordNative.CryptoWallet.Outputs.WalletSection? wallet)
         {
             Attachments = attachments;
             Category = category;

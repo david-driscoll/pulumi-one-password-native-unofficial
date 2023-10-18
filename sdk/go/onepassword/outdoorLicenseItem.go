@@ -56,7 +56,7 @@ func NewOutdoorLicenseItem(ctx *pulumi.Context,
 	})
 	opts = append(opts, secrets)
 	var resource OutdoorLicenseItem
-	err := ctx.RegisterResource("onepassword:index:OutdoorLicenseItem", name, args, &resource, opts...)
+	err := ctx.RegisterResource("one-password-native:index:OutdoorLicenseItem", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +68,7 @@ func NewOutdoorLicenseItem(ctx *pulumi.Context,
 func GetOutdoorLicenseItem(ctx *pulumi.Context,
 	name string, id pulumi.IDInput, state *OutdoorLicenseItemState, opts ...pulumi.ResourceOption) (*OutdoorLicenseItem, error) {
 	var resource OutdoorLicenseItem
-	err := ctx.ReadResource("onepassword:index:OutdoorLicenseItem", name, id, state, &resource, opts...)
+	err := ctx.ReadResource("one-password-native:index:OutdoorLicenseItem", name, id, state, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -140,7 +140,7 @@ func (OutdoorLicenseItemArgs) ElementType() reflect.Type {
 }
 
 func (r *OutdoorLicenseItem) GetAttachment(ctx *pulumi.Context, args *OutdoorLicenseItemGetAttachmentArgs) (OutdoorLicenseItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:OutdoorLicenseItem/attachment", args, OutdoorLicenseItemGetAttachmentResultOutput{}, r)
+	out, err := ctx.Call("one-password-native:index:OutdoorLicenseItem/attachment", args, OutdoorLicenseItemGetAttachmentResultOutput{}, r)
 	if err != nil {
 		return OutdoorLicenseItemGetAttachmentResultOutput{}, err
 	}

@@ -13,7 +13,7 @@ import (
 
 func GetServer(ctx *pulumi.Context, args *GetServerArgs, opts ...pulumi.InvokeOption) (*GetServerResult, error) {
 	var rv GetServerResult
-	err := ctx.Invoke("onepassword:index:GetServer", args, &rv, opts...)
+	err := ctx.Invoke("one-password-native:index:GetServer", args, &rv, opts...)
 	if err != nil {
 		return nil, err
 	}

@@ -13,7 +13,7 @@ import (
 
 func GetCreditCard(ctx *pulumi.Context, args *GetCreditCardArgs, opts ...pulumi.InvokeOption) (*GetCreditCardResult, error) {
 	var rv GetCreditCardResult
-	err := ctx.Invoke("onepassword:index:GetCreditCard", args, &rv, opts...)
+	err := ctx.Invoke("one-password-native:index:GetCreditCard", args, &rv, opts...)
 	if err != nil {
 		return nil, err
 	}

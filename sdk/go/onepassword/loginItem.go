@@ -55,7 +55,7 @@ func NewLoginItem(ctx *pulumi.Context,
 	})
 	opts = append(opts, secrets)
 	var resource LoginItem
-	err := ctx.RegisterResource("onepassword:index:LoginItem", name, args, &resource, opts...)
+	err := ctx.RegisterResource("one-password-native:index:LoginItem", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +67,7 @@ func NewLoginItem(ctx *pulumi.Context,
 func GetLoginItem(ctx *pulumi.Context,
 	name string, id pulumi.IDInput, state *LoginItemState, opts ...pulumi.ResourceOption) (*LoginItem, error) {
 	var resource LoginItem
-	err := ctx.ReadResource("onepassword:index:LoginItem", name, id, state, &resource, opts...)
+	err := ctx.ReadResource("one-password-native:index:LoginItem", name, id, state, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -131,7 +131,7 @@ func (LoginItemArgs) ElementType() reflect.Type {
 }
 
 func (r *LoginItem) GetAttachment(ctx *pulumi.Context, args *LoginItemGetAttachmentArgs) (LoginItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:LoginItem/attachment", args, LoginItemGetAttachmentResultOutput{}, r)
+	out, err := ctx.Call("one-password-native:index:LoginItem/attachment", args, LoginItemGetAttachmentResultOutput{}, r)
 	if err != nil {
 		return LoginItemGetAttachmentResultOutput{}, err
 	}

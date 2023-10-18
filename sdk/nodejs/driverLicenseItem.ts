@@ -20,7 +20,7 @@ export class DriverLicenseItem extends pulumi.CustomResource {
     }
 
     /** @internal */
-    public static readonly __pulumiType = 'onepassword:index:DriverLicenseItem';
+    public static readonly __pulumiType = 'one-password-native:index:DriverLicenseItem';
 
     /**
      * Returns true if the given object is an instance of DriverLicenseItem.  This is designed to work even
@@ -115,7 +115,7 @@ export class DriverLicenseItem extends pulumi.CustomResource {
     }
 
     getAttachment(args: DriverLicenseItem.GetAttachmentArgs): pulumi.Output<DriverLicenseItem.GetAttachmentResult> {
-        return pulumi.runtime.call("onepassword:index:DriverLicenseItem/attachment", {
+        return pulumi.runtime.call("one-password-native:index:DriverLicenseItem/attachment", {
             "__self__": this,
             "name": args.name,
         }, this);

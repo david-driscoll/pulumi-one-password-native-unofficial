@@ -7,15 +7,15 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword
+namespace Pulumi.OnePasswordNative
 {
     public static class GetSoftwareLicense
     {
         public static Task<GetSoftwareLicenseResult> InvokeAsync(GetSoftwareLicenseArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.InvokeAsync<GetSoftwareLicenseResult>("onepassword:index:GetSoftwareLicense", args ?? new GetSoftwareLicenseArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.InvokeAsync<GetSoftwareLicenseResult>("one-password-native:index:GetSoftwareLicense", args ?? new GetSoftwareLicenseArgs(), options.WithDefaults());
 
         public static Output<GetSoftwareLicenseResult> Invoke(GetSoftwareLicenseInvokeArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.Invoke<GetSoftwareLicenseResult>("onepassword:index:GetSoftwareLicense", args ?? new GetSoftwareLicenseInvokeArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.Invoke<GetSoftwareLicenseResult>("one-password-native:index:GetSoftwareLicense", args ?? new GetSoftwareLicenseInvokeArgs(), options.WithDefaults());
     }
 
 
@@ -75,12 +75,12 @@ namespace Pulumi.Onepassword
     {
         public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
         public readonly string Category;
-        public readonly Pulumi.Onepassword.SoftwareLicense.Outputs.CustomerSection? Customer;
+        public readonly Pulumi.OnePasswordNative.SoftwareLicense.Outputs.CustomerSection? Customer;
         public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
         public readonly string? LicenseKey;
         public readonly string? Notes;
-        public readonly Pulumi.Onepassword.SoftwareLicense.Outputs.OrderSection? Order;
-        public readonly Pulumi.Onepassword.SoftwareLicense.Outputs.PublisherSection? Publisher;
+        public readonly Pulumi.OnePasswordNative.SoftwareLicense.Outputs.OrderSection? Order;
+        public readonly Pulumi.OnePasswordNative.SoftwareLicense.Outputs.PublisherSection? Publisher;
         public readonly ImmutableDictionary<string, Outputs.OutField> References;
         public readonly ImmutableDictionary<string, Outputs.OutSection> Sections;
         /// <summary>
@@ -107,7 +107,7 @@ namespace Pulumi.Onepassword
 
             string category,
 
-            Pulumi.Onepassword.SoftwareLicense.Outputs.CustomerSection? customer,
+            Pulumi.OnePasswordNative.SoftwareLicense.Outputs.CustomerSection? customer,
 
             ImmutableDictionary<string, Outputs.OutField> fields,
 
@@ -115,9 +115,9 @@ namespace Pulumi.Onepassword
 
             string? notes,
 
-            Pulumi.Onepassword.SoftwareLicense.Outputs.OrderSection? order,
+            Pulumi.OnePasswordNative.SoftwareLicense.Outputs.OrderSection? order,
 
-            Pulumi.Onepassword.SoftwareLicense.Outputs.PublisherSection? publisher,
+            Pulumi.OnePasswordNative.SoftwareLicense.Outputs.PublisherSection? publisher,
 
             ImmutableDictionary<string, Outputs.OutField> references,
 

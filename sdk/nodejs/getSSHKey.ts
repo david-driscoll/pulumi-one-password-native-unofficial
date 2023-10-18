@@ -11,7 +11,7 @@ export function getSSHKey(args: GetSSHKeyArgs, opts?: pulumi.InvokeOptions): Pro
     }
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-    return pulumi.runtime.invoke("onepassword:index:GetSSHKey", {
+    return pulumi.runtime.invoke("one-password-native:index:GetSSHKey", {
         "title": args.title,
         "uuid": args.uuid,
         "vault": args.vault,

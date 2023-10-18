@@ -7,9 +7,9 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword
+namespace Pulumi.OnePasswordNative
 {
-    [OnepasswordResourceType("onepassword:index:SecureNoteItem")]
+    [OnePasswordNativeResourceType("one-password-native:index:SecureNoteItem")]
     public partial class SecureNoteItem : Pulumi.CustomResource
     {
         [Output("attachments")]
@@ -63,12 +63,12 @@ namespace Pulumi.Onepassword
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public SecureNoteItem(string name, SecureNoteItemArgs args, CustomResourceOptions? options = null)
-            : base("onepassword:index:SecureNoteItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
+            : base("one-password-native:index:SecureNoteItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private SecureNoteItem(string name, Input<string> id, SecureNoteItemState? state = null, CustomResourceOptions? options = null)
-            : base("onepassword:index:SecureNoteItem", name, state, MakeResourceOptions(options, id))
+            : base("one-password-native:index:SecureNoteItem", name, state, MakeResourceOptions(options, id))
         {
         }
 
@@ -112,7 +112,7 @@ namespace Pulumi.Onepassword
         }
 
         public Pulumi.Output<SecureNoteItemGetAttachmentResult> GetAttachment(SecureNoteItemGetAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<SecureNoteItemGetAttachmentResult>("onepassword:index:SecureNoteItem/attachment", args ?? new SecureNoteItemGetAttachmentArgs(), this);
+            => Pulumi.Deployment.Instance.Call<SecureNoteItemGetAttachmentResult>("one-password-native:index:SecureNoteItem/attachment", args ?? new SecureNoteItemGetAttachmentArgs(), this);
     }
 
     public sealed class SecureNoteItemArgs : Pulumi.ResourceArgs

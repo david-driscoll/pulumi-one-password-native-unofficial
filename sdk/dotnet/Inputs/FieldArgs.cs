@@ -7,13 +7,13 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword.Inputs
+namespace Pulumi.OnePasswordNative.Inputs
 {
 
     public sealed class FieldArgs : Pulumi.ResourceArgs
     {
         [Input("type")]
-        public Input<Pulumi.Onepassword.FieldAssignmentType>? Type { get; set; }
+        public Input<Pulumi.OnePasswordNative.FieldAssignmentType>? Type { get; set; }
 
         [Input("value", required: true)]
         private Input<string>? _value;
@@ -29,7 +29,7 @@ namespace Pulumi.Onepassword.Inputs
 
         public FieldArgs()
         {
-            Type = Pulumi.Onepassword.FieldAssignmentType.Text;
+            Type = Pulumi.OnePasswordNative.FieldAssignmentType.Text;
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword.Inputs
+namespace Pulumi.OnePasswordNative.Inputs
 {
 
     public sealed class PasswordRecipeArgs : Pulumi.ResourceArgs

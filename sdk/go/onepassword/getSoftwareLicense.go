@@ -13,7 +13,7 @@ import (
 
 func GetSoftwareLicense(ctx *pulumi.Context, args *GetSoftwareLicenseArgs, opts ...pulumi.InvokeOption) (*GetSoftwareLicenseResult, error) {
 	var rv GetSoftwareLicenseResult
-	err := ctx.Invoke("onepassword:index:GetSoftwareLicense", args, &rv, opts...)
+	err := ctx.Invoke("one-password-native:index:GetSoftwareLicense", args, &rv, opts...)
 	if err != nil {
 		return nil, err
 	}

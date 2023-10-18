@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword.EmailAccount.Outputs
+namespace Pulumi.OnePasswordNative.EmailAccount.Outputs
 {
 
     [OutputType]

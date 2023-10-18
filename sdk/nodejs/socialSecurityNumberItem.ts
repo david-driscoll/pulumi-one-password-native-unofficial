@@ -20,7 +20,7 @@ export class SocialSecurityNumberItem extends pulumi.CustomResource {
     }
 
     /** @internal */
-    public static readonly __pulumiType = 'onepassword:index:SocialSecurityNumberItem';
+    public static readonly __pulumiType = 'one-password-native:index:SocialSecurityNumberItem';
 
     /**
      * Returns true if the given object is an instance of SocialSecurityNumberItem.  This is designed to work even
@@ -97,7 +97,7 @@ export class SocialSecurityNumberItem extends pulumi.CustomResource {
     }
 
     getAttachment(args: SocialSecurityNumberItem.GetAttachmentArgs): pulumi.Output<SocialSecurityNumberItem.GetAttachmentResult> {
-        return pulumi.runtime.call("onepassword:index:SocialSecurityNumberItem/attachment", {
+        return pulumi.runtime.call("one-password-native:index:SocialSecurityNumberItem/attachment", {
             "__self__": this,
             "name": args.name,
         }, this);

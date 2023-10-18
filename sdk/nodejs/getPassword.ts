@@ -11,7 +11,7 @@ export function getPassword(args: GetPasswordArgs, opts?: pulumi.InvokeOptions):
     }
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-    return pulumi.runtime.invoke("onepassword:index:GetPassword", {
+    return pulumi.runtime.invoke("one-password-native:index:GetPassword", {
         "title": args.title,
         "uuid": args.uuid,
         "vault": args.vault,

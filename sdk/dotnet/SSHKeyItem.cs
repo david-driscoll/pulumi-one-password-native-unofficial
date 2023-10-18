@@ -7,9 +7,9 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword
+namespace Pulumi.OnePasswordNative
 {
-    [OnepasswordResourceType("onepassword:index:SSHKeyItem")]
+    [OnePasswordNativeResourceType("one-password-native:index:SSHKeyItem")]
     public partial class SSHKeyItem : Pulumi.CustomResource
     {
         [Output("attachments")]
@@ -66,12 +66,12 @@ namespace Pulumi.Onepassword
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public SSHKeyItem(string name, SSHKeyItemArgs args, CustomResourceOptions? options = null)
-            : base("onepassword:index:SSHKeyItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
+            : base("one-password-native:index:SSHKeyItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private SSHKeyItem(string name, Input<string> id, SSHKeyItemState? state = null, CustomResourceOptions? options = null)
-            : base("onepassword:index:SSHKeyItem", name, state, MakeResourceOptions(options, id))
+            : base("one-password-native:index:SSHKeyItem", name, state, MakeResourceOptions(options, id))
         {
         }
 
@@ -115,7 +115,7 @@ namespace Pulumi.Onepassword
         }
 
         public Pulumi.Output<SSHKeyItemGetAttachmentResult> GetAttachment(SSHKeyItemGetAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<SSHKeyItemGetAttachmentResult>("onepassword:index:SSHKeyItem/attachment", args ?? new SSHKeyItemGetAttachmentArgs(), this);
+            => Pulumi.Deployment.Instance.Call<SSHKeyItemGetAttachmentResult>("one-password-native:index:SSHKeyItem/attachment", args ?? new SSHKeyItemGetAttachmentArgs(), this);
     }
 
     public sealed class SSHKeyItemArgs : Pulumi.ResourceArgs

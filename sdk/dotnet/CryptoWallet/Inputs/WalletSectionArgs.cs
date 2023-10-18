@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword.CryptoWallet.Inputs
+namespace Pulumi.OnePasswordNative.CryptoWallet.Inputs
 {
 
     public sealed class WalletSectionArgs : Pulumi.ResourceArgs

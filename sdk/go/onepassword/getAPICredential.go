@@ -12,7 +12,7 @@ import (
 
 func GetAPICredential(ctx *pulumi.Context, args *GetAPICredentialArgs, opts ...pulumi.InvokeOption) (*GetAPICredentialResult, error) {
 	var rv GetAPICredentialResult
-	err := ctx.Invoke("onepassword:index:GetAPICredential", args, &rv, opts...)
+	err := ctx.Invoke("one-password-native:index:GetAPICredential", args, &rv, opts...)
 	if err != nil {
 		return nil, err
 	}

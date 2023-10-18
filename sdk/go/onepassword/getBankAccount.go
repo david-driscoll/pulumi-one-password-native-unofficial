@@ -13,7 +13,7 @@ import (
 
 func GetBankAccount(ctx *pulumi.Context, args *GetBankAccountArgs, opts ...pulumi.InvokeOption) (*GetBankAccountResult, error) {
 	var rv GetBankAccountResult
-	err := ctx.Invoke("onepassword:index:GetBankAccount", args, &rv, opts...)
+	err := ctx.Invoke("one-password-native:index:GetBankAccount", args, &rv, opts...)
 	if err != nil {
 		return nil, err
 	}

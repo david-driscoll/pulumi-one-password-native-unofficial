@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword.Identity.Inputs
+namespace Pulumi.OnePasswordNative.Identity.Inputs
 {
 
     public sealed class InternetDetailsSectionArgs : Pulumi.ResourceArgs

@@ -12,7 +12,7 @@ import (
 
 func LookupItem(ctx *pulumi.Context, args *LookupItemArgs, opts ...pulumi.InvokeOption) (*LookupItemResult, error) {
 	var rv LookupItemResult
-	err := ctx.Invoke("onepassword:index:GetItem", args, &rv, opts...)
+	err := ctx.Invoke("one-password-native:index:GetItem", args, &rv, opts...)
 	if err != nil {
 		return nil, err
 	}

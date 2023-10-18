@@ -13,7 +13,7 @@ import (
 
 func GetIdentity(ctx *pulumi.Context, args *GetIdentityArgs, opts ...pulumi.InvokeOption) (*GetIdentityResult, error) {
 	var rv GetIdentityResult
-	err := ctx.Invoke("onepassword:index:GetIdentity", args, &rv, opts...)
+	err := ctx.Invoke("one-password-native:index:GetIdentity", args, &rv, opts...)
 	if err != nil {
 		return nil, err
 	}

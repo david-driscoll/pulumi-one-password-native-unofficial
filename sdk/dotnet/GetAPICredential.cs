@@ -7,15 +7,15 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword
+namespace Pulumi.OnePasswordNative
 {
     public static class GetAPICredential
     {
         public static Task<GetAPICredentialResult> InvokeAsync(GetAPICredentialArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.InvokeAsync<GetAPICredentialResult>("onepassword:index:GetAPICredential", args ?? new GetAPICredentialArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.InvokeAsync<GetAPICredentialResult>("one-password-native:index:GetAPICredential", args ?? new GetAPICredentialArgs(), options.WithDefaults());
 
         public static Output<GetAPICredentialResult> Invoke(GetAPICredentialInvokeArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.Invoke<GetAPICredentialResult>("onepassword:index:GetAPICredential", args ?? new GetAPICredentialInvokeArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.Invoke<GetAPICredentialResult>("one-password-native:index:GetAPICredential", args ?? new GetAPICredentialInvokeArgs(), options.WithDefaults());
     }
 
 

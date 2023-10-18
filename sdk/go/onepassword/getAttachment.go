@@ -12,7 +12,7 @@ import (
 
 func GetAttachment(ctx *pulumi.Context, args *GetAttachmentArgs, opts ...pulumi.InvokeOption) (*GetAttachmentResult, error) {
 	var rv GetAttachmentResult
-	err := ctx.Invoke("onepassword:index:GetAttachment", args, &rv, opts...)
+	err := ctx.Invoke("one-password-native:index:GetAttachment", args, &rv, opts...)
 	if err != nil {
 		return nil, err
 	}

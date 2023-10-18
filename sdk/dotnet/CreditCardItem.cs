@@ -7,13 +7,13 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword
+namespace Pulumi.OnePasswordNative
 {
-    [OnepasswordResourceType("onepassword:index:CreditCardItem")]
+    [OnePasswordNativeResourceType("one-password-native:index:CreditCardItem")]
     public partial class CreditCardItem : Pulumi.CustomResource
     {
         [Output("additionalDetails")]
-        public Output<Pulumi.Onepassword.CreditCard.Outputs.AdditionalDetailsSection?> AdditionalDetails { get; private set; } = null!;
+        public Output<Pulumi.OnePasswordNative.CreditCard.Outputs.AdditionalDetailsSection?> AdditionalDetails { get; private set; } = null!;
 
         [Output("attachments")]
         public Output<ImmutableDictionary<string, Outputs.OutField>> Attachments { get; private set; } = null!;
@@ -25,7 +25,7 @@ namespace Pulumi.Onepassword
         public Output<string> Category { get; private set; } = null!;
 
         [Output("contactInformation")]
-        public Output<Pulumi.Onepassword.CreditCard.Outputs.ContactInformationSection?> ContactInformation { get; private set; } = null!;
+        public Output<Pulumi.OnePasswordNative.CreditCard.Outputs.ContactInformationSection?> ContactInformation { get; private set; } = null!;
 
         [Output("expiryDate")]
         public Output<string?> ExpiryDate { get; private set; } = null!;
@@ -87,12 +87,12 @@ namespace Pulumi.Onepassword
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public CreditCardItem(string name, CreditCardItemArgs args, CustomResourceOptions? options = null)
-            : base("onepassword:index:CreditCardItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
+            : base("one-password-native:index:CreditCardItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private CreditCardItem(string name, Input<string> id, CreditCardItemState? state = null, CustomResourceOptions? options = null)
-            : base("onepassword:index:CreditCardItem", name, state, MakeResourceOptions(options, id))
+            : base("one-password-native:index:CreditCardItem", name, state, MakeResourceOptions(options, id))
         {
         }
 
@@ -138,13 +138,13 @@ namespace Pulumi.Onepassword
         }
 
         public Pulumi.Output<CreditCardItemGetAttachmentResult> GetAttachment(CreditCardItemGetAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<CreditCardItemGetAttachmentResult>("onepassword:index:CreditCardItem/attachment", args ?? new CreditCardItemGetAttachmentArgs(), this);
+            => Pulumi.Deployment.Instance.Call<CreditCardItemGetAttachmentResult>("one-password-native:index:CreditCardItem/attachment", args ?? new CreditCardItemGetAttachmentArgs(), this);
     }
 
     public sealed class CreditCardItemArgs : Pulumi.ResourceArgs
     {
         [Input("additionalDetails")]
-        public Input<Pulumi.Onepassword.CreditCard.Inputs.AdditionalDetailsSectionArgs>? AdditionalDetails { get; set; }
+        public Input<Pulumi.OnePasswordNative.CreditCard.Inputs.AdditionalDetailsSectionArgs>? AdditionalDetails { get; set; }
 
         [Input("attachments")]
         private InputMap<AssetOrArchive>? _attachments;
@@ -164,7 +164,7 @@ namespace Pulumi.Onepassword
         public Input<string>? Category { get; set; }
 
         [Input("contactInformation")]
-        public Input<Pulumi.Onepassword.CreditCard.Inputs.ContactInformationSectionArgs>? ContactInformation { get; set; }
+        public Input<Pulumi.OnePasswordNative.CreditCard.Inputs.ContactInformationSectionArgs>? ContactInformation { get; set; }
 
         [Input("expiryDate")]
         public Input<string>? ExpiryDate { get; set; }

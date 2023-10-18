@@ -7,9 +7,9 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword
+namespace Pulumi.OnePasswordNative
 {
-    [OnepasswordResourceType("onepassword:index:Item")]
+    [OnePasswordNativeResourceType("one-password-native:index:Item")]
     public partial class Item : Pulumi.CustomResource
     {
         [Output("attachments")]
@@ -60,12 +60,12 @@ namespace Pulumi.Onepassword
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public Item(string name, ItemArgs args, CustomResourceOptions? options = null)
-            : base("onepassword:index:Item", name, args ?? new ItemArgs(), MakeResourceOptions(options, ""))
+            : base("one-password-native:index:Item", name, args ?? new ItemArgs(), MakeResourceOptions(options, ""))
         {
         }
 
         private Item(string name, Input<string> id, ItemState? state = null, CustomResourceOptions? options = null)
-            : base("onepassword:index:Item", name, state, MakeResourceOptions(options, id))
+            : base("one-password-native:index:Item", name, state, MakeResourceOptions(options, id))
         {
         }
 
@@ -102,7 +102,7 @@ namespace Pulumi.Onepassword
         }
 
         public Pulumi.Output<ItemGetAttachmentResult> GetAttachment(ItemGetAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<ItemGetAttachmentResult>("onepassword:index:Item/attachment", args ?? new ItemGetAttachmentArgs(), this);
+            => Pulumi.Deployment.Instance.Call<ItemGetAttachmentResult>("one-password-native:index:Item/attachment", args ?? new ItemGetAttachmentArgs(), this);
     }
 
     public sealed class ItemArgs : Pulumi.ResourceArgs
@@ -116,7 +116,7 @@ namespace Pulumi.Onepassword
         }
 
         [Input("category")]
-        public InputUnion<Pulumi.Onepassword.Category, string>? Category { get; set; }
+        public InputUnion<Pulumi.OnePasswordNative.Category, string>? Category { get; set; }
 
         [Input("fields")]
         private InputMap<Inputs.FieldArgs>? _fields;

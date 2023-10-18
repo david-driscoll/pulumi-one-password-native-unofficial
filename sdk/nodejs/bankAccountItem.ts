@@ -20,7 +20,7 @@ export class BankAccountItem extends pulumi.CustomResource {
     }
 
     /** @internal */
-    public static readonly __pulumiType = 'onepassword:index:BankAccountItem';
+    public static readonly __pulumiType = 'one-password-native:index:BankAccountItem';
 
     /**
      * Returns true if the given object is an instance of BankAccountItem.  This is designed to work even
@@ -111,7 +111,7 @@ export class BankAccountItem extends pulumi.CustomResource {
     }
 
     getAttachment(args: BankAccountItem.GetAttachmentArgs): pulumi.Output<BankAccountItem.GetAttachmentResult> {
-        return pulumi.runtime.call("onepassword:index:BankAccountItem/attachment", {
+        return pulumi.runtime.call("one-password-native:index:BankAccountItem/attachment", {
             "__self__": this,
             "name": args.name,
         }, this);

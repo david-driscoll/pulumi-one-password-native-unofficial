@@ -12,7 +12,7 @@ import (
 
 func GetWirelessRouter(ctx *pulumi.Context, args *GetWirelessRouterArgs, opts ...pulumi.InvokeOption) (*GetWirelessRouterResult, error) {
 	var rv GetWirelessRouterResult
-	err := ctx.Invoke("onepassword:index:GetWirelessRouter", args, &rv, opts...)
+	err := ctx.Invoke("one-password-native:index:GetWirelessRouter", args, &rv, opts...)
 	if err != nil {
 		return nil, err
 	}

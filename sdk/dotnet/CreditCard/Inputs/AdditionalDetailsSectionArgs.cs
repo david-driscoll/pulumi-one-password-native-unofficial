@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword.CreditCard.Inputs
+namespace Pulumi.OnePasswordNative.CreditCard.Inputs
 {
 
     public sealed class AdditionalDetailsSectionArgs : Pulumi.ResourceArgs

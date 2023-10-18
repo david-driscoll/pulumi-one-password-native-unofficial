@@ -11,7 +11,7 @@ export function getBankAccount(args: GetBankAccountArgs, opts?: pulumi.InvokeOpt
     }
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-    return pulumi.runtime.invoke("onepassword:index:GetBankAccount", {
+    return pulumi.runtime.invoke("one-password-native:index:GetBankAccount", {
         "title": args.title,
         "uuid": args.uuid,
         "vault": args.vault,

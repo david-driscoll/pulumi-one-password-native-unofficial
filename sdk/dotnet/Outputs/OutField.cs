@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword.Outputs
+namespace Pulumi.OnePasswordNative.Outputs
 {
 
     [OutputType]
@@ -15,7 +15,7 @@ namespace Pulumi.Onepassword.Outputs
     {
         public readonly string Label;
         public readonly string Reference;
-        public readonly Pulumi.Onepassword.ResponseFieldType Type;
+        public readonly Pulumi.OnePasswordNative.ResponseFieldType Type;
         public readonly string Uuid;
         public readonly string Value;
 
@@ -25,7 +25,7 @@ namespace Pulumi.Onepassword.Outputs
 
             string reference,
 
-            Pulumi.Onepassword.ResponseFieldType type,
+            Pulumi.OnePasswordNative.ResponseFieldType type,
 
             string uuid,
 

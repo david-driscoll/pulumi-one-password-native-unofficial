@@ -62,7 +62,7 @@ func NewDatabaseItem(ctx *pulumi.Context,
 	})
 	opts = append(opts, secrets)
 	var resource DatabaseItem
-	err := ctx.RegisterResource("onepassword:index:DatabaseItem", name, args, &resource, opts...)
+	err := ctx.RegisterResource("one-password-native:index:DatabaseItem", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -74,7 +74,7 @@ func NewDatabaseItem(ctx *pulumi.Context,
 func GetDatabaseItem(ctx *pulumi.Context,
 	name string, id pulumi.IDInput, state *DatabaseItemState, opts ...pulumi.ResourceOption) (*DatabaseItem, error) {
 	var resource DatabaseItem
-	err := ctx.ReadResource("onepassword:index:DatabaseItem", name, id, state, &resource, opts...)
+	err := ctx.ReadResource("one-password-native:index:DatabaseItem", name, id, state, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -150,7 +150,7 @@ func (DatabaseItemArgs) ElementType() reflect.Type {
 }
 
 func (r *DatabaseItem) GetAttachment(ctx *pulumi.Context, args *DatabaseItemGetAttachmentArgs) (DatabaseItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("onepassword:index:DatabaseItem/attachment", args, DatabaseItemGetAttachmentResultOutput{}, r)
+	out, err := ctx.Call("one-password-native:index:DatabaseItem/attachment", args, DatabaseItemGetAttachmentResultOutput{}, r)
 	if err != nil {
 		return DatabaseItemGetAttachmentResultOutput{}, err
 	}

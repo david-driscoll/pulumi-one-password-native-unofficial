@@ -7,9 +7,9 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword
+namespace Pulumi.OnePasswordNative
 {
-    [OnepasswordResourceType("onepassword:index:DatabaseItem")]
+    [OnePasswordNativeResourceType("one-password-native:index:DatabaseItem")]
     public partial class DatabaseItem : Pulumi.CustomResource
     {
         [Output("alias")]
@@ -90,12 +90,12 @@ namespace Pulumi.Onepassword
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public DatabaseItem(string name, DatabaseItemArgs args, CustomResourceOptions? options = null)
-            : base("onepassword:index:DatabaseItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
+            : base("one-password-native:index:DatabaseItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private DatabaseItem(string name, Input<string> id, DatabaseItemState? state = null, CustomResourceOptions? options = null)
-            : base("onepassword:index:DatabaseItem", name, state, MakeResourceOptions(options, id))
+            : base("one-password-native:index:DatabaseItem", name, state, MakeResourceOptions(options, id))
         {
         }
 
@@ -140,7 +140,7 @@ namespace Pulumi.Onepassword
         }
 
         public Pulumi.Output<DatabaseItemGetAttachmentResult> GetAttachment(DatabaseItemGetAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<DatabaseItemGetAttachmentResult>("onepassword:index:DatabaseItem/attachment", args ?? new DatabaseItemGetAttachmentArgs(), this);
+            => Pulumi.Deployment.Instance.Call<DatabaseItemGetAttachmentResult>("one-password-native:index:DatabaseItem/attachment", args ?? new DatabaseItemGetAttachmentArgs(), this);
     }
 
     public sealed class DatabaseItemArgs : Pulumi.ResourceArgs

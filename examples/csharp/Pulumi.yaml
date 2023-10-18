@@ -3,6 +3,6 @@ runtime: dotnet
 description: A minimal C# Pulumi program
 plugins:
   providers:
-    - name: onepassword
-      path: ../../provider/cmd/pulumi-resource-onepassword/
+    - name: one-password-native
+      path: ../../provider/cmd/pulumi-resource-one-password-native/
 

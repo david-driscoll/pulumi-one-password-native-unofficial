@@ -7,9 +7,9 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword
+namespace Pulumi.OnePasswordNative
 {
-    [OnepasswordResourceType("onepassword:index:APICredentialItem")]
+    [OnePasswordNativeResourceType("one-password-native:index:APICredentialItem")]
     public partial class APICredentialItem : Pulumi.CustomResource
     {
         [Output("attachments")]
@@ -84,12 +84,12 @@ namespace Pulumi.Onepassword
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public APICredentialItem(string name, APICredentialItemArgs args, CustomResourceOptions? options = null)
-            : base("onepassword:index:APICredentialItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
+            : base("one-password-native:index:APICredentialItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private APICredentialItem(string name, Input<string> id, APICredentialItemState? state = null, CustomResourceOptions? options = null)
-            : base("onepassword:index:APICredentialItem", name, state, MakeResourceOptions(options, id))
+            : base("one-password-native:index:APICredentialItem", name, state, MakeResourceOptions(options, id))
         {
         }
 
@@ -134,7 +134,7 @@ namespace Pulumi.Onepassword
         }
 
         public Pulumi.Output<APICredentialItemGetAttachmentResult> GetAttachment(APICredentialItemGetAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<APICredentialItemGetAttachmentResult>("onepassword:index:APICredentialItem/attachment", args ?? new APICredentialItemGetAttachmentArgs(), this);
+            => Pulumi.Deployment.Instance.Call<APICredentialItemGetAttachmentResult>("one-password-native:index:APICredentialItem/attachment", args ?? new APICredentialItemGetAttachmentArgs(), this);
     }
 
     public sealed class APICredentialItemArgs : Pulumi.ResourceArgs

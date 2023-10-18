@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword.EmailAccount.Inputs
+namespace Pulumi.OnePasswordNative.EmailAccount.Inputs
 {
 
     public sealed class ContactInformationSectionArgs : Pulumi.ResourceArgs

@@ -13,7 +13,7 @@ import (
 
 func GetCryptoWallet(ctx *pulumi.Context, args *GetCryptoWalletArgs, opts ...pulumi.InvokeOption) (*GetCryptoWalletResult, error) {
 	var rv GetCryptoWalletResult
-	err := ctx.Invoke("onepassword:index:GetCryptoWallet", args, &rv, opts...)
+	err := ctx.Invoke("one-password-native:index:GetCryptoWallet", args, &rv, opts...)
 	if err != nil {
 		return nil, err
 	}

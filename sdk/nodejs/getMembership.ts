@@ -11,7 +11,7 @@ export function getMembership(args: GetMembershipArgs, opts?: pulumi.InvokeOptio
     }
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-    return pulumi.runtime.invoke("onepassword:index:GetMembership", {
+    return pulumi.runtime.invoke("one-password-native:index:GetMembership", {
         "title": args.title,
         "uuid": args.uuid,
         "vault": args.vault,

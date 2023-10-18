@@ -7,9 +7,9 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Onepassword
+namespace Pulumi.OnePasswordNative
 {
-    [OnepasswordResourceType("onepassword:index:RewardProgramItem")]
+    [OnePasswordNativeResourceType("one-password-native:index:RewardProgramItem")]
     public partial class RewardProgramItem : Pulumi.CustomResource
     {
         [Output("attachments")]
@@ -31,7 +31,7 @@ namespace Pulumi.Onepassword
         public Output<string?> MemberName { get; private set; } = null!;
 
         [Output("moreInformation")]
-        public Output<Pulumi.Onepassword.RewardProgram.Outputs.MoreInformationSection?> MoreInformation { get; private set; } = null!;
+        public Output<Pulumi.OnePasswordNative.RewardProgram.Outputs.MoreInformationSection?> MoreInformation { get; private set; } = null!;
 
         [Output("notes")]
         public Output<string?> Notes { get; private set; } = null!;
@@ -78,12 +78,12 @@ namespace Pulumi.Onepassword
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public RewardProgramItem(string name, RewardProgramItemArgs args, CustomResourceOptions? options = null)
-            : base("onepassword:index:RewardProgramItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
+            : base("one-password-native:index:RewardProgramItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private RewardProgramItem(string name, Input<string> id, RewardProgramItemState? state = null, CustomResourceOptions? options = null)
-            : base("onepassword:index:RewardProgramItem", name, state, MakeResourceOptions(options, id))
+            : base("one-password-native:index:RewardProgramItem", name, state, MakeResourceOptions(options, id))
         {
         }
 
@@ -128,7 +128,7 @@ namespace Pulumi.Onepassword
         }
 
         public Pulumi.Output<RewardProgramItemGetAttachmentResult> GetAttachment(RewardProgramItemGetAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<RewardProgramItemGetAttachmentResult>("onepassword:index:RewardProgramItem/attachment", args ?? new RewardProgramItemGetAttachmentArgs(), this);
+            => Pulumi.Deployment.Instance.Call<RewardProgramItemGetAttachmentResult>("one-password-native:index:RewardProgramItem/attachment", args ?? new RewardProgramItemGetAttachmentArgs(), this);
     }
 
     public sealed class RewardProgramItemArgs : Pulumi.ResourceArgs
@@ -165,7 +165,7 @@ namespace Pulumi.Onepassword
         public Input<string>? MemberName { get; set; }
 
         [Input("moreInformation")]
-        public Input<Pulumi.Onepassword.RewardProgram.Inputs.MoreInformationSectionArgs>? MoreInformation { get; set; }
+        public Input<Pulumi.OnePasswordNative.RewardProgram.Inputs.MoreInformationSectionArgs>? MoreInformation { get; set; }
 
         [Input("notes")]
         public Input<string>? Notes { get; set; }
