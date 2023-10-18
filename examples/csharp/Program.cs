@@ -46,7 +46,7 @@ return await Deployment.RunAsync(() =>
       Pin = "12345"
    });
 
-   login.Attachment(new() { Name = "my-attachment" }).Apply(z =>
+   login.GetAttachment(new() { Name = "my-attachment" }).Apply(z =>
    {
       Log.Info(z.Value);
       return z.Value;

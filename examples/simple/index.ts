@@ -132,7 +132,7 @@ login.fields.apply(z => {
 })
 
 login.attachments.apply(z => z['my-attachment'].reference).apply(reference => op.getAttachment({ reference }))
-    // login.attachment({ name: 'my-attachment' })
+    // login.getAttachment({ name: 'my-attachment' })
     .apply(z => {
         console.log(z.value)
         return Promise.resolve(z.value);
