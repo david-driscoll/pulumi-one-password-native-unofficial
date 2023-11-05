@@ -1,4 +1,4 @@
-module github.com/pulumi/pulumi-onepassword/sdk
+module david-driscoll/pulumi-onepassword/sdk
 
 go 1.17
 
