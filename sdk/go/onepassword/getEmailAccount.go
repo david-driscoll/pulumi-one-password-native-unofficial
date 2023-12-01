@@ -7,7 +7,7 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pulumi/pulumi-onepassword/sdk/go/onepassword/emailaccount"
+	"github.com/Sacro/pulumi-onepassword/sdk/go/onepassword/emailaccount"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
