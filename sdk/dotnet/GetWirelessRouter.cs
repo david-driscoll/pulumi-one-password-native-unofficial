@@ -7,15 +7,15 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative
+namespace Pulumi.OnePasswordNativeUnoffical
 {
     public static class GetWirelessRouter
     {
         public static Task<GetWirelessRouterResult> InvokeAsync(GetWirelessRouterArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.InvokeAsync<GetWirelessRouterResult>("one-password-native:index:GetWirelessRouter", args ?? new GetWirelessRouterArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.InvokeAsync<GetWirelessRouterResult>("one-password-native-unoffical:index:GetWirelessRouter", args ?? new GetWirelessRouterArgs(), options.WithDefaults());
 
         public static Output<GetWirelessRouterResult> Invoke(GetWirelessRouterInvokeArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.Invoke<GetWirelessRouterResult>("one-password-native:index:GetWirelessRouter", args ?? new GetWirelessRouterInvokeArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.Invoke<GetWirelessRouterResult>("one-password-native-unoffical:index:GetWirelessRouter", args ?? new GetWirelessRouterInvokeArgs(), options.WithDefaults());
     }
 
 

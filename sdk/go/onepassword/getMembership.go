@@ -12,7 +12,7 @@ import (
 
 func GetMembership(ctx *pulumi.Context, args *GetMembershipArgs, opts ...pulumi.InvokeOption) (*GetMembershipResult, error) {
 	var rv GetMembershipResult
-	err := ctx.Invoke("one-password-native:index:GetMembership", args, &rv, opts...)
+	err := ctx.Invoke("one-password-native-unoffical:index:GetMembership", args, &rv, opts...)
 	if err != nil {
 		return nil, err
 	}

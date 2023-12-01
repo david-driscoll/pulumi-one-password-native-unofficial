@@ -10,7 +10,7 @@ export function getAttachment(args: GetAttachmentArgs, opts?: pulumi.InvokeOptio
     }
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-    return pulumi.runtime.invoke("one-password-native:index:GetAttachment", {
+    return pulumi.runtime.invoke("one-password-native-unoffical:index:GetAttachment", {
         "reference": args.reference,
     }, opts);
 }

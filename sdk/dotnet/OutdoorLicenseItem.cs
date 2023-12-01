@@ -7,9 +7,9 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative
+namespace Pulumi.OnePasswordNativeUnoffical
 {
-    [OnePasswordNativeResourceType("one-password-native:index:OutdoorLicenseItem")]
+    [OnePasswordNativeUnofficalResourceType("one-password-native-unoffical:index:OutdoorLicenseItem")]
     public partial class OutdoorLicenseItem : Pulumi.CustomResource
     {
         [Output("approvedWildlife")]
@@ -84,12 +84,12 @@ namespace Pulumi.OnePasswordNative
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public OutdoorLicenseItem(string name, OutdoorLicenseItemArgs args, CustomResourceOptions? options = null)
-            : base("one-password-native:index:OutdoorLicenseItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
+            : base("one-password-native-unoffical:index:OutdoorLicenseItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private OutdoorLicenseItem(string name, Input<string> id, OutdoorLicenseItemState? state = null, CustomResourceOptions? options = null)
-            : base("one-password-native:index:OutdoorLicenseItem", name, state, MakeResourceOptions(options, id))
+            : base("one-password-native-unoffical:index:OutdoorLicenseItem", name, state, MakeResourceOptions(options, id))
         {
         }
 
@@ -133,7 +133,7 @@ namespace Pulumi.OnePasswordNative
         }
 
         public Pulumi.Output<OutdoorLicenseItemGetAttachmentResult> GetAttachment(OutdoorLicenseItemGetAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<OutdoorLicenseItemGetAttachmentResult>("one-password-native:index:OutdoorLicenseItem/attachment", args ?? new OutdoorLicenseItemGetAttachmentArgs(), this);
+            => Pulumi.Deployment.Instance.Call<OutdoorLicenseItemGetAttachmentResult>("one-password-native-unoffical:index:OutdoorLicenseItem/attachment", args ?? new OutdoorLicenseItemGetAttachmentArgs(), this);
     }
 
     public sealed class OutdoorLicenseItemArgs : Pulumi.ResourceArgs

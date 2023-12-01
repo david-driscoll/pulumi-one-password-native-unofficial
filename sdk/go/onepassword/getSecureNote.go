@@ -12,7 +12,7 @@ import (
 
 func GetSecureNote(ctx *pulumi.Context, args *GetSecureNoteArgs, opts ...pulumi.InvokeOption) (*GetSecureNoteResult, error) {
 	var rv GetSecureNoteResult
-	err := ctx.Invoke("one-password-native:index:GetSecureNote", args, &rv, opts...)
+	err := ctx.Invoke("one-password-native-unoffical:index:GetSecureNote", args, &rv, opts...)
 	if err != nil {
 		return nil, err
 	}

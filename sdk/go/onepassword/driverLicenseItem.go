@@ -60,7 +60,7 @@ func NewDriverLicenseItem(ctx *pulumi.Context,
 	})
 	opts = append(opts, secrets)
 	var resource DriverLicenseItem
-	err := ctx.RegisterResource("one-password-native:index:DriverLicenseItem", name, args, &resource, opts...)
+	err := ctx.RegisterResource("one-password-native-unoffical:index:DriverLicenseItem", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +72,7 @@ func NewDriverLicenseItem(ctx *pulumi.Context,
 func GetDriverLicenseItem(ctx *pulumi.Context,
 	name string, id pulumi.IDInput, state *DriverLicenseItemState, opts ...pulumi.ResourceOption) (*DriverLicenseItem, error) {
 	var resource DriverLicenseItem
-	err := ctx.ReadResource("one-password-native:index:DriverLicenseItem", name, id, state, &resource, opts...)
+	err := ctx.ReadResource("one-password-native-unoffical:index:DriverLicenseItem", name, id, state, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -152,7 +152,7 @@ func (DriverLicenseItemArgs) ElementType() reflect.Type {
 }
 
 func (r *DriverLicenseItem) GetAttachment(ctx *pulumi.Context, args *DriverLicenseItemGetAttachmentArgs) (DriverLicenseItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("one-password-native:index:DriverLicenseItem/attachment", args, DriverLicenseItemGetAttachmentResultOutput{}, r)
+	out, err := ctx.Call("one-password-native-unoffical:index:DriverLicenseItem/attachment", args, DriverLicenseItemGetAttachmentResultOutput{}, r)
 	if err != nil {
 		return DriverLicenseItemGetAttachmentResultOutput{}, err
 	}

@@ -12,7 +12,7 @@ import (
 
 func GetPassport(ctx *pulumi.Context, args *GetPassportArgs, opts ...pulumi.InvokeOption) (*GetPassportResult, error) {
 	var rv GetPassportResult
-	err := ctx.Invoke("one-password-native:index:GetPassport", args, &rv, opts...)
+	err := ctx.Invoke("one-password-native-unoffical:index:GetPassport", args, &rv, opts...)
 	if err != nil {
 		return nil, err
 	}

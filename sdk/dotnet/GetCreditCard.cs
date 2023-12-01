@@ -7,15 +7,15 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative
+namespace Pulumi.OnePasswordNativeUnoffical
 {
     public static class GetCreditCard
     {
         public static Task<GetCreditCardResult> InvokeAsync(GetCreditCardArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.InvokeAsync<GetCreditCardResult>("one-password-native:index:GetCreditCard", args ?? new GetCreditCardArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.InvokeAsync<GetCreditCardResult>("one-password-native-unoffical:index:GetCreditCard", args ?? new GetCreditCardArgs(), options.WithDefaults());
 
         public static Output<GetCreditCardResult> Invoke(GetCreditCardInvokeArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.Invoke<GetCreditCardResult>("one-password-native:index:GetCreditCard", args ?? new GetCreditCardInvokeArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.Invoke<GetCreditCardResult>("one-password-native-unoffical:index:GetCreditCard", args ?? new GetCreditCardInvokeArgs(), options.WithDefaults());
     }
 
 
@@ -73,11 +73,11 @@ namespace Pulumi.OnePasswordNative
     [OutputType]
     public sealed class GetCreditCardResult
     {
-        public readonly Pulumi.OnePasswordNative.CreditCard.Outputs.AdditionalDetailsSection? AdditionalDetails;
+        public readonly Pulumi.OnePasswordNativeUnoffical.CreditCard.Outputs.AdditionalDetailsSection? AdditionalDetails;
         public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
         public readonly string? CardholderName;
         public readonly string Category;
-        public readonly Pulumi.OnePasswordNative.CreditCard.Outputs.ContactInformationSection? ContactInformation;
+        public readonly Pulumi.OnePasswordNativeUnoffical.CreditCard.Outputs.ContactInformationSection? ContactInformation;
         public readonly string? ExpiryDate;
         public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
         public readonly string? Notes;
@@ -106,7 +106,7 @@ namespace Pulumi.OnePasswordNative
 
         [OutputConstructor]
         private GetCreditCardResult(
-            Pulumi.OnePasswordNative.CreditCard.Outputs.AdditionalDetailsSection? additionalDetails,
+            Pulumi.OnePasswordNativeUnoffical.CreditCard.Outputs.AdditionalDetailsSection? additionalDetails,
 
             ImmutableDictionary<string, Outputs.OutField> attachments,
 
@@ -114,7 +114,7 @@ namespace Pulumi.OnePasswordNative
 
             string category,
 
-            Pulumi.OnePasswordNative.CreditCard.Outputs.ContactInformationSection? contactInformation,
+            Pulumi.OnePasswordNativeUnoffical.CreditCard.Outputs.ContactInformationSection? contactInformation,
 
             string? expiryDate,
 

@@ -12,7 +12,7 @@ import (
 
 func GetOutdoorLicense(ctx *pulumi.Context, args *GetOutdoorLicenseArgs, opts ...pulumi.InvokeOption) (*GetOutdoorLicenseResult, error) {
 	var rv GetOutdoorLicenseResult
-	err := ctx.Invoke("one-password-native:index:GetOutdoorLicense", args, &rv, opts...)
+	err := ctx.Invoke("one-password-native-unoffical:index:GetOutdoorLicense", args, &rv, opts...)
 	if err != nil {
 		return nil, err
 	}

@@ -61,7 +61,7 @@ func NewCryptoWalletItem(ctx *pulumi.Context,
 	})
 	opts = append(opts, secrets)
 	var resource CryptoWalletItem
-	err := ctx.RegisterResource("one-password-native:index:CryptoWalletItem", name, args, &resource, opts...)
+	err := ctx.RegisterResource("one-password-native-unoffical:index:CryptoWalletItem", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +73,7 @@ func NewCryptoWalletItem(ctx *pulumi.Context,
 func GetCryptoWalletItem(ctx *pulumi.Context,
 	name string, id pulumi.IDInput, state *CryptoWalletItemState, opts ...pulumi.ResourceOption) (*CryptoWalletItem, error) {
 	var resource CryptoWalletItem
-	err := ctx.ReadResource("one-password-native:index:CryptoWalletItem", name, id, state, &resource, opts...)
+	err := ctx.ReadResource("one-password-native-unoffical:index:CryptoWalletItem", name, id, state, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -137,7 +137,7 @@ func (CryptoWalletItemArgs) ElementType() reflect.Type {
 }
 
 func (r *CryptoWalletItem) GetAttachment(ctx *pulumi.Context, args *CryptoWalletItemGetAttachmentArgs) (CryptoWalletItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("one-password-native:index:CryptoWalletItem/attachment", args, CryptoWalletItemGetAttachmentResultOutput{}, r)
+	out, err := ctx.Call("one-password-native-unoffical:index:CryptoWalletItem/attachment", args, CryptoWalletItemGetAttachmentResultOutput{}, r)
 	if err != nil {
 		return CryptoWalletItemGetAttachmentResultOutput{}, err
 	}

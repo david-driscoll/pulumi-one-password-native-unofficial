@@ -5,10 +5,10 @@ using System;
 using System.ComponentModel;
 using Pulumi;
 
-namespace Pulumi.OnePasswordNative
+namespace Pulumi.OnePasswordNativeUnoffical
 {
     /// <summary>
-    /// The category of the item. One of [ApiCredential, BankAccount, CreditCard, CryptoWallet, Database, Document, DriverLicense, EmailAccount, Identity, Item, Login, MedicalRecord, Membership, OutdoorLicense, Passport, Password, RewardProgram, SecureNote, Server, SocialSecurityNumber, SoftwareLicense, SshKey, WirelessRouter]
+    /// The category of the item. One of [ApiCredential, BankAccount, CreditCard, CryptoWallet, Database, Document, DriverLicense, EmailAccount, Identity, Item, Login, MedicalRecord, Membership, OutdoorLicense, Passport, Password, RewardProgram, SshKey, SecureNote, Server, SocialSecurityNumber, SoftwareLicense, WirelessRouter]
     /// </summary>
     [EnumType]
     public readonly struct Category : IEquatable<Category>

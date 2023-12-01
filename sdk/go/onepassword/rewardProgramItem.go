@@ -59,7 +59,7 @@ func NewRewardProgramItem(ctx *pulumi.Context,
 	})
 	opts = append(opts, secrets)
 	var resource RewardProgramItem
-	err := ctx.RegisterResource("one-password-native:index:RewardProgramItem", name, args, &resource, opts...)
+	err := ctx.RegisterResource("one-password-native-unoffical:index:RewardProgramItem", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -71,7 +71,7 @@ func NewRewardProgramItem(ctx *pulumi.Context,
 func GetRewardProgramItem(ctx *pulumi.Context,
 	name string, id pulumi.IDInput, state *RewardProgramItemState, opts ...pulumi.ResourceOption) (*RewardProgramItem, error) {
 	var resource RewardProgramItem
-	err := ctx.ReadResource("one-password-native:index:RewardProgramItem", name, id, state, &resource, opts...)
+	err := ctx.ReadResource("one-password-native-unoffical:index:RewardProgramItem", name, id, state, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -139,7 +139,7 @@ func (RewardProgramItemArgs) ElementType() reflect.Type {
 }
 
 func (r *RewardProgramItem) GetAttachment(ctx *pulumi.Context, args *RewardProgramItemGetAttachmentArgs) (RewardProgramItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("one-password-native:index:RewardProgramItem/attachment", args, RewardProgramItemGetAttachmentResultOutput{}, r)
+	out, err := ctx.Call("one-password-native-unoffical:index:RewardProgramItem/attachment", args, RewardProgramItemGetAttachmentResultOutput{}, r)
 	if err != nil {
 		return RewardProgramItemGetAttachmentResultOutput{}, err
 	}

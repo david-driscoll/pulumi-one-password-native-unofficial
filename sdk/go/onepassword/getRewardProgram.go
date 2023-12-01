@@ -13,7 +13,7 @@ import (
 
 func GetRewardProgram(ctx *pulumi.Context, args *GetRewardProgramArgs, opts ...pulumi.InvokeOption) (*GetRewardProgramResult, error) {
 	var rv GetRewardProgramResult
-	err := ctx.Invoke("one-password-native:index:GetRewardProgram", args, &rv, opts...)
+	err := ctx.Invoke("one-password-native-unoffical:index:GetRewardProgram", args, &rv, opts...)
 	if err != nil {
 		return nil, err
 	}

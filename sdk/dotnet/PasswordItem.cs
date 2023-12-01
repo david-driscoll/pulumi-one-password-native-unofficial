@@ -7,9 +7,9 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative
+namespace Pulumi.OnePasswordNativeUnoffical
 {
-    [OnePasswordNativeResourceType("one-password-native:index:PasswordItem")]
+    [OnePasswordNativeUnofficalResourceType("one-password-native-unoffical:index:PasswordItem")]
     public partial class PasswordItem : Pulumi.CustomResource
     {
         [Output("attachments")]
@@ -66,12 +66,12 @@ namespace Pulumi.OnePasswordNative
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public PasswordItem(string name, PasswordItemArgs args, CustomResourceOptions? options = null)
-            : base("one-password-native:index:PasswordItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
+            : base("one-password-native-unoffical:index:PasswordItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private PasswordItem(string name, Input<string> id, PasswordItemState? state = null, CustomResourceOptions? options = null)
-            : base("one-password-native:index:PasswordItem", name, state, MakeResourceOptions(options, id))
+            : base("one-password-native-unoffical:index:PasswordItem", name, state, MakeResourceOptions(options, id))
         {
         }
 
@@ -116,7 +116,7 @@ namespace Pulumi.OnePasswordNative
         }
 
         public Pulumi.Output<PasswordItemGetAttachmentResult> GetAttachment(PasswordItemGetAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<PasswordItemGetAttachmentResult>("one-password-native:index:PasswordItem/attachment", args ?? new PasswordItemGetAttachmentArgs(), this);
+            => Pulumi.Deployment.Instance.Call<PasswordItemGetAttachmentResult>("one-password-native-unoffical:index:PasswordItem/attachment", args ?? new PasswordItemGetAttachmentArgs(), this);
     }
 
     public sealed class PasswordItemArgs : Pulumi.ResourceArgs

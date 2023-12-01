@@ -7,15 +7,15 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative
+namespace Pulumi.OnePasswordNativeUnoffical
 {
     public static class GetOutdoorLicense
     {
         public static Task<GetOutdoorLicenseResult> InvokeAsync(GetOutdoorLicenseArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.InvokeAsync<GetOutdoorLicenseResult>("one-password-native:index:GetOutdoorLicense", args ?? new GetOutdoorLicenseArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.InvokeAsync<GetOutdoorLicenseResult>("one-password-native-unoffical:index:GetOutdoorLicense", args ?? new GetOutdoorLicenseArgs(), options.WithDefaults());
 
         public static Output<GetOutdoorLicenseResult> Invoke(GetOutdoorLicenseInvokeArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.Invoke<GetOutdoorLicenseResult>("one-password-native:index:GetOutdoorLicense", args ?? new GetOutdoorLicenseInvokeArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.Invoke<GetOutdoorLicenseResult>("one-password-native-unoffical:index:GetOutdoorLicense", args ?? new GetOutdoorLicenseInvokeArgs(), options.WithDefaults());
     }
 
 

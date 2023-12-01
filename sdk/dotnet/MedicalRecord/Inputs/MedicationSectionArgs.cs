@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative.MedicalRecord.Inputs
+namespace Pulumi.OnePasswordNativeUnoffical.MedicalRecord.Inputs
 {
 
     public sealed class MedicationSectionArgs : Pulumi.ResourceArgs

@@ -13,7 +13,7 @@ import (
 
 func GetMedicalRecord(ctx *pulumi.Context, args *GetMedicalRecordArgs, opts ...pulumi.InvokeOption) (*GetMedicalRecordResult, error) {
 	var rv GetMedicalRecordResult
-	err := ctx.Invoke("one-password-native:index:GetMedicalRecord", args, &rv, opts...)
+	err := ctx.Invoke("one-password-native-unoffical:index:GetMedicalRecord", args, &rv, opts...)
 	if err != nil {
 		return nil, err
 	}

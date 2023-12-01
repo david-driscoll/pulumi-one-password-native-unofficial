@@ -20,7 +20,7 @@ export class MembershipItem extends pulumi.CustomResource {
     }
 
     /** @internal */
-    public static readonly __pulumiType = 'one-password-native:index:MembershipItem';
+    public static readonly __pulumiType = 'one-password-native-unoffical:index:MembershipItem';
 
     /**
      * Returns true if the given object is an instance of MembershipItem.  This is designed to work even
@@ -109,7 +109,7 @@ export class MembershipItem extends pulumi.CustomResource {
     }
 
     getAttachment(args: MembershipItem.GetAttachmentArgs): pulumi.Output<MembershipItem.GetAttachmentResult> {
-        return pulumi.runtime.call("one-password-native:index:MembershipItem/attachment", {
+        return pulumi.runtime.call("one-password-native-unoffical:index:MembershipItem/attachment", {
             "__self__": this,
             "name": args.name,
         }, this);

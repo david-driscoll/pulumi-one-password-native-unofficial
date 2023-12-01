@@ -7,9 +7,9 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative
+namespace Pulumi.OnePasswordNativeUnoffical
 {
-    [OnePasswordNativeResourceType("one-password-native:index:LoginItem")]
+    [OnePasswordNativeUnofficalResourceType("one-password-native-unoffical:index:LoginItem")]
     public partial class LoginItem : Pulumi.CustomResource
     {
         [Output("attachments")]
@@ -69,12 +69,12 @@ namespace Pulumi.OnePasswordNative
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public LoginItem(string name, LoginItemArgs args, CustomResourceOptions? options = null)
-            : base("one-password-native:index:LoginItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
+            : base("one-password-native-unoffical:index:LoginItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private LoginItem(string name, Input<string> id, LoginItemState? state = null, CustomResourceOptions? options = null)
-            : base("one-password-native:index:LoginItem", name, state, MakeResourceOptions(options, id))
+            : base("one-password-native-unoffical:index:LoginItem", name, state, MakeResourceOptions(options, id))
         {
         }
 
@@ -119,7 +119,7 @@ namespace Pulumi.OnePasswordNative
         }
 
         public Pulumi.Output<LoginItemGetAttachmentResult> GetAttachment(LoginItemGetAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<LoginItemGetAttachmentResult>("one-password-native:index:LoginItem/attachment", args ?? new LoginItemGetAttachmentArgs(), this);
+            => Pulumi.Deployment.Instance.Call<LoginItemGetAttachmentResult>("one-password-native-unoffical:index:LoginItem/attachment", args ?? new LoginItemGetAttachmentArgs(), this);
     }
 
     public sealed class LoginItemArgs : Pulumi.ResourceArgs

@@ -7,9 +7,9 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative
+namespace Pulumi.OnePasswordNativeUnoffical
 {
-    [OnePasswordNativeResourceType("one-password-native:index:SoftwareLicenseItem")]
+    [OnePasswordNativeUnofficalResourceType("one-password-native-unoffical:index:SoftwareLicenseItem")]
     public partial class SoftwareLicenseItem : Pulumi.CustomResource
     {
         [Output("attachments")]
@@ -19,7 +19,7 @@ namespace Pulumi.OnePasswordNative
         public Output<string> Category { get; private set; } = null!;
 
         [Output("customer")]
-        public Output<Pulumi.OnePasswordNative.SoftwareLicense.Outputs.CustomerSection?> Customer { get; private set; } = null!;
+        public Output<Pulumi.OnePasswordNativeUnoffical.SoftwareLicense.Outputs.CustomerSection?> Customer { get; private set; } = null!;
 
         [Output("fields")]
         public Output<ImmutableDictionary<string, Outputs.OutField>> Fields { get; private set; } = null!;
@@ -31,10 +31,10 @@ namespace Pulumi.OnePasswordNative
         public Output<string?> Notes { get; private set; } = null!;
 
         [Output("order")]
-        public Output<Pulumi.OnePasswordNative.SoftwareLicense.Outputs.OrderSection?> Order { get; private set; } = null!;
+        public Output<Pulumi.OnePasswordNativeUnoffical.SoftwareLicense.Outputs.OrderSection?> Order { get; private set; } = null!;
 
         [Output("publisher")]
-        public Output<Pulumi.OnePasswordNative.SoftwareLicense.Outputs.PublisherSection?> Publisher { get; private set; } = null!;
+        public Output<Pulumi.OnePasswordNativeUnoffical.SoftwareLicense.Outputs.PublisherSection?> Publisher { get; private set; } = null!;
 
         [Output("references")]
         public Output<ImmutableDictionary<string, Outputs.OutField>> References { get; private set; } = null!;
@@ -78,12 +78,12 @@ namespace Pulumi.OnePasswordNative
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public SoftwareLicenseItem(string name, SoftwareLicenseItemArgs args, CustomResourceOptions? options = null)
-            : base("one-password-native:index:SoftwareLicenseItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
+            : base("one-password-native-unoffical:index:SoftwareLicenseItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private SoftwareLicenseItem(string name, Input<string> id, SoftwareLicenseItemState? state = null, CustomResourceOptions? options = null)
-            : base("one-password-native:index:SoftwareLicenseItem", name, state, MakeResourceOptions(options, id))
+            : base("one-password-native-unoffical:index:SoftwareLicenseItem", name, state, MakeResourceOptions(options, id))
         {
         }
 
@@ -127,7 +127,7 @@ namespace Pulumi.OnePasswordNative
         }
 
         public Pulumi.Output<SoftwareLicenseItemGetAttachmentResult> GetAttachment(SoftwareLicenseItemGetAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<SoftwareLicenseItemGetAttachmentResult>("one-password-native:index:SoftwareLicenseItem/attachment", args ?? new SoftwareLicenseItemGetAttachmentArgs(), this);
+            => Pulumi.Deployment.Instance.Call<SoftwareLicenseItemGetAttachmentResult>("one-password-native-unoffical:index:SoftwareLicenseItem/attachment", args ?? new SoftwareLicenseItemGetAttachmentArgs(), this);
     }
 
     public sealed class SoftwareLicenseItemArgs : Pulumi.ResourceArgs
@@ -147,7 +147,7 @@ namespace Pulumi.OnePasswordNative
         public Input<string>? Category { get; set; }
 
         [Input("customer")]
-        public Input<Pulumi.OnePasswordNative.SoftwareLicense.Inputs.CustomerSectionArgs>? Customer { get; set; }
+        public Input<Pulumi.OnePasswordNativeUnoffical.SoftwareLicense.Inputs.CustomerSectionArgs>? Customer { get; set; }
 
         [Input("fields")]
         private InputMap<Inputs.FieldArgs>? _fields;
@@ -164,10 +164,10 @@ namespace Pulumi.OnePasswordNative
         public Input<string>? Notes { get; set; }
 
         [Input("order")]
-        public Input<Pulumi.OnePasswordNative.SoftwareLicense.Inputs.OrderSectionArgs>? Order { get; set; }
+        public Input<Pulumi.OnePasswordNativeUnoffical.SoftwareLicense.Inputs.OrderSectionArgs>? Order { get; set; }
 
         [Input("publisher")]
-        public Input<Pulumi.OnePasswordNative.SoftwareLicense.Inputs.PublisherSectionArgs>? Publisher { get; set; }
+        public Input<Pulumi.OnePasswordNativeUnoffical.SoftwareLicense.Inputs.PublisherSectionArgs>? Publisher { get; set; }
 
         [Input("sections")]
         private InputMap<Inputs.SectionArgs>? _sections;

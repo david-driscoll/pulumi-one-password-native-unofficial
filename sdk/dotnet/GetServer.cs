@@ -7,15 +7,15 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative
+namespace Pulumi.OnePasswordNativeUnoffical
 {
     public static class GetServer
     {
         public static Task<GetServerResult> InvokeAsync(GetServerArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.InvokeAsync<GetServerResult>("one-password-native:index:GetServer", args ?? new GetServerArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.InvokeAsync<GetServerResult>("one-password-native-unoffical:index:GetServer", args ?? new GetServerArgs(), options.WithDefaults());
 
         public static Output<GetServerResult> Invoke(GetServerInvokeArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.Invoke<GetServerResult>("one-password-native:index:GetServer", args ?? new GetServerInvokeArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.Invoke<GetServerResult>("one-password-native-unoffical:index:GetServer", args ?? new GetServerInvokeArgs(), options.WithDefaults());
     }
 
 
@@ -73,11 +73,11 @@ namespace Pulumi.OnePasswordNative
     [OutputType]
     public sealed class GetServerResult
     {
-        public readonly Pulumi.OnePasswordNative.Server.Outputs.AdminConsoleSection? AdminConsole;
+        public readonly Pulumi.OnePasswordNativeUnoffical.Server.Outputs.AdminConsoleSection? AdminConsole;
         public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
         public readonly string Category;
         public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
-        public readonly Pulumi.OnePasswordNative.Server.Outputs.HostingProviderSection? HostingProvider;
+        public readonly Pulumi.OnePasswordNativeUnoffical.Server.Outputs.HostingProviderSection? HostingProvider;
         public readonly string? Notes;
         public readonly string? Password;
         public readonly ImmutableDictionary<string, Outputs.OutField> References;
@@ -103,7 +103,7 @@ namespace Pulumi.OnePasswordNative
 
         [OutputConstructor]
         private GetServerResult(
-            Pulumi.OnePasswordNative.Server.Outputs.AdminConsoleSection? adminConsole,
+            Pulumi.OnePasswordNativeUnoffical.Server.Outputs.AdminConsoleSection? adminConsole,
 
             ImmutableDictionary<string, Outputs.OutField> attachments,
 
@@ -111,7 +111,7 @@ namespace Pulumi.OnePasswordNative
 
             ImmutableDictionary<string, Outputs.OutField> fields,
 
-            Pulumi.OnePasswordNative.Server.Outputs.HostingProviderSection? hostingProvider,
+            Pulumi.OnePasswordNativeUnoffical.Server.Outputs.HostingProviderSection? hostingProvider,
 
             string? notes,
 

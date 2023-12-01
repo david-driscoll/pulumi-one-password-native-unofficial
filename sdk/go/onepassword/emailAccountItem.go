@@ -64,7 +64,7 @@ func NewEmailAccountItem(ctx *pulumi.Context,
 	})
 	opts = append(opts, secrets)
 	var resource EmailAccountItem
-	err := ctx.RegisterResource("one-password-native:index:EmailAccountItem", name, args, &resource, opts...)
+	err := ctx.RegisterResource("one-password-native-unoffical:index:EmailAccountItem", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +76,7 @@ func NewEmailAccountItem(ctx *pulumi.Context,
 func GetEmailAccountItem(ctx *pulumi.Context,
 	name string, id pulumi.IDInput, state *EmailAccountItemState, opts ...pulumi.ResourceOption) (*EmailAccountItem, error) {
 	var resource EmailAccountItem
-	err := ctx.ReadResource("one-password-native:index:EmailAccountItem", name, id, state, &resource, opts...)
+	err := ctx.ReadResource("one-password-native-unoffical:index:EmailAccountItem", name, id, state, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -152,7 +152,7 @@ func (EmailAccountItemArgs) ElementType() reflect.Type {
 }
 
 func (r *EmailAccountItem) GetAttachment(ctx *pulumi.Context, args *EmailAccountItemGetAttachmentArgs) (EmailAccountItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("one-password-native:index:EmailAccountItem/attachment", args, EmailAccountItemGetAttachmentResultOutput{}, r)
+	out, err := ctx.Call("one-password-native-unoffical:index:EmailAccountItem/attachment", args, EmailAccountItemGetAttachmentResultOutput{}, r)
 	if err != nil {
 		return EmailAccountItemGetAttachmentResultOutput{}, err
 	}

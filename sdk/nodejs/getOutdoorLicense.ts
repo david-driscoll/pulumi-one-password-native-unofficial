@@ -11,7 +11,7 @@ export function getOutdoorLicense(args: GetOutdoorLicenseArgs, opts?: pulumi.Inv
     }
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-    return pulumi.runtime.invoke("one-password-native:index:GetOutdoorLicense", {
+    return pulumi.runtime.invoke("one-password-native-unoffical:index:GetOutdoorLicense", {
         "title": args.title,
         "uuid": args.uuid,
         "vault": args.vault,

@@ -7,15 +7,15 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative
+namespace Pulumi.OnePasswordNativeUnoffical
 {
     public static class GetMedicalRecord
     {
         public static Task<GetMedicalRecordResult> InvokeAsync(GetMedicalRecordArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.InvokeAsync<GetMedicalRecordResult>("one-password-native:index:GetMedicalRecord", args ?? new GetMedicalRecordArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.InvokeAsync<GetMedicalRecordResult>("one-password-native-unoffical:index:GetMedicalRecord", args ?? new GetMedicalRecordArgs(), options.WithDefaults());
 
         public static Output<GetMedicalRecordResult> Invoke(GetMedicalRecordInvokeArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.Invoke<GetMedicalRecordResult>("one-password-native:index:GetMedicalRecord", args ?? new GetMedicalRecordInvokeArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.Invoke<GetMedicalRecordResult>("one-password-native-unoffical:index:GetMedicalRecord", args ?? new GetMedicalRecordInvokeArgs(), options.WithDefaults());
     }
 
 
@@ -79,7 +79,7 @@ namespace Pulumi.OnePasswordNative
         public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
         public readonly string? HealthcareProfessional;
         public readonly string? Location;
-        public readonly Pulumi.OnePasswordNative.MedicalRecord.Outputs.MedicationSection? Medication;
+        public readonly Pulumi.OnePasswordNativeUnoffical.MedicalRecord.Outputs.MedicationSection? Medication;
         public readonly string? Notes;
         public readonly string? Patient;
         public readonly string? ReasonForVisit;
@@ -116,7 +116,7 @@ namespace Pulumi.OnePasswordNative
 
             string? location,
 
-            Pulumi.OnePasswordNative.MedicalRecord.Outputs.MedicationSection? medication,
+            Pulumi.OnePasswordNativeUnoffical.MedicalRecord.Outputs.MedicationSection? medication,
 
             string? notes,
 

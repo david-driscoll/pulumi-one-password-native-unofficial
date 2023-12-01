@@ -63,7 +63,7 @@ func NewBankAccountItem(ctx *pulumi.Context,
 	})
 	opts = append(opts, secrets)
 	var resource BankAccountItem
-	err := ctx.RegisterResource("one-password-native:index:BankAccountItem", name, args, &resource, opts...)
+	err := ctx.RegisterResource("one-password-native-unoffical:index:BankAccountItem", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +75,7 @@ func NewBankAccountItem(ctx *pulumi.Context,
 func GetBankAccountItem(ctx *pulumi.Context,
 	name string, id pulumi.IDInput, state *BankAccountItemState, opts ...pulumi.ResourceOption) (*BankAccountItem, error) {
 	var resource BankAccountItem
-	err := ctx.ReadResource("one-password-native:index:BankAccountItem", name, id, state, &resource, opts...)
+	err := ctx.ReadResource("one-password-native-unoffical:index:BankAccountItem", name, id, state, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -151,7 +151,7 @@ func (BankAccountItemArgs) ElementType() reflect.Type {
 }
 
 func (r *BankAccountItem) GetAttachment(ctx *pulumi.Context, args *BankAccountItemGetAttachmentArgs) (BankAccountItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("one-password-native:index:BankAccountItem/attachment", args, BankAccountItemGetAttachmentResultOutput{}, r)
+	out, err := ctx.Call("one-password-native-unoffical:index:BankAccountItem/attachment", args, BankAccountItemGetAttachmentResultOutput{}, r)
 	if err != nil {
 		return BankAccountItemGetAttachmentResultOutput{}, err
 	}

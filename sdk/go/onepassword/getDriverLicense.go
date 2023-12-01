@@ -12,7 +12,7 @@ import (
 
 func GetDriverLicense(ctx *pulumi.Context, args *GetDriverLicenseArgs, opts ...pulumi.InvokeOption) (*GetDriverLicenseResult, error) {
 	var rv GetDriverLicenseResult
-	err := ctx.Invoke("one-password-native:index:GetDriverLicense", args, &rv, opts...)
+	err := ctx.Invoke("one-password-native-unoffical:index:GetDriverLicense", args, &rv, opts...)
 	if err != nil {
 		return nil, err
 	}

@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative.Identity.Outputs
+namespace Pulumi.OnePasswordNativeUnoffical.Identity.Outputs
 {
 
     [OutputType]

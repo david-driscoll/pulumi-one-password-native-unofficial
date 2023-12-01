@@ -1,4 +1,4 @@
-import * as op from "@pulumi/one-password-native";
+import * as op from "@pulumi/one-password-native-unoffical";
 import * as pulumi from '@pulumi/pulumi'
 
 // const page = new op.StaticPage("page", {

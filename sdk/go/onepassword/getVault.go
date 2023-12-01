@@ -13,7 +13,7 @@ import (
 // Use this data source to get details of a vault by either its name or uuid.
 func GetVault(ctx *pulumi.Context, args *GetVaultArgs, opts ...pulumi.InvokeOption) (*GetVaultResult, error) {
 	var rv GetVaultResult
-	err := ctx.Invoke("one-password-native:index:GetVault", args, &rv, opts...)
+	err := ctx.Invoke("one-password-native-unoffical:index:GetVault", args, &rv, opts...)
 	if err != nil {
 		return nil, err
 	}

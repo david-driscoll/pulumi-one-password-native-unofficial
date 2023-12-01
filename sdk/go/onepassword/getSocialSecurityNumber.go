@@ -12,7 +12,7 @@ import (
 
 func GetSocialSecurityNumber(ctx *pulumi.Context, args *GetSocialSecurityNumberArgs, opts ...pulumi.InvokeOption) (*GetSocialSecurityNumberResult, error) {
 	var rv GetSocialSecurityNumberResult
-	err := ctx.Invoke("one-password-native:index:GetSocialSecurityNumber", args, &rv, opts...)
+	err := ctx.Invoke("one-password-native-unoffical:index:GetSocialSecurityNumber", args, &rv, opts...)
 	if err != nil {
 		return nil, err
 	}

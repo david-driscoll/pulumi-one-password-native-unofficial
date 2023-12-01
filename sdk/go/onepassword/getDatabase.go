@@ -12,7 +12,7 @@ import (
 
 func GetDatabase(ctx *pulumi.Context, args *GetDatabaseArgs, opts ...pulumi.InvokeOption) (*GetDatabaseResult, error) {
 	var rv GetDatabaseResult
-	err := ctx.Invoke("one-password-native:index:GetDatabase", args, &rv, opts...)
+	err := ctx.Invoke("one-password-native-unoffical:index:GetDatabase", args, &rv, opts...)
 	if err != nil {
 		return nil, err
 	}

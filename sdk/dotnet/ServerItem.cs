@@ -7,13 +7,13 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative
+namespace Pulumi.OnePasswordNativeUnoffical
 {
-    [OnePasswordNativeResourceType("one-password-native:index:ServerItem")]
+    [OnePasswordNativeUnofficalResourceType("one-password-native-unoffical:index:ServerItem")]
     public partial class ServerItem : Pulumi.CustomResource
     {
         [Output("adminConsole")]
-        public Output<Pulumi.OnePasswordNative.Server.Outputs.AdminConsoleSection?> AdminConsole { get; private set; } = null!;
+        public Output<Pulumi.OnePasswordNativeUnoffical.Server.Outputs.AdminConsoleSection?> AdminConsole { get; private set; } = null!;
 
         [Output("attachments")]
         public Output<ImmutableDictionary<string, Outputs.OutField>> Attachments { get; private set; } = null!;
@@ -25,7 +25,7 @@ namespace Pulumi.OnePasswordNative
         public Output<ImmutableDictionary<string, Outputs.OutField>> Fields { get; private set; } = null!;
 
         [Output("hostingProvider")]
-        public Output<Pulumi.OnePasswordNative.Server.Outputs.HostingProviderSection?> HostingProvider { get; private set; } = null!;
+        public Output<Pulumi.OnePasswordNativeUnoffical.Server.Outputs.HostingProviderSection?> HostingProvider { get; private set; } = null!;
 
         [Output("notes")]
         public Output<string?> Notes { get; private set; } = null!;
@@ -78,12 +78,12 @@ namespace Pulumi.OnePasswordNative
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public ServerItem(string name, ServerItemArgs args, CustomResourceOptions? options = null)
-            : base("one-password-native:index:ServerItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
+            : base("one-password-native-unoffical:index:ServerItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private ServerItem(string name, Input<string> id, ServerItemState? state = null, CustomResourceOptions? options = null)
-            : base("one-password-native:index:ServerItem", name, state, MakeResourceOptions(options, id))
+            : base("one-password-native-unoffical:index:ServerItem", name, state, MakeResourceOptions(options, id))
         {
         }
 
@@ -129,13 +129,13 @@ namespace Pulumi.OnePasswordNative
         }
 
         public Pulumi.Output<ServerItemGetAttachmentResult> GetAttachment(ServerItemGetAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<ServerItemGetAttachmentResult>("one-password-native:index:ServerItem/attachment", args ?? new ServerItemGetAttachmentArgs(), this);
+            => Pulumi.Deployment.Instance.Call<ServerItemGetAttachmentResult>("one-password-native-unoffical:index:ServerItem/attachment", args ?? new ServerItemGetAttachmentArgs(), this);
     }
 
     public sealed class ServerItemArgs : Pulumi.ResourceArgs
     {
         [Input("adminConsole")]
-        public Input<Pulumi.OnePasswordNative.Server.Inputs.AdminConsoleSectionArgs>? AdminConsole { get; set; }
+        public Input<Pulumi.OnePasswordNativeUnoffical.Server.Inputs.AdminConsoleSectionArgs>? AdminConsole { get; set; }
 
         [Input("attachments")]
         private InputMap<AssetOrArchive>? _attachments;
@@ -160,7 +160,7 @@ namespace Pulumi.OnePasswordNative
         }
 
         [Input("hostingProvider")]
-        public Input<Pulumi.OnePasswordNative.Server.Inputs.HostingProviderSectionArgs>? HostingProvider { get; set; }
+        public Input<Pulumi.OnePasswordNativeUnoffical.Server.Inputs.HostingProviderSectionArgs>? HostingProvider { get; set; }
 
         [Input("notes")]
         public Input<string>? Notes { get; set; }

@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative.SoftwareLicense.Inputs
+namespace Pulumi.OnePasswordNativeUnoffical.SoftwareLicense.Inputs
 {
 
     public sealed class CustomerSectionArgs : Pulumi.ResourceArgs

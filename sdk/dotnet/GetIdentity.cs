@@ -7,15 +7,15 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative
+namespace Pulumi.OnePasswordNativeUnoffical
 {
     public static class GetIdentity
     {
         public static Task<GetIdentityResult> InvokeAsync(GetIdentityArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.InvokeAsync<GetIdentityResult>("one-password-native:index:GetIdentity", args ?? new GetIdentityArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.InvokeAsync<GetIdentityResult>("one-password-native-unoffical:index:GetIdentity", args ?? new GetIdentityArgs(), options.WithDefaults());
 
         public static Output<GetIdentityResult> Invoke(GetIdentityInvokeArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.Invoke<GetIdentityResult>("one-password-native:index:GetIdentity", args ?? new GetIdentityInvokeArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.Invoke<GetIdentityResult>("one-password-native-unoffical:index:GetIdentity", args ?? new GetIdentityInvokeArgs(), options.WithDefaults());
     }
 
 
@@ -73,12 +73,12 @@ namespace Pulumi.OnePasswordNative
     [OutputType]
     public sealed class GetIdentityResult
     {
-        public readonly Pulumi.OnePasswordNative.Identity.Outputs.AddressSection? Address;
+        public readonly Pulumi.OnePasswordNativeUnoffical.Identity.Outputs.AddressSection? Address;
         public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
         public readonly string Category;
         public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
-        public readonly Pulumi.OnePasswordNative.Identity.Outputs.IdentificationSection? Identification;
-        public readonly Pulumi.OnePasswordNative.Identity.Outputs.InternetDetailsSection? InternetDetails;
+        public readonly Pulumi.OnePasswordNativeUnoffical.Identity.Outputs.IdentificationSection? Identification;
+        public readonly Pulumi.OnePasswordNativeUnoffical.Identity.Outputs.InternetDetailsSection? InternetDetails;
         public readonly string? Notes;
         public readonly ImmutableDictionary<string, Outputs.OutField> References;
         public readonly ImmutableDictionary<string, Outputs.OutSection> Sections;
@@ -101,7 +101,7 @@ namespace Pulumi.OnePasswordNative
 
         [OutputConstructor]
         private GetIdentityResult(
-            Pulumi.OnePasswordNative.Identity.Outputs.AddressSection? address,
+            Pulumi.OnePasswordNativeUnoffical.Identity.Outputs.AddressSection? address,
 
             ImmutableDictionary<string, Outputs.OutField> attachments,
 
@@ -109,9 +109,9 @@ namespace Pulumi.OnePasswordNative
 
             ImmutableDictionary<string, Outputs.OutField> fields,
 
-            Pulumi.OnePasswordNative.Identity.Outputs.IdentificationSection? identification,
+            Pulumi.OnePasswordNativeUnoffical.Identity.Outputs.IdentificationSection? identification,
 
-            Pulumi.OnePasswordNative.Identity.Outputs.InternetDetailsSection? internetDetails,
+            Pulumi.OnePasswordNativeUnoffical.Identity.Outputs.InternetDetailsSection? internetDetails,
 
             string? notes,
 

@@ -7,9 +7,9 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative
+namespace Pulumi.OnePasswordNativeUnoffical
 {
-    [OnePasswordNativeResourceType("one-password-native:index:BankAccountItem")]
+    [OnePasswordNativeUnofficalResourceType("one-password-native-unoffical:index:BankAccountItem")]
     public partial class BankAccountItem : Pulumi.CustomResource
     {
         [Output("accountNumber")]
@@ -22,7 +22,7 @@ namespace Pulumi.OnePasswordNative
         public Output<string?> BankName { get; private set; } = null!;
 
         [Output("branchInformation")]
-        public Output<Pulumi.OnePasswordNative.BankAccount.Outputs.BranchInformationSection?> BranchInformation { get; private set; } = null!;
+        public Output<Pulumi.OnePasswordNativeUnoffical.BankAccount.Outputs.BranchInformationSection?> BranchInformation { get; private set; } = null!;
 
         [Output("category")]
         public Output<string> Category { get; private set; } = null!;
@@ -90,12 +90,12 @@ namespace Pulumi.OnePasswordNative
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public BankAccountItem(string name, BankAccountItemArgs args, CustomResourceOptions? options = null)
-            : base("one-password-native:index:BankAccountItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
+            : base("one-password-native-unoffical:index:BankAccountItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private BankAccountItem(string name, Input<string> id, BankAccountItemState? state = null, CustomResourceOptions? options = null)
-            : base("one-password-native:index:BankAccountItem", name, state, MakeResourceOptions(options, id))
+            : base("one-password-native-unoffical:index:BankAccountItem", name, state, MakeResourceOptions(options, id))
         {
         }
 
@@ -140,7 +140,7 @@ namespace Pulumi.OnePasswordNative
         }
 
         public Pulumi.Output<BankAccountItemGetAttachmentResult> GetAttachment(BankAccountItemGetAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<BankAccountItemGetAttachmentResult>("one-password-native:index:BankAccountItem/attachment", args ?? new BankAccountItemGetAttachmentArgs(), this);
+            => Pulumi.Deployment.Instance.Call<BankAccountItemGetAttachmentResult>("one-password-native-unoffical:index:BankAccountItem/attachment", args ?? new BankAccountItemGetAttachmentArgs(), this);
     }
 
     public sealed class BankAccountItemArgs : Pulumi.ResourceArgs
@@ -160,7 +160,7 @@ namespace Pulumi.OnePasswordNative
         public Input<string>? BankName { get; set; }
 
         [Input("branchInformation")]
-        public Input<Pulumi.OnePasswordNative.BankAccount.Inputs.BranchInformationSectionArgs>? BranchInformation { get; set; }
+        public Input<Pulumi.OnePasswordNativeUnoffical.BankAccount.Inputs.BranchInformationSectionArgs>? BranchInformation { get; set; }
 
         /// <summary>
         /// The category of the vault the item is in.

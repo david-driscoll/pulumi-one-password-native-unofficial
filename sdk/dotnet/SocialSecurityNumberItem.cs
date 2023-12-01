@@ -7,9 +7,9 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative
+namespace Pulumi.OnePasswordNativeUnoffical
 {
-    [OnePasswordNativeResourceType("one-password-native:index:SocialSecurityNumberItem")]
+    [OnePasswordNativeUnofficalResourceType("one-password-native-unoffical:index:SocialSecurityNumberItem")]
     public partial class SocialSecurityNumberItem : Pulumi.CustomResource
     {
         [Output("attachments")]
@@ -69,12 +69,12 @@ namespace Pulumi.OnePasswordNative
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public SocialSecurityNumberItem(string name, SocialSecurityNumberItemArgs args, CustomResourceOptions? options = null)
-            : base("one-password-native:index:SocialSecurityNumberItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
+            : base("one-password-native-unoffical:index:SocialSecurityNumberItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private SocialSecurityNumberItem(string name, Input<string> id, SocialSecurityNumberItemState? state = null, CustomResourceOptions? options = null)
-            : base("one-password-native:index:SocialSecurityNumberItem", name, state, MakeResourceOptions(options, id))
+            : base("one-password-native-unoffical:index:SocialSecurityNumberItem", name, state, MakeResourceOptions(options, id))
         {
         }
 
@@ -119,7 +119,7 @@ namespace Pulumi.OnePasswordNative
         }
 
         public Pulumi.Output<SocialSecurityNumberItemGetAttachmentResult> GetAttachment(SocialSecurityNumberItemGetAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<SocialSecurityNumberItemGetAttachmentResult>("one-password-native:index:SocialSecurityNumberItem/attachment", args ?? new SocialSecurityNumberItemGetAttachmentArgs(), this);
+            => Pulumi.Deployment.Instance.Call<SocialSecurityNumberItemGetAttachmentResult>("one-password-native-unoffical:index:SocialSecurityNumberItem/attachment", args ?? new SocialSecurityNumberItemGetAttachmentArgs(), this);
     }
 
     public sealed class SocialSecurityNumberItemArgs : Pulumi.ResourceArgs

@@ -50,7 +50,7 @@ func NewItem(ctx *pulumi.Context,
 	})
 	opts = append(opts, secrets)
 	var resource Item
-	err := ctx.RegisterResource("one-password-native:index:Item", name, args, &resource, opts...)
+	err := ctx.RegisterResource("one-password-native-unoffical:index:Item", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -62,7 +62,7 @@ func NewItem(ctx *pulumi.Context,
 func GetItem(ctx *pulumi.Context,
 	name string, id pulumi.IDInput, state *ItemState, opts ...pulumi.ResourceOption) (*Item, error) {
 	var resource Item
-	err := ctx.ReadResource("one-password-native:index:Item", name, id, state, &resource, opts...)
+	err := ctx.ReadResource("one-password-native-unoffical:index:Item", name, id, state, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -116,7 +116,7 @@ func (ItemArgs) ElementType() reflect.Type {
 }
 
 func (r *Item) GetAttachment(ctx *pulumi.Context, args *ItemGetAttachmentArgs) (ItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("one-password-native:index:Item/attachment", args, ItemGetAttachmentResultOutput{}, r)
+	out, err := ctx.Call("one-password-native-unoffical:index:Item/attachment", args, ItemGetAttachmentResultOutput{}, r)
 	if err != nil {
 		return ItemGetAttachmentResultOutput{}, err
 	}

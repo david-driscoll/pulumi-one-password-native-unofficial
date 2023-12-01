@@ -56,7 +56,7 @@ func NewMedicalRecordItem(ctx *pulumi.Context,
 	})
 	opts = append(opts, secrets)
 	var resource MedicalRecordItem
-	err := ctx.RegisterResource("one-password-native:index:MedicalRecordItem", name, args, &resource, opts...)
+	err := ctx.RegisterResource("one-password-native-unoffical:index:MedicalRecordItem", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +68,7 @@ func NewMedicalRecordItem(ctx *pulumi.Context,
 func GetMedicalRecordItem(ctx *pulumi.Context,
 	name string, id pulumi.IDInput, state *MedicalRecordItemState, opts ...pulumi.ResourceOption) (*MedicalRecordItem, error) {
 	var resource MedicalRecordItem
-	err := ctx.ReadResource("one-password-native:index:MedicalRecordItem", name, id, state, &resource, opts...)
+	err := ctx.ReadResource("one-password-native-unoffical:index:MedicalRecordItem", name, id, state, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -138,7 +138,7 @@ func (MedicalRecordItemArgs) ElementType() reflect.Type {
 }
 
 func (r *MedicalRecordItem) GetAttachment(ctx *pulumi.Context, args *MedicalRecordItemGetAttachmentArgs) (MedicalRecordItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("one-password-native:index:MedicalRecordItem/attachment", args, MedicalRecordItemGetAttachmentResultOutput{}, r)
+	out, err := ctx.Call("one-password-native-unoffical:index:MedicalRecordItem/attachment", args, MedicalRecordItemGetAttachmentResultOutput{}, r)
 	if err != nil {
 		return MedicalRecordItemGetAttachmentResultOutput{}, err
 	}

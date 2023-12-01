@@ -7,15 +7,15 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative
+namespace Pulumi.OnePasswordNativeUnoffical
 {
     public static class GetRewardProgram
     {
         public static Task<GetRewardProgramResult> InvokeAsync(GetRewardProgramArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.InvokeAsync<GetRewardProgramResult>("one-password-native:index:GetRewardProgram", args ?? new GetRewardProgramArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.InvokeAsync<GetRewardProgramResult>("one-password-native-unoffical:index:GetRewardProgram", args ?? new GetRewardProgramArgs(), options.WithDefaults());
 
         public static Output<GetRewardProgramResult> Invoke(GetRewardProgramInvokeArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.Invoke<GetRewardProgramResult>("one-password-native:index:GetRewardProgram", args ?? new GetRewardProgramInvokeArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.Invoke<GetRewardProgramResult>("one-password-native-unoffical:index:GetRewardProgram", args ?? new GetRewardProgramInvokeArgs(), options.WithDefaults());
     }
 
 
@@ -79,7 +79,7 @@ namespace Pulumi.OnePasswordNative
         public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
         public readonly string? MemberId;
         public readonly string? MemberName;
-        public readonly Pulumi.OnePasswordNative.RewardProgram.Outputs.MoreInformationSection? MoreInformation;
+        public readonly Pulumi.OnePasswordNativeUnoffical.RewardProgram.Outputs.MoreInformationSection? MoreInformation;
         public readonly string? Notes;
         public readonly string? Pin;
         public readonly ImmutableDictionary<string, Outputs.OutField> References;
@@ -115,7 +115,7 @@ namespace Pulumi.OnePasswordNative
 
             string? memberName,
 
-            Pulumi.OnePasswordNative.RewardProgram.Outputs.MoreInformationSection? moreInformation,
+            Pulumi.OnePasswordNativeUnoffical.RewardProgram.Outputs.MoreInformationSection? moreInformation,
 
             string? notes,
 

@@ -10,7 +10,7 @@ export function getSecretReference(args: GetSecretReferenceArgs, opts?: pulumi.I
     }
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-    return pulumi.runtime.invoke("one-password-native:index:GetSecretReference", {
+    return pulumi.runtime.invoke("one-password-native-unoffical:index:GetSecretReference", {
         "reference": args.reference,
     }, opts);
 }

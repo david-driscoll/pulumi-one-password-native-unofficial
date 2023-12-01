@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative.RewardProgram.Inputs
+namespace Pulumi.OnePasswordNativeUnoffical.RewardProgram.Inputs
 {
 
     public sealed class MoreInformationSectionArgs : Pulumi.ResourceArgs

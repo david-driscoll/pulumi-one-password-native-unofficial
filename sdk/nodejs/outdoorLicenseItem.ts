@@ -20,7 +20,7 @@ export class OutdoorLicenseItem extends pulumi.CustomResource {
     }
 
     /** @internal */
-    public static readonly __pulumiType = 'one-password-native:index:OutdoorLicenseItem';
+    public static readonly __pulumiType = 'one-password-native-unoffical:index:OutdoorLicenseItem';
 
     /**
      * Returns true if the given object is an instance of OutdoorLicenseItem.  This is designed to work even
@@ -107,7 +107,7 @@ export class OutdoorLicenseItem extends pulumi.CustomResource {
     }
 
     getAttachment(args: OutdoorLicenseItem.GetAttachmentArgs): pulumi.Output<OutdoorLicenseItem.GetAttachmentResult> {
-        return pulumi.runtime.call("one-password-native:index:OutdoorLicenseItem/attachment", {
+        return pulumi.runtime.call("one-password-native-unoffical:index:OutdoorLicenseItem/attachment", {
             "__self__": this,
             "name": args.name,
         }, this);

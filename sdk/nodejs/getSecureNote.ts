@@ -11,7 +11,7 @@ export function getSecureNote(args: GetSecureNoteArgs, opts?: pulumi.InvokeOptio
     }
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-    return pulumi.runtime.invoke("one-password-native:index:GetSecureNote", {
+    return pulumi.runtime.invoke("one-password-native-unoffical:index:GetSecureNote", {
         "title": args.title,
         "uuid": args.uuid,
         "vault": args.vault,

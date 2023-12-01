@@ -7,9 +7,9 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative
+namespace Pulumi.OnePasswordNativeUnoffical
 {
-    [OnePasswordNativeResourceType("one-password-native:index:EmailAccountItem")]
+    [OnePasswordNativeUnofficalResourceType("one-password-native-unoffical:index:EmailAccountItem")]
     public partial class EmailAccountItem : Pulumi.CustomResource
     {
         [Output("attachments")]
@@ -22,7 +22,7 @@ namespace Pulumi.OnePasswordNative
         public Output<string> Category { get; private set; } = null!;
 
         [Output("contactInformation")]
-        public Output<Pulumi.OnePasswordNative.EmailAccount.Outputs.ContactInformationSection?> ContactInformation { get; private set; } = null!;
+        public Output<Pulumi.OnePasswordNativeUnoffical.EmailAccount.Outputs.ContactInformationSection?> ContactInformation { get; private set; } = null!;
 
         [Output("fields")]
         public Output<ImmutableDictionary<string, Outputs.OutField>> Fields { get; private set; } = null!;
@@ -49,7 +49,7 @@ namespace Pulumi.OnePasswordNative
         public Output<string?> Server { get; private set; } = null!;
 
         [Output("smtp")]
-        public Output<Pulumi.OnePasswordNative.EmailAccount.Outputs.SmtpSection?> Smtp { get; private set; } = null!;
+        public Output<Pulumi.OnePasswordNativeUnoffical.EmailAccount.Outputs.SmtpSection?> Smtp { get; private set; } = null!;
 
         /// <summary>
         /// An array of strings of the tags assigned to the item.
@@ -90,12 +90,12 @@ namespace Pulumi.OnePasswordNative
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public EmailAccountItem(string name, EmailAccountItemArgs args, CustomResourceOptions? options = null)
-            : base("one-password-native:index:EmailAccountItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
+            : base("one-password-native-unoffical:index:EmailAccountItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private EmailAccountItem(string name, Input<string> id, EmailAccountItemState? state = null, CustomResourceOptions? options = null)
-            : base("one-password-native:index:EmailAccountItem", name, state, MakeResourceOptions(options, id))
+            : base("one-password-native-unoffical:index:EmailAccountItem", name, state, MakeResourceOptions(options, id))
         {
         }
 
@@ -141,7 +141,7 @@ namespace Pulumi.OnePasswordNative
         }
 
         public Pulumi.Output<EmailAccountItemGetAttachmentResult> GetAttachment(EmailAccountItemGetAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<EmailAccountItemGetAttachmentResult>("one-password-native:index:EmailAccountItem/attachment", args ?? new EmailAccountItemGetAttachmentArgs(), this);
+            => Pulumi.Deployment.Instance.Call<EmailAccountItemGetAttachmentResult>("one-password-native-unoffical:index:EmailAccountItem/attachment", args ?? new EmailAccountItemGetAttachmentArgs(), this);
     }
 
     public sealed class EmailAccountItemArgs : Pulumi.ResourceArgs
@@ -164,7 +164,7 @@ namespace Pulumi.OnePasswordNative
         public Input<string>? Category { get; set; }
 
         [Input("contactInformation")]
-        public Input<Pulumi.OnePasswordNative.EmailAccount.Inputs.ContactInformationSectionArgs>? ContactInformation { get; set; }
+        public Input<Pulumi.OnePasswordNativeUnoffical.EmailAccount.Inputs.ContactInformationSectionArgs>? ContactInformation { get; set; }
 
         [Input("fields")]
         private InputMap<Inputs.FieldArgs>? _fields;
@@ -207,7 +207,7 @@ namespace Pulumi.OnePasswordNative
         public Input<string>? Server { get; set; }
 
         [Input("smtp")]
-        public Input<Pulumi.OnePasswordNative.EmailAccount.Inputs.SmtpSectionArgs>? Smtp { get; set; }
+        public Input<Pulumi.OnePasswordNativeUnoffical.EmailAccount.Inputs.SmtpSectionArgs>? Smtp { get; set; }
 
         [Input("tags")]
         private InputList<string>? _tags;

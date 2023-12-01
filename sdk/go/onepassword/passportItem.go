@@ -60,7 +60,7 @@ func NewPassportItem(ctx *pulumi.Context,
 	})
 	opts = append(opts, secrets)
 	var resource PassportItem
-	err := ctx.RegisterResource("one-password-native:index:PassportItem", name, args, &resource, opts...)
+	err := ctx.RegisterResource("one-password-native-unoffical:index:PassportItem", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +72,7 @@ func NewPassportItem(ctx *pulumi.Context,
 func GetPassportItem(ctx *pulumi.Context,
 	name string, id pulumi.IDInput, state *PassportItemState, opts ...pulumi.ResourceOption) (*PassportItem, error) {
 	var resource PassportItem
-	err := ctx.ReadResource("one-password-native:index:PassportItem", name, id, state, &resource, opts...)
+	err := ctx.ReadResource("one-password-native-unoffical:index:PassportItem", name, id, state, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -152,7 +152,7 @@ func (PassportItemArgs) ElementType() reflect.Type {
 }
 
 func (r *PassportItem) GetAttachment(ctx *pulumi.Context, args *PassportItemGetAttachmentArgs) (PassportItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("one-password-native:index:PassportItem/attachment", args, PassportItemGetAttachmentResultOutput{}, r)
+	out, err := ctx.Call("one-password-native-unoffical:index:PassportItem/attachment", args, PassportItemGetAttachmentResultOutput{}, r)
 	if err != nil {
 		return PassportItemGetAttachmentResultOutput{}, err
 	}

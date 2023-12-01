@@ -7,15 +7,15 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative
+namespace Pulumi.OnePasswordNativeUnoffical
 {
     public static class GetBankAccount
     {
         public static Task<GetBankAccountResult> InvokeAsync(GetBankAccountArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.InvokeAsync<GetBankAccountResult>("one-password-native:index:GetBankAccount", args ?? new GetBankAccountArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.InvokeAsync<GetBankAccountResult>("one-password-native-unoffical:index:GetBankAccount", args ?? new GetBankAccountArgs(), options.WithDefaults());
 
         public static Output<GetBankAccountResult> Invoke(GetBankAccountInvokeArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.Invoke<GetBankAccountResult>("one-password-native:index:GetBankAccount", args ?? new GetBankAccountInvokeArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.Invoke<GetBankAccountResult>("one-password-native-unoffical:index:GetBankAccount", args ?? new GetBankAccountInvokeArgs(), options.WithDefaults());
     }
 
 
@@ -76,7 +76,7 @@ namespace Pulumi.OnePasswordNative
         public readonly string? AccountNumber;
         public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
         public readonly string? BankName;
-        public readonly Pulumi.OnePasswordNative.BankAccount.Outputs.BranchInformationSection? BranchInformation;
+        public readonly Pulumi.OnePasswordNativeUnoffical.BankAccount.Outputs.BranchInformationSection? BranchInformation;
         public readonly string Category;
         public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
         public readonly string? Iban;
@@ -113,7 +113,7 @@ namespace Pulumi.OnePasswordNative
 
             string? bankName,
 
-            Pulumi.OnePasswordNative.BankAccount.Outputs.BranchInformationSection? branchInformation,
+            Pulumi.OnePasswordNativeUnoffical.BankAccount.Outputs.BranchInformationSection? branchInformation,
 
             string category,
 

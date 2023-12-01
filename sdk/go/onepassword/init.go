@@ -20,51 +20,51 @@ func (m *module) Version() semver.Version {
 
 func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi.Resource, err error) {
 	switch typ {
-	case "one-password-native:index:APICredentialItem":
+	case "one-password-native-unoffical:index:APICredentialItem":
 		r = &APICredentialItem{}
-	case "one-password-native:index:BankAccountItem":
+	case "one-password-native-unoffical:index:BankAccountItem":
 		r = &BankAccountItem{}
-	case "one-password-native:index:CreditCardItem":
+	case "one-password-native-unoffical:index:CreditCardItem":
 		r = &CreditCardItem{}
-	case "one-password-native:index:CryptoWalletItem":
+	case "one-password-native-unoffical:index:CryptoWalletItem":
 		r = &CryptoWalletItem{}
-	case "one-password-native:index:DatabaseItem":
+	case "one-password-native-unoffical:index:DatabaseItem":
 		r = &DatabaseItem{}
-	case "one-password-native:index:DocumentItem":
+	case "one-password-native-unoffical:index:DocumentItem":
 		r = &DocumentItem{}
-	case "one-password-native:index:DriverLicenseItem":
+	case "one-password-native-unoffical:index:DriverLicenseItem":
 		r = &DriverLicenseItem{}
-	case "one-password-native:index:EmailAccountItem":
+	case "one-password-native-unoffical:index:EmailAccountItem":
 		r = &EmailAccountItem{}
-	case "one-password-native:index:IdentityItem":
+	case "one-password-native-unoffical:index:IdentityItem":
 		r = &IdentityItem{}
-	case "one-password-native:index:Item":
+	case "one-password-native-unoffical:index:Item":
 		r = &Item{}
-	case "one-password-native:index:LoginItem":
+	case "one-password-native-unoffical:index:LoginItem":
 		r = &LoginItem{}
-	case "one-password-native:index:MedicalRecordItem":
+	case "one-password-native-unoffical:index:MedicalRecordItem":
 		r = &MedicalRecordItem{}
-	case "one-password-native:index:MembershipItem":
+	case "one-password-native-unoffical:index:MembershipItem":
 		r = &MembershipItem{}
-	case "one-password-native:index:OutdoorLicenseItem":
+	case "one-password-native-unoffical:index:OutdoorLicenseItem":
 		r = &OutdoorLicenseItem{}
-	case "one-password-native:index:PassportItem":
+	case "one-password-native-unoffical:index:PassportItem":
 		r = &PassportItem{}
-	case "one-password-native:index:PasswordItem":
+	case "one-password-native-unoffical:index:PasswordItem":
 		r = &PasswordItem{}
-	case "one-password-native:index:RewardProgramItem":
+	case "one-password-native-unoffical:index:RewardProgramItem":
 		r = &RewardProgramItem{}
-	case "one-password-native:index:SSHKeyItem":
+	case "one-password-native-unoffical:index:SSHKeyItem":
 		r = &SSHKeyItem{}
-	case "one-password-native:index:SecureNoteItem":
+	case "one-password-native-unoffical:index:SecureNoteItem":
 		r = &SecureNoteItem{}
-	case "one-password-native:index:ServerItem":
+	case "one-password-native-unoffical:index:ServerItem":
 		r = &ServerItem{}
-	case "one-password-native:index:SocialSecurityNumberItem":
+	case "one-password-native-unoffical:index:SocialSecurityNumberItem":
 		r = &SocialSecurityNumberItem{}
-	case "one-password-native:index:SoftwareLicenseItem":
+	case "one-password-native-unoffical:index:SoftwareLicenseItem":
 		r = &SoftwareLicenseItem{}
-	case "one-password-native:index:WirelessRouterItem":
+	case "one-password-native-unoffical:index:WirelessRouterItem":
 		r = &WirelessRouterItem{}
 	default:
 		return nil, fmt.Errorf("unknown resource type: %s", typ)
@@ -83,7 +83,7 @@ func (p *pkg) Version() semver.Version {
 }
 
 func (p *pkg) ConstructProvider(ctx *pulumi.Context, name, typ, urn string) (pulumi.ProviderResource, error) {
-	if typ != "pulumi:providers:one-password-native" {
+	if typ != "pulumi:providers:one-password-native-unoffical" {
 		return nil, fmt.Errorf("unknown provider type: %s", typ)
 	}
 
@@ -95,12 +95,12 @@ func (p *pkg) ConstructProvider(ctx *pulumi.Context, name, typ, urn string) (pul
 func init() {
 	version, _ := PkgVersion()
 	pulumi.RegisterResourceModule(
-		"one-password-native",
+		"one-password-native-unoffical",
 		"index",
 		&module{version},
 	)
 	pulumi.RegisterResourcePackage(
-		"one-password-native",
+		"one-password-native-unoffical",
 		&pkg{version},
 	)
 }

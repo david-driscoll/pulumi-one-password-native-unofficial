@@ -10,7 +10,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-// The category of the item. One of [ApiCredential, BankAccount, CreditCard, CryptoWallet, Database, Document, DriverLicense, EmailAccount, Identity, Item, Login, MedicalRecord, Membership, OutdoorLicense, Passport, Password, RewardProgram, SecureNote, Server, SocialSecurityNumber, SoftwareLicense, SshKey, WirelessRouter]
+// The category of the item. One of [ApiCredential, BankAccount, CreditCard, CryptoWallet, Database, Document, DriverLicense, EmailAccount, Identity, Item, Login, MedicalRecord, Membership, OutdoorLicense, Passport, Password, RewardProgram, SshKey, SecureNote, Server, SocialSecurityNumber, SoftwareLicense, WirelessRouter]
 type Category string
 
 const (

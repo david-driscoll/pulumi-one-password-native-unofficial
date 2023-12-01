@@ -60,7 +60,7 @@ func NewAPICredentialItem(ctx *pulumi.Context,
 	})
 	opts = append(opts, secrets)
 	var resource APICredentialItem
-	err := ctx.RegisterResource("one-password-native:index:APICredentialItem", name, args, &resource, opts...)
+	err := ctx.RegisterResource("one-password-native-unoffical:index:APICredentialItem", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +72,7 @@ func NewAPICredentialItem(ctx *pulumi.Context,
 func GetAPICredentialItem(ctx *pulumi.Context,
 	name string, id pulumi.IDInput, state *APICredentialItemState, opts ...pulumi.ResourceOption) (*APICredentialItem, error) {
 	var resource APICredentialItem
-	err := ctx.ReadResource("one-password-native:index:APICredentialItem", name, id, state, &resource, opts...)
+	err := ctx.ReadResource("one-password-native-unoffical:index:APICredentialItem", name, id, state, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -144,7 +144,7 @@ func (APICredentialItemArgs) ElementType() reflect.Type {
 }
 
 func (r *APICredentialItem) GetAttachment(ctx *pulumi.Context, args *APICredentialItemGetAttachmentArgs) (APICredentialItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("one-password-native:index:APICredentialItem/attachment", args, APICredentialItemGetAttachmentResultOutput{}, r)
+	out, err := ctx.Call("one-password-native-unoffical:index:APICredentialItem/attachment", args, APICredentialItemGetAttachmentResultOutput{}, r)
 	if err != nil {
 		return APICredentialItemGetAttachmentResultOutput{}, err
 	}

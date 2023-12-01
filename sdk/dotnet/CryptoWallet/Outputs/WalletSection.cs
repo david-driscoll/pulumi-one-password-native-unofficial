@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative.CryptoWallet.Outputs
+namespace Pulumi.OnePasswordNativeUnoffical.CryptoWallet.Outputs
 {
 
     [OutputType]

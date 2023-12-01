@@ -29,7 +29,7 @@ export const Category = {
 } as const;
 
 /**
- * The category of the item. One of [ApiCredential, BankAccount, CreditCard, CryptoWallet, Database, Document, DriverLicense, EmailAccount, Identity, Item, Login, MedicalRecord, Membership, OutdoorLicense, Passport, Password, RewardProgram, SecureNote, Server, SocialSecurityNumber, SoftwareLicense, SshKey, WirelessRouter]
+ * The category of the item. One of [ApiCredential, BankAccount, CreditCard, CryptoWallet, Database, Document, DriverLicense, EmailAccount, Identity, Item, Login, MedicalRecord, Membership, OutdoorLicense, Passport, Password, RewardProgram, SshKey, SecureNote, Server, SocialSecurityNumber, SoftwareLicense, WirelessRouter]
  */
 export type Category = (typeof Category)[keyof typeof Category];
 

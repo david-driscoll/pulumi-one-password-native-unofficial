@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative
+namespace Pulumi.OnePasswordNativeUnoffical
 {
     public static class GetVault
     {
@@ -15,13 +15,13 @@ namespace Pulumi.OnePasswordNative
         /// Use this data source to get details of a vault by either its name or uuid.
         /// </summary>
         public static Task<GetVaultResult> InvokeAsync(GetVaultArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.InvokeAsync<GetVaultResult>("one-password-native:index:GetVault", args ?? new GetVaultArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.InvokeAsync<GetVaultResult>("one-password-native-unoffical:index:GetVault", args ?? new GetVaultArgs(), options.WithDefaults());
 
         /// <summary>
         /// Use this data source to get details of a vault by either its name or uuid.
         /// </summary>
         public static Output<GetVaultResult> Invoke(GetVaultInvokeArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.Invoke<GetVaultResult>("one-password-native:index:GetVault", args ?? new GetVaultInvokeArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.Invoke<GetVaultResult>("one-password-native-unoffical:index:GetVault", args ?? new GetVaultInvokeArgs(), options.WithDefaults());
     }
 
 

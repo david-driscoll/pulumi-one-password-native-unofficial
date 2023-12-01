@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative.BankAccount.Inputs
+namespace Pulumi.OnePasswordNativeUnoffical.BankAccount.Inputs
 {
 
     public sealed class BranchInformationSectionArgs : Pulumi.ResourceArgs

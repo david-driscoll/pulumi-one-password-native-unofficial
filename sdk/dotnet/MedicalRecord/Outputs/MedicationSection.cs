@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative.MedicalRecord.Outputs
+namespace Pulumi.OnePasswordNativeUnoffical.MedicalRecord.Outputs
 {
 
     [OutputType]

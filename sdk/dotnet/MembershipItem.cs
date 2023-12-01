@@ -7,9 +7,9 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative
+namespace Pulumi.OnePasswordNativeUnoffical
 {
-    [OnePasswordNativeResourceType("one-password-native:index:MembershipItem")]
+    [OnePasswordNativeUnofficalResourceType("one-password-native-unoffical:index:MembershipItem")]
     public partial class MembershipItem : Pulumi.CustomResource
     {
         [Output("attachments")]
@@ -87,12 +87,12 @@ namespace Pulumi.OnePasswordNative
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public MembershipItem(string name, MembershipItemArgs args, CustomResourceOptions? options = null)
-            : base("one-password-native:index:MembershipItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
+            : base("one-password-native-unoffical:index:MembershipItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
 
         private MembershipItem(string name, Input<string> id, MembershipItemState? state = null, CustomResourceOptions? options = null)
-            : base("one-password-native:index:MembershipItem", name, state, MakeResourceOptions(options, id))
+            : base("one-password-native-unoffical:index:MembershipItem", name, state, MakeResourceOptions(options, id))
         {
         }
 
@@ -137,7 +137,7 @@ namespace Pulumi.OnePasswordNative
         }
 
         public Pulumi.Output<MembershipItemGetAttachmentResult> GetAttachment(MembershipItemGetAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<MembershipItemGetAttachmentResult>("one-password-native:index:MembershipItem/attachment", args ?? new MembershipItemGetAttachmentArgs(), this);
+            => Pulumi.Deployment.Instance.Call<MembershipItemGetAttachmentResult>("one-password-native-unoffical:index:MembershipItem/attachment", args ?? new MembershipItemGetAttachmentArgs(), this);
     }
 
     public sealed class MembershipItemArgs : Pulumi.ResourceArgs

@@ -11,7 +11,7 @@ export function getMedicalRecord(args: GetMedicalRecordArgs, opts?: pulumi.Invok
     }
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-    return pulumi.runtime.invoke("one-password-native:index:GetMedicalRecord", {
+    return pulumi.runtime.invoke("one-password-native-unoffical:index:GetMedicalRecord", {
         "title": args.title,
         "uuid": args.uuid,
         "vault": args.vault,

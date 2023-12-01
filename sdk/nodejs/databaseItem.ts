@@ -20,7 +20,7 @@ export class DatabaseItem extends pulumi.CustomResource {
     }
 
     /** @internal */
-    public static readonly __pulumiType = 'one-password-native:index:DatabaseItem';
+    public static readonly __pulumiType = 'one-password-native-unoffical:index:DatabaseItem';
 
     /**
      * Returns true if the given object is an instance of DatabaseItem.  This is designed to work even
@@ -111,7 +111,7 @@ export class DatabaseItem extends pulumi.CustomResource {
     }
 
     getAttachment(args: DatabaseItem.GetAttachmentArgs): pulumi.Output<DatabaseItem.GetAttachmentResult> {
-        return pulumi.runtime.call("one-password-native:index:DatabaseItem/attachment", {
+        return pulumi.runtime.call("one-password-native-unoffical:index:DatabaseItem/attachment", {
             "__self__": this,
             "name": args.name,
         }, this);

@@ -7,15 +7,15 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative
+namespace Pulumi.OnePasswordNativeUnoffical
 {
     public static class GetSocialSecurityNumber
     {
         public static Task<GetSocialSecurityNumberResult> InvokeAsync(GetSocialSecurityNumberArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.InvokeAsync<GetSocialSecurityNumberResult>("one-password-native:index:GetSocialSecurityNumber", args ?? new GetSocialSecurityNumberArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.InvokeAsync<GetSocialSecurityNumberResult>("one-password-native-unoffical:index:GetSocialSecurityNumber", args ?? new GetSocialSecurityNumberArgs(), options.WithDefaults());
 
         public static Output<GetSocialSecurityNumberResult> Invoke(GetSocialSecurityNumberInvokeArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.Invoke<GetSocialSecurityNumberResult>("one-password-native:index:GetSocialSecurityNumber", args ?? new GetSocialSecurityNumberInvokeArgs(), options.WithDefaults());
+            => Pulumi.Deployment.Instance.Invoke<GetSocialSecurityNumberResult>("one-password-native-unoffical:index:GetSocialSecurityNumber", args ?? new GetSocialSecurityNumberInvokeArgs(), options.WithDefaults());
     }
 
 

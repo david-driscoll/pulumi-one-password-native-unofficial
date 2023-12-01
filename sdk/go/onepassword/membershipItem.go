@@ -61,7 +61,7 @@ func NewMembershipItem(ctx *pulumi.Context,
 	})
 	opts = append(opts, secrets)
 	var resource MembershipItem
-	err := ctx.RegisterResource("one-password-native:index:MembershipItem", name, args, &resource, opts...)
+	err := ctx.RegisterResource("one-password-native-unoffical:index:MembershipItem", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +73,7 @@ func NewMembershipItem(ctx *pulumi.Context,
 func GetMembershipItem(ctx *pulumi.Context,
 	name string, id pulumi.IDInput, state *MembershipItemState, opts ...pulumi.ResourceOption) (*MembershipItem, error) {
 	var resource MembershipItem
-	err := ctx.ReadResource("one-password-native:index:MembershipItem", name, id, state, &resource, opts...)
+	err := ctx.ReadResource("one-password-native-unoffical:index:MembershipItem", name, id, state, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -147,7 +147,7 @@ func (MembershipItemArgs) ElementType() reflect.Type {
 }
 
 func (r *MembershipItem) GetAttachment(ctx *pulumi.Context, args *MembershipItemGetAttachmentArgs) (MembershipItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("one-password-native:index:MembershipItem/attachment", args, MembershipItemGetAttachmentResultOutput{}, r)
+	out, err := ctx.Call("one-password-native-unoffical:index:MembershipItem/attachment", args, MembershipItemGetAttachmentResultOutput{}, r)
 	if err != nil {
 		return MembershipItemGetAttachmentResultOutput{}, err
 	}

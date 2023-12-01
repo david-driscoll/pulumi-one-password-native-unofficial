@@ -11,7 +11,7 @@ export function getCreditCard(args: GetCreditCardArgs, opts?: pulumi.InvokeOptio
     }
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-    return pulumi.runtime.invoke("one-password-native:index:GetCreditCard", {
+    return pulumi.runtime.invoke("one-password-native-unoffical:index:GetCreditCard", {
         "title": args.title,
         "uuid": args.uuid,
         "vault": args.vault,

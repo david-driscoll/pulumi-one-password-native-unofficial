@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.OnePasswordNative.Server.Inputs
+namespace Pulumi.OnePasswordNativeUnoffical.Server.Inputs
 {
 
     public sealed class HostingProviderSectionArgs : Pulumi.ResourceArgs

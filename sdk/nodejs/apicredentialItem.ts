@@ -20,7 +20,7 @@ export class APICredentialItem extends pulumi.CustomResource {
     }
 
     /** @internal */
-    public static readonly __pulumiType = 'one-password-native:index:APICredentialItem';
+    public static readonly __pulumiType = 'one-password-native-unoffical:index:APICredentialItem';
 
     /**
      * Returns true if the given object is an instance of APICredentialItem.  This is designed to work even
@@ -107,7 +107,7 @@ export class APICredentialItem extends pulumi.CustomResource {
     }
 
     getAttachment(args: APICredentialItem.GetAttachmentArgs): pulumi.Output<APICredentialItem.GetAttachmentResult> {
-        return pulumi.runtime.call("one-password-native:index:APICredentialItem/attachment", {
+        return pulumi.runtime.call("one-password-native-unoffical:index:APICredentialItem/attachment", {
             "__self__": this,
             "name": args.name,
         }, this);

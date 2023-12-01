@@ -12,7 +12,7 @@ import (
 
 func GetSSHKey(ctx *pulumi.Context, args *GetSSHKeyArgs, opts ...pulumi.InvokeOption) (*GetSSHKeyResult, error) {
 	var rv GetSSHKeyResult
-	err := ctx.Invoke("one-password-native:index:GetSSHKey", args, &rv, opts...)
+	err := ctx.Invoke("one-password-native-unoffical:index:GetSSHKey", args, &rv, opts...)
 	if err != nil {
 		return nil, err
 	}
