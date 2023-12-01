@@ -8674,13 +8674,13 @@
     },
     "language": {
         "csharp": {
-            "name": "Rocket.Surgery.Pulumi.1PasswordNative",
             "packageReferences": {
                 "Pulumi": "3.*"
             },
             "respectSchemaVersion": true
         },
         "go": {
+            "rootPackageName": "pulumi_one_password_native_unoffical",
             "generateResourceContainerTypes": true,
             "importBasePath": "github.com/pulumi/pulumi-onepassword/sdk/go/onepassword",
             "respectSchemaVersion": true
