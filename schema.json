@@ -8677,7 +8677,8 @@
             "packageReferences": {
                 "Pulumi": "3.*"
             },
-            "respectSchemaVersion": true
+            "respectSchemaVersion": true,
+            "rootNamespace": "Rocket.Surgery.Pulumi"
         },
         "go": {
             "rootPackageName": "pulumi_one_password_native_unoffical",
