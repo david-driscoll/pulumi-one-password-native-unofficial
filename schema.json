@@ -1,6 +1,6 @@
 {
   "name": "one-password-native-unoffical",
-  "pluginDownloadURL": "github://api.github.com/david-driscoll",
+  "pluginDownloadURL": "github://api.github.com/david-driscoll/pulumi-onepassword",
   "repository": "https://github.com/david-driscoll/pulumi-onepassword",
   "resources": {
     "one-password-native-unoffical:index:APICredentialItem": {
