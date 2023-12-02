@@ -1,6 +1,7 @@
 {
     "name": "pulumi-one-password-native-unoffical",
     "version": "${VERSION}",
+    "repository": "https://github.com/david-driscoll/pulumi-onepassword",
     "scripts": {
         "build": "tsc",
         "install": "node scripts/install-pulumi-plugin.js resource one-password-native-unoffical ${VERSION}"
@@ -13,6 +14,7 @@
     },
     "pulumi": {
         "name": "one-password-native-unoffical",
-        "resource": true
+        "resource": true,
+        "pluginDownloadURL": "github://api.github.com/david-driscoll"
     }
 }

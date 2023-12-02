@@ -100,6 +100,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
             var defaultOptions = new CustomResourceOptions
             {
                 Version = Utilities.Version,
+                PluginDownloadURL = "github://api.github.com/david-driscoll",
                 AdditionalSecretOutputs =
                 {
                     "adminConsole",

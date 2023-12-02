@@ -15,7 +15,7 @@ class InstallPluginCommand(install):
     def run(self):
         install.run(self)
         try:
-            check_call(['pulumi', 'plugin', 'install', 'resource', 'one-password-native-unoffical', PLUGIN_VERSION])
+            check_call(['pulumi', 'plugin', 'install', 'resource', 'one-password-native-unoffical', PLUGIN_VERSION, '--server', 'github://api.github.com/david-driscoll'])
         except OSError as error:
             if error.errno == errno.ENOENT:
                 print(f"""
@@ -43,6 +43,9 @@ setup(name='pulumi-one-password-native-unoffical',
       long_description_content_type='text/markdown',
       cmdclass={
           'install': InstallPluginCommand,
+      },
+      project_urls={
+          'Repository': 'https://github.com/david-driscoll/pulumi-onepassword'
       },
       packages=find_packages(),
       package_data={
