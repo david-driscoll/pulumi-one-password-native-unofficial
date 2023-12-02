@@ -11,6 +11,7 @@ import (
 )
 
 func GetDocument(ctx *pulumi.Context, args *GetDocumentArgs, opts ...pulumi.InvokeOption) (*GetDocumentResult, error) {
+	opts = pkgInvokeDefaultOpts(opts)
 	var rv GetDocumentResult
 	err := ctx.Invoke("one-password-native-unoffical:index:GetDocument", args, &rv, opts...)
 	if err != nil {
@@ -29,12 +30,12 @@ type GetDocumentArgs struct {
 }
 
 type GetDocumentResult struct {
-	Attachments map[string]OutField   `pulumi:"attachments"`
-	Category    string                `pulumi:"category"`
-	Fields      map[string]OutField   `pulumi:"fields"`
-	Notes       *string               `pulumi:"notes"`
-	References  map[string]OutField   `pulumi:"references"`
-	Sections    map[string]OutSection `pulumi:"sections"`
+	Attachments map[string]OutAttachment `pulumi:"attachments"`
+	Category    string                   `pulumi:"category"`
+	Fields      map[string]OutField      `pulumi:"fields"`
+	Notes       *string                  `pulumi:"notes"`
+	References  map[string]OutField      `pulumi:"references"`
+	Sections    map[string]OutSection    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -85,8 +86,8 @@ func (o GetDocumentResultOutput) ToGetDocumentResultOutputWithContext(ctx contex
 	return o
 }
 
-func (o GetDocumentResultOutput) Attachments() OutFieldMapOutput {
-	return o.ApplyT(func(v GetDocumentResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+func (o GetDocumentResultOutput) Attachments() OutAttachmentMapOutput {
+	return o.ApplyT(func(v GetDocumentResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
 }
 
 func (o GetDocumentResultOutput) Category() pulumi.StringOutput {

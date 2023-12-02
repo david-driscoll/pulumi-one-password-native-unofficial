@@ -16,7 +16,7 @@ type IdentityItem struct {
 	pulumi.CustomResourceState
 
 	Address         identity.AddressSectionPtrOutput         `pulumi:"address"`
-	Attachments     OutFieldMapOutput                        `pulumi:"attachments"`
+	Attachments     OutAttachmentMapOutput                   `pulumi:"attachments"`
 	Category        pulumi.StringOutput                      `pulumi:"category"`
 	Fields          OutFieldMapOutput                        `pulumi:"fields"`
 	Identification  identity.IdentificationSectionPtrOutput  `pulumi:"identification"`
@@ -52,6 +52,7 @@ func NewIdentityItem(ctx *pulumi.Context,
 		"sections",
 	})
 	opts = append(opts, secrets)
+	opts = pkgResourceDefaultOpts(opts)
 	var resource IdentityItem
 	err := ctx.RegisterResource("one-password-native-unoffical:index:IdentityItem", name, args, &resource, opts...)
 	if err != nil {
@@ -88,15 +89,15 @@ func (IdentityItemState) ElementType() reflect.Type {
 }
 
 type identityItemArgs struct {
-	Address     *identity.AddressSection         `pulumi:"address"`
-	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
+	Address *identity.AddressSection `pulumi:"address"`
 	// The category of the vault the item is in.
-	Category        *string                          `pulumi:"category"`
-	Fields          map[string]Field                 `pulumi:"fields"`
-	Identification  *identity.IdentificationSection  `pulumi:"identification"`
-	InternetDetails *identity.InternetDetailsSection `pulumi:"internetDetails"`
-	Notes           *string                          `pulumi:"notes"`
-	Sections        map[string]Section               `pulumi:"sections"`
+	Category         *string                          `pulumi:"category"`
+	Fields           map[string]Field                 `pulumi:"fields"`
+	Identification   *identity.IdentificationSection  `pulumi:"identification"`
+	InputAttachments map[string]pulumi.AssetOrArchive `pulumi:"inputAttachments"`
+	InternetDetails  *identity.InternetDetailsSection `pulumi:"internetDetails"`
+	Notes            *string                          `pulumi:"notes"`
+	Sections         map[string]Section               `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -107,15 +108,15 @@ type identityItemArgs struct {
 
 // The set of arguments for constructing a IdentityItem resource.
 type IdentityItemArgs struct {
-	Address     identity.AddressSectionPtrInput
-	Attachments pulumi.AssetOrArchiveMapInput
+	Address identity.AddressSectionPtrInput
 	// The category of the vault the item is in.
-	Category        pulumi.StringPtrInput
-	Fields          FieldMapInput
-	Identification  identity.IdentificationSectionPtrInput
-	InternetDetails identity.InternetDetailsSectionPtrInput
-	Notes           pulumi.StringPtrInput
-	Sections        SectionMapInput
+	Category         pulumi.StringPtrInput
+	Fields           FieldMapInput
+	Identification   identity.IdentificationSectionPtrInput
+	InputAttachments pulumi.AssetOrArchiveMapInput
+	InternetDetails  identity.InternetDetailsSectionPtrInput
+	Notes            pulumi.StringPtrInput
+	Sections         SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.

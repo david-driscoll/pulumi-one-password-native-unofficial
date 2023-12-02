@@ -33,7 +33,7 @@ export class SoftwareLicenseItem extends pulumi.CustomResource {
         return obj['__pulumiType'] === SoftwareLicenseItem.__pulumiType;
     }
 
-    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public /*out*/ readonly attachments!: pulumi.Output<{[key: string]: outputs.OutAttachment}>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly customer!: pulumi.Output<outputs.softwareLicense.CustomerSection | undefined>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.OutField}>;
@@ -80,10 +80,10 @@ export class SoftwareLicenseItem extends pulumi.CustomResource {
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
-            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "Software License";
             resourceInputs["customer"] = args ? args.customer : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
+            resourceInputs["inputAttachments"] = args ? args.inputAttachments : undefined;
             resourceInputs["licenseKey"] = args ? args.licenseKey : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["order"] = args ? args.order : undefined;
@@ -93,6 +93,7 @@ export class SoftwareLicenseItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["version"] = args ? args.version : undefined;
+            resourceInputs["attachments"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
@@ -121,13 +122,13 @@ export interface SoftwareLicenseItemState {
  * The set of arguments for constructing a SoftwareLicenseItem resource.
  */
 export interface SoftwareLicenseItemArgs {
-    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     /**
      * The category of the vault the item is in.
      */
     category?: pulumi.Input<"Software License">;
     customer?: pulumi.Input<inputs.softwareLicense.CustomerSectionArgs>;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
+    inputAttachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     licenseKey?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
     order?: pulumi.Input<inputs.softwareLicense.OrderSectionArgs>;

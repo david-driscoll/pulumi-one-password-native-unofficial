@@ -35,7 +35,7 @@ export interface GetOutdoorLicenseArgs {
 
 export interface GetOutdoorLicenseResult {
     readonly approvedWildlife?: string;
-    readonly attachments: {[key: string]: outputs.OutField};
+    readonly attachments: {[key: string]: outputs.OutAttachment};
     readonly category: enums.Category | string;
     readonly country?: string;
     readonly expires?: string;

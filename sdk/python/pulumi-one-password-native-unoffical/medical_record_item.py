@@ -18,11 +18,11 @@ __all__ = ['MedicalRecordItemArgs', 'MedicalRecordItem']
 class MedicalRecordItemArgs:
     def __init__(__self__, *,
                  vault: pulumi.Input[str],
-                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  date: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
                  healthcare_professional: Optional[pulumi.Input[str]] = None,
+                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  location: Optional[pulumi.Input[str]] = None,
                  medication: Optional[pulumi.Input['_medicalrecord.MedicationSectionArgs']] = None,
                  notes: Optional[pulumi.Input[str]] = None,
@@ -39,8 +39,6 @@ class MedicalRecordItemArgs:
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         """
         pulumi.set(__self__, "vault", vault)
-        if attachments is not None:
-            pulumi.set(__self__, "attachments", attachments)
         if category is not None:
             pulumi.set(__self__, "category", 'Medical Record')
         if date is not None:
@@ -49,6 +47,8 @@ class MedicalRecordItemArgs:
             pulumi.set(__self__, "fields", fields)
         if healthcare_professional is not None:
             pulumi.set(__self__, "healthcare_professional", healthcare_professional)
+        if input_attachments is not None:
+            pulumi.set(__self__, "input_attachments", input_attachments)
         if location is not None:
             pulumi.set(__self__, "location", location)
         if medication is not None:
@@ -77,15 +77,6 @@ class MedicalRecordItemArgs:
     @vault.setter
     def vault(self, value: pulumi.Input[str]):
         pulumi.set(self, "vault", value)
-
-    @property
-    @pulumi.getter
-    def attachments(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]:
-        return pulumi.get(self, "attachments")
-
-    @attachments.setter
-    def attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
-        pulumi.set(self, "attachments", value)
 
     @property
     @pulumi.getter
@@ -125,6 +116,15 @@ class MedicalRecordItemArgs:
     @healthcare_professional.setter
     def healthcare_professional(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "healthcare_professional", value)
+
+    @property
+    @pulumi.getter(name="inputAttachments")
+    def input_attachments(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]:
+        return pulumi.get(self, "input_attachments")
+
+    @input_attachments.setter
+    def input_attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
+        pulumi.set(self, "input_attachments", value)
 
     @property
     @pulumi.getter
@@ -233,11 +233,11 @@ class MedicalRecordItem(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  date: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  healthcare_professional: Optional[pulumi.Input[str]] = None,
+                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  location: Optional[pulumi.Input[str]] = None,
                  medication: Optional[pulumi.Input[pulumi.InputType['_medicalrecord.MedicationSectionArgs']]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
@@ -280,11 +280,11 @@ class MedicalRecordItem(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  date: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  healthcare_professional: Optional[pulumi.Input[str]] = None,
+                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  location: Optional[pulumi.Input[str]] = None,
                  medication: Optional[pulumi.Input[pulumi.InputType['_medicalrecord.MedicationSectionArgs']]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
@@ -308,11 +308,11 @@ class MedicalRecordItem(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = MedicalRecordItemArgs.__new__(MedicalRecordItemArgs)
 
-            __props__.__dict__["attachments"] = attachments
             __props__.__dict__["category"] = 'Medical Record'
             __props__.__dict__["date"] = date
             __props__.__dict__["fields"] = fields
             __props__.__dict__["healthcare_professional"] = healthcare_professional
+            __props__.__dict__["input_attachments"] = input_attachments
             __props__.__dict__["location"] = location
             __props__.__dict__["medication"] = medication
             __props__.__dict__["notes"] = notes
@@ -324,6 +324,7 @@ class MedicalRecordItem(pulumi.CustomResource):
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
+            __props__.__dict__["attachments"] = None
             __props__.__dict__["references"] = None
             __props__.__dict__["uuid"] = None
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachments", "fields", "references", "sections"])
@@ -372,7 +373,7 @@ class MedicalRecordItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def attachments(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+    def attachments(self) -> pulumi.Output[Mapping[str, 'outputs.OutAttachment']]:
         return pulumi.get(self, "attachments")
 
     @property

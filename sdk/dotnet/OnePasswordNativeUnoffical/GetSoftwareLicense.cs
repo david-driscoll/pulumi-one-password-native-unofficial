@@ -74,7 +74,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
     [OutputType]
     public sealed class GetSoftwareLicenseResult
     {
-        public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
+        public readonly ImmutableDictionary<string, Outputs.OutAttachment> Attachments;
         public readonly string Category;
         public readonly Rocket.Surgery.OnePasswordNativeUnoffical.SoftwareLicense.Outputs.CustomerSection? Customer;
         public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
@@ -104,7 +104,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
         [OutputConstructor]
         private GetSoftwareLicenseResult(
-            ImmutableDictionary<string, Outputs.OutField> attachments,
+            ImmutableDictionary<string, Outputs.OutAttachment> attachments,
 
             string category,
 

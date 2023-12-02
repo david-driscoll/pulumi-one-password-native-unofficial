@@ -17,9 +17,9 @@ __all__ = ['SSHKeyItemArgs', 'SSHKeyItem']
 class SSHKeyItemArgs:
     def __init__(__self__, *,
                  vault: pulumi.Input[str],
-                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
+                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  private_key: Optional[pulumi.Input[str]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input['SectionArgs']]]] = None,
@@ -33,12 +33,12 @@ class SSHKeyItemArgs:
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         """
         pulumi.set(__self__, "vault", vault)
-        if attachments is not None:
-            pulumi.set(__self__, "attachments", attachments)
         if category is not None:
             pulumi.set(__self__, "category", 'SSH Key')
         if fields is not None:
             pulumi.set(__self__, "fields", fields)
+        if input_attachments is not None:
+            pulumi.set(__self__, "input_attachments", input_attachments)
         if notes is not None:
             pulumi.set(__self__, "notes", notes)
         if private_key is not None:
@@ -64,15 +64,6 @@ class SSHKeyItemArgs:
 
     @property
     @pulumi.getter
-    def attachments(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]:
-        return pulumi.get(self, "attachments")
-
-    @attachments.setter
-    def attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
-        pulumi.set(self, "attachments", value)
-
-    @property
-    @pulumi.getter
     def category(self) -> Optional[pulumi.Input[str]]:
         """
         The category of the vault the item is in.
@@ -91,6 +82,15 @@ class SSHKeyItemArgs:
     @fields.setter
     def fields(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]]):
         pulumi.set(self, "fields", value)
+
+    @property
+    @pulumi.getter(name="inputAttachments")
+    def input_attachments(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]:
+        return pulumi.get(self, "input_attachments")
+
+    @input_attachments.setter
+    def input_attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
+        pulumi.set(self, "input_attachments", value)
 
     @property
     @pulumi.getter
@@ -172,9 +172,9 @@ class SSHKeyItem(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
+                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  private_key: Optional[pulumi.Input[str]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
@@ -214,9 +214,9 @@ class SSHKeyItem(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
+                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  private_key: Optional[pulumi.Input[str]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
@@ -237,9 +237,9 @@ class SSHKeyItem(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = SSHKeyItemArgs.__new__(SSHKeyItemArgs)
 
-            __props__.__dict__["attachments"] = attachments
             __props__.__dict__["category"] = 'SSH Key'
             __props__.__dict__["fields"] = fields
+            __props__.__dict__["input_attachments"] = input_attachments
             __props__.__dict__["notes"] = notes
             __props__.__dict__["private_key"] = private_key
             __props__.__dict__["sections"] = sections
@@ -248,6 +248,7 @@ class SSHKeyItem(pulumi.CustomResource):
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
+            __props__.__dict__["attachments"] = None
             __props__.__dict__["references"] = None
             __props__.__dict__["uuid"] = None
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachments", "fields", "references", "sections"])
@@ -291,7 +292,7 @@ class SSHKeyItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def attachments(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+    def attachments(self) -> pulumi.Output[Mapping[str, 'outputs.OutAttachment']]:
         return pulumi.get(self, "attachments")
 
     @property

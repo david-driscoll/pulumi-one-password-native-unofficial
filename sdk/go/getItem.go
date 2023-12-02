@@ -11,6 +11,7 @@ import (
 )
 
 func LookupItem(ctx *pulumi.Context, args *LookupItemArgs, opts ...pulumi.InvokeOption) (*LookupItemResult, error) {
+	opts = pkgInvokeDefaultOpts(opts)
 	var rv LookupItemResult
 	err := ctx.Invoke("one-password-native-unoffical:index:GetItem", args, &rv, opts...)
 	if err != nil {
@@ -29,11 +30,11 @@ type LookupItemArgs struct {
 }
 
 type LookupItemResult struct {
-	Attachments map[string]OutField   `pulumi:"attachments"`
-	Category    string                `pulumi:"category"`
-	Fields      map[string]OutField   `pulumi:"fields"`
-	References  map[string]OutField   `pulumi:"references"`
-	Sections    map[string]OutSection `pulumi:"sections"`
+	Attachments map[string]OutAttachment `pulumi:"attachments"`
+	Category    string                   `pulumi:"category"`
+	Fields      map[string]OutField      `pulumi:"fields"`
+	References  map[string]OutField      `pulumi:"references"`
+	Sections    map[string]OutSection    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -84,8 +85,8 @@ func (o LookupItemResultOutput) ToLookupItemResultOutputWithContext(ctx context.
 	return o
 }
 
-func (o LookupItemResultOutput) Attachments() OutFieldMapOutput {
-	return o.ApplyT(func(v LookupItemResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+func (o LookupItemResultOutput) Attachments() OutAttachmentMapOutput {
+	return o.ApplyT(func(v LookupItemResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
 }
 
 func (o LookupItemResultOutput) Category() pulumi.StringOutput {

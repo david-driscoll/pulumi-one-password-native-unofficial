@@ -76,7 +76,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
     {
         public readonly string? AirPortId;
         public readonly string? AttachedStoragePassword;
-        public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
+        public readonly ImmutableDictionary<string, Outputs.OutAttachment> Attachments;
         public readonly string? BaseStationName;
         public readonly string? BaseStationPassword;
         public readonly string Category;
@@ -111,7 +111,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
             string? attachedStoragePassword,
 
-            ImmutableDictionary<string, Outputs.OutField> attachments,
+            ImmutableDictionary<string, Outputs.OutAttachment> attachments,
 
             string? baseStationName,
 

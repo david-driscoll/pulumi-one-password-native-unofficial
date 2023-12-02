@@ -35,7 +35,7 @@ export interface GetCreditCardArgs {
 
 export interface GetCreditCardResult {
     readonly additionalDetails?: outputs.creditCard.AdditionalDetailsSection;
-    readonly attachments: {[key: string]: outputs.OutField};
+    readonly attachments: {[key: string]: outputs.OutAttachment};
     readonly cardholderName?: string;
     readonly category: enums.Category | string;
     readonly contactInformation?: outputs.creditCard.ContactInformationSection;

@@ -33,7 +33,7 @@ export class CryptoWalletItem extends pulumi.CustomResource {
         return obj['__pulumiType'] === CryptoWalletItem.__pulumiType;
     }
 
-    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public /*out*/ readonly attachments!: pulumi.Output<{[key: string]: outputs.OutAttachment}>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly notes!: pulumi.Output<string | undefined>;
@@ -78,9 +78,9 @@ export class CryptoWalletItem extends pulumi.CustomResource {
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
-            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "Crypto Wallet";
             resourceInputs["fields"] = args ? args.fields : undefined;
+            resourceInputs["inputAttachments"] = args ? args.inputAttachments : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["password"] = args?.password ? pulumi.secret(args.password) : undefined;
             resourceInputs["recoveryPhrase"] = args?.recoveryPhrase ? pulumi.secret(args.recoveryPhrase) : undefined;
@@ -89,6 +89,7 @@ export class CryptoWalletItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["wallet"] = args ? args.wallet : undefined;
+            resourceInputs["attachments"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
@@ -117,12 +118,12 @@ export interface CryptoWalletItemState {
  * The set of arguments for constructing a CryptoWalletItem resource.
  */
 export interface CryptoWalletItemArgs {
-    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     /**
      * The category of the vault the item is in.
      */
     category?: pulumi.Input<"Crypto Wallet">;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
+    inputAttachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     notes?: pulumi.Input<string>;
     password?: pulumi.Input<string>;
     recoveryPhrase?: pulumi.Input<string>;

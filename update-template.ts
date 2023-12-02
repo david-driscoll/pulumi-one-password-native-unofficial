@@ -407,7 +407,7 @@ for (const template of templates) {
         "type": "object",
         "additionalProperties": { "$ref": "#/types/one-password-native-unoffical:index:Field" }
     };
-    currentResource.inputProperties['attachments'] = {
+    currentResource.inputProperties['inputAttachments'] = {
         "type": "object",
         "additionalProperties": { "$ref": "pulumi.json#/Asset" }
     };
@@ -744,7 +744,7 @@ function applyDefaultOutputProperties(item: any) {
         },
         ['attachments']: {
             "type": "object",
-            "additionalProperties": { "$ref": "#/types/one-password-native-unoffical:index:OutField" },
+            "additionalProperties": { "$ref": "#/types/one-password-native-unoffical:index:OutAttachment" },
             secret: true
         },
         ['references']: {

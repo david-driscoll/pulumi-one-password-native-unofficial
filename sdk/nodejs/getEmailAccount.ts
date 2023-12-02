@@ -34,7 +34,7 @@ export interface GetEmailAccountArgs {
 }
 
 export interface GetEmailAccountResult {
-    readonly attachments: {[key: string]: outputs.OutField};
+    readonly attachments: {[key: string]: outputs.OutAttachment};
     readonly authMethod?: string;
     readonly category: enums.Category | string;
     readonly contactInformation?: outputs.emailAccount.ContactInformationSection;

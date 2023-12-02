@@ -12,6 +12,7 @@ import (
 )
 
 func GetBankAccount(ctx *pulumi.Context, args *GetBankAccountArgs, opts ...pulumi.InvokeOption) (*GetBankAccountResult, error) {
+	opts = pkgInvokeDefaultOpts(opts)
 	var rv GetBankAccountResult
 	err := ctx.Invoke("one-password-native-unoffical:index:GetBankAccount", args, &rv, opts...)
 	if err != nil {
@@ -31,7 +32,7 @@ type GetBankAccountArgs struct {
 
 type GetBankAccountResult struct {
 	AccountNumber     *string                               `pulumi:"accountNumber"`
-	Attachments       map[string]OutField                   `pulumi:"attachments"`
+	Attachments       map[string]OutAttachment              `pulumi:"attachments"`
 	BankName          *string                               `pulumi:"bankName"`
 	BranchInformation *bankaccount.BranchInformationSection `pulumi:"branchInformation"`
 	Category          string                                `pulumi:"category"`
@@ -99,8 +100,8 @@ func (o GetBankAccountResultOutput) AccountNumber() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetBankAccountResult) *string { return v.AccountNumber }).(pulumi.StringPtrOutput)
 }
 
-func (o GetBankAccountResultOutput) Attachments() OutFieldMapOutput {
-	return o.ApplyT(func(v GetBankAccountResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+func (o GetBankAccountResultOutput) Attachments() OutAttachmentMapOutput {
+	return o.ApplyT(func(v GetBankAccountResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
 }
 
 func (o GetBankAccountResultOutput) BankName() pulumi.StringPtrOutput {

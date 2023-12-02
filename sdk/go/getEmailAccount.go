@@ -12,6 +12,7 @@ import (
 )
 
 func GetEmailAccount(ctx *pulumi.Context, args *GetEmailAccountArgs, opts ...pulumi.InvokeOption) (*GetEmailAccountResult, error) {
+	opts = pkgInvokeDefaultOpts(opts)
 	var rv GetEmailAccountResult
 	err := ctx.Invoke("one-password-native-unoffical:index:GetEmailAccount", args, &rv, opts...)
 	if err != nil {
@@ -30,7 +31,7 @@ type GetEmailAccountArgs struct {
 }
 
 type GetEmailAccountResult struct {
-	Attachments        map[string]OutField                     `pulumi:"attachments"`
+	Attachments        map[string]OutAttachment                `pulumi:"attachments"`
 	AuthMethod         *string                                 `pulumi:"authMethod"`
 	Category           string                                  `pulumi:"category"`
 	ContactInformation *emailaccount.ContactInformationSection `pulumi:"contactInformation"`
@@ -95,8 +96,8 @@ func (o GetEmailAccountResultOutput) ToGetEmailAccountResultOutputWithContext(ct
 	return o
 }
 
-func (o GetEmailAccountResultOutput) Attachments() OutFieldMapOutput {
-	return o.ApplyT(func(v GetEmailAccountResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+func (o GetEmailAccountResultOutput) Attachments() OutAttachmentMapOutput {
+	return o.ApplyT(func(v GetEmailAccountResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
 }
 
 func (o GetEmailAccountResultOutput) AuthMethod() pulumi.StringPtrOutput {

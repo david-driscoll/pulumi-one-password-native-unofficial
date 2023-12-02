@@ -17,7 +17,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         public Output<Rocket.Surgery.OnePasswordNativeUnoffical.Identity.Outputs.AddressSection?> Address { get; private set; } = null!;
 
         [Output("attachments")]
-        public Output<ImmutableDictionary<string, Outputs.OutField>> Attachments { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutAttachment>> Attachments { get; private set; } = null!;
 
         [Output("category")]
         public Output<string> Category { get; private set; } = null!;
@@ -131,14 +131,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         [Input("address")]
         public Input<Rocket.Surgery.OnePasswordNativeUnoffical.Identity.Inputs.AddressSectionArgs>? Address { get; set; }
 
-        [Input("attachments")]
-        private InputMap<AssetOrArchive>? _attachments;
-        public InputMap<AssetOrArchive> Attachments
-        {
-            get => _attachments ?? (_attachments = new InputMap<AssetOrArchive>());
-            set => _attachments = value;
-        }
-
         /// <summary>
         /// The category of the vault the item is in.
         /// </summary>
@@ -155,6 +147,14 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
         [Input("identification")]
         public Input<Rocket.Surgery.OnePasswordNativeUnoffical.Identity.Inputs.IdentificationSectionArgs>? Identification { get; set; }
+
+        [Input("inputAttachments")]
+        private InputMap<AssetOrArchive>? _inputAttachments;
+        public InputMap<AssetOrArchive> InputAttachments
+        {
+            get => _inputAttachments ?? (_inputAttachments = new InputMap<AssetOrArchive>());
+            set => _inputAttachments = value;
+        }
 
         [Input("internetDetails")]
         public Input<Rocket.Surgery.OnePasswordNativeUnoffical.Identity.Inputs.InternetDetailsSectionArgs>? InternetDetails { get; set; }

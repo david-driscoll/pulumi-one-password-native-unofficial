@@ -15,7 +15,7 @@ type OutdoorLicenseItem struct {
 	pulumi.CustomResourceState
 
 	ApprovedWildlife pulumi.StringPtrOutput `pulumi:"approvedWildlife"`
-	Attachments      OutFieldMapOutput      `pulumi:"attachments"`
+	Attachments      OutAttachmentMapOutput `pulumi:"attachments"`
 	Category         pulumi.StringOutput    `pulumi:"category"`
 	Country          pulumi.StringPtrOutput `pulumi:"country"`
 	Expires          pulumi.StringPtrOutput `pulumi:"expires"`
@@ -55,6 +55,7 @@ func NewOutdoorLicenseItem(ctx *pulumi.Context,
 		"sections",
 	})
 	opts = append(opts, secrets)
+	opts = pkgResourceDefaultOpts(opts)
 	var resource OutdoorLicenseItem
 	err := ctx.RegisterResource("one-password-native-unoffical:index:OutdoorLicenseItem", name, args, &resource, opts...)
 	if err != nil {
@@ -91,18 +92,18 @@ func (OutdoorLicenseItemState) ElementType() reflect.Type {
 }
 
 type outdoorLicenseItemArgs struct {
-	ApprovedWildlife *string                          `pulumi:"approvedWildlife"`
-	Attachments      map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
+	ApprovedWildlife *string `pulumi:"approvedWildlife"`
 	// The category of the vault the item is in.
-	Category     *string            `pulumi:"category"`
-	Country      *string            `pulumi:"country"`
-	Expires      *string            `pulumi:"expires"`
-	Fields       map[string]Field   `pulumi:"fields"`
-	FullName     *string            `pulumi:"fullName"`
-	MaximumQuota *string            `pulumi:"maximumQuota"`
-	Notes        *string            `pulumi:"notes"`
-	Sections     map[string]Section `pulumi:"sections"`
-	State        *string            `pulumi:"state"`
+	Category         *string                          `pulumi:"category"`
+	Country          *string                          `pulumi:"country"`
+	Expires          *string                          `pulumi:"expires"`
+	Fields           map[string]Field                 `pulumi:"fields"`
+	FullName         *string                          `pulumi:"fullName"`
+	InputAttachments map[string]pulumi.AssetOrArchive `pulumi:"inputAttachments"`
+	MaximumQuota     *string                          `pulumi:"maximumQuota"`
+	Notes            *string                          `pulumi:"notes"`
+	Sections         map[string]Section               `pulumi:"sections"`
+	State            *string                          `pulumi:"state"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -115,17 +116,17 @@ type outdoorLicenseItemArgs struct {
 // The set of arguments for constructing a OutdoorLicenseItem resource.
 type OutdoorLicenseItemArgs struct {
 	ApprovedWildlife pulumi.StringPtrInput
-	Attachments      pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
-	Category     pulumi.StringPtrInput
-	Country      pulumi.StringPtrInput
-	Expires      pulumi.StringPtrInput
-	Fields       FieldMapInput
-	FullName     pulumi.StringPtrInput
-	MaximumQuota pulumi.StringPtrInput
-	Notes        pulumi.StringPtrInput
-	Sections     SectionMapInput
-	State        pulumi.StringPtrInput
+	Category         pulumi.StringPtrInput
+	Country          pulumi.StringPtrInput
+	Expires          pulumi.StringPtrInput
+	Fields           FieldMapInput
+	FullName         pulumi.StringPtrInput
+	InputAttachments pulumi.AssetOrArchiveMapInput
+	MaximumQuota     pulumi.StringPtrInput
+	Notes            pulumi.StringPtrInput
+	Sections         SectionMapInput
+	State            pulumi.StringPtrInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.

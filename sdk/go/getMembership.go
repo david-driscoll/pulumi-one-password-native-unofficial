@@ -11,6 +11,7 @@ import (
 )
 
 func GetMembership(ctx *pulumi.Context, args *GetMembershipArgs, opts ...pulumi.InvokeOption) (*GetMembershipResult, error) {
+	opts = pkgInvokeDefaultOpts(opts)
 	var rv GetMembershipResult
 	err := ctx.Invoke("one-password-native-unoffical:index:GetMembership", args, &rv, opts...)
 	if err != nil {
@@ -29,18 +30,18 @@ type GetMembershipArgs struct {
 }
 
 type GetMembershipResult struct {
-	Attachments map[string]OutField   `pulumi:"attachments"`
-	Category    string                `pulumi:"category"`
-	ExpiryDate  *string               `pulumi:"expiryDate"`
-	Fields      map[string]OutField   `pulumi:"fields"`
-	Group       *string               `pulumi:"group"`
-	MemberId    *string               `pulumi:"memberId"`
-	MemberName  *string               `pulumi:"memberName"`
-	MemberSince *string               `pulumi:"memberSince"`
-	Notes       *string               `pulumi:"notes"`
-	Pin         *string               `pulumi:"pin"`
-	References  map[string]OutField   `pulumi:"references"`
-	Sections    map[string]OutSection `pulumi:"sections"`
+	Attachments map[string]OutAttachment `pulumi:"attachments"`
+	Category    string                   `pulumi:"category"`
+	ExpiryDate  *string                  `pulumi:"expiryDate"`
+	Fields      map[string]OutField      `pulumi:"fields"`
+	Group       *string                  `pulumi:"group"`
+	MemberId    *string                  `pulumi:"memberId"`
+	MemberName  *string                  `pulumi:"memberName"`
+	MemberSince *string                  `pulumi:"memberSince"`
+	Notes       *string                  `pulumi:"notes"`
+	Pin         *string                  `pulumi:"pin"`
+	References  map[string]OutField      `pulumi:"references"`
+	Sections    map[string]OutSection    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags      []string `pulumi:"tags"`
 	Telephone *string  `pulumi:"telephone"`
@@ -93,8 +94,8 @@ func (o GetMembershipResultOutput) ToGetMembershipResultOutputWithContext(ctx co
 	return o
 }
 
-func (o GetMembershipResultOutput) Attachments() OutFieldMapOutput {
-	return o.ApplyT(func(v GetMembershipResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+func (o GetMembershipResultOutput) Attachments() OutAttachmentMapOutput {
+	return o.ApplyT(func(v GetMembershipResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
 }
 
 func (o GetMembershipResultOutput) Category() pulumi.StringOutput {

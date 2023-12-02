@@ -14,7 +14,7 @@ import (
 type MembershipItem struct {
 	pulumi.CustomResourceState
 
-	Attachments OutFieldMapOutput      `pulumi:"attachments"`
+	Attachments OutAttachmentMapOutput `pulumi:"attachments"`
 	Category    pulumi.StringOutput    `pulumi:"category"`
 	ExpiryDate  pulumi.StringPtrOutput `pulumi:"expiryDate"`
 	Fields      OutFieldMapOutput      `pulumi:"fields"`
@@ -60,6 +60,7 @@ func NewMembershipItem(ctx *pulumi.Context,
 		"sections",
 	})
 	opts = append(opts, secrets)
+	opts = pkgResourceDefaultOpts(opts)
 	var resource MembershipItem
 	err := ctx.RegisterResource("one-password-native-unoffical:index:MembershipItem", name, args, &resource, opts...)
 	if err != nil {
@@ -96,18 +97,18 @@ func (MembershipItemState) ElementType() reflect.Type {
 }
 
 type membershipItemArgs struct {
-	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
-	Category    *string            `pulumi:"category"`
-	ExpiryDate  *string            `pulumi:"expiryDate"`
-	Fields      map[string]Field   `pulumi:"fields"`
-	Group       *string            `pulumi:"group"`
-	MemberId    *string            `pulumi:"memberId"`
-	MemberName  *string            `pulumi:"memberName"`
-	MemberSince *string            `pulumi:"memberSince"`
-	Notes       *string            `pulumi:"notes"`
-	Pin         *string            `pulumi:"pin"`
-	Sections    map[string]Section `pulumi:"sections"`
+	Category         *string                          `pulumi:"category"`
+	ExpiryDate       *string                          `pulumi:"expiryDate"`
+	Fields           map[string]Field                 `pulumi:"fields"`
+	Group            *string                          `pulumi:"group"`
+	InputAttachments map[string]pulumi.AssetOrArchive `pulumi:"inputAttachments"`
+	MemberId         *string                          `pulumi:"memberId"`
+	MemberName       *string                          `pulumi:"memberName"`
+	MemberSince      *string                          `pulumi:"memberSince"`
+	Notes            *string                          `pulumi:"notes"`
+	Pin              *string                          `pulumi:"pin"`
+	Sections         map[string]Section               `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags      []string `pulumi:"tags"`
 	Telephone *string  `pulumi:"telephone"`
@@ -120,18 +121,18 @@ type membershipItemArgs struct {
 
 // The set of arguments for constructing a MembershipItem resource.
 type MembershipItemArgs struct {
-	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
-	Category    pulumi.StringPtrInput
-	ExpiryDate  pulumi.StringPtrInput
-	Fields      FieldMapInput
-	Group       pulumi.StringPtrInput
-	MemberId    pulumi.StringPtrInput
-	MemberName  pulumi.StringPtrInput
-	MemberSince pulumi.StringPtrInput
-	Notes       pulumi.StringPtrInput
-	Pin         pulumi.StringPtrInput
-	Sections    SectionMapInput
+	Category         pulumi.StringPtrInput
+	ExpiryDate       pulumi.StringPtrInput
+	Fields           FieldMapInput
+	Group            pulumi.StringPtrInput
+	InputAttachments pulumi.AssetOrArchiveMapInput
+	MemberId         pulumi.StringPtrInput
+	MemberName       pulumi.StringPtrInput
+	MemberSince      pulumi.StringPtrInput
+	Notes            pulumi.StringPtrInput
+	Pin              pulumi.StringPtrInput
+	Sections         SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags      pulumi.StringArrayInput
 	Telephone pulumi.StringPtrInput

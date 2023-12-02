@@ -15,7 +15,7 @@ type DriverLicenseItem struct {
 	pulumi.CustomResourceState
 
 	Address                pulumi.StringPtrOutput `pulumi:"address"`
-	Attachments            OutFieldMapOutput      `pulumi:"attachments"`
+	Attachments            OutAttachmentMapOutput `pulumi:"attachments"`
 	Category               pulumi.StringOutput    `pulumi:"category"`
 	ConditionsRestrictions pulumi.StringPtrOutput `pulumi:"conditionsRestrictions"`
 	Country                pulumi.StringPtrOutput `pulumi:"country"`
@@ -59,6 +59,7 @@ func NewDriverLicenseItem(ctx *pulumi.Context,
 		"sections",
 	})
 	opts = append(opts, secrets)
+	opts = pkgResourceDefaultOpts(opts)
 	var resource DriverLicenseItem
 	err := ctx.RegisterResource("one-password-native-unoffical:index:DriverLicenseItem", name, args, &resource, opts...)
 	if err != nil {
@@ -95,23 +96,23 @@ func (DriverLicenseItemState) ElementType() reflect.Type {
 }
 
 type driverLicenseItemArgs struct {
-	Address     *string                          `pulumi:"address"`
-	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
+	Address *string `pulumi:"address"`
 	// The category of the vault the item is in.
-	Category               *string            `pulumi:"category"`
-	ConditionsRestrictions *string            `pulumi:"conditionsRestrictions"`
-	Country                *string            `pulumi:"country"`
-	DateOfBirth            *string            `pulumi:"dateOfBirth"`
-	ExpiryDate             *string            `pulumi:"expiryDate"`
-	Fields                 map[string]Field   `pulumi:"fields"`
-	FullName               *string            `pulumi:"fullName"`
-	Gender                 *string            `pulumi:"gender"`
-	Height                 *string            `pulumi:"height"`
-	LicenseClass           *string            `pulumi:"licenseClass"`
-	Notes                  *string            `pulumi:"notes"`
-	Number                 *string            `pulumi:"number"`
-	Sections               map[string]Section `pulumi:"sections"`
-	State                  *string            `pulumi:"state"`
+	Category               *string                          `pulumi:"category"`
+	ConditionsRestrictions *string                          `pulumi:"conditionsRestrictions"`
+	Country                *string                          `pulumi:"country"`
+	DateOfBirth            *string                          `pulumi:"dateOfBirth"`
+	ExpiryDate             *string                          `pulumi:"expiryDate"`
+	Fields                 map[string]Field                 `pulumi:"fields"`
+	FullName               *string                          `pulumi:"fullName"`
+	Gender                 *string                          `pulumi:"gender"`
+	Height                 *string                          `pulumi:"height"`
+	InputAttachments       map[string]pulumi.AssetOrArchive `pulumi:"inputAttachments"`
+	LicenseClass           *string                          `pulumi:"licenseClass"`
+	Notes                  *string                          `pulumi:"notes"`
+	Number                 *string                          `pulumi:"number"`
+	Sections               map[string]Section               `pulumi:"sections"`
+	State                  *string                          `pulumi:"state"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -122,8 +123,7 @@ type driverLicenseItemArgs struct {
 
 // The set of arguments for constructing a DriverLicenseItem resource.
 type DriverLicenseItemArgs struct {
-	Address     pulumi.StringPtrInput
-	Attachments pulumi.AssetOrArchiveMapInput
+	Address pulumi.StringPtrInput
 	// The category of the vault the item is in.
 	Category               pulumi.StringPtrInput
 	ConditionsRestrictions pulumi.StringPtrInput
@@ -134,6 +134,7 @@ type DriverLicenseItemArgs struct {
 	FullName               pulumi.StringPtrInput
 	Gender                 pulumi.StringPtrInput
 	Height                 pulumi.StringPtrInput
+	InputAttachments       pulumi.AssetOrArchiveMapInput
 	LicenseClass           pulumi.StringPtrInput
 	Notes                  pulumi.StringPtrInput
 	Number                 pulumi.StringPtrInput

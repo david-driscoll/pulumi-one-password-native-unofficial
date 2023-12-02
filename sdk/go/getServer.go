@@ -12,6 +12,7 @@ import (
 )
 
 func GetServer(ctx *pulumi.Context, args *GetServerArgs, opts ...pulumi.InvokeOption) (*GetServerResult, error) {
+	opts = pkgInvokeDefaultOpts(opts)
 	var rv GetServerResult
 	err := ctx.Invoke("one-password-native-unoffical:index:GetServer", args, &rv, opts...)
 	if err != nil {
@@ -31,7 +32,7 @@ type GetServerArgs struct {
 
 type GetServerResult struct {
 	AdminConsole    *server.AdminConsoleSection    `pulumi:"adminConsole"`
-	Attachments     map[string]OutField            `pulumi:"attachments"`
+	Attachments     map[string]OutAttachment       `pulumi:"attachments"`
 	Category        string                         `pulumi:"category"`
 	Fields          map[string]OutField            `pulumi:"fields"`
 	HostingProvider *server.HostingProviderSection `pulumi:"hostingProvider"`
@@ -95,8 +96,8 @@ func (o GetServerResultOutput) AdminConsole() server.AdminConsoleSectionPtrOutpu
 	return o.ApplyT(func(v GetServerResult) *server.AdminConsoleSection { return v.AdminConsole }).(server.AdminConsoleSectionPtrOutput)
 }
 
-func (o GetServerResultOutput) Attachments() OutFieldMapOutput {
-	return o.ApplyT(func(v GetServerResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+func (o GetServerResultOutput) Attachments() OutAttachmentMapOutput {
+	return o.ApplyT(func(v GetServerResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
 }
 
 func (o GetServerResultOutput) Category() pulumi.StringOutput {

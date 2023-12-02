@@ -12,6 +12,7 @@ import (
 )
 
 func GetSoftwareLicense(ctx *pulumi.Context, args *GetSoftwareLicenseArgs, opts ...pulumi.InvokeOption) (*GetSoftwareLicenseResult, error) {
+	opts = pkgInvokeDefaultOpts(opts)
 	var rv GetSoftwareLicenseResult
 	err := ctx.Invoke("one-password-native-unoffical:index:GetSoftwareLicense", args, &rv, opts...)
 	if err != nil {
@@ -30,7 +31,7 @@ type GetSoftwareLicenseArgs struct {
 }
 
 type GetSoftwareLicenseResult struct {
-	Attachments map[string]OutField               `pulumi:"attachments"`
+	Attachments map[string]OutAttachment          `pulumi:"attachments"`
 	Category    string                            `pulumi:"category"`
 	Customer    *softwarelicense.CustomerSection  `pulumi:"customer"`
 	Fields      map[string]OutField               `pulumi:"fields"`
@@ -91,8 +92,8 @@ func (o GetSoftwareLicenseResultOutput) ToGetSoftwareLicenseResultOutputWithCont
 	return o
 }
 
-func (o GetSoftwareLicenseResultOutput) Attachments() OutFieldMapOutput {
-	return o.ApplyT(func(v GetSoftwareLicenseResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+func (o GetSoftwareLicenseResultOutput) Attachments() OutAttachmentMapOutput {
+	return o.ApplyT(func(v GetSoftwareLicenseResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
 }
 
 func (o GetSoftwareLicenseResultOutput) Category() pulumi.StringOutput {

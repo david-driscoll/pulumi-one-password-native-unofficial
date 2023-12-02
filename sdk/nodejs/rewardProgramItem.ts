@@ -33,7 +33,7 @@ export class RewardProgramItem extends pulumi.CustomResource {
         return obj['__pulumiType'] === RewardProgramItem.__pulumiType;
     }
 
-    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public /*out*/ readonly attachments!: pulumi.Output<{[key: string]: outputs.OutAttachment}>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly companyName!: pulumi.Output<string | undefined>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.OutField}>;
@@ -80,10 +80,10 @@ export class RewardProgramItem extends pulumi.CustomResource {
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
-            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "Reward Program";
             resourceInputs["companyName"] = args ? args.companyName : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
+            resourceInputs["inputAttachments"] = args ? args.inputAttachments : undefined;
             resourceInputs["memberId"] = args ? args.memberId : undefined;
             resourceInputs["memberName"] = args ? args.memberName : undefined;
             resourceInputs["moreInformation"] = args ? args.moreInformation : undefined;
@@ -93,6 +93,7 @@ export class RewardProgramItem extends pulumi.CustomResource {
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["attachments"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
@@ -121,13 +122,13 @@ export interface RewardProgramItemState {
  * The set of arguments for constructing a RewardProgramItem resource.
  */
 export interface RewardProgramItemArgs {
-    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     /**
      * The category of the vault the item is in.
      */
     category?: pulumi.Input<"Reward Program">;
     companyName?: pulumi.Input<string>;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
+    inputAttachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     memberId?: pulumi.Input<string>;
     memberName?: pulumi.Input<string>;
     moreInformation?: pulumi.Input<inputs.rewardProgram.MoreInformationSectionArgs>;

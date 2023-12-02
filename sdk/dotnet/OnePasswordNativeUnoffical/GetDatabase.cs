@@ -75,7 +75,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
     public sealed class GetDatabaseResult
     {
         public readonly string? Alias;
-        public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
+        public readonly ImmutableDictionary<string, Outputs.OutAttachment> Attachments;
         public readonly string Category;
         public readonly string? ConnectionOptions;
         public readonly string? Database;
@@ -110,7 +110,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         private GetDatabaseResult(
             string? alias,
 
-            ImmutableDictionary<string, Outputs.OutField> attachments,
+            ImmutableDictionary<string, Outputs.OutAttachment> attachments,
 
             string category,
 

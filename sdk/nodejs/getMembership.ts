@@ -34,7 +34,7 @@ export interface GetMembershipArgs {
 }
 
 export interface GetMembershipResult {
-    readonly attachments: {[key: string]: outputs.OutField};
+    readonly attachments: {[key: string]: outputs.OutAttachment};
     readonly category: enums.Category | string;
     readonly expiryDate?: string;
     readonly fields: {[key: string]: outputs.OutField};

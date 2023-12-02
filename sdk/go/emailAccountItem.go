@@ -15,7 +15,7 @@ import (
 type EmailAccountItem struct {
 	pulumi.CustomResourceState
 
-	Attachments        OutFieldMapOutput                               `pulumi:"attachments"`
+	Attachments        OutAttachmentMapOutput                          `pulumi:"attachments"`
 	AuthMethod         pulumi.StringPtrOutput                          `pulumi:"authMethod"`
 	Category           pulumi.StringOutput                             `pulumi:"category"`
 	ContactInformation emailaccount.ContactInformationSectionPtrOutput `pulumi:"contactInformation"`
@@ -63,6 +63,7 @@ func NewEmailAccountItem(ctx *pulumi.Context,
 		"smtp",
 	})
 	opts = append(opts, secrets)
+	opts = pkgResourceDefaultOpts(opts)
 	var resource EmailAccountItem
 	err := ctx.RegisterResource("one-password-native-unoffical:index:EmailAccountItem", name, args, &resource, opts...)
 	if err != nil {
@@ -99,12 +100,12 @@ func (EmailAccountItemState) ElementType() reflect.Type {
 }
 
 type emailAccountItemArgs struct {
-	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
-	AuthMethod  *string                          `pulumi:"authMethod"`
+	AuthMethod *string `pulumi:"authMethod"`
 	// The category of the vault the item is in.
 	Category           *string                                 `pulumi:"category"`
 	ContactInformation *emailaccount.ContactInformationSection `pulumi:"contactInformation"`
 	Fields             map[string]Field                        `pulumi:"fields"`
+	InputAttachments   map[string]pulumi.AssetOrArchive        `pulumi:"inputAttachments"`
 	Notes              *string                                 `pulumi:"notes"`
 	Password           *string                                 `pulumi:"password"`
 	PortNumber         *string                                 `pulumi:"portNumber"`
@@ -124,12 +125,12 @@ type emailAccountItemArgs struct {
 
 // The set of arguments for constructing a EmailAccountItem resource.
 type EmailAccountItemArgs struct {
-	Attachments pulumi.AssetOrArchiveMapInput
-	AuthMethod  pulumi.StringPtrInput
+	AuthMethod pulumi.StringPtrInput
 	// The category of the vault the item is in.
 	Category           pulumi.StringPtrInput
 	ContactInformation emailaccount.ContactInformationSectionPtrInput
 	Fields             FieldMapInput
+	InputAttachments   pulumi.AssetOrArchiveMapInput
 	Notes              pulumi.StringPtrInput
 	Password           pulumi.StringPtrInput
 	PortNumber         pulumi.StringPtrInput

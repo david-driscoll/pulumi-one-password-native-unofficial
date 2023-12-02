@@ -86,7 +86,7 @@ class GetPassportResult:
 
     @property
     @pulumi.getter
-    def attachments(self) -> Mapping[str, 'outputs.OutField']:
+    def attachments(self) -> Mapping[str, 'outputs.OutAttachment']:
         return pulumi.get(self, "attachments")
 
     @property

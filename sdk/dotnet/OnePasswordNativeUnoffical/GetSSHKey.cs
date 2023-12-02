@@ -74,7 +74,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
     [OutputType]
     public sealed class GetSSHKeyResult
     {
-        public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
+        public readonly ImmutableDictionary<string, Outputs.OutAttachment> Attachments;
         public readonly string Category;
         public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
         public readonly string? Notes;
@@ -100,7 +100,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
         [OutputConstructor]
         private GetSSHKeyResult(
-            ImmutableDictionary<string, Outputs.OutField> attachments,
+            ImmutableDictionary<string, Outputs.OutAttachment> attachments,
 
             string category,
 

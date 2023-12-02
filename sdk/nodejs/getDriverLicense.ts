@@ -35,7 +35,7 @@ export interface GetDriverLicenseArgs {
 
 export interface GetDriverLicenseResult {
     readonly address?: string;
-    readonly attachments: {[key: string]: outputs.OutField};
+    readonly attachments: {[key: string]: outputs.OutAttachment};
     readonly category: enums.Category | string;
     readonly conditionsRestrictions?: string;
     readonly country?: string;

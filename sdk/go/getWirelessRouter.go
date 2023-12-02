@@ -11,6 +11,7 @@ import (
 )
 
 func GetWirelessRouter(ctx *pulumi.Context, args *GetWirelessRouterArgs, opts ...pulumi.InvokeOption) (*GetWirelessRouterResult, error) {
+	opts = pkgInvokeDefaultOpts(opts)
 	var rv GetWirelessRouterResult
 	err := ctx.Invoke("one-password-native-unoffical:index:GetWirelessRouter", args, &rv, opts...)
 	if err != nil {
@@ -29,18 +30,18 @@ type GetWirelessRouterArgs struct {
 }
 
 type GetWirelessRouterResult struct {
-	AirPortId               *string               `pulumi:"airPortId"`
-	AttachedStoragePassword *string               `pulumi:"attachedStoragePassword"`
-	Attachments             map[string]OutField   `pulumi:"attachments"`
-	BaseStationName         *string               `pulumi:"baseStationName"`
-	BaseStationPassword     *string               `pulumi:"baseStationPassword"`
-	Category                string                `pulumi:"category"`
-	Fields                  map[string]OutField   `pulumi:"fields"`
-	NetworkName             *string               `pulumi:"networkName"`
-	Notes                   *string               `pulumi:"notes"`
-	References              map[string]OutField   `pulumi:"references"`
-	Sections                map[string]OutSection `pulumi:"sections"`
-	ServerIpAddress         *string               `pulumi:"serverIpAddress"`
+	AirPortId               *string                  `pulumi:"airPortId"`
+	AttachedStoragePassword *string                  `pulumi:"attachedStoragePassword"`
+	Attachments             map[string]OutAttachment `pulumi:"attachments"`
+	BaseStationName         *string                  `pulumi:"baseStationName"`
+	BaseStationPassword     *string                  `pulumi:"baseStationPassword"`
+	Category                string                   `pulumi:"category"`
+	Fields                  map[string]OutField      `pulumi:"fields"`
+	NetworkName             *string                  `pulumi:"networkName"`
+	Notes                   *string                  `pulumi:"notes"`
+	References              map[string]OutField      `pulumi:"references"`
+	Sections                map[string]OutSection    `pulumi:"sections"`
+	ServerIpAddress         *string                  `pulumi:"serverIpAddress"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -101,8 +102,8 @@ func (o GetWirelessRouterResultOutput) AttachedStoragePassword() pulumi.StringPt
 	return o.ApplyT(func(v GetWirelessRouterResult) *string { return v.AttachedStoragePassword }).(pulumi.StringPtrOutput)
 }
 
-func (o GetWirelessRouterResultOutput) Attachments() OutFieldMapOutput {
-	return o.ApplyT(func(v GetWirelessRouterResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+func (o GetWirelessRouterResultOutput) Attachments() OutAttachmentMapOutput {
+	return o.ApplyT(func(v GetWirelessRouterResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
 }
 
 func (o GetWirelessRouterResultOutput) BaseStationName() pulumi.StringPtrOutput {

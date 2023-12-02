@@ -17,7 +17,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         public Output<string?> ApprovedWildlife { get; private set; } = null!;
 
         [Output("attachments")]
-        public Output<ImmutableDictionary<string, Outputs.OutField>> Attachments { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutAttachment>> Attachments { get; private set; } = null!;
 
         [Output("category")]
         public Output<string> Category { get; private set; } = null!;
@@ -143,14 +143,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         [Input("approvedWildlife")]
         public Input<string>? ApprovedWildlife { get; set; }
 
-        [Input("attachments")]
-        private InputMap<AssetOrArchive>? _attachments;
-        public InputMap<AssetOrArchive> Attachments
-        {
-            get => _attachments ?? (_attachments = new InputMap<AssetOrArchive>());
-            set => _attachments = value;
-        }
-
         /// <summary>
         /// The category of the vault the item is in.
         /// </summary>
@@ -173,6 +165,14 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
         [Input("fullName")]
         public Input<string>? FullName { get; set; }
+
+        [Input("inputAttachments")]
+        private InputMap<AssetOrArchive>? _inputAttachments;
+        public InputMap<AssetOrArchive> InputAttachments
+        {
+            get => _inputAttachments ?? (_inputAttachments = new InputMap<AssetOrArchive>());
+            set => _inputAttachments = value;
+        }
 
         [Input("maximumQuota")]
         public Input<string>? MaximumQuota { get; set; }

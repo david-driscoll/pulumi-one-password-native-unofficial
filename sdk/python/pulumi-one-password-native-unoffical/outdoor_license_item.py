@@ -18,12 +18,12 @@ class OutdoorLicenseItemArgs:
     def __init__(__self__, *,
                  vault: pulumi.Input[str],
                  approved_wildlife: Optional[pulumi.Input[str]] = None,
-                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  country: Optional[pulumi.Input[str]] = None,
                  expires: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
                  full_name: Optional[pulumi.Input[str]] = None,
+                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  maximum_quota: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input['SectionArgs']]]] = None,
@@ -41,8 +41,6 @@ class OutdoorLicenseItemArgs:
         pulumi.set(__self__, "vault", vault)
         if approved_wildlife is not None:
             pulumi.set(__self__, "approved_wildlife", approved_wildlife)
-        if attachments is not None:
-            pulumi.set(__self__, "attachments", attachments)
         if category is not None:
             pulumi.set(__self__, "category", 'Outdoor License')
         if country is not None:
@@ -53,6 +51,8 @@ class OutdoorLicenseItemArgs:
             pulumi.set(__self__, "fields", fields)
         if full_name is not None:
             pulumi.set(__self__, "full_name", full_name)
+        if input_attachments is not None:
+            pulumi.set(__self__, "input_attachments", input_attachments)
         if maximum_quota is not None:
             pulumi.set(__self__, "maximum_quota", maximum_quota)
         if notes is not None:
@@ -88,15 +88,6 @@ class OutdoorLicenseItemArgs:
     @approved_wildlife.setter
     def approved_wildlife(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "approved_wildlife", value)
-
-    @property
-    @pulumi.getter
-    def attachments(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]:
-        return pulumi.get(self, "attachments")
-
-    @attachments.setter
-    def attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
-        pulumi.set(self, "attachments", value)
 
     @property
     @pulumi.getter
@@ -145,6 +136,15 @@ class OutdoorLicenseItemArgs:
     @full_name.setter
     def full_name(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "full_name", value)
+
+    @property
+    @pulumi.getter(name="inputAttachments")
+    def input_attachments(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]:
+        return pulumi.get(self, "input_attachments")
+
+    @input_attachments.setter
+    def input_attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
+        pulumi.set(self, "input_attachments", value)
 
     @property
     @pulumi.getter(name="maximumQuota")
@@ -245,12 +245,12 @@ class OutdoorLicenseItem(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  approved_wildlife: Optional[pulumi.Input[str]] = None,
-                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  country: Optional[pulumi.Input[str]] = None,
                  expires: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  full_name: Optional[pulumi.Input[str]] = None,
+                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  maximum_quota: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
@@ -293,12 +293,12 @@ class OutdoorLicenseItem(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  approved_wildlife: Optional[pulumi.Input[str]] = None,
-                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  country: Optional[pulumi.Input[str]] = None,
                  expires: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  full_name: Optional[pulumi.Input[str]] = None,
+                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  maximum_quota: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
@@ -322,12 +322,12 @@ class OutdoorLicenseItem(pulumi.CustomResource):
             __props__ = OutdoorLicenseItemArgs.__new__(OutdoorLicenseItemArgs)
 
             __props__.__dict__["approved_wildlife"] = approved_wildlife
-            __props__.__dict__["attachments"] = attachments
             __props__.__dict__["category"] = 'Outdoor License'
             __props__.__dict__["country"] = country
             __props__.__dict__["expires"] = expires
             __props__.__dict__["fields"] = fields
             __props__.__dict__["full_name"] = full_name
+            __props__.__dict__["input_attachments"] = input_attachments
             __props__.__dict__["maximum_quota"] = maximum_quota
             __props__.__dict__["notes"] = notes
             __props__.__dict__["sections"] = sections
@@ -338,6 +338,7 @@ class OutdoorLicenseItem(pulumi.CustomResource):
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
+            __props__.__dict__["attachments"] = None
             __props__.__dict__["references"] = None
             __props__.__dict__["uuid"] = None
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachments", "fields", "references", "sections"])
@@ -392,7 +393,7 @@ class OutdoorLicenseItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def attachments(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+    def attachments(self) -> pulumi.Output[Mapping[str, 'outputs.OutAttachment']]:
         return pulumi.get(self, "attachments")
 
     @property

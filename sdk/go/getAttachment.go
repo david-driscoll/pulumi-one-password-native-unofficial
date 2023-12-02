@@ -11,6 +11,7 @@ import (
 )
 
 func GetAttachment(ctx *pulumi.Context, args *GetAttachmentArgs, opts ...pulumi.InvokeOption) (*GetAttachmentResult, error) {
+	opts = pkgInvokeDefaultOpts(opts)
 	var rv GetAttachmentResult
 	err := ctx.Invoke("one-password-native-unoffical:index:GetAttachment", args, &rv, opts...)
 	if err != nil {

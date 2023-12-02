@@ -34,7 +34,7 @@ export interface GetAPICredentialArgs {
 }
 
 export interface GetAPICredentialResult {
-    readonly attachments: {[key: string]: outputs.OutField};
+    readonly attachments: {[key: string]: outputs.OutAttachment};
     readonly category: enums.Category | string;
     readonly credential?: string;
     readonly expires?: string;

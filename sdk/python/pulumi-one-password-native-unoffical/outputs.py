@@ -11,9 +11,43 @@ from . import outputs
 from ._enums import *
 
 __all__ = [
+    'OutAttachment',
     'OutField',
     'OutSection',
 ]
+
+@pulumi.output_type
+class OutAttachment(dict):
+    def __init__(__self__, *,
+                 name: str,
+                 reference: str,
+                 size: int,
+                 uuid: str):
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "reference", reference)
+        pulumi.set(__self__, "size", size)
+        pulumi.set(__self__, "uuid", uuid)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def reference(self) -> str:
+        return pulumi.get(self, "reference")
+
+    @property
+    @pulumi.getter
+    def size(self) -> int:
+        return pulumi.get(self, "size")
+
+    @property
+    @pulumi.getter
+    def uuid(self) -> str:
+        return pulumi.get(self, "uuid")
+
 
 @pulumi.output_type
 class OutField(dict):

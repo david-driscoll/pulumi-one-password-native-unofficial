@@ -11,6 +11,7 @@ import (
 )
 
 func GetSecureNote(ctx *pulumi.Context, args *GetSecureNoteArgs, opts ...pulumi.InvokeOption) (*GetSecureNoteResult, error) {
+	opts = pkgInvokeDefaultOpts(opts)
 	var rv GetSecureNoteResult
 	err := ctx.Invoke("one-password-native-unoffical:index:GetSecureNote", args, &rv, opts...)
 	if err != nil {
@@ -29,12 +30,12 @@ type GetSecureNoteArgs struct {
 }
 
 type GetSecureNoteResult struct {
-	Attachments map[string]OutField   `pulumi:"attachments"`
-	Category    string                `pulumi:"category"`
-	Fields      map[string]OutField   `pulumi:"fields"`
-	Notes       *string               `pulumi:"notes"`
-	References  map[string]OutField   `pulumi:"references"`
-	Sections    map[string]OutSection `pulumi:"sections"`
+	Attachments map[string]OutAttachment `pulumi:"attachments"`
+	Category    string                   `pulumi:"category"`
+	Fields      map[string]OutField      `pulumi:"fields"`
+	Notes       *string                  `pulumi:"notes"`
+	References  map[string]OutField      `pulumi:"references"`
+	Sections    map[string]OutSection    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -85,8 +86,8 @@ func (o GetSecureNoteResultOutput) ToGetSecureNoteResultOutputWithContext(ctx co
 	return o
 }
 
-func (o GetSecureNoteResultOutput) Attachments() OutFieldMapOutput {
-	return o.ApplyT(func(v GetSecureNoteResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+func (o GetSecureNoteResultOutput) Attachments() OutAttachmentMapOutput {
+	return o.ApplyT(func(v GetSecureNoteResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
 }
 
 func (o GetSecureNoteResultOutput) Category() pulumi.StringOutput {

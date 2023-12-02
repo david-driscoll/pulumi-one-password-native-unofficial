@@ -11,6 +11,7 @@ import (
 )
 
 func GetDatabase(ctx *pulumi.Context, args *GetDatabaseArgs, opts ...pulumi.InvokeOption) (*GetDatabaseResult, error) {
+	opts = pkgInvokeDefaultOpts(opts)
 	var rv GetDatabaseResult
 	err := ctx.Invoke("one-password-native-unoffical:index:GetDatabase", args, &rv, opts...)
 	if err != nil {
@@ -29,19 +30,19 @@ type GetDatabaseArgs struct {
 }
 
 type GetDatabaseResult struct {
-	Alias             *string               `pulumi:"alias"`
-	Attachments       map[string]OutField   `pulumi:"attachments"`
-	Category          string                `pulumi:"category"`
-	ConnectionOptions *string               `pulumi:"connectionOptions"`
-	Database          *string               `pulumi:"database"`
-	Fields            map[string]OutField   `pulumi:"fields"`
-	Notes             *string               `pulumi:"notes"`
-	Password          *string               `pulumi:"password"`
-	Port              *string               `pulumi:"port"`
-	References        map[string]OutField   `pulumi:"references"`
-	Sections          map[string]OutSection `pulumi:"sections"`
-	Server            *string               `pulumi:"server"`
-	Sid               *string               `pulumi:"sid"`
+	Alias             *string                  `pulumi:"alias"`
+	Attachments       map[string]OutAttachment `pulumi:"attachments"`
+	Category          string                   `pulumi:"category"`
+	ConnectionOptions *string                  `pulumi:"connectionOptions"`
+	Database          *string                  `pulumi:"database"`
+	Fields            map[string]OutField      `pulumi:"fields"`
+	Notes             *string                  `pulumi:"notes"`
+	Password          *string                  `pulumi:"password"`
+	Port              *string                  `pulumi:"port"`
+	References        map[string]OutField      `pulumi:"references"`
+	Sections          map[string]OutSection    `pulumi:"sections"`
+	Server            *string                  `pulumi:"server"`
+	Sid               *string                  `pulumi:"sid"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -98,8 +99,8 @@ func (o GetDatabaseResultOutput) Alias() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetDatabaseResult) *string { return v.Alias }).(pulumi.StringPtrOutput)
 }
 
-func (o GetDatabaseResultOutput) Attachments() OutFieldMapOutput {
-	return o.ApplyT(func(v GetDatabaseResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+func (o GetDatabaseResultOutput) Attachments() OutAttachmentMapOutput {
+	return o.ApplyT(func(v GetDatabaseResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
 }
 
 func (o GetDatabaseResultOutput) Category() pulumi.StringOutput {

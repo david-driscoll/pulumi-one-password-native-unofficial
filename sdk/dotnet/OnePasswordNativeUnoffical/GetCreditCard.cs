@@ -75,7 +75,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
     public sealed class GetCreditCardResult
     {
         public readonly Rocket.Surgery.OnePasswordNativeUnoffical.CreditCard.Outputs.AdditionalDetailsSection? AdditionalDetails;
-        public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
+        public readonly ImmutableDictionary<string, Outputs.OutAttachment> Attachments;
         public readonly string? CardholderName;
         public readonly string Category;
         public readonly Rocket.Surgery.OnePasswordNativeUnoffical.CreditCard.Outputs.ContactInformationSection? ContactInformation;
@@ -109,7 +109,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         private GetCreditCardResult(
             Rocket.Surgery.OnePasswordNativeUnoffical.CreditCard.Outputs.AdditionalDetailsSection? additionalDetails,
 
-            ImmutableDictionary<string, Outputs.OutField> attachments,
+            ImmutableDictionary<string, Outputs.OutAttachment> attachments,
 
             string? cardholderName,
 

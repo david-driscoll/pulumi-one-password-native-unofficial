@@ -33,7 +33,7 @@ export class MedicalRecordItem extends pulumi.CustomResource {
         return obj['__pulumiType'] === MedicalRecordItem.__pulumiType;
     }
 
-    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public /*out*/ readonly attachments!: pulumi.Output<{[key: string]: outputs.OutAttachment}>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly date!: pulumi.Output<string | undefined>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.OutField}>;
@@ -81,11 +81,11 @@ export class MedicalRecordItem extends pulumi.CustomResource {
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
-            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "Medical Record";
             resourceInputs["date"] = args ? args.date : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["healthcareProfessional"] = args ? args.healthcareProfessional : undefined;
+            resourceInputs["inputAttachments"] = args ? args.inputAttachments : undefined;
             resourceInputs["location"] = args ? args.location : undefined;
             resourceInputs["medication"] = args ? args.medication : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
@@ -95,6 +95,7 @@ export class MedicalRecordItem extends pulumi.CustomResource {
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["attachments"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
@@ -123,7 +124,6 @@ export interface MedicalRecordItemState {
  * The set of arguments for constructing a MedicalRecordItem resource.
  */
 export interface MedicalRecordItemArgs {
-    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     /**
      * The category of the vault the item is in.
      */
@@ -131,6 +131,7 @@ export interface MedicalRecordItemArgs {
     date?: pulumi.Input<string>;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     healthcareProfessional?: pulumi.Input<string>;
+    inputAttachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     location?: pulumi.Input<string>;
     medication?: pulumi.Input<inputs.medicalRecord.MedicationSectionArgs>;
     notes?: pulumi.Input<string>;

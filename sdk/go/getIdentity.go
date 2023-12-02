@@ -12,6 +12,7 @@ import (
 )
 
 func GetIdentity(ctx *pulumi.Context, args *GetIdentityArgs, opts ...pulumi.InvokeOption) (*GetIdentityResult, error) {
+	opts = pkgInvokeDefaultOpts(opts)
 	var rv GetIdentityResult
 	err := ctx.Invoke("one-password-native-unoffical:index:GetIdentity", args, &rv, opts...)
 	if err != nil {
@@ -31,7 +32,7 @@ type GetIdentityArgs struct {
 
 type GetIdentityResult struct {
 	Address         *identity.AddressSection         `pulumi:"address"`
-	Attachments     map[string]OutField              `pulumi:"attachments"`
+	Attachments     map[string]OutAttachment         `pulumi:"attachments"`
 	Category        string                           `pulumi:"category"`
 	Fields          map[string]OutField              `pulumi:"fields"`
 	Identification  *identity.IdentificationSection  `pulumi:"identification"`
@@ -93,8 +94,8 @@ func (o GetIdentityResultOutput) Address() identity.AddressSectionPtrOutput {
 	return o.ApplyT(func(v GetIdentityResult) *identity.AddressSection { return v.Address }).(identity.AddressSectionPtrOutput)
 }
 
-func (o GetIdentityResultOutput) Attachments() OutFieldMapOutput {
-	return o.ApplyT(func(v GetIdentityResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+func (o GetIdentityResultOutput) Attachments() OutAttachmentMapOutput {
+	return o.ApplyT(func(v GetIdentityResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
 }
 
 func (o GetIdentityResultOutput) Category() pulumi.StringOutput {

@@ -34,7 +34,7 @@ export interface GetPassportArgs {
 }
 
 export interface GetPassportResult {
-    readonly attachments: {[key: string]: outputs.OutField};
+    readonly attachments: {[key: string]: outputs.OutAttachment};
     readonly category: enums.Category | string;
     readonly dateOfBirth?: string;
     readonly expiryDate?: string;

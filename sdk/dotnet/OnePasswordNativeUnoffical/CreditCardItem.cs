@@ -17,7 +17,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         public Output<Rocket.Surgery.OnePasswordNativeUnoffical.CreditCard.Outputs.AdditionalDetailsSection?> AdditionalDetails { get; private set; } = null!;
 
         [Output("attachments")]
-        public Output<ImmutableDictionary<string, Outputs.OutField>> Attachments { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutAttachment>> Attachments { get; private set; } = null!;
 
         [Output("cardholderName")]
         public Output<string?> CardholderName { get; private set; } = null!;
@@ -148,14 +148,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         [Input("additionalDetails")]
         public Input<Rocket.Surgery.OnePasswordNativeUnoffical.CreditCard.Inputs.AdditionalDetailsSectionArgs>? AdditionalDetails { get; set; }
 
-        [Input("attachments")]
-        private InputMap<AssetOrArchive>? _attachments;
-        public InputMap<AssetOrArchive> Attachments
-        {
-            get => _attachments ?? (_attachments = new InputMap<AssetOrArchive>());
-            set => _attachments = value;
-        }
-
         [Input("cardholderName")]
         public Input<string>? CardholderName { get; set; }
 
@@ -177,6 +169,14 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         {
             get => _fields ?? (_fields = new InputMap<Inputs.FieldArgs>());
             set => _fields = value;
+        }
+
+        [Input("inputAttachments")]
+        private InputMap<AssetOrArchive>? _inputAttachments;
+        public InputMap<AssetOrArchive> InputAttachments
+        {
+            get => _inputAttachments ?? (_inputAttachments = new InputMap<AssetOrArchive>());
+            set => _inputAttachments = value;
         }
 
         [Input("notes")]

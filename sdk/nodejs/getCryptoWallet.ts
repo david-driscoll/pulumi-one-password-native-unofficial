@@ -34,7 +34,7 @@ export interface GetCryptoWalletArgs {
 }
 
 export interface GetCryptoWalletResult {
-    readonly attachments: {[key: string]: outputs.OutField};
+    readonly attachments: {[key: string]: outputs.OutAttachment};
     readonly category: enums.Category | string;
     readonly fields: {[key: string]: outputs.OutField};
     readonly notes?: string;

@@ -36,7 +36,7 @@ export interface GetWirelessRouterArgs {
 export interface GetWirelessRouterResult {
     readonly airPortId?: string;
     readonly attachedStoragePassword?: string;
-    readonly attachments: {[key: string]: outputs.OutField};
+    readonly attachments: {[key: string]: outputs.OutAttachment};
     readonly baseStationName?: string;
     readonly baseStationPassword?: string;
     readonly category: enums.Category | string;

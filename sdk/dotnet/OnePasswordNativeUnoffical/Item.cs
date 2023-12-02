@@ -14,7 +14,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
     public partial class Item : Pulumi.CustomResource
     {
         [Output("attachments")]
-        public Output<ImmutableDictionary<string, Outputs.OutField>> Attachments { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutAttachment>> Attachments { get; private set; } = null!;
 
         [Output("category")]
         public Output<string> Category { get; private set; } = null!;
@@ -109,14 +109,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
     public sealed class ItemArgs : Pulumi.ResourceArgs
     {
-        [Input("attachments")]
-        private InputMap<AssetOrArchive>? _attachments;
-        public InputMap<AssetOrArchive> Attachments
-        {
-            get => _attachments ?? (_attachments = new InputMap<AssetOrArchive>());
-            set => _attachments = value;
-        }
-
         [Input("category")]
         public InputUnion<Rocket.Surgery.OnePasswordNativeUnoffical.Category, string>? Category { get; set; }
 
@@ -126,6 +118,14 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         {
             get => _fields ?? (_fields = new InputMap<Inputs.FieldArgs>());
             set => _fields = value;
+        }
+
+        [Input("inputAttachments")]
+        private InputMap<AssetOrArchive>? _inputAttachments;
+        public InputMap<AssetOrArchive> InputAttachments
+        {
+            get => _inputAttachments ?? (_inputAttachments = new InputMap<AssetOrArchive>());
+            set => _inputAttachments = value;
         }
 
         [Input("sections")]

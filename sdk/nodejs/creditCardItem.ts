@@ -34,7 +34,7 @@ export class CreditCardItem extends pulumi.CustomResource {
     }
 
     public readonly additionalDetails!: pulumi.Output<outputs.creditCard.AdditionalDetailsSection | undefined>;
-    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public /*out*/ readonly attachments!: pulumi.Output<{[key: string]: outputs.OutAttachment}>;
     public readonly cardholderName!: pulumi.Output<string | undefined>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly contactInformation!: pulumi.Output<outputs.creditCard.ContactInformationSection | undefined>;
@@ -84,12 +84,12 @@ export class CreditCardItem extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vault'");
             }
             resourceInputs["additionalDetails"] = args ? args.additionalDetails : undefined;
-            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["cardholderName"] = args ? args.cardholderName : undefined;
             resourceInputs["category"] = "Credit Card";
             resourceInputs["contactInformation"] = args ? args.contactInformation : undefined;
             resourceInputs["expiryDate"] = args ? args.expiryDate : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
+            resourceInputs["inputAttachments"] = args ? args.inputAttachments : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["number"] = args ? args.number : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
@@ -99,6 +99,7 @@ export class CreditCardItem extends pulumi.CustomResource {
             resourceInputs["validFrom"] = args ? args.validFrom : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["verificationNumber"] = args?.verificationNumber ? pulumi.secret(args.verificationNumber) : undefined;
+            resourceInputs["attachments"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
@@ -128,7 +129,6 @@ export interface CreditCardItemState {
  */
 export interface CreditCardItemArgs {
     additionalDetails?: pulumi.Input<inputs.creditCard.AdditionalDetailsSectionArgs>;
-    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     cardholderName?: pulumi.Input<string>;
     /**
      * The category of the vault the item is in.
@@ -137,6 +137,7 @@ export interface CreditCardItemArgs {
     contactInformation?: pulumi.Input<inputs.creditCard.ContactInformationSectionArgs>;
     expiryDate?: pulumi.Input<string>;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
+    inputAttachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     notes?: pulumi.Input<string>;
     number?: pulumi.Input<string>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;

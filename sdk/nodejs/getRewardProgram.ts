@@ -34,7 +34,7 @@ export interface GetRewardProgramArgs {
 }
 
 export interface GetRewardProgramResult {
-    readonly attachments: {[key: string]: outputs.OutField};
+    readonly attachments: {[key: string]: outputs.OutAttachment};
     readonly category: enums.Category | string;
     readonly companyName?: string;
     readonly fields: {[key: string]: outputs.OutField};

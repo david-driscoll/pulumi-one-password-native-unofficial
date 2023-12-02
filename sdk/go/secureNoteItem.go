@@ -14,7 +14,7 @@ import (
 type SecureNoteItem struct {
 	pulumi.CustomResourceState
 
-	Attachments OutFieldMapOutput      `pulumi:"attachments"`
+	Attachments OutAttachmentMapOutput `pulumi:"attachments"`
 	Category    pulumi.StringOutput    `pulumi:"category"`
 	Fields      OutFieldMapOutput      `pulumi:"fields"`
 	Notes       pulumi.StringPtrOutput `pulumi:"notes"`
@@ -48,6 +48,7 @@ func NewSecureNoteItem(ctx *pulumi.Context,
 		"sections",
 	})
 	opts = append(opts, secrets)
+	opts = pkgResourceDefaultOpts(opts)
 	var resource SecureNoteItem
 	err := ctx.RegisterResource("one-password-native-unoffical:index:SecureNoteItem", name, args, &resource, opts...)
 	if err != nil {
@@ -84,12 +85,12 @@ func (SecureNoteItemState) ElementType() reflect.Type {
 }
 
 type secureNoteItemArgs struct {
-	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
-	Category *string            `pulumi:"category"`
-	Fields   map[string]Field   `pulumi:"fields"`
-	Notes    *string            `pulumi:"notes"`
-	Sections map[string]Section `pulumi:"sections"`
+	Category         *string                          `pulumi:"category"`
+	Fields           map[string]Field                 `pulumi:"fields"`
+	InputAttachments map[string]pulumi.AssetOrArchive `pulumi:"inputAttachments"`
+	Notes            *string                          `pulumi:"notes"`
+	Sections         map[string]Section               `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -100,12 +101,12 @@ type secureNoteItemArgs struct {
 
 // The set of arguments for constructing a SecureNoteItem resource.
 type SecureNoteItemArgs struct {
-	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
-	Category pulumi.StringPtrInput
-	Fields   FieldMapInput
-	Notes    pulumi.StringPtrInput
-	Sections SectionMapInput
+	Category         pulumi.StringPtrInput
+	Fields           FieldMapInput
+	InputAttachments pulumi.AssetOrArchiveMapInput
+	Notes            pulumi.StringPtrInput
+	Sections         SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.

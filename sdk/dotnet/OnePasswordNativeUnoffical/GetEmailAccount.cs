@@ -74,7 +74,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
     [OutputType]
     public sealed class GetEmailAccountResult
     {
-        public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
+        public readonly ImmutableDictionary<string, Outputs.OutAttachment> Attachments;
         public readonly string? AuthMethod;
         public readonly string Category;
         public readonly Rocket.Surgery.OnePasswordNativeUnoffical.EmailAccount.Outputs.ContactInformationSection? ContactInformation;
@@ -108,7 +108,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
         [OutputConstructor]
         private GetEmailAccountResult(
-            ImmutableDictionary<string, Outputs.OutField> attachments,
+            ImmutableDictionary<string, Outputs.OutAttachment> attachments,
 
             string? authMethod,
 

@@ -33,7 +33,7 @@ export class PassportItem extends pulumi.CustomResource {
         return obj['__pulumiType'] === PassportItem.__pulumiType;
     }
 
-    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public /*out*/ readonly attachments!: pulumi.Output<{[key: string]: outputs.OutAttachment}>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly dateOfBirth!: pulumi.Output<string | undefined>;
     public readonly expiryDate!: pulumi.Output<string | undefined>;
@@ -86,13 +86,13 @@ export class PassportItem extends pulumi.CustomResource {
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
-            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "Passport";
             resourceInputs["dateOfBirth"] = args ? args.dateOfBirth : undefined;
             resourceInputs["expiryDate"] = args ? args.expiryDate : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["fullName"] = args ? args.fullName : undefined;
             resourceInputs["gender"] = args ? args.gender : undefined;
+            resourceInputs["inputAttachments"] = args ? args.inputAttachments : undefined;
             resourceInputs["issuedOn"] = args ? args.issuedOn : undefined;
             resourceInputs["issuingAuthority"] = args ? args.issuingAuthority : undefined;
             resourceInputs["issuingCountry"] = args ? args.issuingCountry : undefined;
@@ -105,6 +105,7 @@ export class PassportItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["type"] = args ? args.type : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["attachments"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
@@ -133,7 +134,6 @@ export interface PassportItemState {
  * The set of arguments for constructing a PassportItem resource.
  */
 export interface PassportItemArgs {
-    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     /**
      * The category of the vault the item is in.
      */
@@ -143,6 +143,7 @@ export interface PassportItemArgs {
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     fullName?: pulumi.Input<string>;
     gender?: pulumi.Input<string>;
+    inputAttachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     issuedOn?: pulumi.Input<string>;
     issuingAuthority?: pulumi.Input<string>;
     issuingCountry?: pulumi.Input<string>;

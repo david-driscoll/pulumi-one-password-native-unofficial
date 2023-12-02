@@ -9,7 +9,7 @@ import { Operation, diff } from "just-diff";
 import * as fs from "fs";
 import { basename, resolve } from "path";
 
-const propertiesToIgnore = ['category', 'fields', 'sections', 'tags', 'title', 'vault', 'uuid', 'generatePassword', 'attachments', 'references'];
+const propertiesToIgnore = ['category', 'fields', 'sections', 'tags', 'title', 'vault', 'uuid', 'generatePassword', 'inputAttachments', 'attachments', 'references'];
 
 
 // import { StaticPage, StaticPageArgs } from "./staticPage";
@@ -51,6 +51,7 @@ export class Provider implements provider.Provider {
 
         const disposables: AsyncDisposable[] = [];
         try {
+            // console.log(inputs)
             const assignments: FieldAssignment[] = [];
 
             const fields: Record<string, Field> = {}
@@ -58,7 +59,7 @@ export class Provider implements provider.Provider {
             const attachments: Record<string, string> = {}
             Object.assign(fields, inputs.fields ?? {});
             Object.assign(sections, inputs.sections ?? {});
-            Object.assign(attachments, inputs.attachments ?? {});
+            Object.assign(attachments, inputs.inputAttachments ?? {});
 
 
             for (const [name, propScheme] of Object.entries<any>(resourceScheme.inputProperties).filter(z => !propertiesToIgnore.includes(z[0]))) {
@@ -89,6 +90,10 @@ export class Provider implements provider.Provider {
             assignments.push(...assignFields(fields));
             assignments.push(...assignSections(sections));
             assignments.push(...await assignAttachments(attachments, disposables));
+            for (let index = 0; index < assignments.length; index++) {
+                const element = assignments[index];
+                assignments[index] = element.map(z => z === null || z === undefined ? '' : z) as any;
+            }
             // console.log(assignments);
             const name = inputs.title ?? newUniqueName(getNameFromUrn(urn));
 
@@ -102,6 +107,7 @@ export class Provider implements provider.Provider {
                     generatePassword: createPasswordRecipe(inputs.generatePassword)
                 }
             )
+            // console.log(result);
 
             const output = convertResultToOutputs(resourceType, result);
             // console.log(output);
@@ -110,6 +116,10 @@ export class Provider implements provider.Provider {
                 id: result.id,
                 outs: output
             }
+        }
+        catch (e) {
+            console.error(e);
+            throw e;
         }
         finally {
             for (const disposable of disposables) {
@@ -176,6 +186,7 @@ export class Provider implements provider.Provider {
                         if ((item.op === "add" || item.op === "replace") && item.path.length > 1) {
                             const path = item.path.concat();
                             path.pop();
+                            // console.log(path.join('.'), 'get', get(news, path.join('.')))
                             replacedFields[getFieldPath(path)] = get(news, path.join('.'))
                         }
                     } else if ((item.path[0] === 'fields' && item.path.length === 2) || (item.path[0] === 'sections' && item.path.length === 4)) {
@@ -183,6 +194,7 @@ export class Provider implements provider.Provider {
                             deletes.push(getFieldPath(item.path));
                         }
                         if ((item.op === "add" || item.op === "replace") && item.path.length > 1) {
+                            // console.log(item.path.join('.'), 'get', get(news, item.path.join('.')))
                             replacedFields[getFieldPath(item.path)] = get(news, item.path.join('.'))
                         }
                     } else if (item.path[0] === 'sections' && item.path.length === 2) {
@@ -193,6 +205,7 @@ export class Provider implements provider.Provider {
                         if ((item.op === "add" || item.op === "replace") && item.path.length > 1) {
                             Object.entries(olds.sections?.[item.path[1]]?.fields ?? {})
                                 .forEach(z => {
+                                    // console.log(item.path.concat(z[0]).join('.'), 'get', z[1])
                                     replacedFields[getFieldPath(item.path.concat(z[0]))] = z[1];
                                 });
 
@@ -200,7 +213,7 @@ export class Provider implements provider.Provider {
                     }
                     continue;
                 }
-                if (item.path[0] === 'attachments' && (item.op === "add" || item.op === "replace")) {
+                if ((item.path[0] === 'inputAttachments' || item.path[0] === 'attachments') && (item.op === "add" || item.op === "replace")) {
                     if (item.path.length === 0) {
                         assignments.push(...await assignAttachments(item.value, disposables))
                     } else if (item.path.length === 2) {
@@ -210,7 +223,7 @@ export class Provider implements provider.Provider {
                     continue;
                 }
 
-                // console.log(item);
+                // console.log(item.path[0]);
 
                 if (item.op === "add" || item.op === "replace") {
                     const propScheme = this.getPropertySchema(resourceType, item);
@@ -242,10 +255,10 @@ export class Provider implements provider.Provider {
                 title: name,
                 generatePassword: createPasswordRecipe(news.generatePassword)
             });
+            // console.log(result);
 
             const output = convertResultToOutputs(resourceType, result);
             // console.log(output);
-
             return {
                 outs: output
             }
@@ -326,7 +339,7 @@ export class Provider implements provider.Provider {
         if (!resourceType) throw new Error(`unknown resource type ${urn}`);
 
         const delta = this.diffValues(resourceType, olds, news);
-        console.log('delta', delta)
+        // console.log('delta', delta)
 
         return {
             changes: delta.length > 0,
@@ -341,7 +354,7 @@ export class Provider implements provider.Provider {
         return diff(prepareForDiff(olds), prepareForDiff(news))
             .filter(item => !(item.path.length === 1 && propertiesToIgnore.includes(item.path[0].toString())))
             .filter(item => !['tags', 'reference', 'label', 'hash', pulumi.runtime.specialSigKey].includes(item.path[item.path.length - 1].toString()))
-            .filter(item => item.path[0] === 'attachments' && !['name', 'uuid', 'size'].includes(item.path[item.path.length - 1].toString()))
+            .filter(item => (item.path[0] === 'attachments' || item.path[0] === 'inputAttachments') && !['name', 'uuid', 'size'].includes(item.path[item.path.length - 1].toString()))
             .filter(item => !['references'].includes(item.path[0].toString()))
             .filter(item => {
                 if (item.path?.[0] === "notesPlain") return false;
@@ -532,7 +545,7 @@ interface CommonProperties { category: string; fields?: Record<string, Field>; s
 interface Field {
     purpose?: FieldPurpose;
     type?: FieldAssignmentType;
-    value: string;
+    value: string | { [pulumi.runtime.specialSigKey]: string; value: string };
 }
 interface Section {
     fields: Record<string, Field>;
@@ -561,8 +574,13 @@ function createAssignment(path: string, field: Field): FieldAssignment {
     // if (field.type === 'reference') {
     //     return ['linked items.' + last(path.split('.')), field.type, field.value];
     // }
-    const isPassword = field.purpose === 'PASSWORD' || field.type === 'concealed';
-    return [path, field.purpose === 'PASSWORD' ? 'concealed' : field.type ?? 'text', isPassword ? ((field.value as any)?.value ?? field.value) : field.value, field.purpose];
+    if (typeof field.value === 'string') {
+        return [path, field.purpose === 'PASSWORD' ? 'concealed' : field.type ?? 'text', field.value, field.purpose];
+    }
+    if (field.value[pulumi.runtime.specialSigKey] === pulumi.runtime.specialSecretSig) {
+        return [path, field.purpose === 'PASSWORD' ? 'concealed' : field.type ?? 'text', field.value.value, field.purpose];
+    }
+    throw new Error("unknown signature key " + JSON.stringify({ path, field }))
 }
 
 function assignFields(fields: Record<string, Field>, prefix?: string) {
@@ -702,10 +720,14 @@ function createPasswordRecipe(value: boolean | { "letters": "boolean", "digits":
 }
 
 function convertResultToOutputs(kind: string, opResult: import('@1password/op-js').Item) {
+
+    // console.log('convertResultToOutputs')
+    // console.log(kind, opResult)
     opResult.fields ??= [];
     opResult.files ??= [];
     const output = {
         attachments: opResult.files!.reduce((result, value) => {
+            // console.log(value, result)
             result[value.name] = {
                 name: value.name,
                 size: value.size,

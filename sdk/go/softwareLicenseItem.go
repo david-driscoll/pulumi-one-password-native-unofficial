@@ -15,7 +15,7 @@ import (
 type SoftwareLicenseItem struct {
 	pulumi.CustomResourceState
 
-	Attachments OutFieldMapOutput                         `pulumi:"attachments"`
+	Attachments OutAttachmentMapOutput                    `pulumi:"attachments"`
 	Category    pulumi.StringOutput                       `pulumi:"category"`
 	Customer    softwarelicense.CustomerSectionPtrOutput  `pulumi:"customer"`
 	Fields      OutFieldMapOutput                         `pulumi:"fields"`
@@ -54,6 +54,7 @@ func NewSoftwareLicenseItem(ctx *pulumi.Context,
 		"sections",
 	})
 	opts = append(opts, secrets)
+	opts = pkgResourceDefaultOpts(opts)
 	var resource SoftwareLicenseItem
 	err := ctx.RegisterResource("one-password-native-unoffical:index:SoftwareLicenseItem", name, args, &resource, opts...)
 	if err != nil {
@@ -90,16 +91,16 @@ func (SoftwareLicenseItemState) ElementType() reflect.Type {
 }
 
 type softwareLicenseItemArgs struct {
-	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
-	Category   *string                           `pulumi:"category"`
-	Customer   *softwarelicense.CustomerSection  `pulumi:"customer"`
-	Fields     map[string]Field                  `pulumi:"fields"`
-	LicenseKey *string                           `pulumi:"licenseKey"`
-	Notes      *string                           `pulumi:"notes"`
-	Order      *softwarelicense.OrderSection     `pulumi:"order"`
-	Publisher  *softwarelicense.PublisherSection `pulumi:"publisher"`
-	Sections   map[string]Section                `pulumi:"sections"`
+	Category         *string                           `pulumi:"category"`
+	Customer         *softwarelicense.CustomerSection  `pulumi:"customer"`
+	Fields           map[string]Field                  `pulumi:"fields"`
+	InputAttachments map[string]pulumi.AssetOrArchive  `pulumi:"inputAttachments"`
+	LicenseKey       *string                           `pulumi:"licenseKey"`
+	Notes            *string                           `pulumi:"notes"`
+	Order            *softwarelicense.OrderSection     `pulumi:"order"`
+	Publisher        *softwarelicense.PublisherSection `pulumi:"publisher"`
+	Sections         map[string]Section                `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -111,16 +112,16 @@ type softwareLicenseItemArgs struct {
 
 // The set of arguments for constructing a SoftwareLicenseItem resource.
 type SoftwareLicenseItemArgs struct {
-	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
-	Category   pulumi.StringPtrInput
-	Customer   softwarelicense.CustomerSectionPtrInput
-	Fields     FieldMapInput
-	LicenseKey pulumi.StringPtrInput
-	Notes      pulumi.StringPtrInput
-	Order      softwarelicense.OrderSectionPtrInput
-	Publisher  softwarelicense.PublisherSectionPtrInput
-	Sections   SectionMapInput
+	Category         pulumi.StringPtrInput
+	Customer         softwarelicense.CustomerSectionPtrInput
+	Fields           FieldMapInput
+	InputAttachments pulumi.AssetOrArchiveMapInput
+	LicenseKey       pulumi.StringPtrInput
+	Notes            pulumi.StringPtrInput
+	Order            softwarelicense.OrderSectionPtrInput
+	Publisher        softwarelicense.PublisherSectionPtrInput
+	Sections         SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.

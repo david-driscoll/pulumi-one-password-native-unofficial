@@ -11,6 +11,7 @@ import (
 )
 
 func GetAPICredential(ctx *pulumi.Context, args *GetAPICredentialArgs, opts ...pulumi.InvokeOption) (*GetAPICredentialResult, error) {
+	opts = pkgInvokeDefaultOpts(opts)
 	var rv GetAPICredentialResult
 	err := ctx.Invoke("one-password-native-unoffical:index:GetAPICredential", args, &rv, opts...)
 	if err != nil {
@@ -29,16 +30,16 @@ type GetAPICredentialArgs struct {
 }
 
 type GetAPICredentialResult struct {
-	Attachments map[string]OutField   `pulumi:"attachments"`
-	Category    string                `pulumi:"category"`
-	Credential  *string               `pulumi:"credential"`
-	Expires     *string               `pulumi:"expires"`
-	Fields      map[string]OutField   `pulumi:"fields"`
-	Filename    *string               `pulumi:"filename"`
-	Hostname    *string               `pulumi:"hostname"`
-	Notes       *string               `pulumi:"notes"`
-	References  map[string]OutField   `pulumi:"references"`
-	Sections    map[string]OutSection `pulumi:"sections"`
+	Attachments map[string]OutAttachment `pulumi:"attachments"`
+	Category    string                   `pulumi:"category"`
+	Credential  *string                  `pulumi:"credential"`
+	Expires     *string                  `pulumi:"expires"`
+	Fields      map[string]OutField      `pulumi:"fields"`
+	Filename    *string                  `pulumi:"filename"`
+	Hostname    *string                  `pulumi:"hostname"`
+	Notes       *string                  `pulumi:"notes"`
+	References  map[string]OutField      `pulumi:"references"`
+	Sections    map[string]OutSection    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -92,8 +93,8 @@ func (o GetAPICredentialResultOutput) ToGetAPICredentialResultOutputWithContext(
 	return o
 }
 
-func (o GetAPICredentialResultOutput) Attachments() OutFieldMapOutput {
-	return o.ApplyT(func(v GetAPICredentialResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+func (o GetAPICredentialResultOutput) Attachments() OutAttachmentMapOutput {
+	return o.ApplyT(func(v GetAPICredentialResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
 }
 
 func (o GetAPICredentialResultOutput) Category() pulumi.StringOutput {

@@ -12,6 +12,7 @@ import (
 )
 
 func GetCreditCard(ctx *pulumi.Context, args *GetCreditCardArgs, opts ...pulumi.InvokeOption) (*GetCreditCardResult, error) {
+	opts = pkgInvokeDefaultOpts(opts)
 	var rv GetCreditCardResult
 	err := ctx.Invoke("one-password-native-unoffical:index:GetCreditCard", args, &rv, opts...)
 	if err != nil {
@@ -31,7 +32,7 @@ type GetCreditCardArgs struct {
 
 type GetCreditCardResult struct {
 	AdditionalDetails  *creditcard.AdditionalDetailsSection  `pulumi:"additionalDetails"`
-	Attachments        map[string]OutField                   `pulumi:"attachments"`
+	Attachments        map[string]OutAttachment              `pulumi:"attachments"`
 	CardholderName     *string                               `pulumi:"cardholderName"`
 	Category           string                                `pulumi:"category"`
 	ContactInformation *creditcard.ContactInformationSection `pulumi:"contactInformation"`
@@ -98,8 +99,8 @@ func (o GetCreditCardResultOutput) AdditionalDetails() creditcard.AdditionalDeta
 	return o.ApplyT(func(v GetCreditCardResult) *creditcard.AdditionalDetailsSection { return v.AdditionalDetails }).(creditcard.AdditionalDetailsSectionPtrOutput)
 }
 
-func (o GetCreditCardResultOutput) Attachments() OutFieldMapOutput {
-	return o.ApplyT(func(v GetCreditCardResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+func (o GetCreditCardResultOutput) Attachments() OutAttachmentMapOutput {
+	return o.ApplyT(func(v GetCreditCardResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
 }
 
 func (o GetCreditCardResultOutput) CardholderName() pulumi.StringPtrOutput {

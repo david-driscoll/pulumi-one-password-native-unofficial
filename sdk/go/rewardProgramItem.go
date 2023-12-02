@@ -15,7 +15,7 @@ import (
 type RewardProgramItem struct {
 	pulumi.CustomResourceState
 
-	Attachments     OutFieldMapOutput                             `pulumi:"attachments"`
+	Attachments     OutAttachmentMapOutput                        `pulumi:"attachments"`
 	Category        pulumi.StringOutput                           `pulumi:"category"`
 	CompanyName     pulumi.StringPtrOutput                        `pulumi:"companyName"`
 	Fields          OutFieldMapOutput                             `pulumi:"fields"`
@@ -58,6 +58,7 @@ func NewRewardProgramItem(ctx *pulumi.Context,
 		"sections",
 	})
 	opts = append(opts, secrets)
+	opts = pkgResourceDefaultOpts(opts)
 	var resource RewardProgramItem
 	err := ctx.RegisterResource("one-password-native-unoffical:index:RewardProgramItem", name, args, &resource, opts...)
 	if err != nil {
@@ -94,17 +95,17 @@ func (RewardProgramItemState) ElementType() reflect.Type {
 }
 
 type rewardProgramItemArgs struct {
-	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
-	Category        *string                               `pulumi:"category"`
-	CompanyName     *string                               `pulumi:"companyName"`
-	Fields          map[string]Field                      `pulumi:"fields"`
-	MemberId        *string                               `pulumi:"memberId"`
-	MemberName      *string                               `pulumi:"memberName"`
-	MoreInformation *rewardprogram.MoreInformationSection `pulumi:"moreInformation"`
-	Notes           *string                               `pulumi:"notes"`
-	Pin             *string                               `pulumi:"pin"`
-	Sections        map[string]Section                    `pulumi:"sections"`
+	Category         *string                               `pulumi:"category"`
+	CompanyName      *string                               `pulumi:"companyName"`
+	Fields           map[string]Field                      `pulumi:"fields"`
+	InputAttachments map[string]pulumi.AssetOrArchive      `pulumi:"inputAttachments"`
+	MemberId         *string                               `pulumi:"memberId"`
+	MemberName       *string                               `pulumi:"memberName"`
+	MoreInformation  *rewardprogram.MoreInformationSection `pulumi:"moreInformation"`
+	Notes            *string                               `pulumi:"notes"`
+	Pin              *string                               `pulumi:"pin"`
+	Sections         map[string]Section                    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -115,17 +116,17 @@ type rewardProgramItemArgs struct {
 
 // The set of arguments for constructing a RewardProgramItem resource.
 type RewardProgramItemArgs struct {
-	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
-	Category        pulumi.StringPtrInput
-	CompanyName     pulumi.StringPtrInput
-	Fields          FieldMapInput
-	MemberId        pulumi.StringPtrInput
-	MemberName      pulumi.StringPtrInput
-	MoreInformation rewardprogram.MoreInformationSectionPtrInput
-	Notes           pulumi.StringPtrInput
-	Pin             pulumi.StringPtrInput
-	Sections        SectionMapInput
+	Category         pulumi.StringPtrInput
+	CompanyName      pulumi.StringPtrInput
+	Fields           FieldMapInput
+	InputAttachments pulumi.AssetOrArchiveMapInput
+	MemberId         pulumi.StringPtrInput
+	MemberName       pulumi.StringPtrInput
+	MoreInformation  rewardprogram.MoreInformationSectionPtrInput
+	Notes            pulumi.StringPtrInput
+	Pin              pulumi.StringPtrInput
+	Sections         SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.

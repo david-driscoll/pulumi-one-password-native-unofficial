@@ -14,7 +14,7 @@ import (
 type PassportItem struct {
 	pulumi.CustomResourceState
 
-	Attachments      OutFieldMapOutput      `pulumi:"attachments"`
+	Attachments      OutAttachmentMapOutput `pulumi:"attachments"`
 	Category         pulumi.StringOutput    `pulumi:"category"`
 	DateOfBirth      pulumi.StringPtrOutput `pulumi:"dateOfBirth"`
 	ExpiryDate       pulumi.StringPtrOutput `pulumi:"expiryDate"`
@@ -59,6 +59,7 @@ func NewPassportItem(ctx *pulumi.Context,
 		"sections",
 	})
 	opts = append(opts, secrets)
+	opts = pkgResourceDefaultOpts(opts)
 	var resource PassportItem
 	err := ctx.RegisterResource("one-password-native-unoffical:index:PassportItem", name, args, &resource, opts...)
 	if err != nil {
@@ -95,22 +96,22 @@ func (PassportItemState) ElementType() reflect.Type {
 }
 
 type passportItemArgs struct {
-	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
-	Category         *string            `pulumi:"category"`
-	DateOfBirth      *string            `pulumi:"dateOfBirth"`
-	ExpiryDate       *string            `pulumi:"expiryDate"`
-	Fields           map[string]Field   `pulumi:"fields"`
-	FullName         *string            `pulumi:"fullName"`
-	Gender           *string            `pulumi:"gender"`
-	IssuedOn         *string            `pulumi:"issuedOn"`
-	IssuingAuthority *string            `pulumi:"issuingAuthority"`
-	IssuingCountry   *string            `pulumi:"issuingCountry"`
-	Nationality      *string            `pulumi:"nationality"`
-	Notes            *string            `pulumi:"notes"`
-	Number           *string            `pulumi:"number"`
-	PlaceOfBirth     *string            `pulumi:"placeOfBirth"`
-	Sections         map[string]Section `pulumi:"sections"`
+	Category         *string                          `pulumi:"category"`
+	DateOfBirth      *string                          `pulumi:"dateOfBirth"`
+	ExpiryDate       *string                          `pulumi:"expiryDate"`
+	Fields           map[string]Field                 `pulumi:"fields"`
+	FullName         *string                          `pulumi:"fullName"`
+	Gender           *string                          `pulumi:"gender"`
+	InputAttachments map[string]pulumi.AssetOrArchive `pulumi:"inputAttachments"`
+	IssuedOn         *string                          `pulumi:"issuedOn"`
+	IssuingAuthority *string                          `pulumi:"issuingAuthority"`
+	IssuingCountry   *string                          `pulumi:"issuingCountry"`
+	Nationality      *string                          `pulumi:"nationality"`
+	Notes            *string                          `pulumi:"notes"`
+	Number           *string                          `pulumi:"number"`
+	PlaceOfBirth     *string                          `pulumi:"placeOfBirth"`
+	Sections         map[string]Section               `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -122,7 +123,6 @@ type passportItemArgs struct {
 
 // The set of arguments for constructing a PassportItem resource.
 type PassportItemArgs struct {
-	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
 	Category         pulumi.StringPtrInput
 	DateOfBirth      pulumi.StringPtrInput
@@ -130,6 +130,7 @@ type PassportItemArgs struct {
 	Fields           FieldMapInput
 	FullName         pulumi.StringPtrInput
 	Gender           pulumi.StringPtrInput
+	InputAttachments pulumi.AssetOrArchiveMapInput
 	IssuedOn         pulumi.StringPtrInput
 	IssuingAuthority pulumi.StringPtrInput
 	IssuingCountry   pulumi.StringPtrInput

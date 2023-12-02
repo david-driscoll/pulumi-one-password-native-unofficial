@@ -19,10 +19,10 @@ class IdentityItemArgs:
     def __init__(__self__, *,
                  vault: pulumi.Input[str],
                  address: Optional[pulumi.Input['_identity.AddressSectionArgs']] = None,
-                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
                  identification: Optional[pulumi.Input['_identity.IdentificationSectionArgs']] = None,
+                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  internet_details: Optional[pulumi.Input['_identity.InternetDetailsSectionArgs']] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input['SectionArgs']]]] = None,
@@ -38,14 +38,14 @@ class IdentityItemArgs:
         pulumi.set(__self__, "vault", vault)
         if address is not None:
             pulumi.set(__self__, "address", address)
-        if attachments is not None:
-            pulumi.set(__self__, "attachments", attachments)
         if category is not None:
             pulumi.set(__self__, "category", 'Identity')
         if fields is not None:
             pulumi.set(__self__, "fields", fields)
         if identification is not None:
             pulumi.set(__self__, "identification", identification)
+        if input_attachments is not None:
+            pulumi.set(__self__, "input_attachments", input_attachments)
         if internet_details is not None:
             pulumi.set(__self__, "internet_details", internet_details)
         if notes is not None:
@@ -80,15 +80,6 @@ class IdentityItemArgs:
 
     @property
     @pulumi.getter
-    def attachments(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]:
-        return pulumi.get(self, "attachments")
-
-    @attachments.setter
-    def attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
-        pulumi.set(self, "attachments", value)
-
-    @property
-    @pulumi.getter
     def category(self) -> Optional[pulumi.Input[str]]:
         """
         The category of the vault the item is in.
@@ -116,6 +107,15 @@ class IdentityItemArgs:
     @identification.setter
     def identification(self, value: Optional[pulumi.Input['_identity.IdentificationSectionArgs']]):
         pulumi.set(self, "identification", value)
+
+    @property
+    @pulumi.getter(name="inputAttachments")
+    def input_attachments(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]:
+        return pulumi.get(self, "input_attachments")
+
+    @input_attachments.setter
+    def input_attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
+        pulumi.set(self, "input_attachments", value)
 
     @property
     @pulumi.getter(name="internetDetails")
@@ -198,10 +198,10 @@ class IdentityItem(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  address: Optional[pulumi.Input[pulumi.InputType['_identity.AddressSectionArgs']]] = None,
-                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  identification: Optional[pulumi.Input[pulumi.InputType['_identity.IdentificationSectionArgs']]] = None,
+                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  internet_details: Optional[pulumi.Input[pulumi.InputType['_identity.InternetDetailsSectionArgs']]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
@@ -242,10 +242,10 @@ class IdentityItem(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  address: Optional[pulumi.Input[pulumi.InputType['_identity.AddressSectionArgs']]] = None,
-                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  identification: Optional[pulumi.Input[pulumi.InputType['_identity.IdentificationSectionArgs']]] = None,
+                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  internet_details: Optional[pulumi.Input[pulumi.InputType['_identity.InternetDetailsSectionArgs']]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
@@ -267,10 +267,10 @@ class IdentityItem(pulumi.CustomResource):
             __props__ = IdentityItemArgs.__new__(IdentityItemArgs)
 
             __props__.__dict__["address"] = address
-            __props__.__dict__["attachments"] = attachments
             __props__.__dict__["category"] = 'Identity'
             __props__.__dict__["fields"] = fields
             __props__.__dict__["identification"] = identification
+            __props__.__dict__["input_attachments"] = input_attachments
             __props__.__dict__["internet_details"] = internet_details
             __props__.__dict__["notes"] = notes
             __props__.__dict__["sections"] = sections
@@ -279,6 +279,7 @@ class IdentityItem(pulumi.CustomResource):
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
+            __props__.__dict__["attachments"] = None
             __props__.__dict__["references"] = None
             __props__.__dict__["uuid"] = None
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachments", "fields", "references", "sections"])
@@ -329,7 +330,7 @@ class IdentityItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def attachments(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+    def attachments(self) -> pulumi.Output[Mapping[str, 'outputs.OutAttachment']]:
         return pulumi.get(self, "attachments")
 
     @property

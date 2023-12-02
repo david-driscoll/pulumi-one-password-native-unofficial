@@ -34,7 +34,7 @@ export interface GetMedicalRecordArgs {
 }
 
 export interface GetMedicalRecordResult {
-    readonly attachments: {[key: string]: outputs.OutField};
+    readonly attachments: {[key: string]: outputs.OutAttachment};
     readonly category: enums.Category | string;
     readonly date?: string;
     readonly fields: {[key: string]: outputs.OutField};

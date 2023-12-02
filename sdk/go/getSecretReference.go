@@ -11,6 +11,7 @@ import (
 )
 
 func GetSecretReference(ctx *pulumi.Context, args *GetSecretReferenceArgs, opts ...pulumi.InvokeOption) (*GetSecretReferenceResult, error) {
+	opts = pkgInvokeDefaultOpts(opts)
 	var rv GetSecretReferenceResult
 	err := ctx.Invoke("one-password-native-unoffical:index:GetSecretReference", args, &rv, opts...)
 	if err != nil {

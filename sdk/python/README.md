@@ -49,7 +49,7 @@ $ export PATH=$PATH:$PWD/bin
 $ make install_nodejs_sdk
 $ cd examples/simple
 $ yarn install
-$ yarn link @pulumi/one-password-native-unoffical
+$ yarn link pulumi-one-password-native-unoffical
 $ pulumi stack init test
 $ pulumi config set aws:region us-east-1
 $ pulumi up

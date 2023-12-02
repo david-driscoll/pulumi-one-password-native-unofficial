@@ -16,7 +16,7 @@ type CreditCardItem struct {
 	pulumi.CustomResourceState
 
 	AdditionalDetails  creditcard.AdditionalDetailsSectionPtrOutput  `pulumi:"additionalDetails"`
-	Attachments        OutFieldMapOutput                             `pulumi:"attachments"`
+	Attachments        OutAttachmentMapOutput                        `pulumi:"attachments"`
 	CardholderName     pulumi.StringPtrOutput                        `pulumi:"cardholderName"`
 	Category           pulumi.StringOutput                           `pulumi:"category"`
 	ContactInformation creditcard.ContactInformationSectionPtrOutput `pulumi:"contactInformation"`
@@ -62,6 +62,7 @@ func NewCreditCardItem(ctx *pulumi.Context,
 		"verificationNumber",
 	})
 	opts = append(opts, secrets)
+	opts = pkgResourceDefaultOpts(opts)
 	var resource CreditCardItem
 	err := ctx.RegisterResource("one-password-native-unoffical:index:CreditCardItem", name, args, &resource, opts...)
 	if err != nil {
@@ -99,13 +100,13 @@ func (CreditCardItemState) ElementType() reflect.Type {
 
 type creditCardItemArgs struct {
 	AdditionalDetails *creditcard.AdditionalDetailsSection `pulumi:"additionalDetails"`
-	Attachments       map[string]pulumi.AssetOrArchive     `pulumi:"attachments"`
 	CardholderName    *string                              `pulumi:"cardholderName"`
 	// The category of the vault the item is in.
 	Category           *string                               `pulumi:"category"`
 	ContactInformation *creditcard.ContactInformationSection `pulumi:"contactInformation"`
 	ExpiryDate         *string                               `pulumi:"expiryDate"`
 	Fields             map[string]Field                      `pulumi:"fields"`
+	InputAttachments   map[string]pulumi.AssetOrArchive      `pulumi:"inputAttachments"`
 	Notes              *string                               `pulumi:"notes"`
 	Number             *string                               `pulumi:"number"`
 	Sections           map[string]Section                    `pulumi:"sections"`
@@ -123,13 +124,13 @@ type creditCardItemArgs struct {
 // The set of arguments for constructing a CreditCardItem resource.
 type CreditCardItemArgs struct {
 	AdditionalDetails creditcard.AdditionalDetailsSectionPtrInput
-	Attachments       pulumi.AssetOrArchiveMapInput
 	CardholderName    pulumi.StringPtrInput
 	// The category of the vault the item is in.
 	Category           pulumi.StringPtrInput
 	ContactInformation creditcard.ContactInformationSectionPtrInput
 	ExpiryDate         pulumi.StringPtrInput
 	Fields             FieldMapInput
+	InputAttachments   pulumi.AssetOrArchiveMapInput
 	Notes              pulumi.StringPtrInput
 	Number             pulumi.StringPtrInput
 	Sections           SectionMapInput

@@ -12,6 +12,7 @@ import (
 )
 
 func GetRewardProgram(ctx *pulumi.Context, args *GetRewardProgramArgs, opts ...pulumi.InvokeOption) (*GetRewardProgramResult, error) {
+	opts = pkgInvokeDefaultOpts(opts)
 	var rv GetRewardProgramResult
 	err := ctx.Invoke("one-password-native-unoffical:index:GetRewardProgram", args, &rv, opts...)
 	if err != nil {
@@ -30,7 +31,7 @@ type GetRewardProgramArgs struct {
 }
 
 type GetRewardProgramResult struct {
-	Attachments     map[string]OutField                   `pulumi:"attachments"`
+	Attachments     map[string]OutAttachment              `pulumi:"attachments"`
 	Category        string                                `pulumi:"category"`
 	CompanyName     *string                               `pulumi:"companyName"`
 	Fields          map[string]OutField                   `pulumi:"fields"`
@@ -91,8 +92,8 @@ func (o GetRewardProgramResultOutput) ToGetRewardProgramResultOutputWithContext(
 	return o
 }
 
-func (o GetRewardProgramResultOutput) Attachments() OutFieldMapOutput {
-	return o.ApplyT(func(v GetRewardProgramResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+func (o GetRewardProgramResultOutput) Attachments() OutAttachmentMapOutput {
+	return o.ApplyT(func(v GetRewardProgramResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
 }
 
 func (o GetRewardProgramResultOutput) Category() pulumi.StringOutput {

@@ -35,7 +35,7 @@ export interface GetServerArgs {
 
 export interface GetServerResult {
     readonly adminConsole?: outputs.server.AdminConsoleSection;
-    readonly attachments: {[key: string]: outputs.OutField};
+    readonly attachments: {[key: string]: outputs.OutAttachment};
     readonly category: enums.Category | string;
     readonly fields: {[key: string]: outputs.OutField};
     readonly hostingProvider?: outputs.server.HostingProviderSection;

@@ -33,7 +33,7 @@ export class EmailAccountItem extends pulumi.CustomResource {
         return obj['__pulumiType'] === EmailAccountItem.__pulumiType;
     }
 
-    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public /*out*/ readonly attachments!: pulumi.Output<{[key: string]: outputs.OutAttachment}>;
     public readonly authMethod!: pulumi.Output<string | undefined>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly contactInformation!: pulumi.Output<outputs.emailAccount.ContactInformationSection | undefined>;
@@ -84,11 +84,11 @@ export class EmailAccountItem extends pulumi.CustomResource {
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
-            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["authMethod"] = args ? args.authMethod : undefined;
             resourceInputs["category"] = "Email Account";
             resourceInputs["contactInformation"] = args ? args.contactInformation : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
+            resourceInputs["inputAttachments"] = args ? args.inputAttachments : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["password"] = args?.password ? pulumi.secret(args.password) : undefined;
             resourceInputs["portNumber"] = args ? args.portNumber : undefined;
@@ -101,6 +101,7 @@ export class EmailAccountItem extends pulumi.CustomResource {
             resourceInputs["type"] = args ? args.type : undefined;
             resourceInputs["username"] = args ? args.username : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["attachments"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
@@ -129,7 +130,6 @@ export interface EmailAccountItemState {
  * The set of arguments for constructing a EmailAccountItem resource.
  */
 export interface EmailAccountItemArgs {
-    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     authMethod?: pulumi.Input<string>;
     /**
      * The category of the vault the item is in.
@@ -137,6 +137,7 @@ export interface EmailAccountItemArgs {
     category?: pulumi.Input<"Email Account">;
     contactInformation?: pulumi.Input<inputs.emailAccount.ContactInformationSectionArgs>;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
+    inputAttachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     notes?: pulumi.Input<string>;
     password?: pulumi.Input<string>;
     portNumber?: pulumi.Input<string>;

@@ -35,7 +35,7 @@ export interface GetDatabaseArgs {
 
 export interface GetDatabaseResult {
     readonly alias?: string;
-    readonly attachments: {[key: string]: outputs.OutField};
+    readonly attachments: {[key: string]: outputs.OutAttachment};
     readonly category: enums.Category | string;
     readonly connectionOptions?: string;
     readonly database?: string;

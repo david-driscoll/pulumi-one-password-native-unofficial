@@ -6,6 +6,13 @@ import { input as inputs, output as outputs, enums } from "../types";
 
 import * as utilities from "../utilities";
 
+export interface OutAttachment {
+    name: string;
+    reference: string;
+    size: number;
+    uuid: string;
+}
+
 export interface OutField {
     label: string;
     reference: string;

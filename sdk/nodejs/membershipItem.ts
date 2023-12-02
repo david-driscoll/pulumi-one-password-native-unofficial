@@ -33,7 +33,7 @@ export class MembershipItem extends pulumi.CustomResource {
         return obj['__pulumiType'] === MembershipItem.__pulumiType;
     }
 
-    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public /*out*/ readonly attachments!: pulumi.Output<{[key: string]: outputs.OutAttachment}>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly expiryDate!: pulumi.Output<string | undefined>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.OutField}>;
@@ -83,11 +83,11 @@ export class MembershipItem extends pulumi.CustomResource {
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
-            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "Membership";
             resourceInputs["expiryDate"] = args ? args.expiryDate : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["group"] = args ? args.group : undefined;
+            resourceInputs["inputAttachments"] = args ? args.inputAttachments : undefined;
             resourceInputs["memberId"] = args ? args.memberId : undefined;
             resourceInputs["memberName"] = args ? args.memberName : undefined;
             resourceInputs["memberSince"] = args ? args.memberSince : undefined;
@@ -99,6 +99,7 @@ export class MembershipItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["website"] = args ? args.website : undefined;
+            resourceInputs["attachments"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
@@ -127,7 +128,6 @@ export interface MembershipItemState {
  * The set of arguments for constructing a MembershipItem resource.
  */
 export interface MembershipItemArgs {
-    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     /**
      * The category of the vault the item is in.
      */
@@ -135,6 +135,7 @@ export interface MembershipItemArgs {
     expiryDate?: pulumi.Input<string>;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     group?: pulumi.Input<string>;
+    inputAttachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     memberId?: pulumi.Input<string>;
     memberName?: pulumi.Input<string>;
     memberSince?: pulumi.Input<string>;

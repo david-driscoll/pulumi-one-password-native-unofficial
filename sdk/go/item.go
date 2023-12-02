@@ -14,11 +14,11 @@ import (
 type Item struct {
 	pulumi.CustomResourceState
 
-	Attachments OutFieldMapOutput   `pulumi:"attachments"`
-	Category    pulumi.StringOutput `pulumi:"category"`
-	Fields      OutFieldMapOutput   `pulumi:"fields"`
-	References  OutFieldMapOutput   `pulumi:"references"`
-	Sections    OutSectionMapOutput `pulumi:"sections"`
+	Attachments OutAttachmentMapOutput `pulumi:"attachments"`
+	Category    pulumi.StringOutput    `pulumi:"category"`
+	Fields      OutFieldMapOutput      `pulumi:"fields"`
+	References  OutFieldMapOutput      `pulumi:"references"`
+	Sections    OutSectionMapOutput    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -49,6 +49,7 @@ func NewItem(ctx *pulumi.Context,
 		"sections",
 	})
 	opts = append(opts, secrets)
+	opts = pkgResourceDefaultOpts(opts)
 	var resource Item
 	err := ctx.RegisterResource("one-password-native-unoffical:index:Item", name, args, &resource, opts...)
 	if err != nil {
@@ -85,10 +86,10 @@ func (ItemState) ElementType() reflect.Type {
 }
 
 type itemArgs struct {
-	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
-	Category    *string                          `pulumi:"category"`
-	Fields      map[string]Field                 `pulumi:"fields"`
-	Sections    map[string]Section               `pulumi:"sections"`
+	Category         *string                          `pulumi:"category"`
+	Fields           map[string]Field                 `pulumi:"fields"`
+	InputAttachments map[string]pulumi.AssetOrArchive `pulumi:"inputAttachments"`
+	Sections         map[string]Section               `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -99,10 +100,10 @@ type itemArgs struct {
 
 // The set of arguments for constructing a Item resource.
 type ItemArgs struct {
-	Attachments pulumi.AssetOrArchiveMapInput
-	Category    pulumi.StringPtrInput
-	Fields      FieldMapInput
-	Sections    SectionMapInput
+	Category         pulumi.StringPtrInput
+	Fields           FieldMapInput
+	InputAttachments pulumi.AssetOrArchiveMapInput
+	Sections         SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.

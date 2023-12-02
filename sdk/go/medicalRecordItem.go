@@ -15,7 +15,7 @@ import (
 type MedicalRecordItem struct {
 	pulumi.CustomResourceState
 
-	Attachments            OutFieldMapOutput                        `pulumi:"attachments"`
+	Attachments            OutAttachmentMapOutput                   `pulumi:"attachments"`
 	Category               pulumi.StringOutput                      `pulumi:"category"`
 	Date                   pulumi.StringPtrOutput                   `pulumi:"date"`
 	Fields                 OutFieldMapOutput                        `pulumi:"fields"`
@@ -55,6 +55,7 @@ func NewMedicalRecordItem(ctx *pulumi.Context,
 		"sections",
 	})
 	opts = append(opts, secrets)
+	opts = pkgResourceDefaultOpts(opts)
 	var resource MedicalRecordItem
 	err := ctx.RegisterResource("one-password-native-unoffical:index:MedicalRecordItem", name, args, &resource, opts...)
 	if err != nil {
@@ -91,12 +92,12 @@ func (MedicalRecordItemState) ElementType() reflect.Type {
 }
 
 type medicalRecordItemArgs struct {
-	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
 	Category               *string                          `pulumi:"category"`
 	Date                   *string                          `pulumi:"date"`
 	Fields                 map[string]Field                 `pulumi:"fields"`
 	HealthcareProfessional *string                          `pulumi:"healthcareProfessional"`
+	InputAttachments       map[string]pulumi.AssetOrArchive `pulumi:"inputAttachments"`
 	Location               *string                          `pulumi:"location"`
 	Medication             *medicalrecord.MedicationSection `pulumi:"medication"`
 	Notes                  *string                          `pulumi:"notes"`
@@ -113,12 +114,12 @@ type medicalRecordItemArgs struct {
 
 // The set of arguments for constructing a MedicalRecordItem resource.
 type MedicalRecordItemArgs struct {
-	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
 	Category               pulumi.StringPtrInput
 	Date                   pulumi.StringPtrInput
 	Fields                 FieldMapInput
 	HealthcareProfessional pulumi.StringPtrInput
+	InputAttachments       pulumi.AssetOrArchiveMapInput
 	Location               pulumi.StringPtrInput
 	Medication             medicalrecord.MedicationSectionPtrInput
 	Notes                  pulumi.StringPtrInput

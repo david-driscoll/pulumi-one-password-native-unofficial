@@ -34,7 +34,7 @@ export class BankAccountItem extends pulumi.CustomResource {
     }
 
     public readonly accountNumber!: pulumi.Output<string | undefined>;
-    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public /*out*/ readonly attachments!: pulumi.Output<{[key: string]: outputs.OutAttachment}>;
     public readonly bankName!: pulumi.Output<string | undefined>;
     public readonly branchInformation!: pulumi.Output<outputs.bankAccount.BranchInformationSection | undefined>;
     public readonly category!: pulumi.Output<enums.Category | string>;
@@ -85,12 +85,12 @@ export class BankAccountItem extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vault'");
             }
             resourceInputs["accountNumber"] = args ? args.accountNumber : undefined;
-            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["bankName"] = args ? args.bankName : undefined;
             resourceInputs["branchInformation"] = args ? args.branchInformation : undefined;
             resourceInputs["category"] = "Bank Account";
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["iban"] = args ? args.iban : undefined;
+            resourceInputs["inputAttachments"] = args ? args.inputAttachments : undefined;
             resourceInputs["nameOnAccount"] = args ? args.nameOnAccount : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["pin"] = args?.pin ? pulumi.secret(args.pin) : undefined;
@@ -101,6 +101,7 @@ export class BankAccountItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["type"] = args ? args.type : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["attachments"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
@@ -130,7 +131,6 @@ export interface BankAccountItemState {
  */
 export interface BankAccountItemArgs {
     accountNumber?: pulumi.Input<string>;
-    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     bankName?: pulumi.Input<string>;
     branchInformation?: pulumi.Input<inputs.bankAccount.BranchInformationSectionArgs>;
     /**
@@ -139,6 +139,7 @@ export interface BankAccountItemArgs {
     category?: pulumi.Input<"Bank Account">;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     iban?: pulumi.Input<string>;
+    inputAttachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     nameOnAccount?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
     pin?: pulumi.Input<string>;

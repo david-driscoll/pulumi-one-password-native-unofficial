@@ -34,7 +34,7 @@ export class DriverLicenseItem extends pulumi.CustomResource {
     }
 
     public readonly address!: pulumi.Output<string | undefined>;
-    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public /*out*/ readonly attachments!: pulumi.Output<{[key: string]: outputs.OutAttachment}>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly conditionsRestrictions!: pulumi.Output<string | undefined>;
     public readonly country!: pulumi.Output<string | undefined>;
@@ -87,7 +87,6 @@ export class DriverLicenseItem extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vault'");
             }
             resourceInputs["address"] = args ? args.address : undefined;
-            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "Driver License";
             resourceInputs["conditionsRestrictions"] = args ? args.conditionsRestrictions : undefined;
             resourceInputs["country"] = args ? args.country : undefined;
@@ -97,6 +96,7 @@ export class DriverLicenseItem extends pulumi.CustomResource {
             resourceInputs["fullName"] = args ? args.fullName : undefined;
             resourceInputs["gender"] = args ? args.gender : undefined;
             resourceInputs["height"] = args ? args.height : undefined;
+            resourceInputs["inputAttachments"] = args ? args.inputAttachments : undefined;
             resourceInputs["licenseClass"] = args ? args.licenseClass : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["number"] = args ? args.number : undefined;
@@ -105,6 +105,7 @@ export class DriverLicenseItem extends pulumi.CustomResource {
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["attachments"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
@@ -134,7 +135,6 @@ export interface DriverLicenseItemState {
  */
 export interface DriverLicenseItemArgs {
     address?: pulumi.Input<string>;
-    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     /**
      * The category of the vault the item is in.
      */
@@ -147,6 +147,7 @@ export interface DriverLicenseItemArgs {
     fullName?: pulumi.Input<string>;
     gender?: pulumi.Input<string>;
     height?: pulumi.Input<string>;
+    inputAttachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     licenseClass?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
     number?: pulumi.Input<string>;

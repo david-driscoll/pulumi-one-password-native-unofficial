@@ -11,6 +11,7 @@ import (
 )
 
 func GetPassport(ctx *pulumi.Context, args *GetPassportArgs, opts ...pulumi.InvokeOption) (*GetPassportResult, error) {
+	opts = pkgInvokeDefaultOpts(opts)
 	var rv GetPassportResult
 	err := ctx.Invoke("one-password-native-unoffical:index:GetPassport", args, &rv, opts...)
 	if err != nil {
@@ -29,22 +30,22 @@ type GetPassportArgs struct {
 }
 
 type GetPassportResult struct {
-	Attachments      map[string]OutField   `pulumi:"attachments"`
-	Category         string                `pulumi:"category"`
-	DateOfBirth      *string               `pulumi:"dateOfBirth"`
-	ExpiryDate       *string               `pulumi:"expiryDate"`
-	Fields           map[string]OutField   `pulumi:"fields"`
-	FullName         *string               `pulumi:"fullName"`
-	Gender           *string               `pulumi:"gender"`
-	IssuedOn         *string               `pulumi:"issuedOn"`
-	IssuingAuthority *string               `pulumi:"issuingAuthority"`
-	IssuingCountry   *string               `pulumi:"issuingCountry"`
-	Nationality      *string               `pulumi:"nationality"`
-	Notes            *string               `pulumi:"notes"`
-	Number           *string               `pulumi:"number"`
-	PlaceOfBirth     *string               `pulumi:"placeOfBirth"`
-	References       map[string]OutField   `pulumi:"references"`
-	Sections         map[string]OutSection `pulumi:"sections"`
+	Attachments      map[string]OutAttachment `pulumi:"attachments"`
+	Category         string                   `pulumi:"category"`
+	DateOfBirth      *string                  `pulumi:"dateOfBirth"`
+	ExpiryDate       *string                  `pulumi:"expiryDate"`
+	Fields           map[string]OutField      `pulumi:"fields"`
+	FullName         *string                  `pulumi:"fullName"`
+	Gender           *string                  `pulumi:"gender"`
+	IssuedOn         *string                  `pulumi:"issuedOn"`
+	IssuingAuthority *string                  `pulumi:"issuingAuthority"`
+	IssuingCountry   *string                  `pulumi:"issuingCountry"`
+	Nationality      *string                  `pulumi:"nationality"`
+	Notes            *string                  `pulumi:"notes"`
+	Number           *string                  `pulumi:"number"`
+	PlaceOfBirth     *string                  `pulumi:"placeOfBirth"`
+	References       map[string]OutField      `pulumi:"references"`
+	Sections         map[string]OutSection    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -96,8 +97,8 @@ func (o GetPassportResultOutput) ToGetPassportResultOutputWithContext(ctx contex
 	return o
 }
 
-func (o GetPassportResultOutput) Attachments() OutFieldMapOutput {
-	return o.ApplyT(func(v GetPassportResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+func (o GetPassportResultOutput) Attachments() OutAttachmentMapOutput {
+	return o.ApplyT(func(v GetPassportResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
 }
 
 func (o GetPassportResultOutput) Category() pulumi.StringOutput {

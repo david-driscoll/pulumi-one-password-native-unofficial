@@ -16,7 +16,7 @@ type ServerItem struct {
 	pulumi.CustomResourceState
 
 	AdminConsole    server.AdminConsoleSectionPtrOutput    `pulumi:"adminConsole"`
-	Attachments     OutFieldMapOutput                      `pulumi:"attachments"`
+	Attachments     OutAttachmentMapOutput                 `pulumi:"attachments"`
 	Category        pulumi.StringOutput                    `pulumi:"category"`
 	Fields          OutFieldMapOutput                      `pulumi:"fields"`
 	HostingProvider server.HostingProviderSectionPtrOutput `pulumi:"hostingProvider"`
@@ -59,6 +59,7 @@ func NewServerItem(ctx *pulumi.Context,
 		"sections",
 	})
 	opts = append(opts, secrets)
+	opts = pkgResourceDefaultOpts(opts)
 	var resource ServerItem
 	err := ctx.RegisterResource("one-password-native-unoffical:index:ServerItem", name, args, &resource, opts...)
 	if err != nil {
@@ -95,15 +96,15 @@ func (ServerItemState) ElementType() reflect.Type {
 }
 
 type serverItemArgs struct {
-	AdminConsole *server.AdminConsoleSection      `pulumi:"adminConsole"`
-	Attachments  map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
+	AdminConsole *server.AdminConsoleSection `pulumi:"adminConsole"`
 	// The category of the vault the item is in.
-	Category        *string                        `pulumi:"category"`
-	Fields          map[string]Field               `pulumi:"fields"`
-	HostingProvider *server.HostingProviderSection `pulumi:"hostingProvider"`
-	Notes           *string                        `pulumi:"notes"`
-	Password        *string                        `pulumi:"password"`
-	Sections        map[string]Section             `pulumi:"sections"`
+	Category         *string                          `pulumi:"category"`
+	Fields           map[string]Field                 `pulumi:"fields"`
+	HostingProvider  *server.HostingProviderSection   `pulumi:"hostingProvider"`
+	InputAttachments map[string]pulumi.AssetOrArchive `pulumi:"inputAttachments"`
+	Notes            *string                          `pulumi:"notes"`
+	Password         *string                          `pulumi:"password"`
+	Sections         map[string]Section               `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -117,14 +118,14 @@ type serverItemArgs struct {
 // The set of arguments for constructing a ServerItem resource.
 type ServerItemArgs struct {
 	AdminConsole server.AdminConsoleSectionPtrInput
-	Attachments  pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
-	Category        pulumi.StringPtrInput
-	Fields          FieldMapInput
-	HostingProvider server.HostingProviderSectionPtrInput
-	Notes           pulumi.StringPtrInput
-	Password        pulumi.StringPtrInput
-	Sections        SectionMapInput
+	Category         pulumi.StringPtrInput
+	Fields           FieldMapInput
+	HostingProvider  server.HostingProviderSectionPtrInput
+	InputAttachments pulumi.AssetOrArchiveMapInput
+	Notes            pulumi.StringPtrInput
+	Password         pulumi.StringPtrInput
+	Sections         SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.

@@ -14,7 +14,7 @@ import (
 type LoginItem struct {
 	pulumi.CustomResourceState
 
-	Attachments OutFieldMapOutput      `pulumi:"attachments"`
+	Attachments OutAttachmentMapOutput `pulumi:"attachments"`
 	Category    pulumi.StringOutput    `pulumi:"category"`
 	Fields      OutFieldMapOutput      `pulumi:"fields"`
 	Notes       pulumi.StringPtrOutput `pulumi:"notes"`
@@ -54,6 +54,7 @@ func NewLoginItem(ctx *pulumi.Context,
 		"sections",
 	})
 	opts = append(opts, secrets)
+	opts = pkgResourceDefaultOpts(opts)
 	var resource LoginItem
 	err := ctx.RegisterResource("one-password-native-unoffical:index:LoginItem", name, args, &resource, opts...)
 	if err != nil {
@@ -90,14 +91,14 @@ func (LoginItemState) ElementType() reflect.Type {
 }
 
 type loginItemArgs struct {
-	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
-	Category         *string            `pulumi:"category"`
-	Fields           map[string]Field   `pulumi:"fields"`
-	GeneratePassword interface{}        `pulumi:"generatePassword"`
-	Notes            *string            `pulumi:"notes"`
-	Password         *string            `pulumi:"password"`
-	Sections         map[string]Section `pulumi:"sections"`
+	Category         *string                          `pulumi:"category"`
+	Fields           map[string]Field                 `pulumi:"fields"`
+	GeneratePassword interface{}                      `pulumi:"generatePassword"`
+	InputAttachments map[string]pulumi.AssetOrArchive `pulumi:"inputAttachments"`
+	Notes            *string                          `pulumi:"notes"`
+	Password         *string                          `pulumi:"password"`
+	Sections         map[string]Section               `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -109,11 +110,11 @@ type loginItemArgs struct {
 
 // The set of arguments for constructing a LoginItem resource.
 type LoginItemArgs struct {
-	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
 	Category         pulumi.StringPtrInput
 	Fields           FieldMapInput
 	GeneratePassword pulumi.Input
+	InputAttachments pulumi.AssetOrArchiveMapInput
 	Notes            pulumi.StringPtrInput
 	Password         pulumi.StringPtrInput
 	Sections         SectionMapInput

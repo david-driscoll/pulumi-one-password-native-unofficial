@@ -35,7 +35,7 @@ export class WirelessRouterItem extends pulumi.CustomResource {
 
     public readonly airPortId!: pulumi.Output<string | undefined>;
     public readonly attachedStoragePassword!: pulumi.Output<string | undefined>;
-    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public /*out*/ readonly attachments!: pulumi.Output<{[key: string]: outputs.OutAttachment}>;
     public readonly baseStationName!: pulumi.Output<string | undefined>;
     public readonly baseStationPassword!: pulumi.Output<string | undefined>;
     public readonly category!: pulumi.Output<enums.Category | string>;
@@ -85,11 +85,11 @@ export class WirelessRouterItem extends pulumi.CustomResource {
             }
             resourceInputs["airPortId"] = args ? args.airPortId : undefined;
             resourceInputs["attachedStoragePassword"] = args?.attachedStoragePassword ? pulumi.secret(args.attachedStoragePassword) : undefined;
-            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["baseStationName"] = args ? args.baseStationName : undefined;
             resourceInputs["baseStationPassword"] = args?.baseStationPassword ? pulumi.secret(args.baseStationPassword) : undefined;
             resourceInputs["category"] = "Wireless Router";
             resourceInputs["fields"] = args ? args.fields : undefined;
+            resourceInputs["inputAttachments"] = args ? args.inputAttachments : undefined;
             resourceInputs["networkName"] = args ? args.networkName : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
@@ -99,6 +99,7 @@ export class WirelessRouterItem extends pulumi.CustomResource {
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["wirelessNetworkPassword"] = args?.wirelessNetworkPassword ? pulumi.secret(args.wirelessNetworkPassword) : undefined;
             resourceInputs["wirelessSecurity"] = args ? args.wirelessSecurity : undefined;
+            resourceInputs["attachments"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
@@ -129,7 +130,6 @@ export interface WirelessRouterItemState {
 export interface WirelessRouterItemArgs {
     airPortId?: pulumi.Input<string>;
     attachedStoragePassword?: pulumi.Input<string>;
-    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     baseStationName?: pulumi.Input<string>;
     baseStationPassword?: pulumi.Input<string>;
     /**
@@ -137,6 +137,7 @@ export interface WirelessRouterItemArgs {
      */
     category?: pulumi.Input<"Wireless Router">;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
+    inputAttachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     networkName?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;

@@ -74,7 +74,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
     [OutputType]
     public sealed class GetItemResult
     {
-        public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
+        public readonly ImmutableDictionary<string, Outputs.OutAttachment> Attachments;
         public readonly string Category;
         public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
         public readonly ImmutableDictionary<string, Outputs.OutField> References;
@@ -98,7 +98,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
         [OutputConstructor]
         private GetItemResult(
-            ImmutableDictionary<string, Outputs.OutField> attachments,
+            ImmutableDictionary<string, Outputs.OutAttachment> attachments,
 
             string category,
 

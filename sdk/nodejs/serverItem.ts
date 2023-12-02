@@ -34,7 +34,7 @@ export class ServerItem extends pulumi.CustomResource {
     }
 
     public readonly adminConsole!: pulumi.Output<outputs.server.AdminConsoleSection | undefined>;
-    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public /*out*/ readonly attachments!: pulumi.Output<{[key: string]: outputs.OutAttachment}>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly hostingProvider!: pulumi.Output<outputs.server.HostingProviderSection | undefined>;
@@ -81,10 +81,10 @@ export class ServerItem extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vault'");
             }
             resourceInputs["adminConsole"] = args ? args.adminConsole : undefined;
-            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "Server";
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["hostingProvider"] = args ? args.hostingProvider : undefined;
+            resourceInputs["inputAttachments"] = args ? args.inputAttachments : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["password"] = args?.password ? pulumi.secret(args.password) : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
@@ -93,6 +93,7 @@ export class ServerItem extends pulumi.CustomResource {
             resourceInputs["url"] = args ? args.url : undefined;
             resourceInputs["username"] = args ? args.username : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["attachments"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
@@ -122,13 +123,13 @@ export interface ServerItemState {
  */
 export interface ServerItemArgs {
     adminConsole?: pulumi.Input<inputs.server.AdminConsoleSectionArgs>;
-    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     /**
      * The category of the vault the item is in.
      */
     category?: pulumi.Input<"Server">;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     hostingProvider?: pulumi.Input<inputs.server.HostingProviderSectionArgs>;
+    inputAttachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     notes?: pulumi.Input<string>;
     password?: pulumi.Input<string>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;

@@ -15,7 +15,7 @@ type DatabaseItem struct {
 	pulumi.CustomResourceState
 
 	Alias             pulumi.StringPtrOutput `pulumi:"alias"`
-	Attachments       OutFieldMapOutput      `pulumi:"attachments"`
+	Attachments       OutAttachmentMapOutput `pulumi:"attachments"`
 	Category          pulumi.StringOutput    `pulumi:"category"`
 	ConnectionOptions pulumi.StringPtrOutput `pulumi:"connectionOptions"`
 	Database          pulumi.StringPtrOutput `pulumi:"database"`
@@ -61,6 +61,7 @@ func NewDatabaseItem(ctx *pulumi.Context,
 		"sections",
 	})
 	opts = append(opts, secrets)
+	opts = pkgResourceDefaultOpts(opts)
 	var resource DatabaseItem
 	err := ctx.RegisterResource("one-password-native-unoffical:index:DatabaseItem", name, args, &resource, opts...)
 	if err != nil {
@@ -97,19 +98,19 @@ func (DatabaseItemState) ElementType() reflect.Type {
 }
 
 type databaseItemArgs struct {
-	Alias       *string                          `pulumi:"alias"`
-	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
+	Alias *string `pulumi:"alias"`
 	// The category of the vault the item is in.
-	Category          *string            `pulumi:"category"`
-	ConnectionOptions *string            `pulumi:"connectionOptions"`
-	Database          *string            `pulumi:"database"`
-	Fields            map[string]Field   `pulumi:"fields"`
-	Notes             *string            `pulumi:"notes"`
-	Password          *string            `pulumi:"password"`
-	Port              *string            `pulumi:"port"`
-	Sections          map[string]Section `pulumi:"sections"`
-	Server            *string            `pulumi:"server"`
-	Sid               *string            `pulumi:"sid"`
+	Category          *string                          `pulumi:"category"`
+	ConnectionOptions *string                          `pulumi:"connectionOptions"`
+	Database          *string                          `pulumi:"database"`
+	Fields            map[string]Field                 `pulumi:"fields"`
+	InputAttachments  map[string]pulumi.AssetOrArchive `pulumi:"inputAttachments"`
+	Notes             *string                          `pulumi:"notes"`
+	Password          *string                          `pulumi:"password"`
+	Port              *string                          `pulumi:"port"`
+	Sections          map[string]Section               `pulumi:"sections"`
+	Server            *string                          `pulumi:"server"`
+	Sid               *string                          `pulumi:"sid"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -122,13 +123,13 @@ type databaseItemArgs struct {
 
 // The set of arguments for constructing a DatabaseItem resource.
 type DatabaseItemArgs struct {
-	Alias       pulumi.StringPtrInput
-	Attachments pulumi.AssetOrArchiveMapInput
+	Alias pulumi.StringPtrInput
 	// The category of the vault the item is in.
 	Category          pulumi.StringPtrInput
 	ConnectionOptions pulumi.StringPtrInput
 	Database          pulumi.StringPtrInput
 	Fields            FieldMapInput
+	InputAttachments  pulumi.AssetOrArchiveMapInput
 	Notes             pulumi.StringPtrInput
 	Password          pulumi.StringPtrInput
 	Port              pulumi.StringPtrInput

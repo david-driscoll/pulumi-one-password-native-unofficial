@@ -11,6 +11,7 @@ import (
 )
 
 func GetLogin(ctx *pulumi.Context, args *GetLoginArgs, opts ...pulumi.InvokeOption) (*GetLoginResult, error) {
+	opts = pkgInvokeDefaultOpts(opts)
 	var rv GetLoginResult
 	err := ctx.Invoke("one-password-native-unoffical:index:GetLogin", args, &rv, opts...)
 	if err != nil {
@@ -29,13 +30,13 @@ type GetLoginArgs struct {
 }
 
 type GetLoginResult struct {
-	Attachments map[string]OutField   `pulumi:"attachments"`
-	Category    string                `pulumi:"category"`
-	Fields      map[string]OutField   `pulumi:"fields"`
-	Notes       *string               `pulumi:"notes"`
-	Password    *string               `pulumi:"password"`
-	References  map[string]OutField   `pulumi:"references"`
-	Sections    map[string]OutSection `pulumi:"sections"`
+	Attachments map[string]OutAttachment `pulumi:"attachments"`
+	Category    string                   `pulumi:"category"`
+	Fields      map[string]OutField      `pulumi:"fields"`
+	Notes       *string                  `pulumi:"notes"`
+	Password    *string                  `pulumi:"password"`
+	References  map[string]OutField      `pulumi:"references"`
+	Sections    map[string]OutSection    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -87,8 +88,8 @@ func (o GetLoginResultOutput) ToGetLoginResultOutputWithContext(ctx context.Cont
 	return o
 }
 
-func (o GetLoginResultOutput) Attachments() OutFieldMapOutput {
-	return o.ApplyT(func(v GetLoginResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+func (o GetLoginResultOutput) Attachments() OutAttachmentMapOutput {
+	return o.ApplyT(func(v GetLoginResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
 }
 
 func (o GetLoginResultOutput) Category() pulumi.StringOutput {

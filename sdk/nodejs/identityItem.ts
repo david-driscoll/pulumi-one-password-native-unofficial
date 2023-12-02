@@ -34,7 +34,7 @@ export class IdentityItem extends pulumi.CustomResource {
     }
 
     public readonly address!: pulumi.Output<outputs.identity.AddressSection | undefined>;
-    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public /*out*/ readonly attachments!: pulumi.Output<{[key: string]: outputs.OutAttachment}>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.OutField}>;
     public readonly identification!: pulumi.Output<outputs.identity.IdentificationSection | undefined>;
@@ -79,16 +79,17 @@ export class IdentityItem extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vault'");
             }
             resourceInputs["address"] = args ? args.address : undefined;
-            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "Identity";
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["identification"] = args ? args.identification : undefined;
+            resourceInputs["inputAttachments"] = args ? args.inputAttachments : undefined;
             resourceInputs["internetDetails"] = args ? args.internetDetails : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["attachments"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
@@ -118,13 +119,13 @@ export interface IdentityItemState {
  */
 export interface IdentityItemArgs {
     address?: pulumi.Input<inputs.identity.AddressSectionArgs>;
-    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     /**
      * The category of the vault the item is in.
      */
     category?: pulumi.Input<"Identity">;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     identification?: pulumi.Input<inputs.identity.IdentificationSectionArgs>;
+    inputAttachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     internetDetails?: pulumi.Input<inputs.identity.InternetDetailsSectionArgs>;
     notes?: pulumi.Input<string>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;

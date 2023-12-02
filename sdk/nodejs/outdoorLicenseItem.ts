@@ -34,7 +34,7 @@ export class OutdoorLicenseItem extends pulumi.CustomResource {
     }
 
     public readonly approvedWildlife!: pulumi.Output<string | undefined>;
-    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public /*out*/ readonly attachments!: pulumi.Output<{[key: string]: outputs.OutAttachment}>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly country!: pulumi.Output<string | undefined>;
     public readonly expires!: pulumi.Output<string | undefined>;
@@ -83,12 +83,12 @@ export class OutdoorLicenseItem extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vault'");
             }
             resourceInputs["approvedWildlife"] = args ? args.approvedWildlife : undefined;
-            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "Outdoor License";
             resourceInputs["country"] = args ? args.country : undefined;
             resourceInputs["expires"] = args ? args.expires : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["fullName"] = args ? args.fullName : undefined;
+            resourceInputs["inputAttachments"] = args ? args.inputAttachments : undefined;
             resourceInputs["maximumQuota"] = args ? args.maximumQuota : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
@@ -97,6 +97,7 @@ export class OutdoorLicenseItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["validFrom"] = args ? args.validFrom : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["attachments"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
@@ -126,7 +127,6 @@ export interface OutdoorLicenseItemState {
  */
 export interface OutdoorLicenseItemArgs {
     approvedWildlife?: pulumi.Input<string>;
-    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     /**
      * The category of the vault the item is in.
      */
@@ -135,6 +135,7 @@ export interface OutdoorLicenseItemArgs {
     expires?: pulumi.Input<string>;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     fullName?: pulumi.Input<string>;
+    inputAttachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     maximumQuota?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;

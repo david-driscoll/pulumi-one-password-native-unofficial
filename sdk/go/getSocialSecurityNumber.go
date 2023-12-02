@@ -11,6 +11,7 @@ import (
 )
 
 func GetSocialSecurityNumber(ctx *pulumi.Context, args *GetSocialSecurityNumberArgs, opts ...pulumi.InvokeOption) (*GetSocialSecurityNumberResult, error) {
+	opts = pkgInvokeDefaultOpts(opts)
 	var rv GetSocialSecurityNumberResult
 	err := ctx.Invoke("one-password-native-unoffical:index:GetSocialSecurityNumber", args, &rv, opts...)
 	if err != nil {
@@ -29,14 +30,14 @@ type GetSocialSecurityNumberArgs struct {
 }
 
 type GetSocialSecurityNumberResult struct {
-	Attachments map[string]OutField   `pulumi:"attachments"`
-	Category    string                `pulumi:"category"`
-	Fields      map[string]OutField   `pulumi:"fields"`
-	Name        *string               `pulumi:"name"`
-	Notes       *string               `pulumi:"notes"`
-	Number      *string               `pulumi:"number"`
-	References  map[string]OutField   `pulumi:"references"`
-	Sections    map[string]OutSection `pulumi:"sections"`
+	Attachments map[string]OutAttachment `pulumi:"attachments"`
+	Category    string                   `pulumi:"category"`
+	Fields      map[string]OutField      `pulumi:"fields"`
+	Name        *string                  `pulumi:"name"`
+	Notes       *string                  `pulumi:"notes"`
+	Number      *string                  `pulumi:"number"`
+	References  map[string]OutField      `pulumi:"references"`
+	Sections    map[string]OutSection    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -87,8 +88,8 @@ func (o GetSocialSecurityNumberResultOutput) ToGetSocialSecurityNumberResultOutp
 	return o
 }
 
-func (o GetSocialSecurityNumberResultOutput) Attachments() OutFieldMapOutput {
-	return o.ApplyT(func(v GetSocialSecurityNumberResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+func (o GetSocialSecurityNumberResultOutput) Attachments() OutAttachmentMapOutput {
+	return o.ApplyT(func(v GetSocialSecurityNumberResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
 }
 
 func (o GetSocialSecurityNumberResultOutput) Category() pulumi.StringOutput {

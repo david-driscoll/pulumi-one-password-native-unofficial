@@ -75,7 +75,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
     public sealed class GetBankAccountResult
     {
         public readonly string? AccountNumber;
-        public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
+        public readonly ImmutableDictionary<string, Outputs.OutAttachment> Attachments;
         public readonly string? BankName;
         public readonly Rocket.Surgery.OnePasswordNativeUnoffical.BankAccount.Outputs.BranchInformationSection? BranchInformation;
         public readonly string Category;
@@ -110,7 +110,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         private GetBankAccountResult(
             string? accountNumber,
 
-            ImmutableDictionary<string, Outputs.OutField> attachments,
+            ImmutableDictionary<string, Outputs.OutAttachment> attachments,
 
             string? bankName,
 

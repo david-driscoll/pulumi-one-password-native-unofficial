@@ -11,6 +11,7 @@ import (
 )
 
 func GetOutdoorLicense(ctx *pulumi.Context, args *GetOutdoorLicenseArgs, opts ...pulumi.InvokeOption) (*GetOutdoorLicenseResult, error) {
+	opts = pkgInvokeDefaultOpts(opts)
 	var rv GetOutdoorLicenseResult
 	err := ctx.Invoke("one-password-native-unoffical:index:GetOutdoorLicense", args, &rv, opts...)
 	if err != nil {
@@ -29,18 +30,18 @@ type GetOutdoorLicenseArgs struct {
 }
 
 type GetOutdoorLicenseResult struct {
-	ApprovedWildlife *string               `pulumi:"approvedWildlife"`
-	Attachments      map[string]OutField   `pulumi:"attachments"`
-	Category         string                `pulumi:"category"`
-	Country          *string               `pulumi:"country"`
-	Expires          *string               `pulumi:"expires"`
-	Fields           map[string]OutField   `pulumi:"fields"`
-	FullName         *string               `pulumi:"fullName"`
-	MaximumQuota     *string               `pulumi:"maximumQuota"`
-	Notes            *string               `pulumi:"notes"`
-	References       map[string]OutField   `pulumi:"references"`
-	Sections         map[string]OutSection `pulumi:"sections"`
-	State            *string               `pulumi:"state"`
+	ApprovedWildlife *string                  `pulumi:"approvedWildlife"`
+	Attachments      map[string]OutAttachment `pulumi:"attachments"`
+	Category         string                   `pulumi:"category"`
+	Country          *string                  `pulumi:"country"`
+	Expires          *string                  `pulumi:"expires"`
+	Fields           map[string]OutField      `pulumi:"fields"`
+	FullName         *string                  `pulumi:"fullName"`
+	MaximumQuota     *string                  `pulumi:"maximumQuota"`
+	Notes            *string                  `pulumi:"notes"`
+	References       map[string]OutField      `pulumi:"references"`
+	Sections         map[string]OutSection    `pulumi:"sections"`
+	State            *string                  `pulumi:"state"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -96,8 +97,8 @@ func (o GetOutdoorLicenseResultOutput) ApprovedWildlife() pulumi.StringPtrOutput
 	return o.ApplyT(func(v GetOutdoorLicenseResult) *string { return v.ApprovedWildlife }).(pulumi.StringPtrOutput)
 }
 
-func (o GetOutdoorLicenseResultOutput) Attachments() OutFieldMapOutput {
-	return o.ApplyT(func(v GetOutdoorLicenseResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+func (o GetOutdoorLicenseResultOutput) Attachments() OutAttachmentMapOutput {
+	return o.ApplyT(func(v GetOutdoorLicenseResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
 }
 
 func (o GetOutdoorLicenseResultOutput) Category() pulumi.StringOutput {

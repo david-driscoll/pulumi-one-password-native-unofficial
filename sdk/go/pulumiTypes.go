@@ -130,6 +130,56 @@ type OutAttachment struct {
 	Uuid      string `pulumi:"uuid"`
 }
 
+type OutAttachmentOutput struct{ *pulumi.OutputState }
+
+func (OutAttachmentOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*OutAttachment)(nil)).Elem()
+}
+
+func (o OutAttachmentOutput) ToOutAttachmentOutput() OutAttachmentOutput {
+	return o
+}
+
+func (o OutAttachmentOutput) ToOutAttachmentOutputWithContext(ctx context.Context) OutAttachmentOutput {
+	return o
+}
+
+func (o OutAttachmentOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v OutAttachment) string { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o OutAttachmentOutput) Reference() pulumi.StringOutput {
+	return o.ApplyT(func(v OutAttachment) string { return v.Reference }).(pulumi.StringOutput)
+}
+
+func (o OutAttachmentOutput) Size() pulumi.IntOutput {
+	return o.ApplyT(func(v OutAttachment) int { return v.Size }).(pulumi.IntOutput)
+}
+
+func (o OutAttachmentOutput) Uuid() pulumi.StringOutput {
+	return o.ApplyT(func(v OutAttachment) string { return v.Uuid }).(pulumi.StringOutput)
+}
+
+type OutAttachmentMapOutput struct{ *pulumi.OutputState }
+
+func (OutAttachmentMapOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]OutAttachment)(nil)).Elem()
+}
+
+func (o OutAttachmentMapOutput) ToOutAttachmentMapOutput() OutAttachmentMapOutput {
+	return o
+}
+
+func (o OutAttachmentMapOutput) ToOutAttachmentMapOutputWithContext(ctx context.Context) OutAttachmentMapOutput {
+	return o
+}
+
+func (o OutAttachmentMapOutput) MapIndex(k pulumi.StringInput) OutAttachmentOutput {
+	return pulumi.All(o, k).ApplyT(func(vs []interface{}) OutAttachment {
+		return vs[0].(map[string]OutAttachment)[vs[1].(string)]
+	}).(OutAttachmentOutput)
+}
+
 type OutField struct {
 	Label     string            `pulumi:"label"`
 	Reference string            `pulumi:"reference"`
@@ -352,6 +402,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*SectionMapInput)(nil)).Elem(), SectionMap{})
 	pulumi.RegisterOutputType(FieldOutput{})
 	pulumi.RegisterOutputType(FieldMapOutput{})
+	pulumi.RegisterOutputType(OutAttachmentOutput{})
+	pulumi.RegisterOutputType(OutAttachmentMapOutput{})
 	pulumi.RegisterOutputType(OutFieldOutput{})
 	pulumi.RegisterOutputType(OutFieldMapOutput{})
 	pulumi.RegisterOutputType(OutSectionOutput{})

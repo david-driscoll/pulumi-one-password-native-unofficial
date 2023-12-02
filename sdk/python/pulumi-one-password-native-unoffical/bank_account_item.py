@@ -19,12 +19,12 @@ class BankAccountItemArgs:
     def __init__(__self__, *,
                  vault: pulumi.Input[str],
                  account_number: Optional[pulumi.Input[str]] = None,
-                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  bank_name: Optional[pulumi.Input[str]] = None,
                  branch_information: Optional[pulumi.Input['_bankaccount.BranchInformationSectionArgs']] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
                  iban: Optional[pulumi.Input[str]] = None,
+                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  name_on_account: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  pin: Optional[pulumi.Input[str]] = None,
@@ -44,8 +44,6 @@ class BankAccountItemArgs:
         pulumi.set(__self__, "vault", vault)
         if account_number is not None:
             pulumi.set(__self__, "account_number", account_number)
-        if attachments is not None:
-            pulumi.set(__self__, "attachments", attachments)
         if bank_name is not None:
             pulumi.set(__self__, "bank_name", bank_name)
         if branch_information is not None:
@@ -56,6 +54,8 @@ class BankAccountItemArgs:
             pulumi.set(__self__, "fields", fields)
         if iban is not None:
             pulumi.set(__self__, "iban", iban)
+        if input_attachments is not None:
+            pulumi.set(__self__, "input_attachments", input_attachments)
         if name_on_account is not None:
             pulumi.set(__self__, "name_on_account", name_on_account)
         if notes is not None:
@@ -95,15 +95,6 @@ class BankAccountItemArgs:
     @account_number.setter
     def account_number(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "account_number", value)
-
-    @property
-    @pulumi.getter
-    def attachments(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]:
-        return pulumi.get(self, "attachments")
-
-    @attachments.setter
-    def attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
-        pulumi.set(self, "attachments", value)
 
     @property
     @pulumi.getter(name="bankName")
@@ -152,6 +143,15 @@ class BankAccountItemArgs:
     @iban.setter
     def iban(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "iban", value)
+
+    @property
+    @pulumi.getter(name="inputAttachments")
+    def input_attachments(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]:
+        return pulumi.get(self, "input_attachments")
+
+    @input_attachments.setter
+    def input_attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
+        pulumi.set(self, "input_attachments", value)
 
     @property
     @pulumi.getter(name="nameOnAccount")
@@ -270,12 +270,12 @@ class BankAccountItem(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  account_number: Optional[pulumi.Input[str]] = None,
-                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  bank_name: Optional[pulumi.Input[str]] = None,
                  branch_information: Optional[pulumi.Input[pulumi.InputType['_bankaccount.BranchInformationSectionArgs']]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  iban: Optional[pulumi.Input[str]] = None,
+                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  name_on_account: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  pin: Optional[pulumi.Input[str]] = None,
@@ -320,12 +320,12 @@ class BankAccountItem(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  account_number: Optional[pulumi.Input[str]] = None,
-                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  bank_name: Optional[pulumi.Input[str]] = None,
                  branch_information: Optional[pulumi.Input[pulumi.InputType['_bankaccount.BranchInformationSectionArgs']]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  iban: Optional[pulumi.Input[str]] = None,
+                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  name_on_account: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  pin: Optional[pulumi.Input[str]] = None,
@@ -351,12 +351,12 @@ class BankAccountItem(pulumi.CustomResource):
             __props__ = BankAccountItemArgs.__new__(BankAccountItemArgs)
 
             __props__.__dict__["account_number"] = account_number
-            __props__.__dict__["attachments"] = attachments
             __props__.__dict__["bank_name"] = bank_name
             __props__.__dict__["branch_information"] = branch_information
             __props__.__dict__["category"] = 'Bank Account'
             __props__.__dict__["fields"] = fields
             __props__.__dict__["iban"] = iban
+            __props__.__dict__["input_attachments"] = input_attachments
             __props__.__dict__["name_on_account"] = name_on_account
             __props__.__dict__["notes"] = notes
             __props__.__dict__["pin"] = None if pin is None else pulumi.Output.secret(pin)
@@ -369,6 +369,7 @@ class BankAccountItem(pulumi.CustomResource):
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
+            __props__.__dict__["attachments"] = None
             __props__.__dict__["references"] = None
             __props__.__dict__["uuid"] = None
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachments", "fields", "pin", "references", "sections"])
@@ -425,7 +426,7 @@ class BankAccountItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def attachments(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+    def attachments(self) -> pulumi.Output[Mapping[str, 'outputs.OutAttachment']]:
         return pulumi.get(self, "attachments")
 
     @property

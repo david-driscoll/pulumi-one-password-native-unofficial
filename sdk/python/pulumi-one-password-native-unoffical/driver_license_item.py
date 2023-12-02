@@ -18,7 +18,6 @@ class DriverLicenseItemArgs:
     def __init__(__self__, *,
                  vault: pulumi.Input[str],
                  address: Optional[pulumi.Input[str]] = None,
-                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  conditions_restrictions: Optional[pulumi.Input[str]] = None,
                  country: Optional[pulumi.Input[str]] = None,
@@ -28,6 +27,7 @@ class DriverLicenseItemArgs:
                  full_name: Optional[pulumi.Input[str]] = None,
                  gender: Optional[pulumi.Input[str]] = None,
                  height: Optional[pulumi.Input[str]] = None,
+                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  license_class: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  number: Optional[pulumi.Input[str]] = None,
@@ -45,8 +45,6 @@ class DriverLicenseItemArgs:
         pulumi.set(__self__, "vault", vault)
         if address is not None:
             pulumi.set(__self__, "address", address)
-        if attachments is not None:
-            pulumi.set(__self__, "attachments", attachments)
         if category is not None:
             pulumi.set(__self__, "category", 'Driver License')
         if conditions_restrictions is not None:
@@ -65,6 +63,8 @@ class DriverLicenseItemArgs:
             pulumi.set(__self__, "gender", gender)
         if height is not None:
             pulumi.set(__self__, "height", height)
+        if input_attachments is not None:
+            pulumi.set(__self__, "input_attachments", input_attachments)
         if license_class is not None:
             pulumi.set(__self__, "license_class", license_class)
         if notes is not None:
@@ -100,15 +100,6 @@ class DriverLicenseItemArgs:
     @address.setter
     def address(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "address", value)
-
-    @property
-    @pulumi.getter
-    def attachments(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]:
-        return pulumi.get(self, "attachments")
-
-    @attachments.setter
-    def attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
-        pulumi.set(self, "attachments", value)
 
     @property
     @pulumi.getter
@@ -193,6 +184,15 @@ class DriverLicenseItemArgs:
     @height.setter
     def height(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "height", value)
+
+    @property
+    @pulumi.getter(name="inputAttachments")
+    def input_attachments(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]:
+        return pulumi.get(self, "input_attachments")
+
+    @input_attachments.setter
+    def input_attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
+        pulumi.set(self, "input_attachments", value)
 
     @property
     @pulumi.getter(name="licenseClass")
@@ -293,7 +293,6 @@ class DriverLicenseItem(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  address: Optional[pulumi.Input[str]] = None,
-                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  conditions_restrictions: Optional[pulumi.Input[str]] = None,
                  country: Optional[pulumi.Input[str]] = None,
@@ -303,6 +302,7 @@ class DriverLicenseItem(pulumi.CustomResource):
                  full_name: Optional[pulumi.Input[str]] = None,
                  gender: Optional[pulumi.Input[str]] = None,
                  height: Optional[pulumi.Input[str]] = None,
+                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  license_class: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  number: Optional[pulumi.Input[str]] = None,
@@ -345,7 +345,6 @@ class DriverLicenseItem(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  address: Optional[pulumi.Input[str]] = None,
-                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  conditions_restrictions: Optional[pulumi.Input[str]] = None,
                  country: Optional[pulumi.Input[str]] = None,
@@ -355,6 +354,7 @@ class DriverLicenseItem(pulumi.CustomResource):
                  full_name: Optional[pulumi.Input[str]] = None,
                  gender: Optional[pulumi.Input[str]] = None,
                  height: Optional[pulumi.Input[str]] = None,
+                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  license_class: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  number: Optional[pulumi.Input[str]] = None,
@@ -378,7 +378,6 @@ class DriverLicenseItem(pulumi.CustomResource):
             __props__ = DriverLicenseItemArgs.__new__(DriverLicenseItemArgs)
 
             __props__.__dict__["address"] = address
-            __props__.__dict__["attachments"] = attachments
             __props__.__dict__["category"] = 'Driver License'
             __props__.__dict__["conditions_restrictions"] = conditions_restrictions
             __props__.__dict__["country"] = country
@@ -388,6 +387,7 @@ class DriverLicenseItem(pulumi.CustomResource):
             __props__.__dict__["full_name"] = full_name
             __props__.__dict__["gender"] = gender
             __props__.__dict__["height"] = height
+            __props__.__dict__["input_attachments"] = input_attachments
             __props__.__dict__["license_class"] = license_class
             __props__.__dict__["notes"] = notes
             __props__.__dict__["number"] = number
@@ -398,6 +398,7 @@ class DriverLicenseItem(pulumi.CustomResource):
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
+            __props__.__dict__["attachments"] = None
             __props__.__dict__["references"] = None
             __props__.__dict__["uuid"] = None
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachments", "fields", "references", "sections"])
@@ -456,7 +457,7 @@ class DriverLicenseItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def attachments(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+    def attachments(self) -> pulumi.Output[Mapping[str, 'outputs.OutAttachment']]:
         return pulumi.get(self, "attachments")
 
     @property

@@ -75,7 +75,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
     public sealed class GetServerResult
     {
         public readonly Rocket.Surgery.OnePasswordNativeUnoffical.Server.Outputs.AdminConsoleSection? AdminConsole;
-        public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
+        public readonly ImmutableDictionary<string, Outputs.OutAttachment> Attachments;
         public readonly string Category;
         public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
         public readonly Rocket.Surgery.OnePasswordNativeUnoffical.Server.Outputs.HostingProviderSection? HostingProvider;
@@ -106,7 +106,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         private GetServerResult(
             Rocket.Surgery.OnePasswordNativeUnoffical.Server.Outputs.AdminConsoleSection? adminConsole,
 
-            ImmutableDictionary<string, Outputs.OutField> attachments,
+            ImmutableDictionary<string, Outputs.OutAttachment> attachments,
 
             string category,
 

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Google.Protobuf.WellKnownTypes;
 using Pulumi;
-using Pulumi.OnePasswordNative;
-using Pulumi.OnePasswordNative.Inputs;
+using Rocket.Surgery.OnePasswordNativeUnoffical;
+using Rocket.Surgery.OnePasswordNativeUnoffical.Inputs;
 
 return await Deployment.RunAsync(() =>
 {
@@ -10,7 +10,7 @@ return await Deployment.RunAsync(() =>
    {
       Vault = "testing-pulumi",
       Username = "me",
-      Attachments = new()
+      InputAttachments = new()
       {
          ["my-attachment"] = new StringAsset("this is an attachment"),
          ["package.json"] = new FileAsset("./Pulumi.yaml")
@@ -39,14 +39,48 @@ return await Deployment.RunAsync(() =>
       }
    });
 
-   var member = new MembershipItem("random-membership", new()
-   {
-      Vault = "testing-pulumi",
-      MemberId = login.Uuid,
-      Pin = "12345"
-   });
+   // var api = new APICredentialItem("my-api", new()
+   // {
 
-   login.GetAttachment(new() { Name = "my-attachment" }).Apply(z =>
+   //    Vault = "testing-pulumi",
+   //    Credential = "abcdf",
+   //    Hostname = "hostname",
+   //    Fields = new()
+   //    {
+   //       ["name"] = new FieldArgs { Type = FieldAssignmentType.Text, Value = "thename" },
+   //    },
+   //    Category = "APICredential",
+   //    Filename = "abcd",
+   //    Expires = "",
+   //    ValidFrom = "",
+   //    Type = "1234",
+   //    Notes = "",
+   //    Username = "",
+   //    Title = "mytitles"
+   // });
+
+   // var ssn = new SocialSecurityNumberItem("my-api", new()
+   // {
+   //    Vault = "testing-pulumi",
+   //    Fields = new()
+   //    {
+   //       ["afasdfasdf"] = new FieldArgs { Type = FieldAssignmentType.Text, Value = "thename" },
+   //    },
+   //    Notes = "",
+   //    Title = "mytitles",
+   // });
+
+   // var member = new MembershipItem("random-membership", new()
+   // {
+   //    Vault = "testing-pulumi",
+   //    MemberId = login.Uuid,
+   //    Pin = "12345"
+   // });
+
+   login.Attachments
+   .Apply(z => z["my-attachment"].Reference)
+   .Apply(z => GetAttachment.Invoke(new() { Reference = z }))
+   .Apply(z =>
    {
       Log.Info(z.Value);
       return z.Value;

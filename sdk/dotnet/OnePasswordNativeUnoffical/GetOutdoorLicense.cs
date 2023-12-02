@@ -75,7 +75,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
     public sealed class GetOutdoorLicenseResult
     {
         public readonly string? ApprovedWildlife;
-        public readonly ImmutableDictionary<string, Outputs.OutField> Attachments;
+        public readonly ImmutableDictionary<string, Outputs.OutAttachment> Attachments;
         public readonly string Category;
         public readonly string? Country;
         public readonly string? Expires;
@@ -108,7 +108,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         private GetOutdoorLicenseResult(
             string? approvedWildlife,
 
-            ImmutableDictionary<string, Outputs.OutField> attachments,
+            ImmutableDictionary<string, Outputs.OutAttachment> attachments,
 
             string category,
 

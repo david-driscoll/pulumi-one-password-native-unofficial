@@ -11,6 +11,7 @@ import (
 )
 
 func GetDriverLicense(ctx *pulumi.Context, args *GetDriverLicenseArgs, opts ...pulumi.InvokeOption) (*GetDriverLicenseResult, error) {
+	opts = pkgInvokeDefaultOpts(opts)
 	var rv GetDriverLicenseResult
 	err := ctx.Invoke("one-password-native-unoffical:index:GetDriverLicense", args, &rv, opts...)
 	if err != nil {
@@ -29,23 +30,23 @@ type GetDriverLicenseArgs struct {
 }
 
 type GetDriverLicenseResult struct {
-	Address                *string               `pulumi:"address"`
-	Attachments            map[string]OutField   `pulumi:"attachments"`
-	Category               string                `pulumi:"category"`
-	ConditionsRestrictions *string               `pulumi:"conditionsRestrictions"`
-	Country                *string               `pulumi:"country"`
-	DateOfBirth            *string               `pulumi:"dateOfBirth"`
-	ExpiryDate             *string               `pulumi:"expiryDate"`
-	Fields                 map[string]OutField   `pulumi:"fields"`
-	FullName               *string               `pulumi:"fullName"`
-	Gender                 *string               `pulumi:"gender"`
-	Height                 *string               `pulumi:"height"`
-	LicenseClass           *string               `pulumi:"licenseClass"`
-	Notes                  *string               `pulumi:"notes"`
-	Number                 *string               `pulumi:"number"`
-	References             map[string]OutField   `pulumi:"references"`
-	Sections               map[string]OutSection `pulumi:"sections"`
-	State                  *string               `pulumi:"state"`
+	Address                *string                  `pulumi:"address"`
+	Attachments            map[string]OutAttachment `pulumi:"attachments"`
+	Category               string                   `pulumi:"category"`
+	ConditionsRestrictions *string                  `pulumi:"conditionsRestrictions"`
+	Country                *string                  `pulumi:"country"`
+	DateOfBirth            *string                  `pulumi:"dateOfBirth"`
+	ExpiryDate             *string                  `pulumi:"expiryDate"`
+	Fields                 map[string]OutField      `pulumi:"fields"`
+	FullName               *string                  `pulumi:"fullName"`
+	Gender                 *string                  `pulumi:"gender"`
+	Height                 *string                  `pulumi:"height"`
+	LicenseClass           *string                  `pulumi:"licenseClass"`
+	Notes                  *string                  `pulumi:"notes"`
+	Number                 *string                  `pulumi:"number"`
+	References             map[string]OutField      `pulumi:"references"`
+	Sections               map[string]OutSection    `pulumi:"sections"`
+	State                  *string                  `pulumi:"state"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -100,8 +101,8 @@ func (o GetDriverLicenseResultOutput) Address() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetDriverLicenseResult) *string { return v.Address }).(pulumi.StringPtrOutput)
 }
 
-func (o GetDriverLicenseResultOutput) Attachments() OutFieldMapOutput {
-	return o.ApplyT(func(v GetDriverLicenseResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+func (o GetDriverLicenseResultOutput) Attachments() OutAttachmentMapOutput {
+	return o.ApplyT(func(v GetDriverLicenseResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
 }
 
 func (o GetDriverLicenseResultOutput) Category() pulumi.StringOutput {

@@ -12,6 +12,7 @@ import (
 )
 
 func GetCryptoWallet(ctx *pulumi.Context, args *GetCryptoWalletArgs, opts ...pulumi.InvokeOption) (*GetCryptoWalletResult, error) {
+	opts = pkgInvokeDefaultOpts(opts)
 	var rv GetCryptoWalletResult
 	err := ctx.Invoke("one-password-native-unoffical:index:GetCryptoWallet", args, &rv, opts...)
 	if err != nil {
@@ -30,14 +31,14 @@ type GetCryptoWalletArgs struct {
 }
 
 type GetCryptoWalletResult struct {
-	Attachments    map[string]OutField   `pulumi:"attachments"`
-	Category       string                `pulumi:"category"`
-	Fields         map[string]OutField   `pulumi:"fields"`
-	Notes          *string               `pulumi:"notes"`
-	Password       *string               `pulumi:"password"`
-	RecoveryPhrase *string               `pulumi:"recoveryPhrase"`
-	References     map[string]OutField   `pulumi:"references"`
-	Sections       map[string]OutSection `pulumi:"sections"`
+	Attachments    map[string]OutAttachment `pulumi:"attachments"`
+	Category       string                   `pulumi:"category"`
+	Fields         map[string]OutField      `pulumi:"fields"`
+	Notes          *string                  `pulumi:"notes"`
+	Password       *string                  `pulumi:"password"`
+	RecoveryPhrase *string                  `pulumi:"recoveryPhrase"`
+	References     map[string]OutField      `pulumi:"references"`
+	Sections       map[string]OutSection    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -89,8 +90,8 @@ func (o GetCryptoWalletResultOutput) ToGetCryptoWalletResultOutputWithContext(ct
 	return o
 }
 
-func (o GetCryptoWalletResultOutput) Attachments() OutFieldMapOutput {
-	return o.ApplyT(func(v GetCryptoWalletResult) map[string]OutField { return v.Attachments }).(OutFieldMapOutput)
+func (o GetCryptoWalletResultOutput) Attachments() OutAttachmentMapOutput {
+	return o.ApplyT(func(v GetCryptoWalletResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
 }
 
 func (o GetCryptoWalletResultOutput) Category() pulumi.StringOutput {

@@ -35,7 +35,7 @@ export interface GetIdentityArgs {
 
 export interface GetIdentityResult {
     readonly address?: outputs.identity.AddressSection;
-    readonly attachments: {[key: string]: outputs.OutField};
+    readonly attachments: {[key: string]: outputs.OutAttachment};
     readonly category: enums.Category | string;
     readonly fields: {[key: string]: outputs.OutField};
     readonly identification?: outputs.identity.IdentificationSection;
