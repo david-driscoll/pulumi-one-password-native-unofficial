@@ -31,11 +31,3 @@ Object.defineProperty(exports, "serviceAccountToken", {
     enumerable: true,
 });
 
-export declare const vault: string | undefined;
-Object.defineProperty(exports, "vault", {
-    get() {
-        return __config.get("vault");
-    },
-    enumerable: true,
-});
-

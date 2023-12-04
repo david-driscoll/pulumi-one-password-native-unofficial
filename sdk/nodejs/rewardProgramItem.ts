@@ -42,7 +42,7 @@ export class RewardProgramItem extends pulumi.CustomResource {
     public readonly moreInformation!: pulumi.Output<outputs.rewardProgram.MoreInformationSection | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly pin!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutputReference}>;
+    public /*out*/ readonly references!: pulumi.Output<outputs.OutputReference[]>;
     public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
     /**
      * An array of strings of the tags assigned to the item.
@@ -96,7 +96,7 @@ export class RewardProgramItem extends pulumi.CustomResource {
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "pin", "references", "sections"] };
+        const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "pin", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(RewardProgramItem.__pulumiType, name, resourceInputs, opts);
     }

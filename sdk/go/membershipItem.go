@@ -14,18 +14,18 @@ import (
 type MembershipItem struct {
 	pulumi.CustomResourceState
 
-	Attachments OutputAttachmentMapOutput `pulumi:"attachments"`
-	Category    pulumi.StringOutput       `pulumi:"category"`
-	ExpiryDate  pulumi.StringPtrOutput    `pulumi:"expiryDate"`
-	Fields      OutputFieldMapOutput      `pulumi:"fields"`
-	Group       pulumi.StringPtrOutput    `pulumi:"group"`
-	MemberId    pulumi.StringPtrOutput    `pulumi:"memberId"`
-	MemberName  pulumi.StringPtrOutput    `pulumi:"memberName"`
-	MemberSince pulumi.StringPtrOutput    `pulumi:"memberSince"`
-	Notes       pulumi.StringPtrOutput    `pulumi:"notes"`
-	Pin         pulumi.StringPtrOutput    `pulumi:"pin"`
-	References  OutputReferenceMapOutput  `pulumi:"references"`
-	Sections    OutputSectionMapOutput    `pulumi:"sections"`
+	Attachments OutputAttachmentMapOutput  `pulumi:"attachments"`
+	Category    pulumi.StringOutput        `pulumi:"category"`
+	ExpiryDate  pulumi.StringPtrOutput     `pulumi:"expiryDate"`
+	Fields      OutputFieldMapOutput       `pulumi:"fields"`
+	Group       pulumi.StringPtrOutput     `pulumi:"group"`
+	MemberId    pulumi.StringPtrOutput     `pulumi:"memberId"`
+	MemberName  pulumi.StringPtrOutput     `pulumi:"memberName"`
+	MemberSince pulumi.StringPtrOutput     `pulumi:"memberSince"`
+	Notes       pulumi.StringPtrOutput     `pulumi:"notes"`
+	Pin         pulumi.StringPtrOutput     `pulumi:"pin"`
+	References  OutputReferenceArrayOutput `pulumi:"references"`
+	Sections    OutputSectionMapOutput     `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags      pulumi.StringArrayOutput `pulumi:"tags"`
 	Telephone pulumi.StringPtrOutput   `pulumi:"telephone"`
@@ -56,7 +56,6 @@ func NewMembershipItem(ctx *pulumi.Context,
 		"attachments",
 		"fields",
 		"pin",
-		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)

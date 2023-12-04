@@ -24,7 +24,7 @@ type CreditCardItem struct {
 	Fields             OutputFieldMapOutput                          `pulumi:"fields"`
 	Notes              pulumi.StringPtrOutput                        `pulumi:"notes"`
 	Number             pulumi.StringPtrOutput                        `pulumi:"number"`
-	References         OutputReferenceMapOutput                      `pulumi:"references"`
+	References         OutputReferenceArrayOutput                    `pulumi:"references"`
 	Sections           OutputSectionMapOutput                        `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
@@ -57,7 +57,6 @@ func NewCreditCardItem(ctx *pulumi.Context,
 		"additionalDetails",
 		"attachments",
 		"fields",
-		"references",
 		"sections",
 		"verificationNumber",
 	})

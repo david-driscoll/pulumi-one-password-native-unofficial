@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.Xml;
 using Google.Protobuf.WellKnownTypes;
 using Pulumi;
 using Rocket.Surgery.OnePasswordNativeUnoffical;
@@ -37,7 +38,13 @@ return await Deployment.RunAsync(() =>
                   Value = "secret1235!",
                   Type = FieldAssignmentType.Concealed
                }
-            }
+            },
+            Attachments = new()
+            {
+               ["my-different-attachment"] = new StringAsset("this is my different attachment"),
+               // currently there is no way to have a period escaped via the cli
+               // ["package.json"] = new FileAsset("./Pulumi.yaml")
+            },
          }
       },
       Tags = new string[] { "test-tag" }
@@ -50,7 +57,6 @@ return await Deployment.RunAsync(() =>
       Category = "Social Security Number",
       Notes = "this is a note",
       Vault = "testing-pulumi",
-
    });
 
    var api = new APICredentialItem("my-api", new()

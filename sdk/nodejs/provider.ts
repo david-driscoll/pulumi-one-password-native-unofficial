@@ -31,10 +31,6 @@ export class Provider extends pulumi.ProviderResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         {
-            resourceInputs["connectHost"] = args ? args.connectHost : undefined;
-            resourceInputs["connectToken"] = args ? args.connectToken : undefined;
-            resourceInputs["serviceAccountToken"] = args ? args.serviceAccountToken : undefined;
-            resourceInputs["vault"] = args ? args.vault : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(Provider.__pulumiType, name, resourceInputs, opts);
@@ -45,8 +41,4 @@ export class Provider extends pulumi.ProviderResource {
  * The set of arguments for constructing a Provider resource.
  */
 export interface ProviderArgs {
-    connectHost?: pulumi.Input<string>;
-    connectToken?: pulumi.Input<string>;
-    serviceAccountToken?: pulumi.Input<string>;
-    vault?: pulumi.Input<string>;
 }

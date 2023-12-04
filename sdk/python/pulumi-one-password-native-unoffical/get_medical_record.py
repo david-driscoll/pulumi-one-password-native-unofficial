@@ -51,8 +51,8 @@ class GetMedicalRecordResult:
         if reason_for_visit and not isinstance(reason_for_visit, str):
             raise TypeError("Expected argument 'reason_for_visit' to be a str")
         pulumi.set(__self__, "reason_for_visit", reason_for_visit)
-        if references and not isinstance(references, dict):
-            raise TypeError("Expected argument 'references' to be a dict")
+        if references and not isinstance(references, list):
+            raise TypeError("Expected argument 'references' to be a list")
         pulumi.set(__self__, "references", references)
         if sections and not isinstance(sections, dict):
             raise TypeError("Expected argument 'sections' to be a dict")
@@ -125,7 +125,7 @@ class GetMedicalRecordResult:
 
     @property
     @pulumi.getter
-    def references(self) -> Mapping[str, 'outputs.OutputReference']:
+    def references(self) -> Sequence['outputs.OutputReference']:
         return pulumi.get(self, "references")
 
     @property

@@ -42,7 +42,7 @@ export interface GetSoftwareLicenseResult {
     readonly notes?: string;
     readonly order?: outputs.softwareLicense.OrderSection;
     readonly publisher?: outputs.softwareLicense.PublisherSection;
-    readonly references: {[key: string]: outputs.OutputReference};
+    readonly references: outputs.OutputReference[];
     readonly sections: {[key: string]: outputs.OutputSection};
     /**
      * An array of strings of the tags assigned to the item.

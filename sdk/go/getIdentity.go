@@ -38,7 +38,7 @@ type GetIdentityResult struct {
 	Identification  *identity.IdentificationSection  `pulumi:"identification"`
 	InternetDetails *identity.InternetDetailsSection `pulumi:"internetDetails"`
 	Notes           *string                          `pulumi:"notes"`
-	References      map[string]OutputReference       `pulumi:"references"`
+	References      []OutputReference                `pulumi:"references"`
 	Sections        map[string]OutputSection         `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
@@ -118,8 +118,8 @@ func (o GetIdentityResultOutput) Notes() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetIdentityResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o GetIdentityResultOutput) References() OutputReferenceMapOutput {
-	return o.ApplyT(func(v GetIdentityResult) map[string]OutputReference { return v.References }).(OutputReferenceMapOutput)
+func (o GetIdentityResultOutput) References() OutputReferenceArrayOutput {
+	return o.ApplyT(func(v GetIdentityResult) []OutputReference { return v.References }).(OutputReferenceArrayOutput)
 }
 
 func (o GetIdentityResultOutput) Sections() OutputSectionMapOutput {

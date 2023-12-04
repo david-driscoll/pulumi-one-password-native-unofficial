@@ -14,5 +14,3 @@ connectToken: Optional[str]
 
 serviceAccountToken: Optional[str]
 
-vault: Optional[str]
-

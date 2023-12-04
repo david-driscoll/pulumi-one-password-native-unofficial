@@ -35,7 +35,7 @@ type GetLoginResult struct {
 	Fields      map[string]OutputField      `pulumi:"fields"`
 	Notes       *string                     `pulumi:"notes"`
 	Password    *string                     `pulumi:"password"`
-	References  map[string]OutputReference  `pulumi:"references"`
+	References  []OutputReference           `pulumi:"references"`
 	Sections    map[string]OutputSection    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
@@ -108,8 +108,8 @@ func (o GetLoginResultOutput) Password() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetLoginResult) *string { return v.Password }).(pulumi.StringPtrOutput)
 }
 
-func (o GetLoginResultOutput) References() OutputReferenceMapOutput {
-	return o.ApplyT(func(v GetLoginResult) map[string]OutputReference { return v.References }).(OutputReferenceMapOutput)
+func (o GetLoginResultOutput) References() OutputReferenceArrayOutput {
+	return o.ApplyT(func(v GetLoginResult) []OutputReference { return v.References }).(OutputReferenceArrayOutput)
 }
 
 func (o GetLoginResultOutput) Sections() OutputSectionMapOutput {

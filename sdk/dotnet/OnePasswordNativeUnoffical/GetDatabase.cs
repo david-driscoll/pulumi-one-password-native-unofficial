@@ -83,7 +83,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         public readonly string? Notes;
         public readonly string? Password;
         public readonly string? Port;
-        public readonly ImmutableDictionary<string, Outputs.OutputReference> References;
+        public readonly ImmutableArray<Outputs.OutputReference> References;
         public readonly ImmutableDictionary<string, Outputs.OutputSection> Sections;
         public readonly string? Server;
         public readonly string? Sid;
@@ -124,7 +124,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
             string? port,
 
-            ImmutableDictionary<string, Outputs.OutputReference> references,
+            ImmutableArray<Outputs.OutputReference> references,
 
             ImmutableDictionary<string, Outputs.OutputSection> sections,
 

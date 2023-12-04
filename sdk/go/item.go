@@ -18,9 +18,9 @@ type Item struct {
 	Category    pulumi.StringOutput       `pulumi:"category"`
 	Fields      OutputFieldMapOutput      `pulumi:"fields"`
 	// The notes of the item.
-	Notes      pulumi.StringPtrOutput   `pulumi:"notes"`
-	References OutputReferenceMapOutput `pulumi:"references"`
-	Sections   OutputSectionMapOutput   `pulumi:"sections"`
+	Notes      pulumi.StringPtrOutput     `pulumi:"notes"`
+	References OutputReferenceArrayOutput `pulumi:"references"`
+	Sections   OutputSectionMapOutput     `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -47,7 +47,6 @@ func NewItem(ctx *pulumi.Context,
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"attachments",
 		"fields",
-		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)

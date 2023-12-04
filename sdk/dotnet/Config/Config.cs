@@ -53,12 +53,5 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
             set => _serviceAccountToken.Set(value);
         }
 
-        private static readonly __Value<string?> _vault = new __Value<string?>(() => __config.Get("vault"));
-        public static string? Vault
-        {
-            get => _vault.Get();
-            set => _vault.Set(value);
-        }
-
     }
 }

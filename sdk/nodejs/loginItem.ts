@@ -38,7 +38,7 @@ export class LoginItem extends pulumi.CustomResource {
     public readonly fields!: pulumi.Output<{[key: string]: outputs.OutputField}>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly password!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutputReference}>;
+    public /*out*/ readonly references!: pulumi.Output<outputs.OutputReference[]>;
     public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
     /**
      * An array of strings of the tags assigned to the item.
@@ -91,7 +91,7 @@ export class LoginItem extends pulumi.CustomResource {
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "password", "references", "sections"] };
+        const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "password", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(LoginItem.__pulumiType, name, resourceInputs, opts);
     }

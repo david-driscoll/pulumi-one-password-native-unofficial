@@ -42,7 +42,7 @@ export class WirelessRouterItem extends pulumi.CustomResource {
     public readonly fields!: pulumi.Output<{[key: string]: outputs.OutputField}>;
     public readonly networkName!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutputReference}>;
+    public /*out*/ readonly references!: pulumi.Output<outputs.OutputReference[]>;
     public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
     public readonly serverIpAddress!: pulumi.Output<string | undefined>;
     /**
@@ -102,7 +102,7 @@ export class WirelessRouterItem extends pulumi.CustomResource {
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["attachedStoragePassword", "attachments", "baseStationPassword", "fields", "references", "sections", "wirelessNetworkPassword"] };
+        const secretOpts = { additionalSecretOutputs: ["attachedStoragePassword", "attachments", "baseStationPassword", "fields", "sections", "wirelessNetworkPassword"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(WirelessRouterItem.__pulumiType, name, resourceInputs, opts);
     }

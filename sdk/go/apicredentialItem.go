@@ -14,16 +14,16 @@ import (
 type APICredentialItem struct {
 	pulumi.CustomResourceState
 
-	Attachments OutputAttachmentMapOutput `pulumi:"attachments"`
-	Category    pulumi.StringOutput       `pulumi:"category"`
-	Credential  pulumi.StringPtrOutput    `pulumi:"credential"`
-	Expires     pulumi.StringPtrOutput    `pulumi:"expires"`
-	Fields      OutputFieldMapOutput      `pulumi:"fields"`
-	Filename    pulumi.StringPtrOutput    `pulumi:"filename"`
-	Hostname    pulumi.StringPtrOutput    `pulumi:"hostname"`
-	Notes       pulumi.StringPtrOutput    `pulumi:"notes"`
-	References  OutputReferenceMapOutput  `pulumi:"references"`
-	Sections    OutputSectionMapOutput    `pulumi:"sections"`
+	Attachments OutputAttachmentMapOutput  `pulumi:"attachments"`
+	Category    pulumi.StringOutput        `pulumi:"category"`
+	Credential  pulumi.StringPtrOutput     `pulumi:"credential"`
+	Expires     pulumi.StringPtrOutput     `pulumi:"expires"`
+	Fields      OutputFieldMapOutput       `pulumi:"fields"`
+	Filename    pulumi.StringPtrOutput     `pulumi:"filename"`
+	Hostname    pulumi.StringPtrOutput     `pulumi:"hostname"`
+	Notes       pulumi.StringPtrOutput     `pulumi:"notes"`
+	References  OutputReferenceArrayOutput `pulumi:"references"`
+	Sections    OutputSectionMapOutput     `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -55,7 +55,6 @@ func NewAPICredentialItem(ctx *pulumi.Context,
 		"attachments",
 		"credential",
 		"fields",
-		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)

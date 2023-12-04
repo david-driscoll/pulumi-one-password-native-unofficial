@@ -43,7 +43,7 @@ export interface GetCreditCardResult {
     readonly fields: {[key: string]: outputs.OutputField};
     readonly notes?: string;
     readonly number?: string;
-    readonly references: {[key: string]: outputs.OutputReference};
+    readonly references: outputs.OutputReference[];
     readonly sections: {[key: string]: outputs.OutputSection};
     /**
      * An array of strings of the tags assigned to the item.

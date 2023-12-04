@@ -43,7 +43,7 @@ export interface GetWirelessRouterResult {
     readonly fields: {[key: string]: outputs.OutputField};
     readonly networkName?: string;
     readonly notes?: string;
-    readonly references: {[key: string]: outputs.OutputReference};
+    readonly references: outputs.OutputReference[];
     readonly sections: {[key: string]: outputs.OutputSection};
     readonly serverIpAddress?: string;
     /**

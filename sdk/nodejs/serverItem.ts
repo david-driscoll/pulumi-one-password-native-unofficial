@@ -40,7 +40,7 @@ export class ServerItem extends pulumi.CustomResource {
     public readonly hostingProvider!: pulumi.Output<outputs.server.HostingProviderSection | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly password!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutputReference}>;
+    public /*out*/ readonly references!: pulumi.Output<outputs.OutputReference[]>;
     public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
     /**
      * An array of strings of the tags assigned to the item.
@@ -96,7 +96,7 @@ export class ServerItem extends pulumi.CustomResource {
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["adminConsole", "attachments", "fields", "password", "references", "sections"] };
+        const secretOpts = { additionalSecretOutputs: ["adminConsole", "attachments", "fields", "password", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(ServerItem.__pulumiType, name, resourceInputs, opts);
     }

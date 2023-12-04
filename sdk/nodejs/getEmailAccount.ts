@@ -42,7 +42,7 @@ export interface GetEmailAccountResult {
     readonly notes?: string;
     readonly password?: string;
     readonly portNumber?: string;
-    readonly references: {[key: string]: outputs.OutputReference};
+    readonly references: outputs.OutputReference[];
     readonly sections: {[key: string]: outputs.OutputSection};
     readonly security?: string;
     readonly server?: string;

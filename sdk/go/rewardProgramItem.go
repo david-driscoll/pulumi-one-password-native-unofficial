@@ -24,7 +24,7 @@ type RewardProgramItem struct {
 	MoreInformation rewardprogram.MoreInformationSectionPtrOutput `pulumi:"moreInformation"`
 	Notes           pulumi.StringPtrOutput                        `pulumi:"notes"`
 	Pin             pulumi.StringPtrOutput                        `pulumi:"pin"`
-	References      OutputReferenceMapOutput                      `pulumi:"references"`
+	References      OutputReferenceArrayOutput                    `pulumi:"references"`
 	Sections        OutputSectionMapOutput                        `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
@@ -54,7 +54,6 @@ func NewRewardProgramItem(ctx *pulumi.Context,
 		"attachments",
 		"fields",
 		"pin",
-		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)

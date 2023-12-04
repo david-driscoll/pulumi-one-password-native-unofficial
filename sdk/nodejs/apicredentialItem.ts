@@ -41,7 +41,7 @@ export class APICredentialItem extends pulumi.CustomResource {
     public readonly filename!: pulumi.Output<string | undefined>;
     public readonly hostname!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutputReference}>;
+    public /*out*/ readonly references!: pulumi.Output<outputs.OutputReference[]>;
     public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
     /**
      * An array of strings of the tags assigned to the item.
@@ -100,7 +100,7 @@ export class APICredentialItem extends pulumi.CustomResource {
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["attachments", "credential", "fields", "references", "sections"] };
+        const secretOpts = { additionalSecretOutputs: ["attachments", "credential", "fields", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(APICredentialItem.__pulumiType, name, resourceInputs, opts);
     }

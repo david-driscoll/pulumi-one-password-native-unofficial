@@ -14,22 +14,22 @@ import (
 type PassportItem struct {
 	pulumi.CustomResourceState
 
-	Attachments      OutputAttachmentMapOutput `pulumi:"attachments"`
-	Category         pulumi.StringOutput       `pulumi:"category"`
-	DateOfBirth      pulumi.StringPtrOutput    `pulumi:"dateOfBirth"`
-	ExpiryDate       pulumi.StringPtrOutput    `pulumi:"expiryDate"`
-	Fields           OutputFieldMapOutput      `pulumi:"fields"`
-	FullName         pulumi.StringPtrOutput    `pulumi:"fullName"`
-	Gender           pulumi.StringPtrOutput    `pulumi:"gender"`
-	IssuedOn         pulumi.StringPtrOutput    `pulumi:"issuedOn"`
-	IssuingAuthority pulumi.StringPtrOutput    `pulumi:"issuingAuthority"`
-	IssuingCountry   pulumi.StringPtrOutput    `pulumi:"issuingCountry"`
-	Nationality      pulumi.StringPtrOutput    `pulumi:"nationality"`
-	Notes            pulumi.StringPtrOutput    `pulumi:"notes"`
-	Number           pulumi.StringPtrOutput    `pulumi:"number"`
-	PlaceOfBirth     pulumi.StringPtrOutput    `pulumi:"placeOfBirth"`
-	References       OutputReferenceMapOutput  `pulumi:"references"`
-	Sections         OutputSectionMapOutput    `pulumi:"sections"`
+	Attachments      OutputAttachmentMapOutput  `pulumi:"attachments"`
+	Category         pulumi.StringOutput        `pulumi:"category"`
+	DateOfBirth      pulumi.StringPtrOutput     `pulumi:"dateOfBirth"`
+	ExpiryDate       pulumi.StringPtrOutput     `pulumi:"expiryDate"`
+	Fields           OutputFieldMapOutput       `pulumi:"fields"`
+	FullName         pulumi.StringPtrOutput     `pulumi:"fullName"`
+	Gender           pulumi.StringPtrOutput     `pulumi:"gender"`
+	IssuedOn         pulumi.StringPtrOutput     `pulumi:"issuedOn"`
+	IssuingAuthority pulumi.StringPtrOutput     `pulumi:"issuingAuthority"`
+	IssuingCountry   pulumi.StringPtrOutput     `pulumi:"issuingCountry"`
+	Nationality      pulumi.StringPtrOutput     `pulumi:"nationality"`
+	Notes            pulumi.StringPtrOutput     `pulumi:"notes"`
+	Number           pulumi.StringPtrOutput     `pulumi:"number"`
+	PlaceOfBirth     pulumi.StringPtrOutput     `pulumi:"placeOfBirth"`
+	References       OutputReferenceArrayOutput `pulumi:"references"`
+	Sections         OutputSectionMapOutput     `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -55,7 +55,6 @@ func NewPassportItem(ctx *pulumi.Context,
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"attachments",
 		"fields",
-		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)

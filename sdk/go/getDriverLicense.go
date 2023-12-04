@@ -44,7 +44,7 @@ type GetDriverLicenseResult struct {
 	LicenseClass           *string                     `pulumi:"licenseClass"`
 	Notes                  *string                     `pulumi:"notes"`
 	Number                 *string                     `pulumi:"number"`
-	References             map[string]OutputReference  `pulumi:"references"`
+	References             []OutputReference           `pulumi:"references"`
 	Sections               map[string]OutputSection    `pulumi:"sections"`
 	State                  *string                     `pulumi:"state"`
 	// An array of strings of the tags assigned to the item.
@@ -153,8 +153,8 @@ func (o GetDriverLicenseResultOutput) Number() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetDriverLicenseResult) *string { return v.Number }).(pulumi.StringPtrOutput)
 }
 
-func (o GetDriverLicenseResultOutput) References() OutputReferenceMapOutput {
-	return o.ApplyT(func(v GetDriverLicenseResult) map[string]OutputReference { return v.References }).(OutputReferenceMapOutput)
+func (o GetDriverLicenseResultOutput) References() OutputReferenceArrayOutput {
+	return o.ApplyT(func(v GetDriverLicenseResult) []OutputReference { return v.References }).(OutputReferenceArrayOutput)
 }
 
 func (o GetDriverLicenseResultOutput) Sections() OutputSectionMapOutput {

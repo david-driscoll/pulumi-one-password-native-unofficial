@@ -44,7 +44,7 @@ export interface GetBankAccountResult {
     readonly nameOnAccount?: string;
     readonly notes?: string;
     readonly pin?: string;
-    readonly references: {[key: string]: outputs.OutputReference};
+    readonly references: outputs.OutputReference[];
     readonly routingNumber?: string;
     readonly sections: {[key: string]: outputs.OutputSection};
     readonly swift?: string;

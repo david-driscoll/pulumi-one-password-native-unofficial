@@ -14,13 +14,13 @@ import (
 type SSHKeyItem struct {
 	pulumi.CustomResourceState
 
-	Attachments OutputAttachmentMapOutput `pulumi:"attachments"`
-	Category    pulumi.StringOutput       `pulumi:"category"`
-	Fields      OutputFieldMapOutput      `pulumi:"fields"`
-	Notes       pulumi.StringPtrOutput    `pulumi:"notes"`
-	PrivateKey  pulumi.StringPtrOutput    `pulumi:"privateKey"`
-	References  OutputReferenceMapOutput  `pulumi:"references"`
-	Sections    OutputSectionMapOutput    `pulumi:"sections"`
+	Attachments OutputAttachmentMapOutput  `pulumi:"attachments"`
+	Category    pulumi.StringOutput        `pulumi:"category"`
+	Fields      OutputFieldMapOutput       `pulumi:"fields"`
+	Notes       pulumi.StringPtrOutput     `pulumi:"notes"`
+	PrivateKey  pulumi.StringPtrOutput     `pulumi:"privateKey"`
+	References  OutputReferenceArrayOutput `pulumi:"references"`
+	Sections    OutputSectionMapOutput     `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -45,7 +45,6 @@ func NewSSHKeyItem(ctx *pulumi.Context,
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"attachments",
 		"fields",
-		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)

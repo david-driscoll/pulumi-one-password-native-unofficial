@@ -326,7 +326,7 @@ class ServerItem(pulumi.CustomResource):
             __props__.__dict__["vault"] = vault
             __props__.__dict__["references"] = None
             __props__.__dict__["uuid"] = None
-        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["adminConsole", "attachments", "fields", "password", "references", "sections"])
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["adminConsole", "attachments", "fields", "password", "sections"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(ServerItem, __self__).__init__(
             'one-password-native-unoffical:index:ServerItem',
@@ -407,7 +407,7 @@ class ServerItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def references(self) -> pulumi.Output[Mapping[str, 'outputs.OutputReference']]:
+    def references(self) -> pulumi.Output[Sequence['outputs.OutputReference']]:
         return pulumi.get(self, "references")
 
     @property

@@ -14,9 +14,25 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical.Outputs
     [OutputType]
     public sealed class OutputReference
     {
+        public readonly string ItemId;
+        public readonly string Label;
+        public readonly string Reference;
+        public readonly string Uuid;
+
         [OutputConstructor]
-        private OutputReference()
+        private OutputReference(
+            string itemId,
+
+            string label,
+
+            string reference,
+
+            string uuid)
         {
+            ItemId = itemId;
+            Label = label;
+            Reference = reference;
+            Uuid = uuid;
         }
     }
 }

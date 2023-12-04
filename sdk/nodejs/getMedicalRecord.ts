@@ -44,7 +44,7 @@ export interface GetMedicalRecordResult {
     readonly notes?: string;
     readonly patient?: string;
     readonly reasonForVisit?: string;
-    readonly references: {[key: string]: outputs.OutputReference};
+    readonly references: outputs.OutputReference[];
     readonly sections: {[key: string]: outputs.OutputSection};
     /**
      * An array of strings of the tags assigned to the item.

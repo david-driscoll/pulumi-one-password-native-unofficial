@@ -36,7 +36,7 @@ type GetSocialSecurityNumberResult struct {
 	Name        *string                     `pulumi:"name"`
 	Notes       *string                     `pulumi:"notes"`
 	Number      *string                     `pulumi:"number"`
-	References  map[string]OutputReference  `pulumi:"references"`
+	References  []OutputReference           `pulumi:"references"`
 	Sections    map[string]OutputSection    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
@@ -112,8 +112,8 @@ func (o GetSocialSecurityNumberResultOutput) Number() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetSocialSecurityNumberResult) *string { return v.Number }).(pulumi.StringPtrOutput)
 }
 
-func (o GetSocialSecurityNumberResultOutput) References() OutputReferenceMapOutput {
-	return o.ApplyT(func(v GetSocialSecurityNumberResult) map[string]OutputReference { return v.References }).(OutputReferenceMapOutput)
+func (o GetSocialSecurityNumberResultOutput) References() OutputReferenceArrayOutput {
+	return o.ApplyT(func(v GetSocialSecurityNumberResult) []OutputReference { return v.References }).(OutputReferenceArrayOutput)
 }
 
 func (o GetSocialSecurityNumberResultOutput) Sections() OutputSectionMapOutput {

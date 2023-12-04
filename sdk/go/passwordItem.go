@@ -14,13 +14,13 @@ import (
 type PasswordItem struct {
 	pulumi.CustomResourceState
 
-	Attachments OutputAttachmentMapOutput `pulumi:"attachments"`
-	Category    pulumi.StringOutput       `pulumi:"category"`
-	Fields      OutputFieldMapOutput      `pulumi:"fields"`
-	Notes       pulumi.StringPtrOutput    `pulumi:"notes"`
-	Password    pulumi.StringPtrOutput    `pulumi:"password"`
-	References  OutputReferenceMapOutput  `pulumi:"references"`
-	Sections    OutputSectionMapOutput    `pulumi:"sections"`
+	Attachments OutputAttachmentMapOutput  `pulumi:"attachments"`
+	Category    pulumi.StringOutput        `pulumi:"category"`
+	Fields      OutputFieldMapOutput       `pulumi:"fields"`
+	Notes       pulumi.StringPtrOutput     `pulumi:"notes"`
+	Password    pulumi.StringPtrOutput     `pulumi:"password"`
+	References  OutputReferenceArrayOutput `pulumi:"references"`
+	Sections    OutputSectionMapOutput     `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -49,7 +49,6 @@ func NewPasswordItem(ctx *pulumi.Context,
 		"attachments",
 		"fields",
 		"password",
-		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)

@@ -22,7 +22,7 @@ type ServerItem struct {
 	HostingProvider server.HostingProviderSectionPtrOutput `pulumi:"hostingProvider"`
 	Notes           pulumi.StringPtrOutput                 `pulumi:"notes"`
 	Password        pulumi.StringPtrOutput                 `pulumi:"password"`
-	References      OutputReferenceMapOutput               `pulumi:"references"`
+	References      OutputReferenceArrayOutput             `pulumi:"references"`
 	Sections        OutputSectionMapOutput                 `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
@@ -55,7 +55,6 @@ func NewServerItem(ctx *pulumi.Context,
 		"attachments",
 		"fields",
 		"password",
-		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)

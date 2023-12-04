@@ -370,7 +370,7 @@ class WirelessRouterItem(pulumi.CustomResource):
             __props__.__dict__["wireless_security"] = wireless_security
             __props__.__dict__["references"] = None
             __props__.__dict__["uuid"] = None
-        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachedStoragePassword", "attachments", "baseStationPassword", "fields", "references", "sections", "wirelessNetworkPassword"])
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachedStoragePassword", "attachments", "baseStationPassword", "fields", "sections", "wirelessNetworkPassword"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(WirelessRouterItem, __self__).__init__(
             'one-password-native-unoffical:index:WirelessRouterItem',
@@ -464,7 +464,7 @@ class WirelessRouterItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def references(self) -> pulumi.Output[Mapping[str, 'outputs.OutputReference']]:
+    def references(self) -> pulumi.Output[Sequence['outputs.OutputReference']]:
         return pulumi.get(self, "references")
 
     @property

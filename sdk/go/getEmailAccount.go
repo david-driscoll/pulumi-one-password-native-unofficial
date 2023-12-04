@@ -39,7 +39,7 @@ type GetEmailAccountResult struct {
 	Notes              *string                                 `pulumi:"notes"`
 	Password           *string                                 `pulumi:"password"`
 	PortNumber         *string                                 `pulumi:"portNumber"`
-	References         map[string]OutputReference              `pulumi:"references"`
+	References         []OutputReference                       `pulumi:"references"`
 	Sections           map[string]OutputSection                `pulumi:"sections"`
 	Security           *string                                 `pulumi:"security"`
 	Server             *string                                 `pulumi:"server"`
@@ -128,8 +128,8 @@ func (o GetEmailAccountResultOutput) PortNumber() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetEmailAccountResult) *string { return v.PortNumber }).(pulumi.StringPtrOutput)
 }
 
-func (o GetEmailAccountResultOutput) References() OutputReferenceMapOutput {
-	return o.ApplyT(func(v GetEmailAccountResult) map[string]OutputReference { return v.References }).(OutputReferenceMapOutput)
+func (o GetEmailAccountResultOutput) References() OutputReferenceArrayOutput {
+	return o.ApplyT(func(v GetEmailAccountResult) []OutputReference { return v.References }).(OutputReferenceArrayOutput)
 }
 
 func (o GetEmailAccountResultOutput) Sections() OutputSectionMapOutput {

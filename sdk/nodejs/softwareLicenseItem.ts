@@ -41,7 +41,7 @@ export class SoftwareLicenseItem extends pulumi.CustomResource {
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly order!: pulumi.Output<outputs.softwareLicense.OrderSection | undefined>;
     public readonly publisher!: pulumi.Output<outputs.softwareLicense.PublisherSection | undefined>;
-    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutputReference}>;
+    public /*out*/ readonly references!: pulumi.Output<outputs.OutputReference[]>;
     public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
     /**
      * An array of strings of the tags assigned to the item.
@@ -96,7 +96,7 @@ export class SoftwareLicenseItem extends pulumi.CustomResource {
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "references", "sections"] };
+        const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(SoftwareLicenseItem.__pulumiType, name, resourceInputs, opts);
     }

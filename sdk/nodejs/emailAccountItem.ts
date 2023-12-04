@@ -41,7 +41,7 @@ export class EmailAccountItem extends pulumi.CustomResource {
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly password!: pulumi.Output<string | undefined>;
     public readonly portNumber!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutputReference}>;
+    public /*out*/ readonly references!: pulumi.Output<outputs.OutputReference[]>;
     public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
     public readonly security!: pulumi.Output<string | undefined>;
     public readonly server!: pulumi.Output<string | undefined>;
@@ -104,7 +104,7 @@ export class EmailAccountItem extends pulumi.CustomResource {
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "password", "references", "sections", "smtp"] };
+        const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "password", "sections", "smtp"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(EmailAccountItem.__pulumiType, name, resourceInputs, opts);
     }

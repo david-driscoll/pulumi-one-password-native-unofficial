@@ -48,7 +48,7 @@ export interface GetDriverLicenseResult {
     readonly licenseClass?: string;
     readonly notes?: string;
     readonly number?: string;
-    readonly references: {[key: string]: outputs.OutputReference};
+    readonly references: outputs.OutputReference[];
     readonly sections: {[key: string]: outputs.OutputSection};
     readonly state?: string;
     /**

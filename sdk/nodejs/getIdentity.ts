@@ -41,7 +41,7 @@ export interface GetIdentityResult {
     readonly identification?: outputs.identity.IdentificationSection;
     readonly internetDetails?: outputs.identity.InternetDetailsSection;
     readonly notes?: string;
-    readonly references: {[key: string]: outputs.OutputReference};
+    readonly references: outputs.OutputReference[];
     readonly sections: {[key: string]: outputs.OutputSection};
     /**
      * An array of strings of the tags assigned to the item.

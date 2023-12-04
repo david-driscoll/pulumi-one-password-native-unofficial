@@ -41,7 +41,7 @@ type GetBankAccountResult struct {
 	NameOnAccount     *string                               `pulumi:"nameOnAccount"`
 	Notes             *string                               `pulumi:"notes"`
 	Pin               *string                               `pulumi:"pin"`
-	References        map[string]OutputReference            `pulumi:"references"`
+	References        []OutputReference                     `pulumi:"references"`
 	RoutingNumber     *string                               `pulumi:"routingNumber"`
 	Sections          map[string]OutputSection              `pulumi:"sections"`
 	Swift             *string                               `pulumi:"swift"`
@@ -136,8 +136,8 @@ func (o GetBankAccountResultOutput) Pin() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetBankAccountResult) *string { return v.Pin }).(pulumi.StringPtrOutput)
 }
 
-func (o GetBankAccountResultOutput) References() OutputReferenceMapOutput {
-	return o.ApplyT(func(v GetBankAccountResult) map[string]OutputReference { return v.References }).(OutputReferenceMapOutput)
+func (o GetBankAccountResultOutput) References() OutputReferenceArrayOutput {
+	return o.ApplyT(func(v GetBankAccountResult) []OutputReference { return v.References }).(OutputReferenceArrayOutput)
 }
 
 func (o GetBankAccountResultOutput) RoutingNumber() pulumi.StringPtrOutput {

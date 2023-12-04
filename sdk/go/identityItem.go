@@ -22,7 +22,7 @@ type IdentityItem struct {
 	Identification  identity.IdentificationSectionPtrOutput  `pulumi:"identification"`
 	InternetDetails identity.InternetDetailsSectionPtrOutput `pulumi:"internetDetails"`
 	Notes           pulumi.StringPtrOutput                   `pulumi:"notes"`
-	References      OutputReferenceMapOutput                 `pulumi:"references"`
+	References      OutputReferenceArrayOutput               `pulumi:"references"`
 	Sections        OutputSectionMapOutput                   `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
@@ -48,7 +48,6 @@ func NewIdentityItem(ctx *pulumi.Context,
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"attachments",
 		"fields",
-		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)

@@ -34,7 +34,7 @@ type GetDocumentResult struct {
 	Category    string                      `pulumi:"category"`
 	Fields      map[string]OutputField      `pulumi:"fields"`
 	Notes       *string                     `pulumi:"notes"`
-	References  map[string]OutputReference  `pulumi:"references"`
+	References  []OutputReference           `pulumi:"references"`
 	Sections    map[string]OutputSection    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
@@ -102,8 +102,8 @@ func (o GetDocumentResultOutput) Notes() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetDocumentResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o GetDocumentResultOutput) References() OutputReferenceMapOutput {
-	return o.ApplyT(func(v GetDocumentResult) map[string]OutputReference { return v.References }).(OutputReferenceMapOutput)
+func (o GetDocumentResultOutput) References() OutputReferenceArrayOutput {
+	return o.ApplyT(func(v GetDocumentResult) []OutputReference { return v.References }).(OutputReferenceArrayOutput)
 }
 
 func (o GetDocumentResultOutput) Sections() OutputSectionMapOutput {

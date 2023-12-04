@@ -39,7 +39,7 @@ type GetWirelessRouterResult struct {
 	Fields                  map[string]OutputField      `pulumi:"fields"`
 	NetworkName             *string                     `pulumi:"networkName"`
 	Notes                   *string                     `pulumi:"notes"`
-	References              map[string]OutputReference  `pulumi:"references"`
+	References              []OutputReference           `pulumi:"references"`
 	Sections                map[string]OutputSection    `pulumi:"sections"`
 	ServerIpAddress         *string                     `pulumi:"serverIpAddress"`
 	// An array of strings of the tags assigned to the item.
@@ -130,8 +130,8 @@ func (o GetWirelessRouterResultOutput) Notes() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetWirelessRouterResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o GetWirelessRouterResultOutput) References() OutputReferenceMapOutput {
-	return o.ApplyT(func(v GetWirelessRouterResult) map[string]OutputReference { return v.References }).(OutputReferenceMapOutput)
+func (o GetWirelessRouterResultOutput) References() OutputReferenceArrayOutput {
+	return o.ApplyT(func(v GetWirelessRouterResult) []OutputReference { return v.References }).(OutputReferenceArrayOutput)
 }
 
 func (o GetWirelessRouterResultOutput) Sections() OutputSectionMapOutput {

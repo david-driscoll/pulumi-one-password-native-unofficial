@@ -14,19 +14,19 @@ import (
 type DatabaseItem struct {
 	pulumi.CustomResourceState
 
-	Alias             pulumi.StringPtrOutput    `pulumi:"alias"`
-	Attachments       OutputAttachmentMapOutput `pulumi:"attachments"`
-	Category          pulumi.StringOutput       `pulumi:"category"`
-	ConnectionOptions pulumi.StringPtrOutput    `pulumi:"connectionOptions"`
-	Database          pulumi.StringPtrOutput    `pulumi:"database"`
-	Fields            OutputFieldMapOutput      `pulumi:"fields"`
-	Notes             pulumi.StringPtrOutput    `pulumi:"notes"`
-	Password          pulumi.StringPtrOutput    `pulumi:"password"`
-	Port              pulumi.StringPtrOutput    `pulumi:"port"`
-	References        OutputReferenceMapOutput  `pulumi:"references"`
-	Sections          OutputSectionMapOutput    `pulumi:"sections"`
-	Server            pulumi.StringPtrOutput    `pulumi:"server"`
-	Sid               pulumi.StringPtrOutput    `pulumi:"sid"`
+	Alias             pulumi.StringPtrOutput     `pulumi:"alias"`
+	Attachments       OutputAttachmentMapOutput  `pulumi:"attachments"`
+	Category          pulumi.StringOutput        `pulumi:"category"`
+	ConnectionOptions pulumi.StringPtrOutput     `pulumi:"connectionOptions"`
+	Database          pulumi.StringPtrOutput     `pulumi:"database"`
+	Fields            OutputFieldMapOutput       `pulumi:"fields"`
+	Notes             pulumi.StringPtrOutput     `pulumi:"notes"`
+	Password          pulumi.StringPtrOutput     `pulumi:"password"`
+	Port              pulumi.StringPtrOutput     `pulumi:"port"`
+	References        OutputReferenceArrayOutput `pulumi:"references"`
+	Sections          OutputSectionMapOutput     `pulumi:"sections"`
+	Server            pulumi.StringPtrOutput     `pulumi:"server"`
+	Sid               pulumi.StringPtrOutput     `pulumi:"sid"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -57,7 +57,6 @@ func NewDatabaseItem(ctx *pulumi.Context,
 		"attachments",
 		"fields",
 		"password",
-		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)

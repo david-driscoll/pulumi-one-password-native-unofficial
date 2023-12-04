@@ -17,6 +17,3 @@ func GetConnectToken(ctx *pulumi.Context) string {
 func GetServiceAccountToken(ctx *pulumi.Context) string {
 	return config.Get(ctx, "one-password-native-unoffical:serviceAccountToken")
 }
-func GetVault(ctx *pulumi.Context) string {
-	return config.Get(ctx, "one-password-native-unoffical:vault")
-}

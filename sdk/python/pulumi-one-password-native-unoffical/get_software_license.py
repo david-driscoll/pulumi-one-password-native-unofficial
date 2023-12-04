@@ -45,8 +45,8 @@ class GetSoftwareLicenseResult:
         if publisher and not isinstance(publisher, dict):
             raise TypeError("Expected argument 'publisher' to be a dict")
         pulumi.set(__self__, "publisher", publisher)
-        if references and not isinstance(references, dict):
-            raise TypeError("Expected argument 'references' to be a dict")
+        if references and not isinstance(references, list):
+            raise TypeError("Expected argument 'references' to be a list")
         pulumi.set(__self__, "references", references)
         if sections and not isinstance(sections, dict):
             raise TypeError("Expected argument 'sections' to be a dict")
@@ -112,7 +112,7 @@ class GetSoftwareLicenseResult:
 
     @property
     @pulumi.getter
-    def references(self) -> Mapping[str, 'outputs.OutputReference']:
+    def references(self) -> Sequence['outputs.OutputReference']:
         return pulumi.get(self, "references")
 
     @property

@@ -51,8 +51,8 @@ class GetBankAccountResult:
         if pin and not isinstance(pin, str):
             raise TypeError("Expected argument 'pin' to be a str")
         pulumi.set(__self__, "pin", pin)
-        if references and not isinstance(references, dict):
-            raise TypeError("Expected argument 'references' to be a dict")
+        if references and not isinstance(references, list):
+            raise TypeError("Expected argument 'references' to be a list")
         pulumi.set(__self__, "references", references)
         if routing_number and not isinstance(routing_number, str):
             raise TypeError("Expected argument 'routing_number' to be a str")
@@ -134,7 +134,7 @@ class GetBankAccountResult:
 
     @property
     @pulumi.getter
-    def references(self) -> Mapping[str, 'outputs.OutputReference']:
+    def references(self) -> Sequence['outputs.OutputReference']:
         return pulumi.get(self, "references")
 
     @property

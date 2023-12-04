@@ -23,7 +23,7 @@ type SoftwareLicenseItem struct {
 	Notes       pulumi.StringPtrOutput                    `pulumi:"notes"`
 	Order       softwarelicense.OrderSectionPtrOutput     `pulumi:"order"`
 	Publisher   softwarelicense.PublisherSectionPtrOutput `pulumi:"publisher"`
-	References  OutputReferenceMapOutput                  `pulumi:"references"`
+	References  OutputReferenceArrayOutput                `pulumi:"references"`
 	Sections    OutputSectionMapOutput                    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
@@ -50,7 +50,6 @@ func NewSoftwareLicenseItem(ctx *pulumi.Context,
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"attachments",
 		"fields",
-		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)

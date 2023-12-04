@@ -41,7 +41,7 @@ export interface GetServerResult {
     readonly hostingProvider?: outputs.server.HostingProviderSection;
     readonly notes?: string;
     readonly password?: string;
-    readonly references: {[key: string]: outputs.OutputReference};
+    readonly references: outputs.OutputReference[];
     readonly sections: {[key: string]: outputs.OutputSection};
     /**
      * An array of strings of the tags assigned to the item.

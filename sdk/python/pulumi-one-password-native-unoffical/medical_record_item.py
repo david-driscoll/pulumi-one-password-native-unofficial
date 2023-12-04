@@ -341,7 +341,7 @@ class MedicalRecordItem(pulumi.CustomResource):
             __props__.__dict__["vault"] = vault
             __props__.__dict__["references"] = None
             __props__.__dict__["uuid"] = None
-        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachments", "fields", "references", "sections"])
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachments", "fields", "sections"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(MedicalRecordItem, __self__).__init__(
             'one-password-native-unoffical:index:MedicalRecordItem',
@@ -438,7 +438,7 @@ class MedicalRecordItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def references(self) -> pulumi.Output[Mapping[str, 'outputs.OutputReference']]:
+    def references(self) -> pulumi.Output[Sequence['outputs.OutputReference']]:
         return pulumi.get(self, "references")
 
     @property

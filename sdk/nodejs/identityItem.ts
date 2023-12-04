@@ -40,7 +40,7 @@ export class IdentityItem extends pulumi.CustomResource {
     public readonly identification!: pulumi.Output<outputs.identity.IdentificationSection | undefined>;
     public readonly internetDetails!: pulumi.Output<outputs.identity.InternetDetailsSection | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutputReference}>;
+    public /*out*/ readonly references!: pulumi.Output<outputs.OutputReference[]>;
     public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
     /**
      * An array of strings of the tags assigned to the item.
@@ -92,7 +92,7 @@ export class IdentityItem extends pulumi.CustomResource {
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "references", "sections"] };
+        const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(IdentityItem.__pulumiType, name, resourceInputs, opts);
     }

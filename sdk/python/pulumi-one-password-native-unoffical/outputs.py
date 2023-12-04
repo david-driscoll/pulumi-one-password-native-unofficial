@@ -100,8 +100,52 @@ class OutputField(dict):
 
 @pulumi.output_type
 class OutputReference(dict):
-    def __init__(__self__):
-        pass
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "itemId":
+            suggest = "item_id"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in OutputReference. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        OutputReference.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        OutputReference.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 item_id: str,
+                 label: str,
+                 reference: str,
+                 uuid: str):
+        pulumi.set(__self__, "item_id", item_id)
+        pulumi.set(__self__, "label", label)
+        pulumi.set(__self__, "reference", reference)
+        pulumi.set(__self__, "uuid", uuid)
+
+    @property
+    @pulumi.getter(name="itemId")
+    def item_id(self) -> str:
+        return pulumi.get(self, "item_id")
+
+    @property
+    @pulumi.getter
+    def label(self) -> str:
+        return pulumi.get(self, "label")
+
+    @property
+    @pulumi.getter
+    def reference(self) -> str:
+        return pulumi.get(self, "reference")
+
+    @property
+    @pulumi.getter
+    def uuid(self) -> str:
+        return pulumi.get(self, "uuid")
 
 
 @pulumi.output_type

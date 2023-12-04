@@ -371,7 +371,7 @@ class CreditCardItem(pulumi.CustomResource):
             __props__.__dict__["verification_number"] = None if verification_number is None else pulumi.Output.secret(verification_number)
             __props__.__dict__["references"] = None
             __props__.__dict__["uuid"] = None
-        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["additionalDetails", "attachments", "fields", "references", "sections", "verificationNumber"])
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["additionalDetails", "attachments", "fields", "sections", "verificationNumber"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(CreditCardItem, __self__).__init__(
             'one-password-native-unoffical:index:CreditCardItem',
@@ -465,7 +465,7 @@ class CreditCardItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def references(self) -> pulumi.Output[Mapping[str, 'outputs.OutputReference']]:
+    def references(self) -> pulumi.Output[Sequence['outputs.OutputReference']]:
         return pulumi.get(self, "references")
 
     @property

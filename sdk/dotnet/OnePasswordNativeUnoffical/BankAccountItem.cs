@@ -44,7 +44,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         public Output<string?> Pin { get; private set; } = null!;
 
         [Output("references")]
-        public Output<ImmutableDictionary<string, Outputs.OutputReference>> References { get; private set; } = null!;
+        public Output<ImmutableArray<Outputs.OutputReference>> References { get; private set; } = null!;
 
         [Output("routingNumber")]
         public Output<string?> RoutingNumber { get; private set; } = null!;
@@ -118,7 +118,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
                     "attachments",
                     "fields",
                     "pin",
-                    "references",
                     "sections",
                 },
             };

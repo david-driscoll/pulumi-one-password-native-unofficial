@@ -43,7 +43,7 @@ export interface GetDatabaseResult {
     readonly notes?: string;
     readonly password?: string;
     readonly port?: string;
-    readonly references: {[key: string]: outputs.OutputReference};
+    readonly references: outputs.OutputReference[];
     readonly sections: {[key: string]: outputs.OutputSection};
     readonly server?: string;
     readonly sid?: string;

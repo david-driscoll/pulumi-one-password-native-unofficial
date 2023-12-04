@@ -37,7 +37,7 @@ type GetCryptoWalletResult struct {
 	Notes          *string                     `pulumi:"notes"`
 	Password       *string                     `pulumi:"password"`
 	RecoveryPhrase *string                     `pulumi:"recoveryPhrase"`
-	References     map[string]OutputReference  `pulumi:"references"`
+	References     []OutputReference           `pulumi:"references"`
 	Sections       map[string]OutputSection    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
@@ -114,8 +114,8 @@ func (o GetCryptoWalletResultOutput) RecoveryPhrase() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetCryptoWalletResult) *string { return v.RecoveryPhrase }).(pulumi.StringPtrOutput)
 }
 
-func (o GetCryptoWalletResultOutput) References() OutputReferenceMapOutput {
-	return o.ApplyT(func(v GetCryptoWalletResult) map[string]OutputReference { return v.References }).(OutputReferenceMapOutput)
+func (o GetCryptoWalletResultOutput) References() OutputReferenceArrayOutput {
+	return o.ApplyT(func(v GetCryptoWalletResult) []OutputReference { return v.References }).(OutputReferenceArrayOutput)
 }
 
 func (o GetCryptoWalletResultOutput) Sections() OutputSectionMapOutput {

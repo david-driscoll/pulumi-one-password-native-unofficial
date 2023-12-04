@@ -88,7 +88,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         public readonly string? LicenseClass;
         public readonly string? Notes;
         public readonly string? Number;
-        public readonly ImmutableDictionary<string, Outputs.OutputReference> References;
+        public readonly ImmutableArray<Outputs.OutputReference> References;
         public readonly ImmutableDictionary<string, Outputs.OutputSection> Sections;
         public readonly string? State;
         /// <summary>
@@ -136,7 +136,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
             string? number,
 
-            ImmutableDictionary<string, Outputs.OutputReference> references,
+            ImmutableArray<Outputs.OutputReference> references,
 
             ImmutableDictionary<string, Outputs.OutputSection> sections,
 

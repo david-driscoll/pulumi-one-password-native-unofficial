@@ -23,6 +23,10 @@ export interface OutputField {
 }
 
 export interface OutputReference {
+    itemId: string;
+    label: string;
+    reference: string;
+    uuid: string;
 }
 
 export interface OutputSection {

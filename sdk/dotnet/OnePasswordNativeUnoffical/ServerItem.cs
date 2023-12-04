@@ -35,7 +35,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         public Output<string?> Password { get; private set; } = null!;
 
         [Output("references")]
-        public Output<ImmutableDictionary<string, Outputs.OutputReference>> References { get; private set; } = null!;
+        public Output<ImmutableArray<Outputs.OutputReference>> References { get; private set; } = null!;
 
         [Output("sections")]
         public Output<ImmutableDictionary<string, Outputs.OutputSection>> Sections { get; private set; } = null!;
@@ -107,7 +107,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
                     "attachments",
                     "fields",
                     "password",
-                    "references",
                     "sections",
                 },
             };

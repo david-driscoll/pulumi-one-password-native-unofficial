@@ -84,7 +84,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         public readonly string? NameOnAccount;
         public readonly string? Notes;
         public readonly string? Pin;
-        public readonly ImmutableDictionary<string, Outputs.OutputReference> References;
+        public readonly ImmutableArray<Outputs.OutputReference> References;
         public readonly string? RoutingNumber;
         public readonly ImmutableDictionary<string, Outputs.OutputSection> Sections;
         public readonly string? Swift;
@@ -126,7 +126,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
             string? pin,
 
-            ImmutableDictionary<string, Outputs.OutputReference> references,
+            ImmutableArray<Outputs.OutputReference> references,
 
             string? routingNumber,
 

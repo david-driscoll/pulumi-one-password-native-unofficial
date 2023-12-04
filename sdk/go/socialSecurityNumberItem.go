@@ -14,14 +14,14 @@ import (
 type SocialSecurityNumberItem struct {
 	pulumi.CustomResourceState
 
-	Attachments OutputAttachmentMapOutput `pulumi:"attachments"`
-	Category    pulumi.StringOutput       `pulumi:"category"`
-	Fields      OutputFieldMapOutput      `pulumi:"fields"`
-	Name        pulumi.StringPtrOutput    `pulumi:"name"`
-	Notes       pulumi.StringPtrOutput    `pulumi:"notes"`
-	Number      pulumi.StringPtrOutput    `pulumi:"number"`
-	References  OutputReferenceMapOutput  `pulumi:"references"`
-	Sections    OutputSectionMapOutput    `pulumi:"sections"`
+	Attachments OutputAttachmentMapOutput  `pulumi:"attachments"`
+	Category    pulumi.StringOutput        `pulumi:"category"`
+	Fields      OutputFieldMapOutput       `pulumi:"fields"`
+	Name        pulumi.StringPtrOutput     `pulumi:"name"`
+	Notes       pulumi.StringPtrOutput     `pulumi:"notes"`
+	Number      pulumi.StringPtrOutput     `pulumi:"number"`
+	References  OutputReferenceArrayOutput `pulumi:"references"`
+	Sections    OutputSectionMapOutput     `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -50,7 +50,6 @@ func NewSocialSecurityNumberItem(ctx *pulumi.Context,
 		"attachments",
 		"fields",
 		"number",
-		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)

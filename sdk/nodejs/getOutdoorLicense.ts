@@ -43,7 +43,7 @@ export interface GetOutdoorLicenseResult {
     readonly fullName?: string;
     readonly maximumQuota?: string;
     readonly notes?: string;
-    readonly references: {[key: string]: outputs.OutputReference};
+    readonly references: outputs.OutputReference[];
     readonly sections: {[key: string]: outputs.OutputSection};
     readonly state?: string;
     /**

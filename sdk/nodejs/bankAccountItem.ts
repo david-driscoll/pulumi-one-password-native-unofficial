@@ -43,7 +43,7 @@ export class BankAccountItem extends pulumi.CustomResource {
     public readonly nameOnAccount!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly pin!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutputReference}>;
+    public /*out*/ readonly references!: pulumi.Output<outputs.OutputReference[]>;
     public readonly routingNumber!: pulumi.Output<string | undefined>;
     public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
     public readonly swift!: pulumi.Output<string | undefined>;
@@ -104,7 +104,7 @@ export class BankAccountItem extends pulumi.CustomResource {
             resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "pin", "references", "sections"] };
+        const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "pin", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(BankAccountItem.__pulumiType, name, resourceInputs, opts);
     }

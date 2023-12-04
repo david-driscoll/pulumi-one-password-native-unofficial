@@ -248,6 +248,10 @@ func (o OutputFieldMapOutput) MapIndex(k pulumi.StringInput) OutputFieldOutput {
 }
 
 type OutputReference struct {
+	ItemId    string `pulumi:"itemId"`
+	Label     string `pulumi:"label"`
+	Reference string `pulumi:"reference"`
+	Uuid      string `pulumi:"uuid"`
 }
 
 type OutputReferenceOutput struct{ *pulumi.OutputState }
@@ -264,23 +268,39 @@ func (o OutputReferenceOutput) ToOutputReferenceOutputWithContext(ctx context.Co
 	return o
 }
 
-type OutputReferenceMapOutput struct{ *pulumi.OutputState }
-
-func (OutputReferenceMapOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*map[string]OutputReference)(nil)).Elem()
+func (o OutputReferenceOutput) ItemId() pulumi.StringOutput {
+	return o.ApplyT(func(v OutputReference) string { return v.ItemId }).(pulumi.StringOutput)
 }
 
-func (o OutputReferenceMapOutput) ToOutputReferenceMapOutput() OutputReferenceMapOutput {
+func (o OutputReferenceOutput) Label() pulumi.StringOutput {
+	return o.ApplyT(func(v OutputReference) string { return v.Label }).(pulumi.StringOutput)
+}
+
+func (o OutputReferenceOutput) Reference() pulumi.StringOutput {
+	return o.ApplyT(func(v OutputReference) string { return v.Reference }).(pulumi.StringOutput)
+}
+
+func (o OutputReferenceOutput) Uuid() pulumi.StringOutput {
+	return o.ApplyT(func(v OutputReference) string { return v.Uuid }).(pulumi.StringOutput)
+}
+
+type OutputReferenceArrayOutput struct{ *pulumi.OutputState }
+
+func (OutputReferenceArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]OutputReference)(nil)).Elem()
+}
+
+func (o OutputReferenceArrayOutput) ToOutputReferenceArrayOutput() OutputReferenceArrayOutput {
 	return o
 }
 
-func (o OutputReferenceMapOutput) ToOutputReferenceMapOutputWithContext(ctx context.Context) OutputReferenceMapOutput {
+func (o OutputReferenceArrayOutput) ToOutputReferenceArrayOutputWithContext(ctx context.Context) OutputReferenceArrayOutput {
 	return o
 }
 
-func (o OutputReferenceMapOutput) MapIndex(k pulumi.StringInput) OutputReferenceOutput {
-	return pulumi.All(o, k).ApplyT(func(vs []interface{}) OutputReference {
-		return vs[0].(map[string]OutputReference)[vs[1].(string)]
+func (o OutputReferenceArrayOutput) Index(i pulumi.IntInput) OutputReferenceOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) OutputReference {
+		return vs[0].([]OutputReference)[vs[1].(int)]
 	}).(OutputReferenceOutput)
 }
 
@@ -401,6 +421,7 @@ type PasswordRecipe struct {
 }
 
 type Reference struct {
+	ItemId string `pulumi:"itemId"`
 }
 
 type Section struct {
@@ -623,7 +644,7 @@ func init() {
 	pulumi.RegisterOutputType(OutputFieldOutput{})
 	pulumi.RegisterOutputType(OutputFieldMapOutput{})
 	pulumi.RegisterOutputType(OutputReferenceOutput{})
-	pulumi.RegisterOutputType(OutputReferenceMapOutput{})
+	pulumi.RegisterOutputType(OutputReferenceArrayOutput{})
 	pulumi.RegisterOutputType(OutputSectionOutput{})
 	pulumi.RegisterOutputType(OutputSectionMapOutput{})
 	pulumi.RegisterOutputType(OutputUrlOutput{})

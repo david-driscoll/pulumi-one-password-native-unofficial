@@ -26,7 +26,3 @@ class _ExportableConfig(types.ModuleType):
     def service_account_token(self) -> Optional[str]:
         return __config__.get('serviceAccountToken')
 
-    @property
-    def vault(self) -> Optional[str]:
-        return __config__.get('vault')
-

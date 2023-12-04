@@ -15,14 +15,14 @@ import (
 type CryptoWalletItem struct {
 	pulumi.CustomResourceState
 
-	Attachments    OutputAttachmentMapOutput `pulumi:"attachments"`
-	Category       pulumi.StringOutput       `pulumi:"category"`
-	Fields         OutputFieldMapOutput      `pulumi:"fields"`
-	Notes          pulumi.StringPtrOutput    `pulumi:"notes"`
-	Password       pulumi.StringPtrOutput    `pulumi:"password"`
-	RecoveryPhrase pulumi.StringPtrOutput    `pulumi:"recoveryPhrase"`
-	References     OutputReferenceMapOutput  `pulumi:"references"`
-	Sections       OutputSectionMapOutput    `pulumi:"sections"`
+	Attachments    OutputAttachmentMapOutput  `pulumi:"attachments"`
+	Category       pulumi.StringOutput        `pulumi:"category"`
+	Fields         OutputFieldMapOutput       `pulumi:"fields"`
+	Notes          pulumi.StringPtrOutput     `pulumi:"notes"`
+	Password       pulumi.StringPtrOutput     `pulumi:"password"`
+	RecoveryPhrase pulumi.StringPtrOutput     `pulumi:"recoveryPhrase"`
+	References     OutputReferenceArrayOutput `pulumi:"references"`
+	Sections       OutputSectionMapOutput     `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -56,7 +56,6 @@ func NewCryptoWalletItem(ctx *pulumi.Context,
 		"fields",
 		"password",
 		"recoveryPhrase",
-		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)

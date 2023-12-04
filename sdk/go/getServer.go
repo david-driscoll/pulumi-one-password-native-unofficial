@@ -38,7 +38,7 @@ type GetServerResult struct {
 	HostingProvider *server.HostingProviderSection `pulumi:"hostingProvider"`
 	Notes           *string                        `pulumi:"notes"`
 	Password        *string                        `pulumi:"password"`
-	References      map[string]OutputReference     `pulumi:"references"`
+	References      []OutputReference              `pulumi:"references"`
 	Sections        map[string]OutputSection       `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
@@ -120,8 +120,8 @@ func (o GetServerResultOutput) Password() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetServerResult) *string { return v.Password }).(pulumi.StringPtrOutput)
 }
 
-func (o GetServerResultOutput) References() OutputReferenceMapOutput {
-	return o.ApplyT(func(v GetServerResult) map[string]OutputReference { return v.References }).(OutputReferenceMapOutput)
+func (o GetServerResultOutput) References() OutputReferenceArrayOutput {
+	return o.ApplyT(func(v GetServerResult) []OutputReference { return v.References }).(OutputReferenceArrayOutput)
 }
 
 func (o GetServerResultOutput) Sections() OutputSectionMapOutput {

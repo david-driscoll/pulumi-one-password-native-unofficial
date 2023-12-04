@@ -23,7 +23,7 @@ type EmailAccountItem struct {
 	Notes              pulumi.StringPtrOutput                          `pulumi:"notes"`
 	Password           pulumi.StringPtrOutput                          `pulumi:"password"`
 	PortNumber         pulumi.StringPtrOutput                          `pulumi:"portNumber"`
-	References         OutputReferenceMapOutput                        `pulumi:"references"`
+	References         OutputReferenceArrayOutput                      `pulumi:"references"`
 	Sections           OutputSectionMapOutput                          `pulumi:"sections"`
 	Security           pulumi.StringPtrOutput                          `pulumi:"security"`
 	Server             pulumi.StringPtrOutput                          `pulumi:"server"`
@@ -58,7 +58,6 @@ func NewEmailAccountItem(ctx *pulumi.Context,
 		"attachments",
 		"fields",
 		"password",
-		"references",
 		"sections",
 		"smtp",
 	})

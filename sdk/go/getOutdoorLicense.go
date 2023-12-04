@@ -39,7 +39,7 @@ type GetOutdoorLicenseResult struct {
 	FullName         *string                     `pulumi:"fullName"`
 	MaximumQuota     *string                     `pulumi:"maximumQuota"`
 	Notes            *string                     `pulumi:"notes"`
-	References       map[string]OutputReference  `pulumi:"references"`
+	References       []OutputReference           `pulumi:"references"`
 	Sections         map[string]OutputSection    `pulumi:"sections"`
 	State            *string                     `pulumi:"state"`
 	// An array of strings of the tags assigned to the item.
@@ -129,8 +129,8 @@ func (o GetOutdoorLicenseResultOutput) Notes() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetOutdoorLicenseResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o GetOutdoorLicenseResultOutput) References() OutputReferenceMapOutput {
-	return o.ApplyT(func(v GetOutdoorLicenseResult) map[string]OutputReference { return v.References }).(OutputReferenceMapOutput)
+func (o GetOutdoorLicenseResultOutput) References() OutputReferenceArrayOutput {
+	return o.ApplyT(func(v GetOutdoorLicenseResult) []OutputReference { return v.References }).(OutputReferenceArrayOutput)
 }
 
 func (o GetOutdoorLicenseResultOutput) Sections() OutputSectionMapOutput {

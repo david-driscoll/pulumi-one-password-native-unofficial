@@ -14,18 +14,18 @@ import (
 type OutdoorLicenseItem struct {
 	pulumi.CustomResourceState
 
-	ApprovedWildlife pulumi.StringPtrOutput    `pulumi:"approvedWildlife"`
-	Attachments      OutputAttachmentMapOutput `pulumi:"attachments"`
-	Category         pulumi.StringOutput       `pulumi:"category"`
-	Country          pulumi.StringPtrOutput    `pulumi:"country"`
-	Expires          pulumi.StringPtrOutput    `pulumi:"expires"`
-	Fields           OutputFieldMapOutput      `pulumi:"fields"`
-	FullName         pulumi.StringPtrOutput    `pulumi:"fullName"`
-	MaximumQuota     pulumi.StringPtrOutput    `pulumi:"maximumQuota"`
-	Notes            pulumi.StringPtrOutput    `pulumi:"notes"`
-	References       OutputReferenceMapOutput  `pulumi:"references"`
-	Sections         OutputSectionMapOutput    `pulumi:"sections"`
-	State            pulumi.StringPtrOutput    `pulumi:"state"`
+	ApprovedWildlife pulumi.StringPtrOutput     `pulumi:"approvedWildlife"`
+	Attachments      OutputAttachmentMapOutput  `pulumi:"attachments"`
+	Category         pulumi.StringOutput        `pulumi:"category"`
+	Country          pulumi.StringPtrOutput     `pulumi:"country"`
+	Expires          pulumi.StringPtrOutput     `pulumi:"expires"`
+	Fields           OutputFieldMapOutput       `pulumi:"fields"`
+	FullName         pulumi.StringPtrOutput     `pulumi:"fullName"`
+	MaximumQuota     pulumi.StringPtrOutput     `pulumi:"maximumQuota"`
+	Notes            pulumi.StringPtrOutput     `pulumi:"notes"`
+	References       OutputReferenceArrayOutput `pulumi:"references"`
+	Sections         OutputSectionMapOutput     `pulumi:"sections"`
+	State            pulumi.StringPtrOutput     `pulumi:"state"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -51,7 +51,6 @@ func NewOutdoorLicenseItem(ctx *pulumi.Context,
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"attachments",
 		"fields",
-		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)

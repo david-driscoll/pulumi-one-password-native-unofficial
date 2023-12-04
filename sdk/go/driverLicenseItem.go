@@ -14,23 +14,23 @@ import (
 type DriverLicenseItem struct {
 	pulumi.CustomResourceState
 
-	Address                pulumi.StringPtrOutput    `pulumi:"address"`
-	Attachments            OutputAttachmentMapOutput `pulumi:"attachments"`
-	Category               pulumi.StringOutput       `pulumi:"category"`
-	ConditionsRestrictions pulumi.StringPtrOutput    `pulumi:"conditionsRestrictions"`
-	Country                pulumi.StringPtrOutput    `pulumi:"country"`
-	DateOfBirth            pulumi.StringPtrOutput    `pulumi:"dateOfBirth"`
-	ExpiryDate             pulumi.StringPtrOutput    `pulumi:"expiryDate"`
-	Fields                 OutputFieldMapOutput      `pulumi:"fields"`
-	FullName               pulumi.StringPtrOutput    `pulumi:"fullName"`
-	Gender                 pulumi.StringPtrOutput    `pulumi:"gender"`
-	Height                 pulumi.StringPtrOutput    `pulumi:"height"`
-	LicenseClass           pulumi.StringPtrOutput    `pulumi:"licenseClass"`
-	Notes                  pulumi.StringPtrOutput    `pulumi:"notes"`
-	Number                 pulumi.StringPtrOutput    `pulumi:"number"`
-	References             OutputReferenceMapOutput  `pulumi:"references"`
-	Sections               OutputSectionMapOutput    `pulumi:"sections"`
-	State                  pulumi.StringPtrOutput    `pulumi:"state"`
+	Address                pulumi.StringPtrOutput     `pulumi:"address"`
+	Attachments            OutputAttachmentMapOutput  `pulumi:"attachments"`
+	Category               pulumi.StringOutput        `pulumi:"category"`
+	ConditionsRestrictions pulumi.StringPtrOutput     `pulumi:"conditionsRestrictions"`
+	Country                pulumi.StringPtrOutput     `pulumi:"country"`
+	DateOfBirth            pulumi.StringPtrOutput     `pulumi:"dateOfBirth"`
+	ExpiryDate             pulumi.StringPtrOutput     `pulumi:"expiryDate"`
+	Fields                 OutputFieldMapOutput       `pulumi:"fields"`
+	FullName               pulumi.StringPtrOutput     `pulumi:"fullName"`
+	Gender                 pulumi.StringPtrOutput     `pulumi:"gender"`
+	Height                 pulumi.StringPtrOutput     `pulumi:"height"`
+	LicenseClass           pulumi.StringPtrOutput     `pulumi:"licenseClass"`
+	Notes                  pulumi.StringPtrOutput     `pulumi:"notes"`
+	Number                 pulumi.StringPtrOutput     `pulumi:"number"`
+	References             OutputReferenceArrayOutput `pulumi:"references"`
+	Sections               OutputSectionMapOutput     `pulumi:"sections"`
+	State                  pulumi.StringPtrOutput     `pulumi:"state"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -55,7 +55,6 @@ func NewDriverLicenseItem(ctx *pulumi.Context,
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"attachments",
 		"fields",
-		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)

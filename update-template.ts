@@ -194,16 +194,36 @@ schema.types = {
     },
     "one-password-native-unoffical:index:Reference": {
         "properties": {
+            "itemId": {
+                "type": "string"
+            },
         },
         "type": "object",
         "required": [
+            "itemId"
         ]
     },
     "one-password-native-unoffical:index:OutputReference": {
         "properties": {
+            "uuid": {
+                "type": "string"
+            },
+            "label": {
+                "type": "string"
+            },
+            "itemId": {
+                "type": "string"
+            },
+            "reference": {
+                "type": "string"
+            }
         },
         "type": "object",
         "required": [
+            "uuid",
+            "label",
+            "itemId",
+            "reference"
         ]
     },
     "one-password-native-unoffical:index:OutputField": {
@@ -462,10 +482,9 @@ for (const template of templates) {
         "additionalProperties": { "$ref": "pulumi.json#/Asset" }
     };
     // disabled until cli can actually input them.
-    // currentResource.inputProperties['references']= {
-    //     "type": "object",
-    //     "additionalProperties": { "$ref": "#/types/one-password-native-unoffical:index:Reference" },
-    //     secret: true
+    // currentResource.inputProperties['references'] = {
+    //     "type": "array",
+    //     "items": { "$ref": "#/types/one-password-native-unoffical:index:Reference" },
     // };
     currentResource.inputProperties['urls'] = {
         "type": "array",
@@ -796,13 +815,14 @@ function applyDefaultOutputProperties(item: any) {
         },
         ['vault']: {
             "type": "object",
+            required: ['name', 'uuid'],
             properties: {
                 name: {
 
                     "type": "string",
                     "description": "The name of the vault item is in.\n"
                 },
-                ['id']: {
+                ['uuid']: {
                     "type": "string",
                     "description": "The UUID of the vault the item is in.\n"
                 },
@@ -824,9 +844,8 @@ function applyDefaultOutputProperties(item: any) {
             secret: true
         },
         ['references']: {
-            "type": "object",
-            "additionalProperties": { "$ref": "#/types/one-password-native-unoffical:index:OutputReference" },
-            secret: true
+            "type": "array",
+            "items": { "$ref": "#/types/one-password-native-unoffical:index:OutputReference" },
         },
         ['urls']: {
             "type": "array",

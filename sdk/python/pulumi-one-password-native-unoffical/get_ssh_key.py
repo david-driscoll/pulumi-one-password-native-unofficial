@@ -35,8 +35,8 @@ class GetSSHKeyResult:
         if private_key and not isinstance(private_key, str):
             raise TypeError("Expected argument 'private_key' to be a str")
         pulumi.set(__self__, "private_key", private_key)
-        if references and not isinstance(references, dict):
-            raise TypeError("Expected argument 'references' to be a dict")
+        if references and not isinstance(references, list):
+            raise TypeError("Expected argument 'references' to be a list")
         pulumi.set(__self__, "references", references)
         if sections and not isinstance(sections, dict):
             raise TypeError("Expected argument 'sections' to be a dict")
@@ -84,7 +84,7 @@ class GetSSHKeyResult:
 
     @property
     @pulumi.getter
-    def references(self) -> Mapping[str, 'outputs.OutputReference']:
+    def references(self) -> Sequence['outputs.OutputReference']:
         return pulumi.get(self, "references")
 
     @property

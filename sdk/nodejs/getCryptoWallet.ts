@@ -40,7 +40,7 @@ export interface GetCryptoWalletResult {
     readonly notes?: string;
     readonly password?: string;
     readonly recoveryPhrase?: string;
-    readonly references: {[key: string]: outputs.OutputReference};
+    readonly references: outputs.OutputReference[];
     readonly sections: {[key: string]: outputs.OutputSection};
     /**
      * An array of strings of the tags assigned to the item.

@@ -79,7 +79,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         public readonly ImmutableDictionary<string, Outputs.OutputField> Fields;
         public readonly string? Notes;
         public readonly string? PrivateKey;
-        public readonly ImmutableDictionary<string, Outputs.OutputReference> References;
+        public readonly ImmutableArray<Outputs.OutputReference> References;
         public readonly ImmutableDictionary<string, Outputs.OutputSection> Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
@@ -108,7 +108,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
             string? privateKey,
 
-            ImmutableDictionary<string, Outputs.OutputReference> references,
+            ImmutableArray<Outputs.OutputReference> references,
 
             ImmutableDictionary<string, Outputs.OutputSection> sections,
 

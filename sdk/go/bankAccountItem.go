@@ -25,7 +25,7 @@ type BankAccountItem struct {
 	NameOnAccount     pulumi.StringPtrOutput                        `pulumi:"nameOnAccount"`
 	Notes             pulumi.StringPtrOutput                        `pulumi:"notes"`
 	Pin               pulumi.StringPtrOutput                        `pulumi:"pin"`
-	References        OutputReferenceMapOutput                      `pulumi:"references"`
+	References        OutputReferenceArrayOutput                    `pulumi:"references"`
 	RoutingNumber     pulumi.StringPtrOutput                        `pulumi:"routingNumber"`
 	Sections          OutputSectionMapOutput                        `pulumi:"sections"`
 	Swift             pulumi.StringPtrOutput                        `pulumi:"swift"`
@@ -58,7 +58,6 @@ func NewBankAccountItem(ctx *pulumi.Context,
 		"attachments",
 		"fields",
 		"pin",
-		"references",
 		"sections",
 	})
 	opts = append(opts, secrets)

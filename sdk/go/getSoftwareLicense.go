@@ -39,7 +39,7 @@ type GetSoftwareLicenseResult struct {
 	Notes       *string                           `pulumi:"notes"`
 	Order       *softwarelicense.OrderSection     `pulumi:"order"`
 	Publisher   *softwarelicense.PublisherSection `pulumi:"publisher"`
-	References  map[string]OutputReference        `pulumi:"references"`
+	References  []OutputReference                 `pulumi:"references"`
 	Sections    map[string]OutputSection          `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
@@ -124,8 +124,8 @@ func (o GetSoftwareLicenseResultOutput) Publisher() softwarelicense.PublisherSec
 	return o.ApplyT(func(v GetSoftwareLicenseResult) *softwarelicense.PublisherSection { return v.Publisher }).(softwarelicense.PublisherSectionPtrOutput)
 }
 
-func (o GetSoftwareLicenseResultOutput) References() OutputReferenceMapOutput {
-	return o.ApplyT(func(v GetSoftwareLicenseResult) map[string]OutputReference { return v.References }).(OutputReferenceMapOutput)
+func (o GetSoftwareLicenseResultOutput) References() OutputReferenceArrayOutput {
+	return o.ApplyT(func(v GetSoftwareLicenseResult) []OutputReference { return v.References }).(OutputReferenceArrayOutput)
 }
 
 func (o GetSoftwareLicenseResultOutput) Sections() OutputSectionMapOutput {

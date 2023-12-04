@@ -40,7 +40,7 @@ type GetRewardProgramResult struct {
 	MoreInformation *rewardprogram.MoreInformationSection `pulumi:"moreInformation"`
 	Notes           *string                               `pulumi:"notes"`
 	Pin             *string                               `pulumi:"pin"`
-	References      map[string]OutputReference            `pulumi:"references"`
+	References      []OutputReference                     `pulumi:"references"`
 	Sections        map[string]OutputSection              `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
@@ -128,8 +128,8 @@ func (o GetRewardProgramResultOutput) Pin() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetRewardProgramResult) *string { return v.Pin }).(pulumi.StringPtrOutput)
 }
 
-func (o GetRewardProgramResultOutput) References() OutputReferenceMapOutput {
-	return o.ApplyT(func(v GetRewardProgramResult) map[string]OutputReference { return v.References }).(OutputReferenceMapOutput)
+func (o GetRewardProgramResultOutput) References() OutputReferenceArrayOutput {
+	return o.ApplyT(func(v GetRewardProgramResult) []OutputReference { return v.References }).(OutputReferenceArrayOutput)
 }
 
 func (o GetRewardProgramResultOutput) Sections() OutputSectionMapOutput {

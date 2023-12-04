@@ -14,18 +14,18 @@ import (
 type WirelessRouterItem struct {
 	pulumi.CustomResourceState
 
-	AirPortId               pulumi.StringPtrOutput    `pulumi:"airPortId"`
-	AttachedStoragePassword pulumi.StringPtrOutput    `pulumi:"attachedStoragePassword"`
-	Attachments             OutputAttachmentMapOutput `pulumi:"attachments"`
-	BaseStationName         pulumi.StringPtrOutput    `pulumi:"baseStationName"`
-	BaseStationPassword     pulumi.StringPtrOutput    `pulumi:"baseStationPassword"`
-	Category                pulumi.StringOutput       `pulumi:"category"`
-	Fields                  OutputFieldMapOutput      `pulumi:"fields"`
-	NetworkName             pulumi.StringPtrOutput    `pulumi:"networkName"`
-	Notes                   pulumi.StringPtrOutput    `pulumi:"notes"`
-	References              OutputReferenceMapOutput  `pulumi:"references"`
-	Sections                OutputSectionMapOutput    `pulumi:"sections"`
-	ServerIpAddress         pulumi.StringPtrOutput    `pulumi:"serverIpAddress"`
+	AirPortId               pulumi.StringPtrOutput     `pulumi:"airPortId"`
+	AttachedStoragePassword pulumi.StringPtrOutput     `pulumi:"attachedStoragePassword"`
+	Attachments             OutputAttachmentMapOutput  `pulumi:"attachments"`
+	BaseStationName         pulumi.StringPtrOutput     `pulumi:"baseStationName"`
+	BaseStationPassword     pulumi.StringPtrOutput     `pulumi:"baseStationPassword"`
+	Category                pulumi.StringOutput        `pulumi:"category"`
+	Fields                  OutputFieldMapOutput       `pulumi:"fields"`
+	NetworkName             pulumi.StringPtrOutput     `pulumi:"networkName"`
+	Notes                   pulumi.StringPtrOutput     `pulumi:"notes"`
+	References              OutputReferenceArrayOutput `pulumi:"references"`
+	Sections                OutputSectionMapOutput     `pulumi:"sections"`
+	ServerIpAddress         pulumi.StringPtrOutput     `pulumi:"serverIpAddress"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -63,7 +63,6 @@ func NewWirelessRouterItem(ctx *pulumi.Context,
 		"attachments",
 		"baseStationPassword",
 		"fields",
-		"references",
 		"sections",
 		"wirelessNetworkPassword",
 	})

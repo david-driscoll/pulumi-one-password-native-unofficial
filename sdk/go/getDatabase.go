@@ -39,7 +39,7 @@ type GetDatabaseResult struct {
 	Notes             *string                     `pulumi:"notes"`
 	Password          *string                     `pulumi:"password"`
 	Port              *string                     `pulumi:"port"`
-	References        map[string]OutputReference  `pulumi:"references"`
+	References        []OutputReference           `pulumi:"references"`
 	Sections          map[string]OutputSection    `pulumi:"sections"`
 	Server            *string                     `pulumi:"server"`
 	Sid               *string                     `pulumi:"sid"`
@@ -131,8 +131,8 @@ func (o GetDatabaseResultOutput) Port() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetDatabaseResult) *string { return v.Port }).(pulumi.StringPtrOutput)
 }
 
-func (o GetDatabaseResultOutput) References() OutputReferenceMapOutput {
-	return o.ApplyT(func(v GetDatabaseResult) map[string]OutputReference { return v.References }).(OutputReferenceMapOutput)
+func (o GetDatabaseResultOutput) References() OutputReferenceArrayOutput {
+	return o.ApplyT(func(v GetDatabaseResult) []OutputReference { return v.References }).(OutputReferenceArrayOutput)
 }
 
 func (o GetDatabaseResultOutput) Sections() OutputSectionMapOutput {

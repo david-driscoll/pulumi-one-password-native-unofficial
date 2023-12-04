@@ -1,7 +1,7 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as provider from "@pulumi/pulumi/provider";
 import { ItemType, ResourceTypes, ItemTypeNames, FunctionTypes, PropertyPaths } from './types'
-import { FieldAssignmentType, FieldPurpose, item, vault, read, ResponseFieldType, FieldAssignment } from "@1password/op-js"
+import { FieldAssignmentType, FieldPurpose, item, vault, read, ResponseFieldType, FieldAssignment, setConnect } from "@1password/op-js"
 import { createHash, randomBytes } from "crypto";
 import { RNGFactory, Random } from "random/dist/cjs/random";
 import { camelCase, clone, cloneDeep, get, isEmpty, last, orderBy, set, sortBy, uniq, unset, valuesIn } from "lodash";
@@ -10,12 +10,11 @@ import * as fs from "fs";
 import { basename, resolve } from "path";
 
 const propertiesThatCannotBeRemoved = ['category', 'fields', 'sections', 'tags', 'title', 'vault', 'uuid', 'generatePassword', 'notes', 'attachments', 'references', 'createdAt', 'updatedAt', 'password'];
-const propertiesToNotSave = ['fields', 'sections', 'tags', 'vault', 'uuid', 'generatePassword', 'attachments', 'references'];
 
 interface InputField {
     purpose?: FieldPurpose;
     type?: FieldAssignmentType;
-    value: string | { [pulumi.runtime.specialSigKey]: string; value: string };
+    value: string | PulumiSecretSpecial | PulumiArchiveSpecial | PulumiArchiveSpecial | PulumiResourcesSpecial | PulumiOutputValueSpecial;
 }
 interface InputSection {
     // label: string;
@@ -23,7 +22,7 @@ interface InputSection {
     attachments: Record<string, pulumi.asset.Asset>;
 }
 interface InputReference {
-
+    itemId: string;
 }
 interface InputUrl {
     label?: string;
@@ -37,7 +36,7 @@ interface Inputs {
     fields?: InputFields;
     attachments?: InputAttachments;
     sections?: Record<string, InputSection>;
-    references?: Record<string, InputReference>;
+    references?: InputReference[];
     urls?: InputUrl[];
     tags?: string[];
     title?: string;
@@ -55,8 +54,11 @@ interface OutputAttachment {
     reference: string;
     hash?: string;
 }
-interface OutputReference extends OutputField {
-
+interface OutputReference {
+    itemId: string;
+    uuid: string;
+    label: string;
+    reference: string;
 }
 interface OutputField {
     type?: ResponseFieldType;
@@ -64,7 +66,7 @@ interface OutputField {
     value: string;
     uuid: string;
     label: string;
-    reference?: string;
+    reference: string;
     data: Record<string, any>;
 }
 interface OutputSection {
@@ -83,7 +85,7 @@ interface Outputs {
     attachments: Record<string, OutputAttachment>;
     fields: Record<string, OutputField>;
     sections: Record<string, OutputSection>;
-    references: Record<string, OutputReference>;
+    references: OutputReference[];
     urls: OutputUrl[];
     category: string;
     uuid: string;
@@ -91,7 +93,7 @@ interface Outputs {
     notes: string;
     vault: {
         name: string;
-        id: string;
+        uuid: string;
     };
     tags: string[];
     createdAt: string;
@@ -105,26 +107,10 @@ interface Outputs {
 
 export class Provider implements provider.Provider {
     resolvedSchema: typeof import('./schema.json');
+    config: pulumi.Config;
     constructor(readonly version: string, readonly schema: string) {
         this.resolvedSchema = JSON.parse(schema);
-    }
-
-    /**
-     * Construct creates a new component pulumi.
-     *
-     * @param name The name of the resource to create.
-     * @param type The type of the resource to create.
-     * @param inputs The inputs to the pulumi.
-     * @param options the options for the pulumi.
-     */
-    async construct(name: string, type: string, inputs: pulumi.Inputs,
-        options: pulumi.ComponentResourceOptions): Promise<provider.ConstructResult> {
-
-        // TODO: Add support for additional component resources here.
-        switch (type) {
-            default:
-                throw new Error(`unknown resource type ${type} name ${name}`);
-        }
+        this.config = new pulumi.Config("one-password-native-unoffical");
     }
 
     /**
@@ -141,6 +127,7 @@ export class Provider implements provider.Provider {
         const disposables: AsyncDisposable[] = [];
         try {
             doLog(`==== Create: ${urn} ====`);
+            doLog(Object.keys(this));
             // doLog('inputs', inputs)
             // NOTE: we need to filter the template fields from the fields object
             // then we can simply just let the field override the template field, if the user sets it so.
@@ -149,6 +136,7 @@ export class Provider implements provider.Provider {
             const fields: Record<string, InputField> = {}
             const sections: Record<string, InputSection> = {}
             const attachments: Record<string, InputAttachments> = {}
+            const references: InputReference[] = inputs.references ?? []
             Object.assign(fields, inputs.fields ?? {});
             Object.assign(sections, inputs.sections ?? {});
             Object.assign(attachments, inputs.attachments ?? {});
@@ -185,6 +173,8 @@ export class Provider implements provider.Provider {
             }
 
             assignments.push(...assignFields(fields));
+            // not currently supported by the cli
+            // assignments.push(...assignReferences(references));
             assignments.push(...await assignSections(sections, disposables));
             assignments.push(...await assignAttachments(attachments, disposables));
             for (let index = 0; index < assignments.length; index++) {
@@ -193,6 +183,7 @@ export class Provider implements provider.Provider {
             }
             doLog('assignments', assignments);
 
+            ensure1PasswordEnvironmentVariables(this.config);
             const result = item.create(
                 assignments as any,
                 {
@@ -233,6 +224,7 @@ export class Provider implements provider.Provider {
         const resourceType = getResourceTypeFromUrn(urn);
         if (!resourceType) throw new Error(`unknown resource type ${urn}`);
 
+        ensure1PasswordEnvironmentVariables(this.config);
         const result = item.get(id, { vault: props?.vault })
 
         const outputs = convertResultToOutputs(resourceType, {}, result);
@@ -272,54 +264,66 @@ export class Provider implements provider.Provider {
         }
 
         const disposables: AsyncDisposable[] = [];
+        const replacedFields: Record<string, InputField> = {}
+        const deletes: string[] = []
+
+        const handleField = (item: ReturnType<typeof diff>[number] & { path: (string | number)[] }) => {
+
+            if (item.op === "remove") {
+                deletes.push(getFieldPath(item.path));
+            }
+            if ((item.op === "add" || item.op === "replace")) {
+                replacedFields[getFieldPath(item.path)] = get(news, item.path.join('.'))
+            }
+        };
+
+        const handleFields = (item: ReturnType<typeof diff>[number] & { path: (string | number)[] }) => {
+            if (item.op === "remove") {
+                deletes.push(...
+                    Object
+                        .keys(get(olds, item.path.join('.')) ?? {})
+                        .map(z => getFieldPath(item.path.concat(z)))
+                );
+            }
+            if (item.op === "add" || item.op === "replace") {
+                Object
+                    .entries(get(news, item.path.join('.')) ?? {})
+                    .forEach(z => {
+                        replacedFields[getFieldPath(item.path.concat(z[0]))] = z[1] as any;
+                    });
+            }
+        };
         try {
-            const replacedFields: Record<string, InputField> = {}
-            const deletes: string[] = []
             for (const item of delta) {
-                if (item.path[0] === 'sections' || item.path[0] === 'fields') {
-                    if (item.path[2] === 'value' || item.path[4] === 'value' || item.path[2] === 'type' || item.path[4] === 'type' || item.path[2] === 'purpose' || item.path[4] === 'purpose') {
-                        if (item.op === "remove") {
-
-                            const path = item.path.concat();
-                            path.pop();
-                            deletes.push(getFieldPath(item.path));
-                        }
-                        if ((item.op === "add" || item.op === "replace") && item.path.length > 1) {
-                            const path = item.path.concat();
-                            path.pop();
-                            replacedFields[getFieldPath(path)] = get(news, path.join('.'))
-                        }
-                    } else if ((item.path[0] === 'fields' && item.path.length === 2) || (item.path[0] === 'sections' && item.path.length === 4)) {
-                        if (item.op === "remove") {
-                            deletes.push(getFieldPath(item.path));
-                        }
-                        if ((item.op === "add" || item.op === "replace") && item.path.length > 1) {
-                            replacedFields[getFieldPath(item.path)] = get(news, item.path.join('.'))
-                        }
-                    } else if (item.path[0] === 'sections' && item.path.length === 2) {
-                        if (item.op === "remove") {
-                            deletes.push(...Object.keys(olds.sections?.[item.path[1]]?.fields ?? {})
-                                .map(z => getFieldPath(item.path.concat(z))));
-                        }
-                        if ((item.op === "add" || item.op === "replace") && item.path.length > 1) {
-                            Object.entries(olds.sections?.[item.path[1]]?.fields ?? {})
-                                .forEach(z => {
-                                    replacedFields[getFieldPath(item.path.concat(z[0]))] = z[1];
-                                });
-
-                        }
-                    }
+                if (item.path[item.path.length - 1] === 'fields') {
+                    handleFields(item)
                     continue;
                 }
-                if (item.path[0] === 'attachments' && (item.op === "add" || item.op === "replace")) {
-                    if (item.path.length === 0) {
-                        assignments.push(...await assignAttachments(item.value, disposables))
-                    } else if (item.path.length === 2) {
-                        assignments.push(...await assignAttachments({ [item.path[1].toString()]: item.value }, disposables))
-                    }
+                if (item.path[item.path.length - 2] === 'fields') {
+                    handleField(item)
                     continue;
                 }
-                // if (propertiesToNotSave.includes(item.path[0] as any)) {
+                if (item.path[item.path.length - 1] === 'attachments' && (item.op === "add" || item.op === "replace")) {
+                    const section = item.path.length > 2 ? item.path[item.path.length - 2].toString() : undefined;
+                    const values = get(news, item.path.join('.'));
+                    assignments.push(...await assignAttachments(values, disposables, section))
+                    continue;
+                }
+                if (item.path[item.path.length - 2] === 'attachments' && (item.op === "add" || item.op === "replace")) {
+                    const name = item.path[item.path.length - 1].toString();
+                    const section = item.path.length > 3 ? item.path[item.path.length - 3].toString() : undefined;
+                    const value = get(news, item.path.join('.'));
+                    assignments.push(...await assignAttachments({ [name]: value }, disposables, section))
+                    continue;
+                }
+
+                // not currently supported by the cli
+                // if (item.path[0] === 'references' && (item.op === "add" || item.op === "replace")) {
+                //     if (item.path.length === 0) {
+                //         assignments.push(...await assignReferences(item.value))
+                //     } else if (item.path.length === 2) {
+                //         assignments.push(assignReference(item.value));
+                //     }
                 //     continue;
                 // }
 
@@ -328,7 +332,7 @@ export class Provider implements provider.Provider {
                     assignments.push(createAssignment(item.path.join('.'), { value: propScheme.secret ? item.value.value : item.value, purpose: propScheme.purpose, type: propScheme.purpose === 'PASSWORD' ? 'concealed' : propScheme.kind }))
                 }
                 else if (item.op === "remove") {
-                    deletes.push(item.path.join('.'))
+                    deletes.push(getFieldPath(item.path));
                 }
 
             }
@@ -344,6 +348,7 @@ export class Provider implements provider.Provider {
             }
             doLog('assignments', assignments);
 
+            ensure1PasswordEnvironmentVariables(this.config);
             const result = item.edit(id, assignments as any, {
                 vault: news.vault,
                 tags: news.tags ?? [],
@@ -386,7 +391,9 @@ export class Provider implements provider.Provider {
     async check(urn: pulumi.URN, olds: Outputs, news: Inputs): Promise<provider.CheckResult> {
         const failures: provider.CheckFailure[] = [];
         const resourceType = getResourceTypeFromUrn(urn);
-        if (!resourceType) return {};
+        if (!resourceType) throw new Error(`unknown resource type ${urn}`);
+
+        doLog(Object.keys(this))
 
         const typeName = ItemTypeNames[resourceType]
         if (resourceType !== ItemType.Item && news.category !== typeName) {
@@ -496,7 +503,7 @@ export class Provider implements provider.Provider {
 
 
     private getFieldPathParts(path: (string | number)[]) {
-        return path.filter(z => z !== 'sections' && z !== 'fields')
+        return path.filter(z => z !== 'sections' && z !== 'fields' && z !== 'attachments')
     }
 
     private getPropertySchema(resourceType: string, item: { path: Array<string | number>; }) {
@@ -566,6 +573,7 @@ export class Provider implements provider.Provider {
             return { failures };
         }
 
+        ensure1PasswordEnvironmentVariables(this.config);
         const result = vault.get(inputs.vault);
         return {
             outputs: {
@@ -582,6 +590,7 @@ export class Provider implements provider.Provider {
             return { failures };
         }
 
+        ensure1PasswordEnvironmentVariables(this.config);
         const result = read.parse(inputs.reference);
         return {
             outputs: {
@@ -599,6 +608,7 @@ export class Provider implements provider.Provider {
             return { failures };
         }
 
+        ensure1PasswordEnvironmentVariables(this.config);
         const result = read.parse(inputs.reference!);
         return {
             outputs: {
@@ -616,6 +626,7 @@ export class Provider implements provider.Provider {
             return { failures };
         }
 
+        ensure1PasswordEnvironmentVariables(this.config);
         const result = item.get(name!, { vault: inputs.vault })
 
         const outputs = convertResultToOutputs(token as any, inputs, result);
@@ -670,38 +681,45 @@ function newUniqueName(prefix: string, randomSeed?: Buffer, randlen = 8, maxlen?
 }
 
 function createAssignment(path: string, field: InputField): FieldAssignment {
-    // not currently supported vial the cli
-    // if (field.type === 'reference') {
-    //     return ['linked items.' + last(path.split('.')), field.type, field.value];
-    // }
     if (typeof field.value === 'string') {
-        return [path, field.purpose === 'PASSWORD' ? 'concealed' : field.type ?? 'text', field.value, field.purpose];
+        return [path === 'notes' ? 'notesPlain' : path, field.purpose === 'PASSWORD' ? 'concealed' : field.type ?? 'text', field.value, field.purpose];
     }
-    if (field.value[pulumi.runtime.specialSigKey] === pulumi.runtime.specialSecretSig) {
-        return [path, field.purpose === 'PASSWORD' ? 'concealed' : field.type ?? 'text', field.value.value, field.purpose];
-    }
-    throw new Error("unknown signature key " + JSON.stringify({ path, field }))
+    return [path, field.purpose === 'PASSWORD' ? 'concealed' : field.type ?? 'text', unwrapSpecialValue(field.value) as any, field.purpose];
 }
 
 function assignFields(fields: Record<string, InputField> | undefined, prefix?: string) {
     const assignments: FieldAssignment[] = [];
     for (const field of Object.entries(fields ?? {})) {
-        let path = prefix ? `${prefix}.${field[0]}` : field[0];
-        if (path === 'notes') path = 'notesPlain';
+        const path = prefix ? `${prefix}.${field[0]}` : field[0];
         assignments.push(createAssignment(path, field[1]))
     }
     return assignments;
+}
+
+function assignReferences(references: InputReference[] | undefined) {
+    return references?.map(assignReference) ?? [];
+}
+
+function assignReference(reference: InputReference): FieldAssignment {
+    return ['linked items.' + last(reference.itemId), 'reference' as any, reference.itemId];
+}
+
+async function assignAttachment(name: string, asset: pulumi.asset.Asset, options: { disposables: AsyncDisposable[]; tempDirectory?: string; }, prefix?: string): Promise<FieldAssignment> {
+    const tempDirectory = options.tempDirectory ?? await fs.promises.mkdtemp(newUniqueName('attachments'))
+    const resolvedAsset = await resolveAsset(name, asset, tempDirectory);
+    options.disposables.push(resolvedAsset);
+    if (!options.tempDirectory) {
+        options.disposables.push({ [Symbol.asyncDispose]: () => fs.promises.rmdir(tempDirectory) });
+    }
+    const path = prefix ? `${prefix}.${name}` : name;
+    return [path, 'file' as any, resolvedAsset.value];
 }
 
 async function assignAttachments(attachments: Record<string, pulumi.asset.Asset> | undefined, disposables: AsyncDisposable[], prefix?: string) {
     const assignments: FieldAssignment[] = [];
     const tempDirectory = await fs.promises.mkdtemp(newUniqueName('attachments'))
     for (const [name, asset] of Object.entries(attachments ?? {})) {
-
-        const resolvedAsset = await resolveAsset(name, asset, tempDirectory);
-        disposables.push(resolvedAsset);
-        const path = prefix ? `${prefix}.${name}` : name;
-        assignments.push([path, 'file' as any, resolvedAsset.value]);
+        assignments.push(await assignAttachment(name, asset, { disposables, tempDirectory }, prefix))
     }
     disposables.push({ [Symbol.asyncDispose]: () => fs.promises.rmdir(tempDirectory) });
     return assignments;
@@ -803,12 +821,7 @@ function makeReference(vaultOrUuid: string, itemOrUuid: string, fieldOrSection: 
 function prepareForDiff(object: any) {
     const v = cloneDeep(object);
     for (const [key, value] of Object.entries<any>(object)) {
-        if (value?.[pulumi.runtime.specialSigKey] === pulumi.runtime.specialSecretSig) {
-            v[key] = value.value;
-        }
-        if (value?.[pulumi.runtime.specialSigKey] === pulumi.runtime.specialAssetSig) {
-            v[key] = { hash: v[key].hash };
-        }
+        v[key] = unwrapSpecialValue(value)
         if (typeof v[key] === 'object') {
             v[key] = prepareForDiff(v[key])
         }
@@ -819,6 +832,41 @@ function prepareForDiff(object: any) {
         }
     }
     return v;
+}
+
+interface PulumiSecretSpecial {
+    [pulumi.runtime.specialSigKey]?: typeof pulumi.runtime.specialSecretSig;
+    value: string;
+}
+interface PulumiResourcesSpecial {
+    [pulumi.runtime.specialSigKey]?: typeof pulumi.runtime.specialResourceSig;
+}
+interface PulumiArchiveSpecial {
+    [pulumi.runtime.specialSigKey]?: typeof pulumi.runtime.specialArchiveSig;
+    hash: string;
+}
+interface PulumiAssetSpecial {
+    [pulumi.runtime.specialSigKey]?: typeof pulumi.runtime.specialAssetSig;
+    hash: string;
+}
+interface PulumiOutputValueSpecial {
+    [pulumi.runtime.specialSigKey]?: typeof pulumi.runtime.specialOutputValueSig;
+}
+
+function isSpecialSecret(val: any): val is PulumiSecretSpecial {
+    return val?.[pulumi.runtime.specialSigKey] === pulumi.runtime.specialSecretSig;
+}
+
+function unwrapSpecialValue(val: PulumiSecretSpecial | PulumiResourcesSpecial | PulumiArchiveSpecial | PulumiAssetSpecial | PulumiOutputValueSpecial): any {
+    if (typeof val !== 'object') return val;
+    if (isSpecialSecret(val)) {
+        return val.value;
+    }
+    if (val?.[pulumi.runtime.specialSigKey] === pulumi.runtime.specialAssetSig || val?.[pulumi.runtime.specialSigKey] === pulumi.runtime.specialArchiveSig) {
+        return { hash: val.hash }
+    }
+    if (val?.[pulumi.runtime.specialSigKey]) throw new Error("unknown signature key " + JSON.stringify({ val }))
+    return val;
 }
 
 function createPasswordRecipe(value: boolean | { "letters": "boolean", "digits": "boolean", "symbols": "boolean", "length": "number" } | undefined) {
@@ -833,8 +881,8 @@ function convertOutputsToInputs(kind: string, olds: Outputs): Inputs {
     const result: Inputs = {
         attachments: {},
         fields: {},
-        references: {},
         sections: {},
+        references: [],
         urls: [],
         category: olds.category,
         vault: olds.vault.name,
@@ -845,14 +893,16 @@ function convertOutputsToInputs(kind: string, olds: Outputs): Inputs {
     olds = prepareForDiff(olds);
     olds.attachments ??= {};
     olds.fields ??= {};
-    olds.references ??= {};
     olds.sections ??= {};
+    olds.references ??= [];
     olds.urls ??= [];
 
     setAttachmentData(olds.attachments, result.attachments!);
     setFieldData(olds.fields, result.fields!)
-    for (const [name, value] of Object.entries(olds.references)) {
-        result.references![name] = {}
+    for (const reference of orderBy(olds.references, z => z.uuid)) {
+        result.references?.push({
+            itemId: reference.itemId
+        });
     }
     result.urls = olds.urls.concat()
     for (const [name, section] of Object.entries(olds.sections)) {
@@ -861,14 +911,15 @@ function convertOutputsToInputs(kind: string, olds: Outputs): Inputs {
         setFieldData(section.fields ?? {}, sectionData.fields)
     }
 
-    for (const item of PropertyPaths[kind] ?? []) {
-        const outField = item[1] ? result.sections?.[item[1]]?.fields?.[item[0]] : result.fields?.[item[0]];
-        if (outField == null || outField.type === "monthYear" && outField.value === "0") {
-            unset(result, item[1] ? `sections.${item[1]}.fields.${item[0]}` : `fields.${item[0]}`)
+    for (const [field, section] of PropertyPaths[kind] ?? []) {
+        const outField = section ? olds.sections?.[section]?.fields?.[field] : olds.fields?.[field];
+        if (!outField || (outField.type === "MONTH_YEAR" || outField.type === "DATE") && outField.value === "0") {
+            unset(result, section ? `sections.${section}.fields.${field}` : `fields.${field}`)
             continue;
         }
-        set(result, item.reverse().join('.'), outField.value ?? '');
-        unset(result, item[1] ? `sections.${item[1]}.fields.${item[0]}` : `fields.${item[0]}`)
+
+        set(result, [section, field].filter(z => !!z).join('.'), outField.value ?? '');
+        unset(result, section ? `sections.${section}.fields.${field}` : `fields.${field}`)
     }
 
     return result;
@@ -936,7 +987,12 @@ function convertResultToOutputs(kind: string, inputs: Inputs, opResult: import('
             .reduce((result, value) => setOutputAttachment(value, result, inputs.attachments![value.name] as any), {} as Record<string, OutputAttachment>),
         references: opResult.fields
             .filter(z => z.type === "REFERENCE")
-            .reduce((result, value) => setOutputReference(value, result), {} as Record<string, OutputReference>),
+            .map((value) => <OutputReference>{
+                label: value.label,
+                reference: value.reference,
+                uuid: value.id,
+                itemId: value.value
+            }),
         fields: opResult.fields
             .filter(hasNoSection)
             .reduce((result, value) => setOutputField(value, result), {} as Record<string, OutputField>),
@@ -944,24 +1000,24 @@ function convertResultToOutputs(kind: string, inputs: Inputs, opResult: import('
             .map((value) => value as OutputUrl),
         sections,
         uuid: opResult.id,
-        title: opResult.title,
+        title: opResult.title ?? inputs.title,
         vault: {
             name: opResult.vault.name,
-            id: opResult.vault.id
+            uuid: opResult.vault.id
         },
         category: inputs.category!,
         tags: opResult.tags ?? [],
         createdAt: opResult.created_at,
         updatedAt: opResult.updated_at,
-        notes: opResult.fields.find(z => z.id === 'notesPlain')?.value ?? '',
+        notes: opResult.fields.find(z => z.id === 'notesPlain' || z.id === 'notes')?.value ?? inputs.notes ?? '',
     };
 
-    for (const item of PropertyPaths[kind] ?? []) {
-        const outField = item[1] ? result.sections?.[item[1]]?.fields?.[item[0]] : result.fields?.[item[0]];
-        if (!outField || outField.type === "MONTH_YEAR" && outField.value === "0") {
+    for (const [field, section] of PropertyPaths[kind] ?? []) {
+        const outField = section ? result.sections?.[section]?.fields?.[field] : result.fields?.[field];
+        if (!outField || (outField.type === "MONTH_YEAR" || outField.type === "DATE") && outField.value === "0") {
             continue;
         }
-        set(result, item.reverse().join('.'), outField.value ?? '');
+        set(result, [section, field].filter(z => !!z).join('.'), outField.value ?? '');
     }
 
 
@@ -972,17 +1028,13 @@ function convertResultToOutputs(kind: string, inputs: Inputs, opResult: import('
     //     result.additionalInformation = opResult.additional_information;
     return result;
 
-    function setOutputReference(value: import('@1password/op-js').Field, result: Record<string, OutputReference>) {
-        return result;
-    }
-
-    function setOutputField(value: import('@1password/op-js').Field, result: Record<string, OutputField>) {
+    function setOutputField(value: import('@1password/op-js').Field, result: Record<string, OutputField>, section?: string) {
         const key = getOutputKey(value);
         const out = result[key] = {
-            label: value.label ?? null,
-            uuid: value.id ?? null,
-            type: value.type as any ?? null,
-            reference: value.reference ?? makeReference(opResult.vault.id, opResult.id, value.id)!,
+            label: value.label!,
+            uuid: value.id!,
+            type: value.type?.toUpperCase(),
+            reference: value.reference ?? (section ? makeReference(opResult.vault.id, opResult.id, section, value.id)! : makeReference(opResult.vault.id, opResult.id, value.id)!),
             data: {}
         } as OutputField;
         if (isOtpField(value)) {
@@ -1016,7 +1068,7 @@ function convertResultToOutputs(kind: string, inputs: Inputs, opResult: import('
         return result;
     }
     function setOutputSectionField(value: import('@1password/op-js').Field & { section: import('@1password/op-js').Section }, result: Record<string, OutputSection>) {
-        setOutputField(value, setSection(value.section, result).fields);
+        setOutputField(value, setSection(value.section, result).fields, getOutputKey(value.section));
         return result;
     }
     function setOutputSectionAttachment(value: import('@1password/op-js').File & { section: import('@1password/op-js').Section }, result: Record<string, OutputSection>, asset: { hash?: string }) {
@@ -1061,9 +1113,20 @@ function isGenericField(field: import('@1password/op-js').Field): field is (impo
 function doLog(message?: any, ...optionalParams: any[]) {
     console.log(message, ...optionalParams);
 }
+function doLog2(message?: any, ...optionalParams: any[]) {
+    console.log(message, ...optionalParams);
+}
 function hasSection(z: { section?: import('@1password/op-js').Section }) {
     return !!z.section?.label;
 }
 function hasNoSection(z: { section?: import('@1password/op-js').Section }) {
     return !hasSection(z);
+}
+function ensure1PasswordEnvironmentVariables(config: pulumi.Config) {
+    if (config.get("serviceAccountToken")) {
+        process.env['OP_SERVICE_ACCOUNT_TOKEN'] = config.get("serviceAccountToken")!;
+    }
+    if (config.get("connectHost") && config.get("connectToken")) {
+        setConnect(config.get("connectHost")!, config.get("connectToken")!)
+    }
 }
