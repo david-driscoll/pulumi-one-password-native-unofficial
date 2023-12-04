@@ -34,16 +34,16 @@ export interface GetEmailAccountArgs {
 }
 
 export interface GetEmailAccountResult {
-    readonly attachments: {[key: string]: outputs.OutAttachment};
+    readonly attachments: {[key: string]: outputs.OutputAttachment};
     readonly authMethod?: string;
     readonly category: enums.Category | string;
     readonly contactInformation?: outputs.emailAccount.ContactInformationSection;
-    readonly fields: {[key: string]: outputs.OutField};
+    readonly fields: {[key: string]: outputs.OutputField};
     readonly notes?: string;
     readonly password?: string;
     readonly portNumber?: string;
-    readonly references: {[key: string]: outputs.OutField};
-    readonly sections: {[key: string]: outputs.OutSection};
+    readonly references: {[key: string]: outputs.OutputReference};
+    readonly sections: {[key: string]: outputs.OutputSection};
     readonly security?: string;
     readonly server?: string;
     readonly smtp?: outputs.emailAccount.SmtpSection;
@@ -56,15 +56,13 @@ export interface GetEmailAccountResult {
      */
     readonly title: string;
     readonly type?: string;
+    readonly urls?: outputs.OutputUrl[];
     readonly username?: string;
     /**
      * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
      */
     readonly uuid: string;
-    /**
-     * The UUID of the vault the item is in.
-     */
-    readonly vault: string;
+    readonly vault: {[key: string]: string};
 }
 
 export function getEmailAccountOutput(args: GetEmailAccountOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetEmailAccountResult> {

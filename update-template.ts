@@ -117,13 +117,17 @@ schema.types = {
             "value": t.name
         }))
     },
-    "one-password-native-unoffical:index:OutSection": {
+    "one-password-native-unoffical:index:OutputSection": {
         "properties": {
             "fields": {
                 "type": "object",
                 "additionalProperties": {
-                    "$ref": "#/types/one-password-native-unoffical:index:OutField"
+                    "$ref": "#/types/one-password-native-unoffical:index:OutputField"
                 }
+            },
+            'attachments': {
+                "type": "object",
+                "additionalProperties": { "$ref": "#/types/one-password-native-unoffical:index:OutputAttachment" },
             },
             "uuid": {
                 "type": "string"
@@ -146,14 +150,21 @@ schema.types = {
                 "additionalProperties": {
                     "$ref": "#/types/one-password-native-unoffical:index:Field"
                 }
-            }
+            },
+            'attachments': {
+                "type": "object",
+                "additionalProperties": { "$ref": "pulumi.json#/Asset" }
+            },
+            // "label": {
+            //     "type": "string"
+            // }
         },
         "type": "object",
         "required": [
             "fields"
         ]
     },
-    "one-password-native-unoffical:index:OutAttachment": {
+    "one-password-native-unoffical:index:OutputAttachment": {
         "properties": {
             "uuid": { "type": "string" },
             "name": { "type": "string" },
@@ -161,11 +172,41 @@ schema.types = {
             "size": { "type": "integer" },
         },
         "type": "object",
+        "required": ["uuid", "name", "size", "reference"]
+    },
+    "one-password-native-unoffical:index:Url": {
+        "properties": {
+            "label": { "type": "string" },
+            "primary": { "type": "boolean" },
+            "href": { "type": "string" },
+        },
+        "type": "object",
+        "required": ["primary", "href"]
+    },
+    "one-password-native-unoffical:index:OutputUrl": {
+        "properties": {
+            "label": { "type": "string" },
+            "primary": { "type": "boolean" },
+            "href": { "type": "string" },
+        },
+        "type": "object",
+        "required": ["primary", "href"]
+    },
+    "one-password-native-unoffical:index:Reference": {
+        "properties": {
+        },
+        "type": "object",
         "required": [
-            "uuid", "name", "size", "reference"
         ]
     },
-    "one-password-native-unoffical:index:OutField": {
+    "one-password-native-unoffical:index:OutputReference": {
+        "properties": {
+        },
+        "type": "object",
+        "required": [
+        ]
+    },
+    "one-password-native-unoffical:index:OutputField": {
         "properties": {
             "uuid": {
                 "type": "string"
@@ -182,6 +223,10 @@ schema.types = {
             },
             "reference": {
                 "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "additionalProperties": { "$ref": "pulumi.json#/Any" }
             }
         },
         "type": "object",
@@ -190,7 +235,8 @@ schema.types = {
             "label",
             "type",
             "value",
-            "reference"
+            "reference",
+            "data"
         ]
     },
     "one-password-native-unoffical:index:Field": {
@@ -307,10 +353,10 @@ schema.types = {
                 "name": "Gender",
                 "value": "GENDER"
             },
-            {
-                "name": "Menu",
-                "value": "MENU"
-            },
+            // {
+            //     "name": "Menu",
+            //     "value": "MENU"
+            // },
             {
                 "name": "MonthYear",
                 "value": "MONTH_YEAR"
@@ -399,6 +445,10 @@ for (const template of templates) {
         "type": "string",
         "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
     };
+    currentResource.inputProperties['notes'] = {
+        "type": "string",
+        "description": "The notes of the item.\n"
+    };
     currentResource.inputProperties['sections'] = {
         "type": "object",
         "additionalProperties": { "$ref": "#/types/one-password-native-unoffical:index:Section" }
@@ -407,9 +457,19 @@ for (const template of templates) {
         "type": "object",
         "additionalProperties": { "$ref": "#/types/one-password-native-unoffical:index:Field" }
     };
-    currentResource.inputProperties['inputAttachments'] = {
+    currentResource.inputProperties['attachments'] = {
         "type": "object",
         "additionalProperties": { "$ref": "pulumi.json#/Asset" }
+    };
+    // disabled until cli can actually input them.
+    // currentResource.inputProperties['references']= {
+    //     "type": "object",
+    //     "additionalProperties": { "$ref": "#/types/one-password-native-unoffical:index:Reference" },
+    //     secret: true
+    // };
+    currentResource.inputProperties['urls'] = {
+        "type": "array",
+        items: { "$ref": "#/types/one-password-native-unoffical:index:Url" },
     };
     currentResource.inputProperties['vault'] = {
         "type": "string",
@@ -455,32 +515,33 @@ for (const template of templates) {
     };
     currentFunction.outputs = applyDefaultOutputProperties({ properties: {}, required: [] });
 
-    schema.functions[resourceName + '/attachment'] = {
-        inputs: {
-            properties: {
-                "__self__": {
-                    "$ref": `#/resources/${resourceName}`
-                },
-                "name": {
-                    "type": "string",
-                    "description": "The name or uuid of the attachment to get"
-                }
-            },
-            required: ['__self__', 'name']
-        },
-        outputs: {
-            "properties": {
-                "value": {
-                    description: 'the value of the attachment',
-                    "type": "string",
-                    "secret": true
-                }
-            },
-            required: ['value'],
-            "description": "The resolved reference value"
-        }
-    }
-    currentResource.methods = { getAttachment: resourceName + '/attachment' }
+    // schema.functions[resourceName + '/attachment'] = {
+    //     inputs: {
+    //         properties: {
+    //             "__self__": {
+    //                 "$ref": `#/resources/${resourceName}`
+    //             },
+    //             "name": {
+    //                 "type": "string",
+    //                 "description": "The name or uuid of the attachment to get"
+    //             }
+    //         },
+    //         required: ['__self__', 'name']
+    //     },
+    //     outputs: {
+    //         "properties": {
+    //             "value": {
+    //                 description: 'the value of the attachment',
+    //                 "type": "string",
+    //                 "secret": true
+    //             }
+    //         },
+    //         required: ['value'],
+    //         "description": "The resolved reference value"
+    //     }
+    // }
+    // Currently bugged.
+    // currentResource.methods = { getAttachment: resourceName + '/attachment' }
 
     const sections = templateSchema.fields
         .filter(z => !!z.section)
@@ -712,6 +773,7 @@ function getFieldType(field: Field) {
             break;
     }
 
+    fieldData.kind = (fieldData.kind as any) === 'menu' ? 'text' : fieldData.kind;
     fieldData.secret = fieldData.secret || fieldData.kind === 'concealed'
 
     return fieldData;
@@ -728,29 +790,47 @@ function applyDefaultOutputProperties(item: any) {
             "type": "string",
             "description": "The title of the item.\n"
         },
-        ['vault']: {
+        ['notes']: {
             "type": "string",
-            "description": "The UUID of the vault the item is in.\n"
+            "description": "The notes of the item.\n"
+        },
+        ['vault']: {
+            "type": "object",
+            properties: {
+                name: {
+
+                    "type": "string",
+                    "description": "The name of the vault item is in.\n"
+                },
+                ['id']: {
+                    "type": "string",
+                    "description": "The UUID of the vault the item is in.\n"
+                },
+            }
         },
         ['sections']: {
             "type": "object",
-            "additionalProperties": { "$ref": "#/types/one-password-native-unoffical:index:OutSection" },
+            "additionalProperties": { "$ref": "#/types/one-password-native-unoffical:index:OutputSection" },
             secret: true
         },
         ['fields']: {
             "type": "object",
-            "additionalProperties": { "$ref": "#/types/one-password-native-unoffical:index:OutField" },
+            "additionalProperties": { "$ref": "#/types/one-password-native-unoffical:index:OutputField" },
             secret: true
         },
         ['attachments']: {
             "type": "object",
-            "additionalProperties": { "$ref": "#/types/one-password-native-unoffical:index:OutAttachment" },
+            "additionalProperties": { "$ref": "#/types/one-password-native-unoffical:index:OutputAttachment" },
             secret: true
         },
         ['references']: {
             "type": "object",
-            "additionalProperties": { "$ref": "#/types/one-password-native-unoffical:index:OutField" },
+            "additionalProperties": { "$ref": "#/types/one-password-native-unoffical:index:OutputReference" },
             secret: true
+        },
+        ['urls']: {
+            "type": "array",
+            items: { "$ref": "#/types/one-password-native-unoffical:index:OutputUrl" }
         },
         ['tags']: {
             type: 'array',
@@ -768,7 +848,26 @@ function applyDefaultOutputProperties(item: any) {
                     "type": "string"
                 }
             ]
-        }
+        },
+
+        /*
+        lastEditedBy: opResult.last_edited_by,
+        createdAt: opResult.created_at,
+        updatedAt: opResult.updated_at,
+        additionalInformation: opResult.additional_information,
+         */
+        // ['lastEditedBy']: {
+        //     "type": "string"
+        // },
+        // ['createdAt']: {
+        //     "type": "string"
+        // },
+        // ['updatedAt']: {
+        //     "type": "string"
+        // },
+        // ['additionalInformation']: {
+        //     "type": "string"
+        // },
 
     });
     return item

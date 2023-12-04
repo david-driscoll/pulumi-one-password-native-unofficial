@@ -33,13 +33,13 @@ export class LoginItem extends pulumi.CustomResource {
         return obj['__pulumiType'] === LoginItem.__pulumiType;
     }
 
-    public /*out*/ readonly attachments!: pulumi.Output<{[key: string]: outputs.OutAttachment}>;
+    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutputAttachment}>;
     public readonly category!: pulumi.Output<enums.Category | string>;
-    public readonly fields!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.OutputField}>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly password!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutField}>;
-    public readonly sections!: pulumi.Output<{[key: string]: outputs.OutSection}>;
+    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutputReference}>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
     /**
      * An array of strings of the tags assigned to the item.
      */
@@ -48,15 +48,13 @@ export class LoginItem extends pulumi.CustomResource {
      * The title of the item.
      */
     public readonly title!: pulumi.Output<string>;
+    public readonly urls!: pulumi.Output<outputs.OutputUrl[] | undefined>;
     public readonly username!: pulumi.Output<string | undefined>;
     /**
      * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
      */
     public /*out*/ readonly uuid!: pulumi.Output<string>;
-    /**
-     * The UUID of the vault the item is in.
-     */
-    public readonly vault!: pulumi.Output<string>;
+    public readonly vault!: pulumi.Output<{[key: string]: string}>;
 
     /**
      * Create a LoginItem resource with the given unique name, arguments, and options.
@@ -77,18 +75,18 @@ export class LoginItem extends pulumi.CustomResource {
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
+            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "Login";
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["generatePassword"] = args ? args.generatePassword : undefined;
-            resourceInputs["inputAttachments"] = args ? args.inputAttachments : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["password"] = args?.password ? pulumi.secret(args.password) : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
+            resourceInputs["urls"] = args ? args.urls : undefined;
             resourceInputs["username"] = args ? args.username : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
-            resourceInputs["attachments"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
@@ -96,13 +94,6 @@ export class LoginItem extends pulumi.CustomResource {
         const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "password", "references", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(LoginItem.__pulumiType, name, resourceInputs, opts);
-    }
-
-    getAttachment(args: LoginItem.GetAttachmentArgs): pulumi.Output<LoginItem.GetAttachmentResult> {
-        return pulumi.runtime.call("one-password-native-unoffical:index:LoginItem/attachment", {
-            "__self__": this,
-            "name": args.name,
-        }, this);
     }
 }
 
@@ -117,13 +108,13 @@ export interface LoginItemState {
  * The set of arguments for constructing a LoginItem resource.
  */
 export interface LoginItemArgs {
+    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     /**
      * The category of the vault the item is in.
      */
     category?: pulumi.Input<"Login">;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     generatePassword?: pulumi.Input<boolean | inputs.PasswordRecipeArgs>;
-    inputAttachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     notes?: pulumi.Input<string>;
     password?: pulumi.Input<string>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
@@ -135,32 +126,10 @@ export interface LoginItemArgs {
      * The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
      */
     title?: pulumi.Input<string>;
+    urls?: pulumi.Input<pulumi.Input<inputs.UrlArgs>[]>;
     username?: pulumi.Input<string>;
     /**
      * The UUID of the vault the item is in.
      */
     vault: pulumi.Input<string>;
-}
-
-export namespace LoginItem {
-    /**
-     * The set of arguments for the LoginItem.getAttachment method.
-     */
-    export interface GetAttachmentArgs {
-        /**
-         * The name or uuid of the attachment to get
-         */
-        name: pulumi.Input<string>;
-    }
-
-    /**
-     * The results of the LoginItem.getAttachment method.
-     */
-    export interface GetAttachmentResult {
-        /**
-         * the value of the attachment
-         */
-        readonly value: string;
-    }
-
 }

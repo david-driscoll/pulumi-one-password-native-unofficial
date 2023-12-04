@@ -14,13 +14,13 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
     public partial class PasswordItem : Pulumi.CustomResource
     {
         [Output("attachments")]
-        public Output<ImmutableDictionary<string, Outputs.OutAttachment>> Attachments { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutputAttachment>> Attachments { get; private set; } = null!;
 
         [Output("category")]
         public Output<string> Category { get; private set; } = null!;
 
         [Output("fields")]
-        public Output<ImmutableDictionary<string, Outputs.OutField>> Fields { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutputField>> Fields { get; private set; } = null!;
 
         [Output("notes")]
         public Output<string?> Notes { get; private set; } = null!;
@@ -29,10 +29,10 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         public Output<string?> Password { get; private set; } = null!;
 
         [Output("references")]
-        public Output<ImmutableDictionary<string, Outputs.OutField>> References { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutputReference>> References { get; private set; } = null!;
 
         [Output("sections")]
-        public Output<ImmutableDictionary<string, Outputs.OutSection>> Sections { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutputSection>> Sections { get; private set; } = null!;
 
         /// <summary>
         /// An array of strings of the tags assigned to the item.
@@ -46,17 +46,17 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         [Output("title")]
         public Output<string> Title { get; private set; } = null!;
 
+        [Output("urls")]
+        public Output<ImmutableArray<Outputs.OutputUrl>> Urls { get; private set; } = null!;
+
         /// <summary>
         /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
         /// </summary>
         [Output("uuid")]
         public Output<string> Uuid { get; private set; } = null!;
 
-        /// <summary>
-        /// The UUID of the vault the item is in.
-        /// </summary>
         [Output("vault")]
-        public Output<string> Vault { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>> Vault { get; private set; } = null!;
 
 
         /// <summary>
@@ -116,13 +116,18 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         {
             return new PasswordItem(name, id, state, options);
         }
-
-        public Pulumi.Output<PasswordItemGetAttachmentResult> GetAttachment(PasswordItemGetAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<PasswordItemGetAttachmentResult>("one-password-native-unoffical:index:PasswordItem/attachment", args ?? new PasswordItemGetAttachmentArgs(), this);
     }
 
     public sealed class PasswordItemArgs : Pulumi.ResourceArgs
     {
+        [Input("attachments")]
+        private InputMap<AssetOrArchive>? _attachments;
+        public InputMap<AssetOrArchive> Attachments
+        {
+            get => _attachments ?? (_attachments = new InputMap<AssetOrArchive>());
+            set => _attachments = value;
+        }
+
         /// <summary>
         /// The category of the vault the item is in.
         /// </summary>
@@ -139,14 +144,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
         [Input("generatePassword")]
         public InputUnion<bool, Inputs.PasswordRecipeArgs>? GeneratePassword { get; set; }
-
-        [Input("inputAttachments")]
-        private InputMap<AssetOrArchive>? _inputAttachments;
-        public InputMap<AssetOrArchive> InputAttachments
-        {
-            get => _inputAttachments ?? (_inputAttachments = new InputMap<AssetOrArchive>());
-            set => _inputAttachments = value;
-        }
 
         [Input("notes")]
         public Input<string>? Notes { get; set; }
@@ -189,6 +186,14 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         [Input("title")]
         public Input<string>? Title { get; set; }
 
+        [Input("urls")]
+        private InputList<Inputs.UrlArgs>? _urls;
+        public InputList<Inputs.UrlArgs> Urls
+        {
+            get => _urls ?? (_urls = new InputList<Inputs.UrlArgs>());
+            set => _urls = value;
+        }
+
         /// <summary>
         /// The UUID of the vault the item is in.
         /// </summary>
@@ -210,40 +215,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
         public PasswordItemState()
         {
-        }
-    }
-
-    /// <summary>
-    /// The set of arguments for the <see cref="PasswordItem.GetAttachment"/> method.
-    /// </summary>
-    public sealed class PasswordItemGetAttachmentArgs : Pulumi.CallArgs
-    {
-        /// <summary>
-        /// The name or uuid of the attachment to get
-        /// </summary>
-        [Input("name", required: true)]
-        public Input<string> Name { get; set; } = null!;
-
-        public PasswordItemGetAttachmentArgs()
-        {
-        }
-    }
-
-    /// <summary>
-    /// The results of the <see cref="PasswordItem.GetAttachment"/> method.
-    /// </summary>
-    [OutputType]
-    public sealed class PasswordItemGetAttachmentResult
-    {
-        /// <summary>
-        /// the value of the attachment
-        /// </summary>
-        public readonly string Value;
-
-        [OutputConstructor]
-        private PasswordItemGetAttachmentResult(string value)
-        {
-            Value = value;
         }
     }
 }

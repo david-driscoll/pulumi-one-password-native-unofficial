@@ -74,16 +74,16 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
     [OutputType]
     public sealed class GetEmailAccountResult
     {
-        public readonly ImmutableDictionary<string, Outputs.OutAttachment> Attachments;
+        public readonly ImmutableDictionary<string, Outputs.OutputAttachment> Attachments;
         public readonly string? AuthMethod;
         public readonly string Category;
         public readonly Rocket.Surgery.OnePasswordNativeUnoffical.EmailAccount.Outputs.ContactInformationSection? ContactInformation;
-        public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.OutputField> Fields;
         public readonly string? Notes;
         public readonly string? Password;
         public readonly string? PortNumber;
-        public readonly ImmutableDictionary<string, Outputs.OutField> References;
-        public readonly ImmutableDictionary<string, Outputs.OutSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.OutputReference> References;
+        public readonly ImmutableDictionary<string, Outputs.OutputSection> Sections;
         public readonly string? Security;
         public readonly string? Server;
         public readonly Rocket.Surgery.OnePasswordNativeUnoffical.EmailAccount.Outputs.SmtpSection? Smtp;
@@ -96,19 +96,17 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         /// </summary>
         public readonly string Title;
         public readonly string? Type;
+        public readonly ImmutableArray<Outputs.OutputUrl> Urls;
         public readonly string? Username;
         /// <summary>
         /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
         /// </summary>
         public readonly string Uuid;
-        /// <summary>
-        /// The UUID of the vault the item is in.
-        /// </summary>
-        public readonly string Vault;
+        public readonly ImmutableDictionary<string, string> Vault;
 
         [OutputConstructor]
         private GetEmailAccountResult(
-            ImmutableDictionary<string, Outputs.OutAttachment> attachments,
+            ImmutableDictionary<string, Outputs.OutputAttachment> attachments,
 
             string? authMethod,
 
@@ -116,7 +114,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
             Rocket.Surgery.OnePasswordNativeUnoffical.EmailAccount.Outputs.ContactInformationSection? contactInformation,
 
-            ImmutableDictionary<string, Outputs.OutField> fields,
+            ImmutableDictionary<string, Outputs.OutputField> fields,
 
             string? notes,
 
@@ -124,9 +122,9 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
             string? portNumber,
 
-            ImmutableDictionary<string, Outputs.OutField> references,
+            ImmutableDictionary<string, Outputs.OutputReference> references,
 
-            ImmutableDictionary<string, Outputs.OutSection> sections,
+            ImmutableDictionary<string, Outputs.OutputSection> sections,
 
             string? security,
 
@@ -140,11 +138,13 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
             string? type,
 
+            ImmutableArray<Outputs.OutputUrl> urls,
+
             string? username,
 
             string uuid,
 
-            string vault)
+            ImmutableDictionary<string, string> vault)
         {
             Attachments = attachments;
             AuthMethod = authMethod;
@@ -162,6 +162,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
             Tags = tags;
             Title = title;
             Type = type;
+            Urls = urls;
             Username = username;
             Uuid = uuid;
             Vault = vault;

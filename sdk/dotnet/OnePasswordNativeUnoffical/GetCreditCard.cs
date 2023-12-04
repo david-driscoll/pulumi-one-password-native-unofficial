@@ -75,16 +75,16 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
     public sealed class GetCreditCardResult
     {
         public readonly Rocket.Surgery.OnePasswordNativeUnoffical.CreditCard.Outputs.AdditionalDetailsSection? AdditionalDetails;
-        public readonly ImmutableDictionary<string, Outputs.OutAttachment> Attachments;
+        public readonly ImmutableDictionary<string, Outputs.OutputAttachment> Attachments;
         public readonly string? CardholderName;
         public readonly string Category;
         public readonly Rocket.Surgery.OnePasswordNativeUnoffical.CreditCard.Outputs.ContactInformationSection? ContactInformation;
         public readonly string? ExpiryDate;
-        public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.OutputField> Fields;
         public readonly string? Notes;
         public readonly string? Number;
-        public readonly ImmutableDictionary<string, Outputs.OutField> References;
-        public readonly ImmutableDictionary<string, Outputs.OutSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.OutputReference> References;
+        public readonly ImmutableDictionary<string, Outputs.OutputSection> Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
         /// </summary>
@@ -94,22 +94,20 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         /// </summary>
         public readonly string Title;
         public readonly string? Type;
+        public readonly ImmutableArray<Outputs.OutputUrl> Urls;
         /// <summary>
         /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
         /// </summary>
         public readonly string Uuid;
         public readonly string? ValidFrom;
-        /// <summary>
-        /// The UUID of the vault the item is in.
-        /// </summary>
-        public readonly string Vault;
+        public readonly ImmutableDictionary<string, string> Vault;
         public readonly string? VerificationNumber;
 
         [OutputConstructor]
         private GetCreditCardResult(
             Rocket.Surgery.OnePasswordNativeUnoffical.CreditCard.Outputs.AdditionalDetailsSection? additionalDetails,
 
-            ImmutableDictionary<string, Outputs.OutAttachment> attachments,
+            ImmutableDictionary<string, Outputs.OutputAttachment> attachments,
 
             string? cardholderName,
 
@@ -119,15 +117,15 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
             string? expiryDate,
 
-            ImmutableDictionary<string, Outputs.OutField> fields,
+            ImmutableDictionary<string, Outputs.OutputField> fields,
 
             string? notes,
 
             string? number,
 
-            ImmutableDictionary<string, Outputs.OutField> references,
+            ImmutableDictionary<string, Outputs.OutputReference> references,
 
-            ImmutableDictionary<string, Outputs.OutSection> sections,
+            ImmutableDictionary<string, Outputs.OutputSection> sections,
 
             ImmutableArray<string> tags,
 
@@ -135,11 +133,13 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
             string? type,
 
+            ImmutableArray<Outputs.OutputUrl> urls,
+
             string uuid,
 
             string? validFrom,
 
-            string vault,
+            ImmutableDictionary<string, string> vault,
 
             string? verificationNumber)
         {
@@ -157,6 +157,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
             Tags = tags;
             Title = title;
             Type = type;
+            Urls = urls;
             Uuid = uuid;
             ValidFrom = validFrom;
             Vault = vault;

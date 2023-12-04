@@ -16,26 +16,26 @@ type CreditCardItem struct {
 	pulumi.CustomResourceState
 
 	AdditionalDetails  creditcard.AdditionalDetailsSectionPtrOutput  `pulumi:"additionalDetails"`
-	Attachments        OutAttachmentMapOutput                        `pulumi:"attachments"`
+	Attachments        OutputAttachmentMapOutput                     `pulumi:"attachments"`
 	CardholderName     pulumi.StringPtrOutput                        `pulumi:"cardholderName"`
 	Category           pulumi.StringOutput                           `pulumi:"category"`
 	ContactInformation creditcard.ContactInformationSectionPtrOutput `pulumi:"contactInformation"`
 	ExpiryDate         pulumi.StringPtrOutput                        `pulumi:"expiryDate"`
-	Fields             OutFieldMapOutput                             `pulumi:"fields"`
+	Fields             OutputFieldMapOutput                          `pulumi:"fields"`
 	Notes              pulumi.StringPtrOutput                        `pulumi:"notes"`
 	Number             pulumi.StringPtrOutput                        `pulumi:"number"`
-	References         OutFieldMapOutput                             `pulumi:"references"`
-	Sections           OutSectionMapOutput                           `pulumi:"sections"`
+	References         OutputReferenceMapOutput                      `pulumi:"references"`
+	Sections           OutputSectionMapOutput                        `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
 	Title pulumi.StringOutput    `pulumi:"title"`
 	Type  pulumi.StringPtrOutput `pulumi:"type"`
+	Urls  OutputUrlArrayOutput   `pulumi:"urls"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid      pulumi.StringOutput    `pulumi:"uuid"`
-	ValidFrom pulumi.StringPtrOutput `pulumi:"validFrom"`
-	// The UUID of the vault the item is in.
-	Vault              pulumi.StringOutput    `pulumi:"vault"`
+	Uuid               pulumi.StringOutput    `pulumi:"uuid"`
+	ValidFrom          pulumi.StringPtrOutput `pulumi:"validFrom"`
+	Vault              pulumi.StringMapOutput `pulumi:"vault"`
 	VerificationNumber pulumi.StringPtrOutput `pulumi:"verificationNumber"`
 }
 
@@ -100,13 +100,13 @@ func (CreditCardItemState) ElementType() reflect.Type {
 
 type creditCardItemArgs struct {
 	AdditionalDetails *creditcard.AdditionalDetailsSection `pulumi:"additionalDetails"`
+	Attachments       map[string]pulumi.AssetOrArchive     `pulumi:"attachments"`
 	CardholderName    *string                              `pulumi:"cardholderName"`
 	// The category of the vault the item is in.
 	Category           *string                               `pulumi:"category"`
 	ContactInformation *creditcard.ContactInformationSection `pulumi:"contactInformation"`
 	ExpiryDate         *string                               `pulumi:"expiryDate"`
 	Fields             map[string]Field                      `pulumi:"fields"`
-	InputAttachments   map[string]pulumi.AssetOrArchive      `pulumi:"inputAttachments"`
 	Notes              *string                               `pulumi:"notes"`
 	Number             *string                               `pulumi:"number"`
 	Sections           map[string]Section                    `pulumi:"sections"`
@@ -115,6 +115,7 @@ type creditCardItemArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title     *string `pulumi:"title"`
 	Type      *string `pulumi:"type"`
+	Urls      []Url   `pulumi:"urls"`
 	ValidFrom *string `pulumi:"validFrom"`
 	// The UUID of the vault the item is in.
 	Vault              string  `pulumi:"vault"`
@@ -124,13 +125,13 @@ type creditCardItemArgs struct {
 // The set of arguments for constructing a CreditCardItem resource.
 type CreditCardItemArgs struct {
 	AdditionalDetails creditcard.AdditionalDetailsSectionPtrInput
+	Attachments       pulumi.AssetOrArchiveMapInput
 	CardholderName    pulumi.StringPtrInput
 	// The category of the vault the item is in.
 	Category           pulumi.StringPtrInput
 	ContactInformation creditcard.ContactInformationSectionPtrInput
 	ExpiryDate         pulumi.StringPtrInput
 	Fields             FieldMapInput
-	InputAttachments   pulumi.AssetOrArchiveMapInput
 	Notes              pulumi.StringPtrInput
 	Number             pulumi.StringPtrInput
 	Sections           SectionMapInput
@@ -139,6 +140,7 @@ type CreditCardItemArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title     pulumi.StringPtrInput
 	Type      pulumi.StringPtrInput
+	Urls      UrlArrayInput
 	ValidFrom pulumi.StringPtrInput
 	// The UUID of the vault the item is in.
 	Vault              pulumi.StringInput
@@ -147,46 +149,6 @@ type CreditCardItemArgs struct {
 
 func (CreditCardItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*creditCardItemArgs)(nil)).Elem()
-}
-
-func (r *CreditCardItem) GetAttachment(ctx *pulumi.Context, args *CreditCardItemGetAttachmentArgs) (CreditCardItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("one-password-native-unoffical:index:CreditCardItem/attachment", args, CreditCardItemGetAttachmentResultOutput{}, r)
-	if err != nil {
-		return CreditCardItemGetAttachmentResultOutput{}, err
-	}
-	return out.(CreditCardItemGetAttachmentResultOutput), nil
-}
-
-type creditCardItemGetAttachmentArgs struct {
-	// The name or uuid of the attachment to get
-	Name string `pulumi:"name"`
-}
-
-// The set of arguments for the GetAttachment method of the CreditCardItem resource.
-type CreditCardItemGetAttachmentArgs struct {
-	// The name or uuid of the attachment to get
-	Name pulumi.StringInput
-}
-
-func (CreditCardItemGetAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*creditCardItemGetAttachmentArgs)(nil)).Elem()
-}
-
-// The resolved reference value
-type CreditCardItemGetAttachmentResult struct {
-	// the value of the attachment
-	Value string `pulumi:"value"`
-}
-
-type CreditCardItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
-
-func (CreditCardItemGetAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*CreditCardItemGetAttachmentResult)(nil)).Elem()
-}
-
-// the value of the attachment
-func (o CreditCardItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v CreditCardItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type CreditCardItemInput interface {
@@ -317,7 +279,6 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*CreditCardItemArrayInput)(nil)).Elem(), CreditCardItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CreditCardItemMapInput)(nil)).Elem(), CreditCardItemMap{})
 	pulumi.RegisterOutputType(CreditCardItemOutput{})
-	pulumi.RegisterOutputType(CreditCardItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(CreditCardItemArrayOutput{})
 	pulumi.RegisterOutputType(CreditCardItemMapOutput{})
 }

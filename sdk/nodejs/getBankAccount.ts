@@ -35,18 +35,18 @@ export interface GetBankAccountArgs {
 
 export interface GetBankAccountResult {
     readonly accountNumber?: string;
-    readonly attachments: {[key: string]: outputs.OutAttachment};
+    readonly attachments: {[key: string]: outputs.OutputAttachment};
     readonly bankName?: string;
     readonly branchInformation?: outputs.bankAccount.BranchInformationSection;
     readonly category: enums.Category | string;
-    readonly fields: {[key: string]: outputs.OutField};
+    readonly fields: {[key: string]: outputs.OutputField};
     readonly iban?: string;
     readonly nameOnAccount?: string;
     readonly notes?: string;
     readonly pin?: string;
-    readonly references: {[key: string]: outputs.OutField};
+    readonly references: {[key: string]: outputs.OutputReference};
     readonly routingNumber?: string;
-    readonly sections: {[key: string]: outputs.OutSection};
+    readonly sections: {[key: string]: outputs.OutputSection};
     readonly swift?: string;
     /**
      * An array of strings of the tags assigned to the item.
@@ -57,14 +57,12 @@ export interface GetBankAccountResult {
      */
     readonly title: string;
     readonly type?: string;
+    readonly urls?: outputs.OutputUrl[];
     /**
      * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
      */
     readonly uuid: string;
-    /**
-     * The UUID of the vault the item is in.
-     */
-    readonly vault: string;
+    readonly vault: {[key: string]: string};
 }
 
 export function getBankAccountOutput(args: GetBankAccountOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetBankAccountResult> {

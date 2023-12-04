@@ -34,18 +34,18 @@ export class BankAccountItem extends pulumi.CustomResource {
     }
 
     public readonly accountNumber!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly attachments!: pulumi.Output<{[key: string]: outputs.OutAttachment}>;
+    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutputAttachment}>;
     public readonly bankName!: pulumi.Output<string | undefined>;
     public readonly branchInformation!: pulumi.Output<outputs.bankAccount.BranchInformationSection | undefined>;
     public readonly category!: pulumi.Output<enums.Category | string>;
-    public readonly fields!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.OutputField}>;
     public readonly iban!: pulumi.Output<string | undefined>;
     public readonly nameOnAccount!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly pin!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutputReference}>;
     public readonly routingNumber!: pulumi.Output<string | undefined>;
-    public readonly sections!: pulumi.Output<{[key: string]: outputs.OutSection}>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
     public readonly swift!: pulumi.Output<string | undefined>;
     /**
      * An array of strings of the tags assigned to the item.
@@ -56,14 +56,12 @@ export class BankAccountItem extends pulumi.CustomResource {
      */
     public readonly title!: pulumi.Output<string>;
     public readonly type!: pulumi.Output<string | undefined>;
+    public readonly urls!: pulumi.Output<outputs.OutputUrl[] | undefined>;
     /**
      * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
      */
     public /*out*/ readonly uuid!: pulumi.Output<string>;
-    /**
-     * The UUID of the vault the item is in.
-     */
-    public readonly vault!: pulumi.Output<string>;
+    public readonly vault!: pulumi.Output<{[key: string]: string}>;
 
     /**
      * Create a BankAccountItem resource with the given unique name, arguments, and options.
@@ -85,12 +83,12 @@ export class BankAccountItem extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vault'");
             }
             resourceInputs["accountNumber"] = args ? args.accountNumber : undefined;
+            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["bankName"] = args ? args.bankName : undefined;
             resourceInputs["branchInformation"] = args ? args.branchInformation : undefined;
             resourceInputs["category"] = "Bank Account";
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["iban"] = args ? args.iban : undefined;
-            resourceInputs["inputAttachments"] = args ? args.inputAttachments : undefined;
             resourceInputs["nameOnAccount"] = args ? args.nameOnAccount : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["pin"] = args?.pin ? pulumi.secret(args.pin) : undefined;
@@ -100,8 +98,8 @@ export class BankAccountItem extends pulumi.CustomResource {
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["type"] = args ? args.type : undefined;
+            resourceInputs["urls"] = args ? args.urls : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
-            resourceInputs["attachments"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
@@ -109,13 +107,6 @@ export class BankAccountItem extends pulumi.CustomResource {
         const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "pin", "references", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(BankAccountItem.__pulumiType, name, resourceInputs, opts);
-    }
-
-    getAttachment(args: BankAccountItem.GetAttachmentArgs): pulumi.Output<BankAccountItem.GetAttachmentResult> {
-        return pulumi.runtime.call("one-password-native-unoffical:index:BankAccountItem/attachment", {
-            "__self__": this,
-            "name": args.name,
-        }, this);
     }
 }
 
@@ -131,6 +122,7 @@ export interface BankAccountItemState {
  */
 export interface BankAccountItemArgs {
     accountNumber?: pulumi.Input<string>;
+    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     bankName?: pulumi.Input<string>;
     branchInformation?: pulumi.Input<inputs.bankAccount.BranchInformationSectionArgs>;
     /**
@@ -139,7 +131,6 @@ export interface BankAccountItemArgs {
     category?: pulumi.Input<"Bank Account">;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     iban?: pulumi.Input<string>;
-    inputAttachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     nameOnAccount?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
     pin?: pulumi.Input<string>;
@@ -155,31 +146,9 @@ export interface BankAccountItemArgs {
      */
     title?: pulumi.Input<string>;
     type?: pulumi.Input<string>;
+    urls?: pulumi.Input<pulumi.Input<inputs.UrlArgs>[]>;
     /**
      * The UUID of the vault the item is in.
      */
     vault: pulumi.Input<string>;
-}
-
-export namespace BankAccountItem {
-    /**
-     * The set of arguments for the BankAccountItem.getAttachment method.
-     */
-    export interface GetAttachmentArgs {
-        /**
-         * The name or uuid of the attachment to get
-         */
-        name: pulumi.Input<string>;
-    }
-
-    /**
-     * The results of the BankAccountItem.getAttachment method.
-     */
-    export interface GetAttachmentResult {
-        /**
-         * the value of the attachment
-         */
-        readonly value: string;
-    }
-
 }

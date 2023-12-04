@@ -19,7 +19,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetMembershipResult:
-    def __init__(__self__, attachments=None, category=None, expiry_date=None, fields=None, group=None, member_id=None, member_name=None, member_since=None, notes=None, pin=None, references=None, sections=None, tags=None, telephone=None, title=None, uuid=None, vault=None, website=None):
+    def __init__(__self__, attachments=None, category=None, expiry_date=None, fields=None, group=None, member_id=None, member_name=None, member_since=None, notes=None, pin=None, references=None, sections=None, tags=None, telephone=None, title=None, urls=None, uuid=None, vault=None, website=None):
         if attachments and not isinstance(attachments, dict):
             raise TypeError("Expected argument 'attachments' to be a dict")
         pulumi.set(__self__, "attachments", attachments)
@@ -65,11 +65,14 @@ class GetMembershipResult:
         if title and not isinstance(title, str):
             raise TypeError("Expected argument 'title' to be a str")
         pulumi.set(__self__, "title", title)
+        if urls and not isinstance(urls, list):
+            raise TypeError("Expected argument 'urls' to be a list")
+        pulumi.set(__self__, "urls", urls)
         if uuid and not isinstance(uuid, str):
             raise TypeError("Expected argument 'uuid' to be a str")
         pulumi.set(__self__, "uuid", uuid)
-        if vault and not isinstance(vault, str):
-            raise TypeError("Expected argument 'vault' to be a str")
+        if vault and not isinstance(vault, dict):
+            raise TypeError("Expected argument 'vault' to be a dict")
         pulumi.set(__self__, "vault", vault)
         if website and not isinstance(website, str):
             raise TypeError("Expected argument 'website' to be a str")
@@ -77,7 +80,7 @@ class GetMembershipResult:
 
     @property
     @pulumi.getter
-    def attachments(self) -> Mapping[str, 'outputs.OutAttachment']:
+    def attachments(self) -> Mapping[str, 'outputs.OutputAttachment']:
         return pulumi.get(self, "attachments")
 
     @property
@@ -92,7 +95,7 @@ class GetMembershipResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.OutField']:
+    def fields(self) -> Mapping[str, 'outputs.OutputField']:
         return pulumi.get(self, "fields")
 
     @property
@@ -127,12 +130,12 @@ class GetMembershipResult:
 
     @property
     @pulumi.getter
-    def references(self) -> Mapping[str, 'outputs.OutField']:
+    def references(self) -> Mapping[str, 'outputs.OutputReference']:
         return pulumi.get(self, "references")
 
     @property
     @pulumi.getter
-    def sections(self) -> Mapping[str, 'outputs.OutSection']:
+    def sections(self) -> Mapping[str, 'outputs.OutputSection']:
         return pulumi.get(self, "sections")
 
     @property
@@ -158,6 +161,11 @@ class GetMembershipResult:
 
     @property
     @pulumi.getter
+    def urls(self) -> Optional[Sequence['outputs.OutputUrl']]:
+        return pulumi.get(self, "urls")
+
+    @property
+    @pulumi.getter
     def uuid(self) -> str:
         """
         The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -166,10 +174,7 @@ class GetMembershipResult:
 
     @property
     @pulumi.getter
-    def vault(self) -> str:
-        """
-        The UUID of the vault the item is in.
-        """
+    def vault(self) -> Mapping[str, str]:
         return pulumi.get(self, "vault")
 
     @property
@@ -199,6 +204,7 @@ class AwaitableGetMembershipResult(GetMembershipResult):
             tags=self.tags,
             telephone=self.telephone,
             title=self.title,
+            urls=self.urls,
             uuid=self.uuid,
             vault=self.vault,
             website=self.website)
@@ -243,6 +249,7 @@ def get_membership(title: Optional[str] = None,
         tags=__ret__.tags,
         telephone=__ret__.telephone,
         title=__ret__.title,
+        urls=__ret__.urls,
         uuid=__ret__.uuid,
         vault=__ret__.vault,
         website=__ret__.website)

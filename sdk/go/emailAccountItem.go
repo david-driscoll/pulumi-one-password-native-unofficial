@@ -15,16 +15,16 @@ import (
 type EmailAccountItem struct {
 	pulumi.CustomResourceState
 
-	Attachments        OutAttachmentMapOutput                          `pulumi:"attachments"`
+	Attachments        OutputAttachmentMapOutput                       `pulumi:"attachments"`
 	AuthMethod         pulumi.StringPtrOutput                          `pulumi:"authMethod"`
 	Category           pulumi.StringOutput                             `pulumi:"category"`
 	ContactInformation emailaccount.ContactInformationSectionPtrOutput `pulumi:"contactInformation"`
-	Fields             OutFieldMapOutput                               `pulumi:"fields"`
+	Fields             OutputFieldMapOutput                            `pulumi:"fields"`
 	Notes              pulumi.StringPtrOutput                          `pulumi:"notes"`
 	Password           pulumi.StringPtrOutput                          `pulumi:"password"`
 	PortNumber         pulumi.StringPtrOutput                          `pulumi:"portNumber"`
-	References         OutFieldMapOutput                               `pulumi:"references"`
-	Sections           OutSectionMapOutput                             `pulumi:"sections"`
+	References         OutputReferenceMapOutput                        `pulumi:"references"`
+	Sections           OutputSectionMapOutput                          `pulumi:"sections"`
 	Security           pulumi.StringPtrOutput                          `pulumi:"security"`
 	Server             pulumi.StringPtrOutput                          `pulumi:"server"`
 	Smtp               emailaccount.SmtpSectionPtrOutput               `pulumi:"smtp"`
@@ -33,11 +33,11 @@ type EmailAccountItem struct {
 	// The title of the item.
 	Title    pulumi.StringOutput    `pulumi:"title"`
 	Type     pulumi.StringPtrOutput `pulumi:"type"`
+	Urls     OutputUrlArrayOutput   `pulumi:"urls"`
 	Username pulumi.StringPtrOutput `pulumi:"username"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid pulumi.StringOutput `pulumi:"uuid"`
-	// The UUID of the vault the item is in.
-	Vault pulumi.StringOutput `pulumi:"vault"`
+	Uuid  pulumi.StringOutput    `pulumi:"uuid"`
+	Vault pulumi.StringMapOutput `pulumi:"vault"`
 }
 
 // NewEmailAccountItem registers a new resource with the given unique name, arguments, and options.
@@ -100,12 +100,12 @@ func (EmailAccountItemState) ElementType() reflect.Type {
 }
 
 type emailAccountItemArgs struct {
-	AuthMethod *string `pulumi:"authMethod"`
+	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
+	AuthMethod  *string                          `pulumi:"authMethod"`
 	// The category of the vault the item is in.
 	Category           *string                                 `pulumi:"category"`
 	ContactInformation *emailaccount.ContactInformationSection `pulumi:"contactInformation"`
 	Fields             map[string]Field                        `pulumi:"fields"`
-	InputAttachments   map[string]pulumi.AssetOrArchive        `pulumi:"inputAttachments"`
 	Notes              *string                                 `pulumi:"notes"`
 	Password           *string                                 `pulumi:"password"`
 	PortNumber         *string                                 `pulumi:"portNumber"`
@@ -118,6 +118,7 @@ type emailAccountItemArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title    *string `pulumi:"title"`
 	Type     *string `pulumi:"type"`
+	Urls     []Url   `pulumi:"urls"`
 	Username *string `pulumi:"username"`
 	// The UUID of the vault the item is in.
 	Vault string `pulumi:"vault"`
@@ -125,12 +126,12 @@ type emailAccountItemArgs struct {
 
 // The set of arguments for constructing a EmailAccountItem resource.
 type EmailAccountItemArgs struct {
-	AuthMethod pulumi.StringPtrInput
+	Attachments pulumi.AssetOrArchiveMapInput
+	AuthMethod  pulumi.StringPtrInput
 	// The category of the vault the item is in.
 	Category           pulumi.StringPtrInput
 	ContactInformation emailaccount.ContactInformationSectionPtrInput
 	Fields             FieldMapInput
-	InputAttachments   pulumi.AssetOrArchiveMapInput
 	Notes              pulumi.StringPtrInput
 	Password           pulumi.StringPtrInput
 	PortNumber         pulumi.StringPtrInput
@@ -143,6 +144,7 @@ type EmailAccountItemArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title    pulumi.StringPtrInput
 	Type     pulumi.StringPtrInput
+	Urls     UrlArrayInput
 	Username pulumi.StringPtrInput
 	// The UUID of the vault the item is in.
 	Vault pulumi.StringInput
@@ -150,46 +152,6 @@ type EmailAccountItemArgs struct {
 
 func (EmailAccountItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*emailAccountItemArgs)(nil)).Elem()
-}
-
-func (r *EmailAccountItem) GetAttachment(ctx *pulumi.Context, args *EmailAccountItemGetAttachmentArgs) (EmailAccountItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("one-password-native-unoffical:index:EmailAccountItem/attachment", args, EmailAccountItemGetAttachmentResultOutput{}, r)
-	if err != nil {
-		return EmailAccountItemGetAttachmentResultOutput{}, err
-	}
-	return out.(EmailAccountItemGetAttachmentResultOutput), nil
-}
-
-type emailAccountItemGetAttachmentArgs struct {
-	// The name or uuid of the attachment to get
-	Name string `pulumi:"name"`
-}
-
-// The set of arguments for the GetAttachment method of the EmailAccountItem resource.
-type EmailAccountItemGetAttachmentArgs struct {
-	// The name or uuid of the attachment to get
-	Name pulumi.StringInput
-}
-
-func (EmailAccountItemGetAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*emailAccountItemGetAttachmentArgs)(nil)).Elem()
-}
-
-// The resolved reference value
-type EmailAccountItemGetAttachmentResult struct {
-	// the value of the attachment
-	Value string `pulumi:"value"`
-}
-
-type EmailAccountItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
-
-func (EmailAccountItemGetAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*EmailAccountItemGetAttachmentResult)(nil)).Elem()
-}
-
-// the value of the attachment
-func (o EmailAccountItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v EmailAccountItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type EmailAccountItemInput interface {
@@ -320,7 +282,6 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*EmailAccountItemArrayInput)(nil)).Elem(), EmailAccountItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*EmailAccountItemMapInput)(nil)).Elem(), EmailAccountItemMap{})
 	pulumi.RegisterOutputType(EmailAccountItemOutput{})
-	pulumi.RegisterOutputType(EmailAccountItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(EmailAccountItemArrayOutput{})
 	pulumi.RegisterOutputType(EmailAccountItemMapOutput{})
 }

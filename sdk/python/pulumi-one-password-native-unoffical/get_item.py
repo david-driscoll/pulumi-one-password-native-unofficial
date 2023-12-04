@@ -19,7 +19,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetItemResult:
-    def __init__(__self__, attachments=None, category=None, fields=None, references=None, sections=None, tags=None, title=None, uuid=None, vault=None):
+    def __init__(__self__, attachments=None, category=None, fields=None, notes=None, references=None, sections=None, tags=None, title=None, urls=None, uuid=None, vault=None):
         if attachments and not isinstance(attachments, dict):
             raise TypeError("Expected argument 'attachments' to be a dict")
         pulumi.set(__self__, "attachments", attachments)
@@ -29,6 +29,9 @@ class GetItemResult:
         if fields and not isinstance(fields, dict):
             raise TypeError("Expected argument 'fields' to be a dict")
         pulumi.set(__self__, "fields", fields)
+        if notes and not isinstance(notes, str):
+            raise TypeError("Expected argument 'notes' to be a str")
+        pulumi.set(__self__, "notes", notes)
         if references and not isinstance(references, dict):
             raise TypeError("Expected argument 'references' to be a dict")
         pulumi.set(__self__, "references", references)
@@ -41,16 +44,19 @@ class GetItemResult:
         if title and not isinstance(title, str):
             raise TypeError("Expected argument 'title' to be a str")
         pulumi.set(__self__, "title", title)
+        if urls and not isinstance(urls, list):
+            raise TypeError("Expected argument 'urls' to be a list")
+        pulumi.set(__self__, "urls", urls)
         if uuid and not isinstance(uuid, str):
             raise TypeError("Expected argument 'uuid' to be a str")
         pulumi.set(__self__, "uuid", uuid)
-        if vault and not isinstance(vault, str):
-            raise TypeError("Expected argument 'vault' to be a str")
+        if vault and not isinstance(vault, dict):
+            raise TypeError("Expected argument 'vault' to be a dict")
         pulumi.set(__self__, "vault", vault)
 
     @property
     @pulumi.getter
-    def attachments(self) -> Mapping[str, 'outputs.OutAttachment']:
+    def attachments(self) -> Mapping[str, 'outputs.OutputAttachment']:
         return pulumi.get(self, "attachments")
 
     @property
@@ -60,17 +66,25 @@ class GetItemResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.OutField']:
+    def fields(self) -> Mapping[str, 'outputs.OutputField']:
         return pulumi.get(self, "fields")
 
     @property
     @pulumi.getter
-    def references(self) -> Mapping[str, 'outputs.OutField']:
+    def notes(self) -> Optional[str]:
+        """
+        The notes of the item.
+        """
+        return pulumi.get(self, "notes")
+
+    @property
+    @pulumi.getter
+    def references(self) -> Mapping[str, 'outputs.OutputReference']:
         return pulumi.get(self, "references")
 
     @property
     @pulumi.getter
-    def sections(self) -> Mapping[str, 'outputs.OutSection']:
+    def sections(self) -> Mapping[str, 'outputs.OutputSection']:
         return pulumi.get(self, "sections")
 
     @property
@@ -91,6 +105,11 @@ class GetItemResult:
 
     @property
     @pulumi.getter
+    def urls(self) -> Optional[Sequence['outputs.OutputUrl']]:
+        return pulumi.get(self, "urls")
+
+    @property
+    @pulumi.getter
     def uuid(self) -> str:
         """
         The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -99,10 +118,7 @@ class GetItemResult:
 
     @property
     @pulumi.getter
-    def vault(self) -> str:
-        """
-        The UUID of the vault the item is in.
-        """
+    def vault(self) -> Mapping[str, str]:
         return pulumi.get(self, "vault")
 
 
@@ -115,10 +131,12 @@ class AwaitableGetItemResult(GetItemResult):
             attachments=self.attachments,
             category=self.category,
             fields=self.fields,
+            notes=self.notes,
             references=self.references,
             sections=self.sections,
             tags=self.tags,
             title=self.title,
+            urls=self.urls,
             uuid=self.uuid,
             vault=self.vault)
 
@@ -150,10 +168,12 @@ def get_item(title: Optional[str] = None,
         attachments=__ret__.attachments,
         category=__ret__.category,
         fields=__ret__.fields,
+        notes=__ret__.notes,
         references=__ret__.references,
         sections=__ret__.sections,
         tags=__ret__.tags,
         title=__ret__.title,
+        urls=__ret__.urls,
         uuid=__ret__.uuid,
         vault=__ret__.vault)
 

@@ -75,18 +75,18 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
     public sealed class GetBankAccountResult
     {
         public readonly string? AccountNumber;
-        public readonly ImmutableDictionary<string, Outputs.OutAttachment> Attachments;
+        public readonly ImmutableDictionary<string, Outputs.OutputAttachment> Attachments;
         public readonly string? BankName;
         public readonly Rocket.Surgery.OnePasswordNativeUnoffical.BankAccount.Outputs.BranchInformationSection? BranchInformation;
         public readonly string Category;
-        public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.OutputField> Fields;
         public readonly string? Iban;
         public readonly string? NameOnAccount;
         public readonly string? Notes;
         public readonly string? Pin;
-        public readonly ImmutableDictionary<string, Outputs.OutField> References;
+        public readonly ImmutableDictionary<string, Outputs.OutputReference> References;
         public readonly string? RoutingNumber;
-        public readonly ImmutableDictionary<string, Outputs.OutSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.OutputSection> Sections;
         public readonly string? Swift;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
@@ -97,20 +97,18 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         /// </summary>
         public readonly string Title;
         public readonly string? Type;
+        public readonly ImmutableArray<Outputs.OutputUrl> Urls;
         /// <summary>
         /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
         /// </summary>
         public readonly string Uuid;
-        /// <summary>
-        /// The UUID of the vault the item is in.
-        /// </summary>
-        public readonly string Vault;
+        public readonly ImmutableDictionary<string, string> Vault;
 
         [OutputConstructor]
         private GetBankAccountResult(
             string? accountNumber,
 
-            ImmutableDictionary<string, Outputs.OutAttachment> attachments,
+            ImmutableDictionary<string, Outputs.OutputAttachment> attachments,
 
             string? bankName,
 
@@ -118,7 +116,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
             string category,
 
-            ImmutableDictionary<string, Outputs.OutField> fields,
+            ImmutableDictionary<string, Outputs.OutputField> fields,
 
             string? iban,
 
@@ -128,11 +126,11 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
             string? pin,
 
-            ImmutableDictionary<string, Outputs.OutField> references,
+            ImmutableDictionary<string, Outputs.OutputReference> references,
 
             string? routingNumber,
 
-            ImmutableDictionary<string, Outputs.OutSection> sections,
+            ImmutableDictionary<string, Outputs.OutputSection> sections,
 
             string? swift,
 
@@ -142,9 +140,11 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
             string? type,
 
+            ImmutableArray<Outputs.OutputUrl> urls,
+
             string uuid,
 
-            string vault)
+            ImmutableDictionary<string, string> vault)
         {
             AccountNumber = accountNumber;
             Attachments = attachments;
@@ -163,6 +163,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
             Tags = tags;
             Title = title;
             Type = type;
+            Urls = urls;
             Uuid = uuid;
             Vault = vault;
         }

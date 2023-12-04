@@ -34,16 +34,16 @@ export class CreditCardItem extends pulumi.CustomResource {
     }
 
     public readonly additionalDetails!: pulumi.Output<outputs.creditCard.AdditionalDetailsSection | undefined>;
-    public /*out*/ readonly attachments!: pulumi.Output<{[key: string]: outputs.OutAttachment}>;
+    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutputAttachment}>;
     public readonly cardholderName!: pulumi.Output<string | undefined>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly contactInformation!: pulumi.Output<outputs.creditCard.ContactInformationSection | undefined>;
     public readonly expiryDate!: pulumi.Output<string | undefined>;
-    public readonly fields!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.OutputField}>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly number!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutField}>;
-    public readonly sections!: pulumi.Output<{[key: string]: outputs.OutSection}>;
+    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutputReference}>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
     /**
      * An array of strings of the tags assigned to the item.
      */
@@ -53,15 +53,13 @@ export class CreditCardItem extends pulumi.CustomResource {
      */
     public readonly title!: pulumi.Output<string>;
     public readonly type!: pulumi.Output<string | undefined>;
+    public readonly urls!: pulumi.Output<outputs.OutputUrl[] | undefined>;
     /**
      * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
      */
     public /*out*/ readonly uuid!: pulumi.Output<string>;
     public readonly validFrom!: pulumi.Output<string | undefined>;
-    /**
-     * The UUID of the vault the item is in.
-     */
-    public readonly vault!: pulumi.Output<string>;
+    public readonly vault!: pulumi.Output<{[key: string]: string}>;
     public readonly verificationNumber!: pulumi.Output<string | undefined>;
 
     /**
@@ -84,22 +82,22 @@ export class CreditCardItem extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vault'");
             }
             resourceInputs["additionalDetails"] = args ? args.additionalDetails : undefined;
+            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["cardholderName"] = args ? args.cardholderName : undefined;
             resourceInputs["category"] = "Credit Card";
             resourceInputs["contactInformation"] = args ? args.contactInformation : undefined;
             resourceInputs["expiryDate"] = args ? args.expiryDate : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
-            resourceInputs["inputAttachments"] = args ? args.inputAttachments : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["number"] = args ? args.number : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["type"] = args ? args.type : undefined;
+            resourceInputs["urls"] = args ? args.urls : undefined;
             resourceInputs["validFrom"] = args ? args.validFrom : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["verificationNumber"] = args?.verificationNumber ? pulumi.secret(args.verificationNumber) : undefined;
-            resourceInputs["attachments"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
@@ -107,13 +105,6 @@ export class CreditCardItem extends pulumi.CustomResource {
         const secretOpts = { additionalSecretOutputs: ["additionalDetails", "attachments", "fields", "references", "sections", "verificationNumber"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(CreditCardItem.__pulumiType, name, resourceInputs, opts);
-    }
-
-    getAttachment(args: CreditCardItem.GetAttachmentArgs): pulumi.Output<CreditCardItem.GetAttachmentResult> {
-        return pulumi.runtime.call("one-password-native-unoffical:index:CreditCardItem/attachment", {
-            "__self__": this,
-            "name": args.name,
-        }, this);
     }
 }
 
@@ -129,6 +120,7 @@ export interface CreditCardItemState {
  */
 export interface CreditCardItemArgs {
     additionalDetails?: pulumi.Input<inputs.creditCard.AdditionalDetailsSectionArgs>;
+    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     cardholderName?: pulumi.Input<string>;
     /**
      * The category of the vault the item is in.
@@ -137,7 +129,6 @@ export interface CreditCardItemArgs {
     contactInformation?: pulumi.Input<inputs.creditCard.ContactInformationSectionArgs>;
     expiryDate?: pulumi.Input<string>;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
-    inputAttachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     notes?: pulumi.Input<string>;
     number?: pulumi.Input<string>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
@@ -150,33 +141,11 @@ export interface CreditCardItemArgs {
      */
     title?: pulumi.Input<string>;
     type?: pulumi.Input<string>;
+    urls?: pulumi.Input<pulumi.Input<inputs.UrlArgs>[]>;
     validFrom?: pulumi.Input<string>;
     /**
      * The UUID of the vault the item is in.
      */
     vault: pulumi.Input<string>;
     verificationNumber?: pulumi.Input<string>;
-}
-
-export namespace CreditCardItem {
-    /**
-     * The set of arguments for the CreditCardItem.getAttachment method.
-     */
-    export interface GetAttachmentArgs {
-        /**
-         * The name or uuid of the attachment to get
-         */
-        name: pulumi.Input<string>;
-    }
-
-    /**
-     * The results of the CreditCardItem.getAttachment method.
-     */
-    export interface GetAttachmentResult {
-        /**
-         * the value of the attachment
-         */
-        readonly value: string;
-    }
-
 }

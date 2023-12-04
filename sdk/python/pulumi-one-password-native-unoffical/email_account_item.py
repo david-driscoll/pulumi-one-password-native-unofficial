@@ -18,11 +18,11 @@ __all__ = ['EmailAccountItemArgs', 'EmailAccountItem']
 class EmailAccountItemArgs:
     def __init__(__self__, *,
                  vault: pulumi.Input[str],
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  auth_method: Optional[pulumi.Input[str]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  contact_information: Optional[pulumi.Input['_emailaccount.ContactInformationSectionArgs']] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
-                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  password: Optional[pulumi.Input[str]] = None,
                  port_number: Optional[pulumi.Input[str]] = None,
@@ -33,6 +33,7 @@ class EmailAccountItemArgs:
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None,
+                 urls: Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]] = None,
                  username: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a EmailAccountItem resource.
@@ -42,6 +43,8 @@ class EmailAccountItemArgs:
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         """
         pulumi.set(__self__, "vault", vault)
+        if attachments is not None:
+            pulumi.set(__self__, "attachments", attachments)
         if auth_method is not None:
             pulumi.set(__self__, "auth_method", auth_method)
         if category is not None:
@@ -50,8 +53,6 @@ class EmailAccountItemArgs:
             pulumi.set(__self__, "contact_information", contact_information)
         if fields is not None:
             pulumi.set(__self__, "fields", fields)
-        if input_attachments is not None:
-            pulumi.set(__self__, "input_attachments", input_attachments)
         if notes is not None:
             pulumi.set(__self__, "notes", notes)
         if password is not None:
@@ -72,6 +73,8 @@ class EmailAccountItemArgs:
             pulumi.set(__self__, "title", title)
         if type is not None:
             pulumi.set(__self__, "type", type)
+        if urls is not None:
+            pulumi.set(__self__, "urls", urls)
         if username is not None:
             pulumi.set(__self__, "username", username)
 
@@ -86,6 +89,15 @@ class EmailAccountItemArgs:
     @vault.setter
     def vault(self, value: pulumi.Input[str]):
         pulumi.set(self, "vault", value)
+
+    @property
+    @pulumi.getter
+    def attachments(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]:
+        return pulumi.get(self, "attachments")
+
+    @attachments.setter
+    def attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
+        pulumi.set(self, "attachments", value)
 
     @property
     @pulumi.getter(name="authMethod")
@@ -125,15 +137,6 @@ class EmailAccountItemArgs:
     @fields.setter
     def fields(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]]):
         pulumi.set(self, "fields", value)
-
-    @property
-    @pulumi.getter(name="inputAttachments")
-    def input_attachments(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]:
-        return pulumi.get(self, "input_attachments")
-
-    @input_attachments.setter
-    def input_attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
-        pulumi.set(self, "input_attachments", value)
 
     @property
     @pulumi.getter
@@ -233,6 +236,15 @@ class EmailAccountItemArgs:
 
     @property
     @pulumi.getter
+    def urls(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]]:
+        return pulumi.get(self, "urls")
+
+    @urls.setter
+    def urls(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]]):
+        pulumi.set(self, "urls", value)
+
+    @property
+    @pulumi.getter
     def username(self) -> Optional[pulumi.Input[str]]:
         return pulumi.get(self, "username")
 
@@ -269,11 +281,11 @@ class EmailAccountItem(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  auth_method: Optional[pulumi.Input[str]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  contact_information: Optional[pulumi.Input[pulumi.InputType['_emailaccount.ContactInformationSectionArgs']]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
-                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  password: Optional[pulumi.Input[str]] = None,
                  port_number: Optional[pulumi.Input[str]] = None,
@@ -284,6 +296,7 @@ class EmailAccountItem(pulumi.CustomResource):
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None,
+                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['UrlArgs']]]]] = None,
                  username: Optional[pulumi.Input[str]] = None,
                  vault: Optional[pulumi.Input[str]] = None,
                  __props__=None):
@@ -319,11 +332,11 @@ class EmailAccountItem(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  auth_method: Optional[pulumi.Input[str]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  contact_information: Optional[pulumi.Input[pulumi.InputType['_emailaccount.ContactInformationSectionArgs']]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
-                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  password: Optional[pulumi.Input[str]] = None,
                  port_number: Optional[pulumi.Input[str]] = None,
@@ -334,6 +347,7 @@ class EmailAccountItem(pulumi.CustomResource):
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None,
+                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['UrlArgs']]]]] = None,
                  username: Optional[pulumi.Input[str]] = None,
                  vault: Optional[pulumi.Input[str]] = None,
                  __props__=None):
@@ -350,11 +364,11 @@ class EmailAccountItem(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = EmailAccountItemArgs.__new__(EmailAccountItemArgs)
 
+            __props__.__dict__["attachments"] = attachments
             __props__.__dict__["auth_method"] = auth_method
             __props__.__dict__["category"] = 'Email Account'
             __props__.__dict__["contact_information"] = contact_information
             __props__.__dict__["fields"] = fields
-            __props__.__dict__["input_attachments"] = input_attachments
             __props__.__dict__["notes"] = notes
             __props__.__dict__["password"] = None if password is None else pulumi.Output.secret(password)
             __props__.__dict__["port_number"] = port_number
@@ -365,11 +379,11 @@ class EmailAccountItem(pulumi.CustomResource):
             __props__.__dict__["tags"] = tags
             __props__.__dict__["title"] = title
             __props__.__dict__["type"] = type
+            __props__.__dict__["urls"] = urls
             __props__.__dict__["username"] = username
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
-            __props__.__dict__["attachments"] = None
             __props__.__dict__["references"] = None
             __props__.__dict__["uuid"] = None
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachments", "fields", "password", "references", "sections", "smtp"])
@@ -415,13 +429,14 @@ class EmailAccountItem(pulumi.CustomResource):
         __props__.__dict__["tags"] = None
         __props__.__dict__["title"] = None
         __props__.__dict__["type"] = None
+        __props__.__dict__["urls"] = None
         __props__.__dict__["username"] = None
         __props__.__dict__["uuid"] = None
         return EmailAccountItem(resource_name, opts=opts, __props__=__props__)
 
     @property
     @pulumi.getter
-    def attachments(self) -> pulumi.Output[Mapping[str, 'outputs.OutAttachment']]:
+    def attachments(self) -> pulumi.Output[Mapping[str, 'outputs.OutputAttachment']]:
         return pulumi.get(self, "attachments")
 
     @property
@@ -441,7 +456,7 @@ class EmailAccountItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def fields(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+    def fields(self) -> pulumi.Output[Mapping[str, 'outputs.OutputField']]:
         return pulumi.get(self, "fields")
 
     @property
@@ -461,12 +476,12 @@ class EmailAccountItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def references(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+    def references(self) -> pulumi.Output[Mapping[str, 'outputs.OutputReference']]:
         return pulumi.get(self, "references")
 
     @property
     @pulumi.getter
-    def sections(self) -> pulumi.Output[Mapping[str, 'outputs.OutSection']]:
+    def sections(self) -> pulumi.Output[Mapping[str, 'outputs.OutputSection']]:
         return pulumi.get(self, "sections")
 
     @property
@@ -507,6 +522,11 @@ class EmailAccountItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
+    def urls(self) -> pulumi.Output[Optional[Sequence['outputs.OutputUrl']]]:
+        return pulumi.get(self, "urls")
+
+    @property
+    @pulumi.getter
     def username(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "username")
 
@@ -520,38 +540,6 @@ class EmailAccountItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def vault(self) -> pulumi.Output[str]:
-        """
-        The UUID of the vault the item is in.
-        """
+    def vault(self) -> pulumi.Output[Mapping[str, str]]:
         return pulumi.get(self, "vault")
-
-    @pulumi.output_type
-    class GetAttachmentResult:
-        """
-        The resolved reference value
-        """
-        def __init__(__self__, value=None):
-            if value and not isinstance(value, str):
-                raise TypeError("Expected argument 'value' to be a str")
-            pulumi.set(__self__, "value", value)
-
-        @property
-        @pulumi.getter
-        def value(self) -> str:
-            """
-            the value of the attachment
-            """
-            return pulumi.get(self, "value")
-
-    def get_attachment(__self__, *,
-                       name: pulumi.Input[str]) -> pulumi.Output['EmailAccountItem.GetAttachmentResult']:
-        """
-
-        :param pulumi.Input[str] name: The name or uuid of the attachment to get
-        """
-        __args__ = dict()
-        __args__['__self__'] = __self__
-        __args__['name'] = name
-        return pulumi.runtime.call('one-password-native-unoffical:index:EmailAccountItem/attachment', __args__, res=__self__, typ=EmailAccountItem.GetAttachmentResult)
 

@@ -32,22 +32,22 @@ type GetIdentityArgs struct {
 
 type GetIdentityResult struct {
 	Address         *identity.AddressSection         `pulumi:"address"`
-	Attachments     map[string]OutAttachment         `pulumi:"attachments"`
+	Attachments     map[string]OutputAttachment      `pulumi:"attachments"`
 	Category        string                           `pulumi:"category"`
-	Fields          map[string]OutField              `pulumi:"fields"`
+	Fields          map[string]OutputField           `pulumi:"fields"`
 	Identification  *identity.IdentificationSection  `pulumi:"identification"`
 	InternetDetails *identity.InternetDetailsSection `pulumi:"internetDetails"`
 	Notes           *string                          `pulumi:"notes"`
-	References      map[string]OutField              `pulumi:"references"`
-	Sections        map[string]OutSection            `pulumi:"sections"`
+	References      map[string]OutputReference       `pulumi:"references"`
+	Sections        map[string]OutputSection         `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title string `pulumi:"title"`
+	Title string      `pulumi:"title"`
+	Urls  []OutputUrl `pulumi:"urls"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid string `pulumi:"uuid"`
-	// The UUID of the vault the item is in.
-	Vault string `pulumi:"vault"`
+	Uuid  string            `pulumi:"uuid"`
+	Vault map[string]string `pulumi:"vault"`
 }
 
 func GetIdentityOutput(ctx *pulumi.Context, args GetIdentityOutputArgs, opts ...pulumi.InvokeOption) GetIdentityResultOutput {
@@ -94,16 +94,16 @@ func (o GetIdentityResultOutput) Address() identity.AddressSectionPtrOutput {
 	return o.ApplyT(func(v GetIdentityResult) *identity.AddressSection { return v.Address }).(identity.AddressSectionPtrOutput)
 }
 
-func (o GetIdentityResultOutput) Attachments() OutAttachmentMapOutput {
-	return o.ApplyT(func(v GetIdentityResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
+func (o GetIdentityResultOutput) Attachments() OutputAttachmentMapOutput {
+	return o.ApplyT(func(v GetIdentityResult) map[string]OutputAttachment { return v.Attachments }).(OutputAttachmentMapOutput)
 }
 
 func (o GetIdentityResultOutput) Category() pulumi.StringOutput {
 	return o.ApplyT(func(v GetIdentityResult) string { return v.Category }).(pulumi.StringOutput)
 }
 
-func (o GetIdentityResultOutput) Fields() OutFieldMapOutput {
-	return o.ApplyT(func(v GetIdentityResult) map[string]OutField { return v.Fields }).(OutFieldMapOutput)
+func (o GetIdentityResultOutput) Fields() OutputFieldMapOutput {
+	return o.ApplyT(func(v GetIdentityResult) map[string]OutputField { return v.Fields }).(OutputFieldMapOutput)
 }
 
 func (o GetIdentityResultOutput) Identification() identity.IdentificationSectionPtrOutput {
@@ -118,12 +118,12 @@ func (o GetIdentityResultOutput) Notes() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetIdentityResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o GetIdentityResultOutput) References() OutFieldMapOutput {
-	return o.ApplyT(func(v GetIdentityResult) map[string]OutField { return v.References }).(OutFieldMapOutput)
+func (o GetIdentityResultOutput) References() OutputReferenceMapOutput {
+	return o.ApplyT(func(v GetIdentityResult) map[string]OutputReference { return v.References }).(OutputReferenceMapOutput)
 }
 
-func (o GetIdentityResultOutput) Sections() OutSectionMapOutput {
-	return o.ApplyT(func(v GetIdentityResult) map[string]OutSection { return v.Sections }).(OutSectionMapOutput)
+func (o GetIdentityResultOutput) Sections() OutputSectionMapOutput {
+	return o.ApplyT(func(v GetIdentityResult) map[string]OutputSection { return v.Sections }).(OutputSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.
@@ -136,14 +136,17 @@ func (o GetIdentityResultOutput) Title() pulumi.StringOutput {
 	return o.ApplyT(func(v GetIdentityResult) string { return v.Title }).(pulumi.StringOutput)
 }
 
+func (o GetIdentityResultOutput) Urls() OutputUrlArrayOutput {
+	return o.ApplyT(func(v GetIdentityResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
+}
+
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
 func (o GetIdentityResultOutput) Uuid() pulumi.StringOutput {
 	return o.ApplyT(func(v GetIdentityResult) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
-// The UUID of the vault the item is in.
-func (o GetIdentityResultOutput) Vault() pulumi.StringOutput {
-	return o.ApplyT(func(v GetIdentityResult) string { return v.Vault }).(pulumi.StringOutput)
+func (o GetIdentityResultOutput) Vault() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetIdentityResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
 }
 
 func init() {

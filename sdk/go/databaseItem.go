@@ -14,29 +14,29 @@ import (
 type DatabaseItem struct {
 	pulumi.CustomResourceState
 
-	Alias             pulumi.StringPtrOutput `pulumi:"alias"`
-	Attachments       OutAttachmentMapOutput `pulumi:"attachments"`
-	Category          pulumi.StringOutput    `pulumi:"category"`
-	ConnectionOptions pulumi.StringPtrOutput `pulumi:"connectionOptions"`
-	Database          pulumi.StringPtrOutput `pulumi:"database"`
-	Fields            OutFieldMapOutput      `pulumi:"fields"`
-	Notes             pulumi.StringPtrOutput `pulumi:"notes"`
-	Password          pulumi.StringPtrOutput `pulumi:"password"`
-	Port              pulumi.StringPtrOutput `pulumi:"port"`
-	References        OutFieldMapOutput      `pulumi:"references"`
-	Sections          OutSectionMapOutput    `pulumi:"sections"`
-	Server            pulumi.StringPtrOutput `pulumi:"server"`
-	Sid               pulumi.StringPtrOutput `pulumi:"sid"`
+	Alias             pulumi.StringPtrOutput    `pulumi:"alias"`
+	Attachments       OutputAttachmentMapOutput `pulumi:"attachments"`
+	Category          pulumi.StringOutput       `pulumi:"category"`
+	ConnectionOptions pulumi.StringPtrOutput    `pulumi:"connectionOptions"`
+	Database          pulumi.StringPtrOutput    `pulumi:"database"`
+	Fields            OutputFieldMapOutput      `pulumi:"fields"`
+	Notes             pulumi.StringPtrOutput    `pulumi:"notes"`
+	Password          pulumi.StringPtrOutput    `pulumi:"password"`
+	Port              pulumi.StringPtrOutput    `pulumi:"port"`
+	References        OutputReferenceMapOutput  `pulumi:"references"`
+	Sections          OutputSectionMapOutput    `pulumi:"sections"`
+	Server            pulumi.StringPtrOutput    `pulumi:"server"`
+	Sid               pulumi.StringPtrOutput    `pulumi:"sid"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
 	Title    pulumi.StringOutput    `pulumi:"title"`
 	Type     pulumi.StringPtrOutput `pulumi:"type"`
+	Urls     OutputUrlArrayOutput   `pulumi:"urls"`
 	Username pulumi.StringPtrOutput `pulumi:"username"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid pulumi.StringOutput `pulumi:"uuid"`
-	// The UUID of the vault the item is in.
-	Vault pulumi.StringOutput `pulumi:"vault"`
+	Uuid  pulumi.StringOutput    `pulumi:"uuid"`
+	Vault pulumi.StringMapOutput `pulumi:"vault"`
 }
 
 // NewDatabaseItem registers a new resource with the given unique name, arguments, and options.
@@ -98,24 +98,25 @@ func (DatabaseItemState) ElementType() reflect.Type {
 }
 
 type databaseItemArgs struct {
-	Alias *string `pulumi:"alias"`
+	Alias       *string                          `pulumi:"alias"`
+	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
-	Category          *string                          `pulumi:"category"`
-	ConnectionOptions *string                          `pulumi:"connectionOptions"`
-	Database          *string                          `pulumi:"database"`
-	Fields            map[string]Field                 `pulumi:"fields"`
-	InputAttachments  map[string]pulumi.AssetOrArchive `pulumi:"inputAttachments"`
-	Notes             *string                          `pulumi:"notes"`
-	Password          *string                          `pulumi:"password"`
-	Port              *string                          `pulumi:"port"`
-	Sections          map[string]Section               `pulumi:"sections"`
-	Server            *string                          `pulumi:"server"`
-	Sid               *string                          `pulumi:"sid"`
+	Category          *string            `pulumi:"category"`
+	ConnectionOptions *string            `pulumi:"connectionOptions"`
+	Database          *string            `pulumi:"database"`
+	Fields            map[string]Field   `pulumi:"fields"`
+	Notes             *string            `pulumi:"notes"`
+	Password          *string            `pulumi:"password"`
+	Port              *string            `pulumi:"port"`
+	Sections          map[string]Section `pulumi:"sections"`
+	Server            *string            `pulumi:"server"`
+	Sid               *string            `pulumi:"sid"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title    *string `pulumi:"title"`
 	Type     *string `pulumi:"type"`
+	Urls     []Url   `pulumi:"urls"`
 	Username *string `pulumi:"username"`
 	// The UUID of the vault the item is in.
 	Vault string `pulumi:"vault"`
@@ -123,13 +124,13 @@ type databaseItemArgs struct {
 
 // The set of arguments for constructing a DatabaseItem resource.
 type DatabaseItemArgs struct {
-	Alias pulumi.StringPtrInput
+	Alias       pulumi.StringPtrInput
+	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
 	Category          pulumi.StringPtrInput
 	ConnectionOptions pulumi.StringPtrInput
 	Database          pulumi.StringPtrInput
 	Fields            FieldMapInput
-	InputAttachments  pulumi.AssetOrArchiveMapInput
 	Notes             pulumi.StringPtrInput
 	Password          pulumi.StringPtrInput
 	Port              pulumi.StringPtrInput
@@ -141,6 +142,7 @@ type DatabaseItemArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title    pulumi.StringPtrInput
 	Type     pulumi.StringPtrInput
+	Urls     UrlArrayInput
 	Username pulumi.StringPtrInput
 	// The UUID of the vault the item is in.
 	Vault pulumi.StringInput
@@ -148,46 +150,6 @@ type DatabaseItemArgs struct {
 
 func (DatabaseItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*databaseItemArgs)(nil)).Elem()
-}
-
-func (r *DatabaseItem) GetAttachment(ctx *pulumi.Context, args *DatabaseItemGetAttachmentArgs) (DatabaseItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("one-password-native-unoffical:index:DatabaseItem/attachment", args, DatabaseItemGetAttachmentResultOutput{}, r)
-	if err != nil {
-		return DatabaseItemGetAttachmentResultOutput{}, err
-	}
-	return out.(DatabaseItemGetAttachmentResultOutput), nil
-}
-
-type databaseItemGetAttachmentArgs struct {
-	// The name or uuid of the attachment to get
-	Name string `pulumi:"name"`
-}
-
-// The set of arguments for the GetAttachment method of the DatabaseItem resource.
-type DatabaseItemGetAttachmentArgs struct {
-	// The name or uuid of the attachment to get
-	Name pulumi.StringInput
-}
-
-func (DatabaseItemGetAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*databaseItemGetAttachmentArgs)(nil)).Elem()
-}
-
-// The resolved reference value
-type DatabaseItemGetAttachmentResult struct {
-	// the value of the attachment
-	Value string `pulumi:"value"`
-}
-
-type DatabaseItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
-
-func (DatabaseItemGetAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*DatabaseItemGetAttachmentResult)(nil)).Elem()
-}
-
-// the value of the attachment
-func (o DatabaseItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v DatabaseItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type DatabaseItemInput interface {
@@ -318,7 +280,6 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*DatabaseItemArrayInput)(nil)).Elem(), DatabaseItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DatabaseItemMapInput)(nil)).Elem(), DatabaseItemMap{})
 	pulumi.RegisterOutputType(DatabaseItemOutput{})
-	pulumi.RegisterOutputType(DatabaseItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(DatabaseItemArrayOutput{})
 	pulumi.RegisterOutputType(DatabaseItemMapOutput{})
 }

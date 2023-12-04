@@ -13,6 +13,14 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical.Inputs
 
     public sealed class SectionArgs : Pulumi.ResourceArgs
     {
+        [Input("attachments")]
+        private InputMap<AssetOrArchive>? _attachments;
+        public InputMap<AssetOrArchive> Attachments
+        {
+            get => _attachments ?? (_attachments = new InputMap<AssetOrArchive>());
+            set => _attachments = value;
+        }
+
         [Input("fields", required: true)]
         private InputMap<Inputs.FieldArgs>? _fields;
         public InputMap<Inputs.FieldArgs> Fields

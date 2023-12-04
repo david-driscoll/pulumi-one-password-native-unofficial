@@ -66,7 +66,6 @@ class ResponseFieldType(str, Enum):
     DATE = "Date"
     EMAIL = "EMAIL"
     GENDER = "GENDER"
-    MENU = "MENU"
     MONTH_YEAR = "MONTH_YEAR"
     OTP = "OTP"
     PHONE = "PHONE"

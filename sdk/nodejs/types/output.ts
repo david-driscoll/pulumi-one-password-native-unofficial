@@ -6,14 +6,15 @@ import { input as inputs, output as outputs, enums } from "../types";
 
 import * as utilities from "../utilities";
 
-export interface OutAttachment {
+export interface OutputAttachment {
     name: string;
     reference: string;
     size: number;
     uuid: string;
 }
 
-export interface OutField {
+export interface OutputField {
+    data: {[key: string]: any};
     label: string;
     reference: string;
     type: enums.ResponseFieldType;
@@ -21,10 +22,20 @@ export interface OutField {
     value: string;
 }
 
-export interface OutSection {
-    fields: {[key: string]: outputs.OutField};
+export interface OutputReference {
+}
+
+export interface OutputSection {
+    attachments?: {[key: string]: outputs.OutputAttachment};
+    fields: {[key: string]: outputs.OutputField};
     label: string;
     uuid: string;
+}
+
+export interface OutputUrl {
+    href: string;
+    label?: string;
+    primary: boolean;
 }
 
 export namespace bankAccount {

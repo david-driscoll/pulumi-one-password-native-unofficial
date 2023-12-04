@@ -34,16 +34,16 @@ export interface GetSoftwareLicenseArgs {
 }
 
 export interface GetSoftwareLicenseResult {
-    readonly attachments: {[key: string]: outputs.OutAttachment};
+    readonly attachments: {[key: string]: outputs.OutputAttachment};
     readonly category: enums.Category | string;
     readonly customer?: outputs.softwareLicense.CustomerSection;
-    readonly fields: {[key: string]: outputs.OutField};
+    readonly fields: {[key: string]: outputs.OutputField};
     readonly licenseKey?: string;
     readonly notes?: string;
     readonly order?: outputs.softwareLicense.OrderSection;
     readonly publisher?: outputs.softwareLicense.PublisherSection;
-    readonly references: {[key: string]: outputs.OutField};
-    readonly sections: {[key: string]: outputs.OutSection};
+    readonly references: {[key: string]: outputs.OutputReference};
+    readonly sections: {[key: string]: outputs.OutputSection};
     /**
      * An array of strings of the tags assigned to the item.
      */
@@ -52,14 +52,12 @@ export interface GetSoftwareLicenseResult {
      * The title of the item.
      */
     readonly title: string;
+    readonly urls?: outputs.OutputUrl[];
     /**
      * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
      */
     readonly uuid: string;
-    /**
-     * The UUID of the vault the item is in.
-     */
-    readonly vault: string;
+    readonly vault: {[key: string]: string};
     readonly version?: string;
 }
 

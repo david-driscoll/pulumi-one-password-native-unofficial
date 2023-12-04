@@ -32,8 +32,9 @@ var ssn = new op.SocialSecurityNumberItem("my-ssn",
         vault: "testing-pulumi",
         fields:
         {
-            ["afasdfasdf"]: { type: op.FieldAssignmentType.Text, value: "thename" },
+            ["name"]: { type: op.FieldAssignmentType.Text, value: "thename" },
         },
+        notes: "",
         title: "mytitles",
     });
 

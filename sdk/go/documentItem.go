@@ -14,20 +14,20 @@ import (
 type DocumentItem struct {
 	pulumi.CustomResourceState
 
-	Attachments OutAttachmentMapOutput `pulumi:"attachments"`
-	Category    pulumi.StringOutput    `pulumi:"category"`
-	Fields      OutFieldMapOutput      `pulumi:"fields"`
-	Notes       pulumi.StringPtrOutput `pulumi:"notes"`
-	References  OutFieldMapOutput      `pulumi:"references"`
-	Sections    OutSectionMapOutput    `pulumi:"sections"`
+	Attachments OutputAttachmentMapOutput `pulumi:"attachments"`
+	Category    pulumi.StringOutput       `pulumi:"category"`
+	Fields      OutputFieldMapOutput      `pulumi:"fields"`
+	Notes       pulumi.StringPtrOutput    `pulumi:"notes"`
+	References  OutputReferenceMapOutput  `pulumi:"references"`
+	Sections    OutputSectionMapOutput    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
-	Title pulumi.StringOutput `pulumi:"title"`
+	Title pulumi.StringOutput  `pulumi:"title"`
+	Urls  OutputUrlArrayOutput `pulumi:"urls"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid pulumi.StringOutput `pulumi:"uuid"`
-	// The UUID of the vault the item is in.
-	Vault pulumi.StringOutput `pulumi:"vault"`
+	Uuid  pulumi.StringOutput    `pulumi:"uuid"`
+	Vault pulumi.StringMapOutput `pulumi:"vault"`
 }
 
 // NewDocumentItem registers a new resource with the given unique name, arguments, and options.
@@ -85,78 +85,40 @@ func (DocumentItemState) ElementType() reflect.Type {
 }
 
 type documentItemArgs struct {
+	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
-	Category         *string                          `pulumi:"category"`
-	Fields           map[string]Field                 `pulumi:"fields"`
-	InputAttachments map[string]pulumi.AssetOrArchive `pulumi:"inputAttachments"`
-	Notes            *string                          `pulumi:"notes"`
-	Sections         map[string]Section               `pulumi:"sections"`
+	Category *string            `pulumi:"category"`
+	Fields   map[string]Field   `pulumi:"fields"`
+	Notes    *string            `pulumi:"notes"`
+	Sections map[string]Section `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
+	Urls  []Url   `pulumi:"urls"`
 	// The UUID of the vault the item is in.
 	Vault string `pulumi:"vault"`
 }
 
 // The set of arguments for constructing a DocumentItem resource.
 type DocumentItemArgs struct {
+	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
-	Category         pulumi.StringPtrInput
-	Fields           FieldMapInput
-	InputAttachments pulumi.AssetOrArchiveMapInput
-	Notes            pulumi.StringPtrInput
-	Sections         SectionMapInput
+	Category pulumi.StringPtrInput
+	Fields   FieldMapInput
+	Notes    pulumi.StringPtrInput
+	Sections SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput
+	Urls  UrlArrayInput
 	// The UUID of the vault the item is in.
 	Vault pulumi.StringInput
 }
 
 func (DocumentItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*documentItemArgs)(nil)).Elem()
-}
-
-func (r *DocumentItem) GetAttachment(ctx *pulumi.Context, args *DocumentItemGetAttachmentArgs) (DocumentItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("one-password-native-unoffical:index:DocumentItem/attachment", args, DocumentItemGetAttachmentResultOutput{}, r)
-	if err != nil {
-		return DocumentItemGetAttachmentResultOutput{}, err
-	}
-	return out.(DocumentItemGetAttachmentResultOutput), nil
-}
-
-type documentItemGetAttachmentArgs struct {
-	// The name or uuid of the attachment to get
-	Name string `pulumi:"name"`
-}
-
-// The set of arguments for the GetAttachment method of the DocumentItem resource.
-type DocumentItemGetAttachmentArgs struct {
-	// The name or uuid of the attachment to get
-	Name pulumi.StringInput
-}
-
-func (DocumentItemGetAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*documentItemGetAttachmentArgs)(nil)).Elem()
-}
-
-// The resolved reference value
-type DocumentItemGetAttachmentResult struct {
-	// the value of the attachment
-	Value string `pulumi:"value"`
-}
-
-type DocumentItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
-
-func (DocumentItemGetAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*DocumentItemGetAttachmentResult)(nil)).Elem()
-}
-
-// the value of the attachment
-func (o DocumentItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v DocumentItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type DocumentItemInput interface {
@@ -287,7 +249,6 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*DocumentItemArrayInput)(nil)).Elem(), DocumentItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DocumentItemMapInput)(nil)).Elem(), DocumentItemMap{})
 	pulumi.RegisterOutputType(DocumentItemOutput{})
-	pulumi.RegisterOutputType(DocumentItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(DocumentItemArrayOutput{})
 	pulumi.RegisterOutputType(DocumentItemMapOutput{})
 }

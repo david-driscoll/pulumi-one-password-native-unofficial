@@ -33,11 +33,11 @@ export class PassportItem extends pulumi.CustomResource {
         return obj['__pulumiType'] === PassportItem.__pulumiType;
     }
 
-    public /*out*/ readonly attachments!: pulumi.Output<{[key: string]: outputs.OutAttachment}>;
+    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutputAttachment}>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly dateOfBirth!: pulumi.Output<string | undefined>;
     public readonly expiryDate!: pulumi.Output<string | undefined>;
-    public readonly fields!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.OutputField}>;
     public readonly fullName!: pulumi.Output<string | undefined>;
     public readonly gender!: pulumi.Output<string | undefined>;
     public readonly issuedOn!: pulumi.Output<string | undefined>;
@@ -47,8 +47,8 @@ export class PassportItem extends pulumi.CustomResource {
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly number!: pulumi.Output<string | undefined>;
     public readonly placeOfBirth!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutField}>;
-    public readonly sections!: pulumi.Output<{[key: string]: outputs.OutSection}>;
+    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutputReference}>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
     /**
      * An array of strings of the tags assigned to the item.
      */
@@ -58,14 +58,12 @@ export class PassportItem extends pulumi.CustomResource {
      */
     public readonly title!: pulumi.Output<string>;
     public readonly type!: pulumi.Output<string | undefined>;
+    public readonly urls!: pulumi.Output<outputs.OutputUrl[] | undefined>;
     /**
      * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
      */
     public /*out*/ readonly uuid!: pulumi.Output<string>;
-    /**
-     * The UUID of the vault the item is in.
-     */
-    public readonly vault!: pulumi.Output<string>;
+    public readonly vault!: pulumi.Output<{[key: string]: string}>;
 
     /**
      * Create a PassportItem resource with the given unique name, arguments, and options.
@@ -86,13 +84,13 @@ export class PassportItem extends pulumi.CustomResource {
             if ((!args || args.vault === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vault'");
             }
+            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "Passport";
             resourceInputs["dateOfBirth"] = args ? args.dateOfBirth : undefined;
             resourceInputs["expiryDate"] = args ? args.expiryDate : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["fullName"] = args ? args.fullName : undefined;
             resourceInputs["gender"] = args ? args.gender : undefined;
-            resourceInputs["inputAttachments"] = args ? args.inputAttachments : undefined;
             resourceInputs["issuedOn"] = args ? args.issuedOn : undefined;
             resourceInputs["issuingAuthority"] = args ? args.issuingAuthority : undefined;
             resourceInputs["issuingCountry"] = args ? args.issuingCountry : undefined;
@@ -104,8 +102,8 @@ export class PassportItem extends pulumi.CustomResource {
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["type"] = args ? args.type : undefined;
+            resourceInputs["urls"] = args ? args.urls : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
-            resourceInputs["attachments"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
@@ -113,13 +111,6 @@ export class PassportItem extends pulumi.CustomResource {
         const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "references", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(PassportItem.__pulumiType, name, resourceInputs, opts);
-    }
-
-    getAttachment(args: PassportItem.GetAttachmentArgs): pulumi.Output<PassportItem.GetAttachmentResult> {
-        return pulumi.runtime.call("one-password-native-unoffical:index:PassportItem/attachment", {
-            "__self__": this,
-            "name": args.name,
-        }, this);
     }
 }
 
@@ -134,6 +125,7 @@ export interface PassportItemState {
  * The set of arguments for constructing a PassportItem resource.
  */
 export interface PassportItemArgs {
+    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     /**
      * The category of the vault the item is in.
      */
@@ -143,7 +135,6 @@ export interface PassportItemArgs {
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     fullName?: pulumi.Input<string>;
     gender?: pulumi.Input<string>;
-    inputAttachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     issuedOn?: pulumi.Input<string>;
     issuingAuthority?: pulumi.Input<string>;
     issuingCountry?: pulumi.Input<string>;
@@ -161,31 +152,9 @@ export interface PassportItemArgs {
      */
     title?: pulumi.Input<string>;
     type?: pulumi.Input<string>;
+    urls?: pulumi.Input<pulumi.Input<inputs.UrlArgs>[]>;
     /**
      * The UUID of the vault the item is in.
      */
     vault: pulumi.Input<string>;
-}
-
-export namespace PassportItem {
-    /**
-     * The set of arguments for the PassportItem.getAttachment method.
-     */
-    export interface GetAttachmentArgs {
-        /**
-         * The name or uuid of the attachment to get
-         */
-        name: pulumi.Input<string>;
-    }
-
-    /**
-     * The results of the PassportItem.getAttachment method.
-     */
-    export interface GetAttachmentResult {
-        /**
-         * the value of the attachment
-         */
-        readonly value: string;
-    }
-
 }

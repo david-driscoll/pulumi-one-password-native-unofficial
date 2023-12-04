@@ -139,7 +139,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         public static ResponseFieldType Date { get; } = new ResponseFieldType("Date");
         public static ResponseFieldType Email { get; } = new ResponseFieldType("EMAIL");
         public static ResponseFieldType Gender { get; } = new ResponseFieldType("GENDER");
-        public static ResponseFieldType Menu { get; } = new ResponseFieldType("MENU");
         public static ResponseFieldType MonthYear { get; } = new ResponseFieldType("MONTH_YEAR");
         public static ResponseFieldType Otp { get; } = new ResponseFieldType("OTP");
         public static ResponseFieldType Phone { get; } = new ResponseFieldType("PHONE");

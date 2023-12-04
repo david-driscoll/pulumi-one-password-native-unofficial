@@ -28,50 +28,27 @@ export const ItemType = {
 "GetSecretReference": "one-password-native-unoffical:index:GetSecretReference",
 "GetAttachment": "one-password-native-unoffical:index:GetAttachment",
 "GetAPICredential": "one-password-native-unoffical:index:GetAPICredential",
-"APICredentialItem/attachment": "one-password-native-unoffical:index:APICredentialItem/attachment",
 "GetBankAccount": "one-password-native-unoffical:index:GetBankAccount",
-"BankAccountItem/attachment": "one-password-native-unoffical:index:BankAccountItem/attachment",
 "GetCreditCard": "one-password-native-unoffical:index:GetCreditCard",
-"CreditCardItem/attachment": "one-password-native-unoffical:index:CreditCardItem/attachment",
 "GetCryptoWallet": "one-password-native-unoffical:index:GetCryptoWallet",
-"CryptoWalletItem/attachment": "one-password-native-unoffical:index:CryptoWalletItem/attachment",
 "GetDatabase": "one-password-native-unoffical:index:GetDatabase",
-"DatabaseItem/attachment": "one-password-native-unoffical:index:DatabaseItem/attachment",
 "GetDocument": "one-password-native-unoffical:index:GetDocument",
-"DocumentItem/attachment": "one-password-native-unoffical:index:DocumentItem/attachment",
 "GetDriverLicense": "one-password-native-unoffical:index:GetDriverLicense",
-"DriverLicenseItem/attachment": "one-password-native-unoffical:index:DriverLicenseItem/attachment",
 "GetEmailAccount": "one-password-native-unoffical:index:GetEmailAccount",
-"EmailAccountItem/attachment": "one-password-native-unoffical:index:EmailAccountItem/attachment",
 "GetIdentity": "one-password-native-unoffical:index:GetIdentity",
-"IdentityItem/attachment": "one-password-native-unoffical:index:IdentityItem/attachment",
-"Item/attachment": "one-password-native-unoffical:index:Item/attachment",
 "GetLogin": "one-password-native-unoffical:index:GetLogin",
-"LoginItem/attachment": "one-password-native-unoffical:index:LoginItem/attachment",
 "GetMedicalRecord": "one-password-native-unoffical:index:GetMedicalRecord",
-"MedicalRecordItem/attachment": "one-password-native-unoffical:index:MedicalRecordItem/attachment",
 "GetMembership": "one-password-native-unoffical:index:GetMembership",
-"MembershipItem/attachment": "one-password-native-unoffical:index:MembershipItem/attachment",
 "GetOutdoorLicense": "one-password-native-unoffical:index:GetOutdoorLicense",
-"OutdoorLicenseItem/attachment": "one-password-native-unoffical:index:OutdoorLicenseItem/attachment",
 "GetPassport": "one-password-native-unoffical:index:GetPassport",
-"PassportItem/attachment": "one-password-native-unoffical:index:PassportItem/attachment",
 "GetPassword": "one-password-native-unoffical:index:GetPassword",
-"PasswordItem/attachment": "one-password-native-unoffical:index:PasswordItem/attachment",
 "GetRewardProgram": "one-password-native-unoffical:index:GetRewardProgram",
-"RewardProgramItem/attachment": "one-password-native-unoffical:index:RewardProgramItem/attachment",
 "GetSSHKey": "one-password-native-unoffical:index:GetSSHKey",
-"SSHKeyItem/attachment": "one-password-native-unoffical:index:SSHKeyItem/attachment",
 "GetSecureNote": "one-password-native-unoffical:index:GetSecureNote",
-"SecureNoteItem/attachment": "one-password-native-unoffical:index:SecureNoteItem/attachment",
 "GetServer": "one-password-native-unoffical:index:GetServer",
-"ServerItem/attachment": "one-password-native-unoffical:index:ServerItem/attachment",
 "GetSocialSecurityNumber": "one-password-native-unoffical:index:GetSocialSecurityNumber",
-"SocialSecurityNumberItem/attachment": "one-password-native-unoffical:index:SocialSecurityNumberItem/attachment",
 "GetSoftwareLicense": "one-password-native-unoffical:index:GetSoftwareLicense",
-"SoftwareLicenseItem/attachment": "one-password-native-unoffical:index:SoftwareLicenseItem/attachment",
-"GetWirelessRouter": "one-password-native-unoffical:index:GetWirelessRouter",
-"WirelessRouterItem/attachment": "one-password-native-unoffical:index:WirelessRouterItem/attachment"
+"GetWirelessRouter": "one-password-native-unoffical:index:GetWirelessRouter"
 } as const;
 export const ItemTypeNames = {
 "one-password-native-unoffical:index:APICredentialItem": "API Credential",
@@ -125,7 +102,7 @@ export const ItemTypeNames = {
 "one-password-native-unoffical:index:GetAttachment": "Attachment"
 } as const;
 export const ResourceTypes = ["one-password-native-unoffical:index:APICredentialItem", "one-password-native-unoffical:index:BankAccountItem", "one-password-native-unoffical:index:CreditCardItem", "one-password-native-unoffical:index:CryptoWalletItem", "one-password-native-unoffical:index:DatabaseItem", "one-password-native-unoffical:index:DocumentItem", "one-password-native-unoffical:index:DriverLicenseItem", "one-password-native-unoffical:index:EmailAccountItem", "one-password-native-unoffical:index:IdentityItem", "one-password-native-unoffical:index:Item", "one-password-native-unoffical:index:LoginItem", "one-password-native-unoffical:index:MedicalRecordItem", "one-password-native-unoffical:index:MembershipItem", "one-password-native-unoffical:index:OutdoorLicenseItem", "one-password-native-unoffical:index:PassportItem", "one-password-native-unoffical:index:PasswordItem", "one-password-native-unoffical:index:RewardProgramItem", "one-password-native-unoffical:index:SSHKeyItem", "one-password-native-unoffical:index:SecureNoteItem", "one-password-native-unoffical:index:ServerItem", "one-password-native-unoffical:index:SocialSecurityNumberItem", "one-password-native-unoffical:index:SoftwareLicenseItem", "one-password-native-unoffical:index:WirelessRouterItem"] as const;
-export const FunctionTypes = ["one-password-native-unoffical:index:GetItem", "one-password-native-unoffical:index:GetVault", "one-password-native-unoffical:index:GetSecretReference", "one-password-native-unoffical:index:GetAttachment", "one-password-native-unoffical:index:GetAPICredential", "one-password-native-unoffical:index:APICredentialItem/attachment", "one-password-native-unoffical:index:GetBankAccount", "one-password-native-unoffical:index:BankAccountItem/attachment", "one-password-native-unoffical:index:GetCreditCard", "one-password-native-unoffical:index:CreditCardItem/attachment", "one-password-native-unoffical:index:GetCryptoWallet", "one-password-native-unoffical:index:CryptoWalletItem/attachment", "one-password-native-unoffical:index:GetDatabase", "one-password-native-unoffical:index:DatabaseItem/attachment", "one-password-native-unoffical:index:GetDocument", "one-password-native-unoffical:index:DocumentItem/attachment", "one-password-native-unoffical:index:GetDriverLicense", "one-password-native-unoffical:index:DriverLicenseItem/attachment", "one-password-native-unoffical:index:GetEmailAccount", "one-password-native-unoffical:index:EmailAccountItem/attachment", "one-password-native-unoffical:index:GetIdentity", "one-password-native-unoffical:index:IdentityItem/attachment", "one-password-native-unoffical:index:Item/attachment", "one-password-native-unoffical:index:GetLogin", "one-password-native-unoffical:index:LoginItem/attachment", "one-password-native-unoffical:index:GetMedicalRecord", "one-password-native-unoffical:index:MedicalRecordItem/attachment", "one-password-native-unoffical:index:GetMembership", "one-password-native-unoffical:index:MembershipItem/attachment", "one-password-native-unoffical:index:GetOutdoorLicense", "one-password-native-unoffical:index:OutdoorLicenseItem/attachment", "one-password-native-unoffical:index:GetPassport", "one-password-native-unoffical:index:PassportItem/attachment", "one-password-native-unoffical:index:GetPassword", "one-password-native-unoffical:index:PasswordItem/attachment", "one-password-native-unoffical:index:GetRewardProgram", "one-password-native-unoffical:index:RewardProgramItem/attachment", "one-password-native-unoffical:index:GetSSHKey", "one-password-native-unoffical:index:SSHKeyItem/attachment", "one-password-native-unoffical:index:GetSecureNote", "one-password-native-unoffical:index:SecureNoteItem/attachment", "one-password-native-unoffical:index:GetServer", "one-password-native-unoffical:index:ServerItem/attachment", "one-password-native-unoffical:index:GetSocialSecurityNumber", "one-password-native-unoffical:index:SocialSecurityNumberItem/attachment", "one-password-native-unoffical:index:GetSoftwareLicense", "one-password-native-unoffical:index:SoftwareLicenseItem/attachment", "one-password-native-unoffical:index:GetWirelessRouter", "one-password-native-unoffical:index:WirelessRouterItem/attachment"] as const;
+export const FunctionTypes = ["one-password-native-unoffical:index:GetItem", "one-password-native-unoffical:index:GetVault", "one-password-native-unoffical:index:GetSecretReference", "one-password-native-unoffical:index:GetAttachment", "one-password-native-unoffical:index:GetAPICredential", "one-password-native-unoffical:index:GetBankAccount", "one-password-native-unoffical:index:GetCreditCard", "one-password-native-unoffical:index:GetCryptoWallet", "one-password-native-unoffical:index:GetDatabase", "one-password-native-unoffical:index:GetDocument", "one-password-native-unoffical:index:GetDriverLicense", "one-password-native-unoffical:index:GetEmailAccount", "one-password-native-unoffical:index:GetIdentity", "one-password-native-unoffical:index:GetLogin", "one-password-native-unoffical:index:GetMedicalRecord", "one-password-native-unoffical:index:GetMembership", "one-password-native-unoffical:index:GetOutdoorLicense", "one-password-native-unoffical:index:GetPassport", "one-password-native-unoffical:index:GetPassword", "one-password-native-unoffical:index:GetRewardProgram", "one-password-native-unoffical:index:GetSSHKey", "one-password-native-unoffical:index:GetSecureNote", "one-password-native-unoffical:index:GetServer", "one-password-native-unoffical:index:GetSocialSecurityNumber", "one-password-native-unoffical:index:GetSoftwareLicense", "one-password-native-unoffical:index:GetWirelessRouter"] as const;
 export const PropertyPaths: Record<string, [field: string, section?: string][]> = {
     "one-password-native-unoffical:index:APICredentialItem": [["notes"],["username"],["credential"],["type"],["filename"],["validFrom"],["expires"],["hostname"]],
 "one-password-native-unoffical:index:BankAccountItem": [["notes"],["bankName"],["nameOnAccount"],["type"],["routingNumber"],["accountNumber"],["swift"],["iban"],["pin"],["phone","branchInformation"],["address","branchInformation"]],

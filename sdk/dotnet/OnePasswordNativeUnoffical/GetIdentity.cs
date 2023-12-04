@@ -75,14 +75,14 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
     public sealed class GetIdentityResult
     {
         public readonly Rocket.Surgery.OnePasswordNativeUnoffical.Identity.Outputs.AddressSection? Address;
-        public readonly ImmutableDictionary<string, Outputs.OutAttachment> Attachments;
+        public readonly ImmutableDictionary<string, Outputs.OutputAttachment> Attachments;
         public readonly string Category;
-        public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.OutputField> Fields;
         public readonly Rocket.Surgery.OnePasswordNativeUnoffical.Identity.Outputs.IdentificationSection? Identification;
         public readonly Rocket.Surgery.OnePasswordNativeUnoffical.Identity.Outputs.InternetDetailsSection? InternetDetails;
         public readonly string? Notes;
-        public readonly ImmutableDictionary<string, Outputs.OutField> References;
-        public readonly ImmutableDictionary<string, Outputs.OutSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.OutputReference> References;
+        public readonly ImmutableDictionary<string, Outputs.OutputSection> Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
         /// </summary>
@@ -91,24 +91,22 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         /// The title of the item.
         /// </summary>
         public readonly string Title;
+        public readonly ImmutableArray<Outputs.OutputUrl> Urls;
         /// <summary>
         /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
         /// </summary>
         public readonly string Uuid;
-        /// <summary>
-        /// The UUID of the vault the item is in.
-        /// </summary>
-        public readonly string Vault;
+        public readonly ImmutableDictionary<string, string> Vault;
 
         [OutputConstructor]
         private GetIdentityResult(
             Rocket.Surgery.OnePasswordNativeUnoffical.Identity.Outputs.AddressSection? address,
 
-            ImmutableDictionary<string, Outputs.OutAttachment> attachments,
+            ImmutableDictionary<string, Outputs.OutputAttachment> attachments,
 
             string category,
 
-            ImmutableDictionary<string, Outputs.OutField> fields,
+            ImmutableDictionary<string, Outputs.OutputField> fields,
 
             Rocket.Surgery.OnePasswordNativeUnoffical.Identity.Outputs.IdentificationSection? identification,
 
@@ -116,17 +114,19 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
             string? notes,
 
-            ImmutableDictionary<string, Outputs.OutField> references,
+            ImmutableDictionary<string, Outputs.OutputReference> references,
 
-            ImmutableDictionary<string, Outputs.OutSection> sections,
+            ImmutableDictionary<string, Outputs.OutputSection> sections,
 
             ImmutableArray<string> tags,
 
             string title,
 
+            ImmutableArray<Outputs.OutputUrl> urls,
+
             string uuid,
 
-            string vault)
+            ImmutableDictionary<string, string> vault)
         {
             Address = address;
             Attachments = attachments;
@@ -139,6 +139,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
             Sections = sections;
             Tags = tags;
             Title = title;
+            Urls = urls;
             Uuid = uuid;
             Vault = vault;
         }

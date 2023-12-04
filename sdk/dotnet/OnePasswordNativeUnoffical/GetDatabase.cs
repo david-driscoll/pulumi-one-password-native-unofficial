@@ -75,16 +75,16 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
     public sealed class GetDatabaseResult
     {
         public readonly string? Alias;
-        public readonly ImmutableDictionary<string, Outputs.OutAttachment> Attachments;
+        public readonly ImmutableDictionary<string, Outputs.OutputAttachment> Attachments;
         public readonly string Category;
         public readonly string? ConnectionOptions;
         public readonly string? Database;
-        public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.OutputField> Fields;
         public readonly string? Notes;
         public readonly string? Password;
         public readonly string? Port;
-        public readonly ImmutableDictionary<string, Outputs.OutField> References;
-        public readonly ImmutableDictionary<string, Outputs.OutSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.OutputReference> References;
+        public readonly ImmutableDictionary<string, Outputs.OutputSection> Sections;
         public readonly string? Server;
         public readonly string? Sid;
         /// <summary>
@@ -96,21 +96,19 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         /// </summary>
         public readonly string Title;
         public readonly string? Type;
+        public readonly ImmutableArray<Outputs.OutputUrl> Urls;
         public readonly string? Username;
         /// <summary>
         /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
         /// </summary>
         public readonly string Uuid;
-        /// <summary>
-        /// The UUID of the vault the item is in.
-        /// </summary>
-        public readonly string Vault;
+        public readonly ImmutableDictionary<string, string> Vault;
 
         [OutputConstructor]
         private GetDatabaseResult(
             string? alias,
 
-            ImmutableDictionary<string, Outputs.OutAttachment> attachments,
+            ImmutableDictionary<string, Outputs.OutputAttachment> attachments,
 
             string category,
 
@@ -118,7 +116,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
             string? database,
 
-            ImmutableDictionary<string, Outputs.OutField> fields,
+            ImmutableDictionary<string, Outputs.OutputField> fields,
 
             string? notes,
 
@@ -126,9 +124,9 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
             string? port,
 
-            ImmutableDictionary<string, Outputs.OutField> references,
+            ImmutableDictionary<string, Outputs.OutputReference> references,
 
-            ImmutableDictionary<string, Outputs.OutSection> sections,
+            ImmutableDictionary<string, Outputs.OutputSection> sections,
 
             string? server,
 
@@ -140,11 +138,13 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
             string? type,
 
+            ImmutableArray<Outputs.OutputUrl> urls,
+
             string? username,
 
             string uuid,
 
-            string vault)
+            ImmutableDictionary<string, string> vault)
         {
             Alias = alias;
             Attachments = attachments;
@@ -162,6 +162,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
             Tags = tags;
             Title = title;
             Type = type;
+            Urls = urls;
             Username = username;
             Uuid = uuid;
             Vault = vault;

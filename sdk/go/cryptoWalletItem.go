@@ -15,22 +15,22 @@ import (
 type CryptoWalletItem struct {
 	pulumi.CustomResourceState
 
-	Attachments    OutAttachmentMapOutput `pulumi:"attachments"`
-	Category       pulumi.StringOutput    `pulumi:"category"`
-	Fields         OutFieldMapOutput      `pulumi:"fields"`
-	Notes          pulumi.StringPtrOutput `pulumi:"notes"`
-	Password       pulumi.StringPtrOutput `pulumi:"password"`
-	RecoveryPhrase pulumi.StringPtrOutput `pulumi:"recoveryPhrase"`
-	References     OutFieldMapOutput      `pulumi:"references"`
-	Sections       OutSectionMapOutput    `pulumi:"sections"`
+	Attachments    OutputAttachmentMapOutput `pulumi:"attachments"`
+	Category       pulumi.StringOutput       `pulumi:"category"`
+	Fields         OutputFieldMapOutput      `pulumi:"fields"`
+	Notes          pulumi.StringPtrOutput    `pulumi:"notes"`
+	Password       pulumi.StringPtrOutput    `pulumi:"password"`
+	RecoveryPhrase pulumi.StringPtrOutput    `pulumi:"recoveryPhrase"`
+	References     OutputReferenceMapOutput  `pulumi:"references"`
+	Sections       OutputSectionMapOutput    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
-	Title pulumi.StringOutput `pulumi:"title"`
+	Title pulumi.StringOutput  `pulumi:"title"`
+	Urls  OutputUrlArrayOutput `pulumi:"urls"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid pulumi.StringOutput `pulumi:"uuid"`
-	// The UUID of the vault the item is in.
-	Vault  pulumi.StringOutput                 `pulumi:"vault"`
+	Uuid   pulumi.StringOutput                 `pulumi:"uuid"`
+	Vault  pulumi.StringMapOutput              `pulumi:"vault"`
 	Wallet cryptowallet.WalletSectionPtrOutput `pulumi:"wallet"`
 }
 
@@ -97,18 +97,19 @@ func (CryptoWalletItemState) ElementType() reflect.Type {
 }
 
 type cryptoWalletItemArgs struct {
+	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
-	Category         *string                          `pulumi:"category"`
-	Fields           map[string]Field                 `pulumi:"fields"`
-	InputAttachments map[string]pulumi.AssetOrArchive `pulumi:"inputAttachments"`
-	Notes            *string                          `pulumi:"notes"`
-	Password         *string                          `pulumi:"password"`
-	RecoveryPhrase   *string                          `pulumi:"recoveryPhrase"`
-	Sections         map[string]Section               `pulumi:"sections"`
+	Category       *string            `pulumi:"category"`
+	Fields         map[string]Field   `pulumi:"fields"`
+	Notes          *string            `pulumi:"notes"`
+	Password       *string            `pulumi:"password"`
+	RecoveryPhrase *string            `pulumi:"recoveryPhrase"`
+	Sections       map[string]Section `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
+	Urls  []Url   `pulumi:"urls"`
 	// The UUID of the vault the item is in.
 	Vault  string                      `pulumi:"vault"`
 	Wallet *cryptowallet.WalletSection `pulumi:"wallet"`
@@ -116,18 +117,19 @@ type cryptoWalletItemArgs struct {
 
 // The set of arguments for constructing a CryptoWalletItem resource.
 type CryptoWalletItemArgs struct {
+	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
-	Category         pulumi.StringPtrInput
-	Fields           FieldMapInput
-	InputAttachments pulumi.AssetOrArchiveMapInput
-	Notes            pulumi.StringPtrInput
-	Password         pulumi.StringPtrInput
-	RecoveryPhrase   pulumi.StringPtrInput
-	Sections         SectionMapInput
+	Category       pulumi.StringPtrInput
+	Fields         FieldMapInput
+	Notes          pulumi.StringPtrInput
+	Password       pulumi.StringPtrInput
+	RecoveryPhrase pulumi.StringPtrInput
+	Sections       SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput
+	Urls  UrlArrayInput
 	// The UUID of the vault the item is in.
 	Vault  pulumi.StringInput
 	Wallet cryptowallet.WalletSectionPtrInput
@@ -135,46 +137,6 @@ type CryptoWalletItemArgs struct {
 
 func (CryptoWalletItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*cryptoWalletItemArgs)(nil)).Elem()
-}
-
-func (r *CryptoWalletItem) GetAttachment(ctx *pulumi.Context, args *CryptoWalletItemGetAttachmentArgs) (CryptoWalletItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("one-password-native-unoffical:index:CryptoWalletItem/attachment", args, CryptoWalletItemGetAttachmentResultOutput{}, r)
-	if err != nil {
-		return CryptoWalletItemGetAttachmentResultOutput{}, err
-	}
-	return out.(CryptoWalletItemGetAttachmentResultOutput), nil
-}
-
-type cryptoWalletItemGetAttachmentArgs struct {
-	// The name or uuid of the attachment to get
-	Name string `pulumi:"name"`
-}
-
-// The set of arguments for the GetAttachment method of the CryptoWalletItem resource.
-type CryptoWalletItemGetAttachmentArgs struct {
-	// The name or uuid of the attachment to get
-	Name pulumi.StringInput
-}
-
-func (CryptoWalletItemGetAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*cryptoWalletItemGetAttachmentArgs)(nil)).Elem()
-}
-
-// The resolved reference value
-type CryptoWalletItemGetAttachmentResult struct {
-	// the value of the attachment
-	Value string `pulumi:"value"`
-}
-
-type CryptoWalletItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
-
-func (CryptoWalletItemGetAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*CryptoWalletItemGetAttachmentResult)(nil)).Elem()
-}
-
-// the value of the attachment
-func (o CryptoWalletItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v CryptoWalletItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type CryptoWalletItemInput interface {
@@ -305,7 +267,6 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*CryptoWalletItemArrayInput)(nil)).Elem(), CryptoWalletItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CryptoWalletItemMapInput)(nil)).Elem(), CryptoWalletItemMap{})
 	pulumi.RegisterOutputType(CryptoWalletItemOutput{})
-	pulumi.RegisterOutputType(CryptoWalletItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(CryptoWalletItemArrayOutput{})
 	pulumi.RegisterOutputType(CryptoWalletItemMapOutput{})
 }

@@ -17,11 +17,11 @@ __all__ = ['MembershipItemArgs', 'MembershipItem']
 class MembershipItemArgs:
     def __init__(__self__, *,
                  vault: pulumi.Input[str],
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  expiry_date: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
                  group: Optional[pulumi.Input[str]] = None,
-                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  member_id: Optional[pulumi.Input[str]] = None,
                  member_name: Optional[pulumi.Input[str]] = None,
                  member_since: Optional[pulumi.Input[str]] = None,
@@ -31,6 +31,7 @@ class MembershipItemArgs:
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  telephone: Optional[pulumi.Input[str]] = None,
                  title: Optional[pulumi.Input[str]] = None,
+                 urls: Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]] = None,
                  website: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a MembershipItem resource.
@@ -40,6 +41,8 @@ class MembershipItemArgs:
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         """
         pulumi.set(__self__, "vault", vault)
+        if attachments is not None:
+            pulumi.set(__self__, "attachments", attachments)
         if category is not None:
             pulumi.set(__self__, "category", 'Membership')
         if expiry_date is not None:
@@ -48,8 +51,6 @@ class MembershipItemArgs:
             pulumi.set(__self__, "fields", fields)
         if group is not None:
             pulumi.set(__self__, "group", group)
-        if input_attachments is not None:
-            pulumi.set(__self__, "input_attachments", input_attachments)
         if member_id is not None:
             pulumi.set(__self__, "member_id", member_id)
         if member_name is not None:
@@ -68,6 +69,8 @@ class MembershipItemArgs:
             pulumi.set(__self__, "telephone", telephone)
         if title is not None:
             pulumi.set(__self__, "title", title)
+        if urls is not None:
+            pulumi.set(__self__, "urls", urls)
         if website is not None:
             pulumi.set(__self__, "website", website)
 
@@ -82,6 +85,15 @@ class MembershipItemArgs:
     @vault.setter
     def vault(self, value: pulumi.Input[str]):
         pulumi.set(self, "vault", value)
+
+    @property
+    @pulumi.getter
+    def attachments(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]:
+        return pulumi.get(self, "attachments")
+
+    @attachments.setter
+    def attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
+        pulumi.set(self, "attachments", value)
 
     @property
     @pulumi.getter
@@ -121,15 +133,6 @@ class MembershipItemArgs:
     @group.setter
     def group(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "group", value)
-
-    @property
-    @pulumi.getter(name="inputAttachments")
-    def input_attachments(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]:
-        return pulumi.get(self, "input_attachments")
-
-    @input_attachments.setter
-    def input_attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
-        pulumi.set(self, "input_attachments", value)
 
     @property
     @pulumi.getter(name="memberId")
@@ -220,6 +223,15 @@ class MembershipItemArgs:
 
     @property
     @pulumi.getter
+    def urls(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]]:
+        return pulumi.get(self, "urls")
+
+    @urls.setter
+    def urls(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]]):
+        pulumi.set(self, "urls", value)
+
+    @property
+    @pulumi.getter
     def website(self) -> Optional[pulumi.Input[str]]:
         return pulumi.get(self, "website")
 
@@ -256,11 +268,11 @@ class MembershipItem(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  expiry_date: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  group: Optional[pulumi.Input[str]] = None,
-                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  member_id: Optional[pulumi.Input[str]] = None,
                  member_name: Optional[pulumi.Input[str]] = None,
                  member_since: Optional[pulumi.Input[str]] = None,
@@ -270,6 +282,7 @@ class MembershipItem(pulumi.CustomResource):
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  telephone: Optional[pulumi.Input[str]] = None,
                  title: Optional[pulumi.Input[str]] = None,
+                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['UrlArgs']]]]] = None,
                  vault: Optional[pulumi.Input[str]] = None,
                  website: Optional[pulumi.Input[str]] = None,
                  __props__=None):
@@ -305,11 +318,11 @@ class MembershipItem(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  expiry_date: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  group: Optional[pulumi.Input[str]] = None,
-                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  member_id: Optional[pulumi.Input[str]] = None,
                  member_name: Optional[pulumi.Input[str]] = None,
                  member_since: Optional[pulumi.Input[str]] = None,
@@ -319,6 +332,7 @@ class MembershipItem(pulumi.CustomResource):
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  telephone: Optional[pulumi.Input[str]] = None,
                  title: Optional[pulumi.Input[str]] = None,
+                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['UrlArgs']]]]] = None,
                  vault: Optional[pulumi.Input[str]] = None,
                  website: Optional[pulumi.Input[str]] = None,
                  __props__=None):
@@ -335,11 +349,11 @@ class MembershipItem(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = MembershipItemArgs.__new__(MembershipItemArgs)
 
+            __props__.__dict__["attachments"] = attachments
             __props__.__dict__["category"] = 'Membership'
             __props__.__dict__["expiry_date"] = expiry_date
             __props__.__dict__["fields"] = fields
             __props__.__dict__["group"] = group
-            __props__.__dict__["input_attachments"] = input_attachments
             __props__.__dict__["member_id"] = member_id
             __props__.__dict__["member_name"] = member_name
             __props__.__dict__["member_since"] = member_since
@@ -349,11 +363,11 @@ class MembershipItem(pulumi.CustomResource):
             __props__.__dict__["tags"] = tags
             __props__.__dict__["telephone"] = telephone
             __props__.__dict__["title"] = title
+            __props__.__dict__["urls"] = urls
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
             __props__.__dict__["website"] = website
-            __props__.__dict__["attachments"] = None
             __props__.__dict__["references"] = None
             __props__.__dict__["uuid"] = None
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachments", "fields", "pin", "references", "sections"])
@@ -398,13 +412,14 @@ class MembershipItem(pulumi.CustomResource):
         __props__.__dict__["tags"] = None
         __props__.__dict__["telephone"] = None
         __props__.__dict__["title"] = None
+        __props__.__dict__["urls"] = None
         __props__.__dict__["uuid"] = None
         __props__.__dict__["website"] = None
         return MembershipItem(resource_name, opts=opts, __props__=__props__)
 
     @property
     @pulumi.getter
-    def attachments(self) -> pulumi.Output[Mapping[str, 'outputs.OutAttachment']]:
+    def attachments(self) -> pulumi.Output[Mapping[str, 'outputs.OutputAttachment']]:
         return pulumi.get(self, "attachments")
 
     @property
@@ -419,7 +434,7 @@ class MembershipItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def fields(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+    def fields(self) -> pulumi.Output[Mapping[str, 'outputs.OutputField']]:
         return pulumi.get(self, "fields")
 
     @property
@@ -454,12 +469,12 @@ class MembershipItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def references(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+    def references(self) -> pulumi.Output[Mapping[str, 'outputs.OutputReference']]:
         return pulumi.get(self, "references")
 
     @property
     @pulumi.getter
-    def sections(self) -> pulumi.Output[Mapping[str, 'outputs.OutSection']]:
+    def sections(self) -> pulumi.Output[Mapping[str, 'outputs.OutputSection']]:
         return pulumi.get(self, "sections")
 
     @property
@@ -485,6 +500,11 @@ class MembershipItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
+    def urls(self) -> pulumi.Output[Optional[Sequence['outputs.OutputUrl']]]:
+        return pulumi.get(self, "urls")
+
+    @property
+    @pulumi.getter
     def uuid(self) -> pulumi.Output[str]:
         """
         The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -493,43 +513,11 @@ class MembershipItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def vault(self) -> pulumi.Output[str]:
-        """
-        The UUID of the vault the item is in.
-        """
+    def vault(self) -> pulumi.Output[Mapping[str, str]]:
         return pulumi.get(self, "vault")
 
     @property
     @pulumi.getter
     def website(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "website")
-
-    @pulumi.output_type
-    class GetAttachmentResult:
-        """
-        The resolved reference value
-        """
-        def __init__(__self__, value=None):
-            if value and not isinstance(value, str):
-                raise TypeError("Expected argument 'value' to be a str")
-            pulumi.set(__self__, "value", value)
-
-        @property
-        @pulumi.getter
-        def value(self) -> str:
-            """
-            the value of the attachment
-            """
-            return pulumi.get(self, "value")
-
-    def get_attachment(__self__, *,
-                       name: pulumi.Input[str]) -> pulumi.Output['MembershipItem.GetAttachmentResult']:
-        """
-
-        :param pulumi.Input[str] name: The name or uuid of the attachment to get
-        """
-        __args__ = dict()
-        __args__['__self__'] = __self__
-        __args__['name'] = name
-        return pulumi.runtime.call('one-password-native-unoffical:index:MembershipItem/attachment', __args__, res=__self__, typ=MembershipItem.GetAttachmentResult)
 

@@ -19,7 +19,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetDriverLicenseResult:
-    def __init__(__self__, address=None, attachments=None, category=None, conditions_restrictions=None, country=None, date_of_birth=None, expiry_date=None, fields=None, full_name=None, gender=None, height=None, license_class=None, notes=None, number=None, references=None, sections=None, state=None, tags=None, title=None, uuid=None, vault=None):
+    def __init__(__self__, address=None, attachments=None, category=None, conditions_restrictions=None, country=None, date_of_birth=None, expiry_date=None, fields=None, full_name=None, gender=None, height=None, license_class=None, notes=None, number=None, references=None, sections=None, state=None, tags=None, title=None, urls=None, uuid=None, vault=None):
         if address and not isinstance(address, str):
             raise TypeError("Expected argument 'address' to be a str")
         pulumi.set(__self__, "address", address)
@@ -77,11 +77,14 @@ class GetDriverLicenseResult:
         if title and not isinstance(title, str):
             raise TypeError("Expected argument 'title' to be a str")
         pulumi.set(__self__, "title", title)
+        if urls and not isinstance(urls, list):
+            raise TypeError("Expected argument 'urls' to be a list")
+        pulumi.set(__self__, "urls", urls)
         if uuid and not isinstance(uuid, str):
             raise TypeError("Expected argument 'uuid' to be a str")
         pulumi.set(__self__, "uuid", uuid)
-        if vault and not isinstance(vault, str):
-            raise TypeError("Expected argument 'vault' to be a str")
+        if vault and not isinstance(vault, dict):
+            raise TypeError("Expected argument 'vault' to be a dict")
         pulumi.set(__self__, "vault", vault)
 
     @property
@@ -91,7 +94,7 @@ class GetDriverLicenseResult:
 
     @property
     @pulumi.getter
-    def attachments(self) -> Mapping[str, 'outputs.OutAttachment']:
+    def attachments(self) -> Mapping[str, 'outputs.OutputAttachment']:
         return pulumi.get(self, "attachments")
 
     @property
@@ -121,7 +124,7 @@ class GetDriverLicenseResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.OutField']:
+    def fields(self) -> Mapping[str, 'outputs.OutputField']:
         return pulumi.get(self, "fields")
 
     @property
@@ -156,12 +159,12 @@ class GetDriverLicenseResult:
 
     @property
     @pulumi.getter
-    def references(self) -> Mapping[str, 'outputs.OutField']:
+    def references(self) -> Mapping[str, 'outputs.OutputReference']:
         return pulumi.get(self, "references")
 
     @property
     @pulumi.getter
-    def sections(self) -> Mapping[str, 'outputs.OutSection']:
+    def sections(self) -> Mapping[str, 'outputs.OutputSection']:
         return pulumi.get(self, "sections")
 
     @property
@@ -187,6 +190,11 @@ class GetDriverLicenseResult:
 
     @property
     @pulumi.getter
+    def urls(self) -> Optional[Sequence['outputs.OutputUrl']]:
+        return pulumi.get(self, "urls")
+
+    @property
+    @pulumi.getter
     def uuid(self) -> str:
         """
         The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -195,10 +203,7 @@ class GetDriverLicenseResult:
 
     @property
     @pulumi.getter
-    def vault(self) -> str:
-        """
-        The UUID of the vault the item is in.
-        """
+    def vault(self) -> Mapping[str, str]:
         return pulumi.get(self, "vault")
 
 
@@ -227,6 +232,7 @@ class AwaitableGetDriverLicenseResult(GetDriverLicenseResult):
             state=self.state,
             tags=self.tags,
             title=self.title,
+            urls=self.urls,
             uuid=self.uuid,
             vault=self.vault)
 
@@ -274,6 +280,7 @@ def get_driver_license(title: Optional[str] = None,
         state=__ret__.state,
         tags=__ret__.tags,
         title=__ret__.title,
+        urls=__ret__.urls,
         uuid=__ret__.uuid,
         vault=__ret__.vault)
 

@@ -30,22 +30,22 @@ type GetLoginArgs struct {
 }
 
 type GetLoginResult struct {
-	Attachments map[string]OutAttachment `pulumi:"attachments"`
-	Category    string                   `pulumi:"category"`
-	Fields      map[string]OutField      `pulumi:"fields"`
-	Notes       *string                  `pulumi:"notes"`
-	Password    *string                  `pulumi:"password"`
-	References  map[string]OutField      `pulumi:"references"`
-	Sections    map[string]OutSection    `pulumi:"sections"`
+	Attachments map[string]OutputAttachment `pulumi:"attachments"`
+	Category    string                      `pulumi:"category"`
+	Fields      map[string]OutputField      `pulumi:"fields"`
+	Notes       *string                     `pulumi:"notes"`
+	Password    *string                     `pulumi:"password"`
+	References  map[string]OutputReference  `pulumi:"references"`
+	Sections    map[string]OutputSection    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title    string  `pulumi:"title"`
-	Username *string `pulumi:"username"`
+	Title    string      `pulumi:"title"`
+	Urls     []OutputUrl `pulumi:"urls"`
+	Username *string     `pulumi:"username"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid string `pulumi:"uuid"`
-	// The UUID of the vault the item is in.
-	Vault string `pulumi:"vault"`
+	Uuid  string            `pulumi:"uuid"`
+	Vault map[string]string `pulumi:"vault"`
 }
 
 func GetLoginOutput(ctx *pulumi.Context, args GetLoginOutputArgs, opts ...pulumi.InvokeOption) GetLoginResultOutput {
@@ -88,16 +88,16 @@ func (o GetLoginResultOutput) ToGetLoginResultOutputWithContext(ctx context.Cont
 	return o
 }
 
-func (o GetLoginResultOutput) Attachments() OutAttachmentMapOutput {
-	return o.ApplyT(func(v GetLoginResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
+func (o GetLoginResultOutput) Attachments() OutputAttachmentMapOutput {
+	return o.ApplyT(func(v GetLoginResult) map[string]OutputAttachment { return v.Attachments }).(OutputAttachmentMapOutput)
 }
 
 func (o GetLoginResultOutput) Category() pulumi.StringOutput {
 	return o.ApplyT(func(v GetLoginResult) string { return v.Category }).(pulumi.StringOutput)
 }
 
-func (o GetLoginResultOutput) Fields() OutFieldMapOutput {
-	return o.ApplyT(func(v GetLoginResult) map[string]OutField { return v.Fields }).(OutFieldMapOutput)
+func (o GetLoginResultOutput) Fields() OutputFieldMapOutput {
+	return o.ApplyT(func(v GetLoginResult) map[string]OutputField { return v.Fields }).(OutputFieldMapOutput)
 }
 
 func (o GetLoginResultOutput) Notes() pulumi.StringPtrOutput {
@@ -108,12 +108,12 @@ func (o GetLoginResultOutput) Password() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetLoginResult) *string { return v.Password }).(pulumi.StringPtrOutput)
 }
 
-func (o GetLoginResultOutput) References() OutFieldMapOutput {
-	return o.ApplyT(func(v GetLoginResult) map[string]OutField { return v.References }).(OutFieldMapOutput)
+func (o GetLoginResultOutput) References() OutputReferenceMapOutput {
+	return o.ApplyT(func(v GetLoginResult) map[string]OutputReference { return v.References }).(OutputReferenceMapOutput)
 }
 
-func (o GetLoginResultOutput) Sections() OutSectionMapOutput {
-	return o.ApplyT(func(v GetLoginResult) map[string]OutSection { return v.Sections }).(OutSectionMapOutput)
+func (o GetLoginResultOutput) Sections() OutputSectionMapOutput {
+	return o.ApplyT(func(v GetLoginResult) map[string]OutputSection { return v.Sections }).(OutputSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.
@@ -126,6 +126,10 @@ func (o GetLoginResultOutput) Title() pulumi.StringOutput {
 	return o.ApplyT(func(v GetLoginResult) string { return v.Title }).(pulumi.StringOutput)
 }
 
+func (o GetLoginResultOutput) Urls() OutputUrlArrayOutput {
+	return o.ApplyT(func(v GetLoginResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
+}
+
 func (o GetLoginResultOutput) Username() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetLoginResult) *string { return v.Username }).(pulumi.StringPtrOutput)
 }
@@ -135,9 +139,8 @@ func (o GetLoginResultOutput) Uuid() pulumi.StringOutput {
 	return o.ApplyT(func(v GetLoginResult) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
-// The UUID of the vault the item is in.
-func (o GetLoginResultOutput) Vault() pulumi.StringOutput {
-	return o.ApplyT(func(v GetLoginResult) string { return v.Vault }).(pulumi.StringOutput)
+func (o GetLoginResultOutput) Vault() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetLoginResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
 }
 
 func init() {

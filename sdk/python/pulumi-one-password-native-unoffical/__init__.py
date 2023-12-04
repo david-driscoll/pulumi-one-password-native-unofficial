@@ -63,6 +63,8 @@ from . import outputs
 if typing.TYPE_CHECKING:
     import pulumi-one-password-native-unoffical.bankaccount as __bankaccount
     bankaccount = __bankaccount
+    import pulumi-one-password-native-unoffical.config as __config
+    config = __config
     import pulumi-one-password-native-unoffical.creditcard as __creditcard
     creditcard = __creditcard
     import pulumi-one-password-native-unoffical.cryptowallet as __cryptowallet
@@ -81,6 +83,7 @@ if typing.TYPE_CHECKING:
     softwarelicense = __softwarelicense
 else:
     bankaccount = _utilities.lazy_import('pulumi-one-password-native-unoffical.bankaccount')
+    config = _utilities.lazy_import('pulumi-one-password-native-unoffical.config')
     creditcard = _utilities.lazy_import('pulumi-one-password-native-unoffical.creditcard')
     cryptowallet = _utilities.lazy_import('pulumi-one-password-native-unoffical.cryptowallet')
     emailaccount = _utilities.lazy_import('pulumi-one-password-native-unoffical.emailaccount')

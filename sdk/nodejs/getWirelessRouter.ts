@@ -36,15 +36,15 @@ export interface GetWirelessRouterArgs {
 export interface GetWirelessRouterResult {
     readonly airPortId?: string;
     readonly attachedStoragePassword?: string;
-    readonly attachments: {[key: string]: outputs.OutAttachment};
+    readonly attachments: {[key: string]: outputs.OutputAttachment};
     readonly baseStationName?: string;
     readonly baseStationPassword?: string;
     readonly category: enums.Category | string;
-    readonly fields: {[key: string]: outputs.OutField};
+    readonly fields: {[key: string]: outputs.OutputField};
     readonly networkName?: string;
     readonly notes?: string;
-    readonly references: {[key: string]: outputs.OutField};
-    readonly sections: {[key: string]: outputs.OutSection};
+    readonly references: {[key: string]: outputs.OutputReference};
+    readonly sections: {[key: string]: outputs.OutputSection};
     readonly serverIpAddress?: string;
     /**
      * An array of strings of the tags assigned to the item.
@@ -54,14 +54,12 @@ export interface GetWirelessRouterResult {
      * The title of the item.
      */
     readonly title: string;
+    readonly urls?: outputs.OutputUrl[];
     /**
      * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
      */
     readonly uuid: string;
-    /**
-     * The UUID of the vault the item is in.
-     */
-    readonly vault: string;
+    readonly vault: {[key: string]: string};
     readonly wirelessNetworkPassword?: string;
     readonly wirelessSecurity?: string;
 }

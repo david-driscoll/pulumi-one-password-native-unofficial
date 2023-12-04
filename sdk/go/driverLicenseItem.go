@@ -14,31 +14,31 @@ import (
 type DriverLicenseItem struct {
 	pulumi.CustomResourceState
 
-	Address                pulumi.StringPtrOutput `pulumi:"address"`
-	Attachments            OutAttachmentMapOutput `pulumi:"attachments"`
-	Category               pulumi.StringOutput    `pulumi:"category"`
-	ConditionsRestrictions pulumi.StringPtrOutput `pulumi:"conditionsRestrictions"`
-	Country                pulumi.StringPtrOutput `pulumi:"country"`
-	DateOfBirth            pulumi.StringPtrOutput `pulumi:"dateOfBirth"`
-	ExpiryDate             pulumi.StringPtrOutput `pulumi:"expiryDate"`
-	Fields                 OutFieldMapOutput      `pulumi:"fields"`
-	FullName               pulumi.StringPtrOutput `pulumi:"fullName"`
-	Gender                 pulumi.StringPtrOutput `pulumi:"gender"`
-	Height                 pulumi.StringPtrOutput `pulumi:"height"`
-	LicenseClass           pulumi.StringPtrOutput `pulumi:"licenseClass"`
-	Notes                  pulumi.StringPtrOutput `pulumi:"notes"`
-	Number                 pulumi.StringPtrOutput `pulumi:"number"`
-	References             OutFieldMapOutput      `pulumi:"references"`
-	Sections               OutSectionMapOutput    `pulumi:"sections"`
-	State                  pulumi.StringPtrOutput `pulumi:"state"`
+	Address                pulumi.StringPtrOutput    `pulumi:"address"`
+	Attachments            OutputAttachmentMapOutput `pulumi:"attachments"`
+	Category               pulumi.StringOutput       `pulumi:"category"`
+	ConditionsRestrictions pulumi.StringPtrOutput    `pulumi:"conditionsRestrictions"`
+	Country                pulumi.StringPtrOutput    `pulumi:"country"`
+	DateOfBirth            pulumi.StringPtrOutput    `pulumi:"dateOfBirth"`
+	ExpiryDate             pulumi.StringPtrOutput    `pulumi:"expiryDate"`
+	Fields                 OutputFieldMapOutput      `pulumi:"fields"`
+	FullName               pulumi.StringPtrOutput    `pulumi:"fullName"`
+	Gender                 pulumi.StringPtrOutput    `pulumi:"gender"`
+	Height                 pulumi.StringPtrOutput    `pulumi:"height"`
+	LicenseClass           pulumi.StringPtrOutput    `pulumi:"licenseClass"`
+	Notes                  pulumi.StringPtrOutput    `pulumi:"notes"`
+	Number                 pulumi.StringPtrOutput    `pulumi:"number"`
+	References             OutputReferenceMapOutput  `pulumi:"references"`
+	Sections               OutputSectionMapOutput    `pulumi:"sections"`
+	State                  pulumi.StringPtrOutput    `pulumi:"state"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
-	Title pulumi.StringOutput `pulumi:"title"`
+	Title pulumi.StringOutput  `pulumi:"title"`
+	Urls  OutputUrlArrayOutput `pulumi:"urls"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid pulumi.StringOutput `pulumi:"uuid"`
-	// The UUID of the vault the item is in.
-	Vault pulumi.StringOutput `pulumi:"vault"`
+	Uuid  pulumi.StringOutput    `pulumi:"uuid"`
+	Vault pulumi.StringMapOutput `pulumi:"vault"`
 }
 
 // NewDriverLicenseItem registers a new resource with the given unique name, arguments, and options.
@@ -96,34 +96,36 @@ func (DriverLicenseItemState) ElementType() reflect.Type {
 }
 
 type driverLicenseItemArgs struct {
-	Address *string `pulumi:"address"`
+	Address     *string                          `pulumi:"address"`
+	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
-	Category               *string                          `pulumi:"category"`
-	ConditionsRestrictions *string                          `pulumi:"conditionsRestrictions"`
-	Country                *string                          `pulumi:"country"`
-	DateOfBirth            *string                          `pulumi:"dateOfBirth"`
-	ExpiryDate             *string                          `pulumi:"expiryDate"`
-	Fields                 map[string]Field                 `pulumi:"fields"`
-	FullName               *string                          `pulumi:"fullName"`
-	Gender                 *string                          `pulumi:"gender"`
-	Height                 *string                          `pulumi:"height"`
-	InputAttachments       map[string]pulumi.AssetOrArchive `pulumi:"inputAttachments"`
-	LicenseClass           *string                          `pulumi:"licenseClass"`
-	Notes                  *string                          `pulumi:"notes"`
-	Number                 *string                          `pulumi:"number"`
-	Sections               map[string]Section               `pulumi:"sections"`
-	State                  *string                          `pulumi:"state"`
+	Category               *string            `pulumi:"category"`
+	ConditionsRestrictions *string            `pulumi:"conditionsRestrictions"`
+	Country                *string            `pulumi:"country"`
+	DateOfBirth            *string            `pulumi:"dateOfBirth"`
+	ExpiryDate             *string            `pulumi:"expiryDate"`
+	Fields                 map[string]Field   `pulumi:"fields"`
+	FullName               *string            `pulumi:"fullName"`
+	Gender                 *string            `pulumi:"gender"`
+	Height                 *string            `pulumi:"height"`
+	LicenseClass           *string            `pulumi:"licenseClass"`
+	Notes                  *string            `pulumi:"notes"`
+	Number                 *string            `pulumi:"number"`
+	Sections               map[string]Section `pulumi:"sections"`
+	State                  *string            `pulumi:"state"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
+	Urls  []Url   `pulumi:"urls"`
 	// The UUID of the vault the item is in.
 	Vault string `pulumi:"vault"`
 }
 
 // The set of arguments for constructing a DriverLicenseItem resource.
 type DriverLicenseItemArgs struct {
-	Address pulumi.StringPtrInput
+	Address     pulumi.StringPtrInput
+	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
 	Category               pulumi.StringPtrInput
 	ConditionsRestrictions pulumi.StringPtrInput
@@ -134,7 +136,6 @@ type DriverLicenseItemArgs struct {
 	FullName               pulumi.StringPtrInput
 	Gender                 pulumi.StringPtrInput
 	Height                 pulumi.StringPtrInput
-	InputAttachments       pulumi.AssetOrArchiveMapInput
 	LicenseClass           pulumi.StringPtrInput
 	Notes                  pulumi.StringPtrInput
 	Number                 pulumi.StringPtrInput
@@ -144,52 +145,13 @@ type DriverLicenseItemArgs struct {
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput
+	Urls  UrlArrayInput
 	// The UUID of the vault the item is in.
 	Vault pulumi.StringInput
 }
 
 func (DriverLicenseItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*driverLicenseItemArgs)(nil)).Elem()
-}
-
-func (r *DriverLicenseItem) GetAttachment(ctx *pulumi.Context, args *DriverLicenseItemGetAttachmentArgs) (DriverLicenseItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("one-password-native-unoffical:index:DriverLicenseItem/attachment", args, DriverLicenseItemGetAttachmentResultOutput{}, r)
-	if err != nil {
-		return DriverLicenseItemGetAttachmentResultOutput{}, err
-	}
-	return out.(DriverLicenseItemGetAttachmentResultOutput), nil
-}
-
-type driverLicenseItemGetAttachmentArgs struct {
-	// The name or uuid of the attachment to get
-	Name string `pulumi:"name"`
-}
-
-// The set of arguments for the GetAttachment method of the DriverLicenseItem resource.
-type DriverLicenseItemGetAttachmentArgs struct {
-	// The name or uuid of the attachment to get
-	Name pulumi.StringInput
-}
-
-func (DriverLicenseItemGetAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*driverLicenseItemGetAttachmentArgs)(nil)).Elem()
-}
-
-// The resolved reference value
-type DriverLicenseItemGetAttachmentResult struct {
-	// the value of the attachment
-	Value string `pulumi:"value"`
-}
-
-type DriverLicenseItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
-
-func (DriverLicenseItemGetAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*DriverLicenseItemGetAttachmentResult)(nil)).Elem()
-}
-
-// the value of the attachment
-func (o DriverLicenseItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v DriverLicenseItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type DriverLicenseItemInput interface {
@@ -320,7 +282,6 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*DriverLicenseItemArrayInput)(nil)).Elem(), DriverLicenseItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DriverLicenseItemMapInput)(nil)).Elem(), DriverLicenseItemMap{})
 	pulumi.RegisterOutputType(DriverLicenseItemOutput{})
-	pulumi.RegisterOutputType(DriverLicenseItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(DriverLicenseItemArrayOutput{})
 	pulumi.RegisterOutputType(DriverLicenseItemMapOutput{})
 }

@@ -12,23 +12,23 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical.Outputs
 {
 
     [OutputType]
-    public sealed class OutSection
+    public sealed class OutputUrl
     {
-        public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
-        public readonly string Label;
-        public readonly string Uuid;
+        public readonly string Href;
+        public readonly string? Label;
+        public readonly bool Primary;
 
         [OutputConstructor]
-        private OutSection(
-            ImmutableDictionary<string, Outputs.OutField> fields,
+        private OutputUrl(
+            string href,
 
-            string label,
+            string? label,
 
-            string uuid)
+            bool primary)
         {
-            Fields = fields;
+            Href = href;
             Label = label;
-            Uuid = uuid;
+            Primary = primary;
         }
     }
 }

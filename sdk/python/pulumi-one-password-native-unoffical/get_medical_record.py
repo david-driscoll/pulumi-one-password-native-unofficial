@@ -20,7 +20,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetMedicalRecordResult:
-    def __init__(__self__, attachments=None, category=None, date=None, fields=None, healthcare_professional=None, location=None, medication=None, notes=None, patient=None, reason_for_visit=None, references=None, sections=None, tags=None, title=None, uuid=None, vault=None):
+    def __init__(__self__, attachments=None, category=None, date=None, fields=None, healthcare_professional=None, location=None, medication=None, notes=None, patient=None, reason_for_visit=None, references=None, sections=None, tags=None, title=None, urls=None, uuid=None, vault=None):
         if attachments and not isinstance(attachments, dict):
             raise TypeError("Expected argument 'attachments' to be a dict")
         pulumi.set(__self__, "attachments", attachments)
@@ -63,16 +63,19 @@ class GetMedicalRecordResult:
         if title and not isinstance(title, str):
             raise TypeError("Expected argument 'title' to be a str")
         pulumi.set(__self__, "title", title)
+        if urls and not isinstance(urls, list):
+            raise TypeError("Expected argument 'urls' to be a list")
+        pulumi.set(__self__, "urls", urls)
         if uuid and not isinstance(uuid, str):
             raise TypeError("Expected argument 'uuid' to be a str")
         pulumi.set(__self__, "uuid", uuid)
-        if vault and not isinstance(vault, str):
-            raise TypeError("Expected argument 'vault' to be a str")
+        if vault and not isinstance(vault, dict):
+            raise TypeError("Expected argument 'vault' to be a dict")
         pulumi.set(__self__, "vault", vault)
 
     @property
     @pulumi.getter
-    def attachments(self) -> Mapping[str, 'outputs.OutAttachment']:
+    def attachments(self) -> Mapping[str, 'outputs.OutputAttachment']:
         return pulumi.get(self, "attachments")
 
     @property
@@ -87,7 +90,7 @@ class GetMedicalRecordResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.OutField']:
+    def fields(self) -> Mapping[str, 'outputs.OutputField']:
         return pulumi.get(self, "fields")
 
     @property
@@ -122,12 +125,12 @@ class GetMedicalRecordResult:
 
     @property
     @pulumi.getter
-    def references(self) -> Mapping[str, 'outputs.OutField']:
+    def references(self) -> Mapping[str, 'outputs.OutputReference']:
         return pulumi.get(self, "references")
 
     @property
     @pulumi.getter
-    def sections(self) -> Mapping[str, 'outputs.OutSection']:
+    def sections(self) -> Mapping[str, 'outputs.OutputSection']:
         return pulumi.get(self, "sections")
 
     @property
@@ -148,6 +151,11 @@ class GetMedicalRecordResult:
 
     @property
     @pulumi.getter
+    def urls(self) -> Optional[Sequence['outputs.OutputUrl']]:
+        return pulumi.get(self, "urls")
+
+    @property
+    @pulumi.getter
     def uuid(self) -> str:
         """
         The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -156,10 +164,7 @@ class GetMedicalRecordResult:
 
     @property
     @pulumi.getter
-    def vault(self) -> str:
-        """
-        The UUID of the vault the item is in.
-        """
+    def vault(self) -> Mapping[str, str]:
         return pulumi.get(self, "vault")
 
 
@@ -183,6 +188,7 @@ class AwaitableGetMedicalRecordResult(GetMedicalRecordResult):
             sections=self.sections,
             tags=self.tags,
             title=self.title,
+            urls=self.urls,
             uuid=self.uuid,
             vault=self.vault)
 
@@ -225,6 +231,7 @@ def get_medical_record(title: Optional[str] = None,
         sections=__ret__.sections,
         tags=__ret__.tags,
         title=__ret__.title,
+        urls=__ret__.urls,
         uuid=__ret__.uuid,
         vault=__ret__.vault)
 

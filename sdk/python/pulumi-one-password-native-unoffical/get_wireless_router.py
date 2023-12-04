@@ -19,7 +19,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetWirelessRouterResult:
-    def __init__(__self__, air_port_id=None, attached_storage_password=None, attachments=None, base_station_name=None, base_station_password=None, category=None, fields=None, network_name=None, notes=None, references=None, sections=None, server_ip_address=None, tags=None, title=None, uuid=None, vault=None, wireless_network_password=None, wireless_security=None):
+    def __init__(__self__, air_port_id=None, attached_storage_password=None, attachments=None, base_station_name=None, base_station_password=None, category=None, fields=None, network_name=None, notes=None, references=None, sections=None, server_ip_address=None, tags=None, title=None, urls=None, uuid=None, vault=None, wireless_network_password=None, wireless_security=None):
         if air_port_id and not isinstance(air_port_id, str):
             raise TypeError("Expected argument 'air_port_id' to be a str")
         pulumi.set(__self__, "air_port_id", air_port_id)
@@ -62,11 +62,14 @@ class GetWirelessRouterResult:
         if title and not isinstance(title, str):
             raise TypeError("Expected argument 'title' to be a str")
         pulumi.set(__self__, "title", title)
+        if urls and not isinstance(urls, list):
+            raise TypeError("Expected argument 'urls' to be a list")
+        pulumi.set(__self__, "urls", urls)
         if uuid and not isinstance(uuid, str):
             raise TypeError("Expected argument 'uuid' to be a str")
         pulumi.set(__self__, "uuid", uuid)
-        if vault and not isinstance(vault, str):
-            raise TypeError("Expected argument 'vault' to be a str")
+        if vault and not isinstance(vault, dict):
+            raise TypeError("Expected argument 'vault' to be a dict")
         pulumi.set(__self__, "vault", vault)
         if wireless_network_password and not isinstance(wireless_network_password, str):
             raise TypeError("Expected argument 'wireless_network_password' to be a str")
@@ -87,7 +90,7 @@ class GetWirelessRouterResult:
 
     @property
     @pulumi.getter
-    def attachments(self) -> Mapping[str, 'outputs.OutAttachment']:
+    def attachments(self) -> Mapping[str, 'outputs.OutputAttachment']:
         return pulumi.get(self, "attachments")
 
     @property
@@ -107,7 +110,7 @@ class GetWirelessRouterResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.OutField']:
+    def fields(self) -> Mapping[str, 'outputs.OutputField']:
         return pulumi.get(self, "fields")
 
     @property
@@ -122,12 +125,12 @@ class GetWirelessRouterResult:
 
     @property
     @pulumi.getter
-    def references(self) -> Mapping[str, 'outputs.OutField']:
+    def references(self) -> Mapping[str, 'outputs.OutputReference']:
         return pulumi.get(self, "references")
 
     @property
     @pulumi.getter
-    def sections(self) -> Mapping[str, 'outputs.OutSection']:
+    def sections(self) -> Mapping[str, 'outputs.OutputSection']:
         return pulumi.get(self, "sections")
 
     @property
@@ -153,6 +156,11 @@ class GetWirelessRouterResult:
 
     @property
     @pulumi.getter
+    def urls(self) -> Optional[Sequence['outputs.OutputUrl']]:
+        return pulumi.get(self, "urls")
+
+    @property
+    @pulumi.getter
     def uuid(self) -> str:
         """
         The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -161,10 +169,7 @@ class GetWirelessRouterResult:
 
     @property
     @pulumi.getter
-    def vault(self) -> str:
-        """
-        The UUID of the vault the item is in.
-        """
+    def vault(self) -> Mapping[str, str]:
         return pulumi.get(self, "vault")
 
     @property
@@ -198,6 +203,7 @@ class AwaitableGetWirelessRouterResult(GetWirelessRouterResult):
             server_ip_address=self.server_ip_address,
             tags=self.tags,
             title=self.title,
+            urls=self.urls,
             uuid=self.uuid,
             vault=self.vault,
             wireless_network_password=self.wireless_network_password,
@@ -242,6 +248,7 @@ def get_wireless_router(title: Optional[str] = None,
         server_ip_address=__ret__.server_ip_address,
         tags=__ret__.tags,
         title=__ret__.title,
+        urls=__ret__.urls,
         uuid=__ret__.uuid,
         vault=__ret__.vault,
         wireless_network_password=__ret__.wireless_network_password,

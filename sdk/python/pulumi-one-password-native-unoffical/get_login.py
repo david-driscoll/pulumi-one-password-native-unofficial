@@ -19,7 +19,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetLoginResult:
-    def __init__(__self__, attachments=None, category=None, fields=None, notes=None, password=None, references=None, sections=None, tags=None, title=None, username=None, uuid=None, vault=None):
+    def __init__(__self__, attachments=None, category=None, fields=None, notes=None, password=None, references=None, sections=None, tags=None, title=None, urls=None, username=None, uuid=None, vault=None):
         if attachments and not isinstance(attachments, dict):
             raise TypeError("Expected argument 'attachments' to be a dict")
         pulumi.set(__self__, "attachments", attachments)
@@ -47,19 +47,22 @@ class GetLoginResult:
         if title and not isinstance(title, str):
             raise TypeError("Expected argument 'title' to be a str")
         pulumi.set(__self__, "title", title)
+        if urls and not isinstance(urls, list):
+            raise TypeError("Expected argument 'urls' to be a list")
+        pulumi.set(__self__, "urls", urls)
         if username and not isinstance(username, str):
             raise TypeError("Expected argument 'username' to be a str")
         pulumi.set(__self__, "username", username)
         if uuid and not isinstance(uuid, str):
             raise TypeError("Expected argument 'uuid' to be a str")
         pulumi.set(__self__, "uuid", uuid)
-        if vault and not isinstance(vault, str):
-            raise TypeError("Expected argument 'vault' to be a str")
+        if vault and not isinstance(vault, dict):
+            raise TypeError("Expected argument 'vault' to be a dict")
         pulumi.set(__self__, "vault", vault)
 
     @property
     @pulumi.getter
-    def attachments(self) -> Mapping[str, 'outputs.OutAttachment']:
+    def attachments(self) -> Mapping[str, 'outputs.OutputAttachment']:
         return pulumi.get(self, "attachments")
 
     @property
@@ -69,7 +72,7 @@ class GetLoginResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.OutField']:
+    def fields(self) -> Mapping[str, 'outputs.OutputField']:
         return pulumi.get(self, "fields")
 
     @property
@@ -84,12 +87,12 @@ class GetLoginResult:
 
     @property
     @pulumi.getter
-    def references(self) -> Mapping[str, 'outputs.OutField']:
+    def references(self) -> Mapping[str, 'outputs.OutputReference']:
         return pulumi.get(self, "references")
 
     @property
     @pulumi.getter
-    def sections(self) -> Mapping[str, 'outputs.OutSection']:
+    def sections(self) -> Mapping[str, 'outputs.OutputSection']:
         return pulumi.get(self, "sections")
 
     @property
@@ -110,6 +113,11 @@ class GetLoginResult:
 
     @property
     @pulumi.getter
+    def urls(self) -> Optional[Sequence['outputs.OutputUrl']]:
+        return pulumi.get(self, "urls")
+
+    @property
+    @pulumi.getter
     def username(self) -> Optional[str]:
         return pulumi.get(self, "username")
 
@@ -123,10 +131,7 @@ class GetLoginResult:
 
     @property
     @pulumi.getter
-    def vault(self) -> str:
-        """
-        The UUID of the vault the item is in.
-        """
+    def vault(self) -> Mapping[str, str]:
         return pulumi.get(self, "vault")
 
 
@@ -145,6 +150,7 @@ class AwaitableGetLoginResult(GetLoginResult):
             sections=self.sections,
             tags=self.tags,
             title=self.title,
+            urls=self.urls,
             username=self.username,
             uuid=self.uuid,
             vault=self.vault)
@@ -183,6 +189,7 @@ def get_login(title: Optional[str] = None,
         sections=__ret__.sections,
         tags=__ret__.tags,
         title=__ret__.title,
+        urls=__ret__.urls,
         username=__ret__.username,
         uuid=__ret__.uuid,
         vault=__ret__.vault)

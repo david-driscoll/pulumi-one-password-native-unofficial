@@ -14,27 +14,27 @@ import (
 type MembershipItem struct {
 	pulumi.CustomResourceState
 
-	Attachments OutAttachmentMapOutput `pulumi:"attachments"`
-	Category    pulumi.StringOutput    `pulumi:"category"`
-	ExpiryDate  pulumi.StringPtrOutput `pulumi:"expiryDate"`
-	Fields      OutFieldMapOutput      `pulumi:"fields"`
-	Group       pulumi.StringPtrOutput `pulumi:"group"`
-	MemberId    pulumi.StringPtrOutput `pulumi:"memberId"`
-	MemberName  pulumi.StringPtrOutput `pulumi:"memberName"`
-	MemberSince pulumi.StringPtrOutput `pulumi:"memberSince"`
-	Notes       pulumi.StringPtrOutput `pulumi:"notes"`
-	Pin         pulumi.StringPtrOutput `pulumi:"pin"`
-	References  OutFieldMapOutput      `pulumi:"references"`
-	Sections    OutSectionMapOutput    `pulumi:"sections"`
+	Attachments OutputAttachmentMapOutput `pulumi:"attachments"`
+	Category    pulumi.StringOutput       `pulumi:"category"`
+	ExpiryDate  pulumi.StringPtrOutput    `pulumi:"expiryDate"`
+	Fields      OutputFieldMapOutput      `pulumi:"fields"`
+	Group       pulumi.StringPtrOutput    `pulumi:"group"`
+	MemberId    pulumi.StringPtrOutput    `pulumi:"memberId"`
+	MemberName  pulumi.StringPtrOutput    `pulumi:"memberName"`
+	MemberSince pulumi.StringPtrOutput    `pulumi:"memberSince"`
+	Notes       pulumi.StringPtrOutput    `pulumi:"notes"`
+	Pin         pulumi.StringPtrOutput    `pulumi:"pin"`
+	References  OutputReferenceMapOutput  `pulumi:"references"`
+	Sections    OutputSectionMapOutput    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags      pulumi.StringArrayOutput `pulumi:"tags"`
 	Telephone pulumi.StringPtrOutput   `pulumi:"telephone"`
 	// The title of the item.
-	Title pulumi.StringOutput `pulumi:"title"`
+	Title pulumi.StringOutput  `pulumi:"title"`
+	Urls  OutputUrlArrayOutput `pulumi:"urls"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid pulumi.StringOutput `pulumi:"uuid"`
-	// The UUID of the vault the item is in.
-	Vault   pulumi.StringOutput    `pulumi:"vault"`
+	Uuid    pulumi.StringOutput    `pulumi:"uuid"`
+	Vault   pulumi.StringMapOutput `pulumi:"vault"`
 	Website pulumi.StringPtrOutput `pulumi:"website"`
 }
 
@@ -97,23 +97,24 @@ func (MembershipItemState) ElementType() reflect.Type {
 }
 
 type membershipItemArgs struct {
+	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
-	Category         *string                          `pulumi:"category"`
-	ExpiryDate       *string                          `pulumi:"expiryDate"`
-	Fields           map[string]Field                 `pulumi:"fields"`
-	Group            *string                          `pulumi:"group"`
-	InputAttachments map[string]pulumi.AssetOrArchive `pulumi:"inputAttachments"`
-	MemberId         *string                          `pulumi:"memberId"`
-	MemberName       *string                          `pulumi:"memberName"`
-	MemberSince      *string                          `pulumi:"memberSince"`
-	Notes            *string                          `pulumi:"notes"`
-	Pin              *string                          `pulumi:"pin"`
-	Sections         map[string]Section               `pulumi:"sections"`
+	Category    *string            `pulumi:"category"`
+	ExpiryDate  *string            `pulumi:"expiryDate"`
+	Fields      map[string]Field   `pulumi:"fields"`
+	Group       *string            `pulumi:"group"`
+	MemberId    *string            `pulumi:"memberId"`
+	MemberName  *string            `pulumi:"memberName"`
+	MemberSince *string            `pulumi:"memberSince"`
+	Notes       *string            `pulumi:"notes"`
+	Pin         *string            `pulumi:"pin"`
+	Sections    map[string]Section `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags      []string `pulumi:"tags"`
 	Telephone *string  `pulumi:"telephone"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
+	Urls  []Url   `pulumi:"urls"`
 	// The UUID of the vault the item is in.
 	Vault   string  `pulumi:"vault"`
 	Website *string `pulumi:"website"`
@@ -121,23 +122,24 @@ type membershipItemArgs struct {
 
 // The set of arguments for constructing a MembershipItem resource.
 type MembershipItemArgs struct {
+	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
-	Category         pulumi.StringPtrInput
-	ExpiryDate       pulumi.StringPtrInput
-	Fields           FieldMapInput
-	Group            pulumi.StringPtrInput
-	InputAttachments pulumi.AssetOrArchiveMapInput
-	MemberId         pulumi.StringPtrInput
-	MemberName       pulumi.StringPtrInput
-	MemberSince      pulumi.StringPtrInput
-	Notes            pulumi.StringPtrInput
-	Pin              pulumi.StringPtrInput
-	Sections         SectionMapInput
+	Category    pulumi.StringPtrInput
+	ExpiryDate  pulumi.StringPtrInput
+	Fields      FieldMapInput
+	Group       pulumi.StringPtrInput
+	MemberId    pulumi.StringPtrInput
+	MemberName  pulumi.StringPtrInput
+	MemberSince pulumi.StringPtrInput
+	Notes       pulumi.StringPtrInput
+	Pin         pulumi.StringPtrInput
+	Sections    SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags      pulumi.StringArrayInput
 	Telephone pulumi.StringPtrInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput
+	Urls  UrlArrayInput
 	// The UUID of the vault the item is in.
 	Vault   pulumi.StringInput
 	Website pulumi.StringPtrInput
@@ -145,46 +147,6 @@ type MembershipItemArgs struct {
 
 func (MembershipItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*membershipItemArgs)(nil)).Elem()
-}
-
-func (r *MembershipItem) GetAttachment(ctx *pulumi.Context, args *MembershipItemGetAttachmentArgs) (MembershipItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("one-password-native-unoffical:index:MembershipItem/attachment", args, MembershipItemGetAttachmentResultOutput{}, r)
-	if err != nil {
-		return MembershipItemGetAttachmentResultOutput{}, err
-	}
-	return out.(MembershipItemGetAttachmentResultOutput), nil
-}
-
-type membershipItemGetAttachmentArgs struct {
-	// The name or uuid of the attachment to get
-	Name string `pulumi:"name"`
-}
-
-// The set of arguments for the GetAttachment method of the MembershipItem resource.
-type MembershipItemGetAttachmentArgs struct {
-	// The name or uuid of the attachment to get
-	Name pulumi.StringInput
-}
-
-func (MembershipItemGetAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*membershipItemGetAttachmentArgs)(nil)).Elem()
-}
-
-// The resolved reference value
-type MembershipItemGetAttachmentResult struct {
-	// the value of the attachment
-	Value string `pulumi:"value"`
-}
-
-type MembershipItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
-
-func (MembershipItemGetAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*MembershipItemGetAttachmentResult)(nil)).Elem()
-}
-
-// the value of the attachment
-func (o MembershipItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v MembershipItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type MembershipItemInput interface {
@@ -315,7 +277,6 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*MembershipItemArrayInput)(nil)).Elem(), MembershipItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*MembershipItemMapInput)(nil)).Elem(), MembershipItemMap{})
 	pulumi.RegisterOutputType(MembershipItemOutput{})
-	pulumi.RegisterOutputType(MembershipItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(MembershipItemArrayOutput{})
 	pulumi.RegisterOutputType(MembershipItemMapOutput{})
 }

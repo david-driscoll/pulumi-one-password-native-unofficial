@@ -30,20 +30,20 @@ type GetDocumentArgs struct {
 }
 
 type GetDocumentResult struct {
-	Attachments map[string]OutAttachment `pulumi:"attachments"`
-	Category    string                   `pulumi:"category"`
-	Fields      map[string]OutField      `pulumi:"fields"`
-	Notes       *string                  `pulumi:"notes"`
-	References  map[string]OutField      `pulumi:"references"`
-	Sections    map[string]OutSection    `pulumi:"sections"`
+	Attachments map[string]OutputAttachment `pulumi:"attachments"`
+	Category    string                      `pulumi:"category"`
+	Fields      map[string]OutputField      `pulumi:"fields"`
+	Notes       *string                     `pulumi:"notes"`
+	References  map[string]OutputReference  `pulumi:"references"`
+	Sections    map[string]OutputSection    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title string `pulumi:"title"`
+	Title string      `pulumi:"title"`
+	Urls  []OutputUrl `pulumi:"urls"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid string `pulumi:"uuid"`
-	// The UUID of the vault the item is in.
-	Vault string `pulumi:"vault"`
+	Uuid  string            `pulumi:"uuid"`
+	Vault map[string]string `pulumi:"vault"`
 }
 
 func GetDocumentOutput(ctx *pulumi.Context, args GetDocumentOutputArgs, opts ...pulumi.InvokeOption) GetDocumentResultOutput {
@@ -86,28 +86,28 @@ func (o GetDocumentResultOutput) ToGetDocumentResultOutputWithContext(ctx contex
 	return o
 }
 
-func (o GetDocumentResultOutput) Attachments() OutAttachmentMapOutput {
-	return o.ApplyT(func(v GetDocumentResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
+func (o GetDocumentResultOutput) Attachments() OutputAttachmentMapOutput {
+	return o.ApplyT(func(v GetDocumentResult) map[string]OutputAttachment { return v.Attachments }).(OutputAttachmentMapOutput)
 }
 
 func (o GetDocumentResultOutput) Category() pulumi.StringOutput {
 	return o.ApplyT(func(v GetDocumentResult) string { return v.Category }).(pulumi.StringOutput)
 }
 
-func (o GetDocumentResultOutput) Fields() OutFieldMapOutput {
-	return o.ApplyT(func(v GetDocumentResult) map[string]OutField { return v.Fields }).(OutFieldMapOutput)
+func (o GetDocumentResultOutput) Fields() OutputFieldMapOutput {
+	return o.ApplyT(func(v GetDocumentResult) map[string]OutputField { return v.Fields }).(OutputFieldMapOutput)
 }
 
 func (o GetDocumentResultOutput) Notes() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetDocumentResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o GetDocumentResultOutput) References() OutFieldMapOutput {
-	return o.ApplyT(func(v GetDocumentResult) map[string]OutField { return v.References }).(OutFieldMapOutput)
+func (o GetDocumentResultOutput) References() OutputReferenceMapOutput {
+	return o.ApplyT(func(v GetDocumentResult) map[string]OutputReference { return v.References }).(OutputReferenceMapOutput)
 }
 
-func (o GetDocumentResultOutput) Sections() OutSectionMapOutput {
-	return o.ApplyT(func(v GetDocumentResult) map[string]OutSection { return v.Sections }).(OutSectionMapOutput)
+func (o GetDocumentResultOutput) Sections() OutputSectionMapOutput {
+	return o.ApplyT(func(v GetDocumentResult) map[string]OutputSection { return v.Sections }).(OutputSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.
@@ -120,14 +120,17 @@ func (o GetDocumentResultOutput) Title() pulumi.StringOutput {
 	return o.ApplyT(func(v GetDocumentResult) string { return v.Title }).(pulumi.StringOutput)
 }
 
+func (o GetDocumentResultOutput) Urls() OutputUrlArrayOutput {
+	return o.ApplyT(func(v GetDocumentResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
+}
+
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
 func (o GetDocumentResultOutput) Uuid() pulumi.StringOutput {
 	return o.ApplyT(func(v GetDocumentResult) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
-// The UUID of the vault the item is in.
-func (o GetDocumentResultOutput) Vault() pulumi.StringOutput {
-	return o.ApplyT(func(v GetDocumentResult) string { return v.Vault }).(pulumi.StringOutput)
+func (o GetDocumentResultOutput) Vault() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetDocumentResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
 }
 
 func init() {

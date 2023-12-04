@@ -31,25 +31,25 @@ type GetSoftwareLicenseArgs struct {
 }
 
 type GetSoftwareLicenseResult struct {
-	Attachments map[string]OutAttachment          `pulumi:"attachments"`
+	Attachments map[string]OutputAttachment       `pulumi:"attachments"`
 	Category    string                            `pulumi:"category"`
 	Customer    *softwarelicense.CustomerSection  `pulumi:"customer"`
-	Fields      map[string]OutField               `pulumi:"fields"`
+	Fields      map[string]OutputField            `pulumi:"fields"`
 	LicenseKey  *string                           `pulumi:"licenseKey"`
 	Notes       *string                           `pulumi:"notes"`
 	Order       *softwarelicense.OrderSection     `pulumi:"order"`
 	Publisher   *softwarelicense.PublisherSection `pulumi:"publisher"`
-	References  map[string]OutField               `pulumi:"references"`
-	Sections    map[string]OutSection             `pulumi:"sections"`
+	References  map[string]OutputReference        `pulumi:"references"`
+	Sections    map[string]OutputSection          `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title string `pulumi:"title"`
+	Title string      `pulumi:"title"`
+	Urls  []OutputUrl `pulumi:"urls"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid string `pulumi:"uuid"`
-	// The UUID of the vault the item is in.
-	Vault   string  `pulumi:"vault"`
-	Version *string `pulumi:"version"`
+	Uuid    string            `pulumi:"uuid"`
+	Vault   map[string]string `pulumi:"vault"`
+	Version *string           `pulumi:"version"`
 }
 
 func GetSoftwareLicenseOutput(ctx *pulumi.Context, args GetSoftwareLicenseOutputArgs, opts ...pulumi.InvokeOption) GetSoftwareLicenseResultOutput {
@@ -92,8 +92,8 @@ func (o GetSoftwareLicenseResultOutput) ToGetSoftwareLicenseResultOutputWithCont
 	return o
 }
 
-func (o GetSoftwareLicenseResultOutput) Attachments() OutAttachmentMapOutput {
-	return o.ApplyT(func(v GetSoftwareLicenseResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
+func (o GetSoftwareLicenseResultOutput) Attachments() OutputAttachmentMapOutput {
+	return o.ApplyT(func(v GetSoftwareLicenseResult) map[string]OutputAttachment { return v.Attachments }).(OutputAttachmentMapOutput)
 }
 
 func (o GetSoftwareLicenseResultOutput) Category() pulumi.StringOutput {
@@ -104,8 +104,8 @@ func (o GetSoftwareLicenseResultOutput) Customer() softwarelicense.CustomerSecti
 	return o.ApplyT(func(v GetSoftwareLicenseResult) *softwarelicense.CustomerSection { return v.Customer }).(softwarelicense.CustomerSectionPtrOutput)
 }
 
-func (o GetSoftwareLicenseResultOutput) Fields() OutFieldMapOutput {
-	return o.ApplyT(func(v GetSoftwareLicenseResult) map[string]OutField { return v.Fields }).(OutFieldMapOutput)
+func (o GetSoftwareLicenseResultOutput) Fields() OutputFieldMapOutput {
+	return o.ApplyT(func(v GetSoftwareLicenseResult) map[string]OutputField { return v.Fields }).(OutputFieldMapOutput)
 }
 
 func (o GetSoftwareLicenseResultOutput) LicenseKey() pulumi.StringPtrOutput {
@@ -124,12 +124,12 @@ func (o GetSoftwareLicenseResultOutput) Publisher() softwarelicense.PublisherSec
 	return o.ApplyT(func(v GetSoftwareLicenseResult) *softwarelicense.PublisherSection { return v.Publisher }).(softwarelicense.PublisherSectionPtrOutput)
 }
 
-func (o GetSoftwareLicenseResultOutput) References() OutFieldMapOutput {
-	return o.ApplyT(func(v GetSoftwareLicenseResult) map[string]OutField { return v.References }).(OutFieldMapOutput)
+func (o GetSoftwareLicenseResultOutput) References() OutputReferenceMapOutput {
+	return o.ApplyT(func(v GetSoftwareLicenseResult) map[string]OutputReference { return v.References }).(OutputReferenceMapOutput)
 }
 
-func (o GetSoftwareLicenseResultOutput) Sections() OutSectionMapOutput {
-	return o.ApplyT(func(v GetSoftwareLicenseResult) map[string]OutSection { return v.Sections }).(OutSectionMapOutput)
+func (o GetSoftwareLicenseResultOutput) Sections() OutputSectionMapOutput {
+	return o.ApplyT(func(v GetSoftwareLicenseResult) map[string]OutputSection { return v.Sections }).(OutputSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.
@@ -142,14 +142,17 @@ func (o GetSoftwareLicenseResultOutput) Title() pulumi.StringOutput {
 	return o.ApplyT(func(v GetSoftwareLicenseResult) string { return v.Title }).(pulumi.StringOutput)
 }
 
+func (o GetSoftwareLicenseResultOutput) Urls() OutputUrlArrayOutput {
+	return o.ApplyT(func(v GetSoftwareLicenseResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
+}
+
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
 func (o GetSoftwareLicenseResultOutput) Uuid() pulumi.StringOutput {
 	return o.ApplyT(func(v GetSoftwareLicenseResult) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
-// The UUID of the vault the item is in.
-func (o GetSoftwareLicenseResultOutput) Vault() pulumi.StringOutput {
-	return o.ApplyT(func(v GetSoftwareLicenseResult) string { return v.Vault }).(pulumi.StringOutput)
+func (o GetSoftwareLicenseResultOutput) Vault() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetSoftwareLicenseResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
 }
 
 func (o GetSoftwareLicenseResultOutput) Version() pulumi.StringPtrOutput {

@@ -74,17 +74,17 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
     [OutputType]
     public sealed class GetRewardProgramResult
     {
-        public readonly ImmutableDictionary<string, Outputs.OutAttachment> Attachments;
+        public readonly ImmutableDictionary<string, Outputs.OutputAttachment> Attachments;
         public readonly string Category;
         public readonly string? CompanyName;
-        public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.OutputField> Fields;
         public readonly string? MemberId;
         public readonly string? MemberName;
         public readonly Rocket.Surgery.OnePasswordNativeUnoffical.RewardProgram.Outputs.MoreInformationSection? MoreInformation;
         public readonly string? Notes;
         public readonly string? Pin;
-        public readonly ImmutableDictionary<string, Outputs.OutField> References;
-        public readonly ImmutableDictionary<string, Outputs.OutSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.OutputReference> References;
+        public readonly ImmutableDictionary<string, Outputs.OutputSection> Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
         /// </summary>
@@ -93,24 +93,22 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         /// The title of the item.
         /// </summary>
         public readonly string Title;
+        public readonly ImmutableArray<Outputs.OutputUrl> Urls;
         /// <summary>
         /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
         /// </summary>
         public readonly string Uuid;
-        /// <summary>
-        /// The UUID of the vault the item is in.
-        /// </summary>
-        public readonly string Vault;
+        public readonly ImmutableDictionary<string, string> Vault;
 
         [OutputConstructor]
         private GetRewardProgramResult(
-            ImmutableDictionary<string, Outputs.OutAttachment> attachments,
+            ImmutableDictionary<string, Outputs.OutputAttachment> attachments,
 
             string category,
 
             string? companyName,
 
-            ImmutableDictionary<string, Outputs.OutField> fields,
+            ImmutableDictionary<string, Outputs.OutputField> fields,
 
             string? memberId,
 
@@ -122,17 +120,19 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
             string? pin,
 
-            ImmutableDictionary<string, Outputs.OutField> references,
+            ImmutableDictionary<string, Outputs.OutputReference> references,
 
-            ImmutableDictionary<string, Outputs.OutSection> sections,
+            ImmutableDictionary<string, Outputs.OutputSection> sections,
 
             ImmutableArray<string> tags,
 
             string title,
 
+            ImmutableArray<Outputs.OutputUrl> urls,
+
             string uuid,
 
-            string vault)
+            ImmutableDictionary<string, string> vault)
         {
             Attachments = attachments;
             Category = category;
@@ -147,6 +147,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
             Sections = sections;
             Tags = tags;
             Title = title;
+            Urls = urls;
             Uuid = uuid;
             Vault = vault;
         }

@@ -30,27 +30,27 @@ type GetOutdoorLicenseArgs struct {
 }
 
 type GetOutdoorLicenseResult struct {
-	ApprovedWildlife *string                  `pulumi:"approvedWildlife"`
-	Attachments      map[string]OutAttachment `pulumi:"attachments"`
-	Category         string                   `pulumi:"category"`
-	Country          *string                  `pulumi:"country"`
-	Expires          *string                  `pulumi:"expires"`
-	Fields           map[string]OutField      `pulumi:"fields"`
-	FullName         *string                  `pulumi:"fullName"`
-	MaximumQuota     *string                  `pulumi:"maximumQuota"`
-	Notes            *string                  `pulumi:"notes"`
-	References       map[string]OutField      `pulumi:"references"`
-	Sections         map[string]OutSection    `pulumi:"sections"`
-	State            *string                  `pulumi:"state"`
+	ApprovedWildlife *string                     `pulumi:"approvedWildlife"`
+	Attachments      map[string]OutputAttachment `pulumi:"attachments"`
+	Category         string                      `pulumi:"category"`
+	Country          *string                     `pulumi:"country"`
+	Expires          *string                     `pulumi:"expires"`
+	Fields           map[string]OutputField      `pulumi:"fields"`
+	FullName         *string                     `pulumi:"fullName"`
+	MaximumQuota     *string                     `pulumi:"maximumQuota"`
+	Notes            *string                     `pulumi:"notes"`
+	References       map[string]OutputReference  `pulumi:"references"`
+	Sections         map[string]OutputSection    `pulumi:"sections"`
+	State            *string                     `pulumi:"state"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title string `pulumi:"title"`
+	Title string      `pulumi:"title"`
+	Urls  []OutputUrl `pulumi:"urls"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid      string  `pulumi:"uuid"`
-	ValidFrom *string `pulumi:"validFrom"`
-	// The UUID of the vault the item is in.
-	Vault string `pulumi:"vault"`
+	Uuid      string            `pulumi:"uuid"`
+	ValidFrom *string           `pulumi:"validFrom"`
+	Vault     map[string]string `pulumi:"vault"`
 }
 
 func GetOutdoorLicenseOutput(ctx *pulumi.Context, args GetOutdoorLicenseOutputArgs, opts ...pulumi.InvokeOption) GetOutdoorLicenseResultOutput {
@@ -97,8 +97,8 @@ func (o GetOutdoorLicenseResultOutput) ApprovedWildlife() pulumi.StringPtrOutput
 	return o.ApplyT(func(v GetOutdoorLicenseResult) *string { return v.ApprovedWildlife }).(pulumi.StringPtrOutput)
 }
 
-func (o GetOutdoorLicenseResultOutput) Attachments() OutAttachmentMapOutput {
-	return o.ApplyT(func(v GetOutdoorLicenseResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
+func (o GetOutdoorLicenseResultOutput) Attachments() OutputAttachmentMapOutput {
+	return o.ApplyT(func(v GetOutdoorLicenseResult) map[string]OutputAttachment { return v.Attachments }).(OutputAttachmentMapOutput)
 }
 
 func (o GetOutdoorLicenseResultOutput) Category() pulumi.StringOutput {
@@ -113,8 +113,8 @@ func (o GetOutdoorLicenseResultOutput) Expires() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetOutdoorLicenseResult) *string { return v.Expires }).(pulumi.StringPtrOutput)
 }
 
-func (o GetOutdoorLicenseResultOutput) Fields() OutFieldMapOutput {
-	return o.ApplyT(func(v GetOutdoorLicenseResult) map[string]OutField { return v.Fields }).(OutFieldMapOutput)
+func (o GetOutdoorLicenseResultOutput) Fields() OutputFieldMapOutput {
+	return o.ApplyT(func(v GetOutdoorLicenseResult) map[string]OutputField { return v.Fields }).(OutputFieldMapOutput)
 }
 
 func (o GetOutdoorLicenseResultOutput) FullName() pulumi.StringPtrOutput {
@@ -129,12 +129,12 @@ func (o GetOutdoorLicenseResultOutput) Notes() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetOutdoorLicenseResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
 
-func (o GetOutdoorLicenseResultOutput) References() OutFieldMapOutput {
-	return o.ApplyT(func(v GetOutdoorLicenseResult) map[string]OutField { return v.References }).(OutFieldMapOutput)
+func (o GetOutdoorLicenseResultOutput) References() OutputReferenceMapOutput {
+	return o.ApplyT(func(v GetOutdoorLicenseResult) map[string]OutputReference { return v.References }).(OutputReferenceMapOutput)
 }
 
-func (o GetOutdoorLicenseResultOutput) Sections() OutSectionMapOutput {
-	return o.ApplyT(func(v GetOutdoorLicenseResult) map[string]OutSection { return v.Sections }).(OutSectionMapOutput)
+func (o GetOutdoorLicenseResultOutput) Sections() OutputSectionMapOutput {
+	return o.ApplyT(func(v GetOutdoorLicenseResult) map[string]OutputSection { return v.Sections }).(OutputSectionMapOutput)
 }
 
 func (o GetOutdoorLicenseResultOutput) State() pulumi.StringPtrOutput {
@@ -151,6 +151,10 @@ func (o GetOutdoorLicenseResultOutput) Title() pulumi.StringOutput {
 	return o.ApplyT(func(v GetOutdoorLicenseResult) string { return v.Title }).(pulumi.StringOutput)
 }
 
+func (o GetOutdoorLicenseResultOutput) Urls() OutputUrlArrayOutput {
+	return o.ApplyT(func(v GetOutdoorLicenseResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
+}
+
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
 func (o GetOutdoorLicenseResultOutput) Uuid() pulumi.StringOutput {
 	return o.ApplyT(func(v GetOutdoorLicenseResult) string { return v.Uuid }).(pulumi.StringOutput)
@@ -160,9 +164,8 @@ func (o GetOutdoorLicenseResultOutput) ValidFrom() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetOutdoorLicenseResult) *string { return v.ValidFrom }).(pulumi.StringPtrOutput)
 }
 
-// The UUID of the vault the item is in.
-func (o GetOutdoorLicenseResultOutput) Vault() pulumi.StringOutput {
-	return o.ApplyT(func(v GetOutdoorLicenseResult) string { return v.Vault }).(pulumi.StringOutput)
+func (o GetOutdoorLicenseResultOutput) Vault() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetOutdoorLicenseResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
 }
 
 func init() {

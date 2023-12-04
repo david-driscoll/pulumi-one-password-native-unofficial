@@ -12,27 +12,35 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical.Outputs
 {
 
     [OutputType]
-    public sealed class OutAttachment
+    public sealed class OutputField
     {
-        public readonly string Name;
+        public readonly ImmutableDictionary<string, object> Data;
+        public readonly string Label;
         public readonly string Reference;
-        public readonly int Size;
+        public readonly Rocket.Surgery.OnePasswordNativeUnoffical.ResponseFieldType Type;
         public readonly string Uuid;
+        public readonly string Value;
 
         [OutputConstructor]
-        private OutAttachment(
-            string name,
+        private OutputField(
+            ImmutableDictionary<string, object> data,
+
+            string label,
 
             string reference,
 
-            int size,
+            Rocket.Surgery.OnePasswordNativeUnoffical.ResponseFieldType type,
 
-            string uuid)
+            string uuid,
+
+            string value)
         {
-            Name = name;
+            Data = data;
+            Label = label;
             Reference = reference;
-            Size = size;
+            Type = type;
             Uuid = uuid;
+            Value = value;
         }
     }
 }

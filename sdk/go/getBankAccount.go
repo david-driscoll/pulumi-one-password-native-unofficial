@@ -32,28 +32,28 @@ type GetBankAccountArgs struct {
 
 type GetBankAccountResult struct {
 	AccountNumber     *string                               `pulumi:"accountNumber"`
-	Attachments       map[string]OutAttachment              `pulumi:"attachments"`
+	Attachments       map[string]OutputAttachment           `pulumi:"attachments"`
 	BankName          *string                               `pulumi:"bankName"`
 	BranchInformation *bankaccount.BranchInformationSection `pulumi:"branchInformation"`
 	Category          string                                `pulumi:"category"`
-	Fields            map[string]OutField                   `pulumi:"fields"`
+	Fields            map[string]OutputField                `pulumi:"fields"`
 	Iban              *string                               `pulumi:"iban"`
 	NameOnAccount     *string                               `pulumi:"nameOnAccount"`
 	Notes             *string                               `pulumi:"notes"`
 	Pin               *string                               `pulumi:"pin"`
-	References        map[string]OutField                   `pulumi:"references"`
+	References        map[string]OutputReference            `pulumi:"references"`
 	RoutingNumber     *string                               `pulumi:"routingNumber"`
-	Sections          map[string]OutSection                 `pulumi:"sections"`
+	Sections          map[string]OutputSection              `pulumi:"sections"`
 	Swift             *string                               `pulumi:"swift"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title string  `pulumi:"title"`
-	Type  *string `pulumi:"type"`
+	Title string      `pulumi:"title"`
+	Type  *string     `pulumi:"type"`
+	Urls  []OutputUrl `pulumi:"urls"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid string `pulumi:"uuid"`
-	// The UUID of the vault the item is in.
-	Vault string `pulumi:"vault"`
+	Uuid  string            `pulumi:"uuid"`
+	Vault map[string]string `pulumi:"vault"`
 }
 
 func GetBankAccountOutput(ctx *pulumi.Context, args GetBankAccountOutputArgs, opts ...pulumi.InvokeOption) GetBankAccountResultOutput {
@@ -100,8 +100,8 @@ func (o GetBankAccountResultOutput) AccountNumber() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetBankAccountResult) *string { return v.AccountNumber }).(pulumi.StringPtrOutput)
 }
 
-func (o GetBankAccountResultOutput) Attachments() OutAttachmentMapOutput {
-	return o.ApplyT(func(v GetBankAccountResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
+func (o GetBankAccountResultOutput) Attachments() OutputAttachmentMapOutput {
+	return o.ApplyT(func(v GetBankAccountResult) map[string]OutputAttachment { return v.Attachments }).(OutputAttachmentMapOutput)
 }
 
 func (o GetBankAccountResultOutput) BankName() pulumi.StringPtrOutput {
@@ -116,8 +116,8 @@ func (o GetBankAccountResultOutput) Category() pulumi.StringOutput {
 	return o.ApplyT(func(v GetBankAccountResult) string { return v.Category }).(pulumi.StringOutput)
 }
 
-func (o GetBankAccountResultOutput) Fields() OutFieldMapOutput {
-	return o.ApplyT(func(v GetBankAccountResult) map[string]OutField { return v.Fields }).(OutFieldMapOutput)
+func (o GetBankAccountResultOutput) Fields() OutputFieldMapOutput {
+	return o.ApplyT(func(v GetBankAccountResult) map[string]OutputField { return v.Fields }).(OutputFieldMapOutput)
 }
 
 func (o GetBankAccountResultOutput) Iban() pulumi.StringPtrOutput {
@@ -136,16 +136,16 @@ func (o GetBankAccountResultOutput) Pin() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetBankAccountResult) *string { return v.Pin }).(pulumi.StringPtrOutput)
 }
 
-func (o GetBankAccountResultOutput) References() OutFieldMapOutput {
-	return o.ApplyT(func(v GetBankAccountResult) map[string]OutField { return v.References }).(OutFieldMapOutput)
+func (o GetBankAccountResultOutput) References() OutputReferenceMapOutput {
+	return o.ApplyT(func(v GetBankAccountResult) map[string]OutputReference { return v.References }).(OutputReferenceMapOutput)
 }
 
 func (o GetBankAccountResultOutput) RoutingNumber() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetBankAccountResult) *string { return v.RoutingNumber }).(pulumi.StringPtrOutput)
 }
 
-func (o GetBankAccountResultOutput) Sections() OutSectionMapOutput {
-	return o.ApplyT(func(v GetBankAccountResult) map[string]OutSection { return v.Sections }).(OutSectionMapOutput)
+func (o GetBankAccountResultOutput) Sections() OutputSectionMapOutput {
+	return o.ApplyT(func(v GetBankAccountResult) map[string]OutputSection { return v.Sections }).(OutputSectionMapOutput)
 }
 
 func (o GetBankAccountResultOutput) Swift() pulumi.StringPtrOutput {
@@ -166,14 +166,17 @@ func (o GetBankAccountResultOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetBankAccountResult) *string { return v.Type }).(pulumi.StringPtrOutput)
 }
 
+func (o GetBankAccountResultOutput) Urls() OutputUrlArrayOutput {
+	return o.ApplyT(func(v GetBankAccountResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
+}
+
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
 func (o GetBankAccountResultOutput) Uuid() pulumi.StringOutput {
 	return o.ApplyT(func(v GetBankAccountResult) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
-// The UUID of the vault the item is in.
-func (o GetBankAccountResultOutput) Vault() pulumi.StringOutput {
-	return o.ApplyT(func(v GetBankAccountResult) string { return v.Vault }).(pulumi.StringOutput)
+func (o GetBankAccountResultOutput) Vault() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetBankAccountResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
 }
 
 func init() {

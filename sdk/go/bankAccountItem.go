@@ -16,28 +16,28 @@ type BankAccountItem struct {
 	pulumi.CustomResourceState
 
 	AccountNumber     pulumi.StringPtrOutput                        `pulumi:"accountNumber"`
-	Attachments       OutAttachmentMapOutput                        `pulumi:"attachments"`
+	Attachments       OutputAttachmentMapOutput                     `pulumi:"attachments"`
 	BankName          pulumi.StringPtrOutput                        `pulumi:"bankName"`
 	BranchInformation bankaccount.BranchInformationSectionPtrOutput `pulumi:"branchInformation"`
 	Category          pulumi.StringOutput                           `pulumi:"category"`
-	Fields            OutFieldMapOutput                             `pulumi:"fields"`
+	Fields            OutputFieldMapOutput                          `pulumi:"fields"`
 	Iban              pulumi.StringPtrOutput                        `pulumi:"iban"`
 	NameOnAccount     pulumi.StringPtrOutput                        `pulumi:"nameOnAccount"`
 	Notes             pulumi.StringPtrOutput                        `pulumi:"notes"`
 	Pin               pulumi.StringPtrOutput                        `pulumi:"pin"`
-	References        OutFieldMapOutput                             `pulumi:"references"`
+	References        OutputReferenceMapOutput                      `pulumi:"references"`
 	RoutingNumber     pulumi.StringPtrOutput                        `pulumi:"routingNumber"`
-	Sections          OutSectionMapOutput                           `pulumi:"sections"`
+	Sections          OutputSectionMapOutput                        `pulumi:"sections"`
 	Swift             pulumi.StringPtrOutput                        `pulumi:"swift"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
 	Title pulumi.StringOutput    `pulumi:"title"`
 	Type  pulumi.StringPtrOutput `pulumi:"type"`
+	Urls  OutputUrlArrayOutput   `pulumi:"urls"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid pulumi.StringOutput `pulumi:"uuid"`
-	// The UUID of the vault the item is in.
-	Vault pulumi.StringOutput `pulumi:"vault"`
+	Uuid  pulumi.StringOutput    `pulumi:"uuid"`
+	Vault pulumi.StringMapOutput `pulumi:"vault"`
 }
 
 // NewBankAccountItem registers a new resource with the given unique name, arguments, and options.
@@ -100,24 +100,25 @@ func (BankAccountItemState) ElementType() reflect.Type {
 
 type bankAccountItemArgs struct {
 	AccountNumber     *string                               `pulumi:"accountNumber"`
+	Attachments       map[string]pulumi.AssetOrArchive      `pulumi:"attachments"`
 	BankName          *string                               `pulumi:"bankName"`
 	BranchInformation *bankaccount.BranchInformationSection `pulumi:"branchInformation"`
 	// The category of the vault the item is in.
-	Category         *string                          `pulumi:"category"`
-	Fields           map[string]Field                 `pulumi:"fields"`
-	Iban             *string                          `pulumi:"iban"`
-	InputAttachments map[string]pulumi.AssetOrArchive `pulumi:"inputAttachments"`
-	NameOnAccount    *string                          `pulumi:"nameOnAccount"`
-	Notes            *string                          `pulumi:"notes"`
-	Pin              *string                          `pulumi:"pin"`
-	RoutingNumber    *string                          `pulumi:"routingNumber"`
-	Sections         map[string]Section               `pulumi:"sections"`
-	Swift            *string                          `pulumi:"swift"`
+	Category      *string            `pulumi:"category"`
+	Fields        map[string]Field   `pulumi:"fields"`
+	Iban          *string            `pulumi:"iban"`
+	NameOnAccount *string            `pulumi:"nameOnAccount"`
+	Notes         *string            `pulumi:"notes"`
+	Pin           *string            `pulumi:"pin"`
+	RoutingNumber *string            `pulumi:"routingNumber"`
+	Sections      map[string]Section `pulumi:"sections"`
+	Swift         *string            `pulumi:"swift"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
 	Type  *string `pulumi:"type"`
+	Urls  []Url   `pulumi:"urls"`
 	// The UUID of the vault the item is in.
 	Vault string `pulumi:"vault"`
 }
@@ -125,70 +126,31 @@ type bankAccountItemArgs struct {
 // The set of arguments for constructing a BankAccountItem resource.
 type BankAccountItemArgs struct {
 	AccountNumber     pulumi.StringPtrInput
+	Attachments       pulumi.AssetOrArchiveMapInput
 	BankName          pulumi.StringPtrInput
 	BranchInformation bankaccount.BranchInformationSectionPtrInput
 	// The category of the vault the item is in.
-	Category         pulumi.StringPtrInput
-	Fields           FieldMapInput
-	Iban             pulumi.StringPtrInput
-	InputAttachments pulumi.AssetOrArchiveMapInput
-	NameOnAccount    pulumi.StringPtrInput
-	Notes            pulumi.StringPtrInput
-	Pin              pulumi.StringPtrInput
-	RoutingNumber    pulumi.StringPtrInput
-	Sections         SectionMapInput
-	Swift            pulumi.StringPtrInput
+	Category      pulumi.StringPtrInput
+	Fields        FieldMapInput
+	Iban          pulumi.StringPtrInput
+	NameOnAccount pulumi.StringPtrInput
+	Notes         pulumi.StringPtrInput
+	Pin           pulumi.StringPtrInput
+	RoutingNumber pulumi.StringPtrInput
+	Sections      SectionMapInput
+	Swift         pulumi.StringPtrInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput
 	Type  pulumi.StringPtrInput
+	Urls  UrlArrayInput
 	// The UUID of the vault the item is in.
 	Vault pulumi.StringInput
 }
 
 func (BankAccountItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*bankAccountItemArgs)(nil)).Elem()
-}
-
-func (r *BankAccountItem) GetAttachment(ctx *pulumi.Context, args *BankAccountItemGetAttachmentArgs) (BankAccountItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("one-password-native-unoffical:index:BankAccountItem/attachment", args, BankAccountItemGetAttachmentResultOutput{}, r)
-	if err != nil {
-		return BankAccountItemGetAttachmentResultOutput{}, err
-	}
-	return out.(BankAccountItemGetAttachmentResultOutput), nil
-}
-
-type bankAccountItemGetAttachmentArgs struct {
-	// The name or uuid of the attachment to get
-	Name string `pulumi:"name"`
-}
-
-// The set of arguments for the GetAttachment method of the BankAccountItem resource.
-type BankAccountItemGetAttachmentArgs struct {
-	// The name or uuid of the attachment to get
-	Name pulumi.StringInput
-}
-
-func (BankAccountItemGetAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*bankAccountItemGetAttachmentArgs)(nil)).Elem()
-}
-
-// The resolved reference value
-type BankAccountItemGetAttachmentResult struct {
-	// the value of the attachment
-	Value string `pulumi:"value"`
-}
-
-type BankAccountItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
-
-func (BankAccountItemGetAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*BankAccountItemGetAttachmentResult)(nil)).Elem()
-}
-
-// the value of the attachment
-func (o BankAccountItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v BankAccountItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type BankAccountItemInput interface {
@@ -319,7 +281,6 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*BankAccountItemArrayInput)(nil)).Elem(), BankAccountItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*BankAccountItemMapInput)(nil)).Elem(), BankAccountItemMap{})
 	pulumi.RegisterOutputType(BankAccountItemOutput{})
-	pulumi.RegisterOutputType(BankAccountItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(BankAccountItemArrayOutput{})
 	pulumi.RegisterOutputType(BankAccountItemMapOutput{})
 }

@@ -30,31 +30,31 @@ type GetPassportArgs struct {
 }
 
 type GetPassportResult struct {
-	Attachments      map[string]OutAttachment `pulumi:"attachments"`
-	Category         string                   `pulumi:"category"`
-	DateOfBirth      *string                  `pulumi:"dateOfBirth"`
-	ExpiryDate       *string                  `pulumi:"expiryDate"`
-	Fields           map[string]OutField      `pulumi:"fields"`
-	FullName         *string                  `pulumi:"fullName"`
-	Gender           *string                  `pulumi:"gender"`
-	IssuedOn         *string                  `pulumi:"issuedOn"`
-	IssuingAuthority *string                  `pulumi:"issuingAuthority"`
-	IssuingCountry   *string                  `pulumi:"issuingCountry"`
-	Nationality      *string                  `pulumi:"nationality"`
-	Notes            *string                  `pulumi:"notes"`
-	Number           *string                  `pulumi:"number"`
-	PlaceOfBirth     *string                  `pulumi:"placeOfBirth"`
-	References       map[string]OutField      `pulumi:"references"`
-	Sections         map[string]OutSection    `pulumi:"sections"`
+	Attachments      map[string]OutputAttachment `pulumi:"attachments"`
+	Category         string                      `pulumi:"category"`
+	DateOfBirth      *string                     `pulumi:"dateOfBirth"`
+	ExpiryDate       *string                     `pulumi:"expiryDate"`
+	Fields           map[string]OutputField      `pulumi:"fields"`
+	FullName         *string                     `pulumi:"fullName"`
+	Gender           *string                     `pulumi:"gender"`
+	IssuedOn         *string                     `pulumi:"issuedOn"`
+	IssuingAuthority *string                     `pulumi:"issuingAuthority"`
+	IssuingCountry   *string                     `pulumi:"issuingCountry"`
+	Nationality      *string                     `pulumi:"nationality"`
+	Notes            *string                     `pulumi:"notes"`
+	Number           *string                     `pulumi:"number"`
+	PlaceOfBirth     *string                     `pulumi:"placeOfBirth"`
+	References       map[string]OutputReference  `pulumi:"references"`
+	Sections         map[string]OutputSection    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title string  `pulumi:"title"`
-	Type  *string `pulumi:"type"`
+	Title string      `pulumi:"title"`
+	Type  *string     `pulumi:"type"`
+	Urls  []OutputUrl `pulumi:"urls"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid string `pulumi:"uuid"`
-	// The UUID of the vault the item is in.
-	Vault string `pulumi:"vault"`
+	Uuid  string            `pulumi:"uuid"`
+	Vault map[string]string `pulumi:"vault"`
 }
 
 func GetPassportOutput(ctx *pulumi.Context, args GetPassportOutputArgs, opts ...pulumi.InvokeOption) GetPassportResultOutput {
@@ -97,8 +97,8 @@ func (o GetPassportResultOutput) ToGetPassportResultOutputWithContext(ctx contex
 	return o
 }
 
-func (o GetPassportResultOutput) Attachments() OutAttachmentMapOutput {
-	return o.ApplyT(func(v GetPassportResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
+func (o GetPassportResultOutput) Attachments() OutputAttachmentMapOutput {
+	return o.ApplyT(func(v GetPassportResult) map[string]OutputAttachment { return v.Attachments }).(OutputAttachmentMapOutput)
 }
 
 func (o GetPassportResultOutput) Category() pulumi.StringOutput {
@@ -113,8 +113,8 @@ func (o GetPassportResultOutput) ExpiryDate() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetPassportResult) *string { return v.ExpiryDate }).(pulumi.StringPtrOutput)
 }
 
-func (o GetPassportResultOutput) Fields() OutFieldMapOutput {
-	return o.ApplyT(func(v GetPassportResult) map[string]OutField { return v.Fields }).(OutFieldMapOutput)
+func (o GetPassportResultOutput) Fields() OutputFieldMapOutput {
+	return o.ApplyT(func(v GetPassportResult) map[string]OutputField { return v.Fields }).(OutputFieldMapOutput)
 }
 
 func (o GetPassportResultOutput) FullName() pulumi.StringPtrOutput {
@@ -153,12 +153,12 @@ func (o GetPassportResultOutput) PlaceOfBirth() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetPassportResult) *string { return v.PlaceOfBirth }).(pulumi.StringPtrOutput)
 }
 
-func (o GetPassportResultOutput) References() OutFieldMapOutput {
-	return o.ApplyT(func(v GetPassportResult) map[string]OutField { return v.References }).(OutFieldMapOutput)
+func (o GetPassportResultOutput) References() OutputReferenceMapOutput {
+	return o.ApplyT(func(v GetPassportResult) map[string]OutputReference { return v.References }).(OutputReferenceMapOutput)
 }
 
-func (o GetPassportResultOutput) Sections() OutSectionMapOutput {
-	return o.ApplyT(func(v GetPassportResult) map[string]OutSection { return v.Sections }).(OutSectionMapOutput)
+func (o GetPassportResultOutput) Sections() OutputSectionMapOutput {
+	return o.ApplyT(func(v GetPassportResult) map[string]OutputSection { return v.Sections }).(OutputSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.
@@ -175,14 +175,17 @@ func (o GetPassportResultOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetPassportResult) *string { return v.Type }).(pulumi.StringPtrOutput)
 }
 
+func (o GetPassportResultOutput) Urls() OutputUrlArrayOutput {
+	return o.ApplyT(func(v GetPassportResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
+}
+
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
 func (o GetPassportResultOutput) Uuid() pulumi.StringOutput {
 	return o.ApplyT(func(v GetPassportResult) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
-// The UUID of the vault the item is in.
-func (o GetPassportResultOutput) Vault() pulumi.StringOutput {
-	return o.ApplyT(func(v GetPassportResult) string { return v.Vault }).(pulumi.StringOutput)
+func (o GetPassportResultOutput) Vault() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetPassportResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
 }
 
 func init() {

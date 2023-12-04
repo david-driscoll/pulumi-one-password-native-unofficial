@@ -227,7 +227,6 @@ const (
 	ResponseFieldTypeDate             = ResponseFieldType("Date")
 	ResponseFieldTypeEmail            = ResponseFieldType("EMAIL")
 	ResponseFieldTypeGender           = ResponseFieldType("GENDER")
-	ResponseFieldTypeMenu             = ResponseFieldType("MENU")
 	ResponseFieldTypeMonthYear        = ResponseFieldType("MONTH_YEAR")
 	ResponseFieldTypeOtp              = ResponseFieldType("OTP")
 	ResponseFieldTypePhone            = ResponseFieldType("PHONE")

@@ -15,26 +15,26 @@ import (
 type MedicalRecordItem struct {
 	pulumi.CustomResourceState
 
-	Attachments            OutAttachmentMapOutput                   `pulumi:"attachments"`
+	Attachments            OutputAttachmentMapOutput                `pulumi:"attachments"`
 	Category               pulumi.StringOutput                      `pulumi:"category"`
 	Date                   pulumi.StringPtrOutput                   `pulumi:"date"`
-	Fields                 OutFieldMapOutput                        `pulumi:"fields"`
+	Fields                 OutputFieldMapOutput                     `pulumi:"fields"`
 	HealthcareProfessional pulumi.StringPtrOutput                   `pulumi:"healthcareProfessional"`
 	Location               pulumi.StringPtrOutput                   `pulumi:"location"`
 	Medication             medicalrecord.MedicationSectionPtrOutput `pulumi:"medication"`
 	Notes                  pulumi.StringPtrOutput                   `pulumi:"notes"`
 	Patient                pulumi.StringPtrOutput                   `pulumi:"patient"`
 	ReasonForVisit         pulumi.StringPtrOutput                   `pulumi:"reasonForVisit"`
-	References             OutFieldMapOutput                        `pulumi:"references"`
-	Sections               OutSectionMapOutput                      `pulumi:"sections"`
+	References             OutputReferenceMapOutput                 `pulumi:"references"`
+	Sections               OutputSectionMapOutput                   `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
-	Title pulumi.StringOutput `pulumi:"title"`
+	Title pulumi.StringOutput  `pulumi:"title"`
+	Urls  OutputUrlArrayOutput `pulumi:"urls"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid pulumi.StringOutput `pulumi:"uuid"`
-	// The UUID of the vault the item is in.
-	Vault pulumi.StringOutput `pulumi:"vault"`
+	Uuid  pulumi.StringOutput    `pulumi:"uuid"`
+	Vault pulumi.StringMapOutput `pulumi:"vault"`
 }
 
 // NewMedicalRecordItem registers a new resource with the given unique name, arguments, and options.
@@ -92,12 +92,12 @@ func (MedicalRecordItemState) ElementType() reflect.Type {
 }
 
 type medicalRecordItemArgs struct {
+	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
 	Category               *string                          `pulumi:"category"`
 	Date                   *string                          `pulumi:"date"`
 	Fields                 map[string]Field                 `pulumi:"fields"`
 	HealthcareProfessional *string                          `pulumi:"healthcareProfessional"`
-	InputAttachments       map[string]pulumi.AssetOrArchive `pulumi:"inputAttachments"`
 	Location               *string                          `pulumi:"location"`
 	Medication             *medicalrecord.MedicationSection `pulumi:"medication"`
 	Notes                  *string                          `pulumi:"notes"`
@@ -108,18 +108,19 @@ type medicalRecordItemArgs struct {
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
+	Urls  []Url   `pulumi:"urls"`
 	// The UUID of the vault the item is in.
 	Vault string `pulumi:"vault"`
 }
 
 // The set of arguments for constructing a MedicalRecordItem resource.
 type MedicalRecordItemArgs struct {
+	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
 	Category               pulumi.StringPtrInput
 	Date                   pulumi.StringPtrInput
 	Fields                 FieldMapInput
 	HealthcareProfessional pulumi.StringPtrInput
-	InputAttachments       pulumi.AssetOrArchiveMapInput
 	Location               pulumi.StringPtrInput
 	Medication             medicalrecord.MedicationSectionPtrInput
 	Notes                  pulumi.StringPtrInput
@@ -130,52 +131,13 @@ type MedicalRecordItemArgs struct {
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput
+	Urls  UrlArrayInput
 	// The UUID of the vault the item is in.
 	Vault pulumi.StringInput
 }
 
 func (MedicalRecordItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*medicalRecordItemArgs)(nil)).Elem()
-}
-
-func (r *MedicalRecordItem) GetAttachment(ctx *pulumi.Context, args *MedicalRecordItemGetAttachmentArgs) (MedicalRecordItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("one-password-native-unoffical:index:MedicalRecordItem/attachment", args, MedicalRecordItemGetAttachmentResultOutput{}, r)
-	if err != nil {
-		return MedicalRecordItemGetAttachmentResultOutput{}, err
-	}
-	return out.(MedicalRecordItemGetAttachmentResultOutput), nil
-}
-
-type medicalRecordItemGetAttachmentArgs struct {
-	// The name or uuid of the attachment to get
-	Name string `pulumi:"name"`
-}
-
-// The set of arguments for the GetAttachment method of the MedicalRecordItem resource.
-type MedicalRecordItemGetAttachmentArgs struct {
-	// The name or uuid of the attachment to get
-	Name pulumi.StringInput
-}
-
-func (MedicalRecordItemGetAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*medicalRecordItemGetAttachmentArgs)(nil)).Elem()
-}
-
-// The resolved reference value
-type MedicalRecordItemGetAttachmentResult struct {
-	// the value of the attachment
-	Value string `pulumi:"value"`
-}
-
-type MedicalRecordItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
-
-func (MedicalRecordItemGetAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*MedicalRecordItemGetAttachmentResult)(nil)).Elem()
-}
-
-// the value of the attachment
-func (o MedicalRecordItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v MedicalRecordItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type MedicalRecordItemInput interface {
@@ -306,7 +268,6 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*MedicalRecordItemArrayInput)(nil)).Elem(), MedicalRecordItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*MedicalRecordItemMapInput)(nil)).Elem(), MedicalRecordItemMap{})
 	pulumi.RegisterOutputType(MedicalRecordItemOutput{})
-	pulumi.RegisterOutputType(MedicalRecordItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(MedicalRecordItemArrayOutput{})
 	pulumi.RegisterOutputType(MedicalRecordItemMapOutput{})
 }

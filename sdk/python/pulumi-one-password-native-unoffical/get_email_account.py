@@ -20,7 +20,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetEmailAccountResult:
-    def __init__(__self__, attachments=None, auth_method=None, category=None, contact_information=None, fields=None, notes=None, password=None, port_number=None, references=None, sections=None, security=None, server=None, smtp=None, tags=None, title=None, type=None, username=None, uuid=None, vault=None):
+    def __init__(__self__, attachments=None, auth_method=None, category=None, contact_information=None, fields=None, notes=None, password=None, port_number=None, references=None, sections=None, security=None, server=None, smtp=None, tags=None, title=None, type=None, urls=None, username=None, uuid=None, vault=None):
         if attachments and not isinstance(attachments, dict):
             raise TypeError("Expected argument 'attachments' to be a dict")
         pulumi.set(__self__, "attachments", attachments)
@@ -69,19 +69,22 @@ class GetEmailAccountResult:
         if type and not isinstance(type, str):
             raise TypeError("Expected argument 'type' to be a str")
         pulumi.set(__self__, "type", type)
+        if urls and not isinstance(urls, list):
+            raise TypeError("Expected argument 'urls' to be a list")
+        pulumi.set(__self__, "urls", urls)
         if username and not isinstance(username, str):
             raise TypeError("Expected argument 'username' to be a str")
         pulumi.set(__self__, "username", username)
         if uuid and not isinstance(uuid, str):
             raise TypeError("Expected argument 'uuid' to be a str")
         pulumi.set(__self__, "uuid", uuid)
-        if vault and not isinstance(vault, str):
-            raise TypeError("Expected argument 'vault' to be a str")
+        if vault and not isinstance(vault, dict):
+            raise TypeError("Expected argument 'vault' to be a dict")
         pulumi.set(__self__, "vault", vault)
 
     @property
     @pulumi.getter
-    def attachments(self) -> Mapping[str, 'outputs.OutAttachment']:
+    def attachments(self) -> Mapping[str, 'outputs.OutputAttachment']:
         return pulumi.get(self, "attachments")
 
     @property
@@ -101,7 +104,7 @@ class GetEmailAccountResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.OutField']:
+    def fields(self) -> Mapping[str, 'outputs.OutputField']:
         return pulumi.get(self, "fields")
 
     @property
@@ -121,12 +124,12 @@ class GetEmailAccountResult:
 
     @property
     @pulumi.getter
-    def references(self) -> Mapping[str, 'outputs.OutField']:
+    def references(self) -> Mapping[str, 'outputs.OutputReference']:
         return pulumi.get(self, "references")
 
     @property
     @pulumi.getter
-    def sections(self) -> Mapping[str, 'outputs.OutSection']:
+    def sections(self) -> Mapping[str, 'outputs.OutputSection']:
         return pulumi.get(self, "sections")
 
     @property
@@ -167,6 +170,11 @@ class GetEmailAccountResult:
 
     @property
     @pulumi.getter
+    def urls(self) -> Optional[Sequence['outputs.OutputUrl']]:
+        return pulumi.get(self, "urls")
+
+    @property
+    @pulumi.getter
     def username(self) -> Optional[str]:
         return pulumi.get(self, "username")
 
@@ -180,10 +188,7 @@ class GetEmailAccountResult:
 
     @property
     @pulumi.getter
-    def vault(self) -> str:
-        """
-        The UUID of the vault the item is in.
-        """
+    def vault(self) -> Mapping[str, str]:
         return pulumi.get(self, "vault")
 
 
@@ -209,6 +214,7 @@ class AwaitableGetEmailAccountResult(GetEmailAccountResult):
             tags=self.tags,
             title=self.title,
             type=self.type,
+            urls=self.urls,
             username=self.username,
             uuid=self.uuid,
             vault=self.vault)
@@ -254,6 +260,7 @@ def get_email_account(title: Optional[str] = None,
         tags=__ret__.tags,
         title=__ret__.title,
         type=__ret__.type,
+        urls=__ret__.urls,
         username=__ret__.username,
         uuid=__ret__.uuid,
         vault=__ret__.vault)

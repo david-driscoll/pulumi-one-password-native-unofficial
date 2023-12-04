@@ -41,6 +41,18 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
     public sealed class ProviderArgs : Pulumi.ResourceArgs
     {
+        [Input("connectHost")]
+        public Input<string>? ConnectHost { get; set; }
+
+        [Input("connectToken")]
+        public Input<string>? ConnectToken { get; set; }
+
+        [Input("serviceAccountToken")]
+        public Input<string>? ServiceAccountToken { get; set; }
+
+        [Input("vault")]
+        public Input<string>? Vault { get; set; }
+
         public ProviderArgs()
         {
         }

@@ -34,16 +34,16 @@ export class DatabaseItem extends pulumi.CustomResource {
     }
 
     public readonly alias!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly attachments!: pulumi.Output<{[key: string]: outputs.OutAttachment}>;
+    public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutputAttachment}>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly connectionOptions!: pulumi.Output<string | undefined>;
     public readonly database!: pulumi.Output<string | undefined>;
-    public readonly fields!: pulumi.Output<{[key: string]: outputs.OutField}>;
+    public readonly fields!: pulumi.Output<{[key: string]: outputs.OutputField}>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly password!: pulumi.Output<string | undefined>;
     public readonly port!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutField}>;
-    public readonly sections!: pulumi.Output<{[key: string]: outputs.OutSection}>;
+    public /*out*/ readonly references!: pulumi.Output<{[key: string]: outputs.OutputReference}>;
+    public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
     public readonly server!: pulumi.Output<string | undefined>;
     public readonly sid!: pulumi.Output<string | undefined>;
     /**
@@ -55,15 +55,13 @@ export class DatabaseItem extends pulumi.CustomResource {
      */
     public readonly title!: pulumi.Output<string>;
     public readonly type!: pulumi.Output<string | undefined>;
+    public readonly urls!: pulumi.Output<outputs.OutputUrl[] | undefined>;
     public readonly username!: pulumi.Output<string | undefined>;
     /**
      * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
      */
     public /*out*/ readonly uuid!: pulumi.Output<string>;
-    /**
-     * The UUID of the vault the item is in.
-     */
-    public readonly vault!: pulumi.Output<string>;
+    public readonly vault!: pulumi.Output<{[key: string]: string}>;
 
     /**
      * Create a DatabaseItem resource with the given unique name, arguments, and options.
@@ -85,11 +83,11 @@ export class DatabaseItem extends pulumi.CustomResource {
                 throw new Error("Missing required property 'vault'");
             }
             resourceInputs["alias"] = args ? args.alias : undefined;
+            resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "Database";
             resourceInputs["connectionOptions"] = args ? args.connectionOptions : undefined;
             resourceInputs["database"] = args ? args.database : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
-            resourceInputs["inputAttachments"] = args ? args.inputAttachments : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["password"] = args?.password ? pulumi.secret(args.password) : undefined;
             resourceInputs["port"] = args ? args.port : undefined;
@@ -99,9 +97,9 @@ export class DatabaseItem extends pulumi.CustomResource {
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["type"] = args ? args.type : undefined;
+            resourceInputs["urls"] = args ? args.urls : undefined;
             resourceInputs["username"] = args ? args.username : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
-            resourceInputs["attachments"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
             resourceInputs["uuid"] = undefined /*out*/;
         }
@@ -109,13 +107,6 @@ export class DatabaseItem extends pulumi.CustomResource {
         const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "password", "references", "sections"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(DatabaseItem.__pulumiType, name, resourceInputs, opts);
-    }
-
-    getAttachment(args: DatabaseItem.GetAttachmentArgs): pulumi.Output<DatabaseItem.GetAttachmentResult> {
-        return pulumi.runtime.call("one-password-native-unoffical:index:DatabaseItem/attachment", {
-            "__self__": this,
-            "name": args.name,
-        }, this);
     }
 }
 
@@ -131,6 +122,7 @@ export interface DatabaseItemState {
  */
 export interface DatabaseItemArgs {
     alias?: pulumi.Input<string>;
+    attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     /**
      * The category of the vault the item is in.
      */
@@ -138,7 +130,6 @@ export interface DatabaseItemArgs {
     connectionOptions?: pulumi.Input<string>;
     database?: pulumi.Input<string>;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
-    inputAttachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     notes?: pulumi.Input<string>;
     password?: pulumi.Input<string>;
     port?: pulumi.Input<string>;
@@ -154,32 +145,10 @@ export interface DatabaseItemArgs {
      */
     title?: pulumi.Input<string>;
     type?: pulumi.Input<string>;
+    urls?: pulumi.Input<pulumi.Input<inputs.UrlArgs>[]>;
     username?: pulumi.Input<string>;
     /**
      * The UUID of the vault the item is in.
      */
     vault: pulumi.Input<string>;
-}
-
-export namespace DatabaseItem {
-    /**
-     * The set of arguments for the DatabaseItem.getAttachment method.
-     */
-    export interface GetAttachmentArgs {
-        /**
-         * The name or uuid of the attachment to get
-         */
-        name: pulumi.Input<string>;
-    }
-
-    /**
-     * The results of the DatabaseItem.getAttachment method.
-     */
-    export interface GetAttachmentResult {
-        /**
-         * the value of the attachment
-         */
-        readonly value: string;
-    }
-
 }

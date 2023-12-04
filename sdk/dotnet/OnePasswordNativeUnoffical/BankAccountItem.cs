@@ -17,7 +17,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         public Output<string?> AccountNumber { get; private set; } = null!;
 
         [Output("attachments")]
-        public Output<ImmutableDictionary<string, Outputs.OutAttachment>> Attachments { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutputAttachment>> Attachments { get; private set; } = null!;
 
         [Output("bankName")]
         public Output<string?> BankName { get; private set; } = null!;
@@ -29,7 +29,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         public Output<string> Category { get; private set; } = null!;
 
         [Output("fields")]
-        public Output<ImmutableDictionary<string, Outputs.OutField>> Fields { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutputField>> Fields { get; private set; } = null!;
 
         [Output("iban")]
         public Output<string?> Iban { get; private set; } = null!;
@@ -44,13 +44,13 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         public Output<string?> Pin { get; private set; } = null!;
 
         [Output("references")]
-        public Output<ImmutableDictionary<string, Outputs.OutField>> References { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutputReference>> References { get; private set; } = null!;
 
         [Output("routingNumber")]
         public Output<string?> RoutingNumber { get; private set; } = null!;
 
         [Output("sections")]
-        public Output<ImmutableDictionary<string, Outputs.OutSection>> Sections { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, Outputs.OutputSection>> Sections { get; private set; } = null!;
 
         [Output("swift")]
         public Output<string?> Swift { get; private set; } = null!;
@@ -70,17 +70,17 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         [Output("type")]
         public Output<string?> Type { get; private set; } = null!;
 
+        [Output("urls")]
+        public Output<ImmutableArray<Outputs.OutputUrl>> Urls { get; private set; } = null!;
+
         /// <summary>
         /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
         /// </summary>
         [Output("uuid")]
         public Output<string> Uuid { get; private set; } = null!;
 
-        /// <summary>
-        /// The UUID of the vault the item is in.
-        /// </summary>
         [Output("vault")]
-        public Output<string> Vault { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>> Vault { get; private set; } = null!;
 
 
         /// <summary>
@@ -140,15 +140,20 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         {
             return new BankAccountItem(name, id, state, options);
         }
-
-        public Pulumi.Output<BankAccountItemGetAttachmentResult> GetAttachment(BankAccountItemGetAttachmentArgs args)
-            => Pulumi.Deployment.Instance.Call<BankAccountItemGetAttachmentResult>("one-password-native-unoffical:index:BankAccountItem/attachment", args ?? new BankAccountItemGetAttachmentArgs(), this);
     }
 
     public sealed class BankAccountItemArgs : Pulumi.ResourceArgs
     {
         [Input("accountNumber")]
         public Input<string>? AccountNumber { get; set; }
+
+        [Input("attachments")]
+        private InputMap<AssetOrArchive>? _attachments;
+        public InputMap<AssetOrArchive> Attachments
+        {
+            get => _attachments ?? (_attachments = new InputMap<AssetOrArchive>());
+            set => _attachments = value;
+        }
 
         [Input("bankName")]
         public Input<string>? BankName { get; set; }
@@ -172,14 +177,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
         [Input("iban")]
         public Input<string>? Iban { get; set; }
-
-        [Input("inputAttachments")]
-        private InputMap<AssetOrArchive>? _inputAttachments;
-        public InputMap<AssetOrArchive> InputAttachments
-        {
-            get => _inputAttachments ?? (_inputAttachments = new InputMap<AssetOrArchive>());
-            set => _inputAttachments = value;
-        }
 
         [Input("nameOnAccount")]
         public Input<string>? NameOnAccount { get; set; }
@@ -234,6 +231,14 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         [Input("type")]
         public Input<string>? Type { get; set; }
 
+        [Input("urls")]
+        private InputList<Inputs.UrlArgs>? _urls;
+        public InputList<Inputs.UrlArgs> Urls
+        {
+            get => _urls ?? (_urls = new InputList<Inputs.UrlArgs>());
+            set => _urls = value;
+        }
+
         /// <summary>
         /// The UUID of the vault the item is in.
         /// </summary>
@@ -255,40 +260,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
         public BankAccountItemState()
         {
-        }
-    }
-
-    /// <summary>
-    /// The set of arguments for the <see cref="BankAccountItem.GetAttachment"/> method.
-    /// </summary>
-    public sealed class BankAccountItemGetAttachmentArgs : Pulumi.CallArgs
-    {
-        /// <summary>
-        /// The name or uuid of the attachment to get
-        /// </summary>
-        [Input("name", required: true)]
-        public Input<string> Name { get; set; } = null!;
-
-        public BankAccountItemGetAttachmentArgs()
-        {
-        }
-    }
-
-    /// <summary>
-    /// The results of the <see cref="BankAccountItem.GetAttachment"/> method.
-    /// </summary>
-    [OutputType]
-    public sealed class BankAccountItemGetAttachmentResult
-    {
-        /// <summary>
-        /// the value of the attachment
-        /// </summary>
-        public readonly string Value;
-
-        [OutputConstructor]
-        private BankAccountItemGetAttachmentResult(string value)
-        {
-            Value = value;
         }
     }
 }

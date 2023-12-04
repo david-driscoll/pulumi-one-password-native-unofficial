@@ -32,27 +32,27 @@ type GetCreditCardArgs struct {
 
 type GetCreditCardResult struct {
 	AdditionalDetails  *creditcard.AdditionalDetailsSection  `pulumi:"additionalDetails"`
-	Attachments        map[string]OutAttachment              `pulumi:"attachments"`
+	Attachments        map[string]OutputAttachment           `pulumi:"attachments"`
 	CardholderName     *string                               `pulumi:"cardholderName"`
 	Category           string                                `pulumi:"category"`
 	ContactInformation *creditcard.ContactInformationSection `pulumi:"contactInformation"`
 	ExpiryDate         *string                               `pulumi:"expiryDate"`
-	Fields             map[string]OutField                   `pulumi:"fields"`
+	Fields             map[string]OutputField                `pulumi:"fields"`
 	Notes              *string                               `pulumi:"notes"`
 	Number             *string                               `pulumi:"number"`
-	References         map[string]OutField                   `pulumi:"references"`
-	Sections           map[string]OutSection                 `pulumi:"sections"`
+	References         map[string]OutputReference            `pulumi:"references"`
+	Sections           map[string]OutputSection              `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title string  `pulumi:"title"`
-	Type  *string `pulumi:"type"`
+	Title string      `pulumi:"title"`
+	Type  *string     `pulumi:"type"`
+	Urls  []OutputUrl `pulumi:"urls"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid      string  `pulumi:"uuid"`
-	ValidFrom *string `pulumi:"validFrom"`
-	// The UUID of the vault the item is in.
-	Vault              string  `pulumi:"vault"`
-	VerificationNumber *string `pulumi:"verificationNumber"`
+	Uuid               string            `pulumi:"uuid"`
+	ValidFrom          *string           `pulumi:"validFrom"`
+	Vault              map[string]string `pulumi:"vault"`
+	VerificationNumber *string           `pulumi:"verificationNumber"`
 }
 
 func GetCreditCardOutput(ctx *pulumi.Context, args GetCreditCardOutputArgs, opts ...pulumi.InvokeOption) GetCreditCardResultOutput {
@@ -99,8 +99,8 @@ func (o GetCreditCardResultOutput) AdditionalDetails() creditcard.AdditionalDeta
 	return o.ApplyT(func(v GetCreditCardResult) *creditcard.AdditionalDetailsSection { return v.AdditionalDetails }).(creditcard.AdditionalDetailsSectionPtrOutput)
 }
 
-func (o GetCreditCardResultOutput) Attachments() OutAttachmentMapOutput {
-	return o.ApplyT(func(v GetCreditCardResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
+func (o GetCreditCardResultOutput) Attachments() OutputAttachmentMapOutput {
+	return o.ApplyT(func(v GetCreditCardResult) map[string]OutputAttachment { return v.Attachments }).(OutputAttachmentMapOutput)
 }
 
 func (o GetCreditCardResultOutput) CardholderName() pulumi.StringPtrOutput {
@@ -119,8 +119,8 @@ func (o GetCreditCardResultOutput) ExpiryDate() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetCreditCardResult) *string { return v.ExpiryDate }).(pulumi.StringPtrOutput)
 }
 
-func (o GetCreditCardResultOutput) Fields() OutFieldMapOutput {
-	return o.ApplyT(func(v GetCreditCardResult) map[string]OutField { return v.Fields }).(OutFieldMapOutput)
+func (o GetCreditCardResultOutput) Fields() OutputFieldMapOutput {
+	return o.ApplyT(func(v GetCreditCardResult) map[string]OutputField { return v.Fields }).(OutputFieldMapOutput)
 }
 
 func (o GetCreditCardResultOutput) Notes() pulumi.StringPtrOutput {
@@ -131,12 +131,12 @@ func (o GetCreditCardResultOutput) Number() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetCreditCardResult) *string { return v.Number }).(pulumi.StringPtrOutput)
 }
 
-func (o GetCreditCardResultOutput) References() OutFieldMapOutput {
-	return o.ApplyT(func(v GetCreditCardResult) map[string]OutField { return v.References }).(OutFieldMapOutput)
+func (o GetCreditCardResultOutput) References() OutputReferenceMapOutput {
+	return o.ApplyT(func(v GetCreditCardResult) map[string]OutputReference { return v.References }).(OutputReferenceMapOutput)
 }
 
-func (o GetCreditCardResultOutput) Sections() OutSectionMapOutput {
-	return o.ApplyT(func(v GetCreditCardResult) map[string]OutSection { return v.Sections }).(OutSectionMapOutput)
+func (o GetCreditCardResultOutput) Sections() OutputSectionMapOutput {
+	return o.ApplyT(func(v GetCreditCardResult) map[string]OutputSection { return v.Sections }).(OutputSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.
@@ -153,6 +153,10 @@ func (o GetCreditCardResultOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetCreditCardResult) *string { return v.Type }).(pulumi.StringPtrOutput)
 }
 
+func (o GetCreditCardResultOutput) Urls() OutputUrlArrayOutput {
+	return o.ApplyT(func(v GetCreditCardResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
+}
+
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
 func (o GetCreditCardResultOutput) Uuid() pulumi.StringOutput {
 	return o.ApplyT(func(v GetCreditCardResult) string { return v.Uuid }).(pulumi.StringOutput)
@@ -162,9 +166,8 @@ func (o GetCreditCardResultOutput) ValidFrom() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetCreditCardResult) *string { return v.ValidFrom }).(pulumi.StringPtrOutput)
 }
 
-// The UUID of the vault the item is in.
-func (o GetCreditCardResultOutput) Vault() pulumi.StringOutput {
-	return o.ApplyT(func(v GetCreditCardResult) string { return v.Vault }).(pulumi.StringOutput)
+func (o GetCreditCardResultOutput) Vault() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetCreditCardResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
 }
 
 func (o GetCreditCardResultOutput) VerificationNumber() pulumi.StringPtrOutput {

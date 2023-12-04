@@ -20,7 +20,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetCreditCardResult:
-    def __init__(__self__, additional_details=None, attachments=None, cardholder_name=None, category=None, contact_information=None, expiry_date=None, fields=None, notes=None, number=None, references=None, sections=None, tags=None, title=None, type=None, uuid=None, valid_from=None, vault=None, verification_number=None):
+    def __init__(__self__, additional_details=None, attachments=None, cardholder_name=None, category=None, contact_information=None, expiry_date=None, fields=None, notes=None, number=None, references=None, sections=None, tags=None, title=None, type=None, urls=None, uuid=None, valid_from=None, vault=None, verification_number=None):
         if additional_details and not isinstance(additional_details, dict):
             raise TypeError("Expected argument 'additional_details' to be a dict")
         pulumi.set(__self__, "additional_details", additional_details)
@@ -63,14 +63,17 @@ class GetCreditCardResult:
         if type and not isinstance(type, str):
             raise TypeError("Expected argument 'type' to be a str")
         pulumi.set(__self__, "type", type)
+        if urls and not isinstance(urls, list):
+            raise TypeError("Expected argument 'urls' to be a list")
+        pulumi.set(__self__, "urls", urls)
         if uuid and not isinstance(uuid, str):
             raise TypeError("Expected argument 'uuid' to be a str")
         pulumi.set(__self__, "uuid", uuid)
         if valid_from and not isinstance(valid_from, str):
             raise TypeError("Expected argument 'valid_from' to be a str")
         pulumi.set(__self__, "valid_from", valid_from)
-        if vault and not isinstance(vault, str):
-            raise TypeError("Expected argument 'vault' to be a str")
+        if vault and not isinstance(vault, dict):
+            raise TypeError("Expected argument 'vault' to be a dict")
         pulumi.set(__self__, "vault", vault)
         if verification_number and not isinstance(verification_number, str):
             raise TypeError("Expected argument 'verification_number' to be a str")
@@ -83,7 +86,7 @@ class GetCreditCardResult:
 
     @property
     @pulumi.getter
-    def attachments(self) -> Mapping[str, 'outputs.OutAttachment']:
+    def attachments(self) -> Mapping[str, 'outputs.OutputAttachment']:
         return pulumi.get(self, "attachments")
 
     @property
@@ -108,7 +111,7 @@ class GetCreditCardResult:
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.OutField']:
+    def fields(self) -> Mapping[str, 'outputs.OutputField']:
         return pulumi.get(self, "fields")
 
     @property
@@ -123,12 +126,12 @@ class GetCreditCardResult:
 
     @property
     @pulumi.getter
-    def references(self) -> Mapping[str, 'outputs.OutField']:
+    def references(self) -> Mapping[str, 'outputs.OutputReference']:
         return pulumi.get(self, "references")
 
     @property
     @pulumi.getter
-    def sections(self) -> Mapping[str, 'outputs.OutSection']:
+    def sections(self) -> Mapping[str, 'outputs.OutputSection']:
         return pulumi.get(self, "sections")
 
     @property
@@ -154,6 +157,11 @@ class GetCreditCardResult:
 
     @property
     @pulumi.getter
+    def urls(self) -> Optional[Sequence['outputs.OutputUrl']]:
+        return pulumi.get(self, "urls")
+
+    @property
+    @pulumi.getter
     def uuid(self) -> str:
         """
         The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -167,10 +175,7 @@ class GetCreditCardResult:
 
     @property
     @pulumi.getter
-    def vault(self) -> str:
-        """
-        The UUID of the vault the item is in.
-        """
+    def vault(self) -> Mapping[str, str]:
         return pulumi.get(self, "vault")
 
     @property
@@ -199,6 +204,7 @@ class AwaitableGetCreditCardResult(GetCreditCardResult):
             tags=self.tags,
             title=self.title,
             type=self.type,
+            urls=self.urls,
             uuid=self.uuid,
             valid_from=self.valid_from,
             vault=self.vault,
@@ -243,6 +249,7 @@ def get_credit_card(title: Optional[str] = None,
         tags=__ret__.tags,
         title=__ret__.title,
         type=__ret__.type,
+        urls=__ret__.urls,
         uuid=__ret__.uuid,
         valid_from=__ret__.valid_from,
         vault=__ret__.vault,

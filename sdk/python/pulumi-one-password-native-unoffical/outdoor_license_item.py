@@ -18,18 +18,19 @@ class OutdoorLicenseItemArgs:
     def __init__(__self__, *,
                  vault: pulumi.Input[str],
                  approved_wildlife: Optional[pulumi.Input[str]] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  country: Optional[pulumi.Input[str]] = None,
                  expires: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
                  full_name: Optional[pulumi.Input[str]] = None,
-                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  maximum_quota: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input['SectionArgs']]]] = None,
                  state: Optional[pulumi.Input[str]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
+                 urls: Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]] = None,
                  valid_from: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a OutdoorLicenseItem resource.
@@ -41,6 +42,8 @@ class OutdoorLicenseItemArgs:
         pulumi.set(__self__, "vault", vault)
         if approved_wildlife is not None:
             pulumi.set(__self__, "approved_wildlife", approved_wildlife)
+        if attachments is not None:
+            pulumi.set(__self__, "attachments", attachments)
         if category is not None:
             pulumi.set(__self__, "category", 'Outdoor License')
         if country is not None:
@@ -51,8 +54,6 @@ class OutdoorLicenseItemArgs:
             pulumi.set(__self__, "fields", fields)
         if full_name is not None:
             pulumi.set(__self__, "full_name", full_name)
-        if input_attachments is not None:
-            pulumi.set(__self__, "input_attachments", input_attachments)
         if maximum_quota is not None:
             pulumi.set(__self__, "maximum_quota", maximum_quota)
         if notes is not None:
@@ -65,6 +66,8 @@ class OutdoorLicenseItemArgs:
             pulumi.set(__self__, "tags", tags)
         if title is not None:
             pulumi.set(__self__, "title", title)
+        if urls is not None:
+            pulumi.set(__self__, "urls", urls)
         if valid_from is not None:
             pulumi.set(__self__, "valid_from", valid_from)
 
@@ -88,6 +91,15 @@ class OutdoorLicenseItemArgs:
     @approved_wildlife.setter
     def approved_wildlife(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "approved_wildlife", value)
+
+    @property
+    @pulumi.getter
+    def attachments(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]:
+        return pulumi.get(self, "attachments")
+
+    @attachments.setter
+    def attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
+        pulumi.set(self, "attachments", value)
 
     @property
     @pulumi.getter
@@ -136,15 +148,6 @@ class OutdoorLicenseItemArgs:
     @full_name.setter
     def full_name(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "full_name", value)
-
-    @property
-    @pulumi.getter(name="inputAttachments")
-    def input_attachments(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]:
-        return pulumi.get(self, "input_attachments")
-
-    @input_attachments.setter
-    def input_attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
-        pulumi.set(self, "input_attachments", value)
 
     @property
     @pulumi.getter(name="maximumQuota")
@@ -207,6 +210,15 @@ class OutdoorLicenseItemArgs:
         pulumi.set(self, "title", value)
 
     @property
+    @pulumi.getter
+    def urls(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]]:
+        return pulumi.get(self, "urls")
+
+    @urls.setter
+    def urls(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]]):
+        pulumi.set(self, "urls", value)
+
+    @property
     @pulumi.getter(name="validFrom")
     def valid_from(self) -> Optional[pulumi.Input[str]]:
         return pulumi.get(self, "valid_from")
@@ -245,18 +257,19 @@ class OutdoorLicenseItem(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  approved_wildlife: Optional[pulumi.Input[str]] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  country: Optional[pulumi.Input[str]] = None,
                  expires: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  full_name: Optional[pulumi.Input[str]] = None,
-                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  maximum_quota: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  state: Optional[pulumi.Input[str]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
+                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['UrlArgs']]]]] = None,
                  valid_from: Optional[pulumi.Input[str]] = None,
                  vault: Optional[pulumi.Input[str]] = None,
                  __props__=None):
@@ -293,18 +306,19 @@ class OutdoorLicenseItem(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  approved_wildlife: Optional[pulumi.Input[str]] = None,
+                 attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  country: Optional[pulumi.Input[str]] = None,
                  expires: Optional[pulumi.Input[str]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  full_name: Optional[pulumi.Input[str]] = None,
-                 input_attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  maximum_quota: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  state: Optional[pulumi.Input[str]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
+                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['UrlArgs']]]]] = None,
                  valid_from: Optional[pulumi.Input[str]] = None,
                  vault: Optional[pulumi.Input[str]] = None,
                  __props__=None):
@@ -322,23 +336,23 @@ class OutdoorLicenseItem(pulumi.CustomResource):
             __props__ = OutdoorLicenseItemArgs.__new__(OutdoorLicenseItemArgs)
 
             __props__.__dict__["approved_wildlife"] = approved_wildlife
+            __props__.__dict__["attachments"] = attachments
             __props__.__dict__["category"] = 'Outdoor License'
             __props__.__dict__["country"] = country
             __props__.__dict__["expires"] = expires
             __props__.__dict__["fields"] = fields
             __props__.__dict__["full_name"] = full_name
-            __props__.__dict__["input_attachments"] = input_attachments
             __props__.__dict__["maximum_quota"] = maximum_quota
             __props__.__dict__["notes"] = notes
             __props__.__dict__["sections"] = sections
             __props__.__dict__["state"] = state
             __props__.__dict__["tags"] = tags
             __props__.__dict__["title"] = title
+            __props__.__dict__["urls"] = urls
             __props__.__dict__["valid_from"] = valid_from
             if vault is None and not opts.urn:
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
-            __props__.__dict__["attachments"] = None
             __props__.__dict__["references"] = None
             __props__.__dict__["uuid"] = None
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachments", "fields", "references", "sections"])
@@ -382,6 +396,7 @@ class OutdoorLicenseItem(pulumi.CustomResource):
         __props__.__dict__["state"] = None
         __props__.__dict__["tags"] = None
         __props__.__dict__["title"] = None
+        __props__.__dict__["urls"] = None
         __props__.__dict__["uuid"] = None
         __props__.__dict__["valid_from"] = None
         return OutdoorLicenseItem(resource_name, opts=opts, __props__=__props__)
@@ -393,7 +408,7 @@ class OutdoorLicenseItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def attachments(self) -> pulumi.Output[Mapping[str, 'outputs.OutAttachment']]:
+    def attachments(self) -> pulumi.Output[Mapping[str, 'outputs.OutputAttachment']]:
         return pulumi.get(self, "attachments")
 
     @property
@@ -413,7 +428,7 @@ class OutdoorLicenseItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def fields(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+    def fields(self) -> pulumi.Output[Mapping[str, 'outputs.OutputField']]:
         return pulumi.get(self, "fields")
 
     @property
@@ -433,12 +448,12 @@ class OutdoorLicenseItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def references(self) -> pulumi.Output[Mapping[str, 'outputs.OutField']]:
+    def references(self) -> pulumi.Output[Mapping[str, 'outputs.OutputReference']]:
         return pulumi.get(self, "references")
 
     @property
     @pulumi.getter
-    def sections(self) -> pulumi.Output[Mapping[str, 'outputs.OutSection']]:
+    def sections(self) -> pulumi.Output[Mapping[str, 'outputs.OutputSection']]:
         return pulumi.get(self, "sections")
 
     @property
@@ -464,6 +479,11 @@ class OutdoorLicenseItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
+    def urls(self) -> pulumi.Output[Optional[Sequence['outputs.OutputUrl']]]:
+        return pulumi.get(self, "urls")
+
+    @property
+    @pulumi.getter
     def uuid(self) -> pulumi.Output[str]:
         """
         The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
@@ -477,38 +497,6 @@ class OutdoorLicenseItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def vault(self) -> pulumi.Output[str]:
-        """
-        The UUID of the vault the item is in.
-        """
+    def vault(self) -> pulumi.Output[Mapping[str, str]]:
         return pulumi.get(self, "vault")
-
-    @pulumi.output_type
-    class GetAttachmentResult:
-        """
-        The resolved reference value
-        """
-        def __init__(__self__, value=None):
-            if value and not isinstance(value, str):
-                raise TypeError("Expected argument 'value' to be a str")
-            pulumi.set(__self__, "value", value)
-
-        @property
-        @pulumi.getter
-        def value(self) -> str:
-            """
-            the value of the attachment
-            """
-            return pulumi.get(self, "value")
-
-    def get_attachment(__self__, *,
-                       name: pulumi.Input[str]) -> pulumi.Output['OutdoorLicenseItem.GetAttachmentResult']:
-        """
-
-        :param pulumi.Input[str] name: The name or uuid of the attachment to get
-        """
-        __args__ = dict()
-        __args__['__self__'] = __self__
-        __args__['name'] = name
-        return pulumi.runtime.call('one-password-native-unoffical:index:OutdoorLicenseItem/attachment', __args__, res=__self__, typ=OutdoorLicenseItem.GetAttachmentResult)
 

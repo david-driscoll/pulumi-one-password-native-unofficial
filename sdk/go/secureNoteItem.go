@@ -14,20 +14,20 @@ import (
 type SecureNoteItem struct {
 	pulumi.CustomResourceState
 
-	Attachments OutAttachmentMapOutput `pulumi:"attachments"`
-	Category    pulumi.StringOutput    `pulumi:"category"`
-	Fields      OutFieldMapOutput      `pulumi:"fields"`
-	Notes       pulumi.StringPtrOutput `pulumi:"notes"`
-	References  OutFieldMapOutput      `pulumi:"references"`
-	Sections    OutSectionMapOutput    `pulumi:"sections"`
+	Attachments OutputAttachmentMapOutput `pulumi:"attachments"`
+	Category    pulumi.StringOutput       `pulumi:"category"`
+	Fields      OutputFieldMapOutput      `pulumi:"fields"`
+	Notes       pulumi.StringPtrOutput    `pulumi:"notes"`
+	References  OutputReferenceMapOutput  `pulumi:"references"`
+	Sections    OutputSectionMapOutput    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
-	Title pulumi.StringOutput `pulumi:"title"`
+	Title pulumi.StringOutput  `pulumi:"title"`
+	Urls  OutputUrlArrayOutput `pulumi:"urls"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid pulumi.StringOutput `pulumi:"uuid"`
-	// The UUID of the vault the item is in.
-	Vault pulumi.StringOutput `pulumi:"vault"`
+	Uuid  pulumi.StringOutput    `pulumi:"uuid"`
+	Vault pulumi.StringMapOutput `pulumi:"vault"`
 }
 
 // NewSecureNoteItem registers a new resource with the given unique name, arguments, and options.
@@ -85,78 +85,40 @@ func (SecureNoteItemState) ElementType() reflect.Type {
 }
 
 type secureNoteItemArgs struct {
+	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
-	Category         *string                          `pulumi:"category"`
-	Fields           map[string]Field                 `pulumi:"fields"`
-	InputAttachments map[string]pulumi.AssetOrArchive `pulumi:"inputAttachments"`
-	Notes            *string                          `pulumi:"notes"`
-	Sections         map[string]Section               `pulumi:"sections"`
+	Category *string            `pulumi:"category"`
+	Fields   map[string]Field   `pulumi:"fields"`
+	Notes    *string            `pulumi:"notes"`
+	Sections map[string]Section `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
+	Urls  []Url   `pulumi:"urls"`
 	// The UUID of the vault the item is in.
 	Vault string `pulumi:"vault"`
 }
 
 // The set of arguments for constructing a SecureNoteItem resource.
 type SecureNoteItemArgs struct {
+	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
-	Category         pulumi.StringPtrInput
-	Fields           FieldMapInput
-	InputAttachments pulumi.AssetOrArchiveMapInput
-	Notes            pulumi.StringPtrInput
-	Sections         SectionMapInput
+	Category pulumi.StringPtrInput
+	Fields   FieldMapInput
+	Notes    pulumi.StringPtrInput
+	Sections SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput
+	Urls  UrlArrayInput
 	// The UUID of the vault the item is in.
 	Vault pulumi.StringInput
 }
 
 func (SecureNoteItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*secureNoteItemArgs)(nil)).Elem()
-}
-
-func (r *SecureNoteItem) GetAttachment(ctx *pulumi.Context, args *SecureNoteItemGetAttachmentArgs) (SecureNoteItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("one-password-native-unoffical:index:SecureNoteItem/attachment", args, SecureNoteItemGetAttachmentResultOutput{}, r)
-	if err != nil {
-		return SecureNoteItemGetAttachmentResultOutput{}, err
-	}
-	return out.(SecureNoteItemGetAttachmentResultOutput), nil
-}
-
-type secureNoteItemGetAttachmentArgs struct {
-	// The name or uuid of the attachment to get
-	Name string `pulumi:"name"`
-}
-
-// The set of arguments for the GetAttachment method of the SecureNoteItem resource.
-type SecureNoteItemGetAttachmentArgs struct {
-	// The name or uuid of the attachment to get
-	Name pulumi.StringInput
-}
-
-func (SecureNoteItemGetAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*secureNoteItemGetAttachmentArgs)(nil)).Elem()
-}
-
-// The resolved reference value
-type SecureNoteItemGetAttachmentResult struct {
-	// the value of the attachment
-	Value string `pulumi:"value"`
-}
-
-type SecureNoteItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
-
-func (SecureNoteItemGetAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*SecureNoteItemGetAttachmentResult)(nil)).Elem()
-}
-
-// the value of the attachment
-func (o SecureNoteItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v SecureNoteItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type SecureNoteItemInput interface {
@@ -287,7 +249,6 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*SecureNoteItemArrayInput)(nil)).Elem(), SecureNoteItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SecureNoteItemMapInput)(nil)).Elem(), SecureNoteItemMap{})
 	pulumi.RegisterOutputType(SecureNoteItemOutput{})
-	pulumi.RegisterOutputType(SecureNoteItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(SecureNoteItemArrayOutput{})
 	pulumi.RegisterOutputType(SecureNoteItemMapOutput{})
 }

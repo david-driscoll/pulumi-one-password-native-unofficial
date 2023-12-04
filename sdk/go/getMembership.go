@@ -30,28 +30,28 @@ type GetMembershipArgs struct {
 }
 
 type GetMembershipResult struct {
-	Attachments map[string]OutAttachment `pulumi:"attachments"`
-	Category    string                   `pulumi:"category"`
-	ExpiryDate  *string                  `pulumi:"expiryDate"`
-	Fields      map[string]OutField      `pulumi:"fields"`
-	Group       *string                  `pulumi:"group"`
-	MemberId    *string                  `pulumi:"memberId"`
-	MemberName  *string                  `pulumi:"memberName"`
-	MemberSince *string                  `pulumi:"memberSince"`
-	Notes       *string                  `pulumi:"notes"`
-	Pin         *string                  `pulumi:"pin"`
-	References  map[string]OutField      `pulumi:"references"`
-	Sections    map[string]OutSection    `pulumi:"sections"`
+	Attachments map[string]OutputAttachment `pulumi:"attachments"`
+	Category    string                      `pulumi:"category"`
+	ExpiryDate  *string                     `pulumi:"expiryDate"`
+	Fields      map[string]OutputField      `pulumi:"fields"`
+	Group       *string                     `pulumi:"group"`
+	MemberId    *string                     `pulumi:"memberId"`
+	MemberName  *string                     `pulumi:"memberName"`
+	MemberSince *string                     `pulumi:"memberSince"`
+	Notes       *string                     `pulumi:"notes"`
+	Pin         *string                     `pulumi:"pin"`
+	References  map[string]OutputReference  `pulumi:"references"`
+	Sections    map[string]OutputSection    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags      []string `pulumi:"tags"`
 	Telephone *string  `pulumi:"telephone"`
 	// The title of the item.
-	Title string `pulumi:"title"`
+	Title string      `pulumi:"title"`
+	Urls  []OutputUrl `pulumi:"urls"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid string `pulumi:"uuid"`
-	// The UUID of the vault the item is in.
-	Vault   string  `pulumi:"vault"`
-	Website *string `pulumi:"website"`
+	Uuid    string            `pulumi:"uuid"`
+	Vault   map[string]string `pulumi:"vault"`
+	Website *string           `pulumi:"website"`
 }
 
 func GetMembershipOutput(ctx *pulumi.Context, args GetMembershipOutputArgs, opts ...pulumi.InvokeOption) GetMembershipResultOutput {
@@ -94,8 +94,8 @@ func (o GetMembershipResultOutput) ToGetMembershipResultOutputWithContext(ctx co
 	return o
 }
 
-func (o GetMembershipResultOutput) Attachments() OutAttachmentMapOutput {
-	return o.ApplyT(func(v GetMembershipResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
+func (o GetMembershipResultOutput) Attachments() OutputAttachmentMapOutput {
+	return o.ApplyT(func(v GetMembershipResult) map[string]OutputAttachment { return v.Attachments }).(OutputAttachmentMapOutput)
 }
 
 func (o GetMembershipResultOutput) Category() pulumi.StringOutput {
@@ -106,8 +106,8 @@ func (o GetMembershipResultOutput) ExpiryDate() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetMembershipResult) *string { return v.ExpiryDate }).(pulumi.StringPtrOutput)
 }
 
-func (o GetMembershipResultOutput) Fields() OutFieldMapOutput {
-	return o.ApplyT(func(v GetMembershipResult) map[string]OutField { return v.Fields }).(OutFieldMapOutput)
+func (o GetMembershipResultOutput) Fields() OutputFieldMapOutput {
+	return o.ApplyT(func(v GetMembershipResult) map[string]OutputField { return v.Fields }).(OutputFieldMapOutput)
 }
 
 func (o GetMembershipResultOutput) Group() pulumi.StringPtrOutput {
@@ -134,12 +134,12 @@ func (o GetMembershipResultOutput) Pin() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetMembershipResult) *string { return v.Pin }).(pulumi.StringPtrOutput)
 }
 
-func (o GetMembershipResultOutput) References() OutFieldMapOutput {
-	return o.ApplyT(func(v GetMembershipResult) map[string]OutField { return v.References }).(OutFieldMapOutput)
+func (o GetMembershipResultOutput) References() OutputReferenceMapOutput {
+	return o.ApplyT(func(v GetMembershipResult) map[string]OutputReference { return v.References }).(OutputReferenceMapOutput)
 }
 
-func (o GetMembershipResultOutput) Sections() OutSectionMapOutput {
-	return o.ApplyT(func(v GetMembershipResult) map[string]OutSection { return v.Sections }).(OutSectionMapOutput)
+func (o GetMembershipResultOutput) Sections() OutputSectionMapOutput {
+	return o.ApplyT(func(v GetMembershipResult) map[string]OutputSection { return v.Sections }).(OutputSectionMapOutput)
 }
 
 // An array of strings of the tags assigned to the item.
@@ -156,14 +156,17 @@ func (o GetMembershipResultOutput) Title() pulumi.StringOutput {
 	return o.ApplyT(func(v GetMembershipResult) string { return v.Title }).(pulumi.StringOutput)
 }
 
+func (o GetMembershipResultOutput) Urls() OutputUrlArrayOutput {
+	return o.ApplyT(func(v GetMembershipResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
+}
+
 // The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
 func (o GetMembershipResultOutput) Uuid() pulumi.StringOutput {
 	return o.ApplyT(func(v GetMembershipResult) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
-// The UUID of the vault the item is in.
-func (o GetMembershipResultOutput) Vault() pulumi.StringOutput {
-	return o.ApplyT(func(v GetMembershipResult) string { return v.Vault }).(pulumi.StringOutput)
+func (o GetMembershipResultOutput) Vault() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetMembershipResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
 }
 
 func (o GetMembershipResultOutput) Website() pulumi.StringPtrOutput {

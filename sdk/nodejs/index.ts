@@ -60,9 +60,11 @@ export * from "./wirelessRouterItem";
 export * from "./types/enums";
 
 // Export sub-modules:
+import * as config from "./config";
 import * as types from "./types";
 
 export {
+    config,
     types,
 };
 

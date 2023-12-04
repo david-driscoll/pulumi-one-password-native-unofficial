@@ -62,7 +62,6 @@ export const ResponseFieldType = {
     Date: "Date",
     Email: "EMAIL",
     Gender: "GENDER",
-    Menu: "MENU",
     MonthYear: "MONTH_YEAR",
     Otp: "OTP",
     Phone: "PHONE",

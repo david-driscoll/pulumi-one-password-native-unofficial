@@ -11,13 +11,15 @@ from . import outputs
 from ._enums import *
 
 __all__ = [
-    'OutAttachment',
-    'OutField',
-    'OutSection',
+    'OutputAttachment',
+    'OutputField',
+    'OutputReference',
+    'OutputSection',
+    'OutputUrl',
 ]
 
 @pulumi.output_type
-class OutAttachment(dict):
+class OutputAttachment(dict):
     def __init__(__self__, *,
                  name: str,
                  reference: str,
@@ -50,18 +52,25 @@ class OutAttachment(dict):
 
 
 @pulumi.output_type
-class OutField(dict):
+class OutputField(dict):
     def __init__(__self__, *,
+                 data: Mapping[str, Any],
                  label: str,
                  reference: str,
                  type: 'ResponseFieldType',
                  uuid: str,
                  value: str):
+        pulumi.set(__self__, "data", data)
         pulumi.set(__self__, "label", label)
         pulumi.set(__self__, "reference", reference)
         pulumi.set(__self__, "type", type)
         pulumi.set(__self__, "uuid", uuid)
         pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def data(self) -> Mapping[str, Any]:
+        return pulumi.get(self, "data")
 
     @property
     @pulumi.getter
@@ -90,18 +99,27 @@ class OutField(dict):
 
 
 @pulumi.output_type
-class OutSection(dict):
+class OutputReference(dict):
+    def __init__(__self__):
+        pass
+
+
+@pulumi.output_type
+class OutputSection(dict):
     def __init__(__self__, *,
-                 fields: Mapping[str, 'outputs.OutField'],
+                 fields: Mapping[str, 'outputs.OutputField'],
                  label: str,
-                 uuid: str):
+                 uuid: str,
+                 attachments: Optional[Mapping[str, 'outputs.OutputAttachment']] = None):
         pulumi.set(__self__, "fields", fields)
         pulumi.set(__self__, "label", label)
         pulumi.set(__self__, "uuid", uuid)
+        if attachments is not None:
+            pulumi.set(__self__, "attachments", attachments)
 
     @property
     @pulumi.getter
-    def fields(self) -> Mapping[str, 'outputs.OutField']:
+    def fields(self) -> Mapping[str, 'outputs.OutputField']:
         return pulumi.get(self, "fields")
 
     @property
@@ -113,5 +131,37 @@ class OutSection(dict):
     @pulumi.getter
     def uuid(self) -> str:
         return pulumi.get(self, "uuid")
+
+    @property
+    @pulumi.getter
+    def attachments(self) -> Optional[Mapping[str, 'outputs.OutputAttachment']]:
+        return pulumi.get(self, "attachments")
+
+
+@pulumi.output_type
+class OutputUrl(dict):
+    def __init__(__self__, *,
+                 href: str,
+                 primary: bool,
+                 label: Optional[str] = None):
+        pulumi.set(__self__, "href", href)
+        pulumi.set(__self__, "primary", primary)
+        if label is not None:
+            pulumi.set(__self__, "label", label)
+
+    @property
+    @pulumi.getter
+    def href(self) -> str:
+        return pulumi.get(self, "href")
+
+    @property
+    @pulumi.getter
+    def primary(self) -> bool:
+        return pulumi.get(self, "primary")
+
+    @property
+    @pulumi.getter
+    def label(self) -> Optional[str]:
+        return pulumi.get(self, "label")
 
 

@@ -14,22 +14,22 @@ import (
 type SocialSecurityNumberItem struct {
 	pulumi.CustomResourceState
 
-	Attachments OutAttachmentMapOutput `pulumi:"attachments"`
-	Category    pulumi.StringOutput    `pulumi:"category"`
-	Fields      OutFieldMapOutput      `pulumi:"fields"`
-	Name        pulumi.StringPtrOutput `pulumi:"name"`
-	Notes       pulumi.StringPtrOutput `pulumi:"notes"`
-	Number      pulumi.StringPtrOutput `pulumi:"number"`
-	References  OutFieldMapOutput      `pulumi:"references"`
-	Sections    OutSectionMapOutput    `pulumi:"sections"`
+	Attachments OutputAttachmentMapOutput `pulumi:"attachments"`
+	Category    pulumi.StringOutput       `pulumi:"category"`
+	Fields      OutputFieldMapOutput      `pulumi:"fields"`
+	Name        pulumi.StringPtrOutput    `pulumi:"name"`
+	Notes       pulumi.StringPtrOutput    `pulumi:"notes"`
+	Number      pulumi.StringPtrOutput    `pulumi:"number"`
+	References  OutputReferenceMapOutput  `pulumi:"references"`
+	Sections    OutputSectionMapOutput    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
-	Title pulumi.StringOutput `pulumi:"title"`
+	Title pulumi.StringOutput  `pulumi:"title"`
+	Urls  OutputUrlArrayOutput `pulumi:"urls"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid pulumi.StringOutput `pulumi:"uuid"`
-	// The UUID of the vault the item is in.
-	Vault pulumi.StringOutput `pulumi:"vault"`
+	Uuid  pulumi.StringOutput    `pulumi:"uuid"`
+	Vault pulumi.StringMapOutput `pulumi:"vault"`
 }
 
 // NewSocialSecurityNumberItem registers a new resource with the given unique name, arguments, and options.
@@ -91,82 +91,44 @@ func (SocialSecurityNumberItemState) ElementType() reflect.Type {
 }
 
 type socialSecurityNumberItemArgs struct {
+	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
-	Category         *string                          `pulumi:"category"`
-	Fields           map[string]Field                 `pulumi:"fields"`
-	InputAttachments map[string]pulumi.AssetOrArchive `pulumi:"inputAttachments"`
-	Name             *string                          `pulumi:"name"`
-	Notes            *string                          `pulumi:"notes"`
-	Number           *string                          `pulumi:"number"`
-	Sections         map[string]Section               `pulumi:"sections"`
+	Category *string            `pulumi:"category"`
+	Fields   map[string]Field   `pulumi:"fields"`
+	Name     *string            `pulumi:"name"`
+	Notes    *string            `pulumi:"notes"`
+	Number   *string            `pulumi:"number"`
+	Sections map[string]Section `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
+	Urls  []Url   `pulumi:"urls"`
 	// The UUID of the vault the item is in.
 	Vault string `pulumi:"vault"`
 }
 
 // The set of arguments for constructing a SocialSecurityNumberItem resource.
 type SocialSecurityNumberItemArgs struct {
+	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
-	Category         pulumi.StringPtrInput
-	Fields           FieldMapInput
-	InputAttachments pulumi.AssetOrArchiveMapInput
-	Name             pulumi.StringPtrInput
-	Notes            pulumi.StringPtrInput
-	Number           pulumi.StringPtrInput
-	Sections         SectionMapInput
+	Category pulumi.StringPtrInput
+	Fields   FieldMapInput
+	Name     pulumi.StringPtrInput
+	Notes    pulumi.StringPtrInput
+	Number   pulumi.StringPtrInput
+	Sections SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput
+	Urls  UrlArrayInput
 	// The UUID of the vault the item is in.
 	Vault pulumi.StringInput
 }
 
 func (SocialSecurityNumberItemArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*socialSecurityNumberItemArgs)(nil)).Elem()
-}
-
-func (r *SocialSecurityNumberItem) GetAttachment(ctx *pulumi.Context, args *SocialSecurityNumberItemGetAttachmentArgs) (SocialSecurityNumberItemGetAttachmentResultOutput, error) {
-	out, err := ctx.Call("one-password-native-unoffical:index:SocialSecurityNumberItem/attachment", args, SocialSecurityNumberItemGetAttachmentResultOutput{}, r)
-	if err != nil {
-		return SocialSecurityNumberItemGetAttachmentResultOutput{}, err
-	}
-	return out.(SocialSecurityNumberItemGetAttachmentResultOutput), nil
-}
-
-type socialSecurityNumberItemGetAttachmentArgs struct {
-	// The name or uuid of the attachment to get
-	Name string `pulumi:"name"`
-}
-
-// The set of arguments for the GetAttachment method of the SocialSecurityNumberItem resource.
-type SocialSecurityNumberItemGetAttachmentArgs struct {
-	// The name or uuid of the attachment to get
-	Name pulumi.StringInput
-}
-
-func (SocialSecurityNumberItemGetAttachmentArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*socialSecurityNumberItemGetAttachmentArgs)(nil)).Elem()
-}
-
-// The resolved reference value
-type SocialSecurityNumberItemGetAttachmentResult struct {
-	// the value of the attachment
-	Value string `pulumi:"value"`
-}
-
-type SocialSecurityNumberItemGetAttachmentResultOutput struct{ *pulumi.OutputState }
-
-func (SocialSecurityNumberItemGetAttachmentResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*SocialSecurityNumberItemGetAttachmentResult)(nil)).Elem()
-}
-
-// the value of the attachment
-func (o SocialSecurityNumberItemGetAttachmentResultOutput) Value() pulumi.StringOutput {
-	return o.ApplyT(func(v SocialSecurityNumberItemGetAttachmentResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 type SocialSecurityNumberItemInput interface {
@@ -297,7 +259,6 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*SocialSecurityNumberItemArrayInput)(nil)).Elem(), SocialSecurityNumberItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SocialSecurityNumberItemMapInput)(nil)).Elem(), SocialSecurityNumberItemMap{})
 	pulumi.RegisterOutputType(SocialSecurityNumberItemOutput{})
-	pulumi.RegisterOutputType(SocialSecurityNumberItemGetAttachmentResultOutput{})
 	pulumi.RegisterOutputType(SocialSecurityNumberItemArrayOutput{})
 	pulumi.RegisterOutputType(SocialSecurityNumberItemMapOutput{})
 }

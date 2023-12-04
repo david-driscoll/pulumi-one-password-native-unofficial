@@ -74,16 +74,16 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
     [OutputType]
     public sealed class GetAPICredentialResult
     {
-        public readonly ImmutableDictionary<string, Outputs.OutAttachment> Attachments;
+        public readonly ImmutableDictionary<string, Outputs.OutputAttachment> Attachments;
         public readonly string Category;
         public readonly string? Credential;
         public readonly string? Expires;
-        public readonly ImmutableDictionary<string, Outputs.OutField> Fields;
+        public readonly ImmutableDictionary<string, Outputs.OutputField> Fields;
         public readonly string? Filename;
         public readonly string? Hostname;
         public readonly string? Notes;
-        public readonly ImmutableDictionary<string, Outputs.OutField> References;
-        public readonly ImmutableDictionary<string, Outputs.OutSection> Sections;
+        public readonly ImmutableDictionary<string, Outputs.OutputReference> References;
+        public readonly ImmutableDictionary<string, Outputs.OutputSection> Sections;
         /// <summary>
         /// An array of strings of the tags assigned to the item.
         /// </summary>
@@ -93,20 +93,18 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         /// </summary>
         public readonly string Title;
         public readonly string? Type;
+        public readonly ImmutableArray<Outputs.OutputUrl> Urls;
         public readonly string? Username;
         /// <summary>
         /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
         /// </summary>
         public readonly string Uuid;
         public readonly string? ValidFrom;
-        /// <summary>
-        /// The UUID of the vault the item is in.
-        /// </summary>
-        public readonly string Vault;
+        public readonly ImmutableDictionary<string, string> Vault;
 
         [OutputConstructor]
         private GetAPICredentialResult(
-            ImmutableDictionary<string, Outputs.OutAttachment> attachments,
+            ImmutableDictionary<string, Outputs.OutputAttachment> attachments,
 
             string category,
 
@@ -114,7 +112,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
             string? expires,
 
-            ImmutableDictionary<string, Outputs.OutField> fields,
+            ImmutableDictionary<string, Outputs.OutputField> fields,
 
             string? filename,
 
@@ -122,9 +120,9 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
             string? notes,
 
-            ImmutableDictionary<string, Outputs.OutField> references,
+            ImmutableDictionary<string, Outputs.OutputReference> references,
 
-            ImmutableDictionary<string, Outputs.OutSection> sections,
+            ImmutableDictionary<string, Outputs.OutputSection> sections,
 
             ImmutableArray<string> tags,
 
@@ -132,13 +130,15 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
             string? type,
 
+            ImmutableArray<Outputs.OutputUrl> urls,
+
             string? username,
 
             string uuid,
 
             string? validFrom,
 
-            string vault)
+            ImmutableDictionary<string, string> vault)
         {
             Attachments = attachments;
             Category = category;
@@ -153,6 +153,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
             Tags = tags;
             Title = title;
             Type = type;
+            Urls = urls;
             Username = username;
             Uuid = uuid;
             ValidFrom = validFrom;

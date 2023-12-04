@@ -31,29 +31,29 @@ type GetEmailAccountArgs struct {
 }
 
 type GetEmailAccountResult struct {
-	Attachments        map[string]OutAttachment                `pulumi:"attachments"`
+	Attachments        map[string]OutputAttachment             `pulumi:"attachments"`
 	AuthMethod         *string                                 `pulumi:"authMethod"`
 	Category           string                                  `pulumi:"category"`
 	ContactInformation *emailaccount.ContactInformationSection `pulumi:"contactInformation"`
-	Fields             map[string]OutField                     `pulumi:"fields"`
+	Fields             map[string]OutputField                  `pulumi:"fields"`
 	Notes              *string                                 `pulumi:"notes"`
 	Password           *string                                 `pulumi:"password"`
 	PortNumber         *string                                 `pulumi:"portNumber"`
-	References         map[string]OutField                     `pulumi:"references"`
-	Sections           map[string]OutSection                   `pulumi:"sections"`
+	References         map[string]OutputReference              `pulumi:"references"`
+	Sections           map[string]OutputSection                `pulumi:"sections"`
 	Security           *string                                 `pulumi:"security"`
 	Server             *string                                 `pulumi:"server"`
 	Smtp               *emailaccount.SmtpSection               `pulumi:"smtp"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title    string  `pulumi:"title"`
-	Type     *string `pulumi:"type"`
-	Username *string `pulumi:"username"`
+	Title    string      `pulumi:"title"`
+	Type     *string     `pulumi:"type"`
+	Urls     []OutputUrl `pulumi:"urls"`
+	Username *string     `pulumi:"username"`
 	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid string `pulumi:"uuid"`
-	// The UUID of the vault the item is in.
-	Vault string `pulumi:"vault"`
+	Uuid  string            `pulumi:"uuid"`
+	Vault map[string]string `pulumi:"vault"`
 }
 
 func GetEmailAccountOutput(ctx *pulumi.Context, args GetEmailAccountOutputArgs, opts ...pulumi.InvokeOption) GetEmailAccountResultOutput {
@@ -96,8 +96,8 @@ func (o GetEmailAccountResultOutput) ToGetEmailAccountResultOutputWithContext(ct
 	return o
 }
 
-func (o GetEmailAccountResultOutput) Attachments() OutAttachmentMapOutput {
-	return o.ApplyT(func(v GetEmailAccountResult) map[string]OutAttachment { return v.Attachments }).(OutAttachmentMapOutput)
+func (o GetEmailAccountResultOutput) Attachments() OutputAttachmentMapOutput {
+	return o.ApplyT(func(v GetEmailAccountResult) map[string]OutputAttachment { return v.Attachments }).(OutputAttachmentMapOutput)
 }
 
 func (o GetEmailAccountResultOutput) AuthMethod() pulumi.StringPtrOutput {
@@ -112,8 +112,8 @@ func (o GetEmailAccountResultOutput) ContactInformation() emailaccount.ContactIn
 	return o.ApplyT(func(v GetEmailAccountResult) *emailaccount.ContactInformationSection { return v.ContactInformation }).(emailaccount.ContactInformationSectionPtrOutput)
 }
 
-func (o GetEmailAccountResultOutput) Fields() OutFieldMapOutput {
-	return o.ApplyT(func(v GetEmailAccountResult) map[string]OutField { return v.Fields }).(OutFieldMapOutput)
+func (o GetEmailAccountResultOutput) Fields() OutputFieldMapOutput {
+	return o.ApplyT(func(v GetEmailAccountResult) map[string]OutputField { return v.Fields }).(OutputFieldMapOutput)
 }
 
 func (o GetEmailAccountResultOutput) Notes() pulumi.StringPtrOutput {
@@ -128,12 +128,12 @@ func (o GetEmailAccountResultOutput) PortNumber() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetEmailAccountResult) *string { return v.PortNumber }).(pulumi.StringPtrOutput)
 }
 
-func (o GetEmailAccountResultOutput) References() OutFieldMapOutput {
-	return o.ApplyT(func(v GetEmailAccountResult) map[string]OutField { return v.References }).(OutFieldMapOutput)
+func (o GetEmailAccountResultOutput) References() OutputReferenceMapOutput {
+	return o.ApplyT(func(v GetEmailAccountResult) map[string]OutputReference { return v.References }).(OutputReferenceMapOutput)
 }
 
-func (o GetEmailAccountResultOutput) Sections() OutSectionMapOutput {
-	return o.ApplyT(func(v GetEmailAccountResult) map[string]OutSection { return v.Sections }).(OutSectionMapOutput)
+func (o GetEmailAccountResultOutput) Sections() OutputSectionMapOutput {
+	return o.ApplyT(func(v GetEmailAccountResult) map[string]OutputSection { return v.Sections }).(OutputSectionMapOutput)
 }
 
 func (o GetEmailAccountResultOutput) Security() pulumi.StringPtrOutput {
@@ -162,6 +162,10 @@ func (o GetEmailAccountResultOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetEmailAccountResult) *string { return v.Type }).(pulumi.StringPtrOutput)
 }
 
+func (o GetEmailAccountResultOutput) Urls() OutputUrlArrayOutput {
+	return o.ApplyT(func(v GetEmailAccountResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
+}
+
 func (o GetEmailAccountResultOutput) Username() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetEmailAccountResult) *string { return v.Username }).(pulumi.StringPtrOutput)
 }
@@ -171,9 +175,8 @@ func (o GetEmailAccountResultOutput) Uuid() pulumi.StringOutput {
 	return o.ApplyT(func(v GetEmailAccountResult) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
-// The UUID of the vault the item is in.
-func (o GetEmailAccountResultOutput) Vault() pulumi.StringOutput {
-	return o.ApplyT(func(v GetEmailAccountResult) string { return v.Vault }).(pulumi.StringOutput)
+func (o GetEmailAccountResultOutput) Vault() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetEmailAccountResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
 }
 
 func init() {
