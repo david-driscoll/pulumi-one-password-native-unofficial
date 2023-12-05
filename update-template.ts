@@ -1,11 +1,11 @@
-import { Field, FieldAssignmentType, FieldPurpose, GenericField, ItemTemplate, NotesField, OtpField, PasswordField, Section, UsernameField, item } from "@1password/op-js"
+import { Field, FieldAssignmentType, FieldPurpose, GenericField, ItemTemplate, ListItemTemplate, NotesField, OtpField, PasswordField, Section, UsernameField, item } from "@1password/op-js"
 import { readFileSync, writeFileSync } from 'fs';
 import { camelCase, uniq, orderBy, cloneDeep, last } from 'lodash'
 
 const templates = orderBy(item.template.list().concat({
     name: 'Item',
     uuid: "-1"
-}), z => z.name);
+}), z => z.name) as (ListItemTemplate & { resourceName?: string; functionName?: string })[];
 const schema = JSON.parse(readFileSync('./schema.json').toString('ascii'));
 
 const allTemplates = templates.map(z => camelCase(z.name)[0].toUpperCase() + camelCase(z.name).substring(1));
@@ -440,7 +440,7 @@ for (const template of templates) {
 
     const templateSchema = template.name === 'Item' ? { fields: [] } : item.template.get(template.name as any) as any as ItemTemplate
     const resourceName = template.name === 'Item' ? `one-password-native-unoffical:index:Item` : `one-password-native-unoffical:index:${template.name.replace(/ /g, '')}Item`;
-    (template as any).resourceName = resourceName
+    template.resourceName = resourceName
 
     const currentResource = schema.resources[resourceName] ??= {
         "isComponent": false,
@@ -511,7 +511,7 @@ for (const template of templates) {
     applyDefaultOutputProperties(currentResource);
 
     const functionName = `one-password-native-unoffical:index:Get${template.name.replace(/ /g, '')}`;
-    (template as any).functionName = functionName
+    template.functionName = functionName
     const currentFunction = schema.functions[functionName] = {} as any;
     currentFunction.inputs = {
         "properties": {
@@ -577,10 +577,10 @@ for (const template of templates) {
             return o;
         }, {} as Record<string, any>);
 
+    resourcePropPaths[resourceName] ??= [];
+    functionPropPaths[functionName] ??= [];
     for (const field of templateSchema.fields) {
 
-        resourcePropPaths[resourceName] ??= [];
-        functionPropPaths[functionName] ??= [];
         const fieldInfo = getFieldType(field);
         if (field.section) {
             const sectionKey = getSectionKey(template.name, field.section!);
@@ -681,6 +681,37 @@ export const PropertyPaths: Record<string, [field: string, section?: string][]> 
     ${Object.entries(resourcePropPaths)
         .concat(Object.entries(functionPropPaths))
         .map((v) => `"${v[0]}": ${JSON.stringify(v[1])}`).join(',\n')}
+}
+`)
+
+writeFileSync('./provider/cmd/pulumi-resource-one-password-native-unoffical/Types.cs', `
+using System.Collections.Immutable;
+
+namespace pulumi_resource_one_password_native_unoffical;
+public static class ItemType
+{
+    ${Object.keys(schema.resources)
+        .concat(Object.keys(schema.functions))
+        .map(z => `public static string ${last(z.split(':'))} { get; } = "${z}";`).join('\n')}
+}
+public static partial class TemplateMetadata
+{
+    private static ImmutableArray<_ResourceType> ResourceTypes = [
+        ${templates
+        .filter(z => !!z.resourceName)
+        .map(template => {
+            var properties = resourcePropPaths[template.resourceName!];
+            const fields = properties.map(z => `("${z[0]}", ${z[1] ? ('"' + z[1] + '"') : "null"})`).join(', ');
+            return `new("${template.resourceName}", "${template.name}", [${fields}])`;
+        }).join(',\n')}];
+    private static ImmutableArray<_FunctionType> FunctionTypes = [
+        ${templates
+        .filter(z => !!z.functionName)
+        .map(template => {
+            var properties = functionPropPaths[template.functionName!];
+            const fields = properties.map(z => `("${z[0]}", ${z[1] ? ('"' + z[1] + '"') : "null"})`).join(', ');
+            return `new("${template.functionName}", "${template.name}", [${fields}])`;
+        }).join(',\n')}];
 }
 `)
 

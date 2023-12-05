@@ -16,6 +16,38 @@
             }
         }
     },
+    "provider": {
+        "inputProperties": {
+            "connectHost": {
+                "type": "string"
+            },
+            "connectToken": {
+                "type": "string"
+            },
+            "serviceAccountToken": {
+                "type": "string"
+            },
+            "vault": {
+                "type": "string",
+                "description": "The UUID of the vault the item is in.\n"
+            }
+        },
+        "properties": {
+            "connectHost": {
+                "type": "string"
+            },
+            "connectToken": {
+                "type": "string"
+            },
+            "serviceAccountToken": {
+                "type": "string"
+            },
+            "vault": {
+                "type": "string",
+                "description": "The UUID of the vault the item is in.\n"
+            }
+        }
+    },
     "resources": {
         "one-password-native-unoffical:index:APICredentialItem": {
             "isComponent": false,

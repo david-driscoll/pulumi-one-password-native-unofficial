@@ -13,6 +13,22 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
     [OnePasswordNativeUnofficalResourceType("pulumi:providers:one-password-native-unoffical")]
     public partial class Provider : Pulumi.ProviderResource
     {
+        [Output("connectHost")]
+        public Output<string?> ConnectHost { get; private set; } = null!;
+
+        [Output("connectToken")]
+        public Output<string?> ConnectToken { get; private set; } = null!;
+
+        [Output("serviceAccountToken")]
+        public Output<string?> ServiceAccountToken { get; private set; } = null!;
+
+        /// <summary>
+        /// The UUID of the vault the item is in.
+        /// </summary>
+        [Output("vault")]
+        public Output<string?> Vault { get; private set; } = null!;
+
+
         /// <summary>
         /// Create a Provider resource with the given unique name, arguments, and options.
         /// </summary>
@@ -41,6 +57,21 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
 
     public sealed class ProviderArgs : Pulumi.ResourceArgs
     {
+        [Input("connectHost")]
+        public Input<string>? ConnectHost { get; set; }
+
+        [Input("connectToken")]
+        public Input<string>? ConnectToken { get; set; }
+
+        [Input("serviceAccountToken")]
+        public Input<string>? ServiceAccountToken { get; set; }
+
+        /// <summary>
+        /// The UUID of the vault the item is in.
+        /// </summary>
+        [Input("vault")]
+        public Input<string>? Vault { get; set; }
+
         public ProviderArgs()
         {
         }

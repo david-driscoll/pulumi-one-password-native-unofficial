@@ -26,6 +26,7 @@ build_provider:: ensure
 	cd provider/cmd/${PROVIDER}/ && \
        		yarn install && \
        		yarn tsc && \
+			dotnet build && \
        		cp package.json schema.json PulumiPlugin.yaml ./bin && \
        		sed -i.bak -e "s/\$${VERSION}/$(VERSION)/g" bin/package.json
 

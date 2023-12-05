@@ -19,6 +19,13 @@ export class Provider extends pulumi.ProviderResource {
         return obj['__pulumiType'] === Provider.__pulumiType;
     }
 
+    public readonly connectHost!: pulumi.Output<string | undefined>;
+    public readonly connectToken!: pulumi.Output<string | undefined>;
+    public readonly serviceAccountToken!: pulumi.Output<string | undefined>;
+    /**
+     * The UUID of the vault the item is in.
+     */
+    public readonly vault!: pulumi.Output<string | undefined>;
 
     /**
      * Create a Provider resource with the given unique name, arguments, and options.
@@ -31,6 +38,10 @@ export class Provider extends pulumi.ProviderResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         {
+            resourceInputs["connectHost"] = args ? args.connectHost : undefined;
+            resourceInputs["connectToken"] = args ? args.connectToken : undefined;
+            resourceInputs["serviceAccountToken"] = args ? args.serviceAccountToken : undefined;
+            resourceInputs["vault"] = args ? args.vault : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(Provider.__pulumiType, name, resourceInputs, opts);
@@ -41,4 +52,11 @@ export class Provider extends pulumi.ProviderResource {
  * The set of arguments for constructing a Provider resource.
  */
 export interface ProviderArgs {
+    connectHost?: pulumi.Input<string>;
+    connectToken?: pulumi.Input<string>;
+    serviceAccountToken?: pulumi.Input<string>;
+    /**
+     * The UUID of the vault the item is in.
+     */
+    vault?: pulumi.Input<string>;
 }

@@ -12,6 +12,12 @@ import (
 
 type Provider struct {
 	pulumi.ProviderResourceState
+
+	ConnectHost         pulumi.StringPtrOutput `pulumi:"connectHost"`
+	ConnectToken        pulumi.StringPtrOutput `pulumi:"connectToken"`
+	ServiceAccountToken pulumi.StringPtrOutput `pulumi:"serviceAccountToken"`
+	// The UUID of the vault the item is in.
+	Vault pulumi.StringPtrOutput `pulumi:"vault"`
 }
 
 // NewProvider registers a new resource with the given unique name, arguments, and options.
@@ -31,10 +37,20 @@ func NewProvider(ctx *pulumi.Context,
 }
 
 type providerArgs struct {
+	ConnectHost         *string `pulumi:"connectHost"`
+	ConnectToken        *string `pulumi:"connectToken"`
+	ServiceAccountToken *string `pulumi:"serviceAccountToken"`
+	// The UUID of the vault the item is in.
+	Vault *string `pulumi:"vault"`
 }
 
 // The set of arguments for constructing a Provider resource.
 type ProviderArgs struct {
+	ConnectHost         pulumi.StringPtrInput
+	ConnectToken        pulumi.StringPtrInput
+	ServiceAccountToken pulumi.StringPtrInput
+	// The UUID of the vault the item is in.
+	Vault pulumi.StringPtrInput
 }
 
 func (ProviderArgs) ElementType() reflect.Type {
