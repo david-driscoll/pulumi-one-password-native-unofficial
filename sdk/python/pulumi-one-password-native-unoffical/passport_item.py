@@ -35,7 +35,7 @@ class PassportItemArgs:
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None,
-                 urls: Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]] = None):
+                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
         """
         The set of arguments for constructing a PassportItem resource.
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
@@ -268,11 +268,11 @@ class PassportItemArgs:
 
     @property
     @pulumi.getter
-    def urls(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]]:
+    def urls(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
         return pulumi.get(self, "urls")
 
     @urls.setter
-    def urls(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]]):
+    def urls(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
         pulumi.set(self, "urls", value)
 
 
@@ -322,7 +322,7 @@ class PassportItem(pulumi.CustomResource):
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None,
-                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['UrlArgs']]]]] = None,
+                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  vault: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -375,7 +375,7 @@ class PassportItem(pulumi.CustomResource):
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None,
-                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['UrlArgs']]]]] = None,
+                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  vault: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         if opts is None:

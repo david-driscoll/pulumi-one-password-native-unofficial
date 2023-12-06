@@ -51,7 +51,7 @@ var ssn = new op.SocialSecurityNumberItem("my-ssn",
 //     console.log('field password:' + z['password'].value)
 // })
 
-// login.attachments.apply(z => z['my-attachment'].reference).apply(reference => op.getAttachment({ reference }))
+// login.attachments.apply(z => z['my-attachment'].reference).apply(reference => op.getAttachment({ reference })
 //     //login.getAttachment({ name: 'my-attachment' })
 //     .apply(z => {
 //         console.log(z.value)

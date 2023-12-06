@@ -37,9 +37,6 @@ export interface GetItemResult {
     readonly attachments: {[key: string]: outputs.OutputAttachment};
     readonly category: enums.Category | string;
     readonly fields: {[key: string]: outputs.OutputField};
-    /**
-     * The notes of the item.
-     */
     readonly notes?: string;
     readonly references: outputs.OutputReference[];
     readonly sections: {[key: string]: outputs.OutputSection};

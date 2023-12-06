@@ -91,7 +91,7 @@
                 "urls": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unoffical:index:Url"
+                        "type": "string"
                     }
                 },
                 "vault": {
@@ -348,7 +348,7 @@
                 "urls": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unoffical:index:Url"
+                        "type": "string"
                     }
                 },
                 "vault": {
@@ -626,7 +626,7 @@
                 "urls": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unoffical:index:Url"
+                        "type": "string"
                     }
                 },
                 "vault": {
@@ -889,7 +889,7 @@
                 "urls": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unoffical:index:Url"
+                        "type": "string"
                     }
                 },
                 "vault": {
@@ -1095,7 +1095,7 @@
                 "urls": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unoffical:index:Url"
+                        "type": "string"
                     }
                 },
                 "vault": {
@@ -1376,7 +1376,7 @@
                 "urls": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unoffical:index:Url"
+                        "type": "string"
                     }
                 },
                 "vault": {
@@ -1549,7 +1549,7 @@
                 "urls": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unoffical:index:Url"
+                        "type": "string"
                     }
                 },
                 "vault": {
@@ -1854,7 +1854,7 @@
                 "urls": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unoffical:index:Url"
+                        "type": "string"
                     }
                 },
                 "vault": {
@@ -2129,7 +2129,7 @@
                 "urls": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unoffical:index:Url"
+                        "type": "string"
                     }
                 },
                 "vault": {
@@ -2303,7 +2303,10 @@
                 },
                 "notes": {
                     "type": "string",
-                    "description": "The notes of the item.\n"
+                    "secret": false,
+                    "purpose": "NOTES",
+                    "kind": "text",
+                    "onePasswordId": "notesPlain"
                 },
                 "sections": {
                     "type": "object",
@@ -2326,7 +2329,7 @@
                 "urls": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unoffical:index:Url"
+                        "type": "string"
                     }
                 },
                 "vault": {
@@ -2361,7 +2364,10 @@
                 },
                 "notes": {
                     "type": "string",
-                    "description": "The notes of the item.\n"
+                    "secret": false,
+                    "purpose": "NOTES",
+                    "kind": "text",
+                    "onePasswordId": "notesPlain"
                 },
                 "vault": {
                     "type": "object",
@@ -2502,7 +2508,7 @@
                 "urls": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unoffical:index:Url"
+                        "type": "string"
                     }
                 },
                 "vault": {
@@ -2714,7 +2720,7 @@
                 "urls": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unoffical:index:Url"
+                        "type": "string"
                     }
                 },
                 "vault": {
@@ -2956,7 +2962,7 @@
                 "urls": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unoffical:index:Url"
+                        "type": "string"
                     }
                 },
                 "vault": {
@@ -3225,7 +3231,7 @@
                 "urls": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unoffical:index:Url"
+                        "type": "string"
                     }
                 },
                 "vault": {
@@ -3482,7 +3488,7 @@
                 "urls": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unoffical:index:Url"
+                        "type": "string"
                     }
                 },
                 "vault": {
@@ -3787,7 +3793,7 @@
                 "urls": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unoffical:index:Url"
+                        "type": "string"
                     }
                 },
                 "vault": {
@@ -3985,7 +3991,7 @@
                 "urls": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unoffical:index:Url"
+                        "type": "string"
                     }
                 },
                 "vault": {
@@ -4215,7 +4221,7 @@
                 "urls": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unoffical:index:Url"
+                        "type": "string"
                     }
                 },
                 "vault": {
@@ -4400,7 +4406,7 @@
                 "urls": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unoffical:index:Url"
+                        "type": "string"
                     }
                 },
                 "vault": {
@@ -4573,7 +4579,7 @@
                 "urls": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unoffical:index:Url"
+                        "type": "string"
                     }
                 },
                 "vault": {
@@ -4800,7 +4806,7 @@
                 "urls": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unoffical:index:Url"
+                        "type": "string"
                     }
                 },
                 "vault": {
@@ -4997,7 +5003,7 @@
                 "urls": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unoffical:index:Url"
+                        "type": "string"
                     }
                 },
                 "vault": {
@@ -5221,7 +5227,7 @@
                 "urls": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unoffical:index:Url"
+                        "type": "string"
                     }
                 },
                 "vault": {
@@ -5482,7 +5488,10 @@
                     },
                     "notes": {
                         "type": "string",
-                        "description": "The notes of the item.\n"
+                        "secret": false,
+                        "purpose": "NOTES",
+                        "kind": "text",
+                        "onePasswordId": "notesPlain"
                     },
                     "vault": {
                         "type": "object",

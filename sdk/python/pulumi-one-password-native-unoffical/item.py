@@ -24,11 +24,10 @@ class ItemArgs:
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input['SectionArgs']]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
-                 urls: Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]] = None):
+                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
         """
         The set of arguments for constructing a Item resource.
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
-        :param pulumi.Input[str] notes: The notes of the item.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         """
@@ -94,9 +93,6 @@ class ItemArgs:
     @property
     @pulumi.getter
     def notes(self) -> Optional[pulumi.Input[str]]:
-        """
-        The notes of the item.
-        """
         return pulumi.get(self, "notes")
 
     @notes.setter
@@ -138,11 +134,11 @@ class ItemArgs:
 
     @property
     @pulumi.getter
-    def urls(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]]:
+    def urls(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
         return pulumi.get(self, "urls")
 
     @urls.setter
-    def urls(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]]):
+    def urls(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
         pulumi.set(self, "urls", value)
 
 
@@ -181,14 +177,13 @@ class Item(pulumi.CustomResource):
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
-                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['UrlArgs']]]]] = None,
+                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  vault: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
         Create a Item resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[str] notes: The notes of the item.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
@@ -223,7 +218,7 @@ class Item(pulumi.CustomResource):
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
-                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['UrlArgs']]]]] = None,
+                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  vault: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         if opts is None:
@@ -311,9 +306,6 @@ class Item(pulumi.CustomResource):
     @property
     @pulumi.getter
     def notes(self) -> pulumi.Output[Optional[str]]:
-        """
-        The notes of the item.
-        """
         return pulumi.get(self, "notes")
 
     @property

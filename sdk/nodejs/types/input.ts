@@ -32,11 +32,6 @@ export interface SectionArgs {
     fields: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
 }
 
-export interface UrlArgs {
-    href: pulumi.Input<string>;
-    label?: pulumi.Input<string>;
-    primary: pulumi.Input<boolean>;
-}
 export namespace bankAccount {
     export interface BranchInformationSectionArgs {
         address?: pulumi.Input<string>;

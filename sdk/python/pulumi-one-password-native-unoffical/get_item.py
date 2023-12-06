@@ -72,9 +72,6 @@ class GetItemResult:
     @property
     @pulumi.getter
     def notes(self) -> Optional[str]:
-        """
-        The notes of the item.
-        """
         return pulumi.get(self, "notes")
 
     @property

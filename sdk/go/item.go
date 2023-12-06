@@ -14,13 +14,12 @@ import (
 type Item struct {
 	pulumi.CustomResourceState
 
-	Attachments OutputAttachmentMapOutput `pulumi:"attachments"`
-	Category    pulumi.StringOutput       `pulumi:"category"`
-	Fields      OutputFieldMapOutput      `pulumi:"fields"`
-	// The notes of the item.
-	Notes      pulumi.StringPtrOutput     `pulumi:"notes"`
-	References OutputReferenceArrayOutput `pulumi:"references"`
-	Sections   OutputSectionMapOutput     `pulumi:"sections"`
+	Attachments OutputAttachmentMapOutput  `pulumi:"attachments"`
+	Category    pulumi.StringOutput        `pulumi:"category"`
+	Fields      OutputFieldMapOutput       `pulumi:"fields"`
+	Notes       pulumi.StringPtrOutput     `pulumi:"notes"`
+	References  OutputReferenceArrayOutput `pulumi:"references"`
+	Sections    OutputSectionMapOutput     `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -90,14 +89,13 @@ type itemArgs struct {
 	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	Category    *string                          `pulumi:"category"`
 	Fields      map[string]Field                 `pulumi:"fields"`
-	// The notes of the item.
-	Notes    *string            `pulumi:"notes"`
-	Sections map[string]Section `pulumi:"sections"`
+	Notes       *string                          `pulumi:"notes"`
+	Sections    map[string]Section               `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-	Title *string `pulumi:"title"`
-	Urls  []Url   `pulumi:"urls"`
+	Title *string  `pulumi:"title"`
+	Urls  []string `pulumi:"urls"`
 	// The UUID of the vault the item is in.
 	Vault string `pulumi:"vault"`
 }
@@ -107,14 +105,13 @@ type ItemArgs struct {
 	Attachments pulumi.AssetOrArchiveMapInput
 	Category    pulumi.StringPtrInput
 	Fields      FieldMapInput
-	// The notes of the item.
-	Notes    pulumi.StringPtrInput
-	Sections SectionMapInput
+	Notes       pulumi.StringPtrInput
+	Sections    SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput
-	Urls  UrlArrayInput
+	Urls  pulumi.StringArrayInput
 	// The UUID of the vault the item is in.
 	Vault pulumi.StringInput
 }

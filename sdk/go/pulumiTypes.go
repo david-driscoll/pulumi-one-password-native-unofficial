@@ -530,113 +530,11 @@ type Url struct {
 	Primary bool    `pulumi:"primary"`
 }
 
-// UrlInput is an input type that accepts UrlArgs and UrlOutput values.
-// You can construct a concrete instance of `UrlInput` via:
-//
-//	UrlArgs{...}
-type UrlInput interface {
-	pulumi.Input
-
-	ToUrlOutput() UrlOutput
-	ToUrlOutputWithContext(context.Context) UrlOutput
-}
-
-type UrlArgs struct {
-	Href    pulumi.StringInput    `pulumi:"href"`
-	Label   pulumi.StringPtrInput `pulumi:"label"`
-	Primary pulumi.BoolInput      `pulumi:"primary"`
-}
-
-func (UrlArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*Url)(nil)).Elem()
-}
-
-func (i UrlArgs) ToUrlOutput() UrlOutput {
-	return i.ToUrlOutputWithContext(context.Background())
-}
-
-func (i UrlArgs) ToUrlOutputWithContext(ctx context.Context) UrlOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(UrlOutput)
-}
-
-// UrlArrayInput is an input type that accepts UrlArray and UrlArrayOutput values.
-// You can construct a concrete instance of `UrlArrayInput` via:
-//
-//	UrlArray{ UrlArgs{...} }
-type UrlArrayInput interface {
-	pulumi.Input
-
-	ToUrlArrayOutput() UrlArrayOutput
-	ToUrlArrayOutputWithContext(context.Context) UrlArrayOutput
-}
-
-type UrlArray []UrlInput
-
-func (UrlArray) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]Url)(nil)).Elem()
-}
-
-func (i UrlArray) ToUrlArrayOutput() UrlArrayOutput {
-	return i.ToUrlArrayOutputWithContext(context.Background())
-}
-
-func (i UrlArray) ToUrlArrayOutputWithContext(ctx context.Context) UrlArrayOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(UrlArrayOutput)
-}
-
-type UrlOutput struct{ *pulumi.OutputState }
-
-func (UrlOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*Url)(nil)).Elem()
-}
-
-func (o UrlOutput) ToUrlOutput() UrlOutput {
-	return o
-}
-
-func (o UrlOutput) ToUrlOutputWithContext(ctx context.Context) UrlOutput {
-	return o
-}
-
-func (o UrlOutput) Href() pulumi.StringOutput {
-	return o.ApplyT(func(v Url) string { return v.Href }).(pulumi.StringOutput)
-}
-
-func (o UrlOutput) Label() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v Url) *string { return v.Label }).(pulumi.StringPtrOutput)
-}
-
-func (o UrlOutput) Primary() pulumi.BoolOutput {
-	return o.ApplyT(func(v Url) bool { return v.Primary }).(pulumi.BoolOutput)
-}
-
-type UrlArrayOutput struct{ *pulumi.OutputState }
-
-func (UrlArrayOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]Url)(nil)).Elem()
-}
-
-func (o UrlArrayOutput) ToUrlArrayOutput() UrlArrayOutput {
-	return o
-}
-
-func (o UrlArrayOutput) ToUrlArrayOutputWithContext(ctx context.Context) UrlArrayOutput {
-	return o
-}
-
-func (o UrlArrayOutput) Index(i pulumi.IntInput) UrlOutput {
-	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Url {
-		return vs[0].([]Url)[vs[1].(int)]
-	}).(UrlOutput)
-}
-
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*FieldInput)(nil)).Elem(), FieldArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FieldMapInput)(nil)).Elem(), FieldMap{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SectionInput)(nil)).Elem(), SectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SectionMapInput)(nil)).Elem(), SectionMap{})
-	pulumi.RegisterInputType(reflect.TypeOf((*UrlInput)(nil)).Elem(), UrlArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*UrlArrayInput)(nil)).Elem(), UrlArray{})
 	pulumi.RegisterOutputType(FieldOutput{})
 	pulumi.RegisterOutputType(FieldMapOutput{})
 	pulumi.RegisterOutputType(OutputAttachmentOutput{})
@@ -651,6 +549,4 @@ func init() {
 	pulumi.RegisterOutputType(OutputUrlArrayOutput{})
 	pulumi.RegisterOutputType(SectionOutput{})
 	pulumi.RegisterOutputType(SectionMapOutput{})
-	pulumi.RegisterOutputType(UrlOutput{})
-	pulumi.RegisterOutputType(UrlArrayOutput{})
 }

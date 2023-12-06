@@ -36,9 +36,6 @@ export class Item extends pulumi.CustomResource {
     public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutputAttachment}>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.OutputField}>;
-    /**
-     * The notes of the item.
-     */
     public readonly notes!: pulumi.Output<string | undefined>;
     public /*out*/ readonly references!: pulumi.Output<outputs.OutputReference[]>;
     public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
@@ -109,9 +106,6 @@ export interface ItemArgs {
     attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     category?: pulumi.Input<enums.Category | string>;
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
-    /**
-     * The notes of the item.
-     */
     notes?: pulumi.Input<string>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     /**
@@ -122,7 +116,7 @@ export interface ItemArgs {
      * The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
      */
     title?: pulumi.Input<string>;
-    urls?: pulumi.Input<pulumi.Input<inputs.UrlArgs>[]>;
+    urls?: pulumi.Input<pulumi.Input<string>[]>;
     /**
      * The UUID of the vault the item is in.
      */

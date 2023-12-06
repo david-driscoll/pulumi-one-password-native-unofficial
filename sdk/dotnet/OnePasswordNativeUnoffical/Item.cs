@@ -22,9 +22,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         [Output("fields")]
         public Output<ImmutableDictionary<string, Outputs.OutputField>> Fields { get; private set; } = null!;
 
-        /// <summary>
-        /// The notes of the item.
-        /// </summary>
         [Output("notes")]
         public Output<string?> Notes { get; private set; } = null!;
 
@@ -130,9 +127,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
             set => _fields = value;
         }
 
-        /// <summary>
-        /// The notes of the item.
-        /// </summary>
         [Input("notes")]
         public Input<string>? Notes { get; set; }
 
@@ -163,10 +157,10 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         public Input<string>? Title { get; set; }
 
         [Input("urls")]
-        private InputList<Inputs.UrlArgs>? _urls;
-        public InputList<Inputs.UrlArgs> Urls
+        private InputList<string>? _urls;
+        public InputList<string> Urls
         {
-            get => _urls ?? (_urls = new InputList<Inputs.UrlArgs>());
+            get => _urls ?? (_urls = new InputList<string>());
             set => _urls = value;
         }
 

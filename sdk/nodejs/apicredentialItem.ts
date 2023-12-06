@@ -138,7 +138,7 @@ export interface APICredentialItemArgs {
      */
     title?: pulumi.Input<string>;
     type?: pulumi.Input<string>;
-    urls?: pulumi.Input<pulumi.Input<inputs.UrlArgs>[]>;
+    urls?: pulumi.Input<pulumi.Input<string>[]>;
     username?: pulumi.Input<string>;
     validFrom?: pulumi.Input<string>;
     /**

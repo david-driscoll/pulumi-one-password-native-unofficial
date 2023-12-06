@@ -77,9 +77,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
         public readonly ImmutableDictionary<string, Outputs.OutputAttachment> Attachments;
         public readonly string Category;
         public readonly ImmutableDictionary<string, Outputs.OutputField> Fields;
-        /// <summary>
-        /// The notes of the item.
-        /// </summary>
         public readonly string? Notes;
         public readonly ImmutableArray<Outputs.OutputReference> References;
         public readonly ImmutableDictionary<string, Outputs.OutputSection> Sections;

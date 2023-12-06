@@ -33,10 +33,9 @@ type LookupItemResult struct {
 	Attachments map[string]OutputAttachment `pulumi:"attachments"`
 	Category    string                      `pulumi:"category"`
 	Fields      map[string]OutputField      `pulumi:"fields"`
-	// The notes of the item.
-	Notes      *string                  `pulumi:"notes"`
-	References []OutputReference        `pulumi:"references"`
-	Sections   map[string]OutputSection `pulumi:"sections"`
+	Notes       *string                     `pulumi:"notes"`
+	References  []OutputReference           `pulumi:"references"`
+	Sections    map[string]OutputSection    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
@@ -99,7 +98,6 @@ func (o LookupItemResultOutput) Fields() OutputFieldMapOutput {
 	return o.ApplyT(func(v LookupItemResult) map[string]OutputField { return v.Fields }).(OutputFieldMapOutput)
 }
 
-// The notes of the item.
 func (o LookupItemResultOutput) Notes() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v LookupItemResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }

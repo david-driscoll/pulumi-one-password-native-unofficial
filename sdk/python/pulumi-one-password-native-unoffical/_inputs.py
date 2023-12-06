@@ -13,7 +13,6 @@ __all__ = [
     'FieldArgs',
     'PasswordRecipeArgs',
     'SectionArgs',
-    'UrlArgs',
 ]
 
 @pulumi.input_type
@@ -124,44 +123,5 @@ class SectionArgs:
     @attachments.setter
     def attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
         pulumi.set(self, "attachments", value)
-
-
-@pulumi.input_type
-class UrlArgs:
-    def __init__(__self__, *,
-                 href: pulumi.Input[str],
-                 primary: pulumi.Input[bool],
-                 label: Optional[pulumi.Input[str]] = None):
-        pulumi.set(__self__, "href", href)
-        pulumi.set(__self__, "primary", primary)
-        if label is not None:
-            pulumi.set(__self__, "label", label)
-
-    @property
-    @pulumi.getter
-    def href(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "href")
-
-    @href.setter
-    def href(self, value: pulumi.Input[str]):
-        pulumi.set(self, "href", value)
-
-    @property
-    @pulumi.getter
-    def primary(self) -> pulumi.Input[bool]:
-        return pulumi.get(self, "primary")
-
-    @primary.setter
-    def primary(self, value: pulumi.Input[bool]):
-        pulumi.set(self, "primary", value)
-
-    @property
-    @pulumi.getter
-    def label(self) -> Optional[pulumi.Input[str]]:
-        return pulumi.get(self, "label")
-
-    @label.setter
-    def label(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "label", value)
 
 
