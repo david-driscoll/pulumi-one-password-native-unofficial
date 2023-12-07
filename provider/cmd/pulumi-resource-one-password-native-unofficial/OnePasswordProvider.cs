@@ -46,8 +46,6 @@ public class OnePasswordProvider : Provider
         List<CheckFailure> failures = new();
         if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
 
-        _logger.Information("Diff called with args {@Args}", request.NewInputs.Keys);
-
         request.NewInputs.TryAdd("category", new(resourceType.Urn == ItemType.Item ? "Secure Note" : resourceType.ItemName));
         if (request.OldState.TryGetValue("title", out var property) && property.TryGetString(out var p))
         {
@@ -115,7 +113,6 @@ public class OnePasswordProvider : Provider
     public override async Task<CreateResponse> Create(CreateRequest request, CancellationToken ct)
     {
         if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
-        _logger.Information("Create called with args {@Args}", request.Properties.Keys);
         DebugHelper.WaitForDebugger();
 
 
@@ -141,7 +138,6 @@ public class OnePasswordProvider : Provider
     public override async Task<UpdateResponse> Update(UpdateRequest request, CancellationToken ct)
     {
         if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
-        _logger.Information("Update called with args {@Args}", request.News.Keys);
         DebugHelper.WaitForDebugger();
 
         var news = resourceType.TransformInputs(request.News);
@@ -165,7 +161,6 @@ public class OnePasswordProvider : Provider
     public override async Task Delete(DeleteRequest request, CancellationToken ct)
     {
         if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
-        _logger.Information("Update called with args {@Args}", request.Properties.Keys);
         DebugHelper.WaitForDebugger();
         await _op.Items.Delete(new(request.Id), ct);
     }
@@ -174,7 +169,6 @@ public class OnePasswordProvider : Provider
     {
         DebugHelper.WaitForDebugger();
         await Task.Yield();
-        _logger.Information("Configure called with args {@Args}", request.Args.Keys);
 
 
         var news = ConfigExtensions.ConvertToConfig(request.Args);
