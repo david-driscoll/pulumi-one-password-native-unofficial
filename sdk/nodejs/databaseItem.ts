@@ -39,6 +39,10 @@ export class DatabaseItem extends pulumi.CustomResource {
     public readonly connectionOptions!: pulumi.Output<string | undefined>;
     public readonly database!: pulumi.Output<string | undefined>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.OutputField}>;
+    /**
+     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+     */
+    public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly password!: pulumi.Output<string | undefined>;
     public readonly port!: pulumi.Output<string | undefined>;
@@ -57,10 +61,6 @@ export class DatabaseItem extends pulumi.CustomResource {
     public readonly type!: pulumi.Output<string | undefined>;
     public readonly urls!: pulumi.Output<outputs.OutputUrl[] | undefined>;
     public readonly username!: pulumi.Output<string | undefined>;
-    /**
-     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-     */
-    public /*out*/ readonly uuid!: pulumi.Output<string>;
     public readonly vault!: pulumi.Output<{[key: string]: string}>;
 
     /**
@@ -100,8 +100,8 @@ export class DatabaseItem extends pulumi.CustomResource {
             resourceInputs["urls"] = args ? args.urls : undefined;
             resourceInputs["username"] = args ? args.username : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
-            resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "password", "sections"] };

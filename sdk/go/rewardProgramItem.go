@@ -15,10 +15,12 @@ import (
 type RewardProgramItem struct {
 	pulumi.CustomResourceState
 
-	Attachments     OutputAttachmentMapOutput                     `pulumi:"attachments"`
-	Category        pulumi.StringOutput                           `pulumi:"category"`
-	CompanyName     pulumi.StringPtrOutput                        `pulumi:"companyName"`
-	Fields          OutputFieldMapOutput                          `pulumi:"fields"`
+	Attachments OutputAttachmentMapOutput `pulumi:"attachments"`
+	Category    pulumi.StringOutput       `pulumi:"category"`
+	CompanyName pulumi.StringPtrOutput    `pulumi:"companyName"`
+	Fields      OutputFieldMapOutput      `pulumi:"fields"`
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id              pulumi.StringOutput                           `pulumi:"id"`
 	MemberId        pulumi.StringPtrOutput                        `pulumi:"memberId"`
 	MemberName      pulumi.StringPtrOutput                        `pulumi:"memberName"`
 	MoreInformation rewardprogram.MoreInformationSectionPtrOutput `pulumi:"moreInformation"`
@@ -29,10 +31,8 @@ type RewardProgramItem struct {
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
-	Title pulumi.StringOutput  `pulumi:"title"`
-	Urls  OutputUrlArrayOutput `pulumi:"urls"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid  pulumi.StringOutput    `pulumi:"uuid"`
+	Title pulumi.StringOutput    `pulumi:"title"`
+	Urls  OutputUrlArrayOutput   `pulumi:"urls"`
 	Vault pulumi.StringMapOutput `pulumi:"vault"`
 }
 

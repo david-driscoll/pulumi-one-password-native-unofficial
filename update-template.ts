@@ -38,7 +38,7 @@ schema.functions = {
                     "type": "string",
                     "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
                 },
-                "uuid": {
+                "id": {
                     "type": "string",
                     "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                 },
@@ -71,7 +71,7 @@ schema.functions = {
                     "type": "string",
                     "description": "The name of the vault to retrieve. This field will be populated with the name of the vault if the vault it looked up by its UUID.\n"
                 },
-                "uuid": {
+                "id": {
                     "type": "string",
                     "description": "The UUID of the vault to retrieve. This field will be populated with the UUID of the vault if the vault it looked up by its name.\n"
                 }
@@ -182,7 +182,7 @@ schema.types = {
                 "type": "object",
                 "additionalProperties": { "$ref": "#/types/one-password-native-unofficial:index:OutputAttachment" },
             },
-            "uuid": {
+            "id": {
                 "type": "string"
             },
             "label": {
@@ -192,7 +192,7 @@ schema.types = {
         "type": "object",
         "required": [
             "fields",
-            "uuid",
+            "id",
             "label"
         ]
     },
@@ -219,13 +219,13 @@ schema.types = {
     },
     "one-password-native-unofficial:index:OutputAttachment": {
         "properties": {
-            "uuid": { "type": "string" },
+            "id": { "type": "string" },
             "name": { "type": "string" },
             "reference": { "type": "string" },
             "size": { "type": "integer" },
         },
         "type": "object",
-        "required": ["uuid", "name", "size", "reference"]
+        "required": ["id", "name", "size", "reference"]
     },
     "one-password-native-unofficial:index:Url": {
         "properties": {
@@ -258,7 +258,7 @@ schema.types = {
     },
     "one-password-native-unofficial:index:OutputReference": {
         "properties": {
-            "uuid": {
+            "id": {
                 "type": "string"
             },
             "label": {
@@ -273,7 +273,7 @@ schema.types = {
         },
         "type": "object",
         "required": [
-            "uuid",
+            "id",
             "label",
             "itemId",
             "reference"
@@ -281,7 +281,7 @@ schema.types = {
     },
     "one-password-native-unofficial:index:OutputField": {
         "properties": {
-            "uuid": {
+            "id": {
                 "type": "string"
             },
             "label": {
@@ -304,7 +304,7 @@ schema.types = {
         },
         "type": "object",
         "required": [
-            "uuid",
+            "id",
             "label",
             "type",
             "value",
@@ -411,7 +411,7 @@ for (const template of templates) {
     currentResource.requiredInputs = ['vault'];
     currentResource.properties = {};
     currentResource.required = [];
-    currentResource.required = uniq(currentResource.required.concat('tags', 'uuid', 'title', 'vault', 'category'));
+    currentResource.required = uniq(currentResource.required.concat('tags', 'id', 'title', 'vault', 'category'));
 
     currentResource.inputProperties['tags'] = {
         type: 'array',
@@ -478,7 +478,7 @@ for (const template of templates) {
                 "type": "string",
                 "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
             },
-            "uuid": {
+            "id": {
                 "type": "string",
                 "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
             },
@@ -630,7 +630,9 @@ ${templates.map(z => `"${(z as any).resourceName}": "${z.name}"`)
         .concat([
             `"one-password-native-unofficial:index:GetVault": "Vault"`,
             `"one-password-native-unofficial:index:GetSecretReference": "Secret Reference"`,
-            `"one-password-native-unofficial:index:GetAttachment": "Attachment"`
+            `"one-password-native-unofficial:index:GetAttachment": "Attachment"`,
+            `"one-password-native-unofficial:index:Read": "Read"`,
+            `"one-password-native-unofficial:index:Inject": "Inject"`,
         ])
         .join(',\n')}
 } as const;
@@ -882,9 +884,9 @@ function getFieldType(field: Field) {
 }
 
 function applyDefaultOutputProperties(item: any) {
-    item.required.push('tags', 'uuid', 'title', 'vault', 'category', 'fields', 'sections', 'attachments', 'references');
+    item.required.push('tags', 'id', 'title', 'vault', 'category', 'fields', 'sections', 'attachments', 'references');
     Object.assign(item.properties, {
-        ['uuid']: {
+        ['id']: {
             "type": "string",
             "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
         },
@@ -898,14 +900,14 @@ function applyDefaultOutputProperties(item: any) {
         },
         ['vault']: {
             "type": "object",
-            required: ['name', 'uuid'],
+            required: ['name', 'id'],
             properties: {
                 name: {
 
                     "type": "string",
                     "description": "The name of the vault item is in.\n"
                 },
-                ['uuid']: {
+                ['id']: {
                     "type": "string",
                     "description": "The UUID of the vault the item is in.\n"
                 },

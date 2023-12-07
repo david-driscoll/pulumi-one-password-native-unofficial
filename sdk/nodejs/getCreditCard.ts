@@ -12,21 +12,21 @@ export function getCreditCard(args: GetCreditCardArgs, opts?: pulumi.InvokeOptio
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
     return pulumi.runtime.invoke("one-password-native-unofficial:index:GetCreditCard", {
+        "id": args.id,
         "title": args.title,
-        "uuid": args.uuid,
         "vault": args.vault,
     }, opts);
 }
 
 export interface GetCreditCardArgs {
     /**
+     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+     */
+    id?: string;
+    /**
      * The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
      */
     title?: string;
-    /**
-     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-     */
-    uuid?: string;
     /**
      * The UUID of the vault the item is in.
      */
@@ -41,6 +41,10 @@ export interface GetCreditCardResult {
     readonly contactInformation?: outputs.creditCard.ContactInformationSection;
     readonly expiryDate?: string;
     readonly fields: {[key: string]: outputs.OutputField};
+    /**
+     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+     */
+    readonly id: string;
     readonly notes?: string;
     readonly number?: string;
     readonly references: outputs.OutputReference[];
@@ -55,10 +59,6 @@ export interface GetCreditCardResult {
     readonly title: string;
     readonly type?: string;
     readonly urls?: outputs.OutputUrl[];
-    /**
-     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-     */
-    readonly uuid: string;
     readonly validFrom?: string;
     readonly vault: {[key: string]: string};
     readonly verificationNumber?: string;
@@ -70,13 +70,13 @@ export function getCreditCardOutput(args: GetCreditCardOutputArgs, opts?: pulumi
 
 export interface GetCreditCardOutputArgs {
     /**
+     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+     */
+    id?: pulumi.Input<string>;
+    /**
      * The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
      */
     title?: pulumi.Input<string>;
-    /**
-     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-     */
-    uuid?: pulumi.Input<string>;
     /**
      * The UUID of the vault the item is in.
      */

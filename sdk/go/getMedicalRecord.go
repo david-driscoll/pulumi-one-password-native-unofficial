@@ -22,34 +22,34 @@ func GetMedicalRecord(ctx *pulumi.Context, args *GetMedicalRecordArgs, opts ...p
 }
 
 type GetMedicalRecordArgs struct {
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id *string `pulumi:"id"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid *string `pulumi:"uuid"`
 	// The UUID of the vault the item is in.
 	Vault string `pulumi:"vault"`
 }
 
 type GetMedicalRecordResult struct {
-	Attachments            map[string]OutputAttachment      `pulumi:"attachments"`
-	Category               string                           `pulumi:"category"`
-	Date                   *string                          `pulumi:"date"`
-	Fields                 map[string]OutputField           `pulumi:"fields"`
-	HealthcareProfessional *string                          `pulumi:"healthcareProfessional"`
-	Location               *string                          `pulumi:"location"`
-	Medication             *medicalrecord.MedicationSection `pulumi:"medication"`
-	Notes                  *string                          `pulumi:"notes"`
-	Patient                *string                          `pulumi:"patient"`
-	ReasonForVisit         *string                          `pulumi:"reasonForVisit"`
-	References             []OutputReference                `pulumi:"references"`
-	Sections               map[string]OutputSection         `pulumi:"sections"`
+	Attachments            map[string]OutputAttachment `pulumi:"attachments"`
+	Category               string                      `pulumi:"category"`
+	Date                   *string                     `pulumi:"date"`
+	Fields                 map[string]OutputField      `pulumi:"fields"`
+	HealthcareProfessional *string                     `pulumi:"healthcareProfessional"`
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id             string                           `pulumi:"id"`
+	Location       *string                          `pulumi:"location"`
+	Medication     *medicalrecord.MedicationSection `pulumi:"medication"`
+	Notes          *string                          `pulumi:"notes"`
+	Patient        *string                          `pulumi:"patient"`
+	ReasonForVisit *string                          `pulumi:"reasonForVisit"`
+	References     []OutputReference                `pulumi:"references"`
+	Sections       map[string]OutputSection         `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title string      `pulumi:"title"`
-	Urls  []OutputUrl `pulumi:"urls"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid  string            `pulumi:"uuid"`
+	Title string            `pulumi:"title"`
+	Urls  []OutputUrl       `pulumi:"urls"`
 	Vault map[string]string `pulumi:"vault"`
 }
 
@@ -67,10 +67,10 @@ func GetMedicalRecordOutput(ctx *pulumi.Context, args GetMedicalRecordOutputArgs
 }
 
 type GetMedicalRecordOutputArgs struct {
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id pulumi.StringPtrInput `pulumi:"id"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput `pulumi:"title"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid pulumi.StringPtrInput `pulumi:"uuid"`
 	// The UUID of the vault the item is in.
 	Vault pulumi.StringInput `pulumi:"vault"`
 }
@@ -113,6 +113,11 @@ func (o GetMedicalRecordResultOutput) HealthcareProfessional() pulumi.StringPtrO
 	return o.ApplyT(func(v GetMedicalRecordResult) *string { return v.HealthcareProfessional }).(pulumi.StringPtrOutput)
 }
 
+// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+func (o GetMedicalRecordResultOutput) Id() pulumi.StringOutput {
+	return o.ApplyT(func(v GetMedicalRecordResult) string { return v.Id }).(pulumi.StringOutput)
+}
+
 func (o GetMedicalRecordResultOutput) Location() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetMedicalRecordResult) *string { return v.Location }).(pulumi.StringPtrOutput)
 }
@@ -153,11 +158,6 @@ func (o GetMedicalRecordResultOutput) Title() pulumi.StringOutput {
 
 func (o GetMedicalRecordResultOutput) Urls() OutputUrlArrayOutput {
 	return o.ApplyT(func(v GetMedicalRecordResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
-}
-
-// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o GetMedicalRecordResultOutput) Uuid() pulumi.StringOutput {
-	return o.ApplyT(func(v GetMedicalRecordResult) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
 func (o GetMedicalRecordResultOutput) Vault() pulumi.StringMapOutput {

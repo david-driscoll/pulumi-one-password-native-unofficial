@@ -7,33 +7,33 @@ import { input as inputs, output as outputs, enums } from "../types";
 import * as utilities from "../utilities";
 
 export interface OutputAttachment {
+    id: string;
     name: string;
     reference: string;
     size: number;
-    uuid: string;
 }
 
 export interface OutputField {
     data: {[key: string]: any};
+    id: string;
     label: string;
     reference: string;
     type: enums.FieldType;
-    uuid: string;
     value: string;
 }
 
 export interface OutputReference {
+    id: string;
     itemId: string;
     label: string;
     reference: string;
-    uuid: string;
 }
 
 export interface OutputSection {
     attachments?: {[key: string]: outputs.OutputAttachment};
     fields: {[key: string]: outputs.OutputField};
+    id: string;
     label: string;
-    uuid: string;
 }
 
 export interface OutputUrl {

@@ -12,21 +12,21 @@ export function getDatabase(args: GetDatabaseArgs, opts?: pulumi.InvokeOptions):
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
     return pulumi.runtime.invoke("one-password-native-unofficial:index:GetDatabase", {
+        "id": args.id,
         "title": args.title,
-        "uuid": args.uuid,
         "vault": args.vault,
     }, opts);
 }
 
 export interface GetDatabaseArgs {
     /**
+     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+     */
+    id?: string;
+    /**
      * The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
      */
     title?: string;
-    /**
-     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-     */
-    uuid?: string;
     /**
      * The UUID of the vault the item is in.
      */
@@ -40,6 +40,10 @@ export interface GetDatabaseResult {
     readonly connectionOptions?: string;
     readonly database?: string;
     readonly fields: {[key: string]: outputs.OutputField};
+    /**
+     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+     */
+    readonly id: string;
     readonly notes?: string;
     readonly password?: string;
     readonly port?: string;
@@ -58,10 +62,6 @@ export interface GetDatabaseResult {
     readonly type?: string;
     readonly urls?: outputs.OutputUrl[];
     readonly username?: string;
-    /**
-     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-     */
-    readonly uuid: string;
     readonly vault: {[key: string]: string};
 }
 
@@ -71,13 +71,13 @@ export function getDatabaseOutput(args: GetDatabaseOutputArgs, opts?: pulumi.Inv
 
 export interface GetDatabaseOutputArgs {
     /**
+     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+     */
+    id?: pulumi.Input<string>;
+    /**
      * The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
      */
     title?: pulumi.Input<string>;
-    /**
-     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-     */
-    uuid?: pulumi.Input<string>;
     /**
      * The UUID of the vault the item is in.
      */

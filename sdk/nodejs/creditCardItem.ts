@@ -40,6 +40,10 @@ export class CreditCardItem extends pulumi.CustomResource {
     public readonly contactInformation!: pulumi.Output<outputs.creditCard.ContactInformationSection | undefined>;
     public readonly expiryDate!: pulumi.Output<string | undefined>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.OutputField}>;
+    /**
+     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+     */
+    public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly number!: pulumi.Output<string | undefined>;
     public /*out*/ readonly references!: pulumi.Output<outputs.OutputReference[]>;
@@ -54,10 +58,6 @@ export class CreditCardItem extends pulumi.CustomResource {
     public readonly title!: pulumi.Output<string>;
     public readonly type!: pulumi.Output<string | undefined>;
     public readonly urls!: pulumi.Output<outputs.OutputUrl[] | undefined>;
-    /**
-     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-     */
-    public /*out*/ readonly uuid!: pulumi.Output<string>;
     public readonly validFrom!: pulumi.Output<string | undefined>;
     public readonly vault!: pulumi.Output<{[key: string]: string}>;
     public readonly verificationNumber!: pulumi.Output<string | undefined>;
@@ -98,8 +98,8 @@ export class CreditCardItem extends pulumi.CustomResource {
             resourceInputs["validFrom"] = args ? args.validFrom : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["verificationNumber"] = args?.verificationNumber ? pulumi.secret(args.verificationNumber) : undefined;
+            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
-            resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         const secretOpts = { additionalSecretOutputs: ["additionalDetails", "attachments", "fields", "sections", "verificationNumber"] };

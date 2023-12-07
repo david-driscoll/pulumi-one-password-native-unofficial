@@ -14,25 +14,25 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial.Outputs
     [OutputType]
     public sealed class OutputAttachment
     {
+        public readonly string Id;
         public readonly string Name;
         public readonly string Reference;
         public readonly int Size;
-        public readonly string Uuid;
 
         [OutputConstructor]
         private OutputAttachment(
+            string id,
+
             string name,
 
             string reference,
 
-            int size,
-
-            string uuid)
+            int size)
         {
+            Id = id;
             Name = name;
             Reference = reference;
             Size = size;
-            Uuid = uuid;
         }
     }
 }

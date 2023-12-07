@@ -14,30 +14,30 @@ import (
 type DriverLicenseItem struct {
 	pulumi.CustomResourceState
 
-	Address                pulumi.StringPtrOutput     `pulumi:"address"`
-	Attachments            OutputAttachmentMapOutput  `pulumi:"attachments"`
-	Category               pulumi.StringOutput        `pulumi:"category"`
-	ConditionsRestrictions pulumi.StringPtrOutput     `pulumi:"conditionsRestrictions"`
-	Country                pulumi.StringPtrOutput     `pulumi:"country"`
-	DateOfBirth            pulumi.StringPtrOutput     `pulumi:"dateOfBirth"`
-	ExpiryDate             pulumi.StringPtrOutput     `pulumi:"expiryDate"`
-	Fields                 OutputFieldMapOutput       `pulumi:"fields"`
-	FullName               pulumi.StringPtrOutput     `pulumi:"fullName"`
-	Gender                 pulumi.StringPtrOutput     `pulumi:"gender"`
-	Height                 pulumi.StringPtrOutput     `pulumi:"height"`
-	LicenseClass           pulumi.StringPtrOutput     `pulumi:"licenseClass"`
-	Notes                  pulumi.StringPtrOutput     `pulumi:"notes"`
-	Number                 pulumi.StringPtrOutput     `pulumi:"number"`
-	References             OutputReferenceArrayOutput `pulumi:"references"`
-	Sections               OutputSectionMapOutput     `pulumi:"sections"`
-	State                  pulumi.StringPtrOutput     `pulumi:"state"`
+	Address                pulumi.StringPtrOutput    `pulumi:"address"`
+	Attachments            OutputAttachmentMapOutput `pulumi:"attachments"`
+	Category               pulumi.StringOutput       `pulumi:"category"`
+	ConditionsRestrictions pulumi.StringPtrOutput    `pulumi:"conditionsRestrictions"`
+	Country                pulumi.StringPtrOutput    `pulumi:"country"`
+	DateOfBirth            pulumi.StringPtrOutput    `pulumi:"dateOfBirth"`
+	ExpiryDate             pulumi.StringPtrOutput    `pulumi:"expiryDate"`
+	Fields                 OutputFieldMapOutput      `pulumi:"fields"`
+	FullName               pulumi.StringPtrOutput    `pulumi:"fullName"`
+	Gender                 pulumi.StringPtrOutput    `pulumi:"gender"`
+	Height                 pulumi.StringPtrOutput    `pulumi:"height"`
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id           pulumi.StringOutput        `pulumi:"id"`
+	LicenseClass pulumi.StringPtrOutput     `pulumi:"licenseClass"`
+	Notes        pulumi.StringPtrOutput     `pulumi:"notes"`
+	Number       pulumi.StringPtrOutput     `pulumi:"number"`
+	References   OutputReferenceArrayOutput `pulumi:"references"`
+	Sections     OutputSectionMapOutput     `pulumi:"sections"`
+	State        pulumi.StringPtrOutput     `pulumi:"state"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
-	Title pulumi.StringOutput  `pulumi:"title"`
-	Urls  OutputUrlArrayOutput `pulumi:"urls"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid  pulumi.StringOutput    `pulumi:"uuid"`
+	Title pulumi.StringOutput    `pulumi:"title"`
+	Urls  OutputUrlArrayOutput   `pulumi:"urls"`
 	Vault pulumi.StringMapOutput `pulumi:"vault"`
 }
 

@@ -19,7 +19,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetPassportResult:
-    def __init__(__self__, attachments=None, category=None, date_of_birth=None, expiry_date=None, fields=None, full_name=None, gender=None, issued_on=None, issuing_authority=None, issuing_country=None, nationality=None, notes=None, number=None, place_of_birth=None, references=None, sections=None, tags=None, title=None, type=None, urls=None, uuid=None, vault=None):
+    def __init__(__self__, attachments=None, category=None, date_of_birth=None, expiry_date=None, fields=None, full_name=None, gender=None, id=None, issued_on=None, issuing_authority=None, issuing_country=None, nationality=None, notes=None, number=None, place_of_birth=None, references=None, sections=None, tags=None, title=None, type=None, urls=None, vault=None):
         if attachments and not isinstance(attachments, dict):
             raise TypeError("Expected argument 'attachments' to be a dict")
         pulumi.set(__self__, "attachments", attachments)
@@ -41,6 +41,9 @@ class GetPassportResult:
         if gender and not isinstance(gender, str):
             raise TypeError("Expected argument 'gender' to be a str")
         pulumi.set(__self__, "gender", gender)
+        if id and not isinstance(id, str):
+            raise TypeError("Expected argument 'id' to be a str")
+        pulumi.set(__self__, "id", id)
         if issued_on and not isinstance(issued_on, str):
             raise TypeError("Expected argument 'issued_on' to be a str")
         pulumi.set(__self__, "issued_on", issued_on)
@@ -80,9 +83,6 @@ class GetPassportResult:
         if urls and not isinstance(urls, list):
             raise TypeError("Expected argument 'urls' to be a list")
         pulumi.set(__self__, "urls", urls)
-        if uuid and not isinstance(uuid, str):
-            raise TypeError("Expected argument 'uuid' to be a str")
-        pulumi.set(__self__, "uuid", uuid)
         if vault and not isinstance(vault, dict):
             raise TypeError("Expected argument 'vault' to be a dict")
         pulumi.set(__self__, "vault", vault)
@@ -121,6 +121,14 @@ class GetPassportResult:
     @pulumi.getter
     def gender(self) -> Optional[str]:
         return pulumi.get(self, "gender")
+
+    @property
+    @pulumi.getter
+    def id(self) -> str:
+        """
+        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        """
+        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter(name="issuedOn")
@@ -195,14 +203,6 @@ class GetPassportResult:
 
     @property
     @pulumi.getter
-    def uuid(self) -> str:
-        """
-        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        """
-        return pulumi.get(self, "uuid")
-
-    @property
-    @pulumi.getter
     def vault(self) -> Mapping[str, str]:
         return pulumi.get(self, "vault")
 
@@ -220,6 +220,7 @@ class AwaitableGetPassportResult(GetPassportResult):
             fields=self.fields,
             full_name=self.full_name,
             gender=self.gender,
+            id=self.id,
             issued_on=self.issued_on,
             issuing_authority=self.issuing_authority,
             issuing_country=self.issuing_country,
@@ -233,24 +234,23 @@ class AwaitableGetPassportResult(GetPassportResult):
             title=self.title,
             type=self.type,
             urls=self.urls,
-            uuid=self.uuid,
             vault=self.vault)
 
 
-def get_passport(title: Optional[str] = None,
-                 uuid: Optional[str] = None,
+def get_passport(id: Optional[str] = None,
+                 title: Optional[str] = None,
                  vault: Optional[str] = None,
                  opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetPassportResult:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     __args__ = dict()
+    __args__['id'] = id
     __args__['title'] = title
-    __args__['uuid'] = uuid
     __args__['vault'] = vault
     if opts is None:
         opts = pulumi.InvokeOptions()
@@ -268,6 +268,7 @@ def get_passport(title: Optional[str] = None,
         fields=__ret__.fields,
         full_name=__ret__.full_name,
         gender=__ret__.gender,
+        id=__ret__.id,
         issued_on=__ret__.issued_on,
         issuing_authority=__ret__.issuing_authority,
         issuing_country=__ret__.issuing_country,
@@ -281,20 +282,19 @@ def get_passport(title: Optional[str] = None,
         title=__ret__.title,
         type=__ret__.type,
         urls=__ret__.urls,
-        uuid=__ret__.uuid,
         vault=__ret__.vault)
 
 
 @_utilities.lift_output_func(get_passport)
-def get_passport_output(title: Optional[pulumi.Input[Optional[str]]] = None,
-                        uuid: Optional[pulumi.Input[Optional[str]]] = None,
+def get_passport_output(id: Optional[pulumi.Input[Optional[str]]] = None,
+                        title: Optional[pulumi.Input[Optional[str]]] = None,
                         vault: Optional[pulumi.Input[str]] = None,
                         opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetPassportResult]:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     ...

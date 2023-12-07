@@ -22,18 +22,18 @@ type CreditCardItem struct {
 	ContactInformation creditcard.ContactInformationSectionPtrOutput `pulumi:"contactInformation"`
 	ExpiryDate         pulumi.StringPtrOutput                        `pulumi:"expiryDate"`
 	Fields             OutputFieldMapOutput                          `pulumi:"fields"`
-	Notes              pulumi.StringPtrOutput                        `pulumi:"notes"`
-	Number             pulumi.StringPtrOutput                        `pulumi:"number"`
-	References         OutputReferenceArrayOutput                    `pulumi:"references"`
-	Sections           OutputSectionMapOutput                        `pulumi:"sections"`
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id         pulumi.StringOutput        `pulumi:"id"`
+	Notes      pulumi.StringPtrOutput     `pulumi:"notes"`
+	Number     pulumi.StringPtrOutput     `pulumi:"number"`
+	References OutputReferenceArrayOutput `pulumi:"references"`
+	Sections   OutputSectionMapOutput     `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
-	Title pulumi.StringOutput    `pulumi:"title"`
-	Type  pulumi.StringPtrOutput `pulumi:"type"`
-	Urls  OutputUrlArrayOutput   `pulumi:"urls"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid               pulumi.StringOutput    `pulumi:"uuid"`
+	Title              pulumi.StringOutput    `pulumi:"title"`
+	Type               pulumi.StringPtrOutput `pulumi:"type"`
+	Urls               OutputUrlArrayOutput   `pulumi:"urls"`
 	ValidFrom          pulumi.StringPtrOutput `pulumi:"validFrom"`
 	Vault              pulumi.StringMapOutput `pulumi:"vault"`
 	VerificationNumber pulumi.StringPtrOutput `pulumi:"verificationNumber"`

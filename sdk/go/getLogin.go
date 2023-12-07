@@ -21,10 +21,10 @@ func GetLogin(ctx *pulumi.Context, args *GetLoginArgs, opts ...pulumi.InvokeOpti
 }
 
 type GetLoginArgs struct {
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id *string `pulumi:"id"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid *string `pulumi:"uuid"`
 	// The UUID of the vault the item is in.
 	Vault string `pulumi:"vault"`
 }
@@ -33,19 +33,19 @@ type GetLoginResult struct {
 	Attachments map[string]OutputAttachment `pulumi:"attachments"`
 	Category    string                      `pulumi:"category"`
 	Fields      map[string]OutputField      `pulumi:"fields"`
-	Notes       *string                     `pulumi:"notes"`
-	Password    *string                     `pulumi:"password"`
-	References  []OutputReference           `pulumi:"references"`
-	Sections    map[string]OutputSection    `pulumi:"sections"`
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id         string                   `pulumi:"id"`
+	Notes      *string                  `pulumi:"notes"`
+	Password   *string                  `pulumi:"password"`
+	References []OutputReference        `pulumi:"references"`
+	Sections   map[string]OutputSection `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title    string      `pulumi:"title"`
-	Urls     []OutputUrl `pulumi:"urls"`
-	Username *string     `pulumi:"username"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid  string            `pulumi:"uuid"`
-	Vault map[string]string `pulumi:"vault"`
+	Title    string            `pulumi:"title"`
+	Urls     []OutputUrl       `pulumi:"urls"`
+	Username *string           `pulumi:"username"`
+	Vault    map[string]string `pulumi:"vault"`
 }
 
 func GetLoginOutput(ctx *pulumi.Context, args GetLoginOutputArgs, opts ...pulumi.InvokeOption) GetLoginResultOutput {
@@ -62,10 +62,10 @@ func GetLoginOutput(ctx *pulumi.Context, args GetLoginOutputArgs, opts ...pulumi
 }
 
 type GetLoginOutputArgs struct {
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id pulumi.StringPtrInput `pulumi:"id"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput `pulumi:"title"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid pulumi.StringPtrInput `pulumi:"uuid"`
 	// The UUID of the vault the item is in.
 	Vault pulumi.StringInput `pulumi:"vault"`
 }
@@ -100,6 +100,11 @@ func (o GetLoginResultOutput) Fields() OutputFieldMapOutput {
 	return o.ApplyT(func(v GetLoginResult) map[string]OutputField { return v.Fields }).(OutputFieldMapOutput)
 }
 
+// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+func (o GetLoginResultOutput) Id() pulumi.StringOutput {
+	return o.ApplyT(func(v GetLoginResult) string { return v.Id }).(pulumi.StringOutput)
+}
+
 func (o GetLoginResultOutput) Notes() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetLoginResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
@@ -132,11 +137,6 @@ func (o GetLoginResultOutput) Urls() OutputUrlArrayOutput {
 
 func (o GetLoginResultOutput) Username() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetLoginResult) *string { return v.Username }).(pulumi.StringPtrOutput)
-}
-
-// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o GetLoginResultOutput) Uuid() pulumi.StringOutput {
-	return o.ApplyT(func(v GetLoginResult) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
 func (o GetLoginResultOutput) Vault() pulumi.StringMapOutput {

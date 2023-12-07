@@ -23,16 +23,16 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
     public sealed class GetDocumentArgs : Pulumi.InvokeArgs
     {
         /// <summary>
+        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        /// </summary>
+        [Input("id")]
+        public string? Id { get; set; }
+
+        /// <summary>
         /// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         /// </summary>
         [Input("title")]
         public string? Title { get; set; }
-
-        /// <summary>
-        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        /// </summary>
-        [Input("uuid")]
-        public string? Uuid { get; set; }
 
         /// <summary>
         /// The UUID of the vault the item is in.
@@ -48,16 +48,16 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
     public sealed class GetDocumentInvokeArgs : Pulumi.InvokeArgs
     {
         /// <summary>
+        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        /// </summary>
+        [Input("id")]
+        public Input<string>? Id { get; set; }
+
+        /// <summary>
         /// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         /// </summary>
         [Input("title")]
         public Input<string>? Title { get; set; }
-
-        /// <summary>
-        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        /// </summary>
-        [Input("uuid")]
-        public Input<string>? Uuid { get; set; }
 
         /// <summary>
         /// The UUID of the vault the item is in.
@@ -77,6 +77,10 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         public readonly ImmutableDictionary<string, Outputs.OutputAttachment> Attachments;
         public readonly string Category;
         public readonly ImmutableDictionary<string, Outputs.OutputField> Fields;
+        /// <summary>
+        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        /// </summary>
+        public readonly string Id;
         public readonly string? Notes;
         public readonly ImmutableArray<Outputs.OutputReference> References;
         public readonly ImmutableDictionary<string, Outputs.OutputSection> Sections;
@@ -89,10 +93,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// </summary>
         public readonly string Title;
         public readonly ImmutableArray<Outputs.OutputUrl> Urls;
-        /// <summary>
-        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        /// </summary>
-        public readonly string Uuid;
         public readonly ImmutableDictionary<string, string> Vault;
 
         [OutputConstructor]
@@ -102,6 +102,8 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
             string category,
 
             ImmutableDictionary<string, Outputs.OutputField> fields,
+
+            string id,
 
             string? notes,
 
@@ -115,20 +117,18 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
 
             ImmutableArray<Outputs.OutputUrl> urls,
 
-            string uuid,
-
             ImmutableDictionary<string, string> vault)
         {
             Attachments = attachments;
             Category = category;
             Fields = fields;
+            Id = id;
             Notes = notes;
             References = references;
             Sections = sections;
             Tags = tags;
             Title = title;
             Urls = urls;
-            Uuid = uuid;
             Vault = vault;
         }
     }

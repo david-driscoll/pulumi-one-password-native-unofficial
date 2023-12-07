@@ -14,11 +14,13 @@ import (
 type MembershipItem struct {
 	pulumi.CustomResourceState
 
-	Attachments OutputAttachmentMapOutput  `pulumi:"attachments"`
-	Category    pulumi.StringOutput        `pulumi:"category"`
-	ExpiryDate  pulumi.StringPtrOutput     `pulumi:"expiryDate"`
-	Fields      OutputFieldMapOutput       `pulumi:"fields"`
-	Group       pulumi.StringPtrOutput     `pulumi:"group"`
+	Attachments OutputAttachmentMapOutput `pulumi:"attachments"`
+	Category    pulumi.StringOutput       `pulumi:"category"`
+	ExpiryDate  pulumi.StringPtrOutput    `pulumi:"expiryDate"`
+	Fields      OutputFieldMapOutput      `pulumi:"fields"`
+	Group       pulumi.StringPtrOutput    `pulumi:"group"`
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id          pulumi.StringOutput        `pulumi:"id"`
 	MemberId    pulumi.StringPtrOutput     `pulumi:"memberId"`
 	MemberName  pulumi.StringPtrOutput     `pulumi:"memberName"`
 	MemberSince pulumi.StringPtrOutput     `pulumi:"memberSince"`
@@ -30,10 +32,8 @@ type MembershipItem struct {
 	Tags      pulumi.StringArrayOutput `pulumi:"tags"`
 	Telephone pulumi.StringPtrOutput   `pulumi:"telephone"`
 	// The title of the item.
-	Title pulumi.StringOutput  `pulumi:"title"`
-	Urls  OutputUrlArrayOutput `pulumi:"urls"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid    pulumi.StringOutput    `pulumi:"uuid"`
+	Title   pulumi.StringOutput    `pulumi:"title"`
+	Urls    OutputUrlArrayOutput   `pulumi:"urls"`
 	Vault   pulumi.StringMapOutput `pulumi:"vault"`
 	Website pulumi.StringPtrOutput `pulumi:"website"`
 }

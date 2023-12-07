@@ -19,7 +19,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetSecureNoteResult:
-    def __init__(__self__, attachments=None, category=None, fields=None, notes=None, references=None, sections=None, tags=None, title=None, urls=None, uuid=None, vault=None):
+    def __init__(__self__, attachments=None, category=None, fields=None, id=None, notes=None, references=None, sections=None, tags=None, title=None, urls=None, vault=None):
         if attachments and not isinstance(attachments, dict):
             raise TypeError("Expected argument 'attachments' to be a dict")
         pulumi.set(__self__, "attachments", attachments)
@@ -29,6 +29,9 @@ class GetSecureNoteResult:
         if fields and not isinstance(fields, dict):
             raise TypeError("Expected argument 'fields' to be a dict")
         pulumi.set(__self__, "fields", fields)
+        if id and not isinstance(id, str):
+            raise TypeError("Expected argument 'id' to be a str")
+        pulumi.set(__self__, "id", id)
         if notes and not isinstance(notes, str):
             raise TypeError("Expected argument 'notes' to be a str")
         pulumi.set(__self__, "notes", notes)
@@ -47,9 +50,6 @@ class GetSecureNoteResult:
         if urls and not isinstance(urls, list):
             raise TypeError("Expected argument 'urls' to be a list")
         pulumi.set(__self__, "urls", urls)
-        if uuid and not isinstance(uuid, str):
-            raise TypeError("Expected argument 'uuid' to be a str")
-        pulumi.set(__self__, "uuid", uuid)
         if vault and not isinstance(vault, dict):
             raise TypeError("Expected argument 'vault' to be a dict")
         pulumi.set(__self__, "vault", vault)
@@ -68,6 +68,14 @@ class GetSecureNoteResult:
     @pulumi.getter
     def fields(self) -> Mapping[str, 'outputs.OutputField']:
         return pulumi.get(self, "fields")
+
+    @property
+    @pulumi.getter
+    def id(self) -> str:
+        """
+        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        """
+        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter
@@ -107,14 +115,6 @@ class GetSecureNoteResult:
 
     @property
     @pulumi.getter
-    def uuid(self) -> str:
-        """
-        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        """
-        return pulumi.get(self, "uuid")
-
-    @property
-    @pulumi.getter
     def vault(self) -> Mapping[str, str]:
         return pulumi.get(self, "vault")
 
@@ -128,30 +128,30 @@ class AwaitableGetSecureNoteResult(GetSecureNoteResult):
             attachments=self.attachments,
             category=self.category,
             fields=self.fields,
+            id=self.id,
             notes=self.notes,
             references=self.references,
             sections=self.sections,
             tags=self.tags,
             title=self.title,
             urls=self.urls,
-            uuid=self.uuid,
             vault=self.vault)
 
 
-def get_secure_note(title: Optional[str] = None,
-                    uuid: Optional[str] = None,
+def get_secure_note(id: Optional[str] = None,
+                    title: Optional[str] = None,
                     vault: Optional[str] = None,
                     opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetSecureNoteResult:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     __args__ = dict()
+    __args__['id'] = id
     __args__['title'] = title
-    __args__['uuid'] = uuid
     __args__['vault'] = vault
     if opts is None:
         opts = pulumi.InvokeOptions()
@@ -165,26 +165,26 @@ def get_secure_note(title: Optional[str] = None,
         attachments=__ret__.attachments,
         category=__ret__.category,
         fields=__ret__.fields,
+        id=__ret__.id,
         notes=__ret__.notes,
         references=__ret__.references,
         sections=__ret__.sections,
         tags=__ret__.tags,
         title=__ret__.title,
         urls=__ret__.urls,
-        uuid=__ret__.uuid,
         vault=__ret__.vault)
 
 
 @_utilities.lift_output_func(get_secure_note)
-def get_secure_note_output(title: Optional[pulumi.Input[Optional[str]]] = None,
-                           uuid: Optional[pulumi.Input[Optional[str]]] = None,
+def get_secure_note_output(id: Optional[pulumi.Input[Optional[str]]] = None,
+                           title: Optional[pulumi.Input[Optional[str]]] = None,
                            vault: Optional[pulumi.Input[str]] = None,
                            opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetSecureNoteResult]:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     ...

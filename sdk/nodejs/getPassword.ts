@@ -12,21 +12,21 @@ export function getPassword(args: GetPasswordArgs, opts?: pulumi.InvokeOptions):
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
     return pulumi.runtime.invoke("one-password-native-unofficial:index:GetPassword", {
+        "id": args.id,
         "title": args.title,
-        "uuid": args.uuid,
         "vault": args.vault,
     }, opts);
 }
 
 export interface GetPasswordArgs {
     /**
+     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+     */
+    id?: string;
+    /**
      * The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
      */
     title?: string;
-    /**
-     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-     */
-    uuid?: string;
     /**
      * The UUID of the vault the item is in.
      */
@@ -37,6 +37,10 @@ export interface GetPasswordResult {
     readonly attachments: {[key: string]: outputs.OutputAttachment};
     readonly category: enums.Category | string;
     readonly fields: {[key: string]: outputs.OutputField};
+    /**
+     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+     */
+    readonly id: string;
     readonly notes?: string;
     readonly password?: string;
     readonly references: outputs.OutputReference[];
@@ -50,10 +54,6 @@ export interface GetPasswordResult {
      */
     readonly title: string;
     readonly urls?: outputs.OutputUrl[];
-    /**
-     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-     */
-    readonly uuid: string;
     readonly vault: {[key: string]: string};
 }
 
@@ -63,13 +63,13 @@ export function getPasswordOutput(args: GetPasswordOutputArgs, opts?: pulumi.Inv
 
 export interface GetPasswordOutputArgs {
     /**
+     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+     */
+    id?: pulumi.Input<string>;
+    /**
      * The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
      */
     title?: pulumi.Input<string>;
-    /**
-     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-     */
-    uuid?: pulumi.Input<string>;
     /**
      * The UUID of the vault the item is in.
      */

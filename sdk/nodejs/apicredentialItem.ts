@@ -40,6 +40,10 @@ export class APICredentialItem extends pulumi.CustomResource {
     public readonly fields!: pulumi.Output<{[key: string]: outputs.OutputField}>;
     public readonly filename!: pulumi.Output<string | undefined>;
     public readonly hostname!: pulumi.Output<string | undefined>;
+    /**
+     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+     */
+    public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public /*out*/ readonly references!: pulumi.Output<outputs.OutputReference[]>;
     public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
@@ -54,10 +58,6 @@ export class APICredentialItem extends pulumi.CustomResource {
     public readonly type!: pulumi.Output<string | undefined>;
     public readonly urls!: pulumi.Output<outputs.OutputUrl[] | undefined>;
     public readonly username!: pulumi.Output<string | undefined>;
-    /**
-     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-     */
-    public /*out*/ readonly uuid!: pulumi.Output<string>;
     public readonly validFrom!: pulumi.Output<string | undefined>;
     public readonly vault!: pulumi.Output<{[key: string]: string}>;
 
@@ -96,8 +96,8 @@ export class APICredentialItem extends pulumi.CustomResource {
             resourceInputs["username"] = args ? args.username : undefined;
             resourceInputs["validFrom"] = args ? args.validFrom : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
-            resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         const secretOpts = { additionalSecretOutputs: ["attachments", "credential", "fields", "sections"] };

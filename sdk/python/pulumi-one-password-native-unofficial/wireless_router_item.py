@@ -368,8 +368,8 @@ class WirelessRouterItem(pulumi.CustomResource):
             __props__.__dict__["vault"] = vault
             __props__.__dict__["wireless_network_password"] = None if wireless_network_password is None else pulumi.Output.secret(wireless_network_password)
             __props__.__dict__["wireless_security"] = wireless_security
+            __props__.__dict__["id"] = None
             __props__.__dict__["references"] = None
-            __props__.__dict__["uuid"] = None
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachedStoragePassword", "attachments", "baseStationPassword", "fields", "sections", "wirelessNetworkPassword"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(WirelessRouterItem, __self__).__init__(
@@ -404,6 +404,7 @@ class WirelessRouterItem(pulumi.CustomResource):
         __props__.__dict__["base_station_password"] = None
         __props__.__dict__["category"] = None
         __props__.__dict__["fields"] = None
+        __props__.__dict__["id"] = None
         __props__.__dict__["network_name"] = None
         __props__.__dict__["notes"] = None
         __props__.__dict__["references"] = None
@@ -412,7 +413,6 @@ class WirelessRouterItem(pulumi.CustomResource):
         __props__.__dict__["tags"] = None
         __props__.__dict__["title"] = None
         __props__.__dict__["urls"] = None
-        __props__.__dict__["uuid"] = None
         __props__.__dict__["wireless_network_password"] = None
         __props__.__dict__["wireless_security"] = None
         return WirelessRouterItem(resource_name, opts=opts, __props__=__props__)
@@ -451,6 +451,14 @@ class WirelessRouterItem(pulumi.CustomResource):
     @pulumi.getter
     def fields(self) -> pulumi.Output[Mapping[str, 'outputs.OutputField']]:
         return pulumi.get(self, "fields")
+
+    @property
+    @pulumi.getter
+    def id(self) -> pulumi.Output[str]:
+        """
+        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        """
+        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter(name="networkName")
@@ -497,14 +505,6 @@ class WirelessRouterItem(pulumi.CustomResource):
     @pulumi.getter
     def urls(self) -> pulumi.Output[Optional[Sequence['outputs.OutputUrl']]]:
         return pulumi.get(self, "urls")
-
-    @property
-    @pulumi.getter
-    def uuid(self) -> pulumi.Output[str]:
-        """
-        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        """
-        return pulumi.get(self, "uuid")
 
     @property
     @pulumi.getter

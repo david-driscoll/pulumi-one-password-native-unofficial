@@ -31,6 +31,12 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         [Output("fields")]
         public Output<ImmutableDictionary<string, Outputs.OutputField>> Fields { get; private set; } = null!;
 
+        /// <summary>
+        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        /// </summary>
+        [Output("id")]
+        public Output<string> Id { get; private set; } = null!;
+
         [Output("notes")]
         public Output<string?> Notes { get; private set; } = null!;
 
@@ -72,12 +78,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
 
         [Output("username")]
         public Output<string?> Username { get; private set; } = null!;
-
-        /// <summary>
-        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        /// </summary>
-        [Output("uuid")]
-        public Output<string> Uuid { get; private set; } = null!;
 
         [Output("vault")]
         public Output<ImmutableDictionary<string, string>> Vault { get; private set; } = null!;

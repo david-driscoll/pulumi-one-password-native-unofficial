@@ -38,6 +38,10 @@ export class MedicalRecordItem extends pulumi.CustomResource {
     public readonly date!: pulumi.Output<string | undefined>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.OutputField}>;
     public readonly healthcareProfessional!: pulumi.Output<string | undefined>;
+    /**
+     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+     */
+    public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly location!: pulumi.Output<string | undefined>;
     public readonly medication!: pulumi.Output<outputs.medicalRecord.MedicationSection | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
@@ -54,10 +58,6 @@ export class MedicalRecordItem extends pulumi.CustomResource {
      */
     public readonly title!: pulumi.Output<string>;
     public readonly urls!: pulumi.Output<outputs.OutputUrl[] | undefined>;
-    /**
-     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-     */
-    public /*out*/ readonly uuid!: pulumi.Output<string>;
     public readonly vault!: pulumi.Output<{[key: string]: string}>;
 
     /**
@@ -94,8 +94,8 @@ export class MedicalRecordItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["urls"] = args ? args.urls : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
-            resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "sections"] };

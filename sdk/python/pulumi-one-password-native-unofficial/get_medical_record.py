@@ -20,7 +20,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetMedicalRecordResult:
-    def __init__(__self__, attachments=None, category=None, date=None, fields=None, healthcare_professional=None, location=None, medication=None, notes=None, patient=None, reason_for_visit=None, references=None, sections=None, tags=None, title=None, urls=None, uuid=None, vault=None):
+    def __init__(__self__, attachments=None, category=None, date=None, fields=None, healthcare_professional=None, id=None, location=None, medication=None, notes=None, patient=None, reason_for_visit=None, references=None, sections=None, tags=None, title=None, urls=None, vault=None):
         if attachments and not isinstance(attachments, dict):
             raise TypeError("Expected argument 'attachments' to be a dict")
         pulumi.set(__self__, "attachments", attachments)
@@ -36,6 +36,9 @@ class GetMedicalRecordResult:
         if healthcare_professional and not isinstance(healthcare_professional, str):
             raise TypeError("Expected argument 'healthcare_professional' to be a str")
         pulumi.set(__self__, "healthcare_professional", healthcare_professional)
+        if id and not isinstance(id, str):
+            raise TypeError("Expected argument 'id' to be a str")
+        pulumi.set(__self__, "id", id)
         if location and not isinstance(location, str):
             raise TypeError("Expected argument 'location' to be a str")
         pulumi.set(__self__, "location", location)
@@ -66,9 +69,6 @@ class GetMedicalRecordResult:
         if urls and not isinstance(urls, list):
             raise TypeError("Expected argument 'urls' to be a list")
         pulumi.set(__self__, "urls", urls)
-        if uuid and not isinstance(uuid, str):
-            raise TypeError("Expected argument 'uuid' to be a str")
-        pulumi.set(__self__, "uuid", uuid)
         if vault and not isinstance(vault, dict):
             raise TypeError("Expected argument 'vault' to be a dict")
         pulumi.set(__self__, "vault", vault)
@@ -97,6 +97,14 @@ class GetMedicalRecordResult:
     @pulumi.getter(name="healthcareProfessional")
     def healthcare_professional(self) -> Optional[str]:
         return pulumi.get(self, "healthcare_professional")
+
+    @property
+    @pulumi.getter
+    def id(self) -> str:
+        """
+        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        """
+        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter
@@ -156,14 +164,6 @@ class GetMedicalRecordResult:
 
     @property
     @pulumi.getter
-    def uuid(self) -> str:
-        """
-        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        """
-        return pulumi.get(self, "uuid")
-
-    @property
-    @pulumi.getter
     def vault(self) -> Mapping[str, str]:
         return pulumi.get(self, "vault")
 
@@ -179,6 +179,7 @@ class AwaitableGetMedicalRecordResult(GetMedicalRecordResult):
             date=self.date,
             fields=self.fields,
             healthcare_professional=self.healthcare_professional,
+            id=self.id,
             location=self.location,
             medication=self.medication,
             notes=self.notes,
@@ -189,24 +190,23 @@ class AwaitableGetMedicalRecordResult(GetMedicalRecordResult):
             tags=self.tags,
             title=self.title,
             urls=self.urls,
-            uuid=self.uuid,
             vault=self.vault)
 
 
-def get_medical_record(title: Optional[str] = None,
-                       uuid: Optional[str] = None,
+def get_medical_record(id: Optional[str] = None,
+                       title: Optional[str] = None,
                        vault: Optional[str] = None,
                        opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetMedicalRecordResult:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     __args__ = dict()
+    __args__['id'] = id
     __args__['title'] = title
-    __args__['uuid'] = uuid
     __args__['vault'] = vault
     if opts is None:
         opts = pulumi.InvokeOptions()
@@ -222,6 +222,7 @@ def get_medical_record(title: Optional[str] = None,
         date=__ret__.date,
         fields=__ret__.fields,
         healthcare_professional=__ret__.healthcare_professional,
+        id=__ret__.id,
         location=__ret__.location,
         medication=__ret__.medication,
         notes=__ret__.notes,
@@ -232,20 +233,19 @@ def get_medical_record(title: Optional[str] = None,
         tags=__ret__.tags,
         title=__ret__.title,
         urls=__ret__.urls,
-        uuid=__ret__.uuid,
         vault=__ret__.vault)
 
 
 @_utilities.lift_output_func(get_medical_record)
-def get_medical_record_output(title: Optional[pulumi.Input[Optional[str]]] = None,
-                              uuid: Optional[pulumi.Input[Optional[str]]] = None,
+def get_medical_record_output(id: Optional[pulumi.Input[Optional[str]]] = None,
+                              title: Optional[pulumi.Input[Optional[str]]] = None,
                               vault: Optional[pulumi.Input[str]] = None,
                               opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetMedicalRecordResult]:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     ...

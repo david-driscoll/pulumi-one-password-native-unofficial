@@ -20,14 +20,16 @@ type EmailAccountItem struct {
 	Category           pulumi.StringOutput                             `pulumi:"category"`
 	ContactInformation emailaccount.ContactInformationSectionPtrOutput `pulumi:"contactInformation"`
 	Fields             OutputFieldMapOutput                            `pulumi:"fields"`
-	Notes              pulumi.StringPtrOutput                          `pulumi:"notes"`
-	Password           pulumi.StringPtrOutput                          `pulumi:"password"`
-	PortNumber         pulumi.StringPtrOutput                          `pulumi:"portNumber"`
-	References         OutputReferenceArrayOutput                      `pulumi:"references"`
-	Sections           OutputSectionMapOutput                          `pulumi:"sections"`
-	Security           pulumi.StringPtrOutput                          `pulumi:"security"`
-	Server             pulumi.StringPtrOutput                          `pulumi:"server"`
-	Smtp               emailaccount.SmtpSectionPtrOutput               `pulumi:"smtp"`
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id         pulumi.StringOutput               `pulumi:"id"`
+	Notes      pulumi.StringPtrOutput            `pulumi:"notes"`
+	Password   pulumi.StringPtrOutput            `pulumi:"password"`
+	PortNumber pulumi.StringPtrOutput            `pulumi:"portNumber"`
+	References OutputReferenceArrayOutput        `pulumi:"references"`
+	Sections   OutputSectionMapOutput            `pulumi:"sections"`
+	Security   pulumi.StringPtrOutput            `pulumi:"security"`
+	Server     pulumi.StringPtrOutput            `pulumi:"server"`
+	Smtp       emailaccount.SmtpSectionPtrOutput `pulumi:"smtp"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -35,9 +37,7 @@ type EmailAccountItem struct {
 	Type     pulumi.StringPtrOutput `pulumi:"type"`
 	Urls     OutputUrlArrayOutput   `pulumi:"urls"`
 	Username pulumi.StringPtrOutput `pulumi:"username"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid  pulumi.StringOutput    `pulumi:"uuid"`
-	Vault pulumi.StringMapOutput `pulumi:"vault"`
+	Vault    pulumi.StringMapOutput `pulumi:"vault"`
 }
 
 // NewEmailAccountItem registers a new resource with the given unique name, arguments, and options.

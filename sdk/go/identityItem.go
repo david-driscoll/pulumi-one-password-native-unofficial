@@ -15,10 +15,12 @@ import (
 type IdentityItem struct {
 	pulumi.CustomResourceState
 
-	Address         identity.AddressSectionPtrOutput         `pulumi:"address"`
-	Attachments     OutputAttachmentMapOutput                `pulumi:"attachments"`
-	Category        pulumi.StringOutput                      `pulumi:"category"`
-	Fields          OutputFieldMapOutput                     `pulumi:"fields"`
+	Address     identity.AddressSectionPtrOutput `pulumi:"address"`
+	Attachments OutputAttachmentMapOutput        `pulumi:"attachments"`
+	Category    pulumi.StringOutput              `pulumi:"category"`
+	Fields      OutputFieldMapOutput             `pulumi:"fields"`
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id              pulumi.StringOutput                      `pulumi:"id"`
 	Identification  identity.IdentificationSectionPtrOutput  `pulumi:"identification"`
 	InternetDetails identity.InternetDetailsSectionPtrOutput `pulumi:"internetDetails"`
 	Notes           pulumi.StringPtrOutput                   `pulumi:"notes"`
@@ -27,10 +29,8 @@ type IdentityItem struct {
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
-	Title pulumi.StringOutput  `pulumi:"title"`
-	Urls  OutputUrlArrayOutput `pulumi:"urls"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid  pulumi.StringOutput    `pulumi:"uuid"`
+	Title pulumi.StringOutput    `pulumi:"title"`
+	Urls  OutputUrlArrayOutput   `pulumi:"urls"`
 	Vault pulumi.StringMapOutput `pulumi:"vault"`
 }
 

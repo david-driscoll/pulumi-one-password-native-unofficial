@@ -20,7 +20,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetCreditCardResult:
-    def __init__(__self__, additional_details=None, attachments=None, cardholder_name=None, category=None, contact_information=None, expiry_date=None, fields=None, notes=None, number=None, references=None, sections=None, tags=None, title=None, type=None, urls=None, uuid=None, valid_from=None, vault=None, verification_number=None):
+    def __init__(__self__, additional_details=None, attachments=None, cardholder_name=None, category=None, contact_information=None, expiry_date=None, fields=None, id=None, notes=None, number=None, references=None, sections=None, tags=None, title=None, type=None, urls=None, valid_from=None, vault=None, verification_number=None):
         if additional_details and not isinstance(additional_details, dict):
             raise TypeError("Expected argument 'additional_details' to be a dict")
         pulumi.set(__self__, "additional_details", additional_details)
@@ -42,6 +42,9 @@ class GetCreditCardResult:
         if fields and not isinstance(fields, dict):
             raise TypeError("Expected argument 'fields' to be a dict")
         pulumi.set(__self__, "fields", fields)
+        if id and not isinstance(id, str):
+            raise TypeError("Expected argument 'id' to be a str")
+        pulumi.set(__self__, "id", id)
         if notes and not isinstance(notes, str):
             raise TypeError("Expected argument 'notes' to be a str")
         pulumi.set(__self__, "notes", notes)
@@ -66,9 +69,6 @@ class GetCreditCardResult:
         if urls and not isinstance(urls, list):
             raise TypeError("Expected argument 'urls' to be a list")
         pulumi.set(__self__, "urls", urls)
-        if uuid and not isinstance(uuid, str):
-            raise TypeError("Expected argument 'uuid' to be a str")
-        pulumi.set(__self__, "uuid", uuid)
         if valid_from and not isinstance(valid_from, str):
             raise TypeError("Expected argument 'valid_from' to be a str")
         pulumi.set(__self__, "valid_from", valid_from)
@@ -113,6 +113,14 @@ class GetCreditCardResult:
     @pulumi.getter
     def fields(self) -> Mapping[str, 'outputs.OutputField']:
         return pulumi.get(self, "fields")
+
+    @property
+    @pulumi.getter
+    def id(self) -> str:
+        """
+        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        """
+        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter
@@ -161,14 +169,6 @@ class GetCreditCardResult:
         return pulumi.get(self, "urls")
 
     @property
-    @pulumi.getter
-    def uuid(self) -> str:
-        """
-        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        """
-        return pulumi.get(self, "uuid")
-
-    @property
     @pulumi.getter(name="validFrom")
     def valid_from(self) -> Optional[str]:
         return pulumi.get(self, "valid_from")
@@ -197,6 +197,7 @@ class AwaitableGetCreditCardResult(GetCreditCardResult):
             contact_information=self.contact_information,
             expiry_date=self.expiry_date,
             fields=self.fields,
+            id=self.id,
             notes=self.notes,
             number=self.number,
             references=self.references,
@@ -205,26 +206,25 @@ class AwaitableGetCreditCardResult(GetCreditCardResult):
             title=self.title,
             type=self.type,
             urls=self.urls,
-            uuid=self.uuid,
             valid_from=self.valid_from,
             vault=self.vault,
             verification_number=self.verification_number)
 
 
-def get_credit_card(title: Optional[str] = None,
-                    uuid: Optional[str] = None,
+def get_credit_card(id: Optional[str] = None,
+                    title: Optional[str] = None,
                     vault: Optional[str] = None,
                     opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetCreditCardResult:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     __args__ = dict()
+    __args__['id'] = id
     __args__['title'] = title
-    __args__['uuid'] = uuid
     __args__['vault'] = vault
     if opts is None:
         opts = pulumi.InvokeOptions()
@@ -242,6 +242,7 @@ def get_credit_card(title: Optional[str] = None,
         contact_information=__ret__.contact_information,
         expiry_date=__ret__.expiry_date,
         fields=__ret__.fields,
+        id=__ret__.id,
         notes=__ret__.notes,
         number=__ret__.number,
         references=__ret__.references,
@@ -250,22 +251,21 @@ def get_credit_card(title: Optional[str] = None,
         title=__ret__.title,
         type=__ret__.type,
         urls=__ret__.urls,
-        uuid=__ret__.uuid,
         valid_from=__ret__.valid_from,
         vault=__ret__.vault,
         verification_number=__ret__.verification_number)
 
 
 @_utilities.lift_output_func(get_credit_card)
-def get_credit_card_output(title: Optional[pulumi.Input[Optional[str]]] = None,
-                           uuid: Optional[pulumi.Input[Optional[str]]] = None,
+def get_credit_card_output(id: Optional[pulumi.Input[Optional[str]]] = None,
+                           title: Optional[pulumi.Input[Optional[str]]] = None,
                            vault: Optional[pulumi.Input[str]] = None,
                            opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetCreditCardResult]:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     ...

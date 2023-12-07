@@ -19,7 +19,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetWirelessRouterResult:
-    def __init__(__self__, air_port_id=None, attached_storage_password=None, attachments=None, base_station_name=None, base_station_password=None, category=None, fields=None, network_name=None, notes=None, references=None, sections=None, server_ip_address=None, tags=None, title=None, urls=None, uuid=None, vault=None, wireless_network_password=None, wireless_security=None):
+    def __init__(__self__, air_port_id=None, attached_storage_password=None, attachments=None, base_station_name=None, base_station_password=None, category=None, fields=None, id=None, network_name=None, notes=None, references=None, sections=None, server_ip_address=None, tags=None, title=None, urls=None, vault=None, wireless_network_password=None, wireless_security=None):
         if air_port_id and not isinstance(air_port_id, str):
             raise TypeError("Expected argument 'air_port_id' to be a str")
         pulumi.set(__self__, "air_port_id", air_port_id)
@@ -41,6 +41,9 @@ class GetWirelessRouterResult:
         if fields and not isinstance(fields, dict):
             raise TypeError("Expected argument 'fields' to be a dict")
         pulumi.set(__self__, "fields", fields)
+        if id and not isinstance(id, str):
+            raise TypeError("Expected argument 'id' to be a str")
+        pulumi.set(__self__, "id", id)
         if network_name and not isinstance(network_name, str):
             raise TypeError("Expected argument 'network_name' to be a str")
         pulumi.set(__self__, "network_name", network_name)
@@ -65,9 +68,6 @@ class GetWirelessRouterResult:
         if urls and not isinstance(urls, list):
             raise TypeError("Expected argument 'urls' to be a list")
         pulumi.set(__self__, "urls", urls)
-        if uuid and not isinstance(uuid, str):
-            raise TypeError("Expected argument 'uuid' to be a str")
-        pulumi.set(__self__, "uuid", uuid)
         if vault and not isinstance(vault, dict):
             raise TypeError("Expected argument 'vault' to be a dict")
         pulumi.set(__self__, "vault", vault)
@@ -112,6 +112,14 @@ class GetWirelessRouterResult:
     @pulumi.getter
     def fields(self) -> Mapping[str, 'outputs.OutputField']:
         return pulumi.get(self, "fields")
+
+    @property
+    @pulumi.getter
+    def id(self) -> str:
+        """
+        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        """
+        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter(name="networkName")
@@ -161,14 +169,6 @@ class GetWirelessRouterResult:
 
     @property
     @pulumi.getter
-    def uuid(self) -> str:
-        """
-        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        """
-        return pulumi.get(self, "uuid")
-
-    @property
-    @pulumi.getter
     def vault(self) -> Mapping[str, str]:
         return pulumi.get(self, "vault")
 
@@ -196,6 +196,7 @@ class AwaitableGetWirelessRouterResult(GetWirelessRouterResult):
             base_station_password=self.base_station_password,
             category=self.category,
             fields=self.fields,
+            id=self.id,
             network_name=self.network_name,
             notes=self.notes,
             references=self.references,
@@ -204,26 +205,25 @@ class AwaitableGetWirelessRouterResult(GetWirelessRouterResult):
             tags=self.tags,
             title=self.title,
             urls=self.urls,
-            uuid=self.uuid,
             vault=self.vault,
             wireless_network_password=self.wireless_network_password,
             wireless_security=self.wireless_security)
 
 
-def get_wireless_router(title: Optional[str] = None,
-                        uuid: Optional[str] = None,
+def get_wireless_router(id: Optional[str] = None,
+                        title: Optional[str] = None,
                         vault: Optional[str] = None,
                         opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetWirelessRouterResult:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     __args__ = dict()
+    __args__['id'] = id
     __args__['title'] = title
-    __args__['uuid'] = uuid
     __args__['vault'] = vault
     if opts is None:
         opts = pulumi.InvokeOptions()
@@ -241,6 +241,7 @@ def get_wireless_router(title: Optional[str] = None,
         base_station_password=__ret__.base_station_password,
         category=__ret__.category,
         fields=__ret__.fields,
+        id=__ret__.id,
         network_name=__ret__.network_name,
         notes=__ret__.notes,
         references=__ret__.references,
@@ -249,22 +250,21 @@ def get_wireless_router(title: Optional[str] = None,
         tags=__ret__.tags,
         title=__ret__.title,
         urls=__ret__.urls,
-        uuid=__ret__.uuid,
         vault=__ret__.vault,
         wireless_network_password=__ret__.wireless_network_password,
         wireless_security=__ret__.wireless_security)
 
 
 @_utilities.lift_output_func(get_wireless_router)
-def get_wireless_router_output(title: Optional[pulumi.Input[Optional[str]]] = None,
-                               uuid: Optional[pulumi.Input[Optional[str]]] = None,
+def get_wireless_router_output(id: Optional[pulumi.Input[Optional[str]]] = None,
+                               title: Optional[pulumi.Input[Optional[str]]] = None,
                                vault: Optional[pulumi.Input[str]] = None,
                                opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetWirelessRouterResult]:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     ...

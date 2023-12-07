@@ -23,16 +23,16 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
     public sealed class GetRewardProgramArgs : Pulumi.InvokeArgs
     {
         /// <summary>
+        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        /// </summary>
+        [Input("id")]
+        public string? Id { get; set; }
+
+        /// <summary>
         /// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         /// </summary>
         [Input("title")]
         public string? Title { get; set; }
-
-        /// <summary>
-        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        /// </summary>
-        [Input("uuid")]
-        public string? Uuid { get; set; }
 
         /// <summary>
         /// The UUID of the vault the item is in.
@@ -48,16 +48,16 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
     public sealed class GetRewardProgramInvokeArgs : Pulumi.InvokeArgs
     {
         /// <summary>
+        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        /// </summary>
+        [Input("id")]
+        public Input<string>? Id { get; set; }
+
+        /// <summary>
         /// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         /// </summary>
         [Input("title")]
         public Input<string>? Title { get; set; }
-
-        /// <summary>
-        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        /// </summary>
-        [Input("uuid")]
-        public Input<string>? Uuid { get; set; }
 
         /// <summary>
         /// The UUID of the vault the item is in.
@@ -78,6 +78,10 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         public readonly string Category;
         public readonly string? CompanyName;
         public readonly ImmutableDictionary<string, Outputs.OutputField> Fields;
+        /// <summary>
+        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        /// </summary>
+        public readonly string Id;
         public readonly string? MemberId;
         public readonly string? MemberName;
         public readonly Rocket.Surgery.OnePasswordNativeUnofficial.RewardProgram.Outputs.MoreInformationSection? MoreInformation;
@@ -94,10 +98,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// </summary>
         public readonly string Title;
         public readonly ImmutableArray<Outputs.OutputUrl> Urls;
-        /// <summary>
-        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        /// </summary>
-        public readonly string Uuid;
         public readonly ImmutableDictionary<string, string> Vault;
 
         [OutputConstructor]
@@ -109,6 +109,8 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
             string? companyName,
 
             ImmutableDictionary<string, Outputs.OutputField> fields,
+
+            string id,
 
             string? memberId,
 
@@ -130,14 +132,13 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
 
             ImmutableArray<Outputs.OutputUrl> urls,
 
-            string uuid,
-
             ImmutableDictionary<string, string> vault)
         {
             Attachments = attachments;
             Category = category;
             CompanyName = companyName;
             Fields = fields;
+            Id = id;
             MemberId = memberId;
             MemberName = memberName;
             MoreInformation = moreInformation;
@@ -148,7 +149,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
             Tags = tags;
             Title = title;
             Urls = urls;
-            Uuid = uuid;
             Vault = vault;
         }
     }

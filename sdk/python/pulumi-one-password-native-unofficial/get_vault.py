@@ -17,13 +17,21 @@ __all__ = [
 
 @pulumi.output_type
 class GetVaultResult:
-    def __init__(__self__, name=None, uuid=None):
+    def __init__(__self__, id=None, name=None):
+        if id and not isinstance(id, str):
+            raise TypeError("Expected argument 'id' to be a str")
+        pulumi.set(__self__, "id", id)
         if name and not isinstance(name, str):
             raise TypeError("Expected argument 'name' to be a str")
         pulumi.set(__self__, "name", name)
-        if uuid and not isinstance(uuid, str):
-            raise TypeError("Expected argument 'uuid' to be a str")
-        pulumi.set(__self__, "uuid", uuid)
+
+    @property
+    @pulumi.getter
+    def id(self) -> Optional[str]:
+        """
+        The UUID of the vault to retrieve. This field will be populated with the UUID of the vault if the vault it looked up by its name.
+        """
+        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter
@@ -33,14 +41,6 @@ class GetVaultResult:
         """
         return pulumi.get(self, "name")
 
-    @property
-    @pulumi.getter
-    def uuid(self) -> Optional[str]:
-        """
-        The UUID of the vault to retrieve. This field will be populated with the UUID of the vault if the vault it looked up by its name.
-        """
-        return pulumi.get(self, "uuid")
-
 
 class AwaitableGetVaultResult(GetVaultResult):
     # pylint: disable=using-constant-test
@@ -48,8 +48,8 @@ class AwaitableGetVaultResult(GetVaultResult):
         if False:
             yield self
         return GetVaultResult(
-            name=self.name,
-            uuid=self.uuid)
+            id=self.id,
+            name=self.name)
 
 
 def get_vault(vault: Optional[str] = None,
@@ -71,8 +71,8 @@ def get_vault(vault: Optional[str] = None,
     __ret__ = pulumi.runtime.invoke('one-password-native-unofficial:index:GetVault', __args__, opts=opts, typ=GetVaultResult).value
 
     return AwaitableGetVaultResult(
-        name=__ret__.name,
-        uuid=__ret__.uuid)
+        id=__ret__.id,
+        name=__ret__.name)
 
 
 @_utilities.lift_output_func(get_vault)

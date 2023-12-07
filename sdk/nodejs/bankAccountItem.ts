@@ -40,6 +40,10 @@ export class BankAccountItem extends pulumi.CustomResource {
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.OutputField}>;
     public readonly iban!: pulumi.Output<string | undefined>;
+    /**
+     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+     */
+    public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly nameOnAccount!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly pin!: pulumi.Output<string | undefined>;
@@ -57,10 +61,6 @@ export class BankAccountItem extends pulumi.CustomResource {
     public readonly title!: pulumi.Output<string>;
     public readonly type!: pulumi.Output<string | undefined>;
     public readonly urls!: pulumi.Output<outputs.OutputUrl[] | undefined>;
-    /**
-     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-     */
-    public /*out*/ readonly uuid!: pulumi.Output<string>;
     public readonly vault!: pulumi.Output<{[key: string]: string}>;
 
     /**
@@ -100,8 +100,8 @@ export class BankAccountItem extends pulumi.CustomResource {
             resourceInputs["type"] = args ? args.type : undefined;
             resourceInputs["urls"] = args ? args.urls : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
-            resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "pin", "sections"] };

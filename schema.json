@@ -152,7 +152,7 @@
                 "vault"
             ],
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string",
                     "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                 },
@@ -171,14 +171,14 @@
                     "type": "object",
                     "required": [
                         "name",
-                        "uuid"
+                        "id"
                     ],
                     "properties": {
                         "name": {
                             "type": "string",
                             "description": "The name of the vault item is in.\n"
                         },
-                        "uuid": {
+                        "id": {
                             "type": "string",
                             "description": "The UUID of the vault the item is in.\n"
                         }
@@ -279,12 +279,12 @@
             },
             "required": [
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
@@ -419,7 +419,7 @@
                 "vault"
             ],
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string",
                     "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                 },
@@ -438,14 +438,14 @@
                     "type": "object",
                     "required": [
                         "name",
-                        "uuid"
+                        "id"
                     ],
                     "properties": {
                         "name": {
                             "type": "string",
                             "description": "The name of the vault item is in.\n"
                         },
-                        "uuid": {
+                        "id": {
                             "type": "string",
                             "description": "The UUID of the vault the item is in.\n"
                         }
@@ -557,12 +557,12 @@
             },
             "required": [
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
@@ -689,7 +689,7 @@
                 "vault"
             ],
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string",
                     "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                 },
@@ -708,14 +708,14 @@
                     "type": "object",
                     "required": [
                         "name",
-                        "uuid"
+                        "id"
                     ],
                     "properties": {
                         "name": {
                             "type": "string",
                             "description": "The name of the vault item is in.\n"
                         },
-                        "uuid": {
+                        "id": {
                             "type": "string",
                             "description": "The UUID of the vault the item is in.\n"
                         }
@@ -820,12 +820,12 @@
             },
             "required": [
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
@@ -924,7 +924,7 @@
                 "vault"
             ],
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string",
                     "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                 },
@@ -943,14 +943,14 @@
                     "type": "object",
                     "required": [
                         "name",
-                        "uuid"
+                        "id"
                     ],
                     "properties": {
                         "name": {
                             "type": "string",
                             "description": "The name of the vault item is in.\n"
                         },
-                        "uuid": {
+                        "id": {
                             "type": "string",
                             "description": "The UUID of the vault the item is in.\n"
                         }
@@ -1026,12 +1026,12 @@
             },
             "required": [
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
@@ -1168,7 +1168,7 @@
                 "vault"
             ],
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string",
                     "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                 },
@@ -1187,14 +1187,14 @@
                     "type": "object",
                     "required": [
                         "name",
-                        "uuid"
+                        "id"
                     ],
                     "properties": {
                         "name": {
                             "type": "string",
                             "description": "The name of the vault item is in.\n"
                         },
-                        "uuid": {
+                        "id": {
                             "type": "string",
                             "description": "The UUID of the vault the item is in.\n"
                         }
@@ -1307,12 +1307,12 @@
             },
             "required": [
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
@@ -1395,7 +1395,7 @@
                 "vault"
             ],
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string",
                     "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                 },
@@ -1414,14 +1414,14 @@
                     "type": "object",
                     "required": [
                         "name",
-                        "uuid"
+                        "id"
                     ],
                     "properties": {
                         "name": {
                             "type": "string",
                             "description": "The name of the vault item is in.\n"
                         },
-                        "uuid": {
+                        "id": {
                             "type": "string",
                             "description": "The UUID of the vault the item is in.\n"
                         }
@@ -1480,12 +1480,12 @@
             },
             "required": [
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
@@ -1634,7 +1634,7 @@
                 "vault"
             ],
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string",
                     "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                 },
@@ -1653,14 +1653,14 @@
                     "type": "object",
                     "required": [
                         "name",
-                        "uuid"
+                        "id"
                     ],
                     "properties": {
                         "name": {
                             "type": "string",
                             "description": "The name of the vault item is in.\n"
                         },
-                        "uuid": {
+                        "id": {
                             "type": "string",
                             "description": "The UUID of the vault the item is in.\n"
                         }
@@ -1785,12 +1785,12 @@
             },
             "required": [
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
@@ -1923,7 +1923,7 @@
                 "vault"
             ],
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string",
                     "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                 },
@@ -1942,14 +1942,14 @@
                     "type": "object",
                     "required": [
                         "name",
-                        "uuid"
+                        "id"
                     ],
                     "properties": {
                         "name": {
                             "type": "string",
                             "description": "The name of the vault item is in.\n"
                         },
-                        "uuid": {
+                        "id": {
                             "type": "string",
                             "description": "The UUID of the vault the item is in.\n"
                         }
@@ -2060,12 +2060,12 @@
             },
             "required": [
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
@@ -2160,7 +2160,7 @@
                 "vault"
             ],
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string",
                     "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                 },
@@ -2179,14 +2179,14 @@
                     "type": "object",
                     "required": [
                         "name",
-                        "uuid"
+                        "id"
                     ],
                     "properties": {
                         "name": {
                             "type": "string",
                             "description": "The name of the vault item is in.\n"
                         },
-                        "uuid": {
+                        "id": {
                             "type": "string",
                             "description": "The UUID of the vault the item is in.\n"
                         }
@@ -2260,12 +2260,12 @@
             },
             "required": [
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
@@ -2354,7 +2354,7 @@
                 "vault"
             ],
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string",
                     "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                 },
@@ -2373,14 +2373,14 @@
                     "type": "object",
                     "required": [
                         "name",
-                        "uuid"
+                        "id"
                     ],
                     "properties": {
                         "name": {
                             "type": "string",
                             "description": "The name of the vault item is in.\n"
                         },
-                        "uuid": {
+                        "id": {
                             "type": "string",
                             "description": "The UUID of the vault the item is in.\n"
                         }
@@ -2439,12 +2439,12 @@
             },
             "required": [
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
@@ -2552,7 +2552,7 @@
                 "vault"
             ],
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string",
                     "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                 },
@@ -2571,14 +2571,14 @@
                     "type": "object",
                     "required": [
                         "name",
-                        "uuid"
+                        "id"
                     ],
                     "properties": {
                         "name": {
                             "type": "string",
                             "description": "The name of the vault item is in.\n"
                         },
-                        "uuid": {
+                        "id": {
                             "type": "string",
                             "description": "The UUID of the vault the item is in.\n"
                         }
@@ -2651,12 +2651,12 @@
             },
             "required": [
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
@@ -2773,7 +2773,7 @@
                 "vault"
             ],
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string",
                     "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                 },
@@ -2792,14 +2792,14 @@
                     "type": "object",
                     "required": [
                         "name",
-                        "uuid"
+                        "id"
                     ],
                     "properties": {
                         "name": {
                             "type": "string",
                             "description": "The name of the vault item is in.\n"
                         },
-                        "uuid": {
+                        "id": {
                             "type": "string",
                             "description": "The UUID of the vault the item is in.\n"
                         }
@@ -2893,12 +2893,12 @@
             },
             "required": [
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
@@ -3029,7 +3029,7 @@
                 "vault"
             ],
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string",
                     "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                 },
@@ -3048,14 +3048,14 @@
                     "type": "object",
                     "required": [
                         "name",
-                        "uuid"
+                        "id"
                     ],
                     "properties": {
                         "name": {
                             "type": "string",
                             "description": "The name of the vault item is in.\n"
                         },
-                        "uuid": {
+                        "id": {
                             "type": "string",
                             "description": "The UUID of the vault the item is in.\n"
                         }
@@ -3162,12 +3162,12 @@
             },
             "required": [
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
@@ -3292,7 +3292,7 @@
                 "vault"
             ],
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string",
                     "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                 },
@@ -3311,14 +3311,14 @@
                     "type": "object",
                     "required": [
                         "name",
-                        "uuid"
+                        "id"
                     ],
                     "properties": {
                         "name": {
                             "type": "string",
                             "description": "The name of the vault item is in.\n"
                         },
-                        "uuid": {
+                        "id": {
                             "type": "string",
                             "description": "The UUID of the vault the item is in.\n"
                         }
@@ -3419,12 +3419,12 @@
             },
             "required": [
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
@@ -3573,7 +3573,7 @@
                 "vault"
             ],
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string",
                     "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                 },
@@ -3592,14 +3592,14 @@
                     "type": "object",
                     "required": [
                         "name",
-                        "uuid"
+                        "id"
                     ],
                     "properties": {
                         "name": {
                             "type": "string",
                             "description": "The name of the vault item is in.\n"
                         },
-                        "uuid": {
+                        "id": {
                             "type": "string",
                             "description": "The UUID of the vault the item is in.\n"
                         }
@@ -3724,12 +3724,12 @@
             },
             "required": [
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
@@ -3830,7 +3830,7 @@
                 "vault"
             ],
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string",
                     "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                 },
@@ -3849,14 +3849,14 @@
                     "type": "object",
                     "required": [
                         "name",
-                        "uuid"
+                        "id"
                     ],
                     "properties": {
                         "name": {
                             "type": "string",
                             "description": "The name of the vault item is in.\n"
                         },
-                        "uuid": {
+                        "id": {
                             "type": "string",
                             "description": "The UUID of the vault the item is in.\n"
                         }
@@ -3922,12 +3922,12 @@
             },
             "required": [
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
@@ -4038,7 +4038,7 @@
                 "vault"
             ],
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string",
                     "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                 },
@@ -4057,14 +4057,14 @@
                     "type": "object",
                     "required": [
                         "name",
-                        "uuid"
+                        "id"
                     ],
                     "properties": {
                         "name": {
                             "type": "string",
                             "description": "The name of the vault item is in.\n"
                         },
-                        "uuid": {
+                        "id": {
                             "type": "string",
                             "description": "The UUID of the vault the item is in.\n"
                         }
@@ -4152,12 +4152,12 @@
             },
             "required": [
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
@@ -4246,7 +4246,7 @@
                 "vault"
             ],
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string",
                     "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                 },
@@ -4265,14 +4265,14 @@
                     "type": "object",
                     "required": [
                         "name",
-                        "uuid"
+                        "id"
                     ],
                     "properties": {
                         "name": {
                             "type": "string",
                             "description": "The name of the vault item is in.\n"
                         },
-                        "uuid": {
+                        "id": {
                             "type": "string",
                             "description": "The UUID of the vault the item is in.\n"
                         }
@@ -4337,12 +4337,12 @@
             },
             "required": [
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
@@ -4425,7 +4425,7 @@
                 "vault"
             ],
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string",
                     "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                 },
@@ -4444,14 +4444,14 @@
                     "type": "object",
                     "required": [
                         "name",
-                        "uuid"
+                        "id"
                     ],
                     "properties": {
                         "name": {
                             "type": "string",
                             "description": "The name of the vault item is in.\n"
                         },
-                        "uuid": {
+                        "id": {
                             "type": "string",
                             "description": "The UUID of the vault the item is in.\n"
                         }
@@ -4510,12 +4510,12 @@
             },
             "required": [
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
@@ -4624,7 +4624,7 @@
                 "vault"
             ],
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string",
                     "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                 },
@@ -4643,14 +4643,14 @@
                     "type": "object",
                     "required": [
                         "name",
-                        "uuid"
+                        "id"
                     ],
                     "properties": {
                         "name": {
                             "type": "string",
                             "description": "The name of the vault item is in.\n"
                         },
-                        "uuid": {
+                        "id": {
                             "type": "string",
                             "description": "The UUID of the vault the item is in.\n"
                         }
@@ -4737,12 +4737,12 @@
             },
             "required": [
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
@@ -4837,7 +4837,7 @@
                 "vault"
             ],
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string",
                     "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                 },
@@ -4856,14 +4856,14 @@
                     "type": "object",
                     "required": [
                         "name",
-                        "uuid"
+                        "id"
                     ],
                     "properties": {
                         "name": {
                             "type": "string",
                             "description": "The name of the vault item is in.\n"
                         },
-                        "uuid": {
+                        "id": {
                             "type": "string",
                             "description": "The UUID of the vault the item is in.\n"
                         }
@@ -4934,12 +4934,12 @@
             },
             "required": [
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
@@ -5046,7 +5046,7 @@
                 "vault"
             ],
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string",
                     "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                 },
@@ -5065,14 +5065,14 @@
                     "type": "object",
                     "required": [
                         "name",
-                        "uuid"
+                        "id"
                     ],
                     "properties": {
                         "name": {
                             "type": "string",
                             "description": "The name of the vault item is in.\n"
                         },
-                        "uuid": {
+                        "id": {
                             "type": "string",
                             "description": "The UUID of the vault the item is in.\n"
                         }
@@ -5158,12 +5158,12 @@
             },
             "required": [
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
@@ -5294,7 +5294,7 @@
                 "vault"
             ],
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string",
                     "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                 },
@@ -5313,14 +5313,14 @@
                     "type": "object",
                     "required": [
                         "name",
-                        "uuid"
+                        "id"
                     ],
                     "properties": {
                         "name": {
                             "type": "string",
                             "description": "The name of the vault item is in.\n"
                         },
-                        "uuid": {
+                        "id": {
                             "type": "string",
                             "description": "The UUID of the vault the item is in.\n"
                         }
@@ -5427,12 +5427,12 @@
             },
             "required": [
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
                 "tags",
-                "uuid",
+                "id",
                 "title",
                 "vault",
                 "category",
@@ -5463,7 +5463,7 @@
                         "type": "string",
                         "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
                     },
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -5478,7 +5478,7 @@
             },
             "outputs": {
                 "properties": {
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -5497,14 +5497,14 @@
                         "type": "object",
                         "required": [
                             "name",
-                            "uuid"
+                            "id"
                         ],
                         "properties": {
                             "name": {
                                 "type": "string",
                                 "description": "The name of the vault item is in.\n"
                             },
-                            "uuid": {
+                            "id": {
                                 "type": "string",
                                 "description": "The UUID of the vault the item is in.\n"
                             }
@@ -5563,7 +5563,7 @@
                 },
                 "required": [
                     "tags",
-                    "uuid",
+                    "id",
                     "title",
                     "vault",
                     "category",
@@ -5593,7 +5593,7 @@
                         "type": "string",
                         "description": "The name of the vault to retrieve. This field will be populated with the name of the vault if the vault it looked up by its UUID.\n"
                     },
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the vault to retrieve. This field will be populated with the UUID of the vault if the vault it looked up by its name.\n"
                     }
@@ -5695,7 +5695,7 @@
                         "type": "string",
                         "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
                     },
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -5710,7 +5710,7 @@
             },
             "outputs": {
                 "properties": {
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -5729,14 +5729,14 @@
                         "type": "object",
                         "required": [
                             "name",
-                            "uuid"
+                            "id"
                         ],
                         "properties": {
                             "name": {
                                 "type": "string",
                                 "description": "The name of the vault item is in.\n"
                             },
-                            "uuid": {
+                            "id": {
                                 "type": "string",
                                 "description": "The UUID of the vault the item is in.\n"
                             }
@@ -5837,7 +5837,7 @@
                 },
                 "required": [
                     "tags",
-                    "uuid",
+                    "id",
                     "title",
                     "vault",
                     "category",
@@ -5855,7 +5855,7 @@
                         "type": "string",
                         "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
                     },
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -5870,7 +5870,7 @@
             },
             "outputs": {
                 "properties": {
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -5889,14 +5889,14 @@
                         "type": "object",
                         "required": [
                             "name",
-                            "uuid"
+                            "id"
                         ],
                         "properties": {
                             "name": {
                                 "type": "string",
                                 "description": "The name of the vault item is in.\n"
                             },
-                            "uuid": {
+                            "id": {
                                 "type": "string",
                                 "description": "The UUID of the vault the item is in.\n"
                             }
@@ -6008,7 +6008,7 @@
                 },
                 "required": [
                     "tags",
-                    "uuid",
+                    "id",
                     "title",
                     "vault",
                     "category",
@@ -6026,7 +6026,7 @@
                         "type": "string",
                         "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
                     },
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -6041,7 +6041,7 @@
             },
             "outputs": {
                 "properties": {
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -6060,14 +6060,14 @@
                         "type": "object",
                         "required": [
                             "name",
-                            "uuid"
+                            "id"
                         ],
                         "properties": {
                             "name": {
                                 "type": "string",
                                 "description": "The name of the vault item is in.\n"
                             },
-                            "uuid": {
+                            "id": {
                                 "type": "string",
                                 "description": "The UUID of the vault the item is in.\n"
                             }
@@ -6172,7 +6172,7 @@
                 },
                 "required": [
                     "tags",
-                    "uuid",
+                    "id",
                     "title",
                     "vault",
                     "category",
@@ -6190,7 +6190,7 @@
                         "type": "string",
                         "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
                     },
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -6205,7 +6205,7 @@
             },
             "outputs": {
                 "properties": {
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -6224,14 +6224,14 @@
                         "type": "object",
                         "required": [
                             "name",
-                            "uuid"
+                            "id"
                         ],
                         "properties": {
                             "name": {
                                 "type": "string",
                                 "description": "The name of the vault item is in.\n"
                             },
-                            "uuid": {
+                            "id": {
                                 "type": "string",
                                 "description": "The UUID of the vault the item is in.\n"
                             }
@@ -6307,7 +6307,7 @@
                 },
                 "required": [
                     "tags",
-                    "uuid",
+                    "id",
                     "title",
                     "vault",
                     "category",
@@ -6325,7 +6325,7 @@
                         "type": "string",
                         "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
                     },
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -6340,7 +6340,7 @@
             },
             "outputs": {
                 "properties": {
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -6359,14 +6359,14 @@
                         "type": "object",
                         "required": [
                             "name",
-                            "uuid"
+                            "id"
                         ],
                         "properties": {
                             "name": {
                                 "type": "string",
                                 "description": "The name of the vault item is in.\n"
                             },
-                            "uuid": {
+                            "id": {
                                 "type": "string",
                                 "description": "The UUID of the vault the item is in.\n"
                             }
@@ -6479,7 +6479,7 @@
                 },
                 "required": [
                     "tags",
-                    "uuid",
+                    "id",
                     "title",
                     "vault",
                     "category",
@@ -6497,7 +6497,7 @@
                         "type": "string",
                         "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
                     },
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -6512,7 +6512,7 @@
             },
             "outputs": {
                 "properties": {
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -6531,14 +6531,14 @@
                         "type": "object",
                         "required": [
                             "name",
-                            "uuid"
+                            "id"
                         ],
                         "properties": {
                             "name": {
                                 "type": "string",
                                 "description": "The name of the vault item is in.\n"
                             },
-                            "uuid": {
+                            "id": {
                                 "type": "string",
                                 "description": "The UUID of the vault the item is in.\n"
                             }
@@ -6597,7 +6597,7 @@
                 },
                 "required": [
                     "tags",
-                    "uuid",
+                    "id",
                     "title",
                     "vault",
                     "category",
@@ -6615,7 +6615,7 @@
                         "type": "string",
                         "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
                     },
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -6630,7 +6630,7 @@
             },
             "outputs": {
                 "properties": {
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -6649,14 +6649,14 @@
                         "type": "object",
                         "required": [
                             "name",
-                            "uuid"
+                            "id"
                         ],
                         "properties": {
                             "name": {
                                 "type": "string",
                                 "description": "The name of the vault item is in.\n"
                             },
-                            "uuid": {
+                            "id": {
                                 "type": "string",
                                 "description": "The UUID of the vault the item is in.\n"
                             }
@@ -6781,7 +6781,7 @@
                 },
                 "required": [
                     "tags",
-                    "uuid",
+                    "id",
                     "title",
                     "vault",
                     "category",
@@ -6799,7 +6799,7 @@
                         "type": "string",
                         "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
                     },
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -6814,7 +6814,7 @@
             },
             "outputs": {
                 "properties": {
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -6833,14 +6833,14 @@
                         "type": "object",
                         "required": [
                             "name",
-                            "uuid"
+                            "id"
                         ],
                         "properties": {
                             "name": {
                                 "type": "string",
                                 "description": "The name of the vault item is in.\n"
                             },
-                            "uuid": {
+                            "id": {
                                 "type": "string",
                                 "description": "The UUID of the vault the item is in.\n"
                             }
@@ -6951,7 +6951,7 @@
                 },
                 "required": [
                     "tags",
-                    "uuid",
+                    "id",
                     "title",
                     "vault",
                     "category",
@@ -6969,7 +6969,7 @@
                         "type": "string",
                         "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
                     },
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -6984,7 +6984,7 @@
             },
             "outputs": {
                 "properties": {
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -7003,14 +7003,14 @@
                         "type": "object",
                         "required": [
                             "name",
-                            "uuid"
+                            "id"
                         ],
                         "properties": {
                             "name": {
                                 "type": "string",
                                 "description": "The name of the vault item is in.\n"
                             },
-                            "uuid": {
+                            "id": {
                                 "type": "string",
                                 "description": "The UUID of the vault the item is in.\n"
                             }
@@ -7084,7 +7084,7 @@
                 },
                 "required": [
                     "tags",
-                    "uuid",
+                    "id",
                     "title",
                     "vault",
                     "category",
@@ -7102,7 +7102,7 @@
                         "type": "string",
                         "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
                     },
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -7117,7 +7117,7 @@
             },
             "outputs": {
                 "properties": {
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -7136,14 +7136,14 @@
                         "type": "object",
                         "required": [
                             "name",
-                            "uuid"
+                            "id"
                         ],
                         "properties": {
                             "name": {
                                 "type": "string",
                                 "description": "The name of the vault item is in.\n"
                             },
-                            "uuid": {
+                            "id": {
                                 "type": "string",
                                 "description": "The UUID of the vault the item is in.\n"
                             }
@@ -7216,7 +7216,7 @@
                 },
                 "required": [
                     "tags",
-                    "uuid",
+                    "id",
                     "title",
                     "vault",
                     "category",
@@ -7234,7 +7234,7 @@
                         "type": "string",
                         "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
                     },
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -7249,7 +7249,7 @@
             },
             "outputs": {
                 "properties": {
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -7268,14 +7268,14 @@
                         "type": "object",
                         "required": [
                             "name",
-                            "uuid"
+                            "id"
                         ],
                         "properties": {
                             "name": {
                                 "type": "string",
                                 "description": "The name of the vault item is in.\n"
                             },
-                            "uuid": {
+                            "id": {
                                 "type": "string",
                                 "description": "The UUID of the vault the item is in.\n"
                             }
@@ -7369,7 +7369,7 @@
                 },
                 "required": [
                     "tags",
-                    "uuid",
+                    "id",
                     "title",
                     "vault",
                     "category",
@@ -7387,7 +7387,7 @@
                         "type": "string",
                         "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
                     },
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -7402,7 +7402,7 @@
             },
             "outputs": {
                 "properties": {
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -7421,14 +7421,14 @@
                         "type": "object",
                         "required": [
                             "name",
-                            "uuid"
+                            "id"
                         ],
                         "properties": {
                             "name": {
                                 "type": "string",
                                 "description": "The name of the vault item is in.\n"
                             },
-                            "uuid": {
+                            "id": {
                                 "type": "string",
                                 "description": "The UUID of the vault the item is in.\n"
                             }
@@ -7535,7 +7535,7 @@
                 },
                 "required": [
                     "tags",
-                    "uuid",
+                    "id",
                     "title",
                     "vault",
                     "category",
@@ -7553,7 +7553,7 @@
                         "type": "string",
                         "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
                     },
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -7568,7 +7568,7 @@
             },
             "outputs": {
                 "properties": {
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -7587,14 +7587,14 @@
                         "type": "object",
                         "required": [
                             "name",
-                            "uuid"
+                            "id"
                         ],
                         "properties": {
                             "name": {
                                 "type": "string",
                                 "description": "The name of the vault item is in.\n"
                             },
-                            "uuid": {
+                            "id": {
                                 "type": "string",
                                 "description": "The UUID of the vault the item is in.\n"
                             }
@@ -7695,7 +7695,7 @@
                 },
                 "required": [
                     "tags",
-                    "uuid",
+                    "id",
                     "title",
                     "vault",
                     "category",
@@ -7713,7 +7713,7 @@
                         "type": "string",
                         "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
                     },
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -7728,7 +7728,7 @@
             },
             "outputs": {
                 "properties": {
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -7747,14 +7747,14 @@
                         "type": "object",
                         "required": [
                             "name",
-                            "uuid"
+                            "id"
                         ],
                         "properties": {
                             "name": {
                                 "type": "string",
                                 "description": "The name of the vault item is in.\n"
                             },
-                            "uuid": {
+                            "id": {
                                 "type": "string",
                                 "description": "The UUID of the vault the item is in.\n"
                             }
@@ -7879,7 +7879,7 @@
                 },
                 "required": [
                     "tags",
-                    "uuid",
+                    "id",
                     "title",
                     "vault",
                     "category",
@@ -7897,7 +7897,7 @@
                         "type": "string",
                         "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
                     },
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -7912,7 +7912,7 @@
             },
             "outputs": {
                 "properties": {
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -7931,14 +7931,14 @@
                         "type": "object",
                         "required": [
                             "name",
-                            "uuid"
+                            "id"
                         ],
                         "properties": {
                             "name": {
                                 "type": "string",
                                 "description": "The name of the vault item is in.\n"
                             },
-                            "uuid": {
+                            "id": {
                                 "type": "string",
                                 "description": "The UUID of the vault the item is in.\n"
                             }
@@ -8004,7 +8004,7 @@
                 },
                 "required": [
                     "tags",
-                    "uuid",
+                    "id",
                     "title",
                     "vault",
                     "category",
@@ -8022,7 +8022,7 @@
                         "type": "string",
                         "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
                     },
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -8037,7 +8037,7 @@
             },
             "outputs": {
                 "properties": {
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -8056,14 +8056,14 @@
                         "type": "object",
                         "required": [
                             "name",
-                            "uuid"
+                            "id"
                         ],
                         "properties": {
                             "name": {
                                 "type": "string",
                                 "description": "The name of the vault item is in.\n"
                             },
-                            "uuid": {
+                            "id": {
                                 "type": "string",
                                 "description": "The UUID of the vault the item is in.\n"
                             }
@@ -8151,7 +8151,7 @@
                 },
                 "required": [
                     "tags",
-                    "uuid",
+                    "id",
                     "title",
                     "vault",
                     "category",
@@ -8169,7 +8169,7 @@
                         "type": "string",
                         "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
                     },
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -8184,7 +8184,7 @@
             },
             "outputs": {
                 "properties": {
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -8203,14 +8203,14 @@
                         "type": "object",
                         "required": [
                             "name",
-                            "uuid"
+                            "id"
                         ],
                         "properties": {
                             "name": {
                                 "type": "string",
                                 "description": "The name of the vault item is in.\n"
                             },
-                            "uuid": {
+                            "id": {
                                 "type": "string",
                                 "description": "The UUID of the vault the item is in.\n"
                             }
@@ -8275,7 +8275,7 @@
                 },
                 "required": [
                     "tags",
-                    "uuid",
+                    "id",
                     "title",
                     "vault",
                     "category",
@@ -8293,7 +8293,7 @@
                         "type": "string",
                         "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
                     },
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -8308,7 +8308,7 @@
             },
             "outputs": {
                 "properties": {
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -8327,14 +8327,14 @@
                         "type": "object",
                         "required": [
                             "name",
-                            "uuid"
+                            "id"
                         ],
                         "properties": {
                             "name": {
                                 "type": "string",
                                 "description": "The name of the vault item is in.\n"
                             },
-                            "uuid": {
+                            "id": {
                                 "type": "string",
                                 "description": "The UUID of the vault the item is in.\n"
                             }
@@ -8393,7 +8393,7 @@
                 },
                 "required": [
                     "tags",
-                    "uuid",
+                    "id",
                     "title",
                     "vault",
                     "category",
@@ -8411,7 +8411,7 @@
                         "type": "string",
                         "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
                     },
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -8426,7 +8426,7 @@
             },
             "outputs": {
                 "properties": {
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -8445,14 +8445,14 @@
                         "type": "object",
                         "required": [
                             "name",
-                            "uuid"
+                            "id"
                         ],
                         "properties": {
                             "name": {
                                 "type": "string",
                                 "description": "The name of the vault item is in.\n"
                             },
-                            "uuid": {
+                            "id": {
                                 "type": "string",
                                 "description": "The UUID of the vault the item is in.\n"
                             }
@@ -8539,7 +8539,7 @@
                 },
                 "required": [
                     "tags",
-                    "uuid",
+                    "id",
                     "title",
                     "vault",
                     "category",
@@ -8557,7 +8557,7 @@
                         "type": "string",
                         "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
                     },
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -8572,7 +8572,7 @@
             },
             "outputs": {
                 "properties": {
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -8591,14 +8591,14 @@
                         "type": "object",
                         "required": [
                             "name",
-                            "uuid"
+                            "id"
                         ],
                         "properties": {
                             "name": {
                                 "type": "string",
                                 "description": "The name of the vault item is in.\n"
                             },
-                            "uuid": {
+                            "id": {
                                 "type": "string",
                                 "description": "The UUID of the vault the item is in.\n"
                             }
@@ -8669,7 +8669,7 @@
                 },
                 "required": [
                     "tags",
-                    "uuid",
+                    "id",
                     "title",
                     "vault",
                     "category",
@@ -8687,7 +8687,7 @@
                         "type": "string",
                         "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
                     },
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -8702,7 +8702,7 @@
             },
             "outputs": {
                 "properties": {
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -8721,14 +8721,14 @@
                         "type": "object",
                         "required": [
                             "name",
-                            "uuid"
+                            "id"
                         ],
                         "properties": {
                             "name": {
                                 "type": "string",
                                 "description": "The name of the vault item is in.\n"
                             },
-                            "uuid": {
+                            "id": {
                                 "type": "string",
                                 "description": "The UUID of the vault the item is in.\n"
                             }
@@ -8814,7 +8814,7 @@
                 },
                 "required": [
                     "tags",
-                    "uuid",
+                    "id",
                     "title",
                     "vault",
                     "category",
@@ -8832,7 +8832,7 @@
                         "type": "string",
                         "description": "The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.\n"
                     },
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -8847,7 +8847,7 @@
             },
             "outputs": {
                 "properties": {
-                    "uuid": {
+                    "id": {
                         "type": "string",
                         "description": "The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.\n"
                     },
@@ -8866,14 +8866,14 @@
                         "type": "object",
                         "required": [
                             "name",
-                            "uuid"
+                            "id"
                         ],
                         "properties": {
                             "name": {
                                 "type": "string",
                                 "description": "The name of the vault item is in.\n"
                             },
-                            "uuid": {
+                            "id": {
                                 "type": "string",
                                 "description": "The UUID of the vault the item is in.\n"
                             }
@@ -8980,7 +8980,7 @@
                 },
                 "required": [
                     "tags",
-                    "uuid",
+                    "id",
                     "title",
                     "vault",
                     "category",
@@ -9138,7 +9138,7 @@
                         "$ref": "#/types/one-password-native-unofficial:index:OutputAttachment"
                     }
                 },
-                "uuid": {
+                "id": {
                     "type": "string"
                 },
                 "label": {
@@ -9148,7 +9148,7 @@
             "type": "object",
             "required": [
                 "fields",
-                "uuid",
+                "id",
                 "label"
             ]
         },
@@ -9174,7 +9174,7 @@
         },
         "one-password-native-unofficial:index:OutputAttachment": {
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string"
                 },
                 "name": {
@@ -9189,7 +9189,7 @@
             },
             "type": "object",
             "required": [
-                "uuid",
+                "id",
                 "name",
                 "size",
                 "reference"
@@ -9244,7 +9244,7 @@
         },
         "one-password-native-unofficial:index:OutputReference": {
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string"
                 },
                 "label": {
@@ -9259,7 +9259,7 @@
             },
             "type": "object",
             "required": [
-                "uuid",
+                "id",
                 "label",
                 "itemId",
                 "reference"
@@ -9267,7 +9267,7 @@
         },
         "one-password-native-unofficial:index:OutputField": {
             "properties": {
-                "uuid": {
+                "id": {
                     "type": "string"
                 },
                 "label": {
@@ -9292,7 +9292,7 @@
             },
             "type": "object",
             "required": [
-                "uuid",
+                "id",
                 "label",
                 "type",
                 "value",

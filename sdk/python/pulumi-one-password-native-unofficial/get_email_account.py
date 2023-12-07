@@ -20,7 +20,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetEmailAccountResult:
-    def __init__(__self__, attachments=None, auth_method=None, category=None, contact_information=None, fields=None, notes=None, password=None, port_number=None, references=None, sections=None, security=None, server=None, smtp=None, tags=None, title=None, type=None, urls=None, username=None, uuid=None, vault=None):
+    def __init__(__self__, attachments=None, auth_method=None, category=None, contact_information=None, fields=None, id=None, notes=None, password=None, port_number=None, references=None, sections=None, security=None, server=None, smtp=None, tags=None, title=None, type=None, urls=None, username=None, vault=None):
         if attachments and not isinstance(attachments, dict):
             raise TypeError("Expected argument 'attachments' to be a dict")
         pulumi.set(__self__, "attachments", attachments)
@@ -36,6 +36,9 @@ class GetEmailAccountResult:
         if fields and not isinstance(fields, dict):
             raise TypeError("Expected argument 'fields' to be a dict")
         pulumi.set(__self__, "fields", fields)
+        if id and not isinstance(id, str):
+            raise TypeError("Expected argument 'id' to be a str")
+        pulumi.set(__self__, "id", id)
         if notes and not isinstance(notes, str):
             raise TypeError("Expected argument 'notes' to be a str")
         pulumi.set(__self__, "notes", notes)
@@ -75,9 +78,6 @@ class GetEmailAccountResult:
         if username and not isinstance(username, str):
             raise TypeError("Expected argument 'username' to be a str")
         pulumi.set(__self__, "username", username)
-        if uuid and not isinstance(uuid, str):
-            raise TypeError("Expected argument 'uuid' to be a str")
-        pulumi.set(__self__, "uuid", uuid)
         if vault and not isinstance(vault, dict):
             raise TypeError("Expected argument 'vault' to be a dict")
         pulumi.set(__self__, "vault", vault)
@@ -106,6 +106,14 @@ class GetEmailAccountResult:
     @pulumi.getter
     def fields(self) -> Mapping[str, 'outputs.OutputField']:
         return pulumi.get(self, "fields")
+
+    @property
+    @pulumi.getter
+    def id(self) -> str:
+        """
+        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        """
+        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter
@@ -180,14 +188,6 @@ class GetEmailAccountResult:
 
     @property
     @pulumi.getter
-    def uuid(self) -> str:
-        """
-        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        """
-        return pulumi.get(self, "uuid")
-
-    @property
-    @pulumi.getter
     def vault(self) -> Mapping[str, str]:
         return pulumi.get(self, "vault")
 
@@ -203,6 +203,7 @@ class AwaitableGetEmailAccountResult(GetEmailAccountResult):
             category=self.category,
             contact_information=self.contact_information,
             fields=self.fields,
+            id=self.id,
             notes=self.notes,
             password=self.password,
             port_number=self.port_number,
@@ -216,24 +217,23 @@ class AwaitableGetEmailAccountResult(GetEmailAccountResult):
             type=self.type,
             urls=self.urls,
             username=self.username,
-            uuid=self.uuid,
             vault=self.vault)
 
 
-def get_email_account(title: Optional[str] = None,
-                      uuid: Optional[str] = None,
+def get_email_account(id: Optional[str] = None,
+                      title: Optional[str] = None,
                       vault: Optional[str] = None,
                       opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetEmailAccountResult:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     __args__ = dict()
+    __args__['id'] = id
     __args__['title'] = title
-    __args__['uuid'] = uuid
     __args__['vault'] = vault
     if opts is None:
         opts = pulumi.InvokeOptions()
@@ -249,6 +249,7 @@ def get_email_account(title: Optional[str] = None,
         category=__ret__.category,
         contact_information=__ret__.contact_information,
         fields=__ret__.fields,
+        id=__ret__.id,
         notes=__ret__.notes,
         password=__ret__.password,
         port_number=__ret__.port_number,
@@ -262,20 +263,19 @@ def get_email_account(title: Optional[str] = None,
         type=__ret__.type,
         urls=__ret__.urls,
         username=__ret__.username,
-        uuid=__ret__.uuid,
         vault=__ret__.vault)
 
 
 @_utilities.lift_output_func(get_email_account)
-def get_email_account_output(title: Optional[pulumi.Input[Optional[str]]] = None,
-                             uuid: Optional[pulumi.Input[Optional[str]]] = None,
+def get_email_account_output(id: Optional[pulumi.Input[Optional[str]]] = None,
+                             title: Optional[pulumi.Input[Optional[str]]] = None,
                              vault: Optional[pulumi.Input[str]] = None,
                              opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetEmailAccountResult]:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     ...

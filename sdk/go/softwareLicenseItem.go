@@ -15,23 +15,23 @@ import (
 type SoftwareLicenseItem struct {
 	pulumi.CustomResourceState
 
-	Attachments OutputAttachmentMapOutput                 `pulumi:"attachments"`
-	Category    pulumi.StringOutput                       `pulumi:"category"`
-	Customer    softwarelicense.CustomerSectionPtrOutput  `pulumi:"customer"`
-	Fields      OutputFieldMapOutput                      `pulumi:"fields"`
-	LicenseKey  pulumi.StringPtrOutput                    `pulumi:"licenseKey"`
-	Notes       pulumi.StringPtrOutput                    `pulumi:"notes"`
-	Order       softwarelicense.OrderSectionPtrOutput     `pulumi:"order"`
-	Publisher   softwarelicense.PublisherSectionPtrOutput `pulumi:"publisher"`
-	References  OutputReferenceArrayOutput                `pulumi:"references"`
-	Sections    OutputSectionMapOutput                    `pulumi:"sections"`
+	Attachments OutputAttachmentMapOutput                `pulumi:"attachments"`
+	Category    pulumi.StringOutput                      `pulumi:"category"`
+	Customer    softwarelicense.CustomerSectionPtrOutput `pulumi:"customer"`
+	Fields      OutputFieldMapOutput                     `pulumi:"fields"`
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id         pulumi.StringOutput                       `pulumi:"id"`
+	LicenseKey pulumi.StringPtrOutput                    `pulumi:"licenseKey"`
+	Notes      pulumi.StringPtrOutput                    `pulumi:"notes"`
+	Order      softwarelicense.OrderSectionPtrOutput     `pulumi:"order"`
+	Publisher  softwarelicense.PublisherSectionPtrOutput `pulumi:"publisher"`
+	References OutputReferenceArrayOutput                `pulumi:"references"`
+	Sections   OutputSectionMapOutput                    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
-	Title pulumi.StringOutput  `pulumi:"title"`
-	Urls  OutputUrlArrayOutput `pulumi:"urls"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid    pulumi.StringOutput    `pulumi:"uuid"`
+	Title   pulumi.StringOutput    `pulumi:"title"`
+	Urls    OutputUrlArrayOutput   `pulumi:"urls"`
 	Vault   pulumi.StringMapOutput `pulumi:"vault"`
 	Version pulumi.StringPtrOutput `pulumi:"version"`
 }

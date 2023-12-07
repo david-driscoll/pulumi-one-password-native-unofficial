@@ -22,21 +22,21 @@ type BankAccountItem struct {
 	Category          pulumi.StringOutput                           `pulumi:"category"`
 	Fields            OutputFieldMapOutput                          `pulumi:"fields"`
 	Iban              pulumi.StringPtrOutput                        `pulumi:"iban"`
-	NameOnAccount     pulumi.StringPtrOutput                        `pulumi:"nameOnAccount"`
-	Notes             pulumi.StringPtrOutput                        `pulumi:"notes"`
-	Pin               pulumi.StringPtrOutput                        `pulumi:"pin"`
-	References        OutputReferenceArrayOutput                    `pulumi:"references"`
-	RoutingNumber     pulumi.StringPtrOutput                        `pulumi:"routingNumber"`
-	Sections          OutputSectionMapOutput                        `pulumi:"sections"`
-	Swift             pulumi.StringPtrOutput                        `pulumi:"swift"`
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id            pulumi.StringOutput        `pulumi:"id"`
+	NameOnAccount pulumi.StringPtrOutput     `pulumi:"nameOnAccount"`
+	Notes         pulumi.StringPtrOutput     `pulumi:"notes"`
+	Pin           pulumi.StringPtrOutput     `pulumi:"pin"`
+	References    OutputReferenceArrayOutput `pulumi:"references"`
+	RoutingNumber pulumi.StringPtrOutput     `pulumi:"routingNumber"`
+	Sections      OutputSectionMapOutput     `pulumi:"sections"`
+	Swift         pulumi.StringPtrOutput     `pulumi:"swift"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
 	Title pulumi.StringOutput    `pulumi:"title"`
 	Type  pulumi.StringPtrOutput `pulumi:"type"`
 	Urls  OutputUrlArrayOutput   `pulumi:"urls"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid  pulumi.StringOutput    `pulumi:"uuid"`
 	Vault pulumi.StringMapOutput `pulumi:"vault"`
 }
 

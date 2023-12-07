@@ -19,7 +19,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetMembershipResult:
-    def __init__(__self__, attachments=None, category=None, expiry_date=None, fields=None, group=None, member_id=None, member_name=None, member_since=None, notes=None, pin=None, references=None, sections=None, tags=None, telephone=None, title=None, urls=None, uuid=None, vault=None, website=None):
+    def __init__(__self__, attachments=None, category=None, expiry_date=None, fields=None, group=None, id=None, member_id=None, member_name=None, member_since=None, notes=None, pin=None, references=None, sections=None, tags=None, telephone=None, title=None, urls=None, vault=None, website=None):
         if attachments and not isinstance(attachments, dict):
             raise TypeError("Expected argument 'attachments' to be a dict")
         pulumi.set(__self__, "attachments", attachments)
@@ -35,6 +35,9 @@ class GetMembershipResult:
         if group and not isinstance(group, str):
             raise TypeError("Expected argument 'group' to be a str")
         pulumi.set(__self__, "group", group)
+        if id and not isinstance(id, str):
+            raise TypeError("Expected argument 'id' to be a str")
+        pulumi.set(__self__, "id", id)
         if member_id and not isinstance(member_id, str):
             raise TypeError("Expected argument 'member_id' to be a str")
         pulumi.set(__self__, "member_id", member_id)
@@ -68,9 +71,6 @@ class GetMembershipResult:
         if urls and not isinstance(urls, list):
             raise TypeError("Expected argument 'urls' to be a list")
         pulumi.set(__self__, "urls", urls)
-        if uuid and not isinstance(uuid, str):
-            raise TypeError("Expected argument 'uuid' to be a str")
-        pulumi.set(__self__, "uuid", uuid)
         if vault and not isinstance(vault, dict):
             raise TypeError("Expected argument 'vault' to be a dict")
         pulumi.set(__self__, "vault", vault)
@@ -102,6 +102,14 @@ class GetMembershipResult:
     @pulumi.getter
     def group(self) -> Optional[str]:
         return pulumi.get(self, "group")
+
+    @property
+    @pulumi.getter
+    def id(self) -> str:
+        """
+        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        """
+        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter(name="memberId")
@@ -166,14 +174,6 @@ class GetMembershipResult:
 
     @property
     @pulumi.getter
-    def uuid(self) -> str:
-        """
-        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        """
-        return pulumi.get(self, "uuid")
-
-    @property
-    @pulumi.getter
     def vault(self) -> Mapping[str, str]:
         return pulumi.get(self, "vault")
 
@@ -194,6 +194,7 @@ class AwaitableGetMembershipResult(GetMembershipResult):
             expiry_date=self.expiry_date,
             fields=self.fields,
             group=self.group,
+            id=self.id,
             member_id=self.member_id,
             member_name=self.member_name,
             member_since=self.member_since,
@@ -205,25 +206,24 @@ class AwaitableGetMembershipResult(GetMembershipResult):
             telephone=self.telephone,
             title=self.title,
             urls=self.urls,
-            uuid=self.uuid,
             vault=self.vault,
             website=self.website)
 
 
-def get_membership(title: Optional[str] = None,
-                   uuid: Optional[str] = None,
+def get_membership(id: Optional[str] = None,
+                   title: Optional[str] = None,
                    vault: Optional[str] = None,
                    opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetMembershipResult:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     __args__ = dict()
+    __args__['id'] = id
     __args__['title'] = title
-    __args__['uuid'] = uuid
     __args__['vault'] = vault
     if opts is None:
         opts = pulumi.InvokeOptions()
@@ -239,6 +239,7 @@ def get_membership(title: Optional[str] = None,
         expiry_date=__ret__.expiry_date,
         fields=__ret__.fields,
         group=__ret__.group,
+        id=__ret__.id,
         member_id=__ret__.member_id,
         member_name=__ret__.member_name,
         member_since=__ret__.member_since,
@@ -250,21 +251,20 @@ def get_membership(title: Optional[str] = None,
         telephone=__ret__.telephone,
         title=__ret__.title,
         urls=__ret__.urls,
-        uuid=__ret__.uuid,
         vault=__ret__.vault,
         website=__ret__.website)
 
 
 @_utilities.lift_output_func(get_membership)
-def get_membership_output(title: Optional[pulumi.Input[Optional[str]]] = None,
-                          uuid: Optional[pulumi.Input[Optional[str]]] = None,
+def get_membership_output(id: Optional[pulumi.Input[Optional[str]]] = None,
+                          title: Optional[pulumi.Input[Optional[str]]] = None,
                           vault: Optional[pulumi.Input[str]] = None,
                           opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetMembershipResult]:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     ...

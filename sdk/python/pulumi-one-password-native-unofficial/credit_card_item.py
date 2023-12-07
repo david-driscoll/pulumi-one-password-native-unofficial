@@ -369,8 +369,8 @@ class CreditCardItem(pulumi.CustomResource):
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
             __props__.__dict__["verification_number"] = None if verification_number is None else pulumi.Output.secret(verification_number)
+            __props__.__dict__["id"] = None
             __props__.__dict__["references"] = None
-            __props__.__dict__["uuid"] = None
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["additionalDetails", "attachments", "fields", "sections", "verificationNumber"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(CreditCardItem, __self__).__init__(
@@ -405,6 +405,7 @@ class CreditCardItem(pulumi.CustomResource):
         __props__.__dict__["contact_information"] = None
         __props__.__dict__["expiry_date"] = None
         __props__.__dict__["fields"] = None
+        __props__.__dict__["id"] = None
         __props__.__dict__["notes"] = None
         __props__.__dict__["number"] = None
         __props__.__dict__["references"] = None
@@ -413,7 +414,6 @@ class CreditCardItem(pulumi.CustomResource):
         __props__.__dict__["title"] = None
         __props__.__dict__["type"] = None
         __props__.__dict__["urls"] = None
-        __props__.__dict__["uuid"] = None
         __props__.__dict__["valid_from"] = None
         __props__.__dict__["verification_number"] = None
         return CreditCardItem(resource_name, opts=opts, __props__=__props__)
@@ -452,6 +452,14 @@ class CreditCardItem(pulumi.CustomResource):
     @pulumi.getter
     def fields(self) -> pulumi.Output[Mapping[str, 'outputs.OutputField']]:
         return pulumi.get(self, "fields")
+
+    @property
+    @pulumi.getter
+    def id(self) -> pulumi.Output[str]:
+        """
+        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        """
+        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter
@@ -498,14 +506,6 @@ class CreditCardItem(pulumi.CustomResource):
     @pulumi.getter
     def urls(self) -> pulumi.Output[Optional[Sequence['outputs.OutputUrl']]]:
         return pulumi.get(self, "urls")
-
-    @property
-    @pulumi.getter
-    def uuid(self) -> pulumi.Output[str]:
-        """
-        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        """
-        return pulumi.get(self, "uuid")
 
     @property
     @pulumi.getter(name="validFrom")

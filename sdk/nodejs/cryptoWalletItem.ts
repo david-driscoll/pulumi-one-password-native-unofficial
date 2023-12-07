@@ -36,6 +36,10 @@ export class CryptoWalletItem extends pulumi.CustomResource {
     public readonly attachments!: pulumi.Output<{[key: string]: outputs.OutputAttachment}>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.OutputField}>;
+    /**
+     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+     */
+    public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly password!: pulumi.Output<string | undefined>;
     public readonly recoveryPhrase!: pulumi.Output<string | undefined>;
@@ -50,10 +54,6 @@ export class CryptoWalletItem extends pulumi.CustomResource {
      */
     public readonly title!: pulumi.Output<string>;
     public readonly urls!: pulumi.Output<outputs.OutputUrl[] | undefined>;
-    /**
-     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-     */
-    public /*out*/ readonly uuid!: pulumi.Output<string>;
     public readonly vault!: pulumi.Output<{[key: string]: string}>;
     public readonly wallet!: pulumi.Output<outputs.cryptoWallet.WalletSection | undefined>;
 
@@ -88,8 +88,8 @@ export class CryptoWalletItem extends pulumi.CustomResource {
             resourceInputs["urls"] = args ? args.urls : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["wallet"] = args ? args.wallet : undefined;
+            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
-            resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "password", "recoveryPhrase", "sections"] };

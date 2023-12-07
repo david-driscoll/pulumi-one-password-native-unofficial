@@ -1,7 +1,7 @@
-VERSION         := 0.0.4
+VERSION         := 0.0.5
 
 PACK            := one-password-native-unofficial
-PROJECT         := david-driscoll/pulumi-onepassword
+PROJECT         := david-driscoll/pulumi-one-password-native-unofficial
 
 PROVIDER        := pulumi-resource-${PACK}
 CODEGEN         := pulumi-gen-${PACK}

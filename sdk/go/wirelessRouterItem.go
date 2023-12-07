@@ -14,25 +14,25 @@ import (
 type WirelessRouterItem struct {
 	pulumi.CustomResourceState
 
-	AirPortId               pulumi.StringPtrOutput     `pulumi:"airPortId"`
-	AttachedStoragePassword pulumi.StringPtrOutput     `pulumi:"attachedStoragePassword"`
-	Attachments             OutputAttachmentMapOutput  `pulumi:"attachments"`
-	BaseStationName         pulumi.StringPtrOutput     `pulumi:"baseStationName"`
-	BaseStationPassword     pulumi.StringPtrOutput     `pulumi:"baseStationPassword"`
-	Category                pulumi.StringOutput        `pulumi:"category"`
-	Fields                  OutputFieldMapOutput       `pulumi:"fields"`
-	NetworkName             pulumi.StringPtrOutput     `pulumi:"networkName"`
-	Notes                   pulumi.StringPtrOutput     `pulumi:"notes"`
-	References              OutputReferenceArrayOutput `pulumi:"references"`
-	Sections                OutputSectionMapOutput     `pulumi:"sections"`
-	ServerIpAddress         pulumi.StringPtrOutput     `pulumi:"serverIpAddress"`
+	AirPortId               pulumi.StringPtrOutput    `pulumi:"airPortId"`
+	AttachedStoragePassword pulumi.StringPtrOutput    `pulumi:"attachedStoragePassword"`
+	Attachments             OutputAttachmentMapOutput `pulumi:"attachments"`
+	BaseStationName         pulumi.StringPtrOutput    `pulumi:"baseStationName"`
+	BaseStationPassword     pulumi.StringPtrOutput    `pulumi:"baseStationPassword"`
+	Category                pulumi.StringOutput       `pulumi:"category"`
+	Fields                  OutputFieldMapOutput      `pulumi:"fields"`
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id              pulumi.StringOutput        `pulumi:"id"`
+	NetworkName     pulumi.StringPtrOutput     `pulumi:"networkName"`
+	Notes           pulumi.StringPtrOutput     `pulumi:"notes"`
+	References      OutputReferenceArrayOutput `pulumi:"references"`
+	Sections        OutputSectionMapOutput     `pulumi:"sections"`
+	ServerIpAddress pulumi.StringPtrOutput     `pulumi:"serverIpAddress"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
-	Title pulumi.StringOutput  `pulumi:"title"`
-	Urls  OutputUrlArrayOutput `pulumi:"urls"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid                    pulumi.StringOutput    `pulumi:"uuid"`
+	Title                   pulumi.StringOutput    `pulumi:"title"`
+	Urls                    OutputUrlArrayOutput   `pulumi:"urls"`
 	Vault                   pulumi.StringMapOutput `pulumi:"vault"`
 	WirelessNetworkPassword pulumi.StringPtrOutput `pulumi:"wirelessNetworkPassword"`
 	WirelessSecurity        pulumi.StringPtrOutput `pulumi:"wirelessSecurity"`

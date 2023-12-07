@@ -40,6 +40,10 @@ export class WirelessRouterItem extends pulumi.CustomResource {
     public readonly baseStationPassword!: pulumi.Output<string | undefined>;
     public readonly category!: pulumi.Output<enums.Category | string>;
     public readonly fields!: pulumi.Output<{[key: string]: outputs.OutputField}>;
+    /**
+     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+     */
+    public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly networkName!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public /*out*/ readonly references!: pulumi.Output<outputs.OutputReference[]>;
@@ -54,10 +58,6 @@ export class WirelessRouterItem extends pulumi.CustomResource {
      */
     public readonly title!: pulumi.Output<string>;
     public readonly urls!: pulumi.Output<outputs.OutputUrl[] | undefined>;
-    /**
-     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-     */
-    public /*out*/ readonly uuid!: pulumi.Output<string>;
     public readonly vault!: pulumi.Output<{[key: string]: string}>;
     public readonly wirelessNetworkPassword!: pulumi.Output<string | undefined>;
     public readonly wirelessSecurity!: pulumi.Output<string | undefined>;
@@ -98,8 +98,8 @@ export class WirelessRouterItem extends pulumi.CustomResource {
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["wirelessNetworkPassword"] = args?.wirelessNetworkPassword ? pulumi.secret(args.wirelessNetworkPassword) : undefined;
             resourceInputs["wirelessSecurity"] = args ? args.wirelessSecurity : undefined;
+            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
-            resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         const secretOpts = { additionalSecretOutputs: ["attachedStoragePassword", "attachments", "baseStationPassword", "fields", "sections", "wirelessNetworkPassword"] };

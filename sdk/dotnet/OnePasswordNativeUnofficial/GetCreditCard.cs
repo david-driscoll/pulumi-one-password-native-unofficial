@@ -23,16 +23,16 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
     public sealed class GetCreditCardArgs : Pulumi.InvokeArgs
     {
         /// <summary>
+        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        /// </summary>
+        [Input("id")]
+        public string? Id { get; set; }
+
+        /// <summary>
         /// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         /// </summary>
         [Input("title")]
         public string? Title { get; set; }
-
-        /// <summary>
-        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        /// </summary>
-        [Input("uuid")]
-        public string? Uuid { get; set; }
 
         /// <summary>
         /// The UUID of the vault the item is in.
@@ -48,16 +48,16 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
     public sealed class GetCreditCardInvokeArgs : Pulumi.InvokeArgs
     {
         /// <summary>
+        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        /// </summary>
+        [Input("id")]
+        public Input<string>? Id { get; set; }
+
+        /// <summary>
         /// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         /// </summary>
         [Input("title")]
         public Input<string>? Title { get; set; }
-
-        /// <summary>
-        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        /// </summary>
-        [Input("uuid")]
-        public Input<string>? Uuid { get; set; }
 
         /// <summary>
         /// The UUID of the vault the item is in.
@@ -81,6 +81,10 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         public readonly Rocket.Surgery.OnePasswordNativeUnofficial.CreditCard.Outputs.ContactInformationSection? ContactInformation;
         public readonly string? ExpiryDate;
         public readonly ImmutableDictionary<string, Outputs.OutputField> Fields;
+        /// <summary>
+        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        /// </summary>
+        public readonly string Id;
         public readonly string? Notes;
         public readonly string? Number;
         public readonly ImmutableArray<Outputs.OutputReference> References;
@@ -95,10 +99,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         public readonly string Title;
         public readonly string? Type;
         public readonly ImmutableArray<Outputs.OutputUrl> Urls;
-        /// <summary>
-        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        /// </summary>
-        public readonly string Uuid;
         public readonly string? ValidFrom;
         public readonly ImmutableDictionary<string, string> Vault;
         public readonly string? VerificationNumber;
@@ -119,6 +119,8 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
 
             ImmutableDictionary<string, Outputs.OutputField> fields,
 
+            string id,
+
             string? notes,
 
             string? number,
@@ -135,8 +137,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
 
             ImmutableArray<Outputs.OutputUrl> urls,
 
-            string uuid,
-
             string? validFrom,
 
             ImmutableDictionary<string, string> vault,
@@ -150,6 +150,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
             ContactInformation = contactInformation;
             ExpiryDate = expiryDate;
             Fields = fields;
+            Id = id;
             Notes = notes;
             Number = number;
             References = references;
@@ -158,7 +159,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
             Title = title;
             Type = type;
             Urls = urls;
-            Uuid = uuid;
             ValidFrom = validFrom;
             Vault = vault;
             VerificationNumber = verificationNumber;

@@ -21,10 +21,10 @@ func GetPassword(ctx *pulumi.Context, args *GetPasswordArgs, opts ...pulumi.Invo
 }
 
 type GetPasswordArgs struct {
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id *string `pulumi:"id"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid *string `pulumi:"uuid"`
 	// The UUID of the vault the item is in.
 	Vault string `pulumi:"vault"`
 }
@@ -33,17 +33,17 @@ type GetPasswordResult struct {
 	Attachments map[string]OutputAttachment `pulumi:"attachments"`
 	Category    string                      `pulumi:"category"`
 	Fields      map[string]OutputField      `pulumi:"fields"`
-	Notes       *string                     `pulumi:"notes"`
-	Password    *string                     `pulumi:"password"`
-	References  []OutputReference           `pulumi:"references"`
-	Sections    map[string]OutputSection    `pulumi:"sections"`
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id         string                   `pulumi:"id"`
+	Notes      *string                  `pulumi:"notes"`
+	Password   *string                  `pulumi:"password"`
+	References []OutputReference        `pulumi:"references"`
+	Sections   map[string]OutputSection `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title string      `pulumi:"title"`
-	Urls  []OutputUrl `pulumi:"urls"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid  string            `pulumi:"uuid"`
+	Title string            `pulumi:"title"`
+	Urls  []OutputUrl       `pulumi:"urls"`
 	Vault map[string]string `pulumi:"vault"`
 }
 
@@ -61,10 +61,10 @@ func GetPasswordOutput(ctx *pulumi.Context, args GetPasswordOutputArgs, opts ...
 }
 
 type GetPasswordOutputArgs struct {
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id pulumi.StringPtrInput `pulumi:"id"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput `pulumi:"title"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid pulumi.StringPtrInput `pulumi:"uuid"`
 	// The UUID of the vault the item is in.
 	Vault pulumi.StringInput `pulumi:"vault"`
 }
@@ -99,6 +99,11 @@ func (o GetPasswordResultOutput) Fields() OutputFieldMapOutput {
 	return o.ApplyT(func(v GetPasswordResult) map[string]OutputField { return v.Fields }).(OutputFieldMapOutput)
 }
 
+// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+func (o GetPasswordResultOutput) Id() pulumi.StringOutput {
+	return o.ApplyT(func(v GetPasswordResult) string { return v.Id }).(pulumi.StringOutput)
+}
+
 func (o GetPasswordResultOutput) Notes() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetPasswordResult) *string { return v.Notes }).(pulumi.StringPtrOutput)
 }
@@ -127,11 +132,6 @@ func (o GetPasswordResultOutput) Title() pulumi.StringOutput {
 
 func (o GetPasswordResultOutput) Urls() OutputUrlArrayOutput {
 	return o.ApplyT(func(v GetPasswordResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
-}
-
-// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o GetPasswordResultOutput) Uuid() pulumi.StringOutput {
-	return o.ApplyT(func(v GetPasswordResult) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
 func (o GetPasswordResultOutput) Vault() pulumi.StringMapOutput {

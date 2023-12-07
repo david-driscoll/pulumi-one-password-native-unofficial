@@ -368,8 +368,8 @@ class MembershipItem(pulumi.CustomResource):
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
             __props__.__dict__["website"] = website
+            __props__.__dict__["id"] = None
             __props__.__dict__["references"] = None
-            __props__.__dict__["uuid"] = None
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachments", "fields", "pin", "sections"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(MembershipItem, __self__).__init__(
@@ -402,6 +402,7 @@ class MembershipItem(pulumi.CustomResource):
         __props__.__dict__["expiry_date"] = None
         __props__.__dict__["fields"] = None
         __props__.__dict__["group"] = None
+        __props__.__dict__["id"] = None
         __props__.__dict__["member_id"] = None
         __props__.__dict__["member_name"] = None
         __props__.__dict__["member_since"] = None
@@ -413,7 +414,6 @@ class MembershipItem(pulumi.CustomResource):
         __props__.__dict__["telephone"] = None
         __props__.__dict__["title"] = None
         __props__.__dict__["urls"] = None
-        __props__.__dict__["uuid"] = None
         __props__.__dict__["website"] = None
         return MembershipItem(resource_name, opts=opts, __props__=__props__)
 
@@ -441,6 +441,14 @@ class MembershipItem(pulumi.CustomResource):
     @pulumi.getter
     def group(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "group")
+
+    @property
+    @pulumi.getter
+    def id(self) -> pulumi.Output[str]:
+        """
+        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        """
+        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter(name="memberId")
@@ -502,14 +510,6 @@ class MembershipItem(pulumi.CustomResource):
     @pulumi.getter
     def urls(self) -> pulumi.Output[Optional[Sequence['outputs.OutputUrl']]]:
         return pulumi.get(self, "urls")
-
-    @property
-    @pulumi.getter
-    def uuid(self) -> pulumi.Output[str]:
-        """
-        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        """
-        return pulumi.get(self, "uuid")
 
     @property
     @pulumi.getter

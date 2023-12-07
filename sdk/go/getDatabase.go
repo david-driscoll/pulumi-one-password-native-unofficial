@@ -21,10 +21,10 @@ func GetDatabase(ctx *pulumi.Context, args *GetDatabaseArgs, opts ...pulumi.Invo
 }
 
 type GetDatabaseArgs struct {
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id *string `pulumi:"id"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid *string `pulumi:"uuid"`
 	// The UUID of the vault the item is in.
 	Vault string `pulumi:"vault"`
 }
@@ -36,23 +36,23 @@ type GetDatabaseResult struct {
 	ConnectionOptions *string                     `pulumi:"connectionOptions"`
 	Database          *string                     `pulumi:"database"`
 	Fields            map[string]OutputField      `pulumi:"fields"`
-	Notes             *string                     `pulumi:"notes"`
-	Password          *string                     `pulumi:"password"`
-	Port              *string                     `pulumi:"port"`
-	References        []OutputReference           `pulumi:"references"`
-	Sections          map[string]OutputSection    `pulumi:"sections"`
-	Server            *string                     `pulumi:"server"`
-	Sid               *string                     `pulumi:"sid"`
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id         string                   `pulumi:"id"`
+	Notes      *string                  `pulumi:"notes"`
+	Password   *string                  `pulumi:"password"`
+	Port       *string                  `pulumi:"port"`
+	References []OutputReference        `pulumi:"references"`
+	Sections   map[string]OutputSection `pulumi:"sections"`
+	Server     *string                  `pulumi:"server"`
+	Sid        *string                  `pulumi:"sid"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title    string      `pulumi:"title"`
-	Type     *string     `pulumi:"type"`
-	Urls     []OutputUrl `pulumi:"urls"`
-	Username *string     `pulumi:"username"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid  string            `pulumi:"uuid"`
-	Vault map[string]string `pulumi:"vault"`
+	Title    string            `pulumi:"title"`
+	Type     *string           `pulumi:"type"`
+	Urls     []OutputUrl       `pulumi:"urls"`
+	Username *string           `pulumi:"username"`
+	Vault    map[string]string `pulumi:"vault"`
 }
 
 func GetDatabaseOutput(ctx *pulumi.Context, args GetDatabaseOutputArgs, opts ...pulumi.InvokeOption) GetDatabaseResultOutput {
@@ -69,10 +69,10 @@ func GetDatabaseOutput(ctx *pulumi.Context, args GetDatabaseOutputArgs, opts ...
 }
 
 type GetDatabaseOutputArgs struct {
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id pulumi.StringPtrInput `pulumi:"id"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput `pulumi:"title"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid pulumi.StringPtrInput `pulumi:"uuid"`
 	// The UUID of the vault the item is in.
 	Vault pulumi.StringInput `pulumi:"vault"`
 }
@@ -117,6 +117,11 @@ func (o GetDatabaseResultOutput) Database() pulumi.StringPtrOutput {
 
 func (o GetDatabaseResultOutput) Fields() OutputFieldMapOutput {
 	return o.ApplyT(func(v GetDatabaseResult) map[string]OutputField { return v.Fields }).(OutputFieldMapOutput)
+}
+
+// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+func (o GetDatabaseResultOutput) Id() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDatabaseResult) string { return v.Id }).(pulumi.StringOutput)
 }
 
 func (o GetDatabaseResultOutput) Notes() pulumi.StringPtrOutput {
@@ -167,11 +172,6 @@ func (o GetDatabaseResultOutput) Urls() OutputUrlArrayOutput {
 
 func (o GetDatabaseResultOutput) Username() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetDatabaseResult) *string { return v.Username }).(pulumi.StringPtrOutput)
-}
-
-// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o GetDatabaseResultOutput) Uuid() pulumi.StringOutput {
-	return o.ApplyT(func(v GetDatabaseResult) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
 func (o GetDatabaseResultOutput) Vault() pulumi.StringMapOutput {

@@ -44,6 +44,10 @@ export class DriverLicenseItem extends pulumi.CustomResource {
     public readonly fullName!: pulumi.Output<string | undefined>;
     public readonly gender!: pulumi.Output<string | undefined>;
     public readonly height!: pulumi.Output<string | undefined>;
+    /**
+     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+     */
+    public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly licenseClass!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly number!: pulumi.Output<string | undefined>;
@@ -59,10 +63,6 @@ export class DriverLicenseItem extends pulumi.CustomResource {
      */
     public readonly title!: pulumi.Output<string>;
     public readonly urls!: pulumi.Output<outputs.OutputUrl[] | undefined>;
-    /**
-     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-     */
-    public /*out*/ readonly uuid!: pulumi.Output<string>;
     public readonly vault!: pulumi.Output<{[key: string]: string}>;
 
     /**
@@ -104,8 +104,8 @@ export class DriverLicenseItem extends pulumi.CustomResource {
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["urls"] = args ? args.urls : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
+            resourceInputs["id"] = undefined /*out*/;
             resourceInputs["references"] = undefined /*out*/;
-            resourceInputs["uuid"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "sections"] };

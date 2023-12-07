@@ -19,7 +19,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetAPICredentialResult:
-    def __init__(__self__, attachments=None, category=None, credential=None, expires=None, fields=None, filename=None, hostname=None, notes=None, references=None, sections=None, tags=None, title=None, type=None, urls=None, username=None, uuid=None, valid_from=None, vault=None):
+    def __init__(__self__, attachments=None, category=None, credential=None, expires=None, fields=None, filename=None, hostname=None, id=None, notes=None, references=None, sections=None, tags=None, title=None, type=None, urls=None, username=None, valid_from=None, vault=None):
         if attachments and not isinstance(attachments, dict):
             raise TypeError("Expected argument 'attachments' to be a dict")
         pulumi.set(__self__, "attachments", attachments)
@@ -41,6 +41,9 @@ class GetAPICredentialResult:
         if hostname and not isinstance(hostname, str):
             raise TypeError("Expected argument 'hostname' to be a str")
         pulumi.set(__self__, "hostname", hostname)
+        if id and not isinstance(id, str):
+            raise TypeError("Expected argument 'id' to be a str")
+        pulumi.set(__self__, "id", id)
         if notes and not isinstance(notes, str):
             raise TypeError("Expected argument 'notes' to be a str")
         pulumi.set(__self__, "notes", notes)
@@ -65,9 +68,6 @@ class GetAPICredentialResult:
         if username and not isinstance(username, str):
             raise TypeError("Expected argument 'username' to be a str")
         pulumi.set(__self__, "username", username)
-        if uuid and not isinstance(uuid, str):
-            raise TypeError("Expected argument 'uuid' to be a str")
-        pulumi.set(__self__, "uuid", uuid)
         if valid_from and not isinstance(valid_from, str):
             raise TypeError("Expected argument 'valid_from' to be a str")
         pulumi.set(__self__, "valid_from", valid_from)
@@ -109,6 +109,14 @@ class GetAPICredentialResult:
     @pulumi.getter
     def hostname(self) -> Optional[str]:
         return pulumi.get(self, "hostname")
+
+    @property
+    @pulumi.getter
+    def id(self) -> str:
+        """
+        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        """
+        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter
@@ -157,14 +165,6 @@ class GetAPICredentialResult:
         return pulumi.get(self, "username")
 
     @property
-    @pulumi.getter
-    def uuid(self) -> str:
-        """
-        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        """
-        return pulumi.get(self, "uuid")
-
-    @property
     @pulumi.getter(name="validFrom")
     def valid_from(self) -> Optional[str]:
         return pulumi.get(self, "valid_from")
@@ -188,6 +188,7 @@ class AwaitableGetAPICredentialResult(GetAPICredentialResult):
             fields=self.fields,
             filename=self.filename,
             hostname=self.hostname,
+            id=self.id,
             notes=self.notes,
             references=self.references,
             sections=self.sections,
@@ -196,25 +197,24 @@ class AwaitableGetAPICredentialResult(GetAPICredentialResult):
             type=self.type,
             urls=self.urls,
             username=self.username,
-            uuid=self.uuid,
             valid_from=self.valid_from,
             vault=self.vault)
 
 
-def get_api_credential(title: Optional[str] = None,
-                       uuid: Optional[str] = None,
+def get_api_credential(id: Optional[str] = None,
+                       title: Optional[str] = None,
                        vault: Optional[str] = None,
                        opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetAPICredentialResult:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     __args__ = dict()
+    __args__['id'] = id
     __args__['title'] = title
-    __args__['uuid'] = uuid
     __args__['vault'] = vault
     if opts is None:
         opts = pulumi.InvokeOptions()
@@ -232,6 +232,7 @@ def get_api_credential(title: Optional[str] = None,
         fields=__ret__.fields,
         filename=__ret__.filename,
         hostname=__ret__.hostname,
+        id=__ret__.id,
         notes=__ret__.notes,
         references=__ret__.references,
         sections=__ret__.sections,
@@ -240,21 +241,20 @@ def get_api_credential(title: Optional[str] = None,
         type=__ret__.type,
         urls=__ret__.urls,
         username=__ret__.username,
-        uuid=__ret__.uuid,
         valid_from=__ret__.valid_from,
         vault=__ret__.vault)
 
 
 @_utilities.lift_output_func(get_api_credential)
-def get_api_credential_output(title: Optional[pulumi.Input[Optional[str]]] = None,
-                              uuid: Optional[pulumi.Input[Optional[str]]] = None,
+def get_api_credential_output(id: Optional[pulumi.Input[Optional[str]]] = None,
+                              title: Optional[pulumi.Input[Optional[str]]] = None,
                               vault: Optional[pulumi.Input[str]] = None,
                               opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetAPICredentialResult]:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     ...

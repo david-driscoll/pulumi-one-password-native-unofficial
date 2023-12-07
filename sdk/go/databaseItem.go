@@ -14,19 +14,21 @@ import (
 type DatabaseItem struct {
 	pulumi.CustomResourceState
 
-	Alias             pulumi.StringPtrOutput     `pulumi:"alias"`
-	Attachments       OutputAttachmentMapOutput  `pulumi:"attachments"`
-	Category          pulumi.StringOutput        `pulumi:"category"`
-	ConnectionOptions pulumi.StringPtrOutput     `pulumi:"connectionOptions"`
-	Database          pulumi.StringPtrOutput     `pulumi:"database"`
-	Fields            OutputFieldMapOutput       `pulumi:"fields"`
-	Notes             pulumi.StringPtrOutput     `pulumi:"notes"`
-	Password          pulumi.StringPtrOutput     `pulumi:"password"`
-	Port              pulumi.StringPtrOutput     `pulumi:"port"`
-	References        OutputReferenceArrayOutput `pulumi:"references"`
-	Sections          OutputSectionMapOutput     `pulumi:"sections"`
-	Server            pulumi.StringPtrOutput     `pulumi:"server"`
-	Sid               pulumi.StringPtrOutput     `pulumi:"sid"`
+	Alias             pulumi.StringPtrOutput    `pulumi:"alias"`
+	Attachments       OutputAttachmentMapOutput `pulumi:"attachments"`
+	Category          pulumi.StringOutput       `pulumi:"category"`
+	ConnectionOptions pulumi.StringPtrOutput    `pulumi:"connectionOptions"`
+	Database          pulumi.StringPtrOutput    `pulumi:"database"`
+	Fields            OutputFieldMapOutput      `pulumi:"fields"`
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id         pulumi.StringOutput        `pulumi:"id"`
+	Notes      pulumi.StringPtrOutput     `pulumi:"notes"`
+	Password   pulumi.StringPtrOutput     `pulumi:"password"`
+	Port       pulumi.StringPtrOutput     `pulumi:"port"`
+	References OutputReferenceArrayOutput `pulumi:"references"`
+	Sections   OutputSectionMapOutput     `pulumi:"sections"`
+	Server     pulumi.StringPtrOutput     `pulumi:"server"`
+	Sid        pulumi.StringPtrOutput     `pulumi:"sid"`
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
@@ -34,9 +36,7 @@ type DatabaseItem struct {
 	Type     pulumi.StringPtrOutput `pulumi:"type"`
 	Urls     OutputUrlArrayOutput   `pulumi:"urls"`
 	Username pulumi.StringPtrOutput `pulumi:"username"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid  pulumi.StringOutput    `pulumi:"uuid"`
-	Vault pulumi.StringMapOutput `pulumi:"vault"`
+	Vault    pulumi.StringMapOutput `pulumi:"vault"`
 }
 
 // NewDatabaseItem registers a new resource with the given unique name, arguments, and options.

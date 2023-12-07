@@ -15,9 +15,11 @@ import (
 type CryptoWalletItem struct {
 	pulumi.CustomResourceState
 
-	Attachments    OutputAttachmentMapOutput  `pulumi:"attachments"`
-	Category       pulumi.StringOutput        `pulumi:"category"`
-	Fields         OutputFieldMapOutput       `pulumi:"fields"`
+	Attachments OutputAttachmentMapOutput `pulumi:"attachments"`
+	Category    pulumi.StringOutput       `pulumi:"category"`
+	Fields      OutputFieldMapOutput      `pulumi:"fields"`
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id             pulumi.StringOutput        `pulumi:"id"`
 	Notes          pulumi.StringPtrOutput     `pulumi:"notes"`
 	Password       pulumi.StringPtrOutput     `pulumi:"password"`
 	RecoveryPhrase pulumi.StringPtrOutput     `pulumi:"recoveryPhrase"`
@@ -26,10 +28,8 @@ type CryptoWalletItem struct {
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
-	Title pulumi.StringOutput  `pulumi:"title"`
-	Urls  OutputUrlArrayOutput `pulumi:"urls"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid   pulumi.StringOutput                 `pulumi:"uuid"`
+	Title  pulumi.StringOutput                 `pulumi:"title"`
+	Urls   OutputUrlArrayOutput                `pulumi:"urls"`
 	Vault  pulumi.StringMapOutput              `pulumi:"vault"`
 	Wallet cryptowallet.WalletSectionPtrOutput `pulumi:"wallet"`
 }

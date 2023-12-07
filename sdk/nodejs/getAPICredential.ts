@@ -12,21 +12,21 @@ export function getAPICredential(args: GetAPICredentialArgs, opts?: pulumi.Invok
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
     return pulumi.runtime.invoke("one-password-native-unofficial:index:GetAPICredential", {
+        "id": args.id,
         "title": args.title,
-        "uuid": args.uuid,
         "vault": args.vault,
     }, opts);
 }
 
 export interface GetAPICredentialArgs {
     /**
+     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+     */
+    id?: string;
+    /**
      * The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
      */
     title?: string;
-    /**
-     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-     */
-    uuid?: string;
     /**
      * The UUID of the vault the item is in.
      */
@@ -41,6 +41,10 @@ export interface GetAPICredentialResult {
     readonly fields: {[key: string]: outputs.OutputField};
     readonly filename?: string;
     readonly hostname?: string;
+    /**
+     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+     */
+    readonly id: string;
     readonly notes?: string;
     readonly references: outputs.OutputReference[];
     readonly sections: {[key: string]: outputs.OutputSection};
@@ -55,10 +59,6 @@ export interface GetAPICredentialResult {
     readonly type?: string;
     readonly urls?: outputs.OutputUrl[];
     readonly username?: string;
-    /**
-     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-     */
-    readonly uuid: string;
     readonly validFrom?: string;
     readonly vault: {[key: string]: string};
 }
@@ -69,13 +69,13 @@ export function getAPICredentialOutput(args: GetAPICredentialOutputArgs, opts?: 
 
 export interface GetAPICredentialOutputArgs {
     /**
+     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+     */
+    id?: pulumi.Input<string>;
+    /**
      * The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
      */
     title?: pulumi.Input<string>;
-    /**
-     * The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-     */
-    uuid?: pulumi.Input<string>;
     /**
      * The UUID of the vault the item is in.
      */

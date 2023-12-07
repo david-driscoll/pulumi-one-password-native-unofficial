@@ -20,7 +20,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetBankAccountResult:
-    def __init__(__self__, account_number=None, attachments=None, bank_name=None, branch_information=None, category=None, fields=None, iban=None, name_on_account=None, notes=None, pin=None, references=None, routing_number=None, sections=None, swift=None, tags=None, title=None, type=None, urls=None, uuid=None, vault=None):
+    def __init__(__self__, account_number=None, attachments=None, bank_name=None, branch_information=None, category=None, fields=None, iban=None, id=None, name_on_account=None, notes=None, pin=None, references=None, routing_number=None, sections=None, swift=None, tags=None, title=None, type=None, urls=None, vault=None):
         if account_number and not isinstance(account_number, str):
             raise TypeError("Expected argument 'account_number' to be a str")
         pulumi.set(__self__, "account_number", account_number)
@@ -42,6 +42,9 @@ class GetBankAccountResult:
         if iban and not isinstance(iban, str):
             raise TypeError("Expected argument 'iban' to be a str")
         pulumi.set(__self__, "iban", iban)
+        if id and not isinstance(id, str):
+            raise TypeError("Expected argument 'id' to be a str")
+        pulumi.set(__self__, "id", id)
         if name_on_account and not isinstance(name_on_account, str):
             raise TypeError("Expected argument 'name_on_account' to be a str")
         pulumi.set(__self__, "name_on_account", name_on_account)
@@ -75,9 +78,6 @@ class GetBankAccountResult:
         if urls and not isinstance(urls, list):
             raise TypeError("Expected argument 'urls' to be a list")
         pulumi.set(__self__, "urls", urls)
-        if uuid and not isinstance(uuid, str):
-            raise TypeError("Expected argument 'uuid' to be a str")
-        pulumi.set(__self__, "uuid", uuid)
         if vault and not isinstance(vault, dict):
             raise TypeError("Expected argument 'vault' to be a dict")
         pulumi.set(__self__, "vault", vault)
@@ -116,6 +116,14 @@ class GetBankAccountResult:
     @pulumi.getter
     def iban(self) -> Optional[str]:
         return pulumi.get(self, "iban")
+
+    @property
+    @pulumi.getter
+    def id(self) -> str:
+        """
+        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        """
+        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter(name="nameOnAccount")
@@ -180,14 +188,6 @@ class GetBankAccountResult:
 
     @property
     @pulumi.getter
-    def uuid(self) -> str:
-        """
-        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        """
-        return pulumi.get(self, "uuid")
-
-    @property
-    @pulumi.getter
     def vault(self) -> Mapping[str, str]:
         return pulumi.get(self, "vault")
 
@@ -205,6 +205,7 @@ class AwaitableGetBankAccountResult(GetBankAccountResult):
             category=self.category,
             fields=self.fields,
             iban=self.iban,
+            id=self.id,
             name_on_account=self.name_on_account,
             notes=self.notes,
             pin=self.pin,
@@ -216,24 +217,23 @@ class AwaitableGetBankAccountResult(GetBankAccountResult):
             title=self.title,
             type=self.type,
             urls=self.urls,
-            uuid=self.uuid,
             vault=self.vault)
 
 
-def get_bank_account(title: Optional[str] = None,
-                     uuid: Optional[str] = None,
+def get_bank_account(id: Optional[str] = None,
+                     title: Optional[str] = None,
                      vault: Optional[str] = None,
                      opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetBankAccountResult:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     __args__ = dict()
+    __args__['id'] = id
     __args__['title'] = title
-    __args__['uuid'] = uuid
     __args__['vault'] = vault
     if opts is None:
         opts = pulumi.InvokeOptions()
@@ -251,6 +251,7 @@ def get_bank_account(title: Optional[str] = None,
         category=__ret__.category,
         fields=__ret__.fields,
         iban=__ret__.iban,
+        id=__ret__.id,
         name_on_account=__ret__.name_on_account,
         notes=__ret__.notes,
         pin=__ret__.pin,
@@ -262,20 +263,19 @@ def get_bank_account(title: Optional[str] = None,
         title=__ret__.title,
         type=__ret__.type,
         urls=__ret__.urls,
-        uuid=__ret__.uuid,
         vault=__ret__.vault)
 
 
 @_utilities.lift_output_func(get_bank_account)
-def get_bank_account_output(title: Optional[pulumi.Input[Optional[str]]] = None,
-                            uuid: Optional[pulumi.Input[Optional[str]]] = None,
+def get_bank_account_output(id: Optional[pulumi.Input[Optional[str]]] = None,
+                            title: Optional[pulumi.Input[Optional[str]]] = None,
                             vault: Optional[pulumi.Input[str]] = None,
                             opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetBankAccountResult]:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     ...

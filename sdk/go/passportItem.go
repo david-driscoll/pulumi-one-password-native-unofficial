@@ -14,13 +14,15 @@ import (
 type PassportItem struct {
 	pulumi.CustomResourceState
 
-	Attachments      OutputAttachmentMapOutput  `pulumi:"attachments"`
-	Category         pulumi.StringOutput        `pulumi:"category"`
-	DateOfBirth      pulumi.StringPtrOutput     `pulumi:"dateOfBirth"`
-	ExpiryDate       pulumi.StringPtrOutput     `pulumi:"expiryDate"`
-	Fields           OutputFieldMapOutput       `pulumi:"fields"`
-	FullName         pulumi.StringPtrOutput     `pulumi:"fullName"`
-	Gender           pulumi.StringPtrOutput     `pulumi:"gender"`
+	Attachments OutputAttachmentMapOutput `pulumi:"attachments"`
+	Category    pulumi.StringOutput       `pulumi:"category"`
+	DateOfBirth pulumi.StringPtrOutput    `pulumi:"dateOfBirth"`
+	ExpiryDate  pulumi.StringPtrOutput    `pulumi:"expiryDate"`
+	Fields      OutputFieldMapOutput      `pulumi:"fields"`
+	FullName    pulumi.StringPtrOutput    `pulumi:"fullName"`
+	Gender      pulumi.StringPtrOutput    `pulumi:"gender"`
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id               pulumi.StringOutput        `pulumi:"id"`
 	IssuedOn         pulumi.StringPtrOutput     `pulumi:"issuedOn"`
 	IssuingAuthority pulumi.StringPtrOutput     `pulumi:"issuingAuthority"`
 	IssuingCountry   pulumi.StringPtrOutput     `pulumi:"issuingCountry"`
@@ -36,8 +38,6 @@ type PassportItem struct {
 	Title pulumi.StringOutput    `pulumi:"title"`
 	Type  pulumi.StringPtrOutput `pulumi:"type"`
 	Urls  OutputUrlArrayOutput   `pulumi:"urls"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid  pulumi.StringOutput    `pulumi:"uuid"`
 	Vault pulumi.StringMapOutput `pulumi:"vault"`
 }
 

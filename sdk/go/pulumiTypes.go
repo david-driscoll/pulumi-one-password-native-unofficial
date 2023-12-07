@@ -130,10 +130,10 @@ func (o FieldMapOutput) MapIndex(k pulumi.StringInput) FieldOutput {
 }
 
 type OutputAttachment struct {
+	Id        string `pulumi:"id"`
 	Name      string `pulumi:"name"`
 	Reference string `pulumi:"reference"`
 	Size      int    `pulumi:"size"`
-	Uuid      string `pulumi:"uuid"`
 }
 
 type OutputAttachmentOutput struct{ *pulumi.OutputState }
@@ -150,6 +150,10 @@ func (o OutputAttachmentOutput) ToOutputAttachmentOutputWithContext(ctx context.
 	return o
 }
 
+func (o OutputAttachmentOutput) Id() pulumi.StringOutput {
+	return o.ApplyT(func(v OutputAttachment) string { return v.Id }).(pulumi.StringOutput)
+}
+
 func (o OutputAttachmentOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v OutputAttachment) string { return v.Name }).(pulumi.StringOutput)
 }
@@ -160,10 +164,6 @@ func (o OutputAttachmentOutput) Reference() pulumi.StringOutput {
 
 func (o OutputAttachmentOutput) Size() pulumi.IntOutput {
 	return o.ApplyT(func(v OutputAttachment) int { return v.Size }).(pulumi.IntOutput)
-}
-
-func (o OutputAttachmentOutput) Uuid() pulumi.StringOutput {
-	return o.ApplyT(func(v OutputAttachment) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
 type OutputAttachmentMapOutput struct{ *pulumi.OutputState }
@@ -188,10 +188,10 @@ func (o OutputAttachmentMapOutput) MapIndex(k pulumi.StringInput) OutputAttachme
 
 type OutputField struct {
 	Data      map[string]interface{} `pulumi:"data"`
+	Id        string                 `pulumi:"id"`
 	Label     string                 `pulumi:"label"`
 	Reference string                 `pulumi:"reference"`
 	Type      FieldType              `pulumi:"type"`
-	Uuid      string                 `pulumi:"uuid"`
 	Value     string                 `pulumi:"value"`
 }
 
@@ -213,6 +213,10 @@ func (o OutputFieldOutput) Data() pulumi.MapOutput {
 	return o.ApplyT(func(v OutputField) map[string]interface{} { return v.Data }).(pulumi.MapOutput)
 }
 
+func (o OutputFieldOutput) Id() pulumi.StringOutput {
+	return o.ApplyT(func(v OutputField) string { return v.Id }).(pulumi.StringOutput)
+}
+
 func (o OutputFieldOutput) Label() pulumi.StringOutput {
 	return o.ApplyT(func(v OutputField) string { return v.Label }).(pulumi.StringOutput)
 }
@@ -223,10 +227,6 @@ func (o OutputFieldOutput) Reference() pulumi.StringOutput {
 
 func (o OutputFieldOutput) Type() FieldTypeOutput {
 	return o.ApplyT(func(v OutputField) FieldType { return v.Type }).(FieldTypeOutput)
-}
-
-func (o OutputFieldOutput) Uuid() pulumi.StringOutput {
-	return o.ApplyT(func(v OutputField) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
 func (o OutputFieldOutput) Value() pulumi.StringOutput {
@@ -254,10 +254,10 @@ func (o OutputFieldMapOutput) MapIndex(k pulumi.StringInput) OutputFieldOutput {
 }
 
 type OutputReference struct {
+	Id        string `pulumi:"id"`
 	ItemId    string `pulumi:"itemId"`
 	Label     string `pulumi:"label"`
 	Reference string `pulumi:"reference"`
-	Uuid      string `pulumi:"uuid"`
 }
 
 type OutputReferenceOutput struct{ *pulumi.OutputState }
@@ -274,6 +274,10 @@ func (o OutputReferenceOutput) ToOutputReferenceOutputWithContext(ctx context.Co
 	return o
 }
 
+func (o OutputReferenceOutput) Id() pulumi.StringOutput {
+	return o.ApplyT(func(v OutputReference) string { return v.Id }).(pulumi.StringOutput)
+}
+
 func (o OutputReferenceOutput) ItemId() pulumi.StringOutput {
 	return o.ApplyT(func(v OutputReference) string { return v.ItemId }).(pulumi.StringOutput)
 }
@@ -284,10 +288,6 @@ func (o OutputReferenceOutput) Label() pulumi.StringOutput {
 
 func (o OutputReferenceOutput) Reference() pulumi.StringOutput {
 	return o.ApplyT(func(v OutputReference) string { return v.Reference }).(pulumi.StringOutput)
-}
-
-func (o OutputReferenceOutput) Uuid() pulumi.StringOutput {
-	return o.ApplyT(func(v OutputReference) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
 type OutputReferenceArrayOutput struct{ *pulumi.OutputState }
@@ -313,8 +313,8 @@ func (o OutputReferenceArrayOutput) Index(i pulumi.IntInput) OutputReferenceOutp
 type OutputSection struct {
 	Attachments map[string]OutputAttachment `pulumi:"attachments"`
 	Fields      map[string]OutputField      `pulumi:"fields"`
+	Id          string                      `pulumi:"id"`
 	Label       string                      `pulumi:"label"`
-	Uuid        string                      `pulumi:"uuid"`
 }
 
 type OutputSectionOutput struct{ *pulumi.OutputState }
@@ -339,12 +339,12 @@ func (o OutputSectionOutput) Fields() OutputFieldMapOutput {
 	return o.ApplyT(func(v OutputSection) map[string]OutputField { return v.Fields }).(OutputFieldMapOutput)
 }
 
-func (o OutputSectionOutput) Label() pulumi.StringOutput {
-	return o.ApplyT(func(v OutputSection) string { return v.Label }).(pulumi.StringOutput)
+func (o OutputSectionOutput) Id() pulumi.StringOutput {
+	return o.ApplyT(func(v OutputSection) string { return v.Id }).(pulumi.StringOutput)
 }
 
-func (o OutputSectionOutput) Uuid() pulumi.StringOutput {
-	return o.ApplyT(func(v OutputSection) string { return v.Uuid }).(pulumi.StringOutput)
+func (o OutputSectionOutput) Label() pulumi.StringOutput {
+	return o.ApplyT(func(v OutputSection) string { return v.Label }).(pulumi.StringOutput)
 }
 
 type OutputSectionMapOutput struct{ *pulumi.OutputState }

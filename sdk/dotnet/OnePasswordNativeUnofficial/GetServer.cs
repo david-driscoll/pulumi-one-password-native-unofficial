@@ -23,16 +23,16 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
     public sealed class GetServerArgs : Pulumi.InvokeArgs
     {
         /// <summary>
+        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        /// </summary>
+        [Input("id")]
+        public string? Id { get; set; }
+
+        /// <summary>
         /// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         /// </summary>
         [Input("title")]
         public string? Title { get; set; }
-
-        /// <summary>
-        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        /// </summary>
-        [Input("uuid")]
-        public string? Uuid { get; set; }
 
         /// <summary>
         /// The UUID of the vault the item is in.
@@ -48,16 +48,16 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
     public sealed class GetServerInvokeArgs : Pulumi.InvokeArgs
     {
         /// <summary>
+        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        /// </summary>
+        [Input("id")]
+        public Input<string>? Id { get; set; }
+
+        /// <summary>
         /// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         /// </summary>
         [Input("title")]
         public Input<string>? Title { get; set; }
-
-        /// <summary>
-        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        /// </summary>
-        [Input("uuid")]
-        public Input<string>? Uuid { get; set; }
 
         /// <summary>
         /// The UUID of the vault the item is in.
@@ -79,6 +79,10 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         public readonly string Category;
         public readonly ImmutableDictionary<string, Outputs.OutputField> Fields;
         public readonly Rocket.Surgery.OnePasswordNativeUnofficial.Server.Outputs.HostingProviderSection? HostingProvider;
+        /// <summary>
+        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        /// </summary>
+        public readonly string Id;
         public readonly string? Notes;
         public readonly string? Password;
         public readonly ImmutableArray<Outputs.OutputReference> References;
@@ -94,10 +98,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         public readonly string? Url;
         public readonly ImmutableArray<Outputs.OutputUrl> Urls;
         public readonly string? Username;
-        /// <summary>
-        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        /// </summary>
-        public readonly string Uuid;
         public readonly ImmutableDictionary<string, string> Vault;
 
         [OutputConstructor]
@@ -111,6 +111,8 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
             ImmutableDictionary<string, Outputs.OutputField> fields,
 
             Rocket.Surgery.OnePasswordNativeUnofficial.Server.Outputs.HostingProviderSection? hostingProvider,
+
+            string id,
 
             string? notes,
 
@@ -130,8 +132,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
 
             string? username,
 
-            string uuid,
-
             ImmutableDictionary<string, string> vault)
         {
             AdminConsole = adminConsole;
@@ -139,6 +139,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
             Category = category;
             Fields = fields;
             HostingProvider = hostingProvider;
+            Id = id;
             Notes = notes;
             Password = password;
             References = references;
@@ -148,7 +149,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
             Url = url;
             Urls = urls;
             Username = username;
-            Uuid = uuid;
             Vault = vault;
         }
     }

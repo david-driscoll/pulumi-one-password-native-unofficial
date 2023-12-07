@@ -20,7 +20,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetServerResult:
-    def __init__(__self__, admin_console=None, attachments=None, category=None, fields=None, hosting_provider=None, notes=None, password=None, references=None, sections=None, tags=None, title=None, url=None, urls=None, username=None, uuid=None, vault=None):
+    def __init__(__self__, admin_console=None, attachments=None, category=None, fields=None, hosting_provider=None, id=None, notes=None, password=None, references=None, sections=None, tags=None, title=None, url=None, urls=None, username=None, vault=None):
         if admin_console and not isinstance(admin_console, dict):
             raise TypeError("Expected argument 'admin_console' to be a dict")
         pulumi.set(__self__, "admin_console", admin_console)
@@ -36,6 +36,9 @@ class GetServerResult:
         if hosting_provider and not isinstance(hosting_provider, dict):
             raise TypeError("Expected argument 'hosting_provider' to be a dict")
         pulumi.set(__self__, "hosting_provider", hosting_provider)
+        if id and not isinstance(id, str):
+            raise TypeError("Expected argument 'id' to be a str")
+        pulumi.set(__self__, "id", id)
         if notes and not isinstance(notes, str):
             raise TypeError("Expected argument 'notes' to be a str")
         pulumi.set(__self__, "notes", notes)
@@ -63,9 +66,6 @@ class GetServerResult:
         if username and not isinstance(username, str):
             raise TypeError("Expected argument 'username' to be a str")
         pulumi.set(__self__, "username", username)
-        if uuid and not isinstance(uuid, str):
-            raise TypeError("Expected argument 'uuid' to be a str")
-        pulumi.set(__self__, "uuid", uuid)
         if vault and not isinstance(vault, dict):
             raise TypeError("Expected argument 'vault' to be a dict")
         pulumi.set(__self__, "vault", vault)
@@ -94,6 +94,14 @@ class GetServerResult:
     @pulumi.getter(name="hostingProvider")
     def hosting_provider(self) -> Optional['_server.outputs.HostingProviderSection']:
         return pulumi.get(self, "hosting_provider")
+
+    @property
+    @pulumi.getter
+    def id(self) -> str:
+        """
+        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        """
+        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter
@@ -148,14 +156,6 @@ class GetServerResult:
 
     @property
     @pulumi.getter
-    def uuid(self) -> str:
-        """
-        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        """
-        return pulumi.get(self, "uuid")
-
-    @property
-    @pulumi.getter
     def vault(self) -> Mapping[str, str]:
         return pulumi.get(self, "vault")
 
@@ -171,6 +171,7 @@ class AwaitableGetServerResult(GetServerResult):
             category=self.category,
             fields=self.fields,
             hosting_provider=self.hosting_provider,
+            id=self.id,
             notes=self.notes,
             password=self.password,
             references=self.references,
@@ -180,24 +181,23 @@ class AwaitableGetServerResult(GetServerResult):
             url=self.url,
             urls=self.urls,
             username=self.username,
-            uuid=self.uuid,
             vault=self.vault)
 
 
-def get_server(title: Optional[str] = None,
-               uuid: Optional[str] = None,
+def get_server(id: Optional[str] = None,
+               title: Optional[str] = None,
                vault: Optional[str] = None,
                opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetServerResult:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     __args__ = dict()
+    __args__['id'] = id
     __args__['title'] = title
-    __args__['uuid'] = uuid
     __args__['vault'] = vault
     if opts is None:
         opts = pulumi.InvokeOptions()
@@ -213,6 +213,7 @@ def get_server(title: Optional[str] = None,
         category=__ret__.category,
         fields=__ret__.fields,
         hosting_provider=__ret__.hosting_provider,
+        id=__ret__.id,
         notes=__ret__.notes,
         password=__ret__.password,
         references=__ret__.references,
@@ -222,20 +223,19 @@ def get_server(title: Optional[str] = None,
         url=__ret__.url,
         urls=__ret__.urls,
         username=__ret__.username,
-        uuid=__ret__.uuid,
         vault=__ret__.vault)
 
 
 @_utilities.lift_output_func(get_server)
-def get_server_output(title: Optional[pulumi.Input[Optional[str]]] = None,
-                      uuid: Optional[pulumi.Input[Optional[str]]] = None,
+def get_server_output(id: Optional[pulumi.Input[Optional[str]]] = None,
+                      title: Optional[pulumi.Input[Optional[str]]] = None,
                       vault: Optional[pulumi.Input[str]] = None,
                       opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetServerResult]:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     ...

@@ -20,7 +20,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetRewardProgramResult:
-    def __init__(__self__, attachments=None, category=None, company_name=None, fields=None, member_id=None, member_name=None, more_information=None, notes=None, pin=None, references=None, sections=None, tags=None, title=None, urls=None, uuid=None, vault=None):
+    def __init__(__self__, attachments=None, category=None, company_name=None, fields=None, id=None, member_id=None, member_name=None, more_information=None, notes=None, pin=None, references=None, sections=None, tags=None, title=None, urls=None, vault=None):
         if attachments and not isinstance(attachments, dict):
             raise TypeError("Expected argument 'attachments' to be a dict")
         pulumi.set(__self__, "attachments", attachments)
@@ -33,6 +33,9 @@ class GetRewardProgramResult:
         if fields and not isinstance(fields, dict):
             raise TypeError("Expected argument 'fields' to be a dict")
         pulumi.set(__self__, "fields", fields)
+        if id and not isinstance(id, str):
+            raise TypeError("Expected argument 'id' to be a str")
+        pulumi.set(__self__, "id", id)
         if member_id and not isinstance(member_id, str):
             raise TypeError("Expected argument 'member_id' to be a str")
         pulumi.set(__self__, "member_id", member_id)
@@ -63,9 +66,6 @@ class GetRewardProgramResult:
         if urls and not isinstance(urls, list):
             raise TypeError("Expected argument 'urls' to be a list")
         pulumi.set(__self__, "urls", urls)
-        if uuid and not isinstance(uuid, str):
-            raise TypeError("Expected argument 'uuid' to be a str")
-        pulumi.set(__self__, "uuid", uuid)
         if vault and not isinstance(vault, dict):
             raise TypeError("Expected argument 'vault' to be a dict")
         pulumi.set(__self__, "vault", vault)
@@ -89,6 +89,14 @@ class GetRewardProgramResult:
     @pulumi.getter
     def fields(self) -> Mapping[str, 'outputs.OutputField']:
         return pulumi.get(self, "fields")
+
+    @property
+    @pulumi.getter
+    def id(self) -> str:
+        """
+        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        """
+        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter(name="memberId")
@@ -148,14 +156,6 @@ class GetRewardProgramResult:
 
     @property
     @pulumi.getter
-    def uuid(self) -> str:
-        """
-        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        """
-        return pulumi.get(self, "uuid")
-
-    @property
-    @pulumi.getter
     def vault(self) -> Mapping[str, str]:
         return pulumi.get(self, "vault")
 
@@ -170,6 +170,7 @@ class AwaitableGetRewardProgramResult(GetRewardProgramResult):
             category=self.category,
             company_name=self.company_name,
             fields=self.fields,
+            id=self.id,
             member_id=self.member_id,
             member_name=self.member_name,
             more_information=self.more_information,
@@ -180,24 +181,23 @@ class AwaitableGetRewardProgramResult(GetRewardProgramResult):
             tags=self.tags,
             title=self.title,
             urls=self.urls,
-            uuid=self.uuid,
             vault=self.vault)
 
 
-def get_reward_program(title: Optional[str] = None,
-                       uuid: Optional[str] = None,
+def get_reward_program(id: Optional[str] = None,
+                       title: Optional[str] = None,
                        vault: Optional[str] = None,
                        opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetRewardProgramResult:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     __args__ = dict()
+    __args__['id'] = id
     __args__['title'] = title
-    __args__['uuid'] = uuid
     __args__['vault'] = vault
     if opts is None:
         opts = pulumi.InvokeOptions()
@@ -212,6 +212,7 @@ def get_reward_program(title: Optional[str] = None,
         category=__ret__.category,
         company_name=__ret__.company_name,
         fields=__ret__.fields,
+        id=__ret__.id,
         member_id=__ret__.member_id,
         member_name=__ret__.member_name,
         more_information=__ret__.more_information,
@@ -222,20 +223,19 @@ def get_reward_program(title: Optional[str] = None,
         tags=__ret__.tags,
         title=__ret__.title,
         urls=__ret__.urls,
-        uuid=__ret__.uuid,
         vault=__ret__.vault)
 
 
 @_utilities.lift_output_func(get_reward_program)
-def get_reward_program_output(title: Optional[pulumi.Input[Optional[str]]] = None,
-                              uuid: Optional[pulumi.Input[Optional[str]]] = None,
+def get_reward_program_output(id: Optional[pulumi.Input[Optional[str]]] = None,
+                              title: Optional[pulumi.Input[Optional[str]]] = None,
                               vault: Optional[pulumi.Input[str]] = None,
                               opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetRewardProgramResult]:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     ...

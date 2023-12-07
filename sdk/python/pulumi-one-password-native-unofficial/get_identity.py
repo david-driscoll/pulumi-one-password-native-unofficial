@@ -20,7 +20,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetIdentityResult:
-    def __init__(__self__, address=None, attachments=None, category=None, fields=None, identification=None, internet_details=None, notes=None, references=None, sections=None, tags=None, title=None, urls=None, uuid=None, vault=None):
+    def __init__(__self__, address=None, attachments=None, category=None, fields=None, id=None, identification=None, internet_details=None, notes=None, references=None, sections=None, tags=None, title=None, urls=None, vault=None):
         if address and not isinstance(address, dict):
             raise TypeError("Expected argument 'address' to be a dict")
         pulumi.set(__self__, "address", address)
@@ -33,6 +33,9 @@ class GetIdentityResult:
         if fields and not isinstance(fields, dict):
             raise TypeError("Expected argument 'fields' to be a dict")
         pulumi.set(__self__, "fields", fields)
+        if id and not isinstance(id, str):
+            raise TypeError("Expected argument 'id' to be a str")
+        pulumi.set(__self__, "id", id)
         if identification and not isinstance(identification, dict):
             raise TypeError("Expected argument 'identification' to be a dict")
         pulumi.set(__self__, "identification", identification)
@@ -57,9 +60,6 @@ class GetIdentityResult:
         if urls and not isinstance(urls, list):
             raise TypeError("Expected argument 'urls' to be a list")
         pulumi.set(__self__, "urls", urls)
-        if uuid and not isinstance(uuid, str):
-            raise TypeError("Expected argument 'uuid' to be a str")
-        pulumi.set(__self__, "uuid", uuid)
         if vault and not isinstance(vault, dict):
             raise TypeError("Expected argument 'vault' to be a dict")
         pulumi.set(__self__, "vault", vault)
@@ -83,6 +83,14 @@ class GetIdentityResult:
     @pulumi.getter
     def fields(self) -> Mapping[str, 'outputs.OutputField']:
         return pulumi.get(self, "fields")
+
+    @property
+    @pulumi.getter
+    def id(self) -> str:
+        """
+        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        """
+        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter
@@ -132,14 +140,6 @@ class GetIdentityResult:
 
     @property
     @pulumi.getter
-    def uuid(self) -> str:
-        """
-        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        """
-        return pulumi.get(self, "uuid")
-
-    @property
-    @pulumi.getter
     def vault(self) -> Mapping[str, str]:
         return pulumi.get(self, "vault")
 
@@ -154,6 +154,7 @@ class AwaitableGetIdentityResult(GetIdentityResult):
             attachments=self.attachments,
             category=self.category,
             fields=self.fields,
+            id=self.id,
             identification=self.identification,
             internet_details=self.internet_details,
             notes=self.notes,
@@ -162,24 +163,23 @@ class AwaitableGetIdentityResult(GetIdentityResult):
             tags=self.tags,
             title=self.title,
             urls=self.urls,
-            uuid=self.uuid,
             vault=self.vault)
 
 
-def get_identity(title: Optional[str] = None,
-                 uuid: Optional[str] = None,
+def get_identity(id: Optional[str] = None,
+                 title: Optional[str] = None,
                  vault: Optional[str] = None,
                  opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetIdentityResult:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     __args__ = dict()
+    __args__['id'] = id
     __args__['title'] = title
-    __args__['uuid'] = uuid
     __args__['vault'] = vault
     if opts is None:
         opts = pulumi.InvokeOptions()
@@ -194,6 +194,7 @@ def get_identity(title: Optional[str] = None,
         attachments=__ret__.attachments,
         category=__ret__.category,
         fields=__ret__.fields,
+        id=__ret__.id,
         identification=__ret__.identification,
         internet_details=__ret__.internet_details,
         notes=__ret__.notes,
@@ -202,20 +203,19 @@ def get_identity(title: Optional[str] = None,
         tags=__ret__.tags,
         title=__ret__.title,
         urls=__ret__.urls,
-        uuid=__ret__.uuid,
         vault=__ret__.vault)
 
 
 @_utilities.lift_output_func(get_identity)
-def get_identity_output(title: Optional[pulumi.Input[Optional[str]]] = None,
-                        uuid: Optional[pulumi.Input[Optional[str]]] = None,
+def get_identity_output(id: Optional[pulumi.Input[Optional[str]]] = None,
+                        title: Optional[pulumi.Input[Optional[str]]] = None,
                         vault: Optional[pulumi.Input[str]] = None,
                         opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetIdentityResult]:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     ...

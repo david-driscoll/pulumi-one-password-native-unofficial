@@ -21,39 +21,39 @@ func GetPassport(ctx *pulumi.Context, args *GetPassportArgs, opts ...pulumi.Invo
 }
 
 type GetPassportArgs struct {
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id *string `pulumi:"id"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid *string `pulumi:"uuid"`
 	// The UUID of the vault the item is in.
 	Vault string `pulumi:"vault"`
 }
 
 type GetPassportResult struct {
-	Attachments      map[string]OutputAttachment `pulumi:"attachments"`
-	Category         string                      `pulumi:"category"`
-	DateOfBirth      *string                     `pulumi:"dateOfBirth"`
-	ExpiryDate       *string                     `pulumi:"expiryDate"`
-	Fields           map[string]OutputField      `pulumi:"fields"`
-	FullName         *string                     `pulumi:"fullName"`
-	Gender           *string                     `pulumi:"gender"`
-	IssuedOn         *string                     `pulumi:"issuedOn"`
-	IssuingAuthority *string                     `pulumi:"issuingAuthority"`
-	IssuingCountry   *string                     `pulumi:"issuingCountry"`
-	Nationality      *string                     `pulumi:"nationality"`
-	Notes            *string                     `pulumi:"notes"`
-	Number           *string                     `pulumi:"number"`
-	PlaceOfBirth     *string                     `pulumi:"placeOfBirth"`
-	References       []OutputReference           `pulumi:"references"`
-	Sections         map[string]OutputSection    `pulumi:"sections"`
+	Attachments map[string]OutputAttachment `pulumi:"attachments"`
+	Category    string                      `pulumi:"category"`
+	DateOfBirth *string                     `pulumi:"dateOfBirth"`
+	ExpiryDate  *string                     `pulumi:"expiryDate"`
+	Fields      map[string]OutputField      `pulumi:"fields"`
+	FullName    *string                     `pulumi:"fullName"`
+	Gender      *string                     `pulumi:"gender"`
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id               string                   `pulumi:"id"`
+	IssuedOn         *string                  `pulumi:"issuedOn"`
+	IssuingAuthority *string                  `pulumi:"issuingAuthority"`
+	IssuingCountry   *string                  `pulumi:"issuingCountry"`
+	Nationality      *string                  `pulumi:"nationality"`
+	Notes            *string                  `pulumi:"notes"`
+	Number           *string                  `pulumi:"number"`
+	PlaceOfBirth     *string                  `pulumi:"placeOfBirth"`
+	References       []OutputReference        `pulumi:"references"`
+	Sections         map[string]OutputSection `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title string      `pulumi:"title"`
-	Type  *string     `pulumi:"type"`
-	Urls  []OutputUrl `pulumi:"urls"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid  string            `pulumi:"uuid"`
+	Title string            `pulumi:"title"`
+	Type  *string           `pulumi:"type"`
+	Urls  []OutputUrl       `pulumi:"urls"`
 	Vault map[string]string `pulumi:"vault"`
 }
 
@@ -71,10 +71,10 @@ func GetPassportOutput(ctx *pulumi.Context, args GetPassportOutputArgs, opts ...
 }
 
 type GetPassportOutputArgs struct {
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id pulumi.StringPtrInput `pulumi:"id"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput `pulumi:"title"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid pulumi.StringPtrInput `pulumi:"uuid"`
 	// The UUID of the vault the item is in.
 	Vault pulumi.StringInput `pulumi:"vault"`
 }
@@ -123,6 +123,11 @@ func (o GetPassportResultOutput) FullName() pulumi.StringPtrOutput {
 
 func (o GetPassportResultOutput) Gender() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetPassportResult) *string { return v.Gender }).(pulumi.StringPtrOutput)
+}
+
+// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+func (o GetPassportResultOutput) Id() pulumi.StringOutput {
+	return o.ApplyT(func(v GetPassportResult) string { return v.Id }).(pulumi.StringOutput)
 }
 
 func (o GetPassportResultOutput) IssuedOn() pulumi.StringPtrOutput {
@@ -177,11 +182,6 @@ func (o GetPassportResultOutput) Type() pulumi.StringPtrOutput {
 
 func (o GetPassportResultOutput) Urls() OutputUrlArrayOutput {
 	return o.ApplyT(func(v GetPassportResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
-}
-
-// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o GetPassportResultOutput) Uuid() pulumi.StringOutput {
-	return o.ApplyT(func(v GetPassportResult) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
 func (o GetPassportResultOutput) Vault() pulumi.StringMapOutput {

@@ -22,19 +22,21 @@ func GetRewardProgram(ctx *pulumi.Context, args *GetRewardProgramArgs, opts ...p
 }
 
 type GetRewardProgramArgs struct {
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id *string `pulumi:"id"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title *string `pulumi:"title"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid *string `pulumi:"uuid"`
 	// The UUID of the vault the item is in.
 	Vault string `pulumi:"vault"`
 }
 
 type GetRewardProgramResult struct {
-	Attachments     map[string]OutputAttachment           `pulumi:"attachments"`
-	Category        string                                `pulumi:"category"`
-	CompanyName     *string                               `pulumi:"companyName"`
-	Fields          map[string]OutputField                `pulumi:"fields"`
+	Attachments map[string]OutputAttachment `pulumi:"attachments"`
+	Category    string                      `pulumi:"category"`
+	CompanyName *string                     `pulumi:"companyName"`
+	Fields      map[string]OutputField      `pulumi:"fields"`
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id              string                                `pulumi:"id"`
 	MemberId        *string                               `pulumi:"memberId"`
 	MemberName      *string                               `pulumi:"memberName"`
 	MoreInformation *rewardprogram.MoreInformationSection `pulumi:"moreInformation"`
@@ -45,10 +47,8 @@ type GetRewardProgramResult struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title string      `pulumi:"title"`
-	Urls  []OutputUrl `pulumi:"urls"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid  string            `pulumi:"uuid"`
+	Title string            `pulumi:"title"`
+	Urls  []OutputUrl       `pulumi:"urls"`
 	Vault map[string]string `pulumi:"vault"`
 }
 
@@ -66,10 +66,10 @@ func GetRewardProgramOutput(ctx *pulumi.Context, args GetRewardProgramOutputArgs
 }
 
 type GetRewardProgramOutputArgs struct {
+	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+	Id pulumi.StringPtrInput `pulumi:"id"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput `pulumi:"title"`
-	// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-	Uuid pulumi.StringPtrInput `pulumi:"uuid"`
 	// The UUID of the vault the item is in.
 	Vault pulumi.StringInput `pulumi:"vault"`
 }
@@ -106,6 +106,11 @@ func (o GetRewardProgramResultOutput) CompanyName() pulumi.StringPtrOutput {
 
 func (o GetRewardProgramResultOutput) Fields() OutputFieldMapOutput {
 	return o.ApplyT(func(v GetRewardProgramResult) map[string]OutputField { return v.Fields }).(OutputFieldMapOutput)
+}
+
+// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+func (o GetRewardProgramResultOutput) Id() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRewardProgramResult) string { return v.Id }).(pulumi.StringOutput)
 }
 
 func (o GetRewardProgramResultOutput) MemberId() pulumi.StringPtrOutput {
@@ -148,11 +153,6 @@ func (o GetRewardProgramResultOutput) Title() pulumi.StringOutput {
 
 func (o GetRewardProgramResultOutput) Urls() OutputUrlArrayOutput {
 	return o.ApplyT(func(v GetRewardProgramResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
-}
-
-// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-func (o GetRewardProgramResultOutput) Uuid() pulumi.StringOutput {
-	return o.ApplyT(func(v GetRewardProgramResult) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
 func (o GetRewardProgramResultOutput) Vault() pulumi.StringMapOutput {

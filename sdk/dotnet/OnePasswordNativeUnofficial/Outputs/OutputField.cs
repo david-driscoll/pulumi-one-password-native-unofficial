@@ -15,15 +15,17 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial.Outputs
     public sealed class OutputField
     {
         public readonly ImmutableDictionary<string, object> Data;
+        public readonly string Id;
         public readonly string Label;
         public readonly string Reference;
         public readonly Rocket.Surgery.OnePasswordNativeUnofficial.FieldType Type;
-        public readonly string Uuid;
         public readonly string Value;
 
         [OutputConstructor]
         private OutputField(
             ImmutableDictionary<string, object> data,
+
+            string id,
 
             string label,
 
@@ -31,15 +33,13 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial.Outputs
 
             Rocket.Surgery.OnePasswordNativeUnofficial.FieldType type,
 
-            string uuid,
-
             string value)
         {
             Data = data;
+            Id = id;
             Label = label;
             Reference = reference;
             Type = type;
-            Uuid = uuid;
             Value = value;
         }
     }

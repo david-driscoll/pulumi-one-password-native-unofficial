@@ -19,7 +19,7 @@ __all__ = [
 
 @pulumi.output_type
 class GetOutdoorLicenseResult:
-    def __init__(__self__, approved_wildlife=None, attachments=None, category=None, country=None, expires=None, fields=None, full_name=None, maximum_quota=None, notes=None, references=None, sections=None, state=None, tags=None, title=None, urls=None, uuid=None, valid_from=None, vault=None):
+    def __init__(__self__, approved_wildlife=None, attachments=None, category=None, country=None, expires=None, fields=None, full_name=None, id=None, maximum_quota=None, notes=None, references=None, sections=None, state=None, tags=None, title=None, urls=None, valid_from=None, vault=None):
         if approved_wildlife and not isinstance(approved_wildlife, str):
             raise TypeError("Expected argument 'approved_wildlife' to be a str")
         pulumi.set(__self__, "approved_wildlife", approved_wildlife)
@@ -41,6 +41,9 @@ class GetOutdoorLicenseResult:
         if full_name and not isinstance(full_name, str):
             raise TypeError("Expected argument 'full_name' to be a str")
         pulumi.set(__self__, "full_name", full_name)
+        if id and not isinstance(id, str):
+            raise TypeError("Expected argument 'id' to be a str")
+        pulumi.set(__self__, "id", id)
         if maximum_quota and not isinstance(maximum_quota, str):
             raise TypeError("Expected argument 'maximum_quota' to be a str")
         pulumi.set(__self__, "maximum_quota", maximum_quota)
@@ -65,9 +68,6 @@ class GetOutdoorLicenseResult:
         if urls and not isinstance(urls, list):
             raise TypeError("Expected argument 'urls' to be a list")
         pulumi.set(__self__, "urls", urls)
-        if uuid and not isinstance(uuid, str):
-            raise TypeError("Expected argument 'uuid' to be a str")
-        pulumi.set(__self__, "uuid", uuid)
         if valid_from and not isinstance(valid_from, str):
             raise TypeError("Expected argument 'valid_from' to be a str")
         pulumi.set(__self__, "valid_from", valid_from)
@@ -109,6 +109,14 @@ class GetOutdoorLicenseResult:
     @pulumi.getter(name="fullName")
     def full_name(self) -> Optional[str]:
         return pulumi.get(self, "full_name")
+
+    @property
+    @pulumi.getter
+    def id(self) -> str:
+        """
+        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        """
+        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter(name="maximumQuota")
@@ -157,14 +165,6 @@ class GetOutdoorLicenseResult:
         return pulumi.get(self, "urls")
 
     @property
-    @pulumi.getter
-    def uuid(self) -> str:
-        """
-        The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        """
-        return pulumi.get(self, "uuid")
-
-    @property
     @pulumi.getter(name="validFrom")
     def valid_from(self) -> Optional[str]:
         return pulumi.get(self, "valid_from")
@@ -188,6 +188,7 @@ class AwaitableGetOutdoorLicenseResult(GetOutdoorLicenseResult):
             expires=self.expires,
             fields=self.fields,
             full_name=self.full_name,
+            id=self.id,
             maximum_quota=self.maximum_quota,
             notes=self.notes,
             references=self.references,
@@ -196,25 +197,24 @@ class AwaitableGetOutdoorLicenseResult(GetOutdoorLicenseResult):
             tags=self.tags,
             title=self.title,
             urls=self.urls,
-            uuid=self.uuid,
             valid_from=self.valid_from,
             vault=self.vault)
 
 
-def get_outdoor_license(title: Optional[str] = None,
-                        uuid: Optional[str] = None,
+def get_outdoor_license(id: Optional[str] = None,
+                        title: Optional[str] = None,
                         vault: Optional[str] = None,
                         opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetOutdoorLicenseResult:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     __args__ = dict()
+    __args__['id'] = id
     __args__['title'] = title
-    __args__['uuid'] = uuid
     __args__['vault'] = vault
     if opts is None:
         opts = pulumi.InvokeOptions()
@@ -232,6 +232,7 @@ def get_outdoor_license(title: Optional[str] = None,
         expires=__ret__.expires,
         fields=__ret__.fields,
         full_name=__ret__.full_name,
+        id=__ret__.id,
         maximum_quota=__ret__.maximum_quota,
         notes=__ret__.notes,
         references=__ret__.references,
@@ -240,21 +241,20 @@ def get_outdoor_license(title: Optional[str] = None,
         tags=__ret__.tags,
         title=__ret__.title,
         urls=__ret__.urls,
-        uuid=__ret__.uuid,
         valid_from=__ret__.valid_from,
         vault=__ret__.vault)
 
 
 @_utilities.lift_output_func(get_outdoor_license)
-def get_outdoor_license_output(title: Optional[pulumi.Input[Optional[str]]] = None,
-                               uuid: Optional[pulumi.Input[Optional[str]]] = None,
+def get_outdoor_license_output(id: Optional[pulumi.Input[Optional[str]]] = None,
+                               title: Optional[pulumi.Input[Optional[str]]] = None,
                                vault: Optional[pulumi.Input[str]] = None,
                                opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetOutdoorLicenseResult]:
     """
     Use this data source to access information about an existing resource.
 
+    :param str id: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-    :param str uuid: The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
     :param str vault: The UUID of the vault the item is in.
     """
     ...

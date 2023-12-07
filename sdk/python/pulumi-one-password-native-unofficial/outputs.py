@@ -21,14 +21,19 @@ __all__ = [
 @pulumi.output_type
 class OutputAttachment(dict):
     def __init__(__self__, *,
+                 id: str,
                  name: str,
                  reference: str,
-                 size: int,
-                 uuid: str):
+                 size: int):
+        pulumi.set(__self__, "id", id)
         pulumi.set(__self__, "name", name)
         pulumi.set(__self__, "reference", reference)
         pulumi.set(__self__, "size", size)
-        pulumi.set(__self__, "uuid", uuid)
+
+    @property
+    @pulumi.getter
+    def id(self) -> str:
+        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter
@@ -45,32 +50,32 @@ class OutputAttachment(dict):
     def size(self) -> int:
         return pulumi.get(self, "size")
 
-    @property
-    @pulumi.getter
-    def uuid(self) -> str:
-        return pulumi.get(self, "uuid")
-
 
 @pulumi.output_type
 class OutputField(dict):
     def __init__(__self__, *,
                  data: Mapping[str, Any],
+                 id: str,
                  label: str,
                  reference: str,
                  type: 'FieldType',
-                 uuid: str,
                  value: str):
         pulumi.set(__self__, "data", data)
+        pulumi.set(__self__, "id", id)
         pulumi.set(__self__, "label", label)
         pulumi.set(__self__, "reference", reference)
         pulumi.set(__self__, "type", type)
-        pulumi.set(__self__, "uuid", uuid)
         pulumi.set(__self__, "value", value)
 
     @property
     @pulumi.getter
     def data(self) -> Mapping[str, Any]:
         return pulumi.get(self, "data")
+
+    @property
+    @pulumi.getter
+    def id(self) -> str:
+        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter
@@ -86,11 +91,6 @@ class OutputField(dict):
     @pulumi.getter
     def type(self) -> 'FieldType':
         return pulumi.get(self, "type")
-
-    @property
-    @pulumi.getter
-    def uuid(self) -> str:
-        return pulumi.get(self, "uuid")
 
     @property
     @pulumi.getter
@@ -118,14 +118,19 @@ class OutputReference(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
+                 id: str,
                  item_id: str,
                  label: str,
-                 reference: str,
-                 uuid: str):
+                 reference: str):
+        pulumi.set(__self__, "id", id)
         pulumi.set(__self__, "item_id", item_id)
         pulumi.set(__self__, "label", label)
         pulumi.set(__self__, "reference", reference)
-        pulumi.set(__self__, "uuid", uuid)
+
+    @property
+    @pulumi.getter
+    def id(self) -> str:
+        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter(name="itemId")
@@ -142,22 +147,17 @@ class OutputReference(dict):
     def reference(self) -> str:
         return pulumi.get(self, "reference")
 
-    @property
-    @pulumi.getter
-    def uuid(self) -> str:
-        return pulumi.get(self, "uuid")
-
 
 @pulumi.output_type
 class OutputSection(dict):
     def __init__(__self__, *,
                  fields: Mapping[str, 'outputs.OutputField'],
+                 id: str,
                  label: str,
-                 uuid: str,
                  attachments: Optional[Mapping[str, 'outputs.OutputAttachment']] = None):
         pulumi.set(__self__, "fields", fields)
+        pulumi.set(__self__, "id", id)
         pulumi.set(__self__, "label", label)
-        pulumi.set(__self__, "uuid", uuid)
         if attachments is not None:
             pulumi.set(__self__, "attachments", attachments)
 
@@ -168,13 +168,13 @@ class OutputSection(dict):
 
     @property
     @pulumi.getter
-    def label(self) -> str:
-        return pulumi.get(self, "label")
+    def id(self) -> str:
+        return pulumi.get(self, "id")
 
     @property
     @pulumi.getter
-    def uuid(self) -> str:
-        return pulumi.get(self, "uuid")
+    def label(self) -> str:
+        return pulumi.get(self, "label")
 
     @property
     @pulumi.getter

@@ -23,16 +23,16 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
     public sealed class GetWirelessRouterArgs : Pulumi.InvokeArgs
     {
         /// <summary>
+        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        /// </summary>
+        [Input("id")]
+        public string? Id { get; set; }
+
+        /// <summary>
         /// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         /// </summary>
         [Input("title")]
         public string? Title { get; set; }
-
-        /// <summary>
-        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        /// </summary>
-        [Input("uuid")]
-        public string? Uuid { get; set; }
 
         /// <summary>
         /// The UUID of the vault the item is in.
@@ -48,16 +48,16 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
     public sealed class GetWirelessRouterInvokeArgs : Pulumi.InvokeArgs
     {
         /// <summary>
+        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        /// </summary>
+        [Input("id")]
+        public Input<string>? Id { get; set; }
+
+        /// <summary>
         /// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
         /// </summary>
         [Input("title")]
         public Input<string>? Title { get; set; }
-
-        /// <summary>
-        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        /// </summary>
-        [Input("uuid")]
-        public Input<string>? Uuid { get; set; }
 
         /// <summary>
         /// The UUID of the vault the item is in.
@@ -81,6 +81,10 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         public readonly string? BaseStationPassword;
         public readonly string Category;
         public readonly ImmutableDictionary<string, Outputs.OutputField> Fields;
+        /// <summary>
+        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
+        /// </summary>
+        public readonly string Id;
         public readonly string? NetworkName;
         public readonly string? Notes;
         public readonly ImmutableArray<Outputs.OutputReference> References;
@@ -95,10 +99,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// </summary>
         public readonly string Title;
         public readonly ImmutableArray<Outputs.OutputUrl> Urls;
-        /// <summary>
-        /// The UUID of the item to retrieve. This field will be populated with the UUID of the item if the item it looked up by its title.
-        /// </summary>
-        public readonly string Uuid;
         public readonly ImmutableDictionary<string, string> Vault;
         public readonly string? WirelessNetworkPassword;
         public readonly string? WirelessSecurity;
@@ -119,6 +119,8 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
 
             ImmutableDictionary<string, Outputs.OutputField> fields,
 
+            string id,
+
             string? networkName,
 
             string? notes,
@@ -135,8 +137,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
 
             ImmutableArray<Outputs.OutputUrl> urls,
 
-            string uuid,
-
             ImmutableDictionary<string, string> vault,
 
             string? wirelessNetworkPassword,
@@ -150,6 +150,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
             BaseStationPassword = baseStationPassword;
             Category = category;
             Fields = fields;
+            Id = id;
             NetworkName = networkName;
             Notes = notes;
             References = references;
@@ -158,7 +159,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
             Tags = tags;
             Title = title;
             Urls = urls;
-            Uuid = uuid;
             Vault = vault;
             WirelessNetworkPassword = wirelessNetworkPassword;
             WirelessSecurity = wirelessSecurity;
