@@ -9,16 +9,16 @@ from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = [
-    'GetAttachmentResult',
-    'AwaitableGetAttachmentResult',
-    'get_attachment',
-    'get_attachment_output',
+    'ReadResult',
+    'AwaitableReadResult',
+    'read',
+    'read_output',
 ]
 
 @pulumi.output_type
-class GetAttachmentResult:
+class ReadResult:
     """
-    The attachment
+    The resolved reference value
     """
     def __init__(__self__, value=None):
         if value and not isinstance(value, str):
@@ -31,21 +31,21 @@ class GetAttachmentResult:
         return pulumi.get(self, "value")
 
 
-class AwaitableGetAttachmentResult(GetAttachmentResult):
+class AwaitableReadResult(ReadResult):
     # pylint: disable=using-constant-test
     def __await__(self):
         if False:
             yield self
-        return GetAttachmentResult(
+        return ReadResult(
             value=self.value)
 
 
-def get_attachment(reference: Optional[str] = None,
-                   opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetAttachmentResult:
+def read(reference: Optional[str] = None,
+         opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableReadResult:
     """
     Use this data source to access information about an existing resource.
 
-    :param str reference: The 1Password secret reference path to the attachment.  eg: op://vault/item/[section]/file 
+    :param str reference: The 1Password secret reference path to the item.  eg: op://vault/item/[section]/field 
     """
     __args__ = dict()
     __args__['reference'] = reference
@@ -55,18 +55,18 @@ def get_attachment(reference: Optional[str] = None,
         opts.version = _utilities.get_version()
         if opts.plugin_download_url is None:
             opts.plugin_download_url = _utilities.get_plugin_download_url()
-    __ret__ = pulumi.runtime.invoke('one-password-native-unofficial:index:GetAttachment', __args__, opts=opts, typ=GetAttachmentResult).value
+    __ret__ = pulumi.runtime.invoke('one-password-native-unofficial:index:Read', __args__, opts=opts, typ=ReadResult).value
 
-    return AwaitableGetAttachmentResult(
+    return AwaitableReadResult(
         value=__ret__.value)
 
 
-@_utilities.lift_output_func(get_attachment)
-def get_attachment_output(reference: Optional[pulumi.Input[str]] = None,
-                          opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetAttachmentResult]:
+@_utilities.lift_output_func(read)
+def read_output(reference: Optional[pulumi.Input[str]] = None,
+                opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[ReadResult]:
     """
     Use this data source to access information about an existing resource.
 
-    :param str reference: The 1Password secret reference path to the attachment.  eg: op://vault/item/[section]/file 
+    :param str reference: The 1Password secret reference path to the item.  eg: op://vault/item/[section]/field 
     """
     ...

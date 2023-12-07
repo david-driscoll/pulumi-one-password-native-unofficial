@@ -11,6 +11,7 @@ import (
 )
 
 type Field struct {
+	Label *string    `pulumi:"label"`
 	Type  *FieldType `pulumi:"type"`
 	Value string     `pulumi:"value"`
 }
@@ -40,8 +41,9 @@ type FieldInput interface {
 }
 
 type FieldArgs struct {
-	Type  FieldTypePtrInput  `pulumi:"type"`
-	Value pulumi.StringInput `pulumi:"value"`
+	Label pulumi.StringPtrInput `pulumi:"label"`
+	Type  FieldTypePtrInput     `pulumi:"type"`
+	Value pulumi.StringInput    `pulumi:"value"`
 }
 
 func (FieldArgs) ElementType() reflect.Type {
@@ -93,6 +95,10 @@ func (o FieldOutput) ToFieldOutput() FieldOutput {
 
 func (o FieldOutput) ToFieldOutputWithContext(ctx context.Context) FieldOutput {
 	return o
+}
+
+func (o FieldOutput) Label() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Field) *string { return v.Label }).(pulumi.StringPtrOutput)
 }
 
 func (o FieldOutput) Type() FieldTypePtrOutput {

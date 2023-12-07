@@ -8,6 +8,7 @@ using pulumi_resource_one_password_native_unofficial.Domain;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 using Serilog;
 using static pulumi_resource_one_password_native_unofficial.TemplateMetadata;
+using System.Text.Json.Serialization;
 
 namespace pulumi_resource_one_password_native_unofficial;
 
@@ -58,8 +59,10 @@ public class OnePasswordProvider : Provider
         var olds = resourceType.TransformInputs(request.OldState);
 
         var diff = olds.CreatePatch(news, new JsonSerializerOptions()
-            {
-            })
+        {
+            PropertyNameCaseInsensitive = true,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+        })
             .Operations;
 
         var replaces = new List<string>();
@@ -165,21 +168,153 @@ public class OnePasswordProvider : Provider
         await _op.Items.Delete(new(request.Id), ct);
     }
 
+    public override Task<InvokeResponse> Invoke(InvokeRequest request, CancellationToken ct)
+    {
+        if (GetFunctionType(request.Tok) is not { } functionType) throw new Exception($"unknown resource type {request.Tok}");
+        DebugHelper.WaitForDebugger();
+
+        return request.Tok switch
+        {
+            "one-password-native-unofficial:index:GetVault" => GetVault(functionType, request.Args, ct),
+            "one-password-native-unofficial:index:Inject" => Inject(functionType, request.Args, ct),
+            "one-password-native-unofficial:index:GetSecretReference" or "one-password-native-unofficial:index:Read" or "one-password-native-unofficial:index:GetAttachment" => Read(functionType, request.Args, ct),
+            _ => GetItem(functionType, request.Args, ct)
+        };
+    }
+
+    private async Task<InvokeResponse> GetVault(FunctionType functionType, ImmutableDictionary<string, PropertyValue> inputs, CancellationToken ct)
+    {
+        var failures = new List<CheckFailure>();
+        if (!inputs.ContainsKey("vault") && _op.Options.Vault is null)
+        {
+            failures.Add(new CheckFailure("vault", "Must give a vault in order to get a Vault"));
+        }
+        if (failures.Count > 0)
+        {
+            return new() { Failures = failures, };
+        }
+
+        var result = await _op.Vaults.Get(GetStringValue(inputs, "vault"));
+
+        return new() { Return = new Dictionary<string, PropertyValue> { { "name", new(result.Name) }, { "uuid", new(result.Id) } } };
+    }
+
+    private async Task<InvokeResponse> GetItem(FunctionType functionType, ImmutableDictionary<string, PropertyValue> inputs, CancellationToken ct)
+    {
+        var failures = new List<CheckFailure>();
+        if (!inputs.ContainsKey("id"))
+        {
+            failures.Add(new CheckFailure("id", "Must give a id in order to get an Item"));
+        }
+        if (!inputs.ContainsKey("vault") && _op.Options.Vault is null)
+        {
+            failures.Add(new CheckFailure("vault", "Must give a vault in order to get an Item"));
+        }
+        if (failures.Count > 0)
+        {
+            return new() { Failures = failures, };
+        }
+
+        var response = await _op.Items.Get(new() { Vault = GetStringValue(inputs, "vault"), Id = GetStringValue(inputs, "id")! }, ct);
+
+        return new() { Return = functionType.TransformOutputs(response) };
+    }
+
+    private async Task<InvokeResponse> Inject(FunctionType functionType, ImmutableDictionary<string, PropertyValue> inputs, CancellationToken ct)
+    {
+        var failures = new List<CheckFailure>();
+        if (!inputs.ContainsKey("template"))
+        {
+            failures.Add(new CheckFailure("template", "Must give a template to inject values into"));
+        }
+        if (failures.Count > 0)
+        {
+            return new() { Failures = failures, };
+        }
+
+        var response = await _op.Inject(GetStringValue(inputs, "template")!, ct);
+
+        return new() { Return = ImmutableDictionary.Create<string, PropertyValue>().Add("result", new(response)) };
+    }
+
+    private async Task<InvokeResponse> Read(FunctionType functionType, ImmutableDictionary<string, PropertyValue> inputs, CancellationToken ct)
+    {
+        var failures = new List<CheckFailure>();
+        if (!inputs.ContainsKey("reference"))
+        {
+            failures.Add(new CheckFailure("reference", "Must give a secret reference to get"));
+        }
+        if (failures.Count > 0)
+        {
+            return new() { Failures = failures, };
+        }
+
+        var value = await _op.Read(GetStringValue(inputs, "reference")!, ct);
+
+        return new() { Return = ImmutableDictionary.Create<string, PropertyValue>().Add("value", new(value)) };
+    }
+
+    /*
+
+    private getSecretReference(inputs: { reference: string }): provider.InvokeResult {
+        const failures: provider.CheckFailure[] = [];
+        if (!inputs.reference) failures.push({ property: 'reference', reason: `Must give a reference in order to get an field by reference uri` });
+        if (failures.length > 0) {
+            return { failures };
+        }
+
+        ensure1PasswordEnvironmentVariables(this.config);
+        const result = read.parse(inputs.reference);
+        return {
+            outputs: {
+                value: result
+            }
+        }
+    }
+
+    private getAttachment(inputs: { reference?: string; }): provider.InvokeResult {
+        const failures: provider.CheckFailure[] = [];
+        if (!inputs.reference) failures.push(
+            { property: 'reference', reason: `Must give the reference path for in order to get an Attachment` }
+        );
+        if (failures.length > 0) {
+            return { failures };
+        const result = read.parse(inputs.reference!);
+        return {
+            outputs: {
+                value: result
+            }
+        }
+    }
+
+     */
+
+    public override async Task<ReadResponse> Read(ReadRequest request, CancellationToken ct)
+    {
+        if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
+        DebugHelper.WaitForDebugger();
+
+        var response = await _op.Items.Get(new() { Id = GetStringValue(request.Inputs, "id"), Vault = GetStringValue(request.Inputs, "vault") }, ct);
+        return new()
+        {
+            Id = response.Id,
+            Properties = resourceType.TransformOutputs(response, null),
+        };
+    }
+
+    // public override Task<GetSchemaResponse> GetSchema(GetSchemaRequest request, CancellationToken ct)
+    // {
+    //     return base.GetSchema(request, ct);
+    // }
+
     public override async Task<ConfigureResponse> Configure(ConfigureRequest request, CancellationToken ct)
     {
         DebugHelper.WaitForDebugger();
         await Task.Yield();
 
 
-        var news = ConfigExtensions.ConvertToConfig(request.Args);
-        var options = new OnePasswordOptions()
-        {
-            Vault = news.Vault,
-            ServiceAccountToken = news.ServiceAccountToken,
-            ConnectHost = news.ConnectHost,
-            ConnectToken = news.ConnectToken,
-        };
-        _op = new OnePassword(options);
+        var options = ConfigExtensions.ConvertToConfig(request.Args);
+        _op = new OnePassword(options, _logger);
         return new()
         {
             AcceptOutputs = true,
@@ -196,25 +331,16 @@ public class OnePasswordProvider : Provider
         var failures = new List<CheckFailure>();
 
         var news = ConfigExtensions.ConvertToConfig(request.NewInputs);
-        var outputs = request.NewInputs;
-        if (request.NewInputs.TryGetValue("vault", out var vault) && vault.TryGetString(out var v) && !string.IsNullOrWhiteSpace(v))
+        try
         {
-            outputs = outputs.Add("vault", new(v));
+            await new OnePassword(news, _logger).WhoAmI(ct);
+        }
+        catch (Exception e)
+        {
+            failures.Add(new CheckFailure("serviceAccountToken", $"Service Account Token or Connect Host/Token must be set # {e.Message}"));
         }
 
-        var pass = news is { ConnectHost.Length: > 0, ConnectToken.Length: > 0 } || news is { ServiceAccountToken.Length: > 0 };
-
-        if (!pass)
-        {
-            failures.Add(new CheckFailure("serviceAccountToken", "Service Account Token or Connect Host/Token must be set"));
-            failures.Add(new CheckFailure("connectToken", "Service Account Token or Connect Host/Token must be set"));
-        }
-
-        return new CheckResponse()
-        {
-            Inputs = outputs,
-            Failures = pass ? new List<CheckFailure>() : failures
-        };
+        return new CheckResponse() { Inputs = request.NewInputs, Failures = failures };
     }
 
     public override async Task<DiffResponse> DiffConfig(DiffRequest request, CancellationToken ct)
@@ -226,8 +352,10 @@ public class OnePasswordProvider : Provider
         var news = ConfigExtensions.ConvertToConfig(request.NewInputs);
 
         var diff = olds.CreatePatch(news, new JsonSerializerOptions()
-            {
-            })
+        {
+            PropertyNameCaseInsensitive = true,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+        })
             .Operations;
 
         var diffs = new List<string>();

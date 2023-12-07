@@ -41,6 +41,7 @@ from .get_ssh_key import *
 from .get_vault import *
 from .get_wireless_router import *
 from .identity_item import *
+from .inject import *
 from .item import *
 from .login_item import *
 from .medical_record_item import *
@@ -49,6 +50,7 @@ from .outdoor_license_item import *
 from .passport_item import *
 from .password_item import *
 from .provider import *
+from .read import *
 from .reward_program_item import *
 from .secure_note_item import *
 from .server_item import *

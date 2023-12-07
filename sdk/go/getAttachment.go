@@ -21,11 +21,11 @@ func GetAttachment(ctx *pulumi.Context, args *GetAttachmentArgs, opts ...pulumi.
 }
 
 type GetAttachmentArgs struct {
-	// The 1Password secret reference path to the item.  eg: op://vault/item/[section]/file
+	// The 1Password secret reference path to the attachment.  eg: op://vault/item/[section]/file
 	Reference string `pulumi:"reference"`
 }
 
-// The resolved reference value
+// The attachment
 type GetAttachmentResult struct {
 	Value *string `pulumi:"value"`
 }
@@ -44,7 +44,7 @@ func GetAttachmentOutput(ctx *pulumi.Context, args GetAttachmentOutputArgs, opts
 }
 
 type GetAttachmentOutputArgs struct {
-	// The 1Password secret reference path to the item.  eg: op://vault/item/[section]/file
+	// The 1Password secret reference path to the attachment.  eg: op://vault/item/[section]/file
 	Reference pulumi.StringInput `pulumi:"reference"`
 }
 
@@ -52,7 +52,7 @@ func (GetAttachmentOutputArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*GetAttachmentArgs)(nil)).Elem()
 }
 
-// The resolved reference value
+// The attachment
 type GetAttachmentResultOutput struct{ *pulumi.OutputState }
 
 func (GetAttachmentResultOutput) ElementType() reflect.Type {

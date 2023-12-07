@@ -17,13 +17,13 @@ export function getAttachment(args: GetAttachmentArgs, opts?: pulumi.InvokeOptio
 
 export interface GetAttachmentArgs {
     /**
-     * The 1Password secret reference path to the item.  eg: op://vault/item/[section]/file 
+     * The 1Password secret reference path to the attachment.  eg: op://vault/item/[section]/file 
      */
     reference: string;
 }
 
 /**
- * The resolved reference value
+ * The attachment
  */
 export interface GetAttachmentResult {
     readonly value?: string;
@@ -35,7 +35,7 @@ export function getAttachmentOutput(args: GetAttachmentOutputArgs, opts?: pulumi
 
 export interface GetAttachmentOutputArgs {
     /**
-     * The 1Password secret reference path to the item.  eg: op://vault/item/[section]/file 
+     * The 1Password secret reference path to the attachment.  eg: op://vault/item/[section]/file 
      */
     reference: pulumi.Input<string>;
 }

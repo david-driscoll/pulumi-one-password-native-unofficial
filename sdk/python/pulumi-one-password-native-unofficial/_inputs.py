@@ -19,8 +19,11 @@ __all__ = [
 class FieldArgs:
     def __init__(__self__, *,
                  value: pulumi.Input[str],
+                 label: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input['FieldType']] = None):
         pulumi.set(__self__, "value", value)
+        if label is not None:
+            pulumi.set(__self__, "label", label)
         if type is None:
             type = 'STRING'
         if type is not None:
@@ -34,6 +37,15 @@ class FieldArgs:
     @value.setter
     def value(self, value: pulumi.Input[str]):
         pulumi.set(self, "value", value)
+
+    @property
+    @pulumi.getter
+    def label(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "label")
+
+    @label.setter
+    def label(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "label", value)
 
     @property
     @pulumi.getter

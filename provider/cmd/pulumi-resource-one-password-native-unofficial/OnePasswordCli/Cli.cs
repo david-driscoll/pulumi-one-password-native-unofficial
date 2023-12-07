@@ -13,6 +13,7 @@ using Google.Protobuf.WellKnownTypes;
 using Microsoft.Extensions.Options;
 using pulumi_resource_one_password_native_unofficial.Domain;
 using Pulumi.Experimental.Provider;
+using Serilog;
 
 namespace pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 
@@ -90,52 +91,114 @@ public record OnePasswordOptions
     }
 }
 
-public abstract class OnePasswordBase(Command command, ArgsBuilder argsBuilder, OnePasswordOptions options, JsonSerializerOptions serializerOptions)
+public abstract class OnePasswordBase(Command command, ArgsBuilder argsBuilder, OnePasswordOptions options, ILogger logger, JsonSerializerOptions serializerOptions)
 {
     private protected JsonSerializerOptions SerializerOptions = serializerOptions;
     private protected readonly OnePasswordOptions Options = options;
     private protected readonly Command Command = command;
     private protected readonly ArgsBuilder ArgsBuilder = argsBuilder;
+    private protected readonly ILogger Logger = logger;
 
-    protected Task<BufferedCommandResult> ExecuteCommand(Command command, CancellationToken cancellationToken) =>
-        command
+    protected Task<BufferedCommandResult> ExecuteCommand(Command command, CancellationToken cancellationToken)
+    {
+        Logger.Information("Executing command: {Command} {Input}", command.Arguments);
+        return command
             .WithEnvironmentVariables(Options.Apply)
             .ExecuteBufferedAsync(cancellationToken);
+    }
+
+    protected Task<BufferedCommandResult> ExecuteCommand(Command command, string standardInput, CancellationToken cancellationToken)
+    {
+        Logger.Information("Executing command: {Command} - {Input}", command.Arguments, standardInput);
+        return command
+            .WithEnvironmentVariables(Options.Apply)
+            .WithStandardInputPipe(PipeSource.FromString(standardInput))
+            .ExecuteBufferedAsync(cancellationToken);
+    }
+
+    protected Task<BufferedCommandResult> ExecuteCommand(Command command, object standardInput, CancellationToken cancellationToken)
+    {
+        return ExecuteCommand(command, JsonSerializer.Serialize(standardInput, SerializerOptions), cancellationToken);
+    }
 }
 
 public class OnePassword : OnePasswordBase
 {
     public OnePasswordOptions Options { get; }
     private readonly Lazy<OnePasswordItems> _items;
+    private readonly Lazy<OnePasswordVaults> _vaults;
 
-    public OnePassword(OnePasswordOptions options) : base(Cli.Wrap("op"), new(), options,
-        new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase })
+    public OnePassword(OnePasswordOptions options, ILogger logger) : base(Cli.Wrap("op"), new(), options, logger,
+        new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            PropertyNameCaseInsensitive = true,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+        })
     {
         Options = options;
-        _items = new Lazy<OnePasswordItems>(() => new(Command, ArgsBuilder, Options, SerializerOptions));
+        _items = new Lazy<OnePasswordItems>(() => new(Command, ArgsBuilder, Options, Logger, SerializerOptions));
+        _vaults = new Lazy<OnePasswordVaults>(() => new(Command, ArgsBuilder, Options, Logger, SerializerOptions));
     }
 
     public OnePasswordItems Items => _items.Value;
+    public OnePasswordVaults Vaults => _vaults.Value;
 
     public async Task<WhoAmIResponse> WhoAmI(CancellationToken cancellationToken = default)
     {
-        var result = await Command
-            .WithEnvironmentVariables(Options.Apply)
-            .WithArguments(ArgsBuilder.Add("whoami").Build())
-            .ExecuteBufferedAsync(cancellationToken);
+        var result = await ExecuteCommand(
+            Command.WithArguments(ArgsBuilder.Add("whoami").Build()),
+            cancellationToken
+        );
+        if (result.ExitCode != 0) throw new Exception(result.StandardError);
 
         // ReSharper disable once NullableWarningSuppressionIsUsed
         return JsonSerializer.Deserialize<WhoAmIResponse>(result.StandardOutput)!;
     }
+
+    public async Task<string> Read(string reference, CancellationToken cancellationToken = default)
+    {
+        var result = await ExecuteCommand(
+            Command.WithArguments(ArgsBuilder.Add("read").Add(reference).Build()),
+            cancellationToken
+        );
+        if (result.ExitCode != 0) throw new Exception(result.StandardError);
+        return result.StandardOutput.TrimEnd();
+    }
+
+    public async Task<string> Inject(string template, CancellationToken cancellationToken = default)
+    {
+        var result = await ExecuteCommand(
+            Command.WithArguments(ArgsBuilder.Add("inject").Build()),
+            template,
+            cancellationToken
+        );
+        if (result.ExitCode != 0) throw new Exception(result.StandardError);
+        return result.StandardOutput.TrimEnd();
+    }
 }
 
-public class OnePasswordItemTemplates(Command command, ArgsBuilder argsBuilder, OnePasswordOptions options, JsonSerializerOptions serializerOptions)
-    : OnePasswordBase(command, argsBuilder.Add("template"), options, serializerOptions);
+public class OnePasswordItemTemplates(Command command, ArgsBuilder argsBuilder, OnePasswordOptions options, ILogger logger, JsonSerializerOptions serializerOptions)
+    : OnePasswordBase(command, argsBuilder.Add("template"), options, logger, serializerOptions);
 
-public class OnePasswordItems(Command command, ArgsBuilder argsBuilder, OnePasswordOptions options, JsonSerializerOptions serializerOptions)
-    : OnePasswordBase(command, argsBuilder.Add("item"), options, serializerOptions)
+public class OnePasswordVaults(Command command, ArgsBuilder argsBuilder, OnePasswordOptions options, ILogger logger, JsonSerializerOptions serializerOptions)
+    : OnePasswordBase(command, argsBuilder.Add("vault"), options, logger, serializerOptions)
 {
-    private readonly Lazy<OnePasswordItemTemplates> _templates = new(() => new(command, argsBuilder, options, serializerOptions));
+    public async Task<VaultResponse> Get(string? vault = null, CancellationToken cancellationToken = default)
+    {
+        var result = await ExecuteCommand(
+            Command.WithArguments(ArgsBuilder.Add("get").Add(vault ?? Options.Vault).Build()),
+            cancellationToken
+        );
+        // ReSharper disable once NullableWarningSuppressionIsUsed
+        return JsonSerializer.Deserialize<VaultResponse>(result.StandardOutput, SerializerOptions)!;
+    }
+}
+
+public class OnePasswordItems(Command command, ArgsBuilder argsBuilder, OnePasswordOptions options, ILogger logger, JsonSerializerOptions serializerOptions)
+    : OnePasswordBase(command, argsBuilder.Add("item"), options, logger, serializerOptions)
+{
+    private readonly Lazy<OnePasswordItemTemplates> _templates = new(() => new(command, argsBuilder, options, logger, serializerOptions));
 
     public async Task<Item.Response> Create(Item.CreateRequest request, TemplateMetadata.Template templateJson, CancellationToken cancellationToken = default)
     {
@@ -153,9 +216,8 @@ public class OnePasswordItems(Command command, ArgsBuilder argsBuilder, OnePassw
             ;
 
         var result = await ExecuteCommand(
-            Command
-                .WithArguments(args.Build())
-                .WithStandardInputPipe(PipeSource.FromString(JsonSerializer.Serialize(templateJson, SerializerOptions))),
+            Command.WithArguments(args.Build()),
+            templateJson,
             cancellationToken
         );
         // ReSharper disable once NullableWarningSuppressionIsUsed
@@ -178,9 +240,8 @@ public class OnePasswordItems(Command command, ArgsBuilder argsBuilder, OnePassw
             ;
 
         var result = await ExecuteCommand(
-            Command
-                .WithArguments(args.Build())
-                .WithStandardInputPipe(PipeSource.FromString(JsonSerializer.Serialize(templateJson, SerializerOptions))),
+            Command.WithArguments(args.Build()),
+            templateJson,
             cancellationToken
         );
         // ReSharper disable once NullableWarningSuppressionIsUsed
@@ -196,14 +257,13 @@ public class OnePasswordItems(Command command, ArgsBuilder argsBuilder, OnePassw
             ;
 
         var result = await ExecuteCommand(
-            Command
-                .WithArguments(args.Build()),
+            Command.WithArguments(args.Build()),
             cancellationToken
         );
         // ReSharper disable once NullableWarningSuppressionIsUsed
         return JsonSerializer.Deserialize<Item.Response>(result.StandardOutput, SerializerOptions)!;
     }
-    
+
     public async Task Delete(Item.DeleteRequest request, CancellationToken cancellationToken = default)
     {
         var args = ArgsBuilder
@@ -213,8 +273,7 @@ public class OnePasswordItems(Command command, ArgsBuilder argsBuilder, OnePassw
             ;
 
         await ExecuteCommand(
-            Command
-                .WithArguments(args.Build()),
+            Command.WithArguments(args.Build()),
             cancellationToken
         );
     }
@@ -246,6 +305,8 @@ public record WhoAmIResponse(
     [property: JsonPropertyName("user_type")]
     string UserType
 );
+
+public record VaultResponse(string Id, string Name);
 
 public record ItemRequestBase
 {
@@ -322,12 +383,12 @@ public static class Item
 
     public class Field
     {
-        public required string Id { get; set; }
-        public required string Label { get; set; }
+        public string? Id { get; set; }
+        public string? Label { get; set; }
         public required string Type { get; set; }
         public string? Purpose { get; set; }
         public Section? Section { get; set; }
-        public required string Value { get; set; }
+        public string? Value { get; set; }
         [JsonExtensionData] public Dictionary<string, JsonElement>? ExtensionData { get; set; }
     }
 

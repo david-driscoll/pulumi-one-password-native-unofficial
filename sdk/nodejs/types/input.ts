@@ -7,6 +7,7 @@ import { input as inputs, output as outputs, enums } from "../types";
 import * as utilities from "../utilities";
 
 export interface FieldArgs {
+    label?: pulumi.Input<string>;
     type?: pulumi.Input<enums.FieldType>;
     value: pulumi.Input<string>;
 }

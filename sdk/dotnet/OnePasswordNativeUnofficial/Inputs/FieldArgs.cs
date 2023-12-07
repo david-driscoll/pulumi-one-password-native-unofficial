@@ -13,6 +13,9 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial.Inputs
 
     public sealed class FieldArgs : Pulumi.ResourceArgs
     {
+        [Input("label")]
+        public Input<string>? Label { get; set; }
+
         [Input("type")]
         public Input<Rocket.Surgery.OnePasswordNativeUnofficial.FieldType>? Type { get; set; }
 

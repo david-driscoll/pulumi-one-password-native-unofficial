@@ -5622,12 +5622,12 @@
                 "description": "The resolved reference value"
             }
         },
-        "one-password-native-unofficial:index:GetAttachment": {
+        "one-password-native-unofficial:index:Read": {
             "inputs": {
                 "properties": {
                     "reference": {
                         "type": "string",
-                        "description": "The 1Password secret reference path to the item.  eg: op://vault/item/[section]/file \n"
+                        "description": "The 1Password secret reference path to the item.  eg: op://vault/item/[section]/field \n"
                     }
                 },
                 "required": [
@@ -5642,6 +5642,50 @@
                     }
                 },
                 "description": "The resolved reference value"
+            }
+        },
+        "one-password-native-unofficial:index:Inject": {
+            "inputs": {
+                "properties": {
+                    "template": {
+                        "type": "string",
+                        "description": "The template that you want transformed with secrets"
+                    }
+                },
+                "required": [
+                    "template"
+                ]
+            },
+            "outputs": {
+                "properties": {
+                    "result": {
+                        "type": "string",
+                        "secret": true
+                    }
+                },
+                "description": "The result template with secrets replaced"
+            }
+        },
+        "one-password-native-unofficial:index:GetAttachment": {
+            "inputs": {
+                "properties": {
+                    "reference": {
+                        "type": "string",
+                        "description": "The 1Password secret reference path to the attachment.  eg: op://vault/item/[section]/file \n"
+                    }
+                },
+                "required": [
+                    "reference"
+                ]
+            },
+            "outputs": {
+                "properties": {
+                    "value": {
+                        "type": "string",
+                        "secret": true
+                    }
+                },
+                "description": "The attachment"
             }
         },
         "one-password-native-unofficial:index:GetAPICredential": {
@@ -9261,6 +9305,9 @@
                 "type": {
                     "$ref": "#/types/one-password-native-unofficial:index:FieldType",
                     "default": "STRING"
+                },
+                "label": {
+                    "type": "string"
                 },
                 "value": {
                     "type": "string",

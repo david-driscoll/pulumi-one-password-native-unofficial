@@ -55,17 +55,23 @@ public static partial class TemplateMetadata
         string ItemCategory,
         TransformOutputs TransformItemToOutputs,
         ImmutableArray<(string field, string? section)> Fields
-    ) : IPulumiItemType;
+    ) : IPulumiItemType
+    {
+        public ImmutableDictionary<string, PropertyValue> TransformOutputs(Item.Response item)
+        {
+            return TransformItemToOutputs(this, item, null);
+        }
+    }
 
     public delegate Inputs TransformInputs(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> properties);
 
-    public delegate ImmutableDictionary<string, PropertyValue> TransformOutputs(ResourceType resourceType, Item.Response template, Inputs? inputs);
+    public delegate ImmutableDictionary<string, PropertyValue> TransformOutputs(IPulumiItemType resourceType, Item.Response template, Inputs? inputs);
 
     public static string? GetStringValue(ImmutableDictionary<string, PropertyValue> values, string fieldName)
     {
-        return values.TryGetValue(fieldName, out var f) && f.TryGetString(out var field) ? field : null;
+        return values.TryGetValue(fieldName, out var f) && f.TryUnwrap(out f) && f.TryGetString(out var field) ? field : null;
     }
-    
+
     public static string? GetVaultName(ImmutableDictionary<string, PropertyValue> values)
     {
         if (GetBoolValue(values, "defaultVault")) return null;
@@ -80,14 +86,34 @@ public static partial class TemplateMetadata
 
     public static bool GetBoolValue(ImmutableDictionary<string, PropertyValue> values, string fieldName)
     {
-        return values.TryGetValue(fieldName, out var f) && f.TryGetBool(out var field) && field;
+        return values.TryGetValue(fieldName, out var f) && f.TryUnwrap(out f) && f.TryGetBool(out var field) && field;
     }
 
     public static ImmutableArray<string> GetArrayValues(ImmutableDictionary<string, PropertyValue> values, string fieldName)
     {
-        return values.TryGetValue(fieldName, out var f) && f.TryGetArray(out var array)
+        return values.TryGetValue(fieldName, out var f) && f.TryUnwrap(out f) && f.TryGetArray(out var array)
             ? array.Select(z => z.TryGetString(out var s) ? s! : "").Where(z => !string.IsNullOrWhiteSpace(z)).ToImmutableArray()
             : ImmutableArray<string>.Empty;
+    }
+
+    public static ImmutableArray<string> GetUrlValues(ImmutableDictionary<string, PropertyValue> values, string fieldName)
+    {
+        var result = new List<string>();
+        if (values.TryGetValue(fieldName, out var f) && f.TryUnwrap(out f) && f.TryGetArray(out var array))
+        {
+            foreach (var item in array)
+            {
+                if (item.TryGetObject(out var obj) && obj.TryGetValue("href", out var href) && href.TryGetString(out var hrefString))
+                {
+                    result.Add(hrefString!);
+                }
+                else if (item.TryGetString(out var s))
+                {
+                    result.Add(s!);
+                }
+            }
+        }
+        return result.ToImmutableArray();
     }
 
 
@@ -97,13 +123,14 @@ public static partial class TemplateMetadata
 
         return AssignFields(root, wellKnownFields)
             .Concat(AssignAttachments(root, wellKnownFields))
+            .Concat(AssignReferences(root))
             .Concat(AssignSections(root, wellKnownFields))
             .ToArray();
     }
 
     public static void AssignCommonOutputs(
         ImmutableDictionary<string, PropertyValue>.Builder outputs,
-        ResourceType resourceType,
+        IPulumiItemType resourceType,
         Item.Response item,
         Inputs inputs
     )
@@ -190,10 +217,11 @@ public static partial class TemplateMetadata
         static ImmutableDictionary<string, PropertyValue> CreateField(Item.Response item, Item.Field field)
         {
             return ImmutableDictionary.Create<string, PropertyValue>()
-                .Add("value", new(field.Value))
+                .Add("id", field.Id is null ? PropertyValue.Null : new(field.Id))
+                .Add("value", field.Value is null ? PropertyValue.Null : new(field.Value))
                 .Add("purpose", field.Purpose is null ? PropertyValue.Null : new(field.Purpose))
-                .Add("type", new(field.Type))
-                .Add("label", new(field.Label))
+                .Add("type", field.Purpose is null ? PropertyValue.Null : new(field.Type))
+                .Add("label", field.Label is null ? PropertyValue.Null : new(field.Label))
                 .Add("reference", new(MakeReference(item, field)));
         }
 
@@ -207,9 +235,9 @@ public static partial class TemplateMetadata
             hash: asset.hash
              */
             return ImmutableDictionary.Create<string, PropertyValue>()
+                .Add("id", new(field.Id))
                 .Add("name", new(field.Name))
                 .Add("size", new(field.Size))
-                .Add("id", new(field.Id))
                 // have to get from the input fields.
                 .Add("hash", new(inputs.Fields.Single(z => z.Section?.Id == field.Section?.Id && z.Id == field.Name).Value))
                 .Add("reference", new(MakeReference(item, field)));
@@ -237,34 +265,64 @@ public static partial class TemplateMetadata
         if (!f.TryUnwrap(out f)) yield break;
         if (!f.TryGetObject(out var fields)) yield break;
 
-        var fieldsAlreadyAdded = values.Select(z => z.Id).ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
+        var fieldsAlreadyAdded = values.Select(z => z.Label).ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
         foreach (var field in fields)
         {
             if (fieldsAlreadyAdded.Contains(field.Key)) continue;
             if (!field.Value.TryGetObject(out var data)) continue;
-            string? value = GetObjectStringValue(data, "value");
-            string? type = GetObjectStringValue(data, "type");
-            string? label = GetObjectStringValue(data, "label");
 
-            yield return new TemplateField()
+            yield return CreateTemplateField(data, field.Key, section);
+        }
+    }
+
+    public static IEnumerable<TemplateField> AssignReferences(ImmutableDictionary<string, PropertyValue> root, TemplateSection? section = null)
+    {
+        if (!root.TryGetValue("references", out var f)) yield break;
+        if (!f.TryUnwrap(out f)) yield break;
+        if (!f.TryGetArray(out var fields)) yield break;
+
+        foreach (var field in fields)
+        {
+            if (!field.TryGetObject(out var data)) continue;
+            yield return CreateTemplateField(data, null, section);
+        }
+    }
+
+    public static TemplateField CreateTemplateField(ImmutableDictionary<string, PropertyValue> data, string? id, TemplateSection? section = null)
+    {
+        id ??= GetObjectStringValue(data, "id");
+        string? value = GetObjectStringValue(data, "value");
+        string? type = GetObjectStringValue(data, "type");
+        string? label = GetObjectStringValue(data, "label");
+        if (section is null && data.TryGetValue("section", out var sectionValue) && sectionValue.TryGetObject(out var sectionData))
+        {
+            section = new TemplateSection()
             {
-                Id = field.Key,
-                Value = value ?? "",
-                Label = label ?? field.Key,
-                Type = type,
-                Section = section
+                Id = GetObjectStringValue(sectionData, "id"),
+                Label = GetObjectStringValue(sectionData, "label"),
             };
         }
+        // string? purpose = GetObjectStringValue(data, "purpose");
+
+        return new TemplateField()
+        {
+            Id = id,
+            Value = value ?? "",
+            Label = label ?? id,
+            Type = type,
+            Section = section
+        };
     }
 
     public static IEnumerable<TemplateField> AssignAttachments(ImmutableDictionary<string, PropertyValue> root, IReadOnlyList<TemplateField> values,
         TemplateSection? section = null)
     {
         if (!root.TryGetValue("attachments", out var f)) yield break;
+        if (!f.TryUnwrap(out f)) yield break;
         if (!f.TryGetObject(out var attachments)) yield break;
         var filesAlreadyAdded = values.Where(z => z.Type?.Equals("file", StringComparison.OrdinalIgnoreCase) == true).Select(z => z.Id)
             .ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
-        // might need to be done through assignments?   
+        // might need to be done through assignments?
 
         var fieldsAlreadyAdded = values.Select(z => z.Id).ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
         foreach (var attachment in attachments)
@@ -289,6 +347,7 @@ public static partial class TemplateMetadata
     public static IEnumerable<TemplateField> AssignSections(ImmutableDictionary<string, PropertyValue> root, IReadOnlyList<TemplateField> values)
     {
         if (!root.TryGetValue("sections", out var f)) yield break;
+        if (!f.TryUnwrap(out f)) yield break;
         if (!f.TryGetObject(out var sections)) yield break;
 
         var fieldsAlreadyAdded = values.Where(z => z.Section is not null).Select(z => $"{z.Id}:{z.Section?.Id}")
@@ -367,6 +426,7 @@ public static partial class TemplateMetadata
     public static ImmutableDictionary<string, PropertyValue>? GetSection(ImmutableDictionary<string, PropertyValue> root, string name)
     {
         if (!root.TryGetValue("sections", out var f)) return null;
+        if (!f.TryUnwrap(out f)) return null;
         if (!f.TryGetObject(out var sections)) return null;
         // ReSharper disable once NullableWarningSuppressionIsUsed
         if (!sections!.TryGetValue(name, out var v)) return null;
@@ -398,14 +458,14 @@ public static partial class TemplateMetadata
 
     public class TemplateSection
     {
-        public required string Id { get; set; }
+        public string? Id { get; set; }
         public string? Label { get; set; }
     }
 
     public record TemplateField
     {
-        public required string Id { get; set; }
-        public required string Label { get; set; }
+        public string? Id { get; set; }
+        public string? Label { get; set; }
         public string? Type { get; set; }
         public string? Purpose { get; set; }
         public TemplateSection? Section { get; set; }

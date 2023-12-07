@@ -7,12 +7,12 @@ namespace pulumi_resource_one_password_native_unofficial;
 public static partial class TemplateMetadata
 {
 
-    public static Inputs TransformInputsToAPICredential(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> values)
-    {           
+    public static Inputs TransformInputsToAPICredential(IPulumiItemType resourceType, ImmutableDictionary<string, PropertyValue> values)
+    {
         var title = GetStringValue(values, "title");
         var category = GetStringValue(values, "category")!;
         var vault = GetVaultName(values);
-        var urls = GetArrayValues(values, "urls");
+        var urls = GetUrlValues(values, "urls");
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
@@ -234,8 +234,8 @@ public static partial class TemplateMetadata
             Fields = fields.ToImmutableArray()
         };
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToAPICredential(ResourceType resourceType, Item.Response template, Inputs? inputs) 
-    {    
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToAPICredential(IPulumiItemType resourceType, Item.Response template, Inputs? inputs)
+    {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
@@ -298,12 +298,12 @@ public static partial class TemplateMetadata
     }
     
 
-    public static Inputs TransformInputsToBankAccount(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> values)
-    {           
+    public static Inputs TransformInputsToBankAccount(IPulumiItemType resourceType, ImmutableDictionary<string, PropertyValue> values)
+    {
         var title = GetStringValue(values, "title");
         var category = GetStringValue(values, "category")!;
         var vault = GetVaultName(values);
-        var urls = GetArrayValues(values, "urls");
+        var urls = GetUrlValues(values, "urls");
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
@@ -603,8 +603,8 @@ public static partial class TemplateMetadata
             Fields = fields.ToImmutableArray()
         };
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToBankAccount(ResourceType resourceType, Item.Response template, Inputs? inputs) 
-    {    
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToBankAccount(IPulumiItemType resourceType, Item.Response template, Inputs? inputs)
+    {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
@@ -688,12 +688,12 @@ public static partial class TemplateMetadata
     }
     
 
-    public static Inputs TransformInputsToCreditCard(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> values)
-    {           
+    public static Inputs TransformInputsToCreditCard(IPulumiItemType resourceType, ImmutableDictionary<string, PropertyValue> values)
+    {
         var title = GetStringValue(values, "title");
         var category = GetStringValue(values, "category")!;
         var vault = GetVaultName(values);
-        var urls = GetArrayValues(values, "urls");
+        var urls = GetUrlValues(values, "urls");
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
@@ -1149,8 +1149,8 @@ public static partial class TemplateMetadata
             Fields = fields.ToImmutableArray()
         };
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToCreditCard(ResourceType resourceType, Item.Response template, Inputs? inputs) 
-    {    
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToCreditCard(IPulumiItemType resourceType, Item.Response template, Inputs? inputs)
+    {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
@@ -1276,12 +1276,12 @@ public static partial class TemplateMetadata
     }
     
 
-    public static Inputs TransformInputsToCryptoWallet(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> values)
-    {           
+    public static Inputs TransformInputsToCryptoWallet(IPulumiItemType resourceType, ImmutableDictionary<string, PropertyValue> values)
+    {
         var title = GetStringValue(values, "title");
         var category = GetStringValue(values, "category")!;
         var vault = GetVaultName(values);
-        var urls = GetArrayValues(values, "urls");
+        var urls = GetUrlValues(values, "urls");
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
@@ -1399,8 +1399,8 @@ public static partial class TemplateMetadata
             Fields = fields.ToImmutableArray()
         };
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToCryptoWallet(ResourceType resourceType, Item.Response template, Inputs? inputs) 
-    {    
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToCryptoWallet(IPulumiItemType resourceType, Item.Response template, Inputs? inputs)
+    {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
@@ -1435,12 +1435,12 @@ public static partial class TemplateMetadata
     }
     
 
-    public static Inputs TransformInputsToDatabase(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> values)
-    {           
+    public static Inputs TransformInputsToDatabase(IPulumiItemType resourceType, ImmutableDictionary<string, PropertyValue> values)
+    {
         var title = GetStringValue(values, "title");
         var category = GetStringValue(values, "category")!;
         var vault = GetVaultName(values);
-        var urls = GetArrayValues(values, "urls");
+        var urls = GetUrlValues(values, "urls");
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
@@ -1714,8 +1714,8 @@ public static partial class TemplateMetadata
             Fields = fields.ToImmutableArray()
         };
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToDatabase(ResourceType resourceType, Item.Response template, Inputs? inputs) 
-    {    
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToDatabase(IPulumiItemType resourceType, Item.Response template, Inputs? inputs)
+    {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
@@ -1792,12 +1792,12 @@ public static partial class TemplateMetadata
     }
     
 
-    public static Inputs TransformInputsToDocument(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> values)
-    {           
+    public static Inputs TransformInputsToDocument(IPulumiItemType resourceType, ImmutableDictionary<string, PropertyValue> values)
+    {
         var title = GetStringValue(values, "title");
         var category = GetStringValue(values, "category")!;
         var vault = GetVaultName(values);
-        var urls = GetArrayValues(values, "urls");
+        var urls = GetUrlValues(values, "urls");
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
@@ -1837,8 +1837,8 @@ public static partial class TemplateMetadata
             Fields = fields.ToImmutableArray()
         };
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToDocument(ResourceType resourceType, Item.Response template, Inputs? inputs) 
-    {    
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToDocument(IPulumiItemType resourceType, Item.Response template, Inputs? inputs)
+    {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
@@ -1852,12 +1852,12 @@ public static partial class TemplateMetadata
     }
     
 
-    public static Inputs TransformInputsToDriverLicense(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> values)
-    {           
+    public static Inputs TransformInputsToDriverLicense(IPulumiItemType resourceType, ImmutableDictionary<string, PropertyValue> values)
+    {
         var title = GetStringValue(values, "title");
         var category = GetStringValue(values, "category")!;
         var vault = GetVaultName(values);
-        var urls = GetArrayValues(values, "urls");
+        var urls = GetUrlValues(values, "urls");
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
@@ -2183,8 +2183,8 @@ public static partial class TemplateMetadata
             Fields = fields.ToImmutableArray()
         };
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToDriverLicense(ResourceType resourceType, Item.Response template, Inputs? inputs) 
-    {    
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToDriverLicense(IPulumiItemType resourceType, Item.Response template, Inputs? inputs)
+    {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
@@ -2275,12 +2275,12 @@ public static partial class TemplateMetadata
     }
     
 
-    public static Inputs TransformInputsToEmailAccount(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> values)
-    {           
+    public static Inputs TransformInputsToEmailAccount(IPulumiItemType resourceType, ImmutableDictionary<string, PropertyValue> values)
+    {
         var title = GetStringValue(values, "title");
         var category = GetStringValue(values, "category")!;
         var vault = GetVaultName(values);
-        var urls = GetArrayValues(values, "urls");
+        var urls = GetUrlValues(values, "urls");
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
@@ -2762,8 +2762,8 @@ public static partial class TemplateMetadata
             Fields = fields.ToImmutableArray()
         };
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToEmailAccount(ResourceType resourceType, Item.Response template, Inputs? inputs) 
-    {    
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToEmailAccount(IPulumiItemType resourceType, Item.Response template, Inputs? inputs)
+    {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
@@ -2896,12 +2896,12 @@ public static partial class TemplateMetadata
     }
     
 
-    public static Inputs TransformInputsToIdentity(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> values)
-    {           
+    public static Inputs TransformInputsToIdentity(IPulumiItemType resourceType, ImmutableDictionary<string, PropertyValue> values)
+    {
         var title = GetStringValue(values, "title");
         var category = GetStringValue(values, "category")!;
         var vault = GetVaultName(values);
-        var urls = GetArrayValues(values, "urls");
+        var urls = GetUrlValues(values, "urls");
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
@@ -3591,8 +3591,8 @@ public static partial class TemplateMetadata
             Fields = fields.ToImmutableArray()
         };
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToIdentity(ResourceType resourceType, Item.Response template, Inputs? inputs) 
-    {    
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToIdentity(IPulumiItemType resourceType, Item.Response template, Inputs? inputs)
+    {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
@@ -3781,12 +3781,12 @@ public static partial class TemplateMetadata
     }
     
 
-    public static Inputs TransformInputsToItem(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> values)
-    {           
+    public static Inputs TransformInputsToItem(IPulumiItemType resourceType, ImmutableDictionary<string, PropertyValue> values)
+    {
         var title = GetStringValue(values, "title");
         var category = GetStringValue(values, "category")!;
         var vault = GetVaultName(values);
-        var urls = GetArrayValues(values, "urls");
+        var urls = GetUrlValues(values, "urls");
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
@@ -3826,8 +3826,8 @@ public static partial class TemplateMetadata
             Fields = fields.ToImmutableArray()
         };
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToItem(ResourceType resourceType, Item.Response template, Inputs? inputs) 
-    {    
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToItem(IPulumiItemType resourceType, Item.Response template, Inputs? inputs)
+    {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
@@ -3841,12 +3841,12 @@ public static partial class TemplateMetadata
     }
     
 
-    public static Inputs TransformInputsToLogin(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> values)
-    {           
+    public static Inputs TransformInputsToLogin(IPulumiItemType resourceType, ImmutableDictionary<string, PropertyValue> values)
+    {
         var title = GetStringValue(values, "title");
         var category = GetStringValue(values, "category")!;
         var vault = GetVaultName(values);
-        var urls = GetArrayValues(values, "urls");
+        var urls = GetUrlValues(values, "urls");
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
@@ -3938,8 +3938,8 @@ public static partial class TemplateMetadata
             Fields = fields.ToImmutableArray()
         };
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToLogin(ResourceType resourceType, Item.Response template, Inputs? inputs) 
-    {    
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToLogin(IPulumiItemType resourceType, Item.Response template, Inputs? inputs)
+    {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
@@ -3967,12 +3967,12 @@ public static partial class TemplateMetadata
     }
     
 
-    public static Inputs TransformInputsToMedicalRecord(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> values)
-    {           
+    public static Inputs TransformInputsToMedicalRecord(IPulumiItemType resourceType, ImmutableDictionary<string, PropertyValue> values)
+    {
         var title = GetStringValue(values, "title");
         var category = GetStringValue(values, "category")!;
         var vault = GetVaultName(values);
-        var urls = GetArrayValues(values, "urls");
+        var urls = GetUrlValues(values, "urls");
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
@@ -4220,8 +4220,8 @@ public static partial class TemplateMetadata
             Fields = fields.ToImmutableArray()
         };
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToMedicalRecord(ResourceType resourceType, Item.Response template, Inputs? inputs) 
-    {    
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToMedicalRecord(IPulumiItemType resourceType, Item.Response template, Inputs? inputs)
+    {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
@@ -4291,12 +4291,12 @@ public static partial class TemplateMetadata
     }
     
 
-    public static Inputs TransformInputsToMembership(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> values)
-    {           
+    public static Inputs TransformInputsToMembership(IPulumiItemType resourceType, ImmutableDictionary<string, PropertyValue> values)
+    {
         var title = GetStringValue(values, "title");
         var category = GetStringValue(values, "category")!;
         var vault = GetVaultName(values);
-        var urls = GetArrayValues(values, "urls");
+        var urls = GetUrlValues(values, "urls");
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
@@ -4544,8 +4544,8 @@ public static partial class TemplateMetadata
             Fields = fields.ToImmutableArray()
         };
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToMembership(ResourceType resourceType, Item.Response template, Inputs? inputs) 
-    {    
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToMembership(IPulumiItemType resourceType, Item.Response template, Inputs? inputs)
+    {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
@@ -4615,12 +4615,12 @@ public static partial class TemplateMetadata
     }
     
 
-    public static Inputs TransformInputsToOutdoorLicense(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> values)
-    {           
+    public static Inputs TransformInputsToOutdoorLicense(IPulumiItemType resourceType, ImmutableDictionary<string, PropertyValue> values)
+    {
         var title = GetStringValue(values, "title");
         var category = GetStringValue(values, "category")!;
         var vault = GetVaultName(values);
-        var urls = GetArrayValues(values, "urls");
+        var urls = GetUrlValues(values, "urls");
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
@@ -4842,8 +4842,8 @@ public static partial class TemplateMetadata
             Fields = fields.ToImmutableArray()
         };
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToOutdoorLicense(ResourceType resourceType, Item.Response template, Inputs? inputs) 
-    {    
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToOutdoorLicense(IPulumiItemType resourceType, Item.Response template, Inputs? inputs)
+    {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
@@ -4906,12 +4906,12 @@ public static partial class TemplateMetadata
     }
     
 
-    public static Inputs TransformInputsToPassport(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> values)
-    {           
+    public static Inputs TransformInputsToPassport(IPulumiItemType resourceType, ImmutableDictionary<string, PropertyValue> values)
+    {
         var title = GetStringValue(values, "title");
         var category = GetStringValue(values, "category")!;
         var vault = GetVaultName(values);
-        var urls = GetArrayValues(values, "urls");
+        var urls = GetUrlValues(values, "urls");
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
@@ -5237,8 +5237,8 @@ public static partial class TemplateMetadata
             Fields = fields.ToImmutableArray()
         };
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToPassport(ResourceType resourceType, Item.Response template, Inputs? inputs) 
-    {    
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToPassport(IPulumiItemType resourceType, Item.Response template, Inputs? inputs)
+    {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
@@ -5329,12 +5329,12 @@ public static partial class TemplateMetadata
     }
     
 
-    public static Inputs TransformInputsToPassword(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> values)
-    {           
+    public static Inputs TransformInputsToPassword(IPulumiItemType resourceType, ImmutableDictionary<string, PropertyValue> values)
+    {
         var title = GetStringValue(values, "title");
         var category = GetStringValue(values, "category")!;
         var vault = GetVaultName(values);
-        var urls = GetArrayValues(values, "urls");
+        var urls = GetUrlValues(values, "urls");
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
@@ -5400,8 +5400,8 @@ public static partial class TemplateMetadata
             Fields = fields.ToImmutableArray()
         };
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToPassword(ResourceType resourceType, Item.Response template, Inputs? inputs) 
-    {    
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToPassword(IPulumiItemType resourceType, Item.Response template, Inputs? inputs)
+    {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
@@ -5422,12 +5422,12 @@ public static partial class TemplateMetadata
     }
     
 
-    public static Inputs TransformInputsToRewardProgram(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> values)
-    {           
+    public static Inputs TransformInputsToRewardProgram(IPulumiItemType resourceType, ImmutableDictionary<string, PropertyValue> values)
+    {
         var title = GetStringValue(values, "title");
         var category = GetStringValue(values, "category")!;
         var vault = GetVaultName(values);
-        var urls = GetArrayValues(values, "urls");
+        var urls = GetUrlValues(values, "urls");
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
@@ -5701,8 +5701,8 @@ public static partial class TemplateMetadata
             Fields = fields.ToImmutableArray()
         };
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToRewardProgram(ResourceType resourceType, Item.Response template, Inputs? inputs) 
-    {    
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToRewardProgram(IPulumiItemType resourceType, Item.Response template, Inputs? inputs)
+    {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
@@ -5779,12 +5779,12 @@ public static partial class TemplateMetadata
     }
     
 
-    public static Inputs TransformInputsToSSHKey(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> values)
-    {           
+    public static Inputs TransformInputsToSSHKey(IPulumiItemType resourceType, ImmutableDictionary<string, PropertyValue> values)
+    {
         var title = GetStringValue(values, "title");
         var category = GetStringValue(values, "category")!;
         var vault = GetVaultName(values);
-        var urls = GetArrayValues(values, "urls");
+        var urls = GetUrlValues(values, "urls");
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
@@ -5850,8 +5850,8 @@ public static partial class TemplateMetadata
             Fields = fields.ToImmutableArray()
         };
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToSSHKey(ResourceType resourceType, Item.Response template, Inputs? inputs) 
-    {    
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToSSHKey(IPulumiItemType resourceType, Item.Response template, Inputs? inputs)
+    {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
@@ -5872,12 +5872,12 @@ public static partial class TemplateMetadata
     }
     
 
-    public static Inputs TransformInputsToSecureNote(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> values)
-    {           
+    public static Inputs TransformInputsToSecureNote(IPulumiItemType resourceType, ImmutableDictionary<string, PropertyValue> values)
+    {
         var title = GetStringValue(values, "title");
         var category = GetStringValue(values, "category")!;
         var vault = GetVaultName(values);
-        var urls = GetArrayValues(values, "urls");
+        var urls = GetUrlValues(values, "urls");
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
@@ -5917,8 +5917,8 @@ public static partial class TemplateMetadata
             Fields = fields.ToImmutableArray()
         };
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToSecureNote(ResourceType resourceType, Item.Response template, Inputs? inputs) 
-    {    
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToSecureNote(IPulumiItemType resourceType, Item.Response template, Inputs? inputs)
+    {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
@@ -5932,12 +5932,12 @@ public static partial class TemplateMetadata
     }
     
 
-    public static Inputs TransformInputsToServer(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> values)
-    {           
+    public static Inputs TransformInputsToServer(IPulumiItemType resourceType, ImmutableDictionary<string, PropertyValue> values)
+    {
         var title = GetStringValue(values, "title");
         var category = GetStringValue(values, "category")!;
         var vault = GetVaultName(values);
-        var urls = GetArrayValues(values, "urls");
+        var urls = GetUrlValues(values, "urls");
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
@@ -6237,8 +6237,8 @@ public static partial class TemplateMetadata
             Fields = fields.ToImmutableArray()
         };
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToServer(ResourceType resourceType, Item.Response template, Inputs? inputs) 
-    {    
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToServer(IPulumiItemType resourceType, Item.Response template, Inputs? inputs)
+    {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
@@ -6322,12 +6322,12 @@ public static partial class TemplateMetadata
     }
     
 
-    public static Inputs TransformInputsToSocialSecurityNumber(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> values)
-    {           
+    public static Inputs TransformInputsToSocialSecurityNumber(IPulumiItemType resourceType, ImmutableDictionary<string, PropertyValue> values)
+    {
         var title = GetStringValue(values, "title");
         var category = GetStringValue(values, "category")!;
         var vault = GetVaultName(values);
-        var urls = GetArrayValues(values, "urls");
+        var urls = GetUrlValues(values, "urls");
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
@@ -6419,8 +6419,8 @@ public static partial class TemplateMetadata
             Fields = fields.ToImmutableArray()
         };
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToSocialSecurityNumber(ResourceType resourceType, Item.Response template, Inputs? inputs) 
-    {    
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToSocialSecurityNumber(IPulumiItemType resourceType, Item.Response template, Inputs? inputs)
+    {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
@@ -6448,12 +6448,12 @@ public static partial class TemplateMetadata
     }
     
 
-    public static Inputs TransformInputsToSoftwareLicense(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> values)
-    {           
+    public static Inputs TransformInputsToSoftwareLicense(IPulumiItemType resourceType, ImmutableDictionary<string, PropertyValue> values)
+    {
         var title = GetStringValue(values, "title");
         var category = GetStringValue(values, "category")!;
         var vault = GetVaultName(values);
-        var urls = GetArrayValues(values, "urls");
+        var urls = GetUrlValues(values, "urls");
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
@@ -6831,8 +6831,8 @@ public static partial class TemplateMetadata
             Fields = fields.ToImmutableArray()
         };
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToSoftwareLicense(ResourceType resourceType, Item.Response template, Inputs? inputs) 
-    {    
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToSoftwareLicense(IPulumiItemType resourceType, Item.Response template, Inputs? inputs)
+    {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
@@ -6937,12 +6937,12 @@ public static partial class TemplateMetadata
     }
     
 
-    public static Inputs TransformInputsToWirelessRouter(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> values)
-    {           
+    public static Inputs TransformInputsToWirelessRouter(IPulumiItemType resourceType, ImmutableDictionary<string, PropertyValue> values)
+    {
         var title = GetStringValue(values, "title");
         var category = GetStringValue(values, "category")!;
         var vault = GetVaultName(values);
-        var urls = GetArrayValues(values, "urls");
+        var urls = GetUrlValues(values, "urls");
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
@@ -7190,8 +7190,8 @@ public static partial class TemplateMetadata
             Fields = fields.ToImmutableArray()
         };
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToWirelessRouter(ResourceType resourceType, Item.Response template, Inputs? inputs) 
-    {    
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToWirelessRouter(IPulumiItemType resourceType, Item.Response template, Inputs? inputs)
+    {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {

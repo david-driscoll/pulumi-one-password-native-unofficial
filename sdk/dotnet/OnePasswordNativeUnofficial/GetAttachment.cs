@@ -23,7 +23,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
     public sealed class GetAttachmentArgs : Pulumi.InvokeArgs
     {
         /// <summary>
-        /// The 1Password secret reference path to the item.  eg: op://vault/item/[section]/file 
+        /// The 1Password secret reference path to the attachment.  eg: op://vault/item/[section]/file 
         /// </summary>
         [Input("reference", required: true)]
         public string Reference { get; set; } = null!;
@@ -36,7 +36,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
     public sealed class GetAttachmentInvokeArgs : Pulumi.InvokeArgs
     {
         /// <summary>
-        /// The 1Password secret reference path to the item.  eg: op://vault/item/[section]/file 
+        /// The 1Password secret reference path to the attachment.  eg: op://vault/item/[section]/file 
         /// </summary>
         [Input("reference", required: true)]
         public Input<string> Reference { get; set; } = null!;
