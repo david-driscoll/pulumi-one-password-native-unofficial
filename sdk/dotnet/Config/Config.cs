@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Immutable;
 
-namespace Rocket.Surgery.OnePasswordNativeUnoffical
+namespace Rocket.Surgery.OnePasswordNativeUnofficial
 {
     public static class Config
     {
@@ -30,7 +30,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnoffical
             }
         }
 
-        private static readonly Pulumi.Config __config = new Pulumi.Config("one-password-native-unoffical");
+        private static readonly Pulumi.Config __config = new Pulumi.Config("one-password-native-unofficial");
 
         private static readonly __Value<string?> _connectHost = new __Value<string?>(() => __config.Get("connectHost"));
         public static string? ConnectHost

@@ -20,7 +20,7 @@ export class DatabaseItem extends pulumi.CustomResource {
     }
 
     /** @internal */
-    public static readonly __pulumiType = 'one-password-native-unoffical:index:DatabaseItem';
+    public static readonly __pulumiType = 'one-password-native-unofficial:index:DatabaseItem';
 
     /**
      * Returns true if the given object is an instance of DatabaseItem.  This is designed to work even

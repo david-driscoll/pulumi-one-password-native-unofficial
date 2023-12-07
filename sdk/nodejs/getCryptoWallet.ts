@@ -11,7 +11,7 @@ export function getCryptoWallet(args: GetCryptoWalletArgs, opts?: pulumi.InvokeO
     }
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-    return pulumi.runtime.invoke("one-password-native-unoffical:index:GetCryptoWallet", {
+    return pulumi.runtime.invoke("one-password-native-unofficial:index:GetCryptoWallet", {
         "title": args.title,
         "uuid": args.uuid,
         "vault": args.vault,

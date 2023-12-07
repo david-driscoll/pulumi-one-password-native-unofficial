@@ -11,7 +11,7 @@ export function getDriverLicense(args: GetDriverLicenseArgs, opts?: pulumi.Invok
     }
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-    return pulumi.runtime.invoke("one-password-native-unoffical:index:GetDriverLicense", {
+    return pulumi.runtime.invoke("one-password-native-unofficial:index:GetDriverLicense", {
         "title": args.title,
         "uuid": args.uuid,
         "vault": args.vault,

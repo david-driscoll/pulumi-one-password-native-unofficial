@@ -20,7 +20,7 @@ export class EmailAccountItem extends pulumi.CustomResource {
     }
 
     /** @internal */
-    public static readonly __pulumiType = 'one-password-native-unoffical:index:EmailAccountItem';
+    public static readonly __pulumiType = 'one-password-native-unofficial:index:EmailAccountItem';
 
     /**
      * Returns true if the given object is an instance of EmailAccountItem.  This is designed to work even

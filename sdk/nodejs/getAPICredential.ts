@@ -11,7 +11,7 @@ export function getAPICredential(args: GetAPICredentialArgs, opts?: pulumi.Invok
     }
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-    return pulumi.runtime.invoke("one-password-native-unoffical:index:GetAPICredential", {
+    return pulumi.runtime.invoke("one-password-native-unofficial:index:GetAPICredential", {
         "title": args.title,
         "uuid": args.uuid,
         "vault": args.vault,

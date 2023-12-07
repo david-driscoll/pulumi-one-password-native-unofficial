@@ -33,18 +33,6 @@ export const Category = {
  */
 export type Category = (typeof Category)[keyof typeof Category];
 
-export const FieldAssignmentType = {
-    Concealed: "concealed",
-    Text: "text",
-    Email: "email",
-    Url: "url",
-    Date: "date",
-    MonthYear: "monthYear",
-    Phone: "phone",
-} as const;
-
-export type FieldAssignmentType = (typeof FieldAssignmentType)[keyof typeof FieldAssignmentType];
-
 export const FieldPurpose = {
     Username: "USERNAME",
     Password: "PASSWORD",
@@ -53,15 +41,16 @@ export const FieldPurpose = {
 
 export type FieldPurpose = (typeof FieldPurpose)[keyof typeof FieldPurpose];
 
-export const ResponseFieldType = {
+export const FieldType = {
     Unknown: "UNKNOWN",
     Address: "ADDRESS",
     Concealed: "CONCEALED",
     CreditCardNumber: "CREDIT_CARD_NUMBER",
     CreditCardType: "CREDIT_CARD_TYPE",
-    Date: "Date",
+    Date: "DATE",
     Email: "EMAIL",
     Gender: "GENDER",
+    Menu: "MENU",
     MonthYear: "MONTH_YEAR",
     Otp: "OTP",
     Phone: "PHONE",
@@ -72,4 +61,4 @@ export const ResponseFieldType = {
     SshKey: "SSHKEY",
 } as const;
 
-export type ResponseFieldType = (typeof ResponseFieldType)[keyof typeof ResponseFieldType];
+export type FieldType = (typeof FieldType)[keyof typeof FieldType];

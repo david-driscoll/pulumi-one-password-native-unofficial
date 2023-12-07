@@ -11,7 +11,7 @@ export function getEmailAccount(args: GetEmailAccountArgs, opts?: pulumi.InvokeO
     }
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-    return pulumi.runtime.invoke("one-password-native-unoffical:index:GetEmailAccount", {
+    return pulumi.runtime.invoke("one-password-native-unofficial:index:GetEmailAccount", {
         "title": args.title,
         "uuid": args.uuid,
         "vault": args.vault,

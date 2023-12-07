@@ -20,7 +20,7 @@ export class PassportItem extends pulumi.CustomResource {
     }
 
     /** @internal */
-    public static readonly __pulumiType = 'one-password-native-unoffical:index:PassportItem';
+    public static readonly __pulumiType = 'one-password-native-unofficial:index:PassportItem';
 
     /**
      * Returns true if the given object is an instance of PassportItem.  This is designed to work even

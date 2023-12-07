@@ -97,65 +97,65 @@ const _module = {
     version: utilities.getVersion(),
     construct: (name: string, type: string, urn: string): pulumi.Resource => {
         switch (type) {
-            case "one-password-native-unoffical:index:APICredentialItem":
+            case "one-password-native-unofficial:index:APICredentialItem":
                 return new APICredentialItem(name, <any>undefined, { urn })
-            case "one-password-native-unoffical:index:BankAccountItem":
+            case "one-password-native-unofficial:index:BankAccountItem":
                 return new BankAccountItem(name, <any>undefined, { urn })
-            case "one-password-native-unoffical:index:CreditCardItem":
+            case "one-password-native-unofficial:index:CreditCardItem":
                 return new CreditCardItem(name, <any>undefined, { urn })
-            case "one-password-native-unoffical:index:CryptoWalletItem":
+            case "one-password-native-unofficial:index:CryptoWalletItem":
                 return new CryptoWalletItem(name, <any>undefined, { urn })
-            case "one-password-native-unoffical:index:DatabaseItem":
+            case "one-password-native-unofficial:index:DatabaseItem":
                 return new DatabaseItem(name, <any>undefined, { urn })
-            case "one-password-native-unoffical:index:DocumentItem":
+            case "one-password-native-unofficial:index:DocumentItem":
                 return new DocumentItem(name, <any>undefined, { urn })
-            case "one-password-native-unoffical:index:DriverLicenseItem":
+            case "one-password-native-unofficial:index:DriverLicenseItem":
                 return new DriverLicenseItem(name, <any>undefined, { urn })
-            case "one-password-native-unoffical:index:EmailAccountItem":
+            case "one-password-native-unofficial:index:EmailAccountItem":
                 return new EmailAccountItem(name, <any>undefined, { urn })
-            case "one-password-native-unoffical:index:IdentityItem":
+            case "one-password-native-unofficial:index:IdentityItem":
                 return new IdentityItem(name, <any>undefined, { urn })
-            case "one-password-native-unoffical:index:Item":
+            case "one-password-native-unofficial:index:Item":
                 return new Item(name, <any>undefined, { urn })
-            case "one-password-native-unoffical:index:LoginItem":
+            case "one-password-native-unofficial:index:LoginItem":
                 return new LoginItem(name, <any>undefined, { urn })
-            case "one-password-native-unoffical:index:MedicalRecordItem":
+            case "one-password-native-unofficial:index:MedicalRecordItem":
                 return new MedicalRecordItem(name, <any>undefined, { urn })
-            case "one-password-native-unoffical:index:MembershipItem":
+            case "one-password-native-unofficial:index:MembershipItem":
                 return new MembershipItem(name, <any>undefined, { urn })
-            case "one-password-native-unoffical:index:OutdoorLicenseItem":
+            case "one-password-native-unofficial:index:OutdoorLicenseItem":
                 return new OutdoorLicenseItem(name, <any>undefined, { urn })
-            case "one-password-native-unoffical:index:PassportItem":
+            case "one-password-native-unofficial:index:PassportItem":
                 return new PassportItem(name, <any>undefined, { urn })
-            case "one-password-native-unoffical:index:PasswordItem":
+            case "one-password-native-unofficial:index:PasswordItem":
                 return new PasswordItem(name, <any>undefined, { urn })
-            case "one-password-native-unoffical:index:RewardProgramItem":
+            case "one-password-native-unofficial:index:RewardProgramItem":
                 return new RewardProgramItem(name, <any>undefined, { urn })
-            case "one-password-native-unoffical:index:SSHKeyItem":
+            case "one-password-native-unofficial:index:SSHKeyItem":
                 return new SSHKeyItem(name, <any>undefined, { urn })
-            case "one-password-native-unoffical:index:SecureNoteItem":
+            case "one-password-native-unofficial:index:SecureNoteItem":
                 return new SecureNoteItem(name, <any>undefined, { urn })
-            case "one-password-native-unoffical:index:ServerItem":
+            case "one-password-native-unofficial:index:ServerItem":
                 return new ServerItem(name, <any>undefined, { urn })
-            case "one-password-native-unoffical:index:SocialSecurityNumberItem":
+            case "one-password-native-unofficial:index:SocialSecurityNumberItem":
                 return new SocialSecurityNumberItem(name, <any>undefined, { urn })
-            case "one-password-native-unoffical:index:SoftwareLicenseItem":
+            case "one-password-native-unofficial:index:SoftwareLicenseItem":
                 return new SoftwareLicenseItem(name, <any>undefined, { urn })
-            case "one-password-native-unoffical:index:WirelessRouterItem":
+            case "one-password-native-unofficial:index:WirelessRouterItem":
                 return new WirelessRouterItem(name, <any>undefined, { urn })
             default:
                 throw new Error(`unknown resource type ${type}`);
         }
     },
 };
-pulumi.runtime.registerResourceModule("one-password-native-unoffical", "index", _module)
+pulumi.runtime.registerResourceModule("one-password-native-unofficial", "index", _module)
 
 import { Provider } from "./provider";
 
-pulumi.runtime.registerResourcePackage("one-password-native-unoffical", {
+pulumi.runtime.registerResourcePackage("one-password-native-unofficial", {
     version: utilities.getVersion(),
     constructProvider: (name: string, type: string, urn: string): pulumi.ProviderResource => {
-        if (type !== "pulumi:providers:one-password-native-unoffical") {
+        if (type !== "pulumi:providers:one-password-native-unofficial") {
             throw new Error(`unknown provider type ${type}`);
         }
         return new Provider(name, <any>undefined, { urn });

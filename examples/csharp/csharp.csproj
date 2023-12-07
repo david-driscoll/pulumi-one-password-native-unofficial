@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Pulumi" Version="3.*" />
-    <ProjectReference Include="../../sdk/dotnet/Rocket.Surgery.OnePasswordNativeUnoffical.csproj" />
+    <ProjectReference Include="../../sdk/dotnet/Rocket.Surgery.OnePasswordNativeUnofficial.csproj" />
   </ItemGroup>
 
 </Project>

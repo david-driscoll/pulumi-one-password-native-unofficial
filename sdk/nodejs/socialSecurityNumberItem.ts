@@ -20,7 +20,7 @@ export class SocialSecurityNumberItem extends pulumi.CustomResource {
     }
 
     /** @internal */
-    public static readonly __pulumiType = 'one-password-native-unoffical:index:SocialSecurityNumberItem';
+    public static readonly __pulumiType = 'one-password-native-unofficial:index:SocialSecurityNumberItem';
 
     /**
      * Returns true if the given object is an instance of SocialSecurityNumberItem.  This is designed to work even

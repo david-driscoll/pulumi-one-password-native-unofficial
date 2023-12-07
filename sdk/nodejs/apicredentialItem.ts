@@ -20,7 +20,7 @@ export class APICredentialItem extends pulumi.CustomResource {
     }
 
     /** @internal */
-    public static readonly __pulumiType = 'one-password-native-unoffical:index:APICredentialItem';
+    public static readonly __pulumiType = 'one-password-native-unofficial:index:APICredentialItem';
 
     /**
      * Returns true if the given object is an instance of APICredentialItem.  This is designed to work even

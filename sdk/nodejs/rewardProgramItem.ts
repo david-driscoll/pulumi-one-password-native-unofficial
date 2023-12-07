@@ -20,7 +20,7 @@ export class RewardProgramItem extends pulumi.CustomResource {
     }
 
     /** @internal */
-    public static readonly __pulumiType = 'one-password-native-unoffical:index:RewardProgramItem';
+    public static readonly __pulumiType = 'one-password-native-unofficial:index:RewardProgramItem';
 
     /**
      * Returns true if the given object is an instance of RewardProgramItem.  This is designed to work even

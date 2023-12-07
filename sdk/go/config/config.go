@@ -9,11 +9,11 @@ import (
 )
 
 func GetConnectHost(ctx *pulumi.Context) string {
-	return config.Get(ctx, "one-password-native-unoffical:connectHost")
+	return config.Get(ctx, "one-password-native-unofficial:connectHost")
 }
 func GetConnectToken(ctx *pulumi.Context) string {
-	return config.Get(ctx, "one-password-native-unoffical:connectToken")
+	return config.Get(ctx, "one-password-native-unofficial:connectToken")
 }
 func GetServiceAccountToken(ctx *pulumi.Context) string {
-	return config.Get(ctx, "one-password-native-unoffical:serviceAccountToken")
+	return config.Get(ctx, "one-password-native-unofficial:serviceAccountToken")
 }

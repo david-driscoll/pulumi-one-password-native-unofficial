@@ -1,4 +1,4 @@
-import * as op from "pulumi-one-password-native-unoffical";
+import * as op from "pulumi-one-password-native-unofficial";
 import * as pulumi from '@pulumi/pulumi'
 
 // const login = new op.LoginItem('my-password', {

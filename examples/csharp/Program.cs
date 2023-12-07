@@ -3,8 +3,8 @@ using System.Linq;
 using System.Security.Cryptography.Xml;
 using Google.Protobuf.WellKnownTypes;
 using Pulumi;
-using Rocket.Surgery.OnePasswordNativeUnoffical;
-using Rocket.Surgery.OnePasswordNativeUnoffical.Inputs;
+using Rocket.Surgery.OnePasswordNativeUnofficial;
+using Rocket.Surgery.OnePasswordNativeUnofficial.Inputs;
 
 return await Deployment.RunAsync(() =>
 {
@@ -97,7 +97,7 @@ return await Deployment.RunAsync(() =>
       Vault = "testing-pulumi",
       Fields = new()
       {
-         ["afasdfasdf"] = new FieldArgs { Type = FieldAssignmentType.Text, Value = "thename" },
+         ["afasdfasdf"] = new FieldArgs { Type = FieldType.String, Value = "thename" },
       },
       Notes = "this is a different note",
       Title = "mytitlessn",

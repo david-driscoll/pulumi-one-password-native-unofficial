@@ -11,7 +11,7 @@ export function getServer(args: GetServerArgs, opts?: pulumi.InvokeOptions): Pro
     }
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-    return pulumi.runtime.invoke("one-password-native-unoffical:index:GetServer", {
+    return pulumi.runtime.invoke("one-password-native-unofficial:index:GetServer", {
         "title": args.title,
         "uuid": args.uuid,
         "vault": args.vault,

@@ -29,7 +29,7 @@ const functionPropPaths: Record<string, [field: string, section?: string][]> = {
 // TODOS: Documents, password recipes, date fields, url fields, etc.
 schema.resources = {}
 schema.functions = {
-    "one-password-native-unoffical:index:GetItem": {
+    "one-password-native-unofficial:index:GetItem": {
         "description": "Use this data source to get details of an item by its vault uuid and either the title or the uuid of the item.",
         type: "object",
         inputs: {
@@ -54,7 +54,7 @@ schema.functions = {
             required: []
         })
     },
-    "one-password-native-unoffical:index:GetVault": {
+    "one-password-native-unofficial:index:GetVault": {
         "description": "Use this data source to get details of a vault by either its name or uuid.\n",
         inputs: {
             properties: {
@@ -78,7 +78,7 @@ schema.functions = {
             }
         }
     },
-    "one-password-native-unoffical:index:GetSecretReference": {
+    "one-password-native-unofficial:index:GetSecretReference": {
         inputs: {
             properties: {
                 "reference": {
@@ -98,7 +98,7 @@ schema.functions = {
             "description": "The resolved reference value"
         }
     },
-    "one-password-native-unoffical:index:GetAttachment": {
+    "one-password-native-unofficial:index:GetAttachment": {
         inputs: {
             properties: {
                 "reference": {
@@ -122,7 +122,7 @@ schema.functions = {
 
 
 schema.types = {
-    "one-password-native-unoffical:index:Category": {
+    "one-password-native-unofficial:index:Category": {
         "type": "string",
         "description": `The category of the item. One of [${allTemplates.join(', ')}]\n`,
         enum: orderBy(templates, z => z.name).map(t => ({
@@ -130,17 +130,17 @@ schema.types = {
             "value": t.name
         }))
     },
-    "one-password-native-unoffical:index:OutputSection": {
+    "one-password-native-unofficial:index:OutputSection": {
         "properties": {
             "fields": {
                 "type": "object",
                 "additionalProperties": {
-                    "$ref": "#/types/one-password-native-unoffical:index:OutputField"
+                    "$ref": "#/types/one-password-native-unofficial:index:OutputField"
                 }
             },
             'attachments': {
                 "type": "object",
-                "additionalProperties": {"$ref": "#/types/one-password-native-unoffical:index:OutputAttachment"},
+                "additionalProperties": {"$ref": "#/types/one-password-native-unofficial:index:OutputAttachment"},
             },
             "uuid": {
                 "type": "string"
@@ -156,12 +156,12 @@ schema.types = {
             "label"
         ]
     },
-    "one-password-native-unoffical:index:Section": {
+    "one-password-native-unofficial:index:Section": {
         "properties": {
             "fields": {
                 "type": "object",
                 "additionalProperties": {
-                    "$ref": "#/types/one-password-native-unoffical:index:Field"
+                    "$ref": "#/types/one-password-native-unofficial:index:Field"
                 }
             },
             'attachments': {
@@ -177,7 +177,7 @@ schema.types = {
             "fields"
         ]
     },
-    "one-password-native-unoffical:index:OutputAttachment": {
+    "one-password-native-unofficial:index:OutputAttachment": {
         "properties": {
             "uuid": {"type": "string"},
             "name": {"type": "string"},
@@ -187,7 +187,7 @@ schema.types = {
         "type": "object",
         "required": ["uuid", "name", "size", "reference"]
     },
-    "one-password-native-unoffical:index:Url": {
+    "one-password-native-unofficial:index:Url": {
         "properties": {
             "label": {"type": "string"},
             "primary": {"type": "boolean"},
@@ -196,7 +196,7 @@ schema.types = {
         "type": "object",
         "required": ["primary", "href"]
     },
-    "one-password-native-unoffical:index:OutputUrl": {
+    "one-password-native-unofficial:index:OutputUrl": {
         "properties": {
             "label": {"type": "string"},
             "primary": {"type": "boolean"},
@@ -205,7 +205,7 @@ schema.types = {
         "type": "object",
         "required": ["primary", "href"]
     },
-    "one-password-native-unoffical:index:Reference": {
+    "one-password-native-unofficial:index:Reference": {
         "properties": {
             "itemId": {
                 "type": "string"
@@ -216,7 +216,7 @@ schema.types = {
             "itemId"
         ]
     },
-    "one-password-native-unoffical:index:OutputReference": {
+    "one-password-native-unofficial:index:OutputReference": {
         "properties": {
             "uuid": {
                 "type": "string"
@@ -239,7 +239,7 @@ schema.types = {
             "reference"
         ]
     },
-    "one-password-native-unoffical:index:OutputField": {
+    "one-password-native-unofficial:index:OutputField": {
         "properties": {
             "uuid": {
                 "type": "string"
@@ -248,7 +248,7 @@ schema.types = {
                 "type": "string"
             },
             "type": {
-                "$ref": "#/types/one-password-native-unoffical:index:ResponseFieldType"
+                "$ref": "#/types/one-password-native-unofficial:index:FieldType"
             },
             "value": {
                 "type": "string",
@@ -272,11 +272,11 @@ schema.types = {
             "data"
         ]
     },
-    "one-password-native-unoffical:index:Field": {
+    "one-password-native-unofficial:index:Field": {
         "properties": {
             "type": {
-                "$ref": "#/types/one-password-native-unoffical:index:FieldAssignmentType",
-                "default": "text"
+                "$ref": "#/types/one-password-native-unofficial:index:FieldType",
+                "default": "STRING"
             },
             "value": {
                 "type": "string",
@@ -288,7 +288,7 @@ schema.types = {
             "value"
         ]
     },
-    "one-password-native-unoffical:index:FieldPurpose": {
+    "one-password-native-unofficial:index:FieldPurpose": {
         "type": "string",
         "enum": [
             {
@@ -305,126 +305,29 @@ schema.types = {
             }
         ]
     },
-    "one-password-native-unoffical:index:FieldAssignmentType": {
+    "one-password-native-unofficial:index:FieldType": {
         "type": "string",
         "enum": [
-            {
-                "name": "Concealed",
-                "value": "concealed"
-            },
-            {
-                "name": "Text",
-                "value": "text"
-            },
-            {
-                "name": "Email",
-                "value": "email"
-            },
-            {
-                "name": "Url",
-                "value": "url"
-            },
-            {
-                "name": "Date",
-                "value": "date"
-            },
-            {
-                "name": "MonthYear",
-                "value": "monthYear"
-            },
-            {
-                "name": "Phone",
-                "value": "phone"
-            },
-            // not currently supported for input
-            // {
-            //     "name": "Reference",
-            //     "value": "reference"
-            // },
-            // {
-            //     "name": "Otp",
-            //     "value": "otp"
-            // },
-            // {
-            //     "name": "SshKey",
-            //     "value": "sshkey"
-            // }
+            {"name": "Unknown", "value": "UNKNOWN"},
+            {"name": "Address", "value": "ADDRESS"},
+            {"name": "Concealed", "value": "CONCEALED"},
+            {"name": "CreditCardNumber", "value": "CREDIT_CARD_NUMBER"},
+            {"name": "CreditCardType", "value": "CREDIT_CARD_TYPE"},
+            {"name": "Date", "value": "DATE"},
+            {"name": "Email", "value": "EMAIL"},
+            {"name": "Gender", "value": "GENDER"},
+            {"name": "Menu", "value": "MENU"},
+            {"name": "MonthYear", "value": "MONTH_YEAR"},
+            {"name": "Otp", "value": "OTP"},
+            {"name": "Phone", "value": "PHONE"},
+            {"name": "Reference", "value": "REFERENCE"},
+            {"name": "String", "value": "STRING"},
+            {"name": "Url", "value": "URL"},
+            {"name": "File", "value": "FILE"},
+            {"name": "SshKey", "value": "SSHKEY"}
         ]
     },
-    "one-password-native-unoffical:index:ResponseFieldType": {
-        "type": "string",
-        "enum": [
-            {
-                "name": "Unknown",
-                "value": "UNKNOWN"
-            },
-            {
-                "name": "Address",
-                "value": "ADDRESS"
-            },
-            {
-                "name": "Concealed",
-                "value": "CONCEALED"
-            },
-            {
-                "name": "CreditCardNumber",
-                "value": "CREDIT_CARD_NUMBER"
-            },
-            {
-                "name": "CreditCardType",
-                "value": "CREDIT_CARD_TYPE"
-            },
-            {
-                "name": "Date",
-                "value": "Date"
-            },
-            {
-                "name": "Email",
-                "value": "EMAIL"
-            },
-            {
-                "name": "Gender",
-                "value": "GENDER"
-            },
-            // {
-            //     "name": "Menu",
-            //     "value": "MENU"
-            // },
-            {
-                "name": "MonthYear",
-                "value": "MONTH_YEAR"
-            },
-            {
-                "name": "Otp",
-                "value": "OTP"
-            },
-            {
-                "name": "Phone",
-                "value": "PHONE"
-            },
-            {
-                "name": "Reference",
-                "value": "REFERENCE"
-            },
-            {
-                "name": "String",
-                "value": "STRING"
-            },
-            {
-                "name": "Url",
-                "value": "URL"
-            },
-            {
-                "name": "File",
-                "value": "FILE"
-            },
-            {
-                "name": "SshKey",
-                "value": "SSHKEY"
-            }
-        ]
-    },
-    "one-password-native-unoffical:index:PasswordRecipe": {
+    "one-password-native-unofficial:index:PasswordRecipe": {
         "properties": {
             "letters": {
                 type: "boolean"
@@ -451,7 +354,7 @@ for (const template of templates) {
 
 
     const templateSchema = template.name === 'Item' ? item.template.get("Secure Note") as any as ItemTemplate : item.template.get(template.name as any) as any as ItemTemplate
-    const resourceName = template.name === 'Item' ? `one-password-native-unoffical:index:Item` : `one-password-native-unoffical:index:${template.name.replace(/ /g, '')}Item`;
+    const resourceName = template.name === 'Item' ? `one-password-native-unofficial:index:Item` : `one-password-native-unofficial:index:${template.name.replace(/ /g, '')}Item`;
     template.resourceName = resourceName
     template.templateSchema = templateSchema as any;
 
@@ -484,11 +387,11 @@ for (const template of templates) {
     };
     currentResource.inputProperties['sections'] = {
         "type": "object",
-        "additionalProperties": {"$ref": "#/types/one-password-native-unoffical:index:Section"}
+        "additionalProperties": {"$ref": "#/types/one-password-native-unofficial:index:Section"}
     };
     currentResource.inputProperties['fields'] = {
         "type": "object",
-        "additionalProperties": {"$ref": "#/types/one-password-native-unoffical:index:Field"}
+        "additionalProperties": {"$ref": "#/types/one-password-native-unofficial:index:Field"}
     };
     currentResource.inputProperties['attachments'] = {
         "type": "object",
@@ -497,7 +400,7 @@ for (const template of templates) {
     // disabled until cli can actually input them.
     // currentResource.inputProperties['references'] = {
     //     "type": "array",
-    //     "items": { "$ref": "#/types/one-password-native-unoffical:index:Reference" },
+    //     "items": { "$ref": "#/types/one-password-native-unofficial:index:Reference" },
     // };
     currentResource.inputProperties['urls'] = {
         "type": "array",
@@ -523,7 +426,7 @@ for (const template of templates) {
 
     applyDefaultOutputProperties(currentResource);
 
-    const functionName = `one-password-native-unoffical:index:Get${template.name.replace(/ /g, '')}`;
+    const functionName = `one-password-native-unofficial:index:Get${template.name.replace(/ /g, '')}`;
     template.functionName = functionName
     const currentFunction = schema.functions[functionName] = {} as any;
     currentFunction.inputs = {
@@ -625,7 +528,7 @@ for (const template of templates) {
             if (fieldInfo.purpose === 'PASSWORD' && fieldInfo.name === 'password') {
                 currentResource.inputProperties['generatePassword'] = {
                     description: '',
-                    oneOf: [{type: "boolean"}, {'$ref': '#/types/one-password-native-unoffical:index:PasswordRecipe'}]
+                    oneOf: [{type: "boolean"}, {'$ref': '#/types/one-password-native-unofficial:index:PasswordRecipe'}]
                 }
             }
             currentResource.properties[fieldInfo.name] = {
@@ -654,10 +557,10 @@ for (const template of templates) {
 
 }
 
-schema.resources[`one-password-native-unoffical:index:Item`].inputProperties['category'] = {
+schema.resources[`one-password-native-unofficial:index:Item`].inputProperties['category'] = {
     "oneOf": [
         {
-            "$ref": "#/types/one-password-native-unoffical:index:Category"
+            "$ref": "#/types/one-password-native-unofficial:index:Category"
         },
         {
             "type": "string"
@@ -670,7 +573,7 @@ schema.resources[`one-password-native-unoffical:index:Item`].inputProperties['ca
 
 writeFileSync('./schema.json', JSON.stringify(schema, null, 4))
 
-writeFileSync('./provider/cmd/pulumi-resource-one-password-native-unoffical/types.ts', `
+writeFileSync('./provider/cmd/pulumi-resource-one-password-native-unofficial/types.ts', `
 export const ItemType = {
 ${Object.keys(schema.resources)
     .concat(Object.keys(schema.functions))
@@ -682,9 +585,9 @@ ${templates.map(z => `"${(z as any).resourceName}": "${z.name}"`)
         templates.map(z => `"${(z as any).functionName}": "${z.name}"`)
     )
     .concat([
-        `"one-password-native-unoffical:index:GetVault": "Vault"`,
-        `"one-password-native-unoffical:index:GetSecretReference": "Secret Reference"`,
-        `"one-password-native-unoffical:index:GetAttachment": "Attachment"`
+        `"one-password-native-unofficial:index:GetVault": "Vault"`,
+        `"one-password-native-unofficial:index:GetSecretReference": "Secret Reference"`,
+        `"one-password-native-unofficial:index:GetAttachment": "Attachment"`
     ])
     .join(',\n')}
 } as const;
@@ -697,10 +600,10 @@ export const PropertyPaths: Record<string, [field: string, section?: string][]> 
 }
 `)
 
-writeFileSync('./provider/cmd/pulumi-resource-one-password-native-unoffical/Types.cs', `
+writeFileSync('./provider/cmd/pulumi-resource-one-password-native-unofficial/Types.cs', `
 using System.Collections.Immutable;
 
-namespace pulumi_resource_one_password_native_unoffical;
+namespace pulumi_resource_one_password_native_unofficial;
 public static class ItemType
 {
     ${Object.keys(schema.resources)
@@ -728,11 +631,11 @@ public static partial class TemplateMetadata
 }
 `)
 
-writeFileSync('./provider/cmd/pulumi-resource-one-password-native-unoffical/Types.Transforms.cs', `using System.Collections.Immutable;
-using pulumi_resource_one_password_native_unoffical.OnePasswordCli;
+writeFileSync('./provider/cmd/pulumi-resource-one-password-native-unofficial/Types.Transforms.cs', `using System.Collections.Immutable;
+using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 using Pulumi.Experimental.Provider;
 
-namespace pulumi_resource_one_password_native_unoffical;
+namespace pulumi_resource_one_password_native_unofficial;
 
 public static partial class TemplateMetadata
 {
@@ -773,7 +676,7 @@ ${templates.map(template => {
     {           
         var title = GetStringValue(values, "title");
         var category = GetStringValue(values, "category")!;
-        var vault = GetBoolValue(values, "defaultVault") ? null: GetStringValue(values, "vault");
+        var vault = GetVaultName(values);
         var urls = GetArrayValues(values, "urls");
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
@@ -874,7 +777,7 @@ function templateAssignFieldMetadata(field: Field) {
  */
 
 function getSectionKey(template: string, section: Section) {
-    return `one-password-native-unoffical:${camelCase(template)}:${camelCase(section!.label || section!.id)}Section`;
+    return `one-password-native-unofficial:${camelCase(template)}:${camelCase(section!.label || section!.id)}Section`;
 }
 
 function isUserNameField(field: Field): field is UsernameField {
@@ -905,7 +808,7 @@ function getFieldType(field: Field) {
         secret: false,
         default: field.value,
         type: 'string',
-        kind: field.type?.toLowerCase() as FieldAssignmentType,
+        kind: field.type,
         purpose: (field as any).purpose as FieldPurpose
     };
 
@@ -929,31 +832,8 @@ function getFieldType(field: Field) {
                         "string"
                         "object"
                          */
-    switch (field.type) {
-        case "DATE":
-            fieldData.kind = "date"
-            break;
-        case "EMAIL":
-            fieldData.kind = "email"
-            break;
-        case "MONTH_YEAR":
-            fieldData.kind = "monthYear"
-            break;
-        case "PHONE":
-            fieldData.kind = "phone"
-            break;
-        case "URL":
-            fieldData.kind = "url"
-            break;
-        case "ADDRESS":
-        case "REFERENCE":
-        case "STRING":
-            fieldData.kind = "text"
-            break;
-    }
 
-    fieldData.kind = (fieldData.kind as any) === 'menu' ? 'text' : fieldData.kind;
-    fieldData.secret = fieldData.secret || fieldData.kind === 'concealed'
+    fieldData.secret = fieldData.secret || fieldData.kind === 'CONCEALED'
 
     return fieldData;
 }
@@ -990,26 +870,26 @@ function applyDefaultOutputProperties(item: any) {
         },
         ['sections']: {
             "type": "object",
-            "additionalProperties": {"$ref": "#/types/one-password-native-unoffical:index:OutputSection"},
+            "additionalProperties": {"$ref": "#/types/one-password-native-unofficial:index:OutputSection"},
             secret: true
         },
         ['fields']: {
             "type": "object",
-            "additionalProperties": {"$ref": "#/types/one-password-native-unoffical:index:OutputField"},
+            "additionalProperties": {"$ref": "#/types/one-password-native-unofficial:index:OutputField"},
             secret: true
         },
         ['attachments']: {
             "type": "object",
-            "additionalProperties": {"$ref": "#/types/one-password-native-unoffical:index:OutputAttachment"},
+            "additionalProperties": {"$ref": "#/types/one-password-native-unofficial:index:OutputAttachment"},
             secret: true
         },
         ['references']: {
             "type": "array",
-            "items": {"$ref": "#/types/one-password-native-unoffical:index:OutputReference"},
+            "items": {"$ref": "#/types/one-password-native-unofficial:index:OutputReference"},
         },
         ['urls']: {
             "type": "array",
-            items: {"$ref": "#/types/one-password-native-unoffical:index:OutputUrl"}
+            items: {"$ref": "#/types/one-password-native-unofficial:index:OutputUrl"}
         },
         ['tags']: {
             type: 'array',
@@ -1021,7 +901,7 @@ function applyDefaultOutputProperties(item: any) {
         ['category']: {
             "oneOf": [
                 {
-                    "$ref": "#/types/one-password-native-unoffical:index:Category"
+                    "$ref": "#/types/one-password-native-unofficial:index:Category"
                 },
                 {
                     "type": "string"

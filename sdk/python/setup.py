@@ -15,15 +15,15 @@ class InstallPluginCommand(install):
     def run(self):
         install.run(self)
         try:
-            check_call(['pulumi', 'plugin', 'install', 'resource', 'one-password-native-unoffical', PLUGIN_VERSION, '--server', 'github://api.github.com/david-driscoll'])
+            check_call(['pulumi', 'plugin', 'install', 'resource', 'one-password-native-unofficial', PLUGIN_VERSION, '--server', 'github://api.github.com/david-driscoll'])
         except OSError as error:
             if error.errno == errno.ENOENT:
                 print(f"""
-                There was an error installing the one-password-native-unoffical resource provider plugin.
+                There was an error installing the one-password-native-unofficial resource provider plugin.
                 It looks like `pulumi` is not installed on your system.
                 Please visit https://pulumi.com/ to install the Pulumi CLI.
                 You may try manually installing the plugin by running
-                `pulumi plugin install resource one-password-native-unoffical {PLUGIN_VERSION}`
+                `pulumi plugin install resource one-password-native-unofficial {PLUGIN_VERSION}`
                 """)
             else:
                 raise
@@ -34,10 +34,10 @@ def readme():
         with open('README.md', encoding='utf-8') as f:
             return f.read()
     except FileNotFoundError:
-        return "one-password-native-unoffical Pulumi Package - Development Version"
+        return "one-password-native-unofficial Pulumi Package - Development Version"
 
 
-setup(name='pulumi-one-password-native-unoffical',
+setup(name='pulumi-one-password-native-unofficial',
       version=VERSION,
       long_description=readme(),
       long_description_content_type='text/markdown',
@@ -49,7 +49,7 @@ setup(name='pulumi-one-password-native-unoffical',
       },
       packages=find_packages(),
       package_data={
-          'pulumi-one-password-native-unoffical': [
+          'pulumi-one-password-native-unofficial': [
               'py.typed',
               'pulumi-plugin.json',
           ]

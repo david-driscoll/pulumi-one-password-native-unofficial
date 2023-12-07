@@ -20,7 +20,7 @@ export class DriverLicenseItem extends pulumi.CustomResource {
     }
 
     /** @internal */
-    public static readonly __pulumiType = 'one-password-native-unoffical:index:DriverLicenseItem';
+    public static readonly __pulumiType = 'one-password-native-unofficial:index:DriverLicenseItem';
 
     /**
      * Returns true if the given object is an instance of DriverLicenseItem.  This is designed to work even

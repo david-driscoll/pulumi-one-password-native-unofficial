@@ -20,7 +20,7 @@ export class CreditCardItem extends pulumi.CustomResource {
     }
 
     /** @internal */
-    public static readonly __pulumiType = 'one-password-native-unoffical:index:CreditCardItem';
+    public static readonly __pulumiType = 'one-password-native-unofficial:index:CreditCardItem';
 
     /**
      * Returns true if the given object is an instance of CreditCardItem.  This is designed to work even

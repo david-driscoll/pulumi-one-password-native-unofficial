@@ -17,7 +17,7 @@ export interface OutputField {
     data: {[key: string]: any};
     label: string;
     reference: string;
-    type: enums.ResponseFieldType;
+    type: enums.FieldType;
     uuid: string;
     value: string;
 }

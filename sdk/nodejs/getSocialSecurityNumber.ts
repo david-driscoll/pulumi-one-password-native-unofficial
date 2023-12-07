@@ -11,7 +11,7 @@ export function getSocialSecurityNumber(args: GetSocialSecurityNumberArgs, opts?
     }
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-    return pulumi.runtime.invoke("one-password-native-unoffical:index:GetSocialSecurityNumber", {
+    return pulumi.runtime.invoke("one-password-native-unofficial:index:GetSocialSecurityNumber", {
         "title": args.title,
         "uuid": args.uuid,
         "vault": args.vault,

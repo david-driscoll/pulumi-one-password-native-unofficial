@@ -20,7 +20,7 @@ export class MedicalRecordItem extends pulumi.CustomResource {
     }
 
     /** @internal */
-    public static readonly __pulumiType = 'one-password-native-unoffical:index:MedicalRecordItem';
+    public static readonly __pulumiType = 'one-password-native-unofficial:index:MedicalRecordItem';
 
     /**
      * Returns true if the given object is an instance of MedicalRecordItem.  This is designed to work even

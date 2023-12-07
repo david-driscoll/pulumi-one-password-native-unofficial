@@ -7,7 +7,7 @@ import { input as inputs, output as outputs, enums } from "../types";
 import * as utilities from "../utilities";
 
 export interface FieldArgs {
-    type?: pulumi.Input<enums.FieldAssignmentType>;
+    type?: pulumi.Input<enums.FieldType>;
     value: pulumi.Input<string>;
 }
 /**
@@ -16,7 +16,7 @@ export interface FieldArgs {
 export function fieldArgsProvideDefaults(val: FieldArgs): FieldArgs {
     return {
         ...val,
-        type: (val.type) ?? "text",
+        type: (val.type) ?? "STRING",
     };
 }
 

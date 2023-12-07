@@ -13,7 +13,7 @@ export function getVault(args: GetVaultArgs, opts?: pulumi.InvokeOptions): Promi
     }
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-    return pulumi.runtime.invoke("one-password-native-unoffical:index:GetVault", {
+    return pulumi.runtime.invoke("one-password-native-unofficial:index:GetVault", {
         "vault": args.vault,
     }, opts);
 }

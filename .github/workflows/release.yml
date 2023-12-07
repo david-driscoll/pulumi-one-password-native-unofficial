@@ -21,7 +21,7 @@ permissions:
   discussions: none
 
 env:
-  PROVIDER: "one-password-native-unoffical"
+  PROVIDER: "one-password-native-unofficial"
   # IF YOU NEED TO PUBLISH A NPM PACKAGE THEN ENSURE A NPM_TOKEN SECRET IS SET
   # AND PUBLISH_NPM: TRUE. IF YOU WANT TO PUBLISH TO A PRIVATE NPM REGISTRY
   # THEN ENSURE THE NPM_REGISTRY_URL IS CHANGED

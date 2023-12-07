@@ -20,7 +20,7 @@ export class CryptoWalletItem extends pulumi.CustomResource {
     }
 
     /** @internal */
-    public static readonly __pulumiType = 'one-password-native-unoffical:index:CryptoWalletItem';
+    public static readonly __pulumiType = 'one-password-native-unofficial:index:CryptoWalletItem';
 
     /**
      * Returns true if the given object is an instance of CryptoWalletItem.  This is designed to work even

@@ -20,7 +20,7 @@ export class SecureNoteItem extends pulumi.CustomResource {
     }
 
     /** @internal */
-    public static readonly __pulumiType = 'one-password-native-unoffical:index:SecureNoteItem';
+    public static readonly __pulumiType = 'one-password-native-unofficial:index:SecureNoteItem';
 
     /**
      * Returns true if the given object is an instance of SecureNoteItem.  This is designed to work even
