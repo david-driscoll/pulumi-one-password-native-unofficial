@@ -9008,7 +9008,7 @@
         },
         "nodejs": {
             "dependencies": {
-                "@pulumi/pulumi": "^3.89.0"
+                "@pulumi/pulumi": "^3.96.0"
             },
             "devDependencies": {
                 "typescript": "^5.2.2"

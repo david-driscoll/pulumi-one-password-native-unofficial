@@ -375,37 +375,37 @@ public static class Item
         public ImmutableArray<Url> Urls { get; init; } = ImmutableArray<Url>.Empty;
     }
 
-    public class Section
+    public record Section
     {
-        public string Id { get; set; }
-        public string? Label { get; set; }
+        public string Id { get; init; }
+        public string? Label { get; init; }
     }
 
-    public class Field
+    public record Field
     {
-        public string? Id { get; set; }
-        public string? Label { get; set; }
-        public required string Type { get; set; }
-        public string? Purpose { get; set; }
-        public Section? Section { get; set; }
-        public string? Value { get; set; }
-        [JsonExtensionData] public Dictionary<string, JsonElement>? ExtensionData { get; set; }
+        public string? Id { get; init; }
+        public string? Label { get; init; }
+        public required string Type { get; init; }
+        public string? Purpose { get; init; }
+        public Section? Section { get; init; }
+        public string? Value { get; init; }
+        [JsonExtensionData] public Dictionary<string, JsonElement>? ExtensionData { get; init; }
     }
 
-    public class File
+    public record File
     {
-        public string Id { get; set; } = "";
-        public string Name { get; set; } = "";
-        public int Size { get; set; }
-        public string ContentPath { get; set; } = "";
-        public Section? Section { get; set; }
+        public string Id { get; init; } = "";
+        public string Name { get; init; } = "";
+        public int Size { get; init; }
+        public string ContentPath { get; init; } = "";
+        public Section? Section { get; init; }
     }
 
-    public class Url
+    public record Url
     {
-        public string Label { get; set; }
-        public bool Primary { get; set; }
-        public string Href { get; set; }
+        public string? Label { get; init; }
+        public bool Primary { get; init; }
+        public string Href { get; init; } = "";
     }
 
 

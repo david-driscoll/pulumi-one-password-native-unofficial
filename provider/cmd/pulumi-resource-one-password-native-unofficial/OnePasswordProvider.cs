@@ -123,7 +123,7 @@ public class OnePasswordProvider : Provider
 
         var response = await _op.Items.Create(new(news.Category)
         {
-            Title = news.Title,
+            Title = news.Title ?? Helpers.NewUniqueName(Helpers.GetNameFromUrn(request.Urn)),
             Vault = news.Vault,
             Tags = news.Tags,
             Url = news.Urls.FirstOrDefault(),
@@ -253,41 +253,6 @@ public class OnePasswordProvider : Provider
 
         return new() { Return = ImmutableDictionary.Create<string, PropertyValue>().Add("value", new(value)) };
     }
-
-    /*
-
-    private getSecretReference(inputs: { reference: string }): provider.InvokeResult {
-        const failures: provider.CheckFailure[] = [];
-        if (!inputs.reference) failures.push({ property: 'reference', reason: `Must give a reference in order to get an field by reference uri` });
-        if (failures.length > 0) {
-            return { failures };
-        }
-
-        ensure1PasswordEnvironmentVariables(this.config);
-        const result = read.parse(inputs.reference);
-        return {
-            outputs: {
-                value: result
-            }
-        }
-    }
-
-    private getAttachment(inputs: { reference?: string; }): provider.InvokeResult {
-        const failures: provider.CheckFailure[] = [];
-        if (!inputs.reference) failures.push(
-            { property: 'reference', reason: `Must give the reference path for in order to get an Attachment` }
-        );
-        if (failures.length > 0) {
-            return { failures };
-        const result = read.parse(inputs.reference!);
-        return {
-            outputs: {
-                value: result
-            }
-        }
-    }
-
-     */
 
     public override async Task<ReadResponse> Read(ReadRequest request, CancellationToken ct)
     {

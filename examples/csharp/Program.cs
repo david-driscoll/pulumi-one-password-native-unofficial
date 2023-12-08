@@ -33,7 +33,7 @@ return await Deployment.RunAsync(() =>
             {
                 Fields = new()
                 {
-                    ["password"] = new FieldArgs()
+                    ["password2"] = new FieldArgs()
                     {
                         Value = "secret1235!",
                         Type = FieldType.Concealed
@@ -50,74 +50,74 @@ return await Deployment.RunAsync(() =>
         Tags = new string[] { "test-tag" }
     });
 
-    // TODO: Allow config values for the vault, tokens, etc.
-    // Check for valid environment variables if not configured
-    var item = new Item("my-test-item", new ItemArgs()
-    {
-        Category = "Social Security Number",
-        Notes = "this is a note",
-        Vault = "testing-pulumi",
-    });
+    // // TODO: Allow config values for the vault, tokens, etc.
+    // // Check for valid environment variables if not configured
+    // var item = new Item("my-test-item", new ItemArgs()
+    // {
+    //     Category = "Social Security Number",
+    //     Notes = "this is a note",
+    //     Vault = "testing-pulumi",
+    // });
 
-    var api = new APICredentialItem("my-api", new()
-    {
-        Attachments = new()
-        {
-            ["my-attachment"] = new StringAsset("this is an attachment"),
-        },
-        Vault = "testing-pulumi",
-        Credential = "abcdf",
-        Hostname = "hostname",
-        Fields = new()
-        {
-            ["name"] = new FieldArgs { Type = FieldType.String, Value = "thename" },
-        },
-        Sections = new()
-        {
-            ["mysection"] = new SectionArgs()
-            {
-                Fields = new()
-                {
-                    ["name"] = new FieldArgs { Type = FieldType.String, Value = "thesectionname" },
-                }
-            }
-        },
-        Category = "APICredential",
-        Filename = "abcd",
-        // Expires = "",
-        // ValidFrom = "",
-        Type = "1234",
-        Notes = "5543434",
-        Username = "142",
-        Title = "mytitle2"
-    });
+    // var api = new APICredentialItem("my-api", new()
+    // {
+    //     Attachments = new()
+    //     {
+    //         ["my-attachment"] = new StringAsset("this is an attachment"),
+    //     },
+    //     Vault = "testing-pulumi",
+    //     Credential = "abcdf",
+    //     Hostname = "hostname",
+    //     Fields = new()
+    //     {
+    //         ["name"] = new FieldArgs { Type = FieldType.String, Value = "thename" },
+    //     },
+    //     Sections = new()
+    //     {
+    //         ["mysection"] = new SectionArgs()
+    //         {
+    //             Fields = new()
+    //             {
+    //                 ["name"] = new FieldArgs { Type = FieldType.String, Value = "thesectionname" },
+    //             }
+    //         }
+    //     },
+    //     Category = "APICredential",
+    //     Filename = "abcd",
+    //     // Expires = "",
+    //     // ValidFrom = "",
+    //     Type = "1234",
+    //     Notes = "5543434",
+    //     Username = "142",
+    //     Title = "mytitle2"
+    // });
 
-    var ssn = new SocialSecurityNumberItem("my-api", new()
-    {
-        Vault = "testing-pulumi",
-        Fields = new()
-        {
-            ["afasdfasdf"] = new FieldArgs { Type = FieldType.String, Value = "thename" },
-        },
-        Notes = "this is a different note",
-        Title = "mytitlessn",
-    });
+    // var ssn = new SocialSecurityNumberItem("my-api", new()
+    // {
+    //     Vault = "testing-pulumi",
+    //     Fields = new()
+    //     {
+    //         ["afasdfasdf"] = new FieldArgs { Type = FieldType.String, Value = "thename" },
+    //     },
+    //     Notes = "this is a different note",
+    //     Title = "mytitlessn",
+    // });
 
-    var member = new MembershipItem("random-membership", new()
-    {
-        Vault = "testing-pulumi",
-        MemberId = login.Uuid,
-        Pin = "12345"
-    });
+    // var member = new MembershipItem("random-membership", new()
+    // {
+    //     Vault = "testing-pulumi",
+    //     MemberId = login.Id,
+    //     Pin = "12345"
+    // });
 
-    login.Attachments
-        .Apply(z => z["my-attachment"].Reference)
-        .Apply(z => GetAttachment.Invoke(new() { Reference = z }))
-        .Apply(z =>
-        {
-            Log.Info(z.Value);
-            return z.Value;
-        });
+    // login.Attachments
+    //     .Apply(z => z["my-attachment"].Reference)
+    //     .Apply(z => GetAttachment.Invoke(new() { Reference = z }))
+    //     .Apply(z =>
+    //     {
+    //         Log.Info(z.Value);
+    //         return z.Value;
+    //     });
 
     login.Fields
         .Apply(z =>

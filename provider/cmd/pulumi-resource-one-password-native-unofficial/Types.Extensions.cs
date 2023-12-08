@@ -135,6 +135,19 @@ public static partial class TemplateMetadata
         Inputs inputs
     )
     {
+
+        item = item with
+        {
+            Fields = item.Fields
+                .GroupBy(z => z.Id)
+                .Select(z =>
+                {
+                    var field = z.First();
+                    return z.Aggregate(field, (field, next) => field with { Value = field.Value ?? next.Value });
+                })
+                .ToImmutableArray()
+        };
+
         outputs.Add("id", new PropertyValue(item.Id));
         outputs.Add("category", new PropertyValue(resourceType.ItemName));
         outputs.Add("title", new PropertyValue(item.Title));
@@ -155,39 +168,30 @@ public static partial class TemplateMetadata
                 .Add("primary", new(z.Primary)))
             ).ToImmutableArray())
         );
-        outputs.Add("fields", new(
-                ImmutableDictionary.Create<string, PropertyValue>()
-                    .AddRange(
-                        item.Fields
-                            .Where(z => !z.Type.Equals("REFERENCE", StringComparison.OrdinalIgnoreCase))
-                            .Where(z => z.Section is null)
-                            .Select(field => new KeyValuePair<string, PropertyValue>(field.Id, new(CreateField(item, field))))
-                    )
-            )
-        );
-        outputs.Add("attachments", new(
-                ImmutableDictionary.Create<string, PropertyValue>()
-                    .AddRange(
-                        item.Files
-                            .Where(z => z.Section is null)
-                            .Select(field => new KeyValuePair<string, PropertyValue>(field.Id, new(CreateAttachment(inputs, item, field))))
-                    )
-            )
-        );
+        var fields = item.Fields
+            .Where(z => !z.Type.Equals("REFERENCE", StringComparison.OrdinalIgnoreCase))
+            .Where(z => z.Section is null)
+            .Select(field => new KeyValuePair<string, PropertyValue>(field.Id, new(CreateField(item, field))))
+            .ToArray();
 
-        outputs.Add("references", new(ImmutableArray.Create<PropertyValue>()
-            .AddRange(
-                item.Fields
+        var attachments = item.Files
+            .Where(z => z.Section is null)
+            .Select(field => new KeyValuePair<string, PropertyValue>(field.Id, new(CreateAttachment(inputs, item, field))))
+            .ToArray();
+
+        var references = item.Fields
                     .Where(z => z.Type.Equals("REFERENCE", StringComparison.OrdinalIgnoreCase))
-                    .Select(field => new PropertyValue(CreateField(item, field)))
-            ))
-        );
+                    .Select(field => new PropertyValue(CreateField(item, field)));
 
         var sections = item.Fields.Where(z => z.Section is not null).Select(z => z.Section)
             .Concat(item.Files.Where(z => z.Section is not null).Select(z => z.Section))
             .GroupBy(z => z.Id)
             .Select(z => z.First())
             .ToImmutableArray();
+
+        outputs.Add("fields", new(ImmutableDictionary.Create<string, PropertyValue>().AddRange(fields)));
+        outputs.Add("attachments", new(ImmutableDictionary.Create<string, PropertyValue>().AddRange(attachments)));
+        outputs.Add("references", new(ImmutableArray.Create<PropertyValue>().AddRange(references)));
 
         outputs.Add("sections", new(
             ImmutableDictionary.Create<string, PropertyValue>()
@@ -202,12 +206,14 @@ public static partial class TemplateMetadata
                                     .AddRange(
                                         item.Fields
                                             .Where(z => !z.Type.Equals("REFERENCE", StringComparison.OrdinalIgnoreCase))
+                                            .Where(z => z.Section is not null)
                                             .Where(z => z.Section?.Id == section.Id)
                                             .Select(field => new KeyValuePair<string, PropertyValue>(field.Id, new(CreateField(item, field))))
                                     )))
                                 .Add("attachments", new(ImmutableDictionary.Create<string, PropertyValue>()
                                     .AddRange(
                                         item.Files
+                                            .Where(z => z.Section is not null)
                                             .Where(z => z.Section?.Id == section.Id)
                                             .Select(field => new KeyValuePair<string, PropertyValue>(field.Id, new(CreateAttachment(inputs, item, field))))
                                     )))
@@ -265,10 +271,10 @@ public static partial class TemplateMetadata
         if (!f.TryUnwrap(out f)) yield break;
         if (!f.TryGetObject(out var fields)) yield break;
 
-        var fieldsAlreadyAdded = values.Select(z => z.Label).ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
+        var fieldsAlreadyAdded = values.Select(z => $"{z.Id}:{z.Section?.Id}").ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
         foreach (var field in fields)
         {
-            if (fieldsAlreadyAdded.Contains(field.Key)) continue;
+            if (fieldsAlreadyAdded.Contains($"{field.Key}:{section?.Id}")) continue;
             if (!field.Value.TryGetObject(out var data)) continue;
 
             yield return CreateTemplateField(data, field.Key, section);
@@ -290,16 +296,20 @@ public static partial class TemplateMetadata
 
     public static TemplateField CreateTemplateField(ImmutableDictionary<string, PropertyValue> data, string? id, TemplateSection? section = null)
     {
-        id ??= GetObjectStringValue(data, "id");
         string? value = GetObjectStringValue(data, "value");
         string? type = GetObjectStringValue(data, "type");
-        string? label = GetObjectStringValue(data, "label");
+        string? label = GetObjectStringValue(data, "label") ?? id;
+        if (id is not null && section is not null)
+        {
+            id = $"{section.Id}.{id}";
+        }
+        id ??= GetObjectStringValue(data, "id");
         if (section is null && data.TryGetValue("section", out var sectionValue) && sectionValue.TryGetObject(out var sectionData))
         {
             section = new TemplateSection()
             {
-                Id = GetObjectStringValue(sectionData, "id"),
-                Label = GetObjectStringValue(sectionData, "label"),
+                Id = GetObjectStringValue(sectionData, "id")!,
+                Label = GetObjectStringValue(sectionData, "label") ?? GetObjectStringValue(sectionData, "id")!,
             };
         }
         // string? purpose = GetObjectStringValue(data, "purpose");
@@ -308,7 +318,7 @@ public static partial class TemplateMetadata
         {
             Id = id,
             Value = value ?? "",
-            Label = label ?? id,
+            Label = label,
             Type = type,
             Section = section
         };
@@ -324,10 +334,10 @@ public static partial class TemplateMetadata
             .ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
         // might need to be done through assignments?
 
-        var fieldsAlreadyAdded = values.Select(z => z.Id).ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
+        var fieldsAlreadyAdded = values.Select(z => $"{z.Id}:{z.Section?.Id}").ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
         foreach (var attachment in attachments)
         {
-            if (fieldsAlreadyAdded.Contains(attachment.Key)) continue;
+            if (fieldsAlreadyAdded.Contains($"{attachment.Key}:{section?.Id}")) continue;
             if (!attachment.Value.TryGetObject(out var data)) continue;
 
             string? hash = GetObjectStringValue(data, "hash");
@@ -356,13 +366,12 @@ public static partial class TemplateMetadata
         {
             if (!section.Value.TryGetObject(out var data)) continue;
 
-            string? id = GetObjectStringValue(data, "id");
             string? label = GetObjectStringValue(data, "label");
 
             var templateSection = new TemplateSection()
             {
-                Id = id,
-                Label = label,
+                Id = section.Key,
+                Label = label ?? section.Key,
             };
 
             foreach (var field in AssignFields(data, values.Where(z => z.Section?.Id == section.Key).ToImmutableArray(), templateSection))
@@ -436,6 +445,7 @@ public static partial class TemplateMetadata
     public record Template
     {
         public required ImmutableArray<TemplateField> Fields { get; init; } = ImmutableArray<TemplateField>.Empty;
+        public ImmutableArray<TemplateSection> Sections => Fields.Where(z => z.Section is not null).GroupBy(z => z.Section?.Id).Select(z => z.First().Section).ToImmutableArray();
     }
 
     public record Inputs
@@ -459,7 +469,7 @@ public static partial class TemplateMetadata
     public class TemplateSection
     {
         public string? Id { get; set; }
-        public string? Label { get; set; }
+        public required string Label { get; set; }
     }
 
     public record TemplateField
