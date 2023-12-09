@@ -141,7 +141,7 @@ export interface CreditCardItemArgs {
      */
     title?: pulumi.Input<string>;
     type?: pulumi.Input<string>;
-    urls?: pulumi.Input<pulumi.Input<string>[]>;
+    urls?: pulumi.Input<pulumi.Input<inputs.UrlArgs>[]>;
     validFrom?: pulumi.Input<string>;
     /**
      * The UUID of the vault the item is in.

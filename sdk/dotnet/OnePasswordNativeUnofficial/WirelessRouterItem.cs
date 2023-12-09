@@ -230,10 +230,10 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         public Input<string>? Title { get; set; }
 
         [Input("urls")]
-        private InputList<string>? _urls;
-        public InputList<string> Urls
+        private InputList<Inputs.UrlArgs>? _urls;
+        public InputList<Inputs.UrlArgs> Urls
         {
-            get => _urls ?? (_urls = new InputList<string>());
+            get => _urls ?? (_urls = new InputList<Inputs.UrlArgs>());
             set => _urls = value;
         }
 

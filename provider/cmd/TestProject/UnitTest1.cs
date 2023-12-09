@@ -9,6 +9,7 @@ using Rocket.Surgery.OnePasswordNativeUnofficial;
 namespace TestProject;
 
 using Pulumi.Automation;
+using Rocket.Surgery.OnePasswordNativeUnofficial.Inputs;
 
 [Collection("Connect collection")]
 public class UnitTest1 : IClassFixture<PulumiFixture>
@@ -33,7 +34,7 @@ public class UnitTest1 : IClassFixture<PulumiFixture>
                 Password = "mypassword",
                 Tags = new string[] { "Test Tag" },
                 Vault = "pulumi-testing",
-                Urls = "http://notlocalhost.com",
+                Urls = new UrlArgs() { Href = "http://notlocalhost.com" },
                 Notes = "this is a note"
             });
         });
@@ -47,7 +48,7 @@ public class UnitTest1 : IClassFixture<PulumiFixture>
         await stack.SetConfigAsync("one-password-native-unofficial:connectToken", new(_fixture.ConnectToken, true));
         var config = await stack.GetAllConfigAsync();
         var up = await stack.UpAsync();
-        await stack.DestroyAsync(new ()
+        await stack.DestroyAsync(new()
         {
             Debug = true,
             Tracing = "7"

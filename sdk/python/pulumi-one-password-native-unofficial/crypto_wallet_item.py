@@ -27,7 +27,7 @@ class CryptoWalletItemArgs:
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input['SectionArgs']]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
-                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 urls: Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]] = None,
                  wallet: Optional[pulumi.Input['_cryptowallet.WalletSectionArgs']] = None):
         """
         The set of arguments for constructing a CryptoWalletItem resource.
@@ -164,11 +164,11 @@ class CryptoWalletItemArgs:
 
     @property
     @pulumi.getter
-    def urls(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+    def urls(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]]:
         return pulumi.get(self, "urls")
 
     @urls.setter
-    def urls(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+    def urls(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]]):
         pulumi.set(self, "urls", value)
 
     @property
@@ -218,7 +218,7 @@ class CryptoWalletItem(pulumi.CustomResource):
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
-                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['UrlArgs']]]]] = None,
                  vault: Optional[pulumi.Input[str]] = None,
                  wallet: Optional[pulumi.Input[pulumi.InputType['_cryptowallet.WalletSectionArgs']]] = None,
                  __props__=None):
@@ -263,7 +263,7 @@ class CryptoWalletItem(pulumi.CustomResource):
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
-                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['UrlArgs']]]]] = None,
                  vault: Optional[pulumi.Input[str]] = None,
                  wallet: Optional[pulumi.Input[pulumi.InputType['_cryptowallet.WalletSectionArgs']]] = None,
                  __props__=None):
