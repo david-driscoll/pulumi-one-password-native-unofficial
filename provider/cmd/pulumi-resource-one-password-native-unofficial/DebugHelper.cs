@@ -57,4 +57,23 @@ public static class Helpers
 
         return prefix + randomSuffix;
     }
+    
+    public static T? GetValue<T>(this IDictionary<string, object>? objects, string key)
+    {
+        if (objects is null)
+        {
+            return default;
+        }
+        if (!objects.TryGetValue(key, out var value))
+        {
+            throw new Exception($"Missing required property '{key}'");
+        }
+
+        if (value is not T)
+        {
+            throw new Exception($"Property '{key}' is not of type '{typeof(T).Name}'");
+        }
+
+        return (T) value;
+    }
 }

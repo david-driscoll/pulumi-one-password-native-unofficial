@@ -208,9 +208,9 @@ schema.types = {
                 "type": "object",
                 "additionalProperties": { "$ref": "pulumi.json#/Asset" }
             },
-            // "label": {
-            //     "type": "string"
-            // }
+            "label": {
+                "type": "string"
+            }
         },
         "type": "object",
         "required": [
@@ -447,8 +447,8 @@ for (const template of templates) {
     // };
     currentResource.inputProperties['urls'] = {
         "type": "array",
-        items: { "type": "string" },
-    };
+        items: { "$ref": "#/types/one-password-native-unofficial:index:Url" }
+    },
     currentResource.inputProperties['vault'] = {
         "type": "string",
         "description": "The UUID of the vault the item is in.\n",

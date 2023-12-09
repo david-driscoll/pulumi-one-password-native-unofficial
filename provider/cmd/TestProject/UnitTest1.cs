@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
@@ -37,12 +38,20 @@ public class UnitTest1 : IClassFixture<PulumiFixture>
             });
         });
 
-        var stack = await LocalWorkspace.CreateStackAsync(new InlineProgramArgs("onepassword", "testing", program)
-        {
-            EnvironmentVariables = _fixture.EnvironmentVariables,
-        });
+        var stack = await LocalWorkspace.CreateStackAsync(
+            new LocalProgramArgs("csharp", @"C:\Development\david-driscoll\pulumi-one-password-native-unofficial\examples\csharp\")
+            {
+                EnvironmentVariables = _fixture.EnvironmentVariables,
+            });
+        await stack.SetConfigAsync("one-password-native-unofficial:connectHost", new(_fixture.ConnectHost, false));
+        await stack.SetConfigAsync("one-password-native-unofficial:connectToken", new(_fixture.ConnectToken, true));
+        var config = await stack.GetAllConfigAsync();
         var up = await stack.UpAsync();
-        await stack.DestroyAsync();
+        await stack.DestroyAsync(new ()
+        {
+            Debug = true,
+            Tracing = "7"
+        });
     }
 }
 
@@ -57,6 +66,8 @@ public class DatabaseCollection : ICollectionFixture<ConnectServerFixture>
 public class ConnectServerFixture : IAsyncLifetime
 {
     private IContainer _connectApi;
+    private IContainer _connectSync;
+    public string TemporaryDirectory { get; private set; } = "";
 
     public async Task InitializeAsync()
     {
@@ -70,13 +81,26 @@ public class ConnectServerFixture : IAsyncLifetime
             throw new Exception("PULUMI_ONEPASSWORD_CONNECT_TOKEN is not set");
         }
 
+        TemporaryDirectory = Path.Combine(Path.GetTempPath(), "connect", Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(TemporaryDirectory);
+        var volume = new VolumeBuilder().WithName("data").WithCleanUp(true).Build();
         _connectApi = new ContainerBuilder()
             .WithImage("1password/connect-api:latest")
-            .WithResourceMapping(Environment.GetEnvironmentVariable("PULUMI_ONEPASSWORD_CONNECT_JSON"), "/home/opuser/.op/1password-credentials.json")
+            .WithResourceMapping(new FileInfo(Environment.GetEnvironmentVariable("PULUMI_ONEPASSWORD_CONNECT_JSON")), new FileInfo("/home/opuser/.op/1password-credentials.json"))
             .WithPortBinding(8080, true)
+            .WithWaitStrategy(Wait.ForUnixContainer().UntilHttpRequestIsSucceeded(x => x.ForPath("/heartbeat").ForPort(8080)))
+            .WithVolumeMount(volume, "/home/opuser/.op/data")
             .Build();
 
-        await _connectApi.StartAsync();
+        _connectSync = new ContainerBuilder()
+            .WithImage("1password/connect-sync:latest")
+            .WithResourceMapping(new FileInfo(Environment.GetEnvironmentVariable("PULUMI_ONEPASSWORD_CONNECT_JSON")), new FileInfo("/home/opuser/.op/1password-credentials.json"))
+            .WithPortBinding(8080, true)
+            .WithWaitStrategy(Wait.ForUnixContainer().UntilHttpRequestIsSucceeded(x => x.ForPath("/heartbeat").ForPort(8080)))
+            .WithVolumeMount(volume, "/home/opuser/.op/data")
+            .Build();
+
+        await Task.WhenAll(_connectApi.StartAsync(), _connectSync.StartAsync());
 
         ConnectHost = new UriBuilder()
         {
@@ -86,15 +110,19 @@ public class ConnectServerFixture : IAsyncLifetime
     }
 
     public Uri ConnectHost { get; private set; }
+    public string ConnectToken => Environment.GetEnvironmentVariable("PULUMI_ONEPASSWORD_CONNECT_TOKEN") ?? "";
 
     public async Task DisposeAsync()
     {
+        Directory.Delete(TemporaryDirectory, true);
         await _connectApi.DisposeAsync();
+        await _connectSync.DisposeAsync();
     }
 }
 
 public class PulumiFixture : IAsyncLifetime
 {
+    public string BackendUrl { get; private set; }
     public string TemporaryDirectory { get; private set; } = "";
     public ImmutableDictionary<string, string?> EnvironmentVariables { get; private set; } = ImmutableDictionary<string, string?>.Empty;
 
@@ -106,16 +134,26 @@ public class PulumiFixture : IAsyncLifetime
         Directory.CreateDirectory(TemporaryDirectory);
         Directory.CreateDirectory(Path.Combine(TemporaryDirectory, "backend-dir"));
 
+        BackendUrl = new UriBuilder() { Host = "", Path = Path.Combine(TemporaryDirectory, "backend-dir"), Scheme = "file" }.Uri.ToString();
+        if (OperatingSystem.IsWindows())
+        {
+            BackendUrl = BackendUrl.Replace("C:", "", StringComparison.OrdinalIgnoreCase);
+        }
+
         EnvironmentVariables = EnvironmentVariables
-            .Add("PULUMI_BACKEND_URL", $"file:///{Path.Combine(TemporaryDirectory, "backend-dir").Replace("\\", "/")}")
+            .Add("PULUMI_BACKEND_URL", BackendUrl)
             .Add("PULUMI_CONFIG_PASSPHRASE", "backup_password");
     }
 
     public void Connect(ConnectServerFixture connectServerFixture)
     {
-        EnvironmentVariables = EnvironmentVariables.Add("OP_CONNECT_HOST", connectServerFixture.ConnectHost.ToString())
+        EnvironmentVariables = EnvironmentVariables
+            .Add("OP_CONNECT_HOST", connectServerFixture.ConnectHost.ToString())
             .Add("OP_CONNECT_TOKEN", Environment.GetEnvironmentVariable("PULUMI_ONEPASSWORD_CONNECT_TOKEN"));
     }
+
+    public string ConnectHost => EnvironmentVariables["OP_CONNECT_HOST"]!;
+    public string ConnectToken => EnvironmentVariables["OP_CONNECT_TOKEN"]!;
 
     public Task DisposeAsync()
     {

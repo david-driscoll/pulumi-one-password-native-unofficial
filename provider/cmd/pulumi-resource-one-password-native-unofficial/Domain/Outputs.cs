@@ -18,8 +18,8 @@
 // public record OutputField
 // (
 //     string? Value,
-//     OnePassword.Items.FieldPurpose? Purpose,
-//     OnePassword.Items.FieldType? Type,
+//     ServiceAccountOnePassword.Items.FieldPurpose? Purpose,
+//     ServiceAccountOnePassword.Items.FieldType? Type,
 //     string Uuid,
 //     string Label,
 //     string Reference

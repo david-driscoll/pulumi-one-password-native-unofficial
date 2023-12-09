@@ -261,8 +261,8 @@
 //
 //         return new OutputField(
 //             field.TryGetValue("value", out var value) ? ConvertToString(value) : null,
-//             field.TryGetValue("purpose", out var purpose) && purpose.TryGetString(out var p) ? Enum.Parse<OnePassword.Items.FieldPurpose>(p!, true) : null,
-//             field.TryGetValue("type", out var type) && type.TryGetString(out var t) ? Enum.Parse<OnePassword.Items.FieldType>(t!, true) : null,
+//             field.TryGetValue("purpose", out var purpose) && purpose.TryGetString(out var p) ? Enum.Parse<ServiceAccountOnePassword.Items.FieldPurpose>(p!, true) : null,
+//             field.TryGetValue("type", out var type) && type.TryGetString(out var t) ? Enum.Parse<ServiceAccountOnePassword.Items.FieldType>(t!, true) : null,
 //             field.GetString("uuid"),
 //             field.GetString("label"),
 //             field.GetString("reference")

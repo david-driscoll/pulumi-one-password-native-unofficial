@@ -7,13 +7,15 @@ using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 using Serilog;
 using static pulumi_resource_one_password_native_unofficial.TemplateMetadata;
 using System.Text.Json.Serialization;
+using pulumi_resource_one_password_native_unofficial.OnePasswordCli.ConnectServer;
+using pulumi_resource_one_password_native_unofficial.OnePasswordCli.ServiceAccount;
 
 namespace pulumi_resource_one_password_native_unofficial;
 
 public class OnePasswordProvider : Provider
 {
     private readonly ILogger _logger;
-    private OnePassword _op;
+    private IOnePassword _op;
 
     public OnePasswordProvider(ILogger logger)
     {
@@ -22,148 +24,194 @@ public class OnePasswordProvider : Provider
 
     public async override Task<CheckResponse> Check(CheckRequest request, CancellationToken ct)
     {
-        List<CheckFailure> failures = new();
-        if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
-
-        if (resourceType.Urn != ItemType.Item && request.NewInputs.TryGetValue("category", out var category) && category.TryGetString(out var c) &&
-            c != resourceType.ItemName)
+        try
         {
-            failures.Add(new CheckFailure("category", $"Category must be {resourceType.ItemName}"));
-        }
+            List<CheckFailure> failures = new();
+            if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
 
-        if (_op.Options.Vault is null && request.NewInputs.TryGetValue("vault", out var vault) && vault.TryGetString(out var v) && string.IsNullOrWhiteSpace(v))
+            if (resourceType.Urn != ItemType.Item && request.NewInputs.TryGetValue("category", out var category) && category.TryGetString(out var c) &&
+                c != resourceType.ItemName)
+            {
+                failures.Add(new CheckFailure("category", $"Category must be {resourceType.ItemName}"));
+            }
+
+            if (_op?.Options?.Vault is null &&
+                (!request.NewInputs.TryGetValue("vault", out var vault) || !vault.TryGetString(out var v) || string.IsNullOrWhiteSpace(v)))
+            {
+                failures.Add(new CheckFailure("vault", $"Vault must be set or a default provided to the provider"));
+            }
+
+            return new CheckResponse { Inputs = request.NewInputs, Failures = failures };
+        }
+        catch (Exception e)
         {
-            failures.Add(new CheckFailure("vault", $"Vault must be set or a default provided to the provider"));
+            Log.Logger.Error(e, "Error checking item {Message} {Stack}", e.Message, e.StackTrace);
+            throw;
         }
-
-        return new CheckResponse { Inputs = request.NewInputs, Failures = failures };
     }
 
     public override async Task<DiffResponse> Diff(DiffRequest request, CancellationToken ct)
     {
-        await Task.Yield();
-        List<CheckFailure> failures = new();
-        if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
-
-        request.NewInputs.TryAdd("category", new(resourceType.Urn == ItemType.Item ? "Secure Note" : resourceType.ItemName));
-        if (request.OldState.TryGetValue("title", out var property) && property.TryGetString(out var p))
+        try
         {
-            request.NewInputs.TryAdd("title", new(p!));
-        }
+            await Task.Yield();
+            List<CheckFailure> failures = new();
+            if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
 
-        // DebugHelper.WaitForDebugger();
-
-        var news = resourceType.TransformInputs(request.NewInputs);
-        var olds = resourceType.TransformInputs(request.OldState);
-
-        var diff = olds.CreatePatch(news, new JsonSerializerOptions()
-        {
-            PropertyNameCaseInsensitive = true,
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
-        })
-            .Operations;
-
-        var replaces = new List<string>();
-        if (resourceType.ItemName == "Item" &&
-            diff.Any(z => z.Path.Segments.Length == 1 && z.Op == OperationType.Replace && z.Path.Segments[0].Value.Equals("category")))
-        {
-            replaces.Add("category");
-        }
-
-        if (diff.Any(z => z.Path.Segments.Length == 1 && z.Op == OperationType.Replace && z.Path.Segments[0].Value.Equals("vault")))
-        {
-            replaces.Add("vault");
-        }
-
-        return new DiffResponse()
-        {
-            Changes = diff.Any(),
-            DetailedDiff = diff.Aggregate(new Dictionary<string, PropertyDiff>(), (result, patchOperation) =>
+            request.NewInputs.TryAdd("category", new(resourceType.Urn == ItemType.Item ? "Secure Note" : resourceType.ItemName));
+            if (request.OldState.TryGetValue("title", out var property) && property.TryGetString(out var p))
             {
-                var diff = result[patchOperation.Path.ToString()] = new PropertyDiff()
-                {
-                    InputDiff = true,
-                    Kind = patchOperation.Op switch
-                    {
-                        OperationType.Add => PropertyDiffKind.Add,
-                        OperationType.Remove => PropertyDiffKind.Delete,
-                        OperationType.Replace => PropertyDiffKind.Update,
-                        _ => PropertyDiffKind.Update,
-                    },
-                };
-                if (replaces.Contains(patchOperation.Path.Segments[0].Value))
-                {
-                    diff.Kind = diff.Kind switch
-                    {
-                        PropertyDiffKind.Add => PropertyDiffKind.AddReplace,
-                        PropertyDiffKind.Delete => PropertyDiffKind.DeleteReplace,
-                        PropertyDiffKind.Update => PropertyDiffKind.UpdateReplace,
-                        _ => diff.Kind
-                    };
-                }
+                request.NewInputs.TryAdd("title", new(p!));
+            }
 
-                return result;
-            }),
-            DeleteBeforeReplace = true,
-            Replaces = replaces,
-            Stables = resourceType.ItemName == "Item" ? ["uuid"] : ["uuid", "category"],
-            Diffs = diff.Select(z => z.Path.Segments[0].Value).ToList(),
-        };
+            // DebugHelper.WaitForDebugger();
+
+            var news = resourceType.TransformInputs(request.NewInputs);
+            var olds = resourceType.TransformInputs(request.OldState);
+
+            var diff = olds.CreatePatch(news, new JsonSerializerOptions()
+                {
+                    PropertyNameCaseInsensitive = true,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+                })
+                .Operations;
+
+            var replaces = new List<string>();
+            if (resourceType.ItemName == "Item" &&
+                diff.Any(z => z.Path.Segments.Length == 1 && z.Op == OperationType.Replace && z.Path.Segments[0].Value.Equals("category")))
+            {
+                replaces.Add("category");
+            }
+
+            if (diff.Any(z => z.Path.Segments.Length == 1 && z.Op == OperationType.Replace && z.Path.Segments[0].Value.Equals("vault")))
+            {
+                replaces.Add("vault");
+            }
+
+            return new DiffResponse()
+            {
+                Changes = diff.Any(),
+                DetailedDiff = diff.Aggregate(new Dictionary<string, PropertyDiff>(), (result, patchOperation) =>
+                {
+                    var diff = result[patchOperation.Path.ToString()] = new PropertyDiff()
+                    {
+                        InputDiff = true,
+                        Kind = patchOperation.Op switch
+                        {
+                            OperationType.Add => PropertyDiffKind.Add,
+                            OperationType.Remove => PropertyDiffKind.Delete,
+                            OperationType.Replace => PropertyDiffKind.Update,
+                            _ => PropertyDiffKind.Update,
+                        },
+                    };
+                    if (replaces.Contains(patchOperation.Path.Segments[0].Value))
+                    {
+                        diff.Kind = diff.Kind switch
+                        {
+                            PropertyDiffKind.Add => PropertyDiffKind.AddReplace,
+                            PropertyDiffKind.Delete => PropertyDiffKind.DeleteReplace,
+                            PropertyDiffKind.Update => PropertyDiffKind.UpdateReplace,
+                            _ => diff.Kind
+                        };
+                    }
+
+                    return result;
+                }),
+                DeleteBeforeReplace = true,
+                Replaces = replaces,
+                Stables = resourceType.ItemName == "Item" ? ["uuid"] : ["uuid", "category"],
+                Diffs = diff.Select(z => z.Path.Segments[0].Value).ToList(),
+            };
+        }
+        catch (Exception e)
+        {
+            Log.Logger.Error(e, "Error diffing item {Message} {Stack}", e.Message, e.StackTrace);
+            throw;
+        }
     }
 
     public override async Task<CreateResponse> Create(CreateRequest request, CancellationToken ct)
     {
-        if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
-        // DebugHelper.WaitForDebugger();
-
-
-        var news = resourceType.TransformInputs(request.Properties);
-
-        var response = await _op.Items.Create(new(news.Category)
+        try
         {
-            Title = news.Title ?? Helpers.NewUniqueName(Helpers.GetNameFromUrn(request.Urn)),
-            Vault = news.Vault,
-            Tags = news.Tags,
-            Url = news.Urls.FirstOrDefault(),
-            // TODO
-            // GeneratePassword =
-        }, news, ct);
+            if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
+            // DebugHelper.WaitForDebugger();
 
-        return new CreateResponse()
+
+            var news = resourceType.TransformInputs(request.Properties);
+
+            var response = await _op.Items.Create(new(news.Category)
+            {
+                Title = news.Title ?? Helpers.NewUniqueName(Helpers.GetNameFromUrn(request.Urn)),
+                Vault = news.Vault,
+                Tags = news.Tags,
+                Urls = news.Urls,
+                // TODO
+                // GeneratePassword =
+            }, news, ct);
+
+            return new CreateResponse()
+            {
+                Id = response.Id,
+                Properties = resourceType.TransformOutputs(response, request.Properties),
+            };
+        }
+        catch (Exception e)
         {
-            Id = response.Id,
-            Properties = resourceType.TransformOutputs(response, request.Properties),
-        };
+            Log.Logger.Error(e, "Error creating item {Message} {Stack}", e.Message, e.StackTrace);
+            throw;
+        }
     }
 
     public override async Task<UpdateResponse> Update(UpdateRequest request, CancellationToken ct)
     {
-        if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
-        // DebugHelper.WaitForDebugger();
-
-        var news = resourceType.TransformInputs(request.News);
-
-        var response = await _op.Items.Edit(new()
+        try
         {
-            Id = request.Id,
-            Title = news.Title,
-            Vault = news.Vault,
-            Tags = news.Tags,
-            Url = news.Urls.FirstOrDefault(),
-            // TODO
-            // GeneratePassword =
-        }, news, ct);
-        return new()
+            if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
+            // DebugHelper.WaitForDebugger();
+
+            var news = resourceType.TransformInputs(request.News);
+
+            var response = await _op.Items.Edit(new()
+            {
+                Id = request.Id,
+                Title = news.Title,
+                Vault = news.Vault,
+                Tags = news.Tags,
+                Urls = news.Urls,
+                // TODO
+                // GeneratePassword =
+            }, news, ct);
+            return new()
+            {
+                Properties = resourceType.TransformOutputs(response, request.News),
+            };
+        }
+        catch (Exception e)
         {
-            Properties = resourceType.TransformOutputs(response, request.News),
-        };
+            Log.Logger.Error(e, "Error updating item {Message} {Stack}", e.Message, e.StackTrace);
+            throw;
+        }
     }
 
     public override async Task Delete(DeleteRequest request, CancellationToken ct)
     {
-        if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
-        // DebugHelper.WaitForDebugger();
-        await _op.Items.Delete(new(request.Id), ct);
+        try
+        {
+            if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
+            // DebugHelper.WaitForDebugger();
+            var inputs = resourceType.TransformInputs(request.Properties);
+            Log.Logger.Information("Deleting item {Id} {@Properties}", request.Id, request.Properties);
+            await _op.Items.Delete(new(request.Id)
+            {
+                Vault = GetObjectStringValue(GetObjectValue(request.Properties, "vault") ?? PropertyValue.Null, "id")
+            }, ct);
+        }
+        catch (Exception e)
+        {
+            Log.Logger.Error(e, "Error deleting item {Message} {Stack}", e.Message, e.StackTrace);
+            throw;
+        }
     }
 
     public override Task<InvokeResponse> Invoke(InvokeRequest request, CancellationToken ct)
@@ -175,7 +223,8 @@ public class OnePasswordProvider : Provider
         {
             "one-password-native-unofficial:index:GetVault" => GetVault(functionType, request.Args, ct),
             "one-password-native-unofficial:index:Inject" => Inject(functionType, request.Args, ct),
-            "one-password-native-unofficial:index:GetSecretReference" or "one-password-native-unofficial:index:Read" or "one-password-native-unofficial:index:GetAttachment" => Read(functionType, request.Args, ct),
+            "one-password-native-unofficial:index:GetSecretReference" or "one-password-native-unofficial:index:Read"
+                or "one-password-native-unofficial:index:GetAttachment" => Read(functionType, request.Args, ct),
             _ => GetItem(functionType, request.Args, ct)
         };
     }
@@ -187,6 +236,7 @@ public class OnePasswordProvider : Provider
         {
             failures.Add(new CheckFailure("vault", "Must give a vault in order to get a Vault"));
         }
+
         if (failures.Count > 0)
         {
             return new() { Failures = failures, };
@@ -204,10 +254,12 @@ public class OnePasswordProvider : Provider
         {
             failures.Add(new CheckFailure("id", "Must give a id in order to get an Item"));
         }
+
         if (!inputs.ContainsKey("vault") && _op.Options.Vault is null)
         {
             failures.Add(new CheckFailure("vault", "Must give a vault in order to get an Item"));
         }
+
         if (failures.Count > 0)
         {
             return new() { Failures = failures, };
@@ -225,6 +277,7 @@ public class OnePasswordProvider : Provider
         {
             failures.Add(new CheckFailure("template", "Must give a template to inject values into"));
         }
+
         if (failures.Count > 0)
         {
             return new() { Failures = failures, };
@@ -242,6 +295,7 @@ public class OnePasswordProvider : Provider
         {
             failures.Add(new CheckFailure("reference", "Must give a secret reference to get"));
         }
+
         if (failures.Count > 0)
         {
             return new() { Failures = failures, };
@@ -274,7 +328,16 @@ public class OnePasswordProvider : Provider
     {
         await Task.Yield();
         var options = ConfigExtensions.ConvertToConfig(request.Args);
-        _op = new OnePassword(options, _logger);
+
+        if (options.IsConnectServer)
+        {
+            _op = new ConnectServerOnePassword(options, _logger);
+        }
+        else
+        {
+            _op = new ServiceAccountOnePassword(options, _logger);
+        }
+
         return new()
         {
             AcceptOutputs = true,
@@ -290,16 +353,25 @@ public class OnePasswordProvider : Provider
         var failures = new List<CheckFailure>();
 
         var news = ConfigExtensions.ConvertToConfig(request.NewInputs);
-        try
+        var outputs = request.NewInputs;
+        if (request.NewInputs.TryGetValue("vault", out var vault) && vault.TryGetString(out var v) && !string.IsNullOrWhiteSpace(v))
         {
-            await new OnePassword(news, _logger).WhoAmI(ct);
-        }
-        catch (Exception e)
-        {
-            failures.Add(new CheckFailure("serviceAccountToken", $"Service Account Token or Connect Host/Token must be set # {e.Message}"));
+            outputs = outputs.Add("vault", new(v));
         }
 
-        return new CheckResponse() { Inputs = request.NewInputs, Failures = failures };
+        var pass = news is { ConnectHost.Length: > 0, ConnectToken.Length: > 0 } or { ServiceAccountToken.Length: > 0 };
+
+        if (!pass)
+        {
+            failures.Add(new CheckFailure("serviceAccountToken", "Service Account Token or Connect Host/Token must be set"));
+            failures.Add(new CheckFailure("connectToken", "Service Account Token or Connect Host/Token must be set"));
+        }
+
+        return new CheckResponse()
+        {
+            Inputs = outputs,
+            Failures = failures
+        };
     }
 
     public override async Task<DiffResponse> DiffConfig(DiffRequest request, CancellationToken ct)
@@ -310,10 +382,10 @@ public class OnePasswordProvider : Provider
         var news = ConfigExtensions.ConvertToConfig(request.NewInputs);
 
         var diff = olds.CreatePatch(news, new JsonSerializerOptions()
-        {
-            PropertyNameCaseInsensitive = true,
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
-        })
+            {
+                PropertyNameCaseInsensitive = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            })
             .Operations;
 
         var diffs = new List<string>();

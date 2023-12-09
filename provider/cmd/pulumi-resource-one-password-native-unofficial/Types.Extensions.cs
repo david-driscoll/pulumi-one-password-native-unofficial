@@ -66,7 +66,8 @@ public static partial class TemplateMetadata
 
     public delegate Inputs TransformInputs(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> properties);
 
-    public delegate ImmutableDictionary<string, PropertyValue> TransformOutputs(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs);
+    public delegate ImmutableDictionary<string, PropertyValue> TransformOutputs(IPulumiItemType resourceType, Item.Response template,
+        ImmutableDictionary<string, PropertyValue>? inputs);
 
     public static string? GetStringValue(ImmutableDictionary<string, PropertyValue> values, string fieldName)
     {
@@ -97,20 +98,25 @@ public static partial class TemplateMetadata
             : ImmutableArray<string>.Empty;
     }
 
-    public static ImmutableArray<string> GetUrlValues(ImmutableDictionary<string, PropertyValue> values, string fieldName)
+    public static ImmutableArray<Item.Url> GetUrlValues(ImmutableDictionary<string, PropertyValue> values, string fieldName)
     {
-        var result = new List<string>();
+        var result = new List<Item.Url>();
         if (values.TryGetValue(fieldName, out var f) && f.TryUnwrap(out f) && f.TryGetArray(out var array))
         {
             foreach (var item in array)
             {
-                if (item.TryGetObject(out var obj) && obj.TryGetValue("href", out var href) && href.TryGetString(out var hrefString))
+                if (item.TryGetObject(out var obj))
                 {
-                    result.Add(hrefString!);
+                    result.Add(new Item.Url()
+                    {
+                        Href = GetStringValue(obj, "href") ?? "",
+                        Label = GetStringValue(obj, "label"),
+                        Primary = GetBoolValue(obj, "primary")
+                    });
                 }
                 else if (item.TryGetString(out var s))
                 {
-                    result.Add(s!);
+                    result.Add(new Item.Url() { Href = s! });
                 }
             }
         }
@@ -234,7 +240,8 @@ public static partial class TemplateMetadata
                 .Add("reference", new(MakeReference(item, field)));
         }
 
-        static ImmutableDictionary<string, PropertyValue> CreateAttachment(ImmutableDictionary<string, PropertyValue> inputs, Item.Response item, Item.File file)
+        static ImmutableDictionary<string, PropertyValue> CreateAttachment(ImmutableDictionary<string, PropertyValue> inputs, Item.Response item,
+            Item.File file)
         {
             // DebugHelper.WaitForDebugger();
             string? hash = null;
@@ -250,7 +257,7 @@ public static partial class TemplateMetadata
                 asset = GetAttachment(inputs, file.Name);
                 hash = AssetOrArchiveExtensions.HashAssetOrArchive(asset);
             }
-            
+
             return ImmutableDictionary.Create<string, PropertyValue>()
                 .Add("id", new(file.Id))
                 .Add("name", new(file.Name))
@@ -354,7 +361,7 @@ public static partial class TemplateMetadata
             if (filesAlreadyAdded.Contains(attachment.Key)) continue;
             if (AssetOrArchiveExtensions.GetAssetOrArchive(attachment.Value) is { } assetOrArchive)
             {
-                yield return  new TemplateAttachment()
+                yield return new TemplateAttachment()
                 {
                     Id = attachment.Key,
                     Value = AssetOrArchiveExtensions.HashAssetOrArchive(assetOrArchive),
@@ -370,7 +377,7 @@ public static partial class TemplateMetadata
                 string name = GetObjectStringValue(data, "name")!;
                 string? hash = GetObjectStringValue(data, "hash") ?? "";
 
-                yield return  new TemplateField()
+                yield return new TemplateField()
                 {
                     Id = id,
                     Value = hash,
@@ -444,6 +451,11 @@ public static partial class TemplateMetadata
         return !(GetObjectValue(root, name) ?? PropertyValue.Null).TryGetString(out var s) ? null : s;
     }
 
+    public static string? GetObjectStringValue(PropertyValue root, string name)
+    {
+        return !root.TryGetObject(out var v) ? null : GetObjectStringValue(v, name);
+    }
+
     public static PropertyValue? GetObjectValue(ImmutableDictionary<string, PropertyValue> root, string name)
     {
         if (!root.TryGetValue(name, out var value)) return null;
@@ -491,6 +503,8 @@ public static partial class TemplateMetadata
     public record Template
     {
         public required ImmutableArray<TemplateField> Fields { get; init; } = ImmutableArray<TemplateField>.Empty;
+        public required ImmutableArray<TemplateUrl> Urls { get; init; } = ImmutableArray<TemplateUrl>.Empty;
+        // public required ImmutableArray<TemplateFile> Files { get; init; } = ImmutableArray<TemplateField>.Empty;
 
         public ImmutableArray<TemplateSection> Sections =>
             Fields.Where(z => z.Section is not null).GroupBy(z => z.Section?.Id).Select(z => z.First().Section).ToImmutableArray();
@@ -501,7 +515,7 @@ public static partial class TemplateMetadata
         public string? Title { get; init; }
         public required string Category { get; init; }
         public required ImmutableArray<TemplateField> Fields { get; init; } = ImmutableArray<TemplateField>.Empty;
-        public required ImmutableArray<string> Urls { get; init; } = ImmutableArray<string>.Empty;
+        public required ImmutableArray<Item.Url> Urls { get; init; } = ImmutableArray<Item.Url>.Empty;
         public required ImmutableArray<string> Tags { get; init; } = ImmutableArray<string>.Empty;
         public string? Vault { get; init; }
 
@@ -510,6 +524,7 @@ public static partial class TemplateMetadata
             return new Template()
             {
                 Fields = inputs.Fields,
+                Urls = inputs.Urls.Select(z => new TemplateUrl() { Href = z.Href, Label = z.Label, Primary = z.Primary }).ToImmutableArray(),
             };
         }
     }
@@ -530,64 +545,70 @@ public static partial class TemplateMetadata
         public required string Value { get; set; }
     }
 
+    public record TemplateUrl
+    {
+        public string? Label { get; init; }
+        public bool Primary { get; init; }
+        public string Href { get; init; } = "";
+    }
+
     public record TemplateAttachment : TemplateField
     {
-        [JsonIgnore]
-        public required AssetOrArchive Asset { get; init; }
+        [JsonIgnore] public required AssetOrArchive Asset { get; init; }
     }
 }
 
-    internal static class Constants
-    {
-        /// <summary>
-        /// Unknown values are encoded as a distinguished string value.
-        /// </summary>
-        public const string UnknownValue = "04da6b54-80e4-46f7-96ec-b56ff0331ba9";
+internal static class Constants
+{
+    /// <summary>
+    /// Unknown values are encoded as a distinguished string value.
+    /// </summary>
+    public const string UnknownValue = "04da6b54-80e4-46f7-96ec-b56ff0331ba9";
 
-        /// <summary>
-        /// SpecialSigKey is sometimes used to encode type identity inside of a map. See sdk/go/common/resource/properties.go.
-        /// </summary>
-        public const string SpecialSigKey = "4dabf18193072939515e22adb298388d";
+    /// <summary>
+    /// SpecialSigKey is sometimes used to encode type identity inside of a map. See sdk/go/common/resource/properties.go.
+    /// </summary>
+    public const string SpecialSigKey = "4dabf18193072939515e22adb298388d";
 
-        /// <summary>
-        /// SpecialAssetSig is a randomly assigned hash used to identify assets in maps. See sdk/go/common/resource/asset.go.
-        /// </summary>
-        public const string SpecialAssetSig = "c44067f5952c0a294b673a41bacd8c17";
+    /// <summary>
+    /// SpecialAssetSig is a randomly assigned hash used to identify assets in maps. See sdk/go/common/resource/asset.go.
+    /// </summary>
+    public const string SpecialAssetSig = "c44067f5952c0a294b673a41bacd8c17";
 
-        /// <summary>
-        /// SpecialArchiveSig is a randomly assigned hash used to identify archives in maps. See sdk/go/common/resource/asset.go.
-        /// </summary>
-        public const string SpecialArchiveSig = "0def7320c3a5731c473e5ecbe6d01bc7";
+    /// <summary>
+    /// SpecialArchiveSig is a randomly assigned hash used to identify archives in maps. See sdk/go/common/resource/asset.go.
+    /// </summary>
+    public const string SpecialArchiveSig = "0def7320c3a5731c473e5ecbe6d01bc7";
 
-        /// <summary>
-        /// SpecialSecretSig is a randomly assigned hash used to identify secrets in maps. See sdk/go/common/resource/properties.go.
-        /// </summary>
-        public const string SpecialSecretSig = "1b47061264138c4ac30d75fd1eb44270";
+    /// <summary>
+    /// SpecialSecretSig is a randomly assigned hash used to identify secrets in maps. See sdk/go/common/resource/properties.go.
+    /// </summary>
+    public const string SpecialSecretSig = "1b47061264138c4ac30d75fd1eb44270";
 
-        /// <summary>
-        /// SpecialResourceSig is a randomly assigned hash used to identify resources in maps. See sdk/go/common/resource/properties.go.
-        /// </summary>
-        public const string SpecialResourceSig = "5cf8f73096256a8f31e491e813e4eb8e";
+    /// <summary>
+    /// SpecialResourceSig is a randomly assigned hash used to identify resources in maps. See sdk/go/common/resource/properties.go.
+    /// </summary>
+    public const string SpecialResourceSig = "5cf8f73096256a8f31e491e813e4eb8e";
 
-        /// <summary>
-        /// SpecialOutputValueSig is a randomly assigned hash used to identify outputs in maps. See sdk/go/common/resource/properties.go.
-        /// </summary>
-        public const string SpecialOutputValueSig = "d0e6a833031e9bbcd3f4e8bde6ca49a4";
+    /// <summary>
+    /// SpecialOutputValueSig is a randomly assigned hash used to identify outputs in maps. See sdk/go/common/resource/properties.go.
+    /// </summary>
+    public const string SpecialOutputValueSig = "d0e6a833031e9bbcd3f4e8bde6ca49a4";
 
-        public const string SecretName = "secret";
-        public const string ValueName = "value";
-        public const string DependenciesName = "dependencies";
+    public const string SecretName = "secret";
+    public const string ValueName = "value";
+    public const string DependenciesName = "dependencies";
 
-        public const string AssetTextName = "text";
-        public const string ArchiveAssetsName = "assets";
+    public const string AssetTextName = "text";
+    public const string ArchiveAssetsName = "assets";
 
-        public const string AssetOrArchivePathName = "path";
-        public const string AssetOrArchiveUriName = "uri";
+    public const string AssetOrArchivePathName = "path";
+    public const string AssetOrArchiveUriName = "uri";
 
-        public const string ResourceUrnName = "urn";
-        public const string ResourceIdName = "id";
-        public const string ResourceVersionName = "packageVersion";
+    public const string ResourceUrnName = "urn";
+    public const string ResourceIdName = "id";
+    public const string ResourceVersionName = "packageVersion";
 
-        public const string IdPropertyName = "id";
-        public const string UrnPropertyName = "urn";
-    }
+    public const string IdPropertyName = "id";
+    public const string UrnPropertyName = "urn";
+}

@@ -9,7 +9,7 @@
 // namespace pulumi_resource_one_password_native_unofficial.Domain;
 //
 //
-// public record InputField(string? Value, OnePassword.Items.FieldPurpose? Purpose, OnePassword.Items.FieldType? Type);
+// public record InputField(string? Value, ServiceAccountOnePassword.Items.FieldPurpose? Purpose, ServiceAccountOnePassword.Items.FieldType? Type);
 //
 // public record InputSection(ImmutableDictionary<string, InputField> Fields, ImmutableDictionary<string, InputAttachment> Attachments);
 //

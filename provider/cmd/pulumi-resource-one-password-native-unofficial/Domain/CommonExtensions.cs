@@ -28,8 +28,8 @@ public static class CommonExtensions
     //
     //     return new InputField(
     //         field.TryGetValue("value", out var value) ? value.TryUnwrap(out var v) ? ConvertToString(v) : null : null,
-    //         field.TryGetValue("purpose", out var purpose) && purpose.TryGetString(out var p) ? Enum.Parse<OnePassword.Items.FieldPurpose>(p!, true) : null,
-    //         field.TryGetValue("type", out var type) && type.TryGetString(out var t) ? Enum.Parse<OnePassword.Items.FieldType>(t!, true) : null
+    //         field.TryGetValue("purpose", out var purpose) && purpose.TryGetString(out var p) ? Enum.Parse<ServiceAccountOnePassword.Items.FieldPurpose>(p!, true) : null,
+    //         field.TryGetValue("type", out var type) && type.TryGetString(out var t) ? Enum.Parse<ServiceAccountOnePassword.Items.FieldType>(t!, true) : null
     //     );
     // }
     internal static string GetString(this ImmutableDictionary<string, PropertyValue> values, string key) => values.TryGetValue(key, out var value) ? ConvertToString(value) : "";
