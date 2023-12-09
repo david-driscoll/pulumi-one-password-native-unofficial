@@ -1,6 +1,5 @@
 using System.Collections.Immutable;
 using Pulumi.Experimental.Provider;
-using static pulumi_resource_one_password_native_unofficial.TemplateMetadata;
 using static pulumi_resource_one_password_native_unofficial.Domain.CommonExtensions;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 

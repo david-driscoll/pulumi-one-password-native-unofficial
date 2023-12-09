@@ -1,8 +1,9 @@
 using System.Collections.Immutable;
-using System.Runtime;
+using System.Text.Json.Serialization;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 using Pulumi.Experimental.Provider;
 using Humanizer;
+using Pulumi;
 
 namespace pulumi_resource_one_password_native_unofficial;
 
@@ -43,7 +44,7 @@ public static partial class TemplateMetadata
             return TransformInputsToTemplate(this, properties);
         }
 
-        public ImmutableDictionary<string, PropertyValue> TransformOutputs(Item.Response item, Inputs? inputs)
+        public ImmutableDictionary<string, PropertyValue> TransformOutputs(Item.Response item, ImmutableDictionary<string, PropertyValue>? inputs)
         {
             return TransformItemToOutputs(this, item, inputs);
         }
@@ -65,7 +66,7 @@ public static partial class TemplateMetadata
 
     public delegate Inputs TransformInputs(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> properties);
 
-    public delegate ImmutableDictionary<string, PropertyValue> TransformOutputs(IPulumiItemType resourceType, Item.Response template, Inputs? inputs);
+    public delegate ImmutableDictionary<string, PropertyValue> TransformOutputs(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs);
 
     public static string? GetStringValue(ImmutableDictionary<string, PropertyValue> values, string fieldName)
     {
@@ -113,12 +114,14 @@ public static partial class TemplateMetadata
                 }
             }
         }
+
         return result.ToImmutableArray();
     }
 
 
     public static IEnumerable<TemplateField> AssignGenericElements(ImmutableDictionary<string, PropertyValue> root, IEnumerable<TemplateField> fields)
     {
+        // DebugHelper.WaitForDebugger();
         var wellKnownFields = fields.ToImmutableArray();
 
         return AssignFields(root, wellKnownFields)
@@ -132,10 +135,10 @@ public static partial class TemplateMetadata
         ImmutableDictionary<string, PropertyValue>.Builder outputs,
         IPulumiItemType resourceType,
         Item.Response item,
-        Inputs inputs
+        ImmutableDictionary<string, PropertyValue> inputs
     )
     {
-
+        DebugHelper.WaitForDebugger();
         item = item with
         {
             Fields = item.Fields
@@ -152,7 +155,7 @@ public static partial class TemplateMetadata
         outputs.Add("category", new PropertyValue(resourceType.ItemName));
         outputs.Add("title", new PropertyValue(item.Title));
         outputs.Add("notes", new PropertyValue(GetField(item, "notesPlain")?.Value ?? ""));
-        outputs.Add("defaultVault", new PropertyValue(inputs.Vault is null));
+        outputs.Add("defaultVault", new PropertyValue(!inputs.ContainsKey("vault")));
         outputs.Add("vault", new PropertyValue(
                 ImmutableDictionary.Create<string, PropertyValue>()
                     .Add("id", new(item.Vault.Id))
@@ -180,8 +183,8 @@ public static partial class TemplateMetadata
             .ToArray();
 
         var references = item.Fields
-                    .Where(z => z.Type.Equals("REFERENCE", StringComparison.OrdinalIgnoreCase))
-                    .Select(field => new PropertyValue(CreateField(item, field)));
+            .Where(z => z.Type.Equals("REFERENCE", StringComparison.OrdinalIgnoreCase))
+            .Select(field => new PropertyValue(CreateField(item, field)));
 
         var sections = item.Fields.Where(z => z.Section is not null).Select(z => z.Section)
             .Concat(item.Files.Where(z => z.Section is not null).Select(z => z.Section))
@@ -231,22 +234,31 @@ public static partial class TemplateMetadata
                 .Add("reference", new(MakeReference(item, field)));
         }
 
-        static ImmutableDictionary<string, PropertyValue> CreateAttachment(Inputs inputs, Item.Response item, Item.File field)
+        static ImmutableDictionary<string, PropertyValue> CreateAttachment(ImmutableDictionary<string, PropertyValue> inputs, Item.Response item, Item.File file)
         {
-            /*
-             * name: value.name,
-            size: value.size,
-            uuid: value.id,
-            reference: makeReference(opResult.vault.id, opResult.id, value.id)!,
-            hash: asset.hash
-             */
+            // DebugHelper.WaitForDebugger();
+            string? hash = null;
+            PropertyValue? asset = null;
+            if (file is { Section.Id: { } })
+            {
+                var section = GetSection(inputs, file.Section.Id);
+                asset = GetAttachment(section, file.Name);
+                hash = AssetOrArchiveExtensions.HashAssetOrArchive(asset);
+            }
+            else
+            {
+                asset = GetAttachment(inputs, file.Name);
+                hash = AssetOrArchiveExtensions.HashAssetOrArchive(asset);
+            }
+            
             return ImmutableDictionary.Create<string, PropertyValue>()
-                .Add("id", new(field.Id))
-                .Add("name", new(field.Name))
-                .Add("size", new(field.Size))
+                .Add("id", new(file.Id))
+                .Add("name", new(file.Name))
+                .Add("size", new(file.Size))
                 // have to get from the input fields.
-                .Add("hash", new(inputs.Fields.Single(z => z.Section?.Id == field.Section?.Id && z.Id == field.Name).Value))
-                .Add("reference", new(MakeReference(item, field)));
+                .Add("hash", new(hash))
+                .Add("asset", new PropertyValue(asset))
+                .Add("reference", new(MakeReference(item, file)));
         }
     }
 
@@ -271,10 +283,10 @@ public static partial class TemplateMetadata
         if (!f.TryUnwrap(out f)) yield break;
         if (!f.TryGetObject(out var fields)) yield break;
 
-        var fieldsAlreadyAdded = values.Select(z => $"{z.Id}:{z.Section?.Id}").ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
+        var fieldsAlreadyAdded = values.Select(z => z.Id).ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
         foreach (var field in fields)
         {
-            if (fieldsAlreadyAdded.Contains($"{field.Key}:{section?.Id}")) continue;
+            if (fieldsAlreadyAdded.Contains(field.Key)) continue;
             if (!field.Value.TryGetObject(out var data)) continue;
 
             yield return CreateTemplateField(data, field.Key, section);
@@ -299,10 +311,11 @@ public static partial class TemplateMetadata
         string? value = GetObjectStringValue(data, "value");
         string? type = GetObjectStringValue(data, "type");
         string? label = GetObjectStringValue(data, "label") ?? id;
-        if (id is not null && section is not null)
-        {
-            id = $"{section.Id}.{id}";
-        }
+        // if (id is not null && section is not null)
+        // {
+        //     id = $"{section.Id}.{id}";
+        // }
+
         id ??= GetObjectStringValue(data, "id");
         if (section is null && data.TryGetValue("section", out var sectionValue) && sectionValue.TryGetObject(out var sectionData))
         {
@@ -327,30 +340,45 @@ public static partial class TemplateMetadata
     public static IEnumerable<TemplateField> AssignAttachments(ImmutableDictionary<string, PropertyValue> root, IReadOnlyList<TemplateField> values,
         TemplateSection? section = null)
     {
+        // DebugHelper.WaitForDebugger();
         if (!root.TryGetValue("attachments", out var f)) yield break;
         if (!f.TryUnwrap(out f)) yield break;
         if (!f.TryGetObject(out var attachments)) yield break;
-        var filesAlreadyAdded = values.Where(z => z.Type?.Equals("file", StringComparison.OrdinalIgnoreCase) == true).Select(z => z.Id)
+        var filesAlreadyAdded = values.Where(z => z.Type?.Equals("file", StringComparison.OrdinalIgnoreCase) == true)
+            .Select(z => z.Id)
             .ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
         // might need to be done through assignments?
 
-        var fieldsAlreadyAdded = values.Select(z => $"{z.Id}:{z.Section?.Id}").ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
         foreach (var attachment in attachments)
         {
-            if (fieldsAlreadyAdded.Contains($"{attachment.Key}:{section?.Id}")) continue;
-            if (!attachment.Value.TryGetObject(out var data)) continue;
+            if (filesAlreadyAdded.Contains(attachment.Key)) continue;
+            if (AssetOrArchiveExtensions.GetAssetOrArchive(attachment.Value) is { } assetOrArchive)
+            {
+                yield return  new TemplateAttachment()
+                {
+                    Id = attachment.Key,
+                    Value = AssetOrArchiveExtensions.HashAssetOrArchive(assetOrArchive),
+                    Label = attachment.Key,
+                    Type = "FILE",
+                    Section = section,
+                    Asset = assetOrArchive,
+                };
+            }
+            else if (attachment.Value.TryGetObject(out var data))
+            {
+                var id = GetObjectStringValue(data, "id")!;
+                string name = GetObjectStringValue(data, "name")!;
+                string? hash = GetObjectStringValue(data, "hash") ?? "";
 
-            string? hash = GetObjectStringValue(data, "hash");
-
-            // TODO: handle asset/archive here
-            // yield return new TemplateField()
-            // {
-            //     Id = attachment.Key,
-            //     Value = hash ?? "",
-            //     Label = label ?? attachment.Key,
-            //     Type = "FILE",
-            //     Section = section
-            // };
+                yield return  new TemplateField()
+                {
+                    Id = id,
+                    Value = hash,
+                    Label = name,
+                    Type = "FILE",
+                    Section = section,
+                };
+            }
         }
     }
 
@@ -360,11 +388,14 @@ public static partial class TemplateMetadata
         if (!f.TryUnwrap(out f)) yield break;
         if (!f.TryGetObject(out var sections)) yield break;
 
-        var fieldsAlreadyAdded = values.Where(z => z.Section is not null).Select(z => $"{z.Id}:{z.Section?.Id}")
-            .ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
         foreach (var section in sections)
         {
             if (!section.Value.TryGetObject(out var data)) continue;
+            var fieldsAlreadyAdded = values
+                .Where(z => z.Section is { Id.Length: > 0 })
+                .Where(z => z.Section.Id == section.Key)
+                .Select(z => z.Id)
+                .ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
 
             string? label = GetObjectStringValue(data, "label");
 
@@ -376,16 +407,26 @@ public static partial class TemplateMetadata
 
             foreach (var field in AssignFields(data, values.Where(z => z.Section?.Id == section.Key).ToImmutableArray(), templateSection))
             {
-                if (fieldsAlreadyAdded.Contains($"{field.Id}:{field.Section?.Id}")) continue;
+                if (fieldsAlreadyAdded.Contains(field.Id)) continue;
                 yield return field;
             }
 
             foreach (var attachment in AssignAttachments(data, values.Where(z => z.Section?.Id == section.Key).ToImmutableArray(), templateSection))
             {
-                if (fieldsAlreadyAdded.Contains($"{attachment.Id}:{attachment.Section?.Id}")) continue;
+                if (fieldsAlreadyAdded.Contains(attachment.Id)) continue;
                 yield return attachment;
             }
         }
+    }
+
+    public static PropertyValue GetAttachment(ImmutableDictionary<string, PropertyValue> root, string name)
+    {
+        if (!root.TryGetValue("attachments", out var f)) return PropertyValue.Null;
+        if (!f.TryUnwrap(out f)) return PropertyValue.Null;
+        if (!f.TryGetObject(out var fields)) return PropertyValue.Null;
+        // ReSharper disable once NullableWarningSuppressionIsUsed
+        if (!fields!.TryGetValue(name, out var v)) return PropertyValue.Null;
+        return v;
     }
 
     public static ImmutableDictionary<string, PropertyValue>? GetField(ImmutableDictionary<string, PropertyValue> root, string name)
@@ -400,9 +441,14 @@ public static partial class TemplateMetadata
 
     public static string? GetObjectStringValue(ImmutableDictionary<string, PropertyValue> root, string name)
     {
+        return !(GetObjectValue(root, name) ?? PropertyValue.Null).TryGetString(out var s) ? null : s;
+    }
+
+    public static PropertyValue? GetObjectValue(ImmutableDictionary<string, PropertyValue> root, string name)
+    {
         if (!root.TryGetValue(name, out var value)) return null;
         if (!value.TryUnwrap(out var unwrap)) return null;
-        return !unwrap.TryGetString(out var s) ? null : s;
+        return unwrap;
     }
 
     public static Item.Field? GetField(Item.Response item, string name, string? sectionName = null)
@@ -445,12 +491,14 @@ public static partial class TemplateMetadata
     public record Template
     {
         public required ImmutableArray<TemplateField> Fields { get; init; } = ImmutableArray<TemplateField>.Empty;
-        public ImmutableArray<TemplateSection> Sections => Fields.Where(z => z.Section is not null).GroupBy(z => z.Section?.Id).Select(z => z.First().Section).ToImmutableArray();
+
+        public ImmutableArray<TemplateSection> Sections =>
+            Fields.Where(z => z.Section is not null).GroupBy(z => z.Section?.Id).Select(z => z.First().Section).ToImmutableArray();
     }
 
     public record Inputs
     {
-        public required string Title { get; init; }
+        public string? Title { get; init; }
         public required string Category { get; init; }
         public required ImmutableArray<TemplateField> Fields { get; init; } = ImmutableArray<TemplateField>.Empty;
         public required ImmutableArray<string> Urls { get; init; } = ImmutableArray<string>.Empty;
@@ -468,17 +516,78 @@ public static partial class TemplateMetadata
 
     public class TemplateSection
     {
-        public string? Id { get; set; }
-        public required string Label { get; set; }
+        public string? Id { get; init; }
+        public required string Label { get; init; }
     }
 
     public record TemplateField
     {
-        public string? Id { get; set; }
-        public string? Label { get; set; }
-        public string? Type { get; set; }
-        public string? Purpose { get; set; }
-        public TemplateSection? Section { get; set; }
+        public string? Id { get; init; }
+        public string? Label { get; init; }
+        public string? Type { get; init; }
+        public string? Purpose { get; init; }
+        public TemplateSection? Section { get; init; }
         public required string Value { get; set; }
     }
+
+    public record TemplateAttachment : TemplateField
+    {
+        [JsonIgnore]
+        public required AssetOrArchive Asset { get; init; }
+    }
 }
+
+    internal static class Constants
+    {
+        /// <summary>
+        /// Unknown values are encoded as a distinguished string value.
+        /// </summary>
+        public const string UnknownValue = "04da6b54-80e4-46f7-96ec-b56ff0331ba9";
+
+        /// <summary>
+        /// SpecialSigKey is sometimes used to encode type identity inside of a map. See sdk/go/common/resource/properties.go.
+        /// </summary>
+        public const string SpecialSigKey = "4dabf18193072939515e22adb298388d";
+
+        /// <summary>
+        /// SpecialAssetSig is a randomly assigned hash used to identify assets in maps. See sdk/go/common/resource/asset.go.
+        /// </summary>
+        public const string SpecialAssetSig = "c44067f5952c0a294b673a41bacd8c17";
+
+        /// <summary>
+        /// SpecialArchiveSig is a randomly assigned hash used to identify archives in maps. See sdk/go/common/resource/asset.go.
+        /// </summary>
+        public const string SpecialArchiveSig = "0def7320c3a5731c473e5ecbe6d01bc7";
+
+        /// <summary>
+        /// SpecialSecretSig is a randomly assigned hash used to identify secrets in maps. See sdk/go/common/resource/properties.go.
+        /// </summary>
+        public const string SpecialSecretSig = "1b47061264138c4ac30d75fd1eb44270";
+
+        /// <summary>
+        /// SpecialResourceSig is a randomly assigned hash used to identify resources in maps. See sdk/go/common/resource/properties.go.
+        /// </summary>
+        public const string SpecialResourceSig = "5cf8f73096256a8f31e491e813e4eb8e";
+
+        /// <summary>
+        /// SpecialOutputValueSig is a randomly assigned hash used to identify outputs in maps. See sdk/go/common/resource/properties.go.
+        /// </summary>
+        public const string SpecialOutputValueSig = "d0e6a833031e9bbcd3f4e8bde6ca49a4";
+
+        public const string SecretName = "secret";
+        public const string ValueName = "value";
+        public const string DependenciesName = "dependencies";
+
+        public const string AssetTextName = "text";
+        public const string ArchiveAssetsName = "assets";
+
+        public const string AssetOrArchivePathName = "path";
+        public const string AssetOrArchiveUriName = "uri";
+
+        public const string ResourceUrnName = "urn";
+        public const string ResourceIdName = "id";
+        public const string ResourceVersionName = "packageVersion";
+
+        public const string IdPropertyName = "id";
+        public const string UrnPropertyName = "urn";
+    }

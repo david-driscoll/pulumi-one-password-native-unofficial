@@ -1,9 +1,7 @@
-﻿using System.Reflection;
-using pulumi_resource_one_password_native_unofficial;
+﻿using pulumi_resource_one_password_native_unofficial;
 using Pulumi.Experimental.Provider;
 using Serilog;
-using System.Text.Json;
-using System.Diagnostics;
+
 // See https://aka.ms/new-console-template for more information
 
 // while (!Debugger.IsAttached)
@@ -13,7 +11,6 @@ using System.Diagnostics;
 
 await Provider.Serve(args, null, host =>
 {
-    DebugHelper.WaitForDebugger();
     Log.Logger = new LoggerConfiguration()
         .WriteTo.Sink(new HostSink(host))
         .CreateLogger();

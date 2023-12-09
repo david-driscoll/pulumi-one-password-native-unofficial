@@ -737,7 +737,7 @@ ${templates.map(template => {
             Fields = fields.ToImmutableArray()
         };
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsTo${template.name.replace(/ /g, '')}(IPulumiItemType resourceType, Item.Response template, Inputs? inputs)
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsTo${template.name.replace(/ /g, '')}(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
         AssignCommonOutputs(outputs, resourceType, template, inputs);

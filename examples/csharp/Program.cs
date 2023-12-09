@@ -39,12 +39,12 @@ return await Deployment.RunAsync(() =>
                         Type = FieldType.Concealed
                     }
                 },
-                Attachments = new()
-                {
-                    ["my-different-attachment"] = new StringAsset("this is my different attachment"),
-                    // currently there is no way to have a period escaped via the cli
-                    // ["package.json"] = new FileAsset("./Pulumi.yaml")
-                },
+                // Attachments = new()
+                // {
+                //     ["my-different-attachment"] = new StringAsset("this is my different attachment"),
+                //     // currently there is no way to have a period escaped via the cli
+                //     // ["package.json"] = new FileAsset("./Pulumi.yaml")
+                // },
             }
         },
         Tags = new string[] { "test-tag" }

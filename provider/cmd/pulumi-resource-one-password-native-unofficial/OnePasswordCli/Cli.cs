@@ -1,18 +1,13 @@
 using System.Collections.Immutable;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Net.Mail;
-using System.Reflection.Emit;
-using System.Security.Cryptography.Xml;
+using System.Reactive.Disposables;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using CliWrap;
 using CliWrap.Buffered;
 using CliWrap.Builders;
-using Google.Protobuf.WellKnownTypes;
-using Microsoft.Extensions.Options;
-using pulumi_resource_one_password_native_unofficial.Domain;
-using Pulumi.Experimental.Provider;
+using CliWrap.Exceptions;
+using Pulumi;
 using Serilog;
 
 namespace pulumi_resource_one_password_native_unofficial.OnePasswordCli;
@@ -91,7 +86,12 @@ public record OnePasswordOptions
     }
 }
 
-public abstract class OnePasswordBase(Command command, ArgsBuilder argsBuilder, OnePasswordOptions options, ILogger logger, JsonSerializerOptions serializerOptions)
+public abstract class OnePasswordBase(
+    Command command,
+    ArgsBuilder argsBuilder,
+    OnePasswordOptions options,
+    ILogger logger,
+    JsonSerializerOptions serializerOptions)
 {
     private protected JsonSerializerOptions SerializerOptions = serializerOptions;
     private protected readonly OnePasswordOptions Options = options;
@@ -178,7 +178,12 @@ public class OnePassword : OnePasswordBase
     }
 }
 
-public class OnePasswordItemTemplates(Command command, ArgsBuilder argsBuilder, OnePasswordOptions options, ILogger logger, JsonSerializerOptions serializerOptions)
+public class OnePasswordItemTemplates(
+    Command command,
+    ArgsBuilder argsBuilder,
+    OnePasswordOptions options,
+    ILogger logger,
+    JsonSerializerOptions serializerOptions)
     : OnePasswordBase(command, argsBuilder.Add("template"), options, logger, serializerOptions);
 
 public class OnePasswordVaults(Command command, ArgsBuilder argsBuilder, OnePasswordOptions options, ILogger logger, JsonSerializerOptions serializerOptions)
@@ -202,6 +207,9 @@ public class OnePasswordItems(Command command, ArgsBuilder argsBuilder, OnePassw
 
     public async Task<Item.Response> Create(Item.CreateRequest request, TemplateMetadata.Template templateJson, CancellationToken cancellationToken = default)
     {
+        var attachments = templateJson.Fields.OfType<TemplateMetadata.TemplateAttachment>().ToImmutableArray();
+        templateJson = templateJson with { Fields = templateJson.Fields.Where(x => x is not TemplateMetadata.TemplateAttachment).ToImmutableArray() };
+
         var args = ArgsBuilder
                 .Add("create")
                 .Add("-")
@@ -214,18 +222,24 @@ public class OnePasswordItems(Command command, ArgsBuilder argsBuilder, OnePassw
                 .Add("vault", request.Vault ?? Options.Vault)
                 .Add("dry-run", request.DryRun)
             ;
+        
+        (args, var disposable) = await AttachFiles(args, attachments, cancellationToken);
 
         var result = await ExecuteCommand(
             Command.WithArguments(args.Build()),
             templateJson,
             cancellationToken
         );
-        // ReSharper disable once NullableWarningSuppressionIsUsed
+
         return JsonSerializer.Deserialize<Item.Response>(result.StandardOutput, SerializerOptions)!;
     }
 
     public async Task<Item.Response> Edit(Item.EditRequest request, TemplateMetadata.Template templateJson, CancellationToken cancellationToken = default)
     {
+        var attachments = templateJson.Fields.OfType<TemplateMetadata.TemplateAttachment>().ToImmutableArray();
+        templateJson = templateJson with { Fields = templateJson.Fields.Where(x => x is not TemplateMetadata.TemplateAttachment).ToImmutableArray() };
+
+
         var args = ArgsBuilder
                 .Add("edit")
                 .Add(request.Id)
@@ -238,16 +252,55 @@ public class OnePasswordItems(Command command, ArgsBuilder argsBuilder, OnePassw
                 .Add("vault", request.Vault ?? Options.Vault)
                 .Add("dry-run", request.DryRun)
             ;
+        
+        (args, var disposable) = await AttachFiles(args, attachments, cancellationToken);
 
         var result = await ExecuteCommand(
             Command.WithArguments(args.Build()),
             templateJson,
             cancellationToken
         );
-        // ReSharper disable once NullableWarningSuppressionIsUsed
+
         return JsonSerializer.Deserialize<Item.Response>(result.StandardOutput, SerializerOptions)!;
     }
 
+    private async Task<(ArgsBuilder args, IDisposable disposable)> AttachFiles(ArgsBuilder args,
+        ImmutableArray<TemplateMetadata.TemplateAttachment> attachments, CancellationToken cancellationToken = default)
+    {
+        
+        var tempDirectory = Directory.CreateTempSubdirectory("p1p");
+        foreach (var attachment in attachments)
+        {
+            var filePath = await ResolveAsset(tempDirectory.FullName, attachment.Id!, attachment.Asset, cancellationToken);
+            Logger.Information("Attaching file {Id} {Path} exists: {Exists}", attachment.Id, filePath, File.Exists(filePath));
+            args = args.Add($"'{attachment.Id}[file]={filePath}'");
+        }
+
+        return (args, Disposable.Empty);
+
+        static async Task<string> ResolveAsset(string tempDirectory, string fileName, AssetOrArchive asset, CancellationToken cancellationToken)
+        {
+            if (asset is FileAsset fileAsset)
+            {
+                return Path.GetFullPath(AssetOrArchiveExtensions.GetAssetValue(fileAsset));
+            }
+
+            if (asset is FileArchive fileArchive)
+            {
+                return Path.GetFullPath(AssetOrArchiveExtensions.GetAssetValue(fileArchive));
+            }
+
+            if (asset is StringAsset stringAsset)
+            {
+                var tempFilePath = Path.Combine(tempDirectory, fileName);
+                await File.WriteAllTextAsync(tempFilePath, AssetOrArchiveExtensions.GetAssetValue(stringAsset), cancellationToken);
+                return tempFilePath;
+            }
+
+            throw new("Asset not supported!");
+        }
+    }
+    
     public async Task<Item.Response> Get(Item.GetRequest request, CancellationToken cancellationToken = default)
     {
         var args = ArgsBuilder

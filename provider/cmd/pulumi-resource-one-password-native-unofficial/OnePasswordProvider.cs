@@ -1,8 +1,6 @@
 using System.Collections.Immutable;
 using System.Text.Json;
 using Json.Patch;
-using Microsoft.AspNetCore.Server.HttpSys;
-using pulumi_resource_one_password_native_unofficial;
 using Pulumi.Experimental.Provider;
 using pulumi_resource_one_password_native_unofficial.Domain;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
@@ -53,7 +51,7 @@ public class OnePasswordProvider : Provider
             request.NewInputs.TryAdd("title", new(p!));
         }
 
-        DebugHelper.WaitForDebugger();
+        // DebugHelper.WaitForDebugger();
 
         var news = resourceType.TransformInputs(request.NewInputs);
         var olds = resourceType.TransformInputs(request.OldState);
@@ -116,7 +114,7 @@ public class OnePasswordProvider : Provider
     public override async Task<CreateResponse> Create(CreateRequest request, CancellationToken ct)
     {
         if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
-        DebugHelper.WaitForDebugger();
+        // DebugHelper.WaitForDebugger();
 
 
         var news = resourceType.TransformInputs(request.Properties);
@@ -134,14 +132,14 @@ public class OnePasswordProvider : Provider
         return new CreateResponse()
         {
             Id = response.Id,
-            Properties = resourceType.TransformOutputs(response, news),
+            Properties = resourceType.TransformOutputs(response, request.Properties),
         };
     }
 
     public override async Task<UpdateResponse> Update(UpdateRequest request, CancellationToken ct)
     {
         if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
-        DebugHelper.WaitForDebugger();
+        // DebugHelper.WaitForDebugger();
 
         var news = resourceType.TransformInputs(request.News);
 
@@ -157,21 +155,21 @@ public class OnePasswordProvider : Provider
         }, news, ct);
         return new()
         {
-            Properties = resourceType.TransformOutputs(response, news),
+            Properties = resourceType.TransformOutputs(response, request.News),
         };
     }
 
     public override async Task Delete(DeleteRequest request, CancellationToken ct)
     {
         if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
-        DebugHelper.WaitForDebugger();
+        // DebugHelper.WaitForDebugger();
         await _op.Items.Delete(new(request.Id), ct);
     }
 
     public override Task<InvokeResponse> Invoke(InvokeRequest request, CancellationToken ct)
     {
         if (GetFunctionType(request.Tok) is not { } functionType) throw new Exception($"unknown resource type {request.Tok}");
-        DebugHelper.WaitForDebugger();
+        // DebugHelper.WaitForDebugger();
 
         return request.Tok switch
         {
@@ -257,7 +255,7 @@ public class OnePasswordProvider : Provider
     public override async Task<ReadResponse> Read(ReadRequest request, CancellationToken ct)
     {
         if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
-        DebugHelper.WaitForDebugger();
+        // DebugHelper.WaitForDebugger();
 
         var response = await _op.Items.Get(new() { Id = GetStringValue(request.Inputs, "id"), Vault = GetStringValue(request.Inputs, "vault") }, ct);
         return new()
@@ -274,10 +272,7 @@ public class OnePasswordProvider : Provider
 
     public override async Task<ConfigureResponse> Configure(ConfigureRequest request, CancellationToken ct)
     {
-        DebugHelper.WaitForDebugger();
         await Task.Yield();
-
-
         var options = ConfigExtensions.ConvertToConfig(request.Args);
         _op = new OnePassword(options, _logger);
         return new()
@@ -292,7 +287,6 @@ public class OnePasswordProvider : Provider
     public override async Task<CheckResponse> CheckConfig(CheckRequest request, CancellationToken ct)
     {
         await Task.Yield();
-        DebugHelper.WaitForDebugger();
         var failures = new List<CheckFailure>();
 
         var news = ConfigExtensions.ConvertToConfig(request.NewInputs);
@@ -311,7 +305,6 @@ public class OnePasswordProvider : Provider
     public override async Task<DiffResponse> DiffConfig(DiffRequest request, CancellationToken ct)
     {
         await Task.Yield();
-        DebugHelper.WaitForDebugger();
 
         var olds = ConfigExtensions.ConvertToConfig(request.OldState);
         var news = ConfigExtensions.ConvertToConfig(request.NewInputs);
