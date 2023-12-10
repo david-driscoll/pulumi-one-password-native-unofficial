@@ -12,8 +12,10 @@
     <ItemGroup>
         <PackageReference Include="FakeItEasy" Version="8.0.0" />
         <PackageReference Include="FakeItEasy.Analyzer" Version="5.0.0" />
+        <PackageReference Include="FluentAssertions" Version="6.12.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
         <PackageReference Include="Pulumi.Automation" Version="3.59.0" />
+        <PackageReference Include="Serilog.Sinks.XUnit" Version="3.0.5" />
         <PackageReference Include="Testcontainers" Version="3.6.0" />
         <PackageReference Include="verify.xunit" Version="22.8.0" />
         <PackageReference Include="xunit" Version="2.6.2" />

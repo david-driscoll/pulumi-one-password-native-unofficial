@@ -1,4 +1,8 @@
 using System.Diagnostics;
+using System.Net.Http.Headers;
+using GeneratedCode;
+using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
+using Refit;
 
 namespace pulumi_resource_one_password_native_unofficial;
 
@@ -7,20 +11,44 @@ public static class DebugHelper
     public static void WaitForDebugger()
     {
         // if (!Environment.GetCommandLineArgs().Any(z => z is "--debugger" or "--debug")) return;
-        var count = 0;
-        while (!Debugger.IsAttached)
-        {
-            Thread.Sleep(1000);
-            if (count++ > 30)
-            {
-                break;
-            }
-        }
+        // var count = 0;
+        // while (!Debugger.IsAttached)
+        // {
+        //     Thread.Sleep(1000);
+        //     if (count++ > 30)
+        //     {
+        //         break;
+        //     }
+        // }
     }
 }
 
 public static class Helpers
 {
+    public static I1PasswordConnect CreateConnectClient(string url, string token)
+    {
+        return RestService.For<I1PasswordConnect>(url, new RefitSettings()
+        {
+            HttpMessageHandlerFactory = () => new AuthHeaderHandler(token) { InnerHandler = new HttpClientHandler() }
+        });
+    }
+
+    class AuthHeaderHandler : DelegatingHandler
+        {
+            private readonly string _token;
+
+    public AuthHeaderHandler(string token)
+    {
+        _token = token;
+    }
+
+    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+    {
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _token);
+        return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
+    }
+}
+    
     public static string GetNameFromUrn(string urn)
     {
         return urn.Split(':').Last();
@@ -40,7 +68,7 @@ public static class Helpers
 
         if (charset is null)
         {
-            charset = "0123456789abcdef";
+            charset = "0123456789abcdefghijklmnopqrstuvwxyz";
         }
 
         if (!randomSeed.HasValue)

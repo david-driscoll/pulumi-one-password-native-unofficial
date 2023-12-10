@@ -12,32 +12,13 @@ public class ConnectServerOnePasswordBase(
     ILogger logger)
 {
     private protected readonly ILogger Logger = logger;
-    private ImmutableDictionary<string, string> VaultIds = ImmutableDictionary<string, string>.Empty.WithComparers(StringComparer.OrdinalIgnoreCase);
+    private ImmutableDictionary<string, string> _vaultIds = ImmutableDictionary<string, string>.Empty.WithComparers(StringComparer.OrdinalIgnoreCase);
 
-    private protected readonly I1PasswordConnect Connect = RestService.For<I1PasswordConnect>(options.ConnectHost!, new RefitSettings()
-    {
-        HttpMessageHandlerFactory = () => new AuthHeaderHandler(options) { InnerHandler = new HttpClientHandler() }
-    });
-
-    class AuthHeaderHandler : DelegatingHandler
-    {
-        private readonly OnePasswordOptions _options;
-
-        public AuthHeaderHandler(OnePasswordOptions options)
-        {
-            _options = options;
-        }
-
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-        {
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _options.ConnectToken);
-            return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
-        }
-    }
+    internal readonly I1PasswordConnect Connect = Helpers.CreateConnectClient(options.ConnectHost!, options.ConnectToken!);
 
     protected async Task<string> GetVaultUuid(string? name)
     {
-        if (VaultIds.TryGetValue(name, out var id))
+        if (_vaultIds.TryGetValue(name, out var id))
         {
             return id;
         }
@@ -45,11 +26,11 @@ public class ConnectServerOnePasswordBase(
         var vaults = await Connect.GetVaults("");
         foreach (var vault in vaults)
         {
-            VaultIds = VaultIds.Add(vault.Id, vault.Id);
-            VaultIds = VaultIds.Add(vault.Name, vault.Id);
+            _vaultIds = _vaultIds.Add(vault.Id, vault.Id);
+            _vaultIds = _vaultIds.Add(vault.Name, vault.Id);
         }
 
-        return VaultIds.TryGetValue(name, out id) ? id : throw new KeyNotFoundException($"vault {name} not found");
+        return _vaultIds.TryGetValue(name, out id) ? id : throw new KeyNotFoundException($"vault {name} not found");
     }
 
     internal static Item.Response ConvertToItemResponse(FullItem result)

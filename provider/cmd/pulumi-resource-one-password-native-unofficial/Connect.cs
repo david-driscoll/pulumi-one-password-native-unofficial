@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace GeneratedCode
 {
     [System.CodeDom.Compiler.GeneratedCode("Refitter", "0.8.5.0")]
-    internal partial interface I1PasswordConnect
+    public partial interface I1PasswordConnect
     {
         [Headers("Accept: application/json")]
         [Get("/v1/activity")]
@@ -111,7 +111,7 @@ namespace GeneratedCode
     
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal partial class ErrorResponse
+    public partial class ErrorResponse
     {
         /// <summary>
         /// HTTP Status Code
@@ -143,7 +143,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal partial class File
+    public partial class File
     {
         /// <summary>
         /// ID of the file
@@ -211,7 +211,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal partial class Vault
+    public partial class Vault
     {
 
         [JsonPropertyName("id")]
@@ -288,7 +288,7 @@ namespace GeneratedCode
     /// The recipe is used in conjunction with the "generate" property to set the character set used to generate a new secure value
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal partial class GeneratorRecipe
+    public partial class GeneratorRecipe
     {
         /// <summary>
         /// Length of the generated value
@@ -328,7 +328,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal partial class Item
+    public partial class Item
     {
 
         [JsonPropertyName("id")]
@@ -408,7 +408,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal partial class FullItem : Item
+    public partial class FullItem : Item
     {
 
         [JsonPropertyName("sections")]
@@ -429,7 +429,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal partial class Field
+    public partial class Field
     {
 
         [JsonPropertyName("id")]
@@ -508,7 +508,7 @@ namespace GeneratedCode
     /// Represents a request that was made to the API. Including what Token was used and what resource was accessed.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal partial class APIRequest
+    public partial class APIRequest
     {
         /// <summary>
         /// The unique id used to identify a single request.
@@ -562,7 +562,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal partial class Patch : System.Collections.ObjectModel.Collection<Anonymous>
+    public partial class Patch : System.Collections.ObjectModel.Collection<Anonymous>
     {
 
     }
@@ -571,7 +571,7 @@ namespace GeneratedCode
     /// The state of a registered server dependency.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal partial class ServiceDependency
+    public partial class ServiceDependency
     {
 
         [JsonPropertyName("service")]
@@ -605,7 +605,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal partial class Anonymous
+    public partial class Anonymous
     {
 
         [JsonPropertyName("op")]
@@ -642,7 +642,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal partial class Response
+    public partial class Response
     {
 
         [JsonPropertyName("name")]
@@ -678,7 +678,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal partial class Section
+    public partial class Section
     {
 
         [JsonPropertyName("id")]
@@ -698,7 +698,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal enum VaultType
+    public enum VaultType
     {
 
         [System.Runtime.Serialization.EnumMember(Value = @"USER_CREATED")]
@@ -716,7 +716,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal enum CharacterSets
+    public enum CharacterSets
     {
 
         [System.Runtime.Serialization.EnumMember(Value = @"LETTERS")]
@@ -731,7 +731,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal partial class Vault2
+    public partial class Vault2
     {
 
         [JsonPropertyName("id")]
@@ -753,7 +753,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal enum ItemCategory
+    public enum ItemCategory
     {
 
         [System.Runtime.Serialization.EnumMember(Value = @"LOGIN")]
@@ -825,7 +825,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal partial class Urls
+    public partial class Urls
     {
 
         [JsonPropertyName("label")]
@@ -856,7 +856,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal enum ItemState
+    public enum ItemState
     {
 
         [System.Runtime.Serialization.EnumMember(Value = @"ARCHIVED")]
@@ -868,7 +868,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal partial class Sections
+    public partial class Sections
     {
 
         [JsonPropertyName("id")]
@@ -893,7 +893,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal partial class Section2
+    public partial class Section2
     {
 
         [JsonPropertyName("id")]
@@ -913,7 +913,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal enum FieldType
+    public enum FieldType
     {
 
         [System.Runtime.Serialization.EnumMember(Value = @"STRING")]
@@ -940,10 +940,13 @@ namespace GeneratedCode
         [System.Runtime.Serialization.EnumMember(Value = @"MENU")]
         MENU = 7,
 
+        [System.Runtime.Serialization.EnumMember(Value = @"FILE")]
+        FILE = 8,
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal enum FieldPurpose
+    public enum FieldPurpose
     {
 
         [System.Runtime.Serialization.EnumMember(Value = @"")]
@@ -961,7 +964,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal enum APIRequestAction
+    public enum APIRequestAction
     {
 
         [System.Runtime.Serialization.EnumMember(Value = @"READ")]
@@ -979,7 +982,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal enum APIRequestResult
+    public enum APIRequestResult
     {
 
         [System.Runtime.Serialization.EnumMember(Value = @"SUCCESS")]
@@ -991,7 +994,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal partial class Actor
+    public partial class Actor
     {
 
         [JsonPropertyName("id")]
@@ -1031,7 +1034,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal partial class Resource
+    public partial class Resource
     {
 
         [JsonPropertyName("type")]
@@ -1067,7 +1070,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal enum Op
+    public enum Op
     {
 
         [System.Runtime.Serialization.EnumMember(Value = @"add")]
@@ -1082,7 +1085,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal enum ResourceType
+    public enum ResourceType
     {
 
         [System.Runtime.Serialization.EnumMember(Value = @"ITEM")]
@@ -1094,7 +1097,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal partial class Vault3
+    public partial class Vault3
     {
 
         [JsonPropertyName("id")]
@@ -1115,7 +1118,7 @@ namespace GeneratedCode
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    internal partial class Item2
+    public partial class Item2
     {
 
         [JsonPropertyName("id")]

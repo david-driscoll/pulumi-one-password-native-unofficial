@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using CliWrap;
 using CliWrap.Buffered;
 using Serilog;

@@ -146,8 +146,7 @@ public class OnePasswordProvider : Provider
                 Vault = news.Vault,
                 Tags = news.Tags,
                 Urls = news.Urls,
-                // TODO
-                // GeneratePassword =
+                GeneratePassword = news.GeneratePassword,
             }, news, ct);
 
             return new CreateResponse()
@@ -179,8 +178,7 @@ public class OnePasswordProvider : Provider
                 Vault = news.Vault,
                 Tags = news.Tags,
                 Urls = news.Urls,
-                // TODO
-                // GeneratePassword =
+                GeneratePassword = news.GeneratePassword,
             }, news, ct);
             return new()
             {

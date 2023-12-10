@@ -11,7 +11,6 @@ public static class Item
         public bool DryRun { get; init; }
         public bool Favorite { get; init; }
         public ImmutableArray<Url> Urls { get; init; } = ImmutableArray<Url>.Empty;
-        public string? GeneratePassword { get; init; }
     }
 
     public record EditRequest : ItemRequestBase
@@ -20,7 +19,6 @@ public static class Item
         public bool DryRun { get; init; }
         public bool Favorite { get; init; }
         public ImmutableArray<Url> Urls { get; init; } = ImmutableArray<Url>.Empty;
-        public string? GeneratePassword { get; init; }
     }
 
     public record DeleteRequest(string Id)

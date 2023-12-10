@@ -1,9 +1,14 @@
 using System.Collections.Immutable;
+using System.Globalization;
+using System.Text;
 using System.Text.Json.Serialization;
+using GeneratedCode;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 using Pulumi.Experimental.Provider;
 using Humanizer;
 using Pulumi;
+using File = System.IO.File;
+using Item = pulumi_resource_one_password_native_unofficial.OnePasswordCli.Item;
 
 namespace pulumi_resource_one_password_native_unofficial;
 
@@ -124,6 +129,63 @@ public static partial class TemplateMetadata
         return result.ToImmutableArray();
     }
 
+    public static Inputs AssignOtherInputs(ImmutableDictionary<string, PropertyValue> root, IEnumerable<TemplateField> fields, Inputs inputs)
+    {
+        if (root.TryGetValue("generatePassword", out var gp))
+        {
+            inputs = inputs with
+            {
+                Fields = inputs.Fields.Add(new TemplateField()
+                {
+                    Value = null!,
+                    Label = "password",
+                    Type = "CONCEALED",
+                    Id = "password",
+                    Purpose = "PASSWORD",
+                })
+            };
+            if (gp.TryGetBool(out var b) && b)
+            {
+                inputs = inputs with { GeneratePassword = new PasswordGeneratorRecipe() };
+            }
+            else if (gp.TryGetObject(out var obj))
+            {
+                inputs = inputs with
+                {
+                    GeneratePassword = new PasswordGeneratorRecipe()
+                    {
+                        Length = GetObjectNumberValue(obj, "length") ?? 32,
+                    }
+                };
+                if (GetObjectBoolValue(obj, "digits") ?? false)
+                {
+                    inputs = inputs with
+                    {
+                        GeneratePassword = inputs.GeneratePassword with { CharacterSets = (inputs.GeneratePassword.CharacterSets ?? ImmutableArray<CharacterSets>.Empty).Add(CharacterSets.DIGITS) }
+                    };
+                }
+
+                if (GetObjectBoolValue(obj, "letters") ?? false)
+                {
+                    inputs = inputs with
+                    {
+                        GeneratePassword = inputs.GeneratePassword with { CharacterSets = (inputs.GeneratePassword.CharacterSets ?? ImmutableArray<CharacterSets>.Empty).Add(CharacterSets.LETTERS) }
+                    };
+                }
+
+                if (GetObjectBoolValue(obj, "symbols") ?? false)
+                {
+                    inputs = inputs with
+                    {
+                        GeneratePassword = inputs.GeneratePassword with { CharacterSets = (inputs.GeneratePassword.CharacterSets ?? ImmutableArray<CharacterSets>.Empty).Add(CharacterSets.SYMBOLS) }
+                    };
+                }
+            }
+        }
+
+        return inputs;
+    }
+
 
     public static IEnumerable<TemplateField> AssignGenericElements(ImmutableDictionary<string, PropertyValue> root, IEnumerable<TemplateField> fields)
     {
@@ -185,7 +247,7 @@ public static partial class TemplateMetadata
 
         var attachments = item.Files
             .Where(z => z.Section is null)
-            .Select(field => new KeyValuePair<string, PropertyValue>(field.Id, new(CreateAttachment(inputs, item, field))))
+            .Select(file => new KeyValuePair<string, PropertyValue>(file.Name, new(CreateAttachment(inputs, item, file))))
             .ToArray();
 
         var references = item.Fields
@@ -224,7 +286,7 @@ public static partial class TemplateMetadata
                                         item.Files
                                             .Where(z => z.Section is not null)
                                             .Where(z => z.Section?.Id == section.Id)
-                                            .Select(field => new KeyValuePair<string, PropertyValue>(field.Id, new(CreateAttachment(inputs, item, field))))
+                                            .Select(file => new KeyValuePair<string, PropertyValue>(file.Name, new(CreateAttachment(inputs, item, file))))
                                     )))
                         ))))
         ));
@@ -446,9 +508,19 @@ public static partial class TemplateMetadata
         return !v.TryGetObject(out var field) ? null : field;
     }
 
-    public static string? GetObjectStringValue(ImmutableDictionary<string, PropertyValue> root, string name)
+    public static string? GetObjectStringValue(IReadOnlyDictionary<string, PropertyValue> root, string name)
     {
         return !(GetObjectValue(root, name) ?? PropertyValue.Null).TryGetString(out var s) ? null : s;
+    }
+
+    public static int? GetObjectNumberValue(IReadOnlyDictionary<string, PropertyValue> root, string name)
+    {
+        return !(GetObjectValue(root, name) ?? PropertyValue.Null).TryGetNumber(out var s) ? null : Convert.ToInt32(s);
+    }
+
+    public static bool? GetObjectBoolValue(IReadOnlyDictionary<string, PropertyValue> root, string name)
+    {
+        return !(GetObjectValue(root, name) ?? PropertyValue.Null).TryGetBool(out var s) ? null : s;
     }
 
     public static string? GetObjectStringValue(PropertyValue root, string name)
@@ -456,7 +528,7 @@ public static partial class TemplateMetadata
         return !root.TryGetObject(out var v) ? null : GetObjectStringValue(v, name);
     }
 
-    public static PropertyValue? GetObjectValue(ImmutableDictionary<string, PropertyValue> root, string name)
+    public static PropertyValue? GetObjectValue(IReadOnlyDictionary<string, PropertyValue> root, string name)
     {
         if (!root.TryGetValue(name, out var value)) return null;
         if (!value.TryUnwrap(out var unwrap)) return null;
@@ -508,6 +580,58 @@ public static partial class TemplateMetadata
 
         public ImmutableArray<TemplateSection> Sections =>
             Fields.Where(z => z.Section is not null).GroupBy(z => z.Section?.Id).Select(z => z.First().Section).ToImmutableArray();
+
+        public (ImmutableArray<TemplateField> fields, ImmutableArray<TemplateAttachment> attachments, ImmutableArray<TemplateSection> sections)
+            GetFieldsAndAttachments()
+        {
+            var fields = Fields.Where(x => x is not TemplateAttachment).ToImmutableArray();
+            var attachments = Fields.OfType<TemplateAttachment>().ToImmutableArray();
+            return (fields, attachments, Sections);
+        }
+    }
+
+
+    public static async Task<string> ResolveAssetPath(this AssetOrArchive asset, string tempDirectory, string fileName, CancellationToken cancellationToken)
+    {
+        if (asset is FileAsset fileAsset)
+        {
+            return Path.GetFullPath(AssetOrArchiveExtensions.GetAssetValue(fileAsset));
+        }
+
+        if (asset is FileArchive fileArchive)
+        {
+            return Path.GetFullPath(AssetOrArchiveExtensions.GetAssetValue(fileArchive));
+        }
+
+        if (asset is StringAsset stringAsset)
+        {
+            var tempFilePath = Path.Combine(tempDirectory, fileName);
+            await File.WriteAllTextAsync(tempFilePath, AssetOrArchiveExtensions.GetAssetValue(stringAsset), cancellationToken);
+            return tempFilePath;
+        }
+
+        throw new($"Asset {asset.GetType().FullName} not supported!");
+    }
+
+    public static async Task<byte[]> ResolveAsset(this AssetOrArchive asset, CancellationToken cancellationToken)
+    {
+        if (asset is FileAsset fileAsset)
+        {
+            var path = Path.GetFullPath(AssetOrArchiveExtensions.GetAssetValue(fileAsset));
+            return await File.ReadAllBytesAsync(path, cancellationToken);
+        }
+
+        // if (asset is FileArchive fileArchive)
+        // {
+        //     return Path.GetFullPath(AssetOrArchiveExtensions.GetAssetValue(fileArchive));
+        // }
+
+        if (asset is StringAsset stringAsset)
+        {
+            return Encoding.UTF8.GetBytes(AssetOrArchiveExtensions.GetAssetValue(stringAsset));
+        }
+
+        throw new($"Asset {asset.GetType().FullName} not supported!");
     }
 
     public record Inputs
@@ -518,6 +642,7 @@ public static partial class TemplateMetadata
         public required ImmutableArray<Item.Url> Urls { get; init; } = ImmutableArray<Item.Url>.Empty;
         public required ImmutableArray<string> Tags { get; init; } = ImmutableArray<string>.Empty;
         public string? Vault { get; init; }
+        public PasswordGeneratorRecipe? GeneratePassword { get; init; }
 
         public static implicit operator Template(Inputs inputs)
         {

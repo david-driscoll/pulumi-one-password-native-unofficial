@@ -49,7 +49,7 @@ public static class AssetOrArchiveExtensions
 
     public static string GetAssetValue(AssetOrArchive assetOrArchive)
     {
-        if (assetOrArchive is FileAsset or FileAsset or StringAsset)
+        if (assetOrArchive is FileAsset or FileArchive or StringAsset)
         {
             return (string)GetValueMethod.GetValue(assetOrArchive)!;
         }

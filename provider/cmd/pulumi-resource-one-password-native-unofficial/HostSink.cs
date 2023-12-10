@@ -24,7 +24,7 @@ class HostSink : ILogEventSink
         //     urnString = urn.ToString(null, _formatProvider);
         // }
         // await _host.LogAsync(new(GetLogSeverity(logEvent.Level), message, urnString)).ConfigureAwait(false);
-        _host.LogAsync(new(GetLogSeverity(logEvent.Level), message, "")).Wait();
+        // _host.LogAsync(new(GetLogSeverity(logEvent.Level), message, "")).Wait();
     }
 
     private static LogSeverity GetLogSeverity(LogEventLevel level) => level switch

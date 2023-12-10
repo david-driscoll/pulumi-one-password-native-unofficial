@@ -1,5 +1,8 @@
-﻿using GeneratedCode;
+﻿using System.Collections.Immutable;
+using System.Security.Cryptography;
+using GeneratedCode;
 using Serilog;
+using File = GeneratedCode.File;
 
 namespace pulumi_resource_one_password_native_unofficial.OnePasswordCli.ConnectServer;
 
@@ -10,6 +13,12 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
 
     public async Task<Item.Response> Create(Item.CreateRequest request, TemplateMetadata.Template templateJson, CancellationToken cancellationToken = default)
     {
+        var (fields, attachments, sections) = templateJson.GetFieldsAndAttachments();
+        if (attachments.Any())
+        {
+            throw new NotSupportedException("Attachments are not supported when using the Connect Server API");
+        }
+
         try
         {
             var vaultId = await GetVaultUuid(request.Vault ?? options.Vault);
@@ -26,29 +35,37 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
                     Primary = x.Primary,
                 }).ToList(),
                 Tags = request.Tags,
-                Fields = templateJson.Fields.Select(z => new Field()
-                {
-                    Id = z.Id,
-                    Type = Enum.TryParse<FieldType>(z.Type, true, out var type)
-                        ? type
-                        : FieldType.STRING,
-                    Value = z.Value,
-                    Purpose = Enum.TryParse<FieldPurpose>(z.Purpose, true, out var purpose)
-                        ? purpose
-                        : FieldPurpose.Empty,
-                    Section = z.Section is not null
-                        ? new()
-                        {
-                            Id = z.Section.Id,
-                            AdditionalProperties = new Dictionary<string, object>() { { "label", z.Section.Label } }
-                        }
-                        : null,
-                    Label = z.Label,
-                    // Entropy = ,
-                    // Generate = ,
-                    // Recipe = ,
-                }).ToList(),
-                Sections = templateJson.Sections.Select(z => new Sections()
+                Fields = fields.Select(z => new Field()
+                    {
+                        Id = z.Id,
+                        Type = Enum.TryParse<FieldType>(z.Type, true, out var type)
+                            ? type
+                            : FieldType.STRING,
+                        Value = z.Value,
+                        Purpose = Enum.TryParse<FieldPurpose>(z.Purpose, true, out var purpose)
+                            ? purpose
+                            : FieldPurpose.Empty,
+                        Section = z.Section is not null
+                            ? new()
+                            {
+                                Id = z.Section.Id,
+                                AdditionalProperties = new Dictionary<string, object>() { { "label", z.Section.Label } }
+                            }
+                            : null,
+                        Label = z.Label,
+                        // Entropy = ,
+                        // Generate = ,
+                        Generate = purpose == FieldPurpose.PASSWORD && request.GeneratePassword is not null,
+                        Recipe = purpose == FieldPurpose.PASSWORD && request is { GeneratePassword: { Length: > 0 } or { CharacterSets.Length: > 0 } }
+                            ? new GeneratorRecipe()
+                            {
+                                Length = request.GeneratePassword?.Length ?? 32,
+                                CharacterSets = request.GeneratePassword?.CharacterSets
+                            }
+                            : null,
+                    })
+                    .ToList(),
+                Sections = sections.Select(z => new Sections()
                 {
                     Id = z.Id,
                     AdditionalProperties = new Dictionary<string, object>() { { "label", z.Label } }
@@ -66,6 +83,12 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
 
     public async Task<Item.Response> Edit(Item.EditRequest request, TemplateMetadata.Template templateJson, CancellationToken cancellationToken = default)
     {
+        var (fields, attachments, sections) = templateJson.GetFieldsAndAttachments();
+        if (attachments.Any())
+        {
+            throw new NotSupportedException("Attachments are not supported when using the Connect Server API");
+        }
+
         try
         {
             var vaultId = await GetVaultUuid(request.Vault ?? options.Vault);
@@ -80,7 +103,7 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
                     Primary = x.Primary,
                 }).ToList(),
                 Tags = request.Tags,
-                Fields = templateJson.Fields.Select(z => new Field()
+                Fields = fields.Select(z => new Field()
                 {
                     Id = z.Id,
                     Type = Enum.TryParse<FieldType>(z.Type, true, out var type)
@@ -102,7 +125,7 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
                     // Generate = ,
                     // Recipe = ,
                 }).ToList(),
-                Sections = templateJson.Sections.Select(z => new Sections()
+                Sections = sections.Select(z => new Sections()
                 {
                     Id = z.Id,
                     AdditionalProperties = new Dictionary<string, object>() { { "label", z.Label } }

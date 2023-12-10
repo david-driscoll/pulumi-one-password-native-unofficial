@@ -1,4 +1,6 @@
 ﻿using System.Collections.Immutable;
+using System.Text.Json.Serialization;
+using GeneratedCode;
 
 namespace pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 
@@ -7,4 +9,14 @@ public record ItemRequestBase
     public string? Title { get; init; }
     public ImmutableArray<string> Tags { get; init; } = ImmutableArray<string>.Empty;
     public string? Vault { get; init; }
+    public PasswordGeneratorRecipe? GeneratePassword { get; init; }
+}
+
+public record PasswordGeneratorRecipe
+{
+    public int? Length { get; init; }
+    public ImmutableArray<CharacterSets>? CharacterSets { get; init; }
+
+    public static implicit operator string(PasswordGeneratorRecipe recipe) =>
+        string.Join(",", (recipe.CharacterSets ?? ImmutableArray<CharacterSets>.Empty).Select(z => z.ToString().ToLowerInvariant()).Concat(new[] { recipe.Length.ToString() }));
 }

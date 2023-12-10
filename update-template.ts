@@ -727,15 +727,15 @@ ${templates.map(template => {
         var fields = new List<TemplateField>();
         ${inputMethods.join('\n')}
         fields.AddRange(AssignGenericElements(values, fields));
-        return new Inputs()
+        return AssignOtherInputs(values, fields, new Inputs()
         {
-            Title = title ?? "",
+            Title = title,
             Category = ${template.name === 'Item' ? 'category' : 'resourceType.ItemName'},
             Urls = urls,
             Tags = tags,
             Vault = vault,
             Fields = fields.ToImmutableArray()
-        };
+        });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsTo${template.name.replace(/ /g, '')}(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {

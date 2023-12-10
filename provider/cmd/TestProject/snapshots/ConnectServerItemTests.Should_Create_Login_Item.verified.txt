@@ -1,0 +1,65 @@
+﻿{
+  Id: [server-generated],
+  Properties: {
+    attachments: {},
+    category: Login,
+    defaultVault: false,
+    fields: {
+      notesPlain: {
+        id: [redacted],
+        label: notesPlain,
+        purpose: NOTES,
+        reference: [redacted],
+        type: STRING,
+        value: null
+      },
+      password: {
+        id: [redacted],
+        label: password,
+        purpose: PASSWORD,
+        reference: [redacted],
+        type: CONCEALED,
+        value: null
+      },
+      username: {
+        id: [redacted],
+        label: username,
+        purpose: USERNAME,
+        reference: [redacted],
+        type: STRING,
+        value: me
+      }
+    },
+    id: [redacted],
+    notes: ,
+    password: null,
+    references: [],
+    sections: {
+      mysection: {
+        attachments: {},
+        fields: {
+          password2: {
+            id: [redacted],
+            label: password2,
+            purpose: Empty,
+            reference: [redacted],
+            type: CONCEALED,
+            value: secret1235!
+          }
+        },
+        id: [redacted],
+        label: mysection
+      }
+    },
+    tags: [
+      test-tag
+    ],
+    title: myitemabcd1234,
+    urls: [],
+    username: me,
+    vault: {
+      id: [redacted],
+      name: 
+    }
+  }
+}
