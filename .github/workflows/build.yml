@@ -1,11 +1,11 @@
 ﻿name: build
 on:
+  push:
+    branches:
+      - main
   pull_request_target:
     branches:
       - main
-    types:
-      - synchronize
-      - ready_for_review
 
 permissions:
   contents: write
@@ -22,7 +22,6 @@ permissions:
   deployments: none
   discussions: none
 
-
 env:
   PROVIDER: "one-password-native-unofficial"
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -31,4 +30,34 @@ jobs:
     # todo build stuff here
     # add commit back for windows sdk work
     name: build
-    
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Unshallow clone for tags
+        run: git fetch --prune --unshallow --tags
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{matrix.nodeversion}}
+      - uses: MOZGIII/install-ldid-action@v1
+        with:
+          tag: v2.1.5-procursus2
+      - name: Install pulumictl
+        uses: jaxxstorm/action-install-gh-release@v1.5.0
+        with:
+          repo: pulumi/pulumictl
+      - name: Configure 1Password
+        uses: 1password/load-secrets-action/configure@v1
+        with:
+          service-account-token: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+      - name: Install Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+      - run: make generate build install
+      - run: dotnet test
+      - if: "'${{ steps.commit-message.outputs.message }}' != 'Updating sdk'"
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'Updating sdk'
+          file_pattern: 'sdk/'
+          
