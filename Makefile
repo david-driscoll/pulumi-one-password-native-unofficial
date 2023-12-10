@@ -39,17 +39,17 @@ install_provider:: build_provider
 dist:: PKG_ARGS := --no-bytecode --public-packages "*" --public
 dist:: build_provider
 	cd provider/cmd/${PROVIDER}/ && \
- 		yarn run pkg . ${PKG_ARGS} --target node16-macos-x64 --output ../../../bin/darwin-amd64/${PROVIDER} && \
- 		yarn run pkg . ${PKG_ARGS} --target node16-macos-arm64 --output ../../../bin/darwin-arm64/${PROVIDER} && \
- 		yarn run pkg . ${PKG_ARGS} --target node16-linuxstatic-x64 --output ../../../bin/linux-amd64/${PROVIDER} && \
- 		yarn run pkg . ${PKG_ARGS} --target node16-linuxstatic-arm64 --output ../../../bin/linux-arm64/${PROVIDER} && \
- 		yarn run pkg . ${PKG_ARGS} --target node16-win-x64 --output ../../../bin/windows-amd64/${PROVIDER}.exe
+	    dotnet publish -c Release -r win-x64 -o ./bin/windows-amd64 && \
+	    dotnet publish -c Release -r linux-x64 -o ./bin/linux-amd64 && \
+	    dotnet publish -c Release -r linux-arm64 -o ./bin/linux-arm64 && \
+	    dotnet publish -c Release -r osx-x64 -o ./bin/darwin-amd64 && \
+	    dotnet publish -c Release -r osx-arm64 -o ./bin/darwin-arm64
 	mkdir -p dist
-	tar --gzip -cf ./dist/pulumi-resource-${PACK}-v${VERSION}-linux-amd64.tar.gz README.md LICENSE -C bin/linux-amd64/ .
-	tar --gzip -cf ./dist/pulumi-resource-${PACK}-v${VERSION}-linux-arm64.tar.gz README.md LICENSE -C bin/linux-arm64/ .
-	tar --gzip -cf ./dist/pulumi-resource-${PACK}-v${VERSION}-darwin-amd64.tar.gz README.md LICENSE -C bin/darwin-amd64/ .
-	tar --gzip -cf ./dist/pulumi-resource-${PACK}-v${VERSION}-darwin-arm64.tar.gz README.md LICENSE -C bin/darwin-arm64/ .
-	tar --gzip -cf ./dist/pulumi-resource-${PACK}-v${VERSION}-windows-amd64.tar.gz README.md LICENSE -C bin/windows-amd64/ .
+	tar --gzip -cf ./dist/pulumi-resource-${PACK}-v${VERSION}-linux-amd64.tar.gz README.md LICENSE -C provider/cmd/${PROVIDER}/bin/linux-amd64/ .
+	tar --gzip -cf ./dist/pulumi-resource-${PACK}-v${VERSION}-linux-arm64.tar.gz README.md LICENSE -C provider/cmd/${PROVIDER}/bin/linux-arm64/ .
+	tar --gzip -cf ./dist/pulumi-resource-${PACK}-v${VERSION}-darwin-amd64.tar.gz README.md LICENSE -C provider/cmd/${PROVIDER}/bin/darwin-amd64/ .
+	tar --gzip -cf ./dist/pulumi-resource-${PACK}-v${VERSION}-darwin-arm64.tar.gz README.md LICENSE -C provider/cmd/${PROVIDER}/bin/darwin-arm64/ .
+	tar --gzip -cf ./dist/pulumi-resource-${PACK}-v${VERSION}-windows-amd64.tar.gz README.md LICENSE -C provider/cmd/${PROVIDER}/bin/windows-amd64/ .
 
 
 update_template::
