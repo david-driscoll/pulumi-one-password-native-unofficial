@@ -1,9 +1,11 @@
 ﻿using System.Collections.Immutable;
+using System.Text;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
 using GeneratedCode;
 using pulumi_resource_one_password_native_unofficial;
 using Pulumi.Experimental.Provider;
+using File = GeneratedCode.File;
 
 namespace TestProject.Helpers;
 
@@ -31,10 +33,10 @@ public class ConnectServerFixture : IAsyncLifetime, IServerFixture
         TemporaryDirectory = Path.Combine(Path.GetTempPath(), "connect", Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(TemporaryDirectory);
         var volume = new VolumeBuilder().WithName("data").WithCleanUp(true).Build();
+        
         _connectApi = new ContainerBuilder()
             .WithImage("1password/connect-api:latest")
-            .WithResourceMapping(new FileInfo(Environment.GetEnvironmentVariable("PULUMI_ONEPASSWORD_CONNECT_JSON")),
-                new FileInfo("/home/opuser/.op/1password-credentials.json"))
+            .WithConnectJson(Environment.GetEnvironmentVariable("PULUMI_ONEPASSWORD_CONNECT_JSON"))
             .WithPortBinding(8080, true)
             .WithWaitStrategy(Wait.ForUnixContainer().UntilHttpRequestIsSucceeded(x => x.ForPath("/heartbeat").ForPort(8080)))
             .WithVolumeMount(volume, "/home/opuser/.op/data")
@@ -42,8 +44,7 @@ public class ConnectServerFixture : IAsyncLifetime, IServerFixture
 
         _connectSync = new ContainerBuilder()
             .WithImage("1password/connect-sync:latest")
-            .WithResourceMapping(new FileInfo(Environment.GetEnvironmentVariable("PULUMI_ONEPASSWORD_CONNECT_JSON")),
-                new FileInfo("/home/opuser/.op/1password-credentials.json"))
+            .WithConnectJson(Environment.GetEnvironmentVariable("PULUMI_ONEPASSWORD_CONNECT_JSON"))
             .WithPortBinding(8080, true)
             .WithWaitStrategy(Wait.ForUnixContainer().UntilHttpRequestIsSucceeded(x => x.ForPath("/heartbeat").ForPort(8080)))
             .WithVolumeMount(volume, "/home/opuser/.op/data")
@@ -116,4 +117,21 @@ public class ConnectServerFixture : IAsyncLifetime, IServerFixture
         // to be the place to apply [CollectionDefinition] and all the
         // ICollectionFixture<> interfaces.
     }
+    
 }
+
+public static class ExtensionMethods
+{
+    public static ContainerBuilder WithConnectJson(this ContainerBuilder builder, string json)
+    {
+        if (System.IO.File.Exists(json))
+        {
+            return builder.WithResourceMapping(new FileInfo(json),
+                new FileInfo("/home/opuser/.op/1password-credentials.json"));
+        }
+        else
+        {
+            return builder.WithResourceMapping(Encoding.UTF8.GetBytes(json), "/home/opuser/.op/1password-credentials.json");
+        }
+    }
+} 

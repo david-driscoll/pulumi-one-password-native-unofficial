@@ -1,0 +1,34 @@
+﻿name: build
+on:
+  pull_request_target:
+    branches:
+      - main
+    types:
+      - synchronize
+      - ready_for_review
+
+permissions:
+  contents: write
+  checks: write
+  actions: read
+  issues: read
+  pull-requests: read
+  repository-projects: none
+  security-events: none
+  statuses: write
+  pages: none
+  packages: none
+  id-token: write
+  deployments: none
+  discussions: none
+
+
+env:
+  PROVIDER: "one-password-native-unofficial"
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+jobs:
+  build:
+    # todo build stuff here
+    # add commit back for windows sdk work
+    name: build
+    

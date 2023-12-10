@@ -64,9 +64,22 @@ jobs:
         uses: jaxxstorm/action-install-gh-release@v1.5.0
         with:
           repo: pulumi/pulumictl
+      - name: Configure 1Password
+        uses: 1password/load-secrets-action/configure@v1
+        with:
+          service-account-token: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
       - name: Install Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
       - run: make build_provider
+      - name: Load Secrets
+        uses: 1password/load-secrets-action@v1
+        with:
+          export-env: true
+        env:
+          PULUMI_ONEPASSWORD_SERVICE_ACCOUNT_TOKEN: "op://onepassword-pulumi/crhc7whbpeu622g672yyjnggjm/credential"
+          PULUMI_ONEPASSWORD_CONNECT_JSON: "op://onepassword-pulumi/testing-pulumi Credentials File/credential"
+          PULUMI_ONEPASSWORD_CONNECT_TOKEN: "op://onepassword-pulumi/3ed4w3nhjfyjzh3sts2eonhlzq/credential"          
+      - run: dotnet test
       - name: Create Provider Binaries
         run: make dist
       - name: Create GH Release
