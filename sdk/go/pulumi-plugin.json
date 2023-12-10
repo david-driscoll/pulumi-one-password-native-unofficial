@@ -1,0 +1,5 @@
+{
+  "resource": true,
+  "name": "one-password-native-unofficial",
+  "server": "github://api.github.com/david-driscoll"
+}

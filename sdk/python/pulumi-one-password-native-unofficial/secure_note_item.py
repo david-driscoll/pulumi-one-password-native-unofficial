@@ -24,7 +24,7 @@ class SecureNoteItemArgs:
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input['SectionArgs']]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
-                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+                 urls: Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]] = None):
         """
         The set of arguments for constructing a SecureNoteItem resource.
         :param pulumi.Input[str] vault: The UUID of the vault the item is in.
@@ -136,11 +136,11 @@ class SecureNoteItemArgs:
 
     @property
     @pulumi.getter
-    def urls(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+    def urls(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]]:
         return pulumi.get(self, "urls")
 
     @urls.setter
-    def urls(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+    def urls(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]]):
         pulumi.set(self, "urls", value)
 
 
@@ -179,7 +179,7 @@ class SecureNoteItem(pulumi.CustomResource):
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
-                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['UrlArgs']]]]] = None,
                  vault: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -221,7 +221,7 @@ class SecureNoteItem(pulumi.CustomResource):
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
-                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 urls: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['UrlArgs']]]]] = None,
                  vault: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         if opts is None:

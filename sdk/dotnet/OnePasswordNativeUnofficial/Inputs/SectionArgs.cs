@@ -29,6 +29,9 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial.Inputs
             set => _fields = value;
         }
 
+        [Input("label")]
+        public Input<string>? Label { get; set; }
+
         public SectionArgs()
         {
         }
