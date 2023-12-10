@@ -72,7 +72,7 @@ jobs:
           service-account-token: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
       - name: Install Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-      - run: make build_provider
+      - run: make build_provider build_dotnet_sdk
       - name: Load Secrets
         uses: 1password/load-secrets-action@v1
         with:
