@@ -605,4 +605,32 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
 
         await Verify(result);
     }
+    [Fact]
+    public async Task Should_Work_With_ApiCredentialItems()
+    {
+        var provider = await _serverFixture.ConfigureProvider(_logger);
+
+        var name = Output.Create("registryname");
+        var username = Output.Create("myusername");
+        var password = Output.CreateSecret("mypassword");
+        var loginserver = Output.Create("loginserver.com");
+
+        var data = await _fixture.CreateRequestObject<APICredentialItem, APICredentialItemArgs>("credential with spaces", new()
+        {
+            Vault = "testing-pulumi",
+            Username = username,
+            Credential = password,
+            Hostname = loginserver,
+            Fields = new()
+            {
+                ["name"] = new FieldArgs { Type = FieldType.String, Value = name },
+            }
+        });
+
+        var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
+
+        await Verify(create)
+            .AddIdScrubber(create.Id)
+            .AddPasswordScrubber(create.Properties);
+    }
 }

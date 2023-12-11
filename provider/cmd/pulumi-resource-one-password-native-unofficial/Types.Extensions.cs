@@ -13,16 +13,24 @@ namespace pulumi_resource_one_password_native_unofficial;
 
 public static partial class TemplateMetadata
 {
+    private static ImmutableDictionary<string, ResourceType> ResourceTypesDictionary { get; } = ResourceTypes.ToImmutableDictionary(z => z.Urn);
     private static ImmutableDictionary<string, FunctionType> FunctionTypesDictionary { get; } = FunctionTypes.ToImmutableDictionary(z => z.Urn);
 
     public static ResourceType? GetResourceTypeFromUrn(string urn)
     {
-        return ResourceTypes.FirstOrDefault(z => urn.Contains($":{z.Urn}:"));
+        return CollectionExtensions.GetValueOrDefault(ResourceTypesDictionary, Type(urn));
     }
 
     public static FunctionType? GetFunctionType(string urn)
     {
-        return FunctionTypesDictionary.TryGetValue(urn, out var value) ? value : null;
+        return CollectionExtensions.GetValueOrDefault(FunctionTypesDictionary, urn);
+    }
+    
+    private static string Type(string urn)
+    {
+        var parts = urn.Split("::");
+        var typeParts = parts[2].Split("$");
+        return typeParts[^1];
     }
 
     public interface IPulumiItemType

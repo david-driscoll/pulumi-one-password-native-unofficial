@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using Pulumi;
 using pulumi_resource_one_password_native_unofficial;
 using Pulumi.Experimental.Provider;
+
 // ReSharper disable NullableWarningSuppressionIsUsed
 
 namespace TestProject.Helpers;
@@ -14,16 +15,20 @@ public static class TestExtensions
         if (id is not { Length: > 0 }) return verifier;
         return verifier.AddScrubber(z => z.Replace(id, "[server-generated]"));
     }
+
     public static SettingsTask AddPasswordScrubber(this SettingsTask verifier, IReadOnlyDictionary<string, PropertyValue>? properties)
     {
-        return properties is null
-            ? verifier
-            : verifier.AddScrubber(x => x.Replace(TemplateMetadata.GetObjectStringValue(properties.ToImmutableDictionary(), "password")!,
-                "[redacted,server-generated]"));
+        if (properties is not null && TemplateMetadata.GetObjectStringValue(properties.ToImmutableDictionary(), "password") is { Length: > 0 } value)
+        {
+            return verifier.AddScrubber(x => x.Replace(value, "[redacted,server-generated]"));
+        }
+
+        return verifier;
     }
+
     public static SettingsTask AddPasswordScrubber(this SettingsTask verifier, IDictionary<string, PropertyValue>? properties)
     {
-        return properties is  null ? verifier : AddPasswordScrubber(verifier, (IReadOnlyDictionary<string, PropertyValue>?)properties.ToImmutableDictionary());
+        return properties is null ? verifier : AddPasswordScrubber(verifier, (IReadOnlyDictionary<string, PropertyValue>?)properties.ToImmutableDictionary());
     }
 
     public static Task<T> GetValue<T>(this Output<T> output) => output.GetValue(arg => arg);
