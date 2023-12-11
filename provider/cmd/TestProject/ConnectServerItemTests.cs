@@ -627,7 +627,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
             }
         });
 
-        var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
+        var create = await provider.Create(new CreateRequest("urn:pulumi:dev::Syndicates.Infrastructure::resources$one-password-native-unofficial:index:APICredentialItem::credential with spaces", data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
 
         await Verify(create)
             .AddIdScrubber(create.Id)
