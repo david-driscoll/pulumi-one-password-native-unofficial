@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using DiffEngine;
 // ReSharper disable NullableWarningSuppressionIsUsed
 
@@ -10,12 +11,12 @@ public static class ModuleInitializer
     public static void Init()
     {
         string[] serverGeneratedFields = { "id:", "uuid:", "reference:", "title:" };
+        var regex = new Regex(@"^[\da-z]{26}$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         VerifierSettings.ScrubLinesWithReplace(
             replaceLine: line =>
             {
-                if (line is { Length: 26 })
+                if (regex.IsMatch(line))
                 {
-                    // might be a uuid
                     return "[server-generated]";
                 }
                 

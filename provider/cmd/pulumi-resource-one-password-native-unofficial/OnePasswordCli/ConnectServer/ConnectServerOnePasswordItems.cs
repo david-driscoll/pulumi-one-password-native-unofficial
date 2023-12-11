@@ -1,6 +1,8 @@
-﻿using GeneratedCode;
+﻿using System.Net;
+using GeneratedCode;
 using Refit;
 using Serilog;
+
 #pragma warning disable CS9107 // Parameter is captured into the state of the enclosing type and its value is also passed to the base constructor. The value might be captured by the base class as well.
 
 namespace pulumi_resource_one_password_native_unofficial.OnePasswordCli.ConnectServer;
@@ -113,8 +115,15 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
 
     public async Task Delete(Item.DeleteRequest request, CancellationToken cancellationToken = default)
     {
-        var vaultId = await GetVaultUuid(request.Vault ?? options.Vault);
-        await Connect.DeleteVaultItem(vaultId, request.Id);
+        try
+        {
+            var vaultId = await GetVaultUuid(request.Vault ?? options.Vault);
+            await Connect.DeleteVaultItem(vaultId, request.Id);
+        }
+        catch (ApiException e) when (e.StatusCode is HttpStatusCode.NotFound)
+        {
+            Logger.Warning(e, "Item {Id} not found", request.Id);
+        }
     }
 
     public IOnePasswordItemTemplates Templates => _templates.Value;

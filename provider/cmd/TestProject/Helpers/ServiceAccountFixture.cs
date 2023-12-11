@@ -37,7 +37,6 @@ public class ServiceAccountFixture : IAsyncLifetime, IServerFixture
                 await provider.Delete(new("", id, ImmutableDictionary<string, PropertyValue>.Empty.Add("vault", new(
                     ImmutableDictionary<string, PropertyValue>.Empty.Add("id", new(Vault))
                 )), TimeSpan.MaxValue), CancellationToken.None);
-                await Task.Delay(200);
             }
         }
 
