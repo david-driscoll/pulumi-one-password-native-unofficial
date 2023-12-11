@@ -49,7 +49,8 @@
             }
           },
           id: [redacted],
-          label: mysection
+          label: mysection,
+          references: []
         }
       },
       tags: [

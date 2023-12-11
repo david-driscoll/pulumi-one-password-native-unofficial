@@ -1,0 +1,7 @@
+﻿{
+  Return: {
+    result:
+MyPassword: my great password
+MyConfigValue: this is a config value
+  }
+}

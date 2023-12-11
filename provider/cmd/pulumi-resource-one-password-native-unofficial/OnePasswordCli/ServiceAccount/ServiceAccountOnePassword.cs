@@ -42,7 +42,7 @@ public class ServiceAccountOnePassword : ServiceAccountOnePasswordBase, IOnePass
     public async Task<string> Read(string reference, CancellationToken cancellationToken = default)
     {
         var result = await ExecuteCommand(
-            Command.WithArguments(ArgsBuilder.Add("read").Add(reference).Build()),
+            Command.WithArguments(ArgsBuilder.Add("read").Add($"\"{reference.Trim('\"')}\"").Build()),
             cancellationToken
         );
         if (result.ExitCode != 0) throw new Exception(result.StandardError);

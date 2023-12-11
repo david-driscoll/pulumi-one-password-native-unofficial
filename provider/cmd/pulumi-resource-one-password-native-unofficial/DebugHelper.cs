@@ -29,7 +29,7 @@ public static class Helpers
 {
     public static string ToPropertyPath(this PatchOperation operation)
     {
-        return string.Join(".", operation.Path.ToString().Split('/', StringSplitOptions.RemoveEmptyEntries).Select(z => z.Camelize()));
+        return string.Join(".", operation.Path.ToString().Split('/', StringSplitOptions.RemoveEmptyEntries).Select(z => string.Concat(z[..1].ToLowerInvariant(), z.AsSpan(1))));
     }
     public static I1PasswordConnect CreateConnectClient(string url, string token)
     {
@@ -100,7 +100,7 @@ public static class Helpers
         }
         if (!objects.TryGetValue(key, out var value))
         {
-            throw new Exception($"Missing required property '{key}'");
+            return default;
         }
 
         if (value is not T)

@@ -99,7 +99,7 @@ public class OnePasswordProvider : Provider
                             _ => PropertyDiffKind.Update,
                         },
                     };
-                    if (replaces.Contains(patchOperation.Path.Segments[0].Value.Camelize()))
+                    if (replaces.Contains(patchOperation.Path.Segments[0].Value))
                     {
                         diff.Kind = diff.Kind switch
                         {
@@ -215,22 +215,18 @@ public class OnePasswordProvider : Provider
 
     public override Task<InvokeResponse> Invoke(InvokeRequest request, CancellationToken ct)
     {
-        if (GetFunctionType(request.Tok) is not { } functionType) throw new Exception($"unknown resource type {request.Tok}");
-        // DebugHelper.WaitForDebugger();
-
         return request.Tok switch
         {
-            "one-password-native-unofficial:index:GetVault" => GetVault(functionType, request.Args, ct),
-            "one-password-native-unofficial:index:Inject" => Inject(functionType, request.Args, ct),
+            "one-password-native-unofficial:index:GetVault" => GetVault(request.Args, ct),
+            "one-password-native-unofficial:index:Inject" => Inject(request.Args, ct),
             "one-password-native-unofficial:index:GetSecretReference" or "one-password-native-unofficial:index:Read"
-                or "one-password-native-unofficial:index:GetAttachment" => Read(functionType, request.Args, ct),
-            _ => GetItem(functionType, request.Args, ct)
+                or "one-password-native-unofficial:index:GetAttachment" => Read(request.Args, ct),
+            _ => GetItem(request.Tok, request.Args, ct)
         };
     }
-    
-    
 
-    private async Task<InvokeResponse> GetVault(FunctionType functionType, ImmutableDictionary<string, PropertyValue> inputs, CancellationToken ct)
+
+    private async Task<InvokeResponse> GetVault(ImmutableDictionary<string, PropertyValue> inputs, CancellationToken ct)
     {
         var failures = new List<CheckFailure>();
         if (!inputs.ContainsKey("vault") && _op.Options.Vault is null)
@@ -248,8 +244,9 @@ public class OnePasswordProvider : Provider
         return new() { Return = new Dictionary<string, PropertyValue> { { "name", new(result.Name) }, { "uuid", new(result.Id) } } };
     }
 
-    private async Task<InvokeResponse> GetItem(FunctionType functionType, ImmutableDictionary<string, PropertyValue> inputs, CancellationToken ct)
+    private async Task<InvokeResponse> GetItem(string urn, ImmutableDictionary<string, PropertyValue> inputs, CancellationToken ct)
     {
+        if (GetFunctionType(urn) is not { } functionType) throw new Exception($"unknown function type {urn}");
         var failures = new List<CheckFailure>();
         if (!inputs.ContainsKey("id"))
         {
@@ -271,11 +268,12 @@ public class OnePasswordProvider : Provider
         return new() { Return = functionType.TransformOutputs(response) };
     }
 
-    private static ImmutableDictionary<string, PropertyValue> ApplyDefaultInputs(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> requestNews)
+    private static ImmutableDictionary<string, PropertyValue> ApplyDefaultInputs(ResourceType resourceType,
+        ImmutableDictionary<string, PropertyValue> requestNews)
     {
         if (GetObjectStringValue(requestNews, "notes") is null)
         {
-            requestNews = requestNews.Remove("notes").Add("notes", new (""));
+            requestNews = requestNews.Remove("notes").Add("notes", new(""));
         }
 
         if (GetObjectStringValue(requestNews, "category") is not { Length: > 0 })
@@ -286,7 +284,8 @@ public class OnePasswordProvider : Provider
         return requestNews;
     }
 
-    private static ImmutableDictionary<string, PropertyValue> ApplyDefaultInputs(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> requestNews, ImmutableDictionary<string, PropertyValue>? oldState)
+    private static ImmutableDictionary<string, PropertyValue> ApplyDefaultInputs(ResourceType resourceType,
+        ImmutableDictionary<string, PropertyValue> requestNews, ImmutableDictionary<string, PropertyValue>? oldState)
     {
         if (GetObjectStringValue(requestNews, "title") is not { Length: > 0 })
         {
@@ -296,7 +295,7 @@ public class OnePasswordProvider : Provider
         return ApplyDefaultInputs(resourceType, requestNews);
     }
 
-    private async Task<InvokeResponse> Inject(FunctionType functionType, ImmutableDictionary<string, PropertyValue> inputs, CancellationToken ct)
+    private async Task<InvokeResponse> Inject(ImmutableDictionary<string, PropertyValue> inputs, CancellationToken ct)
     {
         var failures = new List<CheckFailure>();
         if (!inputs.ContainsKey("template"))
@@ -314,7 +313,7 @@ public class OnePasswordProvider : Provider
         return new() { Return = ImmutableDictionary.Create<string, PropertyValue>().Add("result", new(response)) };
     }
 
-    private async Task<InvokeResponse> Read(FunctionType functionType, ImmutableDictionary<string, PropertyValue> inputs, CancellationToken ct)
+    private async Task<InvokeResponse> Read(ImmutableDictionary<string, PropertyValue> inputs, CancellationToken ct)
     {
         var failures = new List<CheckFailure>();
         if (!inputs.ContainsKey("reference"))

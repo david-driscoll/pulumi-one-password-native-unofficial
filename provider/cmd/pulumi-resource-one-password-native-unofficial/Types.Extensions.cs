@@ -218,7 +218,7 @@ public static partial class TemplateMetadata
         ImmutableDictionary<string, PropertyValue>.Builder outputs,
         IPulumiItemType resourceType,
         Item.Response item,
-        ImmutableDictionary<string, PropertyValue> inputs
+        ImmutableDictionary<string, PropertyValue>? inputs
     )
     {
         DebugHelper.WaitForDebugger();
@@ -238,7 +238,7 @@ public static partial class TemplateMetadata
         outputs.Add("category", new PropertyValue(resourceType.ItemName));
         outputs.Add("title", new PropertyValue(item.Title));
         outputs.Add("notes", new PropertyValue(GetField(item, "notesPlain")?.Value ?? ""));
-        outputs.Add("defaultVault", new PropertyValue(!inputs.ContainsKey("vault")));
+        outputs.Add("defaultVault", new PropertyValue(inputs?.ContainsKey("vault") != true));
         outputs.Add("vault", new PropertyValue(
                 ImmutableDictionary.Create<string, PropertyValue>()
                     .Add("id", new(item.Vault.Id))
@@ -249,7 +249,7 @@ public static partial class TemplateMetadata
         outputs.Add("tags", new PropertyValue(item.Tags.Select(z => new PropertyValue(z)).ToImmutableArray()));
         outputs.Add("urls", new PropertyValue(item.Urls
             .Select(z => new PropertyValue(ImmutableDictionary.Create<string, PropertyValue>()
-                .Add("label", new(z.Label))
+                .Add("label", new(z.Label!))
                 .Add("href", new(z.Href))
                 .Add("primary", new(z.Primary)))
             ).ToImmutableArray())
@@ -285,7 +285,7 @@ public static partial class TemplateMetadata
                 .AddRange(
                     sections
                         // ReSharper disable once NullableWarningSuppressionIsUsed
-                        .Select(section => new KeyValuePair<string, PropertyValue>((section!.Label ?? section.Id).Camelize(), new(
+                        .Select(section => new KeyValuePair<string, PropertyValue>((section!.Label ?? section.Id), new(
                             ImmutableDictionary.Create<string, PropertyValue>()
                                 .Add("id", new(section.Id))
                                 .Add("label", new(section.Label ?? section.Id))
@@ -295,7 +295,7 @@ public static partial class TemplateMetadata
                                             .Where(z => !z.Type.Equals("REFERENCE", StringComparison.OrdinalIgnoreCase))
                                             .Where(z => z.Section is not null)
                                             .Where(z => z.Section?.Id == section.Id)
-                                            .Select(field => new KeyValuePair<string, PropertyValue>(field.Id, new(CreateField(inputs, item, field))))
+                                            .Select(field => new KeyValuePair<string, PropertyValue>(field.Id!, new(CreateField(inputs, item, field))))
                                     )))
                                 .Add("references", new (ImmutableArray.Create<PropertyValue>()
                                     .AddRange(
@@ -315,12 +315,13 @@ public static partial class TemplateMetadata
                         ))))
         ));
 
-        static ImmutableDictionary<string, PropertyValue> CreateField(ImmutableDictionary<string, PropertyValue> inputs, Item.Response item, Item.Field field)
+        static ImmutableDictionary<string, PropertyValue> CreateField(ImmutableDictionary<string, PropertyValue>? inputs, Item.Response item, Item.Field field)
         {
             var purpose = field.Purpose;
             var type = field.Type;
             {
                 if (field is { Section.Id: not null }
+                    && inputs is not null
                     && GetSection(inputs, field.Section.Id) is { Count: > 0 } section
                     && field.Id is { Length: > 0 }
                     && GetField(section, field.Id) is { Count: > 0 } fieldInput
@@ -329,6 +330,7 @@ public static partial class TemplateMetadata
                     purpose = inputPurpose;
                 }
                 if (field.Id is { Length: > 0 }
+                    && inputs is not null
                     && GetField(inputs, field.Id) is { Count: > 0 } sfieldInput
                     && GetObjectStringValue(sfieldInput, "purpose") is { Length: > 0 } sinputPurpose)
                 {
@@ -338,6 +340,7 @@ public static partial class TemplateMetadata
 
             {
                 if (field is { Section.Id: not null }
+                    && inputs is not null
                     && GetSection(inputs, field.Section.Id) is { Count: > 0 } section
                     && field.Id is { Length: > 0 }
                     && GetField(section, field.Id) is { Count: > 0 } sfieldInput
@@ -346,6 +349,7 @@ public static partial class TemplateMetadata
                     type = sinputType;
                 }
                 if (field.Id is { Length: > 0 }
+                    && inputs is not null
                     && GetField(inputs, field.Id) is { Count: > 0 } fieldInput
                     && GetObjectStringValue(fieldInput, "type") is { Length: > 0 } inputType)
                 {
@@ -362,19 +366,19 @@ public static partial class TemplateMetadata
                 .Add("reference", new(MakeReference(item, field)));
         }
 
-        static ImmutableDictionary<string, PropertyValue> CreateAttachment(ImmutableDictionary<string, PropertyValue> inputs, Item.Response item,
+        static ImmutableDictionary<string, PropertyValue> CreateAttachment(ImmutableDictionary<string, PropertyValue>? inputs, Item.Response item,
             Item.File file)
         {
             // DebugHelper.WaitForDebugger();
             string? hash = null;
             PropertyValue? asset = null;
-            if (file is { Section.Id: { } })
+            if (file is { Section.Id: { } } && inputs is not null)
             {
                 var section = GetSection(inputs, file.Section.Id);
-                asset = GetAttachment(section, file.Name);
+                asset = GetAttachment(section!, file.Name);
                 hash = AssetOrArchiveExtensions.HashAssetOrArchive(asset);
             }
-            else
+            else if (inputs is not null)
             {
                 asset = GetAttachment(inputs, file.Name);
                 hash = AssetOrArchiveExtensions.HashAssetOrArchive(asset);

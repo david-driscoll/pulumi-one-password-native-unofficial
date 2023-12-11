@@ -1,0 +1,64 @@
+﻿{
+  Return: {
+    attachments: {},
+    category: Item,
+    defaultVault: true,
+    fields: {
+      notesPlain: {
+        id: [redacted],
+        label: notesPlain,
+        purpose: NOTES,
+        reference: [redacted],
+        type: STRING,
+        value: null
+      }
+    },
+    id: [redacted],
+    notes: ,
+    references: [],
+    sections: {
+      add more: {
+        attachments: {
+          my-attachment: {
+            asset: null,
+            hash: null,
+            id: [redacted],
+            name: my-attachment,
+            reference: [redacted],
+            size: 21.0
+          }
+        },
+        fields: {
+          password: {
+            id: [redacted],
+            label: password,
+            purpose: null,
+            reference: [redacted],
+            type: CONCEALED,
+            value: my great password
+          },
+          text: {
+            id: [redacted],
+            label: text,
+            purpose: null,
+            reference: [redacted],
+            type: STRING,
+            value: this is a config value
+          }
+        },
+        id: [redacted],
+        label: add more,
+        references: []
+      }
+    },
+    tags: [
+      Do not delete
+    ],
+    title: abcd1234,
+    urls: [],
+    vault: {
+      id: [redacted],
+      name: testing-pulumi
+    }
+  }
+}

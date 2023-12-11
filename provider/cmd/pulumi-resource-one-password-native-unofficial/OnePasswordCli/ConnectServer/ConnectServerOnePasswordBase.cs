@@ -105,7 +105,7 @@ public class ConnectServerOnePasswordBase(
             LastEditedBy = result.LastEditedBy,
             CreatedAt = result.CreatedAt,
             UpdatedAt = result.UpdatedAt,
-            Fields = result.Fields?.Select(x => CreateField(x: x)).ToImmutableArray() ?? ImmutableArray<Item.Field>.Empty,
+            Fields = result.Fields?.Select(CreateField).ToImmutableArray() ?? ImmutableArray<Item.Field>.Empty,
             Tags = result.Tags?.ToImmutableArray() ?? ImmutableArray<string>.Empty,
             Urls = result.Urls?.Select(x => new Item.Url()
             {
@@ -139,7 +139,7 @@ public class ConnectServerOnePasswordBase(
             var type = x.Type.ToString();
             return new Item.Field()
             {
-                Id = x.Id,
+                Id = x.Id is { Length: 26 } ? x.Label ?? x.Id : x.Id,
                 Label = x.Label,
                 Type = type,
                 Purpose = purpose,

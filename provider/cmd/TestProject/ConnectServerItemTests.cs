@@ -431,4 +431,61 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
             .AddScrubber(x => x.Replace(TemplateMetadata.GetObjectStringValue(create.Properties as IReadOnlyDictionary<string, PropertyValue>, "password"),
                 "[redacted,server-generated]"));
     }
+
+    [Fact]
+    public async Task Should_Be_Able_To_Get_Attachments()
+    {
+        var provider = await _serverFixture.ConfigureProvider(_logger);
+
+        var result = await provider.Invoke(new InvokeRequest(
+            ItemType.GetAttachment,
+            ImmutableDictionary<string, PropertyValue>.Empty.Add("reference", new("op://testing-pulumi/67gg5pap6mncp6h2wjvpukc3cu/add more/my-attachment")
+            )), CancellationToken.None);
+
+        await Verify(result);
+    }
+
+    [Fact]
+    public async Task Should_Be_Able_To_Get_An_Item()
+    {
+        var provider = await _serverFixture.ConfigureProvider(_logger);
+
+        var result = await provider.Invoke(new InvokeRequest(
+            ItemType.GetItem,
+            ImmutableDictionary<string, PropertyValue>.Empty
+                .Add("id", new("67gg5pap6mncp6h2wjvpukc3cu"))
+                .Add("vault", new("testing-pulumi"))
+            ), 
+            CancellationToken.None);
+
+        await Verify(result);
+    }
+    [Fact]
+    public async Task Should_Be_Able_To_Read_A_Reference()
+    {
+        var provider = await _serverFixture.ConfigureProvider(_logger);
+
+        var result = await provider.Invoke(new InvokeRequest(
+                ItemType.Read,
+                ImmutableDictionary<string, PropertyValue>.Empty.Add("reference", new("op://testing-pulumi/TestItem/password"))), 
+            CancellationToken.None);
+
+        await Verify(result);
+    }
+    [Fact]
+    public async Task Should_Be_Able_To_Inject_References()
+    {
+        var provider = await _serverFixture.ConfigureProvider(_logger);
+
+        var result = await provider.Invoke(new InvokeRequest(
+                ItemType.Inject,
+                ImmutableDictionary<string, PropertyValue>.Empty.Add("template", new(
+                    $"""
+                        MyPassword: op://testing-pulumi/TestItem/password
+                        MyConfigValue: op://testing-pulumi/TestItem/text
+                        """))),
+            CancellationToken.None);
+
+        await Verify(result);
+    }
 }
