@@ -102,6 +102,7 @@ type medicalRecordItemArgs struct {
 	Notes                  *string                          `pulumi:"notes"`
 	Patient                *string                          `pulumi:"patient"`
 	ReasonForVisit         *string                          `pulumi:"reasonForVisit"`
+	References             []Reference                      `pulumi:"references"`
 	Sections               map[string]Section               `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
@@ -125,6 +126,7 @@ type MedicalRecordItemArgs struct {
 	Notes                  pulumi.StringPtrInput
 	Patient                pulumi.StringPtrInput
 	ReasonForVisit         pulumi.StringPtrInput
+	References             ReferenceArrayInput
 	Sections               SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput

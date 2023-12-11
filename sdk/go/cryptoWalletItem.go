@@ -103,6 +103,7 @@ type cryptoWalletItemArgs struct {
 	Notes          *string            `pulumi:"notes"`
 	Password       *string            `pulumi:"password"`
 	RecoveryPhrase *string            `pulumi:"recoveryPhrase"`
+	References     []Reference        `pulumi:"references"`
 	Sections       map[string]Section `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
@@ -123,6 +124,7 @@ type CryptoWalletItemArgs struct {
 	Notes          pulumi.StringPtrInput
 	Password       pulumi.StringPtrInput
 	RecoveryPhrase pulumi.StringPtrInput
+	References     ReferenceArrayInput
 	Sections       SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput

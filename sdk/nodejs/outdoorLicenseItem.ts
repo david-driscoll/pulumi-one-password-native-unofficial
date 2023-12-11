@@ -46,7 +46,7 @@ export class OutdoorLicenseItem extends pulumi.CustomResource {
     public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly maximumQuota!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly references!: pulumi.Output<outputs.OutputReference[]>;
+    public readonly references!: pulumi.Output<outputs.OutputReference[]>;
     public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
     public readonly state!: pulumi.Output<string | undefined>;
     /**
@@ -89,6 +89,7 @@ export class OutdoorLicenseItem extends pulumi.CustomResource {
             resourceInputs["fullName"] = args ? args.fullName : undefined;
             resourceInputs["maximumQuota"] = args ? args.maximumQuota : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
+            resourceInputs["references"] = args ? args.references : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
             resourceInputs["state"] = args ? args.state : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
@@ -97,7 +98,6 @@ export class OutdoorLicenseItem extends pulumi.CustomResource {
             resourceInputs["validFrom"] = args ? args.validFrom : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["id"] = undefined /*out*/;
-            resourceInputs["references"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "sections"] };
@@ -129,6 +129,7 @@ export interface OutdoorLicenseItemArgs {
     fullName?: pulumi.Input<string>;
     maximumQuota?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
+    references?: pulumi.Input<pulumi.Input<inputs.ReferenceArgs>[]>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     state?: pulumi.Input<string>;
     /**

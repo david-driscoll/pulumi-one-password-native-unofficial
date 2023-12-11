@@ -110,6 +110,7 @@ type driverLicenseItemArgs struct {
 	LicenseClass           *string            `pulumi:"licenseClass"`
 	Notes                  *string            `pulumi:"notes"`
 	Number                 *string            `pulumi:"number"`
+	References             []Reference        `pulumi:"references"`
 	Sections               map[string]Section `pulumi:"sections"`
 	State                  *string            `pulumi:"state"`
 	// An array of strings of the tags assigned to the item.
@@ -138,6 +139,7 @@ type DriverLicenseItemArgs struct {
 	LicenseClass           pulumi.StringPtrInput
 	Notes                  pulumi.StringPtrInput
 	Number                 pulumi.StringPtrInput
+	References             ReferenceArrayInput
 	Sections               SectionMapInput
 	State                  pulumi.StringPtrInput
 	// An array of strings of the tags assigned to the item.

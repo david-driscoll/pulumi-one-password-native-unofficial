@@ -46,7 +46,7 @@ export class RewardProgramItem extends pulumi.CustomResource {
     public readonly moreInformation!: pulumi.Output<outputs.rewardProgram.MoreInformationSection | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly pin!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly references!: pulumi.Output<outputs.OutputReference[]>;
+    public readonly references!: pulumi.Output<outputs.OutputReference[]>;
     public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
     /**
      * An array of strings of the tags assigned to the item.
@@ -87,13 +87,13 @@ export class RewardProgramItem extends pulumi.CustomResource {
             resourceInputs["moreInformation"] = args ? args.moreInformation : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["pin"] = args?.pin ? pulumi.secret(args.pin) : undefined;
+            resourceInputs["references"] = args ? args.references : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["urls"] = args ? args.urls : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["id"] = undefined /*out*/;
-            resourceInputs["references"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "pin", "sections"] };
@@ -125,6 +125,7 @@ export interface RewardProgramItemArgs {
     moreInformation?: pulumi.Input<inputs.rewardProgram.MoreInformationSectionArgs>;
     notes?: pulumi.Input<string>;
     pin?: pulumi.Input<string>;
+    references?: pulumi.Input<pulumi.Input<inputs.ReferenceArgs>[]>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     /**
      * An array of strings of the tags assigned to the item.

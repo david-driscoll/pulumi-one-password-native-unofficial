@@ -43,7 +43,7 @@ export class CryptoWalletItem extends pulumi.CustomResource {
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly password!: pulumi.Output<string | undefined>;
     public readonly recoveryPhrase!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly references!: pulumi.Output<outputs.OutputReference[]>;
+    public readonly references!: pulumi.Output<outputs.OutputReference[]>;
     public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
     /**
      * An array of strings of the tags assigned to the item.
@@ -82,6 +82,7 @@ export class CryptoWalletItem extends pulumi.CustomResource {
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["password"] = args?.password ? pulumi.secret(args.password) : undefined;
             resourceInputs["recoveryPhrase"] = args?.recoveryPhrase ? pulumi.secret(args.recoveryPhrase) : undefined;
+            resourceInputs["references"] = args ? args.references : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
@@ -89,7 +90,6 @@ export class CryptoWalletItem extends pulumi.CustomResource {
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["wallet"] = args ? args.wallet : undefined;
             resourceInputs["id"] = undefined /*out*/;
-            resourceInputs["references"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "password", "recoveryPhrase", "sections"] };
@@ -118,6 +118,7 @@ export interface CryptoWalletItemArgs {
     notes?: pulumi.Input<string>;
     password?: pulumi.Input<string>;
     recoveryPhrase?: pulumi.Input<string>;
+    references?: pulumi.Input<pulumi.Input<inputs.ReferenceArgs>[]>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     /**
      * An array of strings of the tags assigned to the item.

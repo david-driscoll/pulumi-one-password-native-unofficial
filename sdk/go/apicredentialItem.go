@@ -104,6 +104,7 @@ type apicredentialItemArgs struct {
 	Filename   *string            `pulumi:"filename"`
 	Hostname   *string            `pulumi:"hostname"`
 	Notes      *string            `pulumi:"notes"`
+	References []Reference        `pulumi:"references"`
 	Sections   map[string]Section `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
@@ -128,6 +129,7 @@ type APICredentialItemArgs struct {
 	Filename   pulumi.StringPtrInput
 	Hostname   pulumi.StringPtrInput
 	Notes      pulumi.StringPtrInput
+	References ReferenceArrayInput
 	Sections   SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput

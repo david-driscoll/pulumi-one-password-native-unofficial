@@ -46,7 +46,7 @@ export class WirelessRouterItem extends pulumi.CustomResource {
     public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly networkName!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly references!: pulumi.Output<outputs.OutputReference[]>;
+    public readonly references!: pulumi.Output<outputs.OutputReference[]>;
     public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
     public readonly serverIpAddress!: pulumi.Output<string | undefined>;
     /**
@@ -90,6 +90,7 @@ export class WirelessRouterItem extends pulumi.CustomResource {
             resourceInputs["fields"] = args ? args.fields : undefined;
             resourceInputs["networkName"] = args ? args.networkName : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
+            resourceInputs["references"] = args ? args.references : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
             resourceInputs["serverIpAddress"] = args ? args.serverIpAddress : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
@@ -99,7 +100,6 @@ export class WirelessRouterItem extends pulumi.CustomResource {
             resourceInputs["wirelessNetworkPassword"] = args?.wirelessNetworkPassword ? pulumi.secret(args.wirelessNetworkPassword) : undefined;
             resourceInputs["wirelessSecurity"] = args ? args.wirelessSecurity : undefined;
             resourceInputs["id"] = undefined /*out*/;
-            resourceInputs["references"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         const secretOpts = { additionalSecretOutputs: ["attachedStoragePassword", "attachments", "baseStationPassword", "fields", "sections", "wirelessNetworkPassword"] };
@@ -131,6 +131,7 @@ export interface WirelessRouterItemArgs {
     fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     networkName?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
+    references?: pulumi.Input<pulumi.Input<inputs.ReferenceArgs>[]>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     serverIpAddress?: pulumi.Input<string>;
     /**

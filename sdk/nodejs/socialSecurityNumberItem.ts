@@ -43,7 +43,7 @@ export class SocialSecurityNumberItem extends pulumi.CustomResource {
     public readonly name!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly number!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly references!: pulumi.Output<outputs.OutputReference[]>;
+    public readonly references!: pulumi.Output<outputs.OutputReference[]>;
     public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
     /**
      * An array of strings of the tags assigned to the item.
@@ -81,13 +81,13 @@ export class SocialSecurityNumberItem extends pulumi.CustomResource {
             resourceInputs["name"] = args ? args.name : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["number"] = args?.number ? pulumi.secret(args.number) : undefined;
+            resourceInputs["references"] = args ? args.references : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
             resourceInputs["urls"] = args ? args.urls : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["id"] = undefined /*out*/;
-            resourceInputs["references"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "number", "sections"] };
@@ -116,6 +116,7 @@ export interface SocialSecurityNumberItemArgs {
     name?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
     number?: pulumi.Input<string>;
+    references?: pulumi.Input<pulumi.Input<inputs.ReferenceArgs>[]>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     /**
      * An array of strings of the tags assigned to the item.

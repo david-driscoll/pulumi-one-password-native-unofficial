@@ -28,6 +28,10 @@ export interface PasswordRecipeArgs {
     symbols?: pulumi.Input<boolean>;
 }
 
+export interface ReferenceArgs {
+    itemId: pulumi.Input<string>;
+}
+
 export interface SectionArgs {
     attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     fields: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;

@@ -91,6 +91,7 @@ type sshkeyItemArgs struct {
 	Fields     map[string]Field   `pulumi:"fields"`
 	Notes      *string            `pulumi:"notes"`
 	PrivateKey *string            `pulumi:"privateKey"`
+	References []Reference        `pulumi:"references"`
 	Sections   map[string]Section `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
@@ -109,6 +110,7 @@ type SSHKeyItemArgs struct {
 	Fields     FieldMapInput
 	Notes      pulumi.StringPtrInput
 	PrivateKey pulumi.StringPtrInput
+	References ReferenceArrayInput
 	Sections   SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput

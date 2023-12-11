@@ -26,6 +26,7 @@ class EmailAccountItemArgs:
                  notes: Optional[pulumi.Input[str]] = None,
                  password: Optional[pulumi.Input[str]] = None,
                  port_number: Optional[pulumi.Input[str]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input['SectionArgs']]]] = None,
                  security: Optional[pulumi.Input[str]] = None,
                  server: Optional[pulumi.Input[str]] = None,
@@ -59,6 +60,8 @@ class EmailAccountItemArgs:
             pulumi.set(__self__, "password", password)
         if port_number is not None:
             pulumi.set(__self__, "port_number", port_number)
+        if references is not None:
+            pulumi.set(__self__, "references", references)
         if sections is not None:
             pulumi.set(__self__, "sections", sections)
         if security is not None:
@@ -164,6 +167,15 @@ class EmailAccountItemArgs:
     @port_number.setter
     def port_number(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "port_number", value)
+
+    @property
+    @pulumi.getter
+    def references(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]]:
+        return pulumi.get(self, "references")
+
+    @references.setter
+    def references(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]]):
+        pulumi.set(self, "references", value)
 
     @property
     @pulumi.getter
@@ -289,6 +301,7 @@ class EmailAccountItem(pulumi.CustomResource):
                  notes: Optional[pulumi.Input[str]] = None,
                  password: Optional[pulumi.Input[str]] = None,
                  port_number: Optional[pulumi.Input[str]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ReferenceArgs']]]]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  security: Optional[pulumi.Input[str]] = None,
                  server: Optional[pulumi.Input[str]] = None,
@@ -340,6 +353,7 @@ class EmailAccountItem(pulumi.CustomResource):
                  notes: Optional[pulumi.Input[str]] = None,
                  password: Optional[pulumi.Input[str]] = None,
                  port_number: Optional[pulumi.Input[str]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ReferenceArgs']]]]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  security: Optional[pulumi.Input[str]] = None,
                  server: Optional[pulumi.Input[str]] = None,
@@ -372,6 +386,7 @@ class EmailAccountItem(pulumi.CustomResource):
             __props__.__dict__["notes"] = notes
             __props__.__dict__["password"] = None if password is None else pulumi.Output.secret(password)
             __props__.__dict__["port_number"] = port_number
+            __props__.__dict__["references"] = references
             __props__.__dict__["sections"] = sections
             __props__.__dict__["security"] = security
             __props__.__dict__["server"] = server
@@ -385,7 +400,6 @@ class EmailAccountItem(pulumi.CustomResource):
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
             __props__.__dict__["id"] = None
-            __props__.__dict__["references"] = None
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachments", "fields", "password", "sections", "smtp"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(EmailAccountItem, __self__).__init__(

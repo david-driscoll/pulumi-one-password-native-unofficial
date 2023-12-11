@@ -45,7 +45,7 @@ export class EmailAccountItem extends pulumi.CustomResource {
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly password!: pulumi.Output<string | undefined>;
     public readonly portNumber!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly references!: pulumi.Output<outputs.OutputReference[]>;
+    public readonly references!: pulumi.Output<outputs.OutputReference[]>;
     public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
     public readonly security!: pulumi.Output<string | undefined>;
     public readonly server!: pulumi.Output<string | undefined>;
@@ -90,6 +90,7 @@ export class EmailAccountItem extends pulumi.CustomResource {
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["password"] = args?.password ? pulumi.secret(args.password) : undefined;
             resourceInputs["portNumber"] = args ? args.portNumber : undefined;
+            resourceInputs["references"] = args ? args.references : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
             resourceInputs["security"] = args ? args.security : undefined;
             resourceInputs["server"] = args ? args.server : undefined;
@@ -101,7 +102,6 @@ export class EmailAccountItem extends pulumi.CustomResource {
             resourceInputs["username"] = args ? args.username : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["id"] = undefined /*out*/;
-            resourceInputs["references"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "password", "sections", "smtp"] };
@@ -132,6 +132,7 @@ export interface EmailAccountItemArgs {
     notes?: pulumi.Input<string>;
     password?: pulumi.Input<string>;
     portNumber?: pulumi.Input<string>;
+    references?: pulumi.Input<pulumi.Input<inputs.ReferenceArgs>[]>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     security?: pulumi.Input<string>;
     server?: pulumi.Input<string>;

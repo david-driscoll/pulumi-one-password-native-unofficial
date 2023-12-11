@@ -107,6 +107,7 @@ type databaseItemArgs struct {
 	Notes             *string            `pulumi:"notes"`
 	Password          *string            `pulumi:"password"`
 	Port              *string            `pulumi:"port"`
+	References        []Reference        `pulumi:"references"`
 	Sections          map[string]Section `pulumi:"sections"`
 	Server            *string            `pulumi:"server"`
 	Sid               *string            `pulumi:"sid"`
@@ -133,6 +134,7 @@ type DatabaseItemArgs struct {
 	Notes             pulumi.StringPtrInput
 	Password          pulumi.StringPtrInput
 	Port              pulumi.StringPtrInput
+	References        ReferenceArrayInput
 	Sections          SectionMapInput
 	Server            pulumi.StringPtrInput
 	Sid               pulumi.StringPtrInput

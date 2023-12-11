@@ -51,7 +51,7 @@ export class DriverLicenseItem extends pulumi.CustomResource {
     public readonly licenseClass!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly number!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly references!: pulumi.Output<outputs.OutputReference[]>;
+    public readonly references!: pulumi.Output<outputs.OutputReference[]>;
     public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
     public readonly state!: pulumi.Output<string | undefined>;
     /**
@@ -98,6 +98,7 @@ export class DriverLicenseItem extends pulumi.CustomResource {
             resourceInputs["licenseClass"] = args ? args.licenseClass : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["number"] = args ? args.number : undefined;
+            resourceInputs["references"] = args ? args.references : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
             resourceInputs["state"] = args ? args.state : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
@@ -105,7 +106,6 @@ export class DriverLicenseItem extends pulumi.CustomResource {
             resourceInputs["urls"] = args ? args.urls : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["id"] = undefined /*out*/;
-            resourceInputs["references"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "sections"] };
@@ -142,6 +142,7 @@ export interface DriverLicenseItemArgs {
     licenseClass?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
     number?: pulumi.Input<string>;
+    references?: pulumi.Input<pulumi.Input<inputs.ReferenceArgs>[]>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     state?: pulumi.Input<string>;
     /**

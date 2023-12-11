@@ -27,6 +27,7 @@ class CreditCardItemArgs:
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  number: Optional[pulumi.Input[str]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input['SectionArgs']]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
@@ -60,6 +61,8 @@ class CreditCardItemArgs:
             pulumi.set(__self__, "notes", notes)
         if number is not None:
             pulumi.set(__self__, "number", number)
+        if references is not None:
+            pulumi.set(__self__, "references", references)
         if sections is not None:
             pulumi.set(__self__, "sections", sections)
         if tags is not None:
@@ -173,6 +176,15 @@ class CreditCardItemArgs:
 
     @property
     @pulumi.getter
+    def references(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]]:
+        return pulumi.get(self, "references")
+
+    @references.setter
+    def references(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]]):
+        pulumi.set(self, "references", value)
+
+    @property
+    @pulumi.getter
     def sections(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['SectionArgs']]]]:
         return pulumi.get(self, "sections")
 
@@ -278,6 +290,7 @@ class CreditCardItem(pulumi.CustomResource):
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  number: Optional[pulumi.Input[str]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ReferenceArgs']]]]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
@@ -328,6 +341,7 @@ class CreditCardItem(pulumi.CustomResource):
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  number: Optional[pulumi.Input[str]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ReferenceArgs']]]]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
@@ -359,6 +373,7 @@ class CreditCardItem(pulumi.CustomResource):
             __props__.__dict__["fields"] = fields
             __props__.__dict__["notes"] = notes
             __props__.__dict__["number"] = number
+            __props__.__dict__["references"] = references
             __props__.__dict__["sections"] = sections
             __props__.__dict__["tags"] = tags
             __props__.__dict__["title"] = title
@@ -370,7 +385,6 @@ class CreditCardItem(pulumi.CustomResource):
             __props__.__dict__["vault"] = vault
             __props__.__dict__["verification_number"] = None if verification_number is None else pulumi.Output.secret(verification_number)
             __props__.__dict__["id"] = None
-            __props__.__dict__["references"] = None
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["additionalDetails", "attachments", "fields", "sections", "verificationNumber"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(CreditCardItem, __self__).__init__(

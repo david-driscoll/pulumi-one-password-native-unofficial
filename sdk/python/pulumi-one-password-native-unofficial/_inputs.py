@@ -12,6 +12,7 @@ from ._enums import *
 __all__ = [
     'FieldArgs',
     'PasswordRecipeArgs',
+    'ReferenceArgs',
     'SectionArgs',
     'UrlArgs',
 ]
@@ -108,6 +109,22 @@ class PasswordRecipeArgs:
     @symbols.setter
     def symbols(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "symbols", value)
+
+
+@pulumi.input_type
+class ReferenceArgs:
+    def __init__(__self__, *,
+                 item_id: pulumi.Input[str]):
+        pulumi.set(__self__, "item_id", item_id)
+
+    @property
+    @pulumi.getter(name="itemId")
+    def item_id(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "item_id")
+
+    @item_id.setter
+    def item_id(self, value: pulumi.Input[str]):
+        pulumi.set(self, "item_id", value)
 
 
 @pulumi.input_type

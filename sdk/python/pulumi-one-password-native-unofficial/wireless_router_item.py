@@ -26,6 +26,7 @@ class WirelessRouterItemArgs:
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
                  network_name: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input['SectionArgs']]]] = None,
                  server_ip_address: Optional[pulumi.Input[str]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
@@ -59,6 +60,8 @@ class WirelessRouterItemArgs:
             pulumi.set(__self__, "network_name", network_name)
         if notes is not None:
             pulumi.set(__self__, "notes", notes)
+        if references is not None:
+            pulumi.set(__self__, "references", references)
         if sections is not None:
             pulumi.set(__self__, "sections", sections)
         if server_ip_address is not None:
@@ -172,6 +175,15 @@ class WirelessRouterItemArgs:
 
     @property
     @pulumi.getter
+    def references(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]]:
+        return pulumi.get(self, "references")
+
+    @references.setter
+    def references(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]]):
+        pulumi.set(self, "references", value)
+
+    @property
+    @pulumi.getter
     def sections(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['SectionArgs']]]]:
         return pulumi.get(self, "sections")
 
@@ -277,6 +289,7 @@ class WirelessRouterItem(pulumi.CustomResource):
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  network_name: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ReferenceArgs']]]]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  server_ip_address: Optional[pulumi.Input[str]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
@@ -327,6 +340,7 @@ class WirelessRouterItem(pulumi.CustomResource):
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  network_name: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ReferenceArgs']]]]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  server_ip_address: Optional[pulumi.Input[str]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
@@ -358,6 +372,7 @@ class WirelessRouterItem(pulumi.CustomResource):
             __props__.__dict__["fields"] = fields
             __props__.__dict__["network_name"] = network_name
             __props__.__dict__["notes"] = notes
+            __props__.__dict__["references"] = references
             __props__.__dict__["sections"] = sections
             __props__.__dict__["server_ip_address"] = server_ip_address
             __props__.__dict__["tags"] = tags
@@ -369,7 +384,6 @@ class WirelessRouterItem(pulumi.CustomResource):
             __props__.__dict__["wireless_network_password"] = None if wireless_network_password is None else pulumi.Output.secret(wireless_network_password)
             __props__.__dict__["wireless_security"] = wireless_security
             __props__.__dict__["id"] = None
-            __props__.__dict__["references"] = None
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachedStoragePassword", "attachments", "baseStationPassword", "fields", "sections", "wirelessNetworkPassword"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(WirelessRouterItem, __self__).__init__(

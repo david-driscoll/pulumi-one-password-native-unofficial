@@ -101,6 +101,7 @@ type outdoorLicenseItemArgs struct {
 	FullName     *string            `pulumi:"fullName"`
 	MaximumQuota *string            `pulumi:"maximumQuota"`
 	Notes        *string            `pulumi:"notes"`
+	References   []Reference        `pulumi:"references"`
 	Sections     map[string]Section `pulumi:"sections"`
 	State        *string            `pulumi:"state"`
 	// An array of strings of the tags assigned to the item.
@@ -125,6 +126,7 @@ type OutdoorLicenseItemArgs struct {
 	FullName     pulumi.StringPtrInput
 	MaximumQuota pulumi.StringPtrInput
 	Notes        pulumi.StringPtrInput
+	References   ReferenceArrayInput
 	Sections     SectionMapInput
 	State        pulumi.StringPtrInput
 	// An array of strings of the tags assigned to the item.

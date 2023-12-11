@@ -114,6 +114,7 @@ type wirelessRouterItemArgs struct {
 	Fields          map[string]Field   `pulumi:"fields"`
 	NetworkName     *string            `pulumi:"networkName"`
 	Notes           *string            `pulumi:"notes"`
+	References      []Reference        `pulumi:"references"`
 	Sections        map[string]Section `pulumi:"sections"`
 	ServerIpAddress *string            `pulumi:"serverIpAddress"`
 	// An array of strings of the tags assigned to the item.
@@ -139,6 +140,7 @@ type WirelessRouterItemArgs struct {
 	Fields          FieldMapInput
 	NetworkName     pulumi.StringPtrInput
 	Notes           pulumi.StringPtrInput
+	References      ReferenceArrayInput
 	Sections        SectionMapInput
 	ServerIpAddress pulumi.StringPtrInput
 	// An array of strings of the tags assigned to the item.

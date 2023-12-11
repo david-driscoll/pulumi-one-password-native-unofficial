@@ -108,6 +108,7 @@ type emailAccountItemArgs struct {
 	Notes              *string                                 `pulumi:"notes"`
 	Password           *string                                 `pulumi:"password"`
 	PortNumber         *string                                 `pulumi:"portNumber"`
+	References         []Reference                             `pulumi:"references"`
 	Sections           map[string]Section                      `pulumi:"sections"`
 	Security           *string                                 `pulumi:"security"`
 	Server             *string                                 `pulumi:"server"`
@@ -134,6 +135,7 @@ type EmailAccountItemArgs struct {
 	Notes              pulumi.StringPtrInput
 	Password           pulumi.StringPtrInput
 	PortNumber         pulumi.StringPtrInput
+	References         ReferenceArrayInput
 	Sections           SectionMapInput
 	Security           pulumi.StringPtrInput
 	Server             pulumi.StringPtrInput

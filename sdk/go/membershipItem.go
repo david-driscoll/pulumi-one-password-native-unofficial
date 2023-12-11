@@ -107,6 +107,7 @@ type membershipItemArgs struct {
 	MemberSince *string            `pulumi:"memberSince"`
 	Notes       *string            `pulumi:"notes"`
 	Pin         *string            `pulumi:"pin"`
+	References  []Reference        `pulumi:"references"`
 	Sections    map[string]Section `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags      []string `pulumi:"tags"`
@@ -132,6 +133,7 @@ type MembershipItemArgs struct {
 	MemberSince pulumi.StringPtrInput
 	Notes       pulumi.StringPtrInput
 	Pin         pulumi.StringPtrInput
+	References  ReferenceArrayInput
 	Sections    SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags      pulumi.StringArrayInput

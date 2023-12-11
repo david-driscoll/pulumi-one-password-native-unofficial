@@ -25,6 +25,7 @@ class APICredentialItemArgs:
                  filename: Optional[pulumi.Input[str]] = None,
                  hostname: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input['SectionArgs']]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
@@ -56,6 +57,8 @@ class APICredentialItemArgs:
             pulumi.set(__self__, "hostname", hostname)
         if notes is not None:
             pulumi.set(__self__, "notes", notes)
+        if references is not None:
+            pulumi.set(__self__, "references", references)
         if sections is not None:
             pulumi.set(__self__, "sections", sections)
         if tags is not None:
@@ -157,6 +160,15 @@ class APICredentialItemArgs:
     @notes.setter
     def notes(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "notes", value)
+
+    @property
+    @pulumi.getter
+    def references(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]]:
+        return pulumi.get(self, "references")
+
+    @references.setter
+    def references(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]]):
+        pulumi.set(self, "references", value)
 
     @property
     @pulumi.getter
@@ -264,6 +276,7 @@ class APICredentialItem(pulumi.CustomResource):
                  filename: Optional[pulumi.Input[str]] = None,
                  hostname: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ReferenceArgs']]]]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
@@ -313,6 +326,7 @@ class APICredentialItem(pulumi.CustomResource):
                  filename: Optional[pulumi.Input[str]] = None,
                  hostname: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ReferenceArgs']]]]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
@@ -343,6 +357,7 @@ class APICredentialItem(pulumi.CustomResource):
             __props__.__dict__["filename"] = filename
             __props__.__dict__["hostname"] = hostname
             __props__.__dict__["notes"] = notes
+            __props__.__dict__["references"] = references
             __props__.__dict__["sections"] = sections
             __props__.__dict__["tags"] = tags
             __props__.__dict__["title"] = title
@@ -354,7 +369,6 @@ class APICredentialItem(pulumi.CustomResource):
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
             __props__.__dict__["id"] = None
-            __props__.__dict__["references"] = None
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachments", "credential", "fields", "sections"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(APICredentialItem, __self__).__init__(

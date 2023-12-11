@@ -96,6 +96,7 @@ type identityItemArgs struct {
 	Identification  *identity.IdentificationSection  `pulumi:"identification"`
 	InternetDetails *identity.InternetDetailsSection `pulumi:"internetDetails"`
 	Notes           *string                          `pulumi:"notes"`
+	References      []Reference                      `pulumi:"references"`
 	Sections        map[string]Section               `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
@@ -116,6 +117,7 @@ type IdentityItemArgs struct {
 	Identification  identity.IdentificationSectionPtrInput
 	InternetDetails identity.InternetDetailsSectionPtrInput
 	Notes           pulumi.StringPtrInput
+	References      ReferenceArrayInput
 	Sections        SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput

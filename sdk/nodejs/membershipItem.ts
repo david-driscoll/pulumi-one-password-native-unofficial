@@ -47,7 +47,7 @@ export class MembershipItem extends pulumi.CustomResource {
     public readonly memberSince!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly pin!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly references!: pulumi.Output<outputs.OutputReference[]>;
+    public readonly references!: pulumi.Output<outputs.OutputReference[]>;
     public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
     /**
      * An array of strings of the tags assigned to the item.
@@ -91,6 +91,7 @@ export class MembershipItem extends pulumi.CustomResource {
             resourceInputs["memberSince"] = args ? args.memberSince : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["pin"] = args?.pin ? pulumi.secret(args.pin) : undefined;
+            resourceInputs["references"] = args ? args.references : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["telephone"] = args ? args.telephone : undefined;
@@ -99,7 +100,6 @@ export class MembershipItem extends pulumi.CustomResource {
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["website"] = args ? args.website : undefined;
             resourceInputs["id"] = undefined /*out*/;
-            resourceInputs["references"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "pin", "sections"] };
@@ -132,6 +132,7 @@ export interface MembershipItemArgs {
     memberSince?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
     pin?: pulumi.Input<string>;
+    references?: pulumi.Input<pulumi.Input<inputs.ReferenceArgs>[]>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     /**
      * An array of strings of the tags assigned to the item.

@@ -109,6 +109,7 @@ type bankAccountItemArgs struct {
 	NameOnAccount *string            `pulumi:"nameOnAccount"`
 	Notes         *string            `pulumi:"notes"`
 	Pin           *string            `pulumi:"pin"`
+	References    []Reference        `pulumi:"references"`
 	RoutingNumber *string            `pulumi:"routingNumber"`
 	Sections      map[string]Section `pulumi:"sections"`
 	Swift         *string            `pulumi:"swift"`
@@ -135,6 +136,7 @@ type BankAccountItemArgs struct {
 	NameOnAccount pulumi.StringPtrInput
 	Notes         pulumi.StringPtrInput
 	Pin           pulumi.StringPtrInput
+	References    ReferenceArrayInput
 	RoutingNumber pulumi.StringPtrInput
 	Sections      SectionMapInput
 	Swift         pulumi.StringPtrInput

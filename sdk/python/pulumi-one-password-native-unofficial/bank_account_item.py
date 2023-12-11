@@ -28,6 +28,7 @@ class BankAccountItemArgs:
                  name_on_account: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  pin: Optional[pulumi.Input[str]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]] = None,
                  routing_number: Optional[pulumi.Input[str]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input['SectionArgs']]]] = None,
                  swift: Optional[pulumi.Input[str]] = None,
@@ -63,6 +64,8 @@ class BankAccountItemArgs:
             pulumi.set(__self__, "notes", notes)
         if pin is not None:
             pulumi.set(__self__, "pin", pin)
+        if references is not None:
+            pulumi.set(__self__, "references", references)
         if routing_number is not None:
             pulumi.set(__self__, "routing_number", routing_number)
         if sections is not None:
@@ -184,6 +187,15 @@ class BankAccountItemArgs:
         pulumi.set(self, "pin", value)
 
     @property
+    @pulumi.getter
+    def references(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]]:
+        return pulumi.get(self, "references")
+
+    @references.setter
+    def references(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]]):
+        pulumi.set(self, "references", value)
+
+    @property
     @pulumi.getter(name="routingNumber")
     def routing_number(self) -> Optional[pulumi.Input[str]]:
         return pulumi.get(self, "routing_number")
@@ -291,6 +303,7 @@ class BankAccountItem(pulumi.CustomResource):
                  name_on_account: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  pin: Optional[pulumi.Input[str]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ReferenceArgs']]]]] = None,
                  routing_number: Optional[pulumi.Input[str]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  swift: Optional[pulumi.Input[str]] = None,
@@ -342,6 +355,7 @@ class BankAccountItem(pulumi.CustomResource):
                  name_on_account: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  pin: Optional[pulumi.Input[str]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ReferenceArgs']]]]] = None,
                  routing_number: Optional[pulumi.Input[str]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  swift: Optional[pulumi.Input[str]] = None,
@@ -374,6 +388,7 @@ class BankAccountItem(pulumi.CustomResource):
             __props__.__dict__["name_on_account"] = name_on_account
             __props__.__dict__["notes"] = notes
             __props__.__dict__["pin"] = None if pin is None else pulumi.Output.secret(pin)
+            __props__.__dict__["references"] = references
             __props__.__dict__["routing_number"] = routing_number
             __props__.__dict__["sections"] = sections
             __props__.__dict__["swift"] = swift
@@ -385,7 +400,6 @@ class BankAccountItem(pulumi.CustomResource):
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
             __props__.__dict__["id"] = None
-            __props__.__dict__["references"] = None
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachments", "fields", "pin", "sections"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(BankAccountItem, __self__).__init__(

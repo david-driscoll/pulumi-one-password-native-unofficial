@@ -90,6 +90,7 @@ type itemArgs struct {
 	Category    *string                          `pulumi:"category"`
 	Fields      map[string]Field                 `pulumi:"fields"`
 	Notes       *string                          `pulumi:"notes"`
+	References  []Reference                      `pulumi:"references"`
 	Sections    map[string]Section               `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
@@ -106,6 +107,7 @@ type ItemArgs struct {
 	Category    pulumi.StringPtrInput
 	Fields      FieldMapInput
 	Notes       pulumi.StringPtrInput
+	References  ReferenceArrayInput
 	Sections    SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput

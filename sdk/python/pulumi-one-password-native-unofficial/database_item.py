@@ -26,6 +26,7 @@ class DatabaseItemArgs:
                  notes: Optional[pulumi.Input[str]] = None,
                  password: Optional[pulumi.Input[str]] = None,
                  port: Optional[pulumi.Input[str]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input['SectionArgs']]]] = None,
                  server: Optional[pulumi.Input[str]] = None,
                  sid: Optional[pulumi.Input[str]] = None,
@@ -60,6 +61,8 @@ class DatabaseItemArgs:
             pulumi.set(__self__, "password", password)
         if port is not None:
             pulumi.set(__self__, "port", port)
+        if references is not None:
+            pulumi.set(__self__, "references", references)
         if sections is not None:
             pulumi.set(__self__, "sections", sections)
         if server is not None:
@@ -172,6 +175,15 @@ class DatabaseItemArgs:
     @port.setter
     def port(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "port", value)
+
+    @property
+    @pulumi.getter
+    def references(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]]:
+        return pulumi.get(self, "references")
+
+    @references.setter
+    def references(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]]):
+        pulumi.set(self, "references", value)
 
     @property
     @pulumi.getter
@@ -289,6 +301,7 @@ class DatabaseItem(pulumi.CustomResource):
                  notes: Optional[pulumi.Input[str]] = None,
                  password: Optional[pulumi.Input[str]] = None,
                  port: Optional[pulumi.Input[str]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ReferenceArgs']]]]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  server: Optional[pulumi.Input[str]] = None,
                  sid: Optional[pulumi.Input[str]] = None,
@@ -340,6 +353,7 @@ class DatabaseItem(pulumi.CustomResource):
                  notes: Optional[pulumi.Input[str]] = None,
                  password: Optional[pulumi.Input[str]] = None,
                  port: Optional[pulumi.Input[str]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ReferenceArgs']]]]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  server: Optional[pulumi.Input[str]] = None,
                  sid: Optional[pulumi.Input[str]] = None,
@@ -372,6 +386,7 @@ class DatabaseItem(pulumi.CustomResource):
             __props__.__dict__["notes"] = notes
             __props__.__dict__["password"] = None if password is None else pulumi.Output.secret(password)
             __props__.__dict__["port"] = port
+            __props__.__dict__["references"] = references
             __props__.__dict__["sections"] = sections
             __props__.__dict__["server"] = server
             __props__.__dict__["sid"] = sid
@@ -384,7 +399,6 @@ class DatabaseItem(pulumi.CustomResource):
                 raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
             __props__.__dict__["id"] = None
-            __props__.__dict__["references"] = None
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachments", "fields", "password", "sections"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(DatabaseItem, __self__).__init__(

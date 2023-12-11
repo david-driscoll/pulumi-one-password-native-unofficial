@@ -45,7 +45,7 @@ export class APICredentialItem extends pulumi.CustomResource {
      */
     public /*out*/ readonly id!: pulumi.Output<string>;
     public readonly notes!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly references!: pulumi.Output<outputs.OutputReference[]>;
+    public readonly references!: pulumi.Output<outputs.OutputReference[]>;
     public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
     /**
      * An array of strings of the tags assigned to the item.
@@ -88,6 +88,7 @@ export class APICredentialItem extends pulumi.CustomResource {
             resourceInputs["filename"] = args ? args.filename : undefined;
             resourceInputs["hostname"] = args ? args.hostname : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
+            resourceInputs["references"] = args ? args.references : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["title"] = args ? args.title : undefined;
@@ -97,7 +98,6 @@ export class APICredentialItem extends pulumi.CustomResource {
             resourceInputs["validFrom"] = args ? args.validFrom : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["id"] = undefined /*out*/;
-            resourceInputs["references"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         const secretOpts = { additionalSecretOutputs: ["attachments", "credential", "fields", "sections"] };
@@ -128,6 +128,7 @@ export interface APICredentialItemArgs {
     filename?: pulumi.Input<string>;
     hostname?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
+    references?: pulumi.Input<pulumi.Input<inputs.ReferenceArgs>[]>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     /**
      * An array of strings of the tags assigned to the item.

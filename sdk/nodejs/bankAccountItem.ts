@@ -47,7 +47,7 @@ export class BankAccountItem extends pulumi.CustomResource {
     public readonly nameOnAccount!: pulumi.Output<string | undefined>;
     public readonly notes!: pulumi.Output<string | undefined>;
     public readonly pin!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly references!: pulumi.Output<outputs.OutputReference[]>;
+    public readonly references!: pulumi.Output<outputs.OutputReference[]>;
     public readonly routingNumber!: pulumi.Output<string | undefined>;
     public readonly sections!: pulumi.Output<{[key: string]: outputs.OutputSection}>;
     public readonly swift!: pulumi.Output<string | undefined>;
@@ -92,6 +92,7 @@ export class BankAccountItem extends pulumi.CustomResource {
             resourceInputs["nameOnAccount"] = args ? args.nameOnAccount : undefined;
             resourceInputs["notes"] = args ? args.notes : undefined;
             resourceInputs["pin"] = args?.pin ? pulumi.secret(args.pin) : undefined;
+            resourceInputs["references"] = args ? args.references : undefined;
             resourceInputs["routingNumber"] = args ? args.routingNumber : undefined;
             resourceInputs["sections"] = args ? args.sections : undefined;
             resourceInputs["swift"] = args ? args.swift : undefined;
@@ -101,7 +102,6 @@ export class BankAccountItem extends pulumi.CustomResource {
             resourceInputs["urls"] = args ? args.urls : undefined;
             resourceInputs["vault"] = args ? args.vault : undefined;
             resourceInputs["id"] = undefined /*out*/;
-            resourceInputs["references"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         const secretOpts = { additionalSecretOutputs: ["attachments", "fields", "pin", "sections"] };
@@ -134,6 +134,7 @@ export interface BankAccountItemArgs {
     nameOnAccount?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
     pin?: pulumi.Input<string>;
+    references?: pulumi.Input<pulumi.Input<inputs.ReferenceArgs>[]>;
     routingNumber?: pulumi.Input<string>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     swift?: pulumi.Input<string>;
