@@ -1,0 +1,60 @@
+﻿{
+  Id: [server-generated],
+  Properties: {
+    attachments: {},
+    category: Login,
+    defaultVault: false,
+    fields: {
+      notesPlain: {
+        id: [redacted],
+        label: notesPlain,
+        purpose: NOTES,
+        reference: [redacted],
+        type: STRING,
+        value: null
+      },
+      password: {
+        id: [redacted],
+        label: password,
+        purpose: PASSWORD,
+        reference: [redacted],
+        type: CONCEALED,
+        value: [redacted,server-generated]
+      },
+      username: {
+        id: [redacted],
+        label: username,
+        purpose: USERNAME,
+        reference: [redacted],
+        type: STRING,
+        value: me
+      }
+    },
+    id: [redacted],
+    notes: ,
+    password: [redacted,server-generated],
+    references: [],
+    sections: {},
+    tags: [
+      test-tag
+    ],
+    title: myitemabcd1234,
+    urls: [
+      {
+        href: http://notaplace.com,
+        label: Not as cool a place,
+        primary: true
+      },
+      {
+        href: http://notlocalhost.com,
+        label: Some really cool place,
+        primary: false
+      }
+    ],
+    username: me,
+    vault: {
+      id: [redacted],
+      name: testing-pulumi
+    }
+  }
+}

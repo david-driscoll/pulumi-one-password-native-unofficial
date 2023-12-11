@@ -441,10 +441,10 @@ for (const template of templates) {
         "additionalProperties": { "$ref": "pulumi.json#/Asset" }
     };
     // disabled until cli can actually input them.
-    // currentResource.inputProperties['references'] = {
-    //     "type": "array",
-    //     "items": { "$ref": "#/types/one-password-native-unofficial:index:Reference" },
-    // };
+    currentResource.inputProperties['references'] = {
+        "type": "array",
+        "items": { "$ref": "#/types/one-password-native-unofficial:index:Reference" },
+    };
     currentResource.inputProperties['urls'] = {
         "type": "array",
         items: { "$ref": "#/types/one-password-native-unofficial:index:Url" }

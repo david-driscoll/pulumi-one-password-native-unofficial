@@ -88,6 +88,12 @@
                         "$ref": "pulumi.json#/Asset"
                     }
                 },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                    }
+                },
                 "urls": {
                     "type": "array",
                     "items": {
@@ -343,6 +349,12 @@
                     "type": "object",
                     "additionalProperties": {
                         "$ref": "pulumi.json#/Asset"
+                    }
+                },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
                     }
                 },
                 "urls": {
@@ -623,6 +635,12 @@
                         "$ref": "pulumi.json#/Asset"
                     }
                 },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                    }
+                },
                 "urls": {
                     "type": "array",
                     "items": {
@@ -886,6 +904,12 @@
                         "$ref": "pulumi.json#/Asset"
                     }
                 },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                    }
+                },
                 "urls": {
                     "type": "array",
                     "items": {
@@ -1090,6 +1114,12 @@
                     "type": "object",
                     "additionalProperties": {
                         "$ref": "pulumi.json#/Asset"
+                    }
+                },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
                     }
                 },
                 "urls": {
@@ -1373,6 +1403,12 @@
                         "$ref": "pulumi.json#/Asset"
                     }
                 },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                    }
+                },
                 "urls": {
                     "type": "array",
                     "items": {
@@ -1544,6 +1580,12 @@
                     "type": "object",
                     "additionalProperties": {
                         "$ref": "pulumi.json#/Asset"
+                    }
+                },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
                     }
                 },
                 "urls": {
@@ -1851,6 +1893,12 @@
                         "$ref": "pulumi.json#/Asset"
                     }
                 },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                    }
+                },
                 "urls": {
                     "type": "array",
                     "items": {
@@ -2126,6 +2174,12 @@
                         "$ref": "pulumi.json#/Asset"
                     }
                 },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                    }
+                },
                 "urls": {
                     "type": "array",
                     "items": {
@@ -2326,6 +2380,12 @@
                         "$ref": "pulumi.json#/Asset"
                     }
                 },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                    }
+                },
                 "urls": {
                     "type": "array",
                     "items": {
@@ -2503,6 +2563,12 @@
                     "type": "object",
                     "additionalProperties": {
                         "$ref": "pulumi.json#/Asset"
+                    }
+                },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
                     }
                 },
                 "urls": {
@@ -2715,6 +2781,12 @@
                     "type": "object",
                     "additionalProperties": {
                         "$ref": "pulumi.json#/Asset"
+                    }
+                },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
                     }
                 },
                 "urls": {
@@ -2957,6 +3029,12 @@
                     "type": "object",
                     "additionalProperties": {
                         "$ref": "pulumi.json#/Asset"
+                    }
+                },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
                     }
                 },
                 "urls": {
@@ -3228,6 +3306,12 @@
                         "$ref": "pulumi.json#/Asset"
                     }
                 },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                    }
+                },
                 "urls": {
                     "type": "array",
                     "items": {
@@ -3483,6 +3567,12 @@
                     "type": "object",
                     "additionalProperties": {
                         "$ref": "pulumi.json#/Asset"
+                    }
+                },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
                     }
                 },
                 "urls": {
@@ -3790,6 +3880,12 @@
                         "$ref": "pulumi.json#/Asset"
                     }
                 },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                    }
+                },
                 "urls": {
                     "type": "array",
                     "items": {
@@ -3986,6 +4082,12 @@
                     "type": "object",
                     "additionalProperties": {
                         "$ref": "pulumi.json#/Asset"
+                    }
+                },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
                     }
                 },
                 "urls": {
@@ -4218,6 +4320,12 @@
                         "$ref": "pulumi.json#/Asset"
                     }
                 },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                    }
+                },
                 "urls": {
                     "type": "array",
                     "items": {
@@ -4403,6 +4511,12 @@
                         "$ref": "pulumi.json#/Asset"
                     }
                 },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                    }
+                },
                 "urls": {
                     "type": "array",
                     "items": {
@@ -4574,6 +4688,12 @@
                     "type": "object",
                     "additionalProperties": {
                         "$ref": "pulumi.json#/Asset"
+                    }
+                },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
                     }
                 },
                 "urls": {
@@ -4803,6 +4923,12 @@
                         "$ref": "pulumi.json#/Asset"
                     }
                 },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                    }
+                },
                 "urls": {
                     "type": "array",
                     "items": {
@@ -4998,6 +5124,12 @@
                     "type": "object",
                     "additionalProperties": {
                         "$ref": "pulumi.json#/Asset"
+                    }
+                },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
                     }
                 },
                 "urls": {
@@ -5222,6 +5354,12 @@
                     "type": "object",
                     "additionalProperties": {
                         "$ref": "pulumi.json#/Asset"
+                    }
+                },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
                     }
                 },
                 "urls": {
