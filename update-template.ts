@@ -212,6 +212,10 @@ schema.types = {
                 "type": "object",
                 "additionalProperties": { "$ref": "pulumi.json#/Asset" }
             },
+            'references': {
+                "type": "array",
+                "items": { "$ref": "#/types/one-password-native-unofficial:index:Reference" },
+            },
             "label": {
                 "type": "string"
             }

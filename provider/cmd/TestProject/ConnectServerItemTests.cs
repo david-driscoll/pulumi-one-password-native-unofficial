@@ -340,7 +340,12 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
                 Letters = true
             },
             Tags = new string[] { "test-tag" },
-            References = new ReferenceArgs[] { new ReferenceArgs() { ItemId = loginItemResult.Id! } }
+            References = new ReferenceArgs[] { new ReferenceArgs() { ItemId = loginItemResult.Id! } },
+        Sections = new SectionArgs()
+        {
+            Label = "My Section",
+            
+        }
         });
 
         var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
