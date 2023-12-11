@@ -7,7 +7,6 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -43,12 +42,9 @@ type DatabaseItem struct {
 func NewDatabaseItem(ctx *pulumi.Context,
 	name string, args *DatabaseItemArgs, opts ...pulumi.ResourceOption) (*DatabaseItem, error) {
 	if args == nil {
-		return nil, errors.New("missing one or more required arguments")
+		args = &DatabaseItemArgs{}
 	}
 
-	if args.Vault == nil {
-		return nil, errors.New("invalid value for required argument 'Vault'")
-	}
 	args.Category = pulumi.StringPtr("Database")
 	if args.Password != nil {
 		args.Password = pulumi.ToSecret(args.Password).(pulumi.StringPtrOutput)
@@ -119,7 +115,7 @@ type databaseItemArgs struct {
 	Urls     []Url   `pulumi:"urls"`
 	Username *string `pulumi:"username"`
 	// The UUID of the vault the item is in.
-	Vault string `pulumi:"vault"`
+	Vault *string `pulumi:"vault"`
 }
 
 // The set of arguments for constructing a DatabaseItem resource.
@@ -146,7 +142,7 @@ type DatabaseItemArgs struct {
 	Urls     UrlArrayInput
 	Username pulumi.StringPtrInput
 	// The UUID of the vault the item is in.
-	Vault pulumi.StringInput
+	Vault pulumi.StringPtrInput
 }
 
 func (DatabaseItemArgs) ElementType() reflect.Type {

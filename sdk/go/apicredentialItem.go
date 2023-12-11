@@ -7,7 +7,6 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -41,12 +40,9 @@ type APICredentialItem struct {
 func NewAPICredentialItem(ctx *pulumi.Context,
 	name string, args *APICredentialItemArgs, opts ...pulumi.ResourceOption) (*APICredentialItem, error) {
 	if args == nil {
-		return nil, errors.New("missing one or more required arguments")
+		args = &APICredentialItemArgs{}
 	}
 
-	if args.Vault == nil {
-		return nil, errors.New("invalid value for required argument 'Vault'")
-	}
 	args.Category = pulumi.StringPtr("API Credential")
 	if args.Credential != nil {
 		args.Credential = pulumi.ToSecret(args.Credential).(pulumi.StringPtrOutput)
@@ -115,7 +111,7 @@ type apicredentialItemArgs struct {
 	Username  *string `pulumi:"username"`
 	ValidFrom *string `pulumi:"validFrom"`
 	// The UUID of the vault the item is in.
-	Vault string `pulumi:"vault"`
+	Vault *string `pulumi:"vault"`
 }
 
 // The set of arguments for constructing a APICredentialItem resource.
@@ -140,7 +136,7 @@ type APICredentialItemArgs struct {
 	Username  pulumi.StringPtrInput
 	ValidFrom pulumi.StringPtrInput
 	// The UUID of the vault the item is in.
-	Vault pulumi.StringInput
+	Vault pulumi.StringPtrInput
 }
 
 func (APICredentialItemArgs) ElementType() reflect.Type {

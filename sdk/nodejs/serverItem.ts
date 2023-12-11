@@ -66,7 +66,7 @@ export class ServerItem extends pulumi.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: ServerItemArgs, opts?: pulumi.CustomResourceOptions)
+    constructor(name: string, args?: ServerItemArgs, opts?: pulumi.CustomResourceOptions)
     constructor(name: string, argsOrState?: ServerItemArgs | ServerItemState, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
@@ -75,9 +75,6 @@ export class ServerItem extends pulumi.CustomResource {
             resourceInputs["vault"] = state ? state.vault : undefined;
         } else {
             const args = argsOrState as ServerItemArgs | undefined;
-            if ((!args || args.vault === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'vault'");
-            }
             resourceInputs["adminConsole"] = args ? args.adminConsole : undefined;
             resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "Server";
@@ -139,5 +136,5 @@ export interface ServerItemArgs {
     /**
      * The UUID of the vault the item is in.
      */
-    vault: pulumi.Input<string>;
+    vault?: pulumi.Input<string>;
 }

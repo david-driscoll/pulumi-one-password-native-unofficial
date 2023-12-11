@@ -87,7 +87,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public WirelessRouterItem(string name, WirelessRouterItemArgs args, CustomResourceOptions? options = null)
+        public WirelessRouterItem(string name, WirelessRouterItemArgs? args = null, CustomResourceOptions? options = null)
             : base("one-password-native-unofficial:index:WirelessRouterItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
@@ -97,7 +97,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         {
         }
 
-        private static WirelessRouterItemArgs MakeArgs(WirelessRouterItemArgs args)
+        private static WirelessRouterItemArgs? MakeArgs(WirelessRouterItemArgs? args)
         {
             args ??= new WirelessRouterItemArgs();
             args.Category = "Wireless Router";
@@ -249,7 +249,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// The UUID of the vault the item is in.
         /// </summary>
         [Input("vault")]
-        public Input<string> Vault { get; set; } = null!;
+        public Input<string>? Vault { get; set; }
 
         [Input("wirelessNetworkPassword")]
         private Input<string>? _wirelessNetworkPassword;
@@ -276,7 +276,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// <summary>
         /// The UUID of the vault the item is in.
         /// </summary>
-        [Input("vault")]
+        [Input("vault", required: true)]
         public Input<string> Vault { get; set; } = null!;
 
         public WirelessRouterItemState()

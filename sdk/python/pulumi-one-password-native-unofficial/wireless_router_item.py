@@ -16,7 +16,6 @@ __all__ = ['WirelessRouterItemArgs', 'WirelessRouterItem']
 @pulumi.input_type
 class WirelessRouterItemArgs:
     def __init__(__self__, *,
-                 vault: pulumi.Input[str],
                  air_port_id: Optional[pulumi.Input[str]] = None,
                  attached_storage_password: Optional[pulumi.Input[str]] = None,
                  attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
@@ -32,16 +31,16 @@ class WirelessRouterItemArgs:
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
                  urls: Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]] = None,
+                 vault: Optional[pulumi.Input[str]] = None,
                  wireless_network_password: Optional[pulumi.Input[str]] = None,
                  wireless_security: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a WirelessRouterItem resource.
-        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         :param pulumi.Input[str] category: The category of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
+        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         """
-        pulumi.set(__self__, "vault", vault)
         if air_port_id is not None:
             pulumi.set(__self__, "air_port_id", air_port_id)
         if attached_storage_password is not None:
@@ -72,22 +71,12 @@ class WirelessRouterItemArgs:
             pulumi.set(__self__, "title", title)
         if urls is not None:
             pulumi.set(__self__, "urls", urls)
+        if vault is not None:
+            pulumi.set(__self__, "vault", vault)
         if wireless_network_password is not None:
             pulumi.set(__self__, "wireless_network_password", wireless_network_password)
         if wireless_security is not None:
             pulumi.set(__self__, "wireless_security", wireless_security)
-
-    @property
-    @pulumi.getter
-    def vault(self) -> pulumi.Input[str]:
-        """
-        The UUID of the vault the item is in.
-        """
-        return pulumi.get(self, "vault")
-
-    @vault.setter
-    def vault(self, value: pulumi.Input[str]):
-        pulumi.set(self, "vault", value)
 
     @property
     @pulumi.getter(name="airPortId")
@@ -234,6 +223,18 @@ class WirelessRouterItemArgs:
         pulumi.set(self, "urls", value)
 
     @property
+    @pulumi.getter
+    def vault(self) -> Optional[pulumi.Input[str]]:
+        """
+        The UUID of the vault the item is in.
+        """
+        return pulumi.get(self, "vault")
+
+    @vault.setter
+    def vault(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "vault", value)
+
+    @property
     @pulumi.getter(name="wirelessNetworkPassword")
     def wireless_network_password(self) -> Optional[pulumi.Input[str]]:
         return pulumi.get(self, "wireless_network_password")
@@ -312,7 +313,7 @@ class WirelessRouterItem(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: WirelessRouterItemArgs,
+                 args: Optional[WirelessRouterItemArgs] = None,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create a WirelessRouterItem resource with the given unique name, props, and options.
@@ -378,8 +379,6 @@ class WirelessRouterItem(pulumi.CustomResource):
             __props__.__dict__["tags"] = tags
             __props__.__dict__["title"] = title
             __props__.__dict__["urls"] = urls
-            if vault is None and not opts.urn:
-                raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
             __props__.__dict__["wireless_network_password"] = None if wireless_network_password is None else pulumi.Output.secret(wireless_network_password)
             __props__.__dict__["wireless_security"] = wireless_security

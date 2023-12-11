@@ -7,7 +7,6 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -45,12 +44,9 @@ type PassportItem struct {
 func NewPassportItem(ctx *pulumi.Context,
 	name string, args *PassportItemArgs, opts ...pulumi.ResourceOption) (*PassportItem, error) {
 	if args == nil {
-		return nil, errors.New("missing one or more required arguments")
+		args = &PassportItemArgs{}
 	}
 
-	if args.Vault == nil {
-		return nil, errors.New("invalid value for required argument 'Vault'")
-	}
 	args.Category = pulumi.StringPtr("Passport")
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"attachments",
@@ -119,7 +115,7 @@ type passportItemArgs struct {
 	Type  *string `pulumi:"type"`
 	Urls  []Url   `pulumi:"urls"`
 	// The UUID of the vault the item is in.
-	Vault string `pulumi:"vault"`
+	Vault *string `pulumi:"vault"`
 }
 
 // The set of arguments for constructing a PassportItem resource.
@@ -148,7 +144,7 @@ type PassportItemArgs struct {
 	Type  pulumi.StringPtrInput
 	Urls  UrlArrayInput
 	// The UUID of the vault the item is in.
-	Vault pulumi.StringInput
+	Vault pulumi.StringPtrInput
 }
 
 func (PassportItemArgs) ElementType() reflect.Type {

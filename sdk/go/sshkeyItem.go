@@ -7,7 +7,6 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -35,12 +34,9 @@ type SSHKeyItem struct {
 func NewSSHKeyItem(ctx *pulumi.Context,
 	name string, args *SSHKeyItemArgs, opts ...pulumi.ResourceOption) (*SSHKeyItem, error) {
 	if args == nil {
-		return nil, errors.New("missing one or more required arguments")
+		args = &SSHKeyItemArgs{}
 	}
 
-	if args.Vault == nil {
-		return nil, errors.New("invalid value for required argument 'Vault'")
-	}
 	args.Category = pulumi.StringPtr("SSH Key")
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"attachments",
@@ -99,7 +95,7 @@ type sshkeyItemArgs struct {
 	Title *string `pulumi:"title"`
 	Urls  []Url   `pulumi:"urls"`
 	// The UUID of the vault the item is in.
-	Vault string `pulumi:"vault"`
+	Vault *string `pulumi:"vault"`
 }
 
 // The set of arguments for constructing a SSHKeyItem resource.
@@ -118,7 +114,7 @@ type SSHKeyItemArgs struct {
 	Title pulumi.StringPtrInput
 	Urls  UrlArrayInput
 	// The UUID of the vault the item is in.
-	Vault pulumi.StringInput
+	Vault pulumi.StringPtrInput
 }
 
 func (SSHKeyItemArgs) ElementType() reflect.Type {

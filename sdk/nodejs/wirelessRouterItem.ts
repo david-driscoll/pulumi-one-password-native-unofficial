@@ -69,7 +69,7 @@ export class WirelessRouterItem extends pulumi.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: WirelessRouterItemArgs, opts?: pulumi.CustomResourceOptions)
+    constructor(name: string, args?: WirelessRouterItemArgs, opts?: pulumi.CustomResourceOptions)
     constructor(name: string, argsOrState?: WirelessRouterItemArgs | WirelessRouterItemState, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
@@ -78,9 +78,6 @@ export class WirelessRouterItem extends pulumi.CustomResource {
             resourceInputs["vault"] = state ? state.vault : undefined;
         } else {
             const args = argsOrState as WirelessRouterItemArgs | undefined;
-            if ((!args || args.vault === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'vault'");
-            }
             resourceInputs["airPortId"] = args ? args.airPortId : undefined;
             resourceInputs["attachedStoragePassword"] = args?.attachedStoragePassword ? pulumi.secret(args.attachedStoragePassword) : undefined;
             resourceInputs["attachments"] = args ? args.attachments : undefined;
@@ -146,7 +143,7 @@ export interface WirelessRouterItemArgs {
     /**
      * The UUID of the vault the item is in.
      */
-    vault: pulumi.Input<string>;
+    vault?: pulumi.Input<string>;
     wirelessNetworkPassword?: pulumi.Input<string>;
     wirelessSecurity?: pulumi.Input<string>;
 }

@@ -7,7 +7,6 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
 	"github.com/pulumi/pulumi-onepassword/sdk/go/onepassword/softwarelicense"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
@@ -40,12 +39,9 @@ type SoftwareLicenseItem struct {
 func NewSoftwareLicenseItem(ctx *pulumi.Context,
 	name string, args *SoftwareLicenseItemArgs, opts ...pulumi.ResourceOption) (*SoftwareLicenseItem, error) {
 	if args == nil {
-		return nil, errors.New("missing one or more required arguments")
+		args = &SoftwareLicenseItemArgs{}
 	}
 
-	if args.Vault == nil {
-		return nil, errors.New("invalid value for required argument 'Vault'")
-	}
 	args.Category = pulumi.StringPtr("Software License")
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"attachments",
@@ -107,7 +103,7 @@ type softwareLicenseItemArgs struct {
 	Title *string `pulumi:"title"`
 	Urls  []Url   `pulumi:"urls"`
 	// The UUID of the vault the item is in.
-	Vault   string  `pulumi:"vault"`
+	Vault   *string `pulumi:"vault"`
 	Version *string `pulumi:"version"`
 }
 
@@ -130,7 +126,7 @@ type SoftwareLicenseItemArgs struct {
 	Title pulumi.StringPtrInput
 	Urls  UrlArrayInput
 	// The UUID of the vault the item is in.
-	Vault   pulumi.StringInput
+	Vault   pulumi.StringPtrInput
 	Version pulumi.StringPtrInput
 }
 

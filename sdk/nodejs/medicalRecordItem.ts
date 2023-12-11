@@ -67,7 +67,7 @@ export class MedicalRecordItem extends pulumi.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: MedicalRecordItemArgs, opts?: pulumi.CustomResourceOptions)
+    constructor(name: string, args?: MedicalRecordItemArgs, opts?: pulumi.CustomResourceOptions)
     constructor(name: string, argsOrState?: MedicalRecordItemArgs | MedicalRecordItemState, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
@@ -76,9 +76,6 @@ export class MedicalRecordItem extends pulumi.CustomResource {
             resourceInputs["vault"] = state ? state.vault : undefined;
         } else {
             const args = argsOrState as MedicalRecordItemArgs | undefined;
-            if ((!args || args.vault === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'vault'");
-            }
             resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "Medical Record";
             resourceInputs["date"] = args ? args.date : undefined;
@@ -142,5 +139,5 @@ export interface MedicalRecordItemArgs {
     /**
      * The UUID of the vault the item is in.
      */
-    vault: pulumi.Input<string>;
+    vault?: pulumi.Input<string>;
 }

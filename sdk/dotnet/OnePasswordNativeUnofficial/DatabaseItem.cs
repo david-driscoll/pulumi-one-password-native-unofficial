@@ -90,7 +90,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public DatabaseItem(string name, DatabaseItemArgs args, CustomResourceOptions? options = null)
+        public DatabaseItem(string name, DatabaseItemArgs? args = null, CustomResourceOptions? options = null)
             : base("one-password-native-unofficial:index:DatabaseItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
@@ -100,7 +100,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         {
         }
 
-        private static DatabaseItemArgs MakeArgs(DatabaseItemArgs args)
+        private static DatabaseItemArgs? MakeArgs(DatabaseItemArgs? args)
         {
             args ??= new DatabaseItemArgs();
             args.Category = "Database";
@@ -250,7 +250,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// The UUID of the vault the item is in.
         /// </summary>
         [Input("vault")]
-        public Input<string> Vault { get; set; } = null!;
+        public Input<string>? Vault { get; set; }
 
         public DatabaseItemArgs()
         {
@@ -262,7 +262,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// <summary>
         /// The UUID of the vault the item is in.
         /// </summary>
-        [Input("vault")]
+        [Input("vault", required: true)]
         public Input<string> Vault { get; set; } = null!;
 
         public DatabaseItemState()

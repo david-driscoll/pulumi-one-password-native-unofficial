@@ -7,7 +7,6 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -34,12 +33,9 @@ type DocumentItem struct {
 func NewDocumentItem(ctx *pulumi.Context,
 	name string, args *DocumentItemArgs, opts ...pulumi.ResourceOption) (*DocumentItem, error) {
 	if args == nil {
-		return nil, errors.New("missing one or more required arguments")
+		args = &DocumentItemArgs{}
 	}
 
-	if args.Vault == nil {
-		return nil, errors.New("invalid value for required argument 'Vault'")
-	}
 	args.Category = pulumi.StringPtr("Document")
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"attachments",
@@ -97,7 +93,7 @@ type documentItemArgs struct {
 	Title *string `pulumi:"title"`
 	Urls  []Url   `pulumi:"urls"`
 	// The UUID of the vault the item is in.
-	Vault string `pulumi:"vault"`
+	Vault *string `pulumi:"vault"`
 }
 
 // The set of arguments for constructing a DocumentItem resource.
@@ -115,7 +111,7 @@ type DocumentItemArgs struct {
 	Title pulumi.StringPtrInput
 	Urls  UrlArrayInput
 	// The UUID of the vault the item is in.
-	Vault pulumi.StringInput
+	Vault pulumi.StringPtrInput
 }
 
 func (DocumentItemArgs) ElementType() reflect.Type {

@@ -69,7 +69,7 @@ export class MembershipItem extends pulumi.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: MembershipItemArgs, opts?: pulumi.CustomResourceOptions)
+    constructor(name: string, args?: MembershipItemArgs, opts?: pulumi.CustomResourceOptions)
     constructor(name: string, argsOrState?: MembershipItemArgs | MembershipItemState, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
@@ -78,9 +78,6 @@ export class MembershipItem extends pulumi.CustomResource {
             resourceInputs["vault"] = state ? state.vault : undefined;
         } else {
             const args = argsOrState as MembershipItemArgs | undefined;
-            if ((!args || args.vault === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'vault'");
-            }
             resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "Membership";
             resourceInputs["expiryDate"] = args ? args.expiryDate : undefined;
@@ -147,6 +144,6 @@ export interface MembershipItemArgs {
     /**
      * The UUID of the vault the item is in.
      */
-    vault: pulumi.Input<string>;
+    vault?: pulumi.Input<string>;
     website?: pulumi.Input<string>;
 }

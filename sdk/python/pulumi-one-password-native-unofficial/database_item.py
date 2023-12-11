@@ -16,7 +16,6 @@ __all__ = ['DatabaseItemArgs', 'DatabaseItem']
 @pulumi.input_type
 class DatabaseItemArgs:
     def __init__(__self__, *,
-                 vault: pulumi.Input[str],
                  alias: Optional[pulumi.Input[str]] = None,
                  attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
@@ -34,15 +33,15 @@ class DatabaseItemArgs:
                  title: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None,
                  urls: Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]] = None,
-                 username: Optional[pulumi.Input[str]] = None):
+                 username: Optional[pulumi.Input[str]] = None,
+                 vault: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a DatabaseItem resource.
-        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         :param pulumi.Input[str] category: The category of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
+        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         """
-        pulumi.set(__self__, "vault", vault)
         if alias is not None:
             pulumi.set(__self__, "alias", alias)
         if attachments is not None:
@@ -79,18 +78,8 @@ class DatabaseItemArgs:
             pulumi.set(__self__, "urls", urls)
         if username is not None:
             pulumi.set(__self__, "username", username)
-
-    @property
-    @pulumi.getter
-    def vault(self) -> pulumi.Input[str]:
-        """
-        The UUID of the vault the item is in.
-        """
-        return pulumi.get(self, "vault")
-
-    @vault.setter
-    def vault(self, value: pulumi.Input[str]):
-        pulumi.set(self, "vault", value)
+        if vault is not None:
+            pulumi.set(__self__, "vault", vault)
 
     @property
     @pulumi.getter
@@ -263,6 +252,18 @@ class DatabaseItemArgs:
     def username(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "username", value)
 
+    @property
+    @pulumi.getter
+    def vault(self) -> Optional[pulumi.Input[str]]:
+        """
+        The UUID of the vault the item is in.
+        """
+        return pulumi.get(self, "vault")
+
+    @vault.setter
+    def vault(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "vault", value)
+
 
 @pulumi.input_type
 class _DatabaseItemState:
@@ -325,7 +326,7 @@ class DatabaseItem(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: DatabaseItemArgs,
+                 args: Optional[DatabaseItemArgs] = None,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create a DatabaseItem resource with the given unique name, props, and options.
@@ -395,8 +396,6 @@ class DatabaseItem(pulumi.CustomResource):
             __props__.__dict__["type"] = type
             __props__.__dict__["urls"] = urls
             __props__.__dict__["username"] = username
-            if vault is None and not opts.urn:
-                raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
             __props__.__dict__["id"] = None
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachments", "fields", "password", "sections"])

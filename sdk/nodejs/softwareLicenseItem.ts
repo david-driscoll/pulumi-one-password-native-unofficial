@@ -66,7 +66,7 @@ export class SoftwareLicenseItem extends pulumi.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: SoftwareLicenseItemArgs, opts?: pulumi.CustomResourceOptions)
+    constructor(name: string, args?: SoftwareLicenseItemArgs, opts?: pulumi.CustomResourceOptions)
     constructor(name: string, argsOrState?: SoftwareLicenseItemArgs | SoftwareLicenseItemState, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
@@ -75,9 +75,6 @@ export class SoftwareLicenseItem extends pulumi.CustomResource {
             resourceInputs["vault"] = state ? state.vault : undefined;
         } else {
             const args = argsOrState as SoftwareLicenseItemArgs | undefined;
-            if ((!args || args.vault === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'vault'");
-            }
             resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "Software License";
             resourceInputs["customer"] = args ? args.customer : undefined;
@@ -138,6 +135,6 @@ export interface SoftwareLicenseItemArgs {
     /**
      * The UUID of the vault the item is in.
      */
-    vault: pulumi.Input<string>;
+    vault?: pulumi.Input<string>;
     version?: pulumi.Input<string>;
 }

@@ -7,7 +7,6 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
 	"github.com/pulumi/pulumi-onepassword/sdk/go/onepassword/emailaccount"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
@@ -44,12 +43,9 @@ type EmailAccountItem struct {
 func NewEmailAccountItem(ctx *pulumi.Context,
 	name string, args *EmailAccountItemArgs, opts ...pulumi.ResourceOption) (*EmailAccountItem, error) {
 	if args == nil {
-		return nil, errors.New("missing one or more required arguments")
+		args = &EmailAccountItemArgs{}
 	}
 
-	if args.Vault == nil {
-		return nil, errors.New("invalid value for required argument 'Vault'")
-	}
 	args.Category = pulumi.StringPtr("Email Account")
 	if args.Password != nil {
 		args.Password = pulumi.ToSecret(args.Password).(pulumi.StringPtrOutput)
@@ -121,7 +117,7 @@ type emailAccountItemArgs struct {
 	Urls     []Url   `pulumi:"urls"`
 	Username *string `pulumi:"username"`
 	// The UUID of the vault the item is in.
-	Vault string `pulumi:"vault"`
+	Vault *string `pulumi:"vault"`
 }
 
 // The set of arguments for constructing a EmailAccountItem resource.
@@ -148,7 +144,7 @@ type EmailAccountItemArgs struct {
 	Urls     UrlArrayInput
 	Username pulumi.StringPtrInput
 	// The UUID of the vault the item is in.
-	Vault pulumi.StringInput
+	Vault pulumi.StringPtrInput
 }
 
 func (EmailAccountItemArgs) ElementType() reflect.Type {

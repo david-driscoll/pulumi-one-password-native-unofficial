@@ -72,7 +72,7 @@ export class DriverLicenseItem extends pulumi.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: DriverLicenseItemArgs, opts?: pulumi.CustomResourceOptions)
+    constructor(name: string, args?: DriverLicenseItemArgs, opts?: pulumi.CustomResourceOptions)
     constructor(name: string, argsOrState?: DriverLicenseItemArgs | DriverLicenseItemState, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
@@ -81,9 +81,6 @@ export class DriverLicenseItem extends pulumi.CustomResource {
             resourceInputs["vault"] = state ? state.vault : undefined;
         } else {
             const args = argsOrState as DriverLicenseItemArgs | undefined;
-            if ((!args || args.vault === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'vault'");
-            }
             resourceInputs["address"] = args ? args.address : undefined;
             resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "Driver License";
@@ -157,5 +154,5 @@ export interface DriverLicenseItemArgs {
     /**
      * The UUID of the vault the item is in.
      */
-    vault: pulumi.Input<string>;
+    vault?: pulumi.Input<string>;
 }

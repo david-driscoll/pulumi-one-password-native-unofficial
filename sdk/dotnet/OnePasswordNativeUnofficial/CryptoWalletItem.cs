@@ -72,7 +72,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public CryptoWalletItem(string name, CryptoWalletItemArgs args, CustomResourceOptions? options = null)
+        public CryptoWalletItem(string name, CryptoWalletItemArgs? args = null, CustomResourceOptions? options = null)
             : base("one-password-native-unofficial:index:CryptoWalletItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
@@ -82,7 +82,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         {
         }
 
-        private static CryptoWalletItemArgs MakeArgs(CryptoWalletItemArgs args)
+        private static CryptoWalletItemArgs? MakeArgs(CryptoWalletItemArgs? args)
         {
             args ??= new CryptoWalletItemArgs();
             args.Category = "Crypto Wallet";
@@ -221,7 +221,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// The UUID of the vault the item is in.
         /// </summary>
         [Input("vault")]
-        public Input<string> Vault { get; set; } = null!;
+        public Input<string>? Vault { get; set; }
 
         [Input("wallet")]
         public Input<Rocket.Surgery.OnePasswordNativeUnofficial.CryptoWallet.Inputs.WalletSectionArgs>? Wallet { get; set; }
@@ -236,7 +236,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// <summary>
         /// The UUID of the vault the item is in.
         /// </summary>
-        [Input("vault")]
+        [Input("vault", required: true)]
         public Input<string> Vault { get; set; } = null!;
 
         public CryptoWalletItemState()

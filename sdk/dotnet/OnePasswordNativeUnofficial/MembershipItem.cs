@@ -87,7 +87,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public MembershipItem(string name, MembershipItemArgs args, CustomResourceOptions? options = null)
+        public MembershipItem(string name, MembershipItemArgs? args = null, CustomResourceOptions? options = null)
             : base("one-password-native-unofficial:index:MembershipItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
@@ -97,7 +97,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         {
         }
 
-        private static MembershipItemArgs MakeArgs(MembershipItemArgs args)
+        private static MembershipItemArgs? MakeArgs(MembershipItemArgs? args)
         {
             args ??= new MembershipItemArgs();
             args.Category = "Membership";
@@ -241,7 +241,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// The UUID of the vault the item is in.
         /// </summary>
         [Input("vault")]
-        public Input<string> Vault { get; set; } = null!;
+        public Input<string>? Vault { get; set; }
 
         [Input("website")]
         public Input<string>? Website { get; set; }
@@ -256,7 +256,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// <summary>
         /// The UUID of the vault the item is in.
         /// </summary>
-        [Input("vault")]
+        [Input("vault", required: true)]
         public Input<string> Vault { get; set; } = null!;
 
         public MembershipItemState()

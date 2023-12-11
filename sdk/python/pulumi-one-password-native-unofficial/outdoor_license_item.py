@@ -16,7 +16,6 @@ __all__ = ['OutdoorLicenseItemArgs', 'OutdoorLicenseItem']
 @pulumi.input_type
 class OutdoorLicenseItemArgs:
     def __init__(__self__, *,
-                 vault: pulumi.Input[str],
                  approved_wildlife: Optional[pulumi.Input[str]] = None,
                  attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
@@ -32,15 +31,15 @@ class OutdoorLicenseItemArgs:
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
                  urls: Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]] = None,
-                 valid_from: Optional[pulumi.Input[str]] = None):
+                 valid_from: Optional[pulumi.Input[str]] = None,
+                 vault: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a OutdoorLicenseItem resource.
-        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         :param pulumi.Input[str] category: The category of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
+        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         """
-        pulumi.set(__self__, "vault", vault)
         if approved_wildlife is not None:
             pulumi.set(__self__, "approved_wildlife", approved_wildlife)
         if attachments is not None:
@@ -73,18 +72,8 @@ class OutdoorLicenseItemArgs:
             pulumi.set(__self__, "urls", urls)
         if valid_from is not None:
             pulumi.set(__self__, "valid_from", valid_from)
-
-    @property
-    @pulumi.getter
-    def vault(self) -> pulumi.Input[str]:
-        """
-        The UUID of the vault the item is in.
-        """
-        return pulumi.get(self, "vault")
-
-    @vault.setter
-    def vault(self, value: pulumi.Input[str]):
-        pulumi.set(self, "vault", value)
+        if vault is not None:
+            pulumi.set(__self__, "vault", vault)
 
     @property
     @pulumi.getter(name="approvedWildlife")
@@ -239,6 +228,18 @@ class OutdoorLicenseItemArgs:
     def valid_from(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "valid_from", value)
 
+    @property
+    @pulumi.getter
+    def vault(self) -> Optional[pulumi.Input[str]]:
+        """
+        The UUID of the vault the item is in.
+        """
+        return pulumi.get(self, "vault")
+
+    @vault.setter
+    def vault(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "vault", value)
+
 
 @pulumi.input_type
 class _OutdoorLicenseItemState:
@@ -299,7 +300,7 @@ class OutdoorLicenseItem(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: OutdoorLicenseItemArgs,
+                 args: Optional[OutdoorLicenseItemArgs] = None,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create a OutdoorLicenseItem resource with the given unique name, props, and options.
@@ -365,8 +366,6 @@ class OutdoorLicenseItem(pulumi.CustomResource):
             __props__.__dict__["title"] = title
             __props__.__dict__["urls"] = urls
             __props__.__dict__["valid_from"] = valid_from
-            if vault is None and not opts.urn:
-                raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
             __props__.__dict__["id"] = None
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachments", "fields", "sections"])

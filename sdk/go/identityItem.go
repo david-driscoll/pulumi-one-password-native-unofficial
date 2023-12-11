@@ -7,7 +7,6 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
 	"github.com/pulumi/pulumi-onepassword/sdk/go/onepassword/identity"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
@@ -38,12 +37,9 @@ type IdentityItem struct {
 func NewIdentityItem(ctx *pulumi.Context,
 	name string, args *IdentityItemArgs, opts ...pulumi.ResourceOption) (*IdentityItem, error) {
 	if args == nil {
-		return nil, errors.New("missing one or more required arguments")
+		args = &IdentityItemArgs{}
 	}
 
-	if args.Vault == nil {
-		return nil, errors.New("invalid value for required argument 'Vault'")
-	}
 	args.Category = pulumi.StringPtr("Identity")
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"attachments",
@@ -104,7 +100,7 @@ type identityItemArgs struct {
 	Title *string `pulumi:"title"`
 	Urls  []Url   `pulumi:"urls"`
 	// The UUID of the vault the item is in.
-	Vault string `pulumi:"vault"`
+	Vault *string `pulumi:"vault"`
 }
 
 // The set of arguments for constructing a IdentityItem resource.
@@ -125,7 +121,7 @@ type IdentityItemArgs struct {
 	Title pulumi.StringPtrInput
 	Urls  UrlArrayInput
 	// The UUID of the vault the item is in.
-	Vault pulumi.StringInput
+	Vault pulumi.StringPtrInput
 }
 
 func (IdentityItemArgs) ElementType() reflect.Type {
