@@ -15,7 +15,7 @@ class DictionaryPropertyValueConverter : WriteOnlyJsonConverter<IDictionary<stri
             writer.WritePropertyName(item.Key);
             if (ServerGeneratedFields.Contains(item.Key))
             {
-                writer.WriteValue(item.Key.Equals("title", StringComparison.OrdinalIgnoreCase) ? item.Value.ToString()[..^8] + "abcd1234" : "[redacted]");
+                writer.WriteValue(item.Key.Equals("title", StringComparison.OrdinalIgnoreCase) && item.Value.ToString().Length > 8 ? item.Value.ToString()[..^8] + "abcd1234" : "[redacted]");
             }
             else
             {

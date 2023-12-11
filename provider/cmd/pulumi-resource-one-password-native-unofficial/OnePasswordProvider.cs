@@ -208,6 +208,10 @@ public class OnePasswordProvider : Provider
                 Vault = GetObjectStringValue(GetObjectValue(request.Properties, "vault") ?? PropertyValue.Null, "id")
             }, ct);
         }
+        catch (TimeoutException)
+        {
+            // ?
+        }
         catch (Exception e)
         {
             Log.Logger.Error(e, "Error deleting item {Message} {Stack}", e.Message, e.StackTrace);

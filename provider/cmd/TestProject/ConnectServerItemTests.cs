@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Immutable;
+using System.Net;
 using System.Reflection;
 using System.Reflection.Metadata;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.Utilities;
+using Polly;
 using Pulumi;
 using pulumi_resource_one_password_native_unofficial;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 using Pulumi.Experimental.Provider;
+using Refit;
 using Rocket.Surgery.OnePasswordNativeUnofficial;
 using Rocket.Surgery.OnePasswordNativeUnofficial.Inputs;
 using Serilog;
@@ -36,6 +39,73 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
             .WriteTo.TestOutput(output, LogEventLevel.Verbose)
             .CreateLogger();
         fixture.Connect(serverFixture);
+    }
+
+    [Fact]
+    public async Task Should_Throw_If_No_Vault_Is_Provided()
+    {
+        var provider = await _serverFixture.ConfigureProvider(_logger);
+
+        var data = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
+        {
+            Username = "me",
+            Password = "secret1234",
+            Sections = new()
+            {
+                ["mysection"] = new SectionArgs()
+                {
+                    Fields = new()
+                    {
+                        ["password2"] = new FieldArgs()
+                        {
+                            Value = "secret1235!",
+                            Type = FieldType.Concealed
+                        }
+                    },
+                }
+            },
+            Tags = new string[] { "test-tag" }
+        });
+
+        var check = await provider.Check(new(data.Urn, data.Request, data.Request, ImmutableArray<byte>.Empty), CancellationToken.None);
+
+        await Verify(check);
+    }
+
+    [Fact]
+    public async Task Should_Support_Default_Vault()
+    {
+        var provider = await _serverFixture.ConfigureProvider(
+            _logger,
+            additionalConfig: ImmutableDictionary.Create<string, PropertyValue>()
+                .Add("vault", new("testing-pulumi"))
+        );
+
+        var data = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
+        {
+            Username = "me",
+            Password = "secret1234",
+            Sections = new()
+            {
+                ["mysection"] = new SectionArgs()
+                {
+                    Fields = new()
+                    {
+                        ["password2"] = new FieldArgs()
+                        {
+                            Value = "secret1235!",
+                            Type = FieldType.Concealed
+                        }
+                    },
+                }
+            },
+            Tags = new string[] { "test-tag" }
+        });
+
+        var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
+
+        await Verify(create)
+            .AddScrubber(z => z.Replace(create.Id!, "[server-generated]"));
     }
 
     [Fact]
@@ -130,7 +200,13 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
         });
 
         var create = await provider.Create(new CreateRequest(createInput.Urn, createInput.Request, TimeSpan.MaxValue, false), CancellationToken.None);
-        await Task.Delay(5000);
+
+        await Policy.Handle<ApiException>(exception => exception.StatusCode == HttpStatusCode.NotFound)
+            .WaitAndRetryAsync(50, _ => TimeSpan.FromMicroseconds(100))
+            .ExecuteAsync(() => _serverFixture.Connect.GetVaultItemById(
+                TemplateMetadata.GetObjectStringValue(TemplateMetadata.GetObjectValue(create.Properties.ToImmutableDictionary(), "vault"), "id"),
+                create.Id
+            ));
 
         var update = await provider.Update(
             new UpdateRequest(updateInput.Urn, create.Id!, create.Properties!.ToImmutableDictionary(), updateInput.Request.ToImmutableDictionary(),
@@ -451,15 +527,16 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
         var provider = await _serverFixture.ConfigureProvider(_logger);
 
         var result = await provider.Invoke(new InvokeRequest(
-            ItemType.GetItem,
-            ImmutableDictionary<string, PropertyValue>.Empty
-                .Add("id", new("67gg5pap6mncp6h2wjvpukc3cu"))
-                .Add("vault", new("testing-pulumi"))
-            ), 
+                ItemType.GetItem,
+                ImmutableDictionary<string, PropertyValue>.Empty
+                    .Add("id", new("67gg5pap6mncp6h2wjvpukc3cu"))
+                    .Add("vault", new("testing-pulumi"))
+            ),
             CancellationToken.None);
 
         await Verify(result);
     }
+
     [Fact]
     public async Task Should_Be_Able_To_Read_A_Reference()
     {
@@ -467,11 +544,12 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
 
         var result = await provider.Invoke(new InvokeRequest(
                 ItemType.Read,
-                ImmutableDictionary<string, PropertyValue>.Empty.Add("reference", new("op://testing-pulumi/TestItem/password"))), 
+                ImmutableDictionary<string, PropertyValue>.Empty.Add("reference", new("op://testing-pulumi/TestItem/password"))),
             CancellationToken.None);
 
         await Verify(result);
     }
+
     [Fact]
     public async Task Should_Be_Able_To_Inject_References()
     {
@@ -481,9 +559,9 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
                 ItemType.Inject,
                 ImmutableDictionary<string, PropertyValue>.Empty.Add("template", new(
                     $"""
-                        MyPassword: op://testing-pulumi/TestItem/password
-                        MyConfigValue: op://testing-pulumi/TestItem/text
-                        """))),
+                     MyPassword: op://testing-pulumi/TestItem/password
+                     MyConfigValue: op://testing-pulumi/TestItem/text
+                     """))),
             CancellationToken.None);
 
         await Verify(result);

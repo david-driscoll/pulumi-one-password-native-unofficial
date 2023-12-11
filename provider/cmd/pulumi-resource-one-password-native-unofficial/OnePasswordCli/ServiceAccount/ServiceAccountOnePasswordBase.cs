@@ -27,8 +27,7 @@ public abstract class ServiceAccountOnePasswordBase(
             .AddFallback(new FallbackStrategyOptions<BufferedCommandResult>()
             {
                 ShouldHandle = arguments =>
-                    ValueTask.FromResult(arguments.Outcome.Exception is CommandExecutionException exception &&
-                                         exception.Message.Contains("(429) Too Many Requests")),
+                    ValueTask.FromResult(arguments.Outcome.Exception is CommandExecutionException exception && exception.Message.Contains("(429)")),
                 FallbackAction = arguments => arguments.Outcome.Exception is CommandExecutionException exception
                     ? ValueTask.FromResult(Outcome.FromException<BufferedCommandResult>(new TimeoutException(exception.Message)))
                     : ValueTask.FromResult(Outcome.FromException<BufferedCommandResult>(new TimeoutException("Unknown error")))
@@ -39,7 +38,7 @@ public abstract class ServiceAccountOnePasswordBase(
                 MaxRetryAttempts = 5,
                 BackoffType = DelayBackoffType.Exponential,
                 ShouldHandle = arguments =>
-                    ValueTask.FromResult(arguments.Outcome.Exception is CommandExecutionException e && e.Message.Contains("(409) (Conflict)")),
+                    ValueTask.FromResult(arguments.Outcome.Exception is CommandExecutionException e && e.Message.Contains("(409)")),
                 UseJitter = true
             }).Build();
 
@@ -58,7 +57,7 @@ public abstract class ServiceAccountOnePasswordBase(
         // Logger.Information("Executing command: {Command} - {Input}", command.Arguments, standardInput);
         return Policy.ExecuteAsync(
             static async (command, ct) => await command.ExecuteBufferedAsync(ct),
-         command.WithEnvironmentVariables(options.Apply).WithStandardInputPipe(PipeSource.FromString(standardInput)),
+            command.WithEnvironmentVariables(options.Apply).WithStandardInputPipe(PipeSource.FromString(standardInput)),
             cancellationToken
         );
     }

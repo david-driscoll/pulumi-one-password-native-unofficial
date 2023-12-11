@@ -414,7 +414,7 @@ for (const template of templates) {
     currentResource.isComponent = false;
     currentResource.inputProperties = {};
     currentResource.requiredInputs = [];
-    currentResource.requiredInputs = ['vault'];
+    currentResource.requiredInputs = [];
     currentResource.properties = {};
     currentResource.required = [];
     currentResource.required = uniq(currentResource.required.concat('tags', 'id', 'title', 'vault', 'category'));

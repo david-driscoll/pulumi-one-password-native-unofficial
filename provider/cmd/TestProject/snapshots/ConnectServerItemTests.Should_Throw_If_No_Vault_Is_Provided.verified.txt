@@ -1,0 +1,38 @@
+﻿{
+  Inputs: {
+    attachments: null,
+    category: null,
+    fields: null,
+    generatePassword: null,
+    notes: null,
+    password: secret1234,
+    references: null,
+    sections: {
+      mysection: {
+        attachments: null,
+        fields: {
+          password2: {
+            label: null,
+            type: CONCEALED,
+            value: secret1235!
+          }
+        },
+        label: null,
+        references: null
+      }
+    },
+    tags: [
+      test-tag
+    ],
+    title: [redacted],
+    urls: null,
+    username: me,
+    vault: null
+  },
+  Failures: [
+    {
+      Property: vault,
+      Reason: Vault must be set or a default provided to the provider
+    }
+  ]
+}

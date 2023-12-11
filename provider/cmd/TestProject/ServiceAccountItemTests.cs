@@ -31,6 +31,73 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
     }
 
     [SkippableFact(typeof(TimeoutException))]
+    public async Task Should_Throw_If_No_Vault_Is_Provided()
+    {
+        var provider = await _serverFixture.ConfigureProvider(_logger);
+
+        var data = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
+        {
+            Username = "me",
+            Password = "secret1234",
+            Sections = new()
+            {
+                ["mysection"] = new SectionArgs()
+                {
+                    Fields = new()
+                    {
+                        ["password2"] = new FieldArgs()
+                        {
+                            Value = "secret1235!",
+                            Type = FieldType.Concealed
+                        }
+                    },
+                }
+            },
+            Tags = new string[] { "test-tag" }
+        });
+
+        var check = await provider.Check(new(data.Urn, data.Request, data.Request, ImmutableArray<byte>.Empty), CancellationToken.None);
+
+        await Verify(check);
+    }
+
+    [SkippableFact(typeof(TimeoutException))]
+    public async Task Should_Support_Default_Vault()
+    {
+        var provider = await _serverFixture.ConfigureProvider(
+            _logger,
+            additionalConfig: ImmutableDictionary.Create<string, PropertyValue>()
+                .Add("vault", new("testing-pulumi"))
+        );
+
+        var data = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
+        {
+            Username = "me",
+            Password = "secret1234",
+            Sections = new()
+            {
+                ["mysection"] = new SectionArgs()
+                {
+                    Fields = new()
+                    {
+                        ["password2"] = new FieldArgs()
+                        {
+                            Value = "secret1235!",
+                            Type = FieldType.Concealed
+                        }
+                    },
+                }
+            },
+            Tags = new string[] { "test-tag" }
+        });
+
+        var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
+
+        await Verify(create)
+            .AddScrubber(z => z.Replace(create.Id!, "[server-generated]"));
+    }
+
+    [SkippableFact(typeof(TimeoutException))]
     public async Task Should_Create_Login_Item()
     {
         var provider = await _serverFixture.ConfigureProvider(_logger);

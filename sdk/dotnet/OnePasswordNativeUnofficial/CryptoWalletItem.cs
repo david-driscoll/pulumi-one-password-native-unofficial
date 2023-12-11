@@ -220,7 +220,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// <summary>
         /// The UUID of the vault the item is in.
         /// </summary>
-        [Input("vault", required: true)]
+        [Input("vault")]
         public Input<string> Vault { get; set; } = null!;
 
         [Input("wallet")]
@@ -236,7 +236,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// <summary>
         /// The UUID of the vault the item is in.
         /// </summary>
-        [Input("vault", required: true)]
+        [Input("vault")]
         public Input<string> Vault { get; set; } = null!;
 
         public CryptoWalletItemState()

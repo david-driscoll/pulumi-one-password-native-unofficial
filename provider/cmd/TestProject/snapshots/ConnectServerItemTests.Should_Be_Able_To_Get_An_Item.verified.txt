@@ -54,7 +54,7 @@
     tags: [
       Do not delete
     ],
-    title: abcd1234,
+    title: [redacted],
     urls: [],
     vault: {
       id: [redacted],
