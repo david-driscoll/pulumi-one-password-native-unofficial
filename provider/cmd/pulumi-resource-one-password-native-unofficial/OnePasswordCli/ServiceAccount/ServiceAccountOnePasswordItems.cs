@@ -2,8 +2,11 @@
 using System.Reactive.Disposables;
 using System.Text.Json;
 using CliWrap;
+using CliWrap.Buffered;
 using CliWrap.Exceptions;
 using Polly;
+using Polly.Fallback;
+using Polly.Retry;
 using Pulumi;
 using Serilog;
 
@@ -40,17 +43,20 @@ public class ServiceAccountOnePasswordItems(
         }
 
         (args, var disposable) = await AttachFiles(args, attachments, cancellationToken);
-
-        var result = await Policy.Handle<CommandExecutionException>(exception => exception.Message.Contains("(409) (Conflict)"))
-            .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)))
-            .ExecuteAsync(() => ExecuteCommand(
+        try
+        {
+            var result = await ExecuteCommand(
                 Command.WithArguments(args.Build()),
                 templateJson,
                 cancellationToken
-            ));
-        disposable.Dispose();
+            );
 
-        return JsonSerializer.Deserialize<Item.Response>(result.StandardOutput, SerializerOptions)!;
+            return JsonSerializer.Deserialize<Item.Response>(result.StandardOutput, SerializerOptions)!;
+        }
+        finally
+        {
+            disposable.Dispose();
+        }
     }
 
     public async Task<Item.Response> Edit(Item.EditRequest request, TemplateMetadata.Template templateJson,
@@ -77,16 +83,21 @@ public class ServiceAccountOnePasswordItems(
 
         (args, var disposable) = await AttachFiles(args, attachments, cancellationToken);
 
-        var result = await Policy.Handle<CommandExecutionException>(exception => exception.Message.Contains("(409) (Conflict)"))
-            .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)))
-            .ExecuteAsync(() => ExecuteCommand(
+        try
+        {
+            var result = await ExecuteCommand(
                 Command.WithArguments(args.Build()),
                 templateJson,
                 cancellationToken
-            ));
-        disposable.Dispose();
+            );
+            disposable.Dispose();
 
-        return JsonSerializer.Deserialize<Item.Response>(result.StandardOutput, SerializerOptions)!;
+            return JsonSerializer.Deserialize<Item.Response>(result.StandardOutput, SerializerOptions)!;
+        }
+        finally
+        {
+            disposable.Dispose();
+        }
     }
 
     private async Task<(ArgsBuilder args, IDisposable disposable)> AttachFiles(ArgsBuilder args,

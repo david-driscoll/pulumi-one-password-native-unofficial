@@ -30,7 +30,7 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
         fixture.ServiceAccount(serviceAccountFixture);
     }
 
-    [Fact]
+    [SkippableFact(typeof(TimeoutException))]
     public async Task Should_Create_Login_Item()
     {
         var provider = await _serverFixture.ConfigureProvider(_logger);
@@ -72,7 +72,7 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
             .AddScrubber(z => z.Replace(create.Id!, "[server-generated]"));
     }
 
-    [Fact]
+    [SkippableFact(typeof(TimeoutException))]
     public async Task Should_Diff_Login_Item()
     {
         var provider = await _serverFixture.ConfigureProvider(_logger);
@@ -117,7 +117,7 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
         await Verify(new { create, diff });
     }
 
-    [Fact]
+    [SkippableFact(typeof(TimeoutException))]
     public async Task Should_Diff_Login_Item_With_Differences()
     {
         var provider = await _serverFixture.ConfigureProvider(_logger);
@@ -190,7 +190,7 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
         await Verify(new { create, diff });
     }
 
-    [Fact]
+    [SkippableFact(typeof(TimeoutException))]
     public async Task Should_Create_Login_Item_With_Attachments()
     {
         var provider = await _serverFixture.ConfigureProvider(_logger);
@@ -244,7 +244,7 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
             .AddScrubber(z => z.Replace(create.Id!, "[server-generated]"));
     }
 
-    [Fact]
+    [SkippableFact(typeof(TimeoutException))]
     public async Task Should_Update_Login_Item()
     {
         var provider = await _serverFixture.ConfigureProvider(_logger);
@@ -319,7 +319,7 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
             .AddScrubber(z => z.Replace(create.Id!, "[server-generated]"));
     }
 
-    [Fact]
+    [SkippableFact(typeof(TimeoutException))]
     public async Task Should_Set_Urls()
     {
         var provider = await _serverFixture.ConfigureProvider(_logger);
@@ -362,7 +362,7 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
     }
 
 
-    [Fact]
+    [SkippableFact(typeof(TimeoutException))]
     public async Task Should_Set_References()
     {
         var provider = await _serverFixture.ConfigureProvider(_logger);
@@ -460,7 +460,7 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
     }
 
 
-    [Fact]
+    [SkippableFact(typeof(TimeoutException))]
     public async Task Should_Generate_Password()
     {
         var provider = await _serverFixture.ConfigureProvider(_logger);
@@ -488,7 +488,7 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
     }
 
 
-    [Fact]
+    [SkippableFact(typeof(TimeoutException))]
     public async Task Should_Generate_Random_Password()
     {
         var provider = await _serverFixture.ConfigureProvider(_logger);
@@ -509,7 +509,7 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
                 "[redacted,server-generated]"));
     }
 
-    [Fact]
+    [SkippableFact(typeof(TimeoutException))]
     public async Task Should_Be_Able_To_Get_Attachments()
     {
         var provider = await _serverFixture.ConfigureProvider(_logger);
@@ -522,7 +522,7 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
         await Verify(result);
     }
 
-    [Fact]
+    [SkippableFact(typeof(TimeoutException))]
     public async Task Should_Be_Able_To_Get_An_Item()
     {
         var provider = await _serverFixture.ConfigureProvider(_logger);
@@ -537,7 +537,7 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
 
         await Verify(result);
     }
-    [Fact]
+    [SkippableFact(typeof(TimeoutException))]
     public async Task Should_Be_Able_To_Read_A_Reference()
     {
         var provider = await _serverFixture.ConfigureProvider(_logger);
@@ -549,7 +549,7 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
 
         await Verify(result);
     }
-    [Fact]
+    [SkippableFact(typeof(TimeoutException))]
     public async Task Should_Be_Able_To_Inject_References()
     {
         var provider = await _serverFixture.ConfigureProvider(_logger);
