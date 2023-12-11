@@ -549,6 +549,7 @@ type Section struct {
 	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	Fields      map[string]Field                 `pulumi:"fields"`
 	Label       *string                          `pulumi:"label"`
+	References  []Reference                      `pulumi:"references"`
 }
 
 // SectionInput is an input type that accepts SectionArgs and SectionOutput values.
@@ -566,6 +567,7 @@ type SectionArgs struct {
 	Attachments pulumi.AssetOrArchiveMapInput `pulumi:"attachments"`
 	Fields      FieldMapInput                 `pulumi:"fields"`
 	Label       pulumi.StringPtrInput         `pulumi:"label"`
+	References  ReferenceArrayInput           `pulumi:"references"`
 }
 
 func (SectionArgs) ElementType() reflect.Type {
@@ -629,6 +631,10 @@ func (o SectionOutput) Fields() FieldMapOutput {
 
 func (o SectionOutput) Label() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v Section) *string { return v.Label }).(pulumi.StringPtrOutput)
+}
+
+func (o SectionOutput) References() ReferenceArrayOutput {
+	return o.ApplyT(func(v Section) []Reference { return v.References }).(ReferenceArrayOutput)
 }
 
 type SectionMapOutput struct{ *pulumi.OutputState }

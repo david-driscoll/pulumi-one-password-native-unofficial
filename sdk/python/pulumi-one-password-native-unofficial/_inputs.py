@@ -132,12 +132,15 @@ class SectionArgs:
     def __init__(__self__, *,
                  fields: pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]],
                  attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
-                 label: Optional[pulumi.Input[str]] = None):
+                 label: Optional[pulumi.Input[str]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]] = None):
         pulumi.set(__self__, "fields", fields)
         if attachments is not None:
             pulumi.set(__self__, "attachments", attachments)
         if label is not None:
             pulumi.set(__self__, "label", label)
+        if references is not None:
+            pulumi.set(__self__, "references", references)
 
     @property
     @pulumi.getter
@@ -165,6 +168,15 @@ class SectionArgs:
     @label.setter
     def label(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "label", value)
+
+    @property
+    @pulumi.getter
+    def references(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]]:
+        return pulumi.get(self, "references")
+
+    @references.setter
+    def references(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]]):
+        pulumi.set(self, "references", value)
 
 
 @pulumi.input_type

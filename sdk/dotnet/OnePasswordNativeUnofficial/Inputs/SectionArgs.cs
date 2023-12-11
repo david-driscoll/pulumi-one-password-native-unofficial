@@ -32,6 +32,14 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial.Inputs
         [Input("label")]
         public Input<string>? Label { get; set; }
 
+        [Input("references")]
+        private InputList<Inputs.ReferenceArgs>? _references;
+        public InputList<Inputs.ReferenceArgs> References
+        {
+            get => _references ?? (_references = new InputList<Inputs.ReferenceArgs>());
+            set => _references = value;
+        }
+
         public SectionArgs()
         {
         }

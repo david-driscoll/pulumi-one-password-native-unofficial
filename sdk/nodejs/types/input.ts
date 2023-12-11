@@ -36,6 +36,7 @@ export interface SectionArgs {
     attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     fields: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     label?: pulumi.Input<string>;
+    references?: pulumi.Input<pulumi.Input<inputs.ReferenceArgs>[]>;
 }
 
 export interface UrlArgs {
