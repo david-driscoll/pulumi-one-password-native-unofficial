@@ -182,6 +182,10 @@ schema.types = {
                 "type": "object",
                 "additionalProperties": { "$ref": "#/types/one-password-native-unofficial:index:OutputAttachment" },
             },
+            'references': {
+                "type": "array",
+                "items": { "$ref": "#/types/one-password-native-unofficial:index:OutputField" },
+            },
             "id": {
                 "type": "string"
             },
@@ -440,7 +444,6 @@ for (const template of templates) {
         "type": "object",
         "additionalProperties": { "$ref": "pulumi.json#/Asset" }
     };
-    // disabled until cli can actually input them.
     currentResource.inputProperties['references'] = {
         "type": "array",
         "items": { "$ref": "#/types/one-password-native-unofficial:index:Reference" },
@@ -734,7 +737,6 @@ ${templates.map(template => {
             Urls = urls,
             Tags = tags,
             Vault = vault,
-            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)
         });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsTo${template.name.replace(/ /g, '')}(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)

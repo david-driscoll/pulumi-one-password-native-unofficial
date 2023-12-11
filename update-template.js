@@ -687,7 +687,7 @@ templates.map(function (template) {
         }
         // UsernameField | PasswordField | OtpField | NotesField | GenericField
     }
-    return "\n    public static TemplateTransform Transform".concat(template.name.replace(/ /g, ''), " = (resourceType, inputs) => {    \n        string? title = null;\n        if (inputs.TryGetValue(\"title\", out var t) && t.TryGetString(out title)) { }\n        var fields = new List<TemplateField>();\n        ").concat(methods.join('\n'), "\n        fields.AddRange(AssignGenericElements(inputs, fields));\n        return new Template()\n        {\n            Title = title ?? \"\",\n            Category = \"").concat(template.templateSchema.category, "\",\n            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)\n        };\n    };\n    ");
+    return "\n    public static TemplateTransform Transform".concat(template.name.replace(/ /g, ''), " = (resourceType, inputs) => {    \n        string? title = null;\n        if (inputs.TryGetValue(\"title\", out var t) && t.TryGetString(out title)) { }\n        var fields = new List<TemplateField>();\n        ").concat(methods.join('\n'), "\n        fields.AddRange(AssignGenericElements(inputs, fields));\n        return new Template()\n        {\n            Title = title ?? \"\",\n            Category = \"").concat(template.templateSchema.category, "\",\n            \n        };\n    };\n    ");
 });
 // GetSection(values, "info") is {} section && GetField(section, "notes") is {} field
 function templateGetTemplateField(field, fieldName) {
