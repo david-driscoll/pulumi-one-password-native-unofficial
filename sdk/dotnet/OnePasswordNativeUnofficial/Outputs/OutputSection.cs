@@ -18,6 +18,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial.Outputs
         public readonly ImmutableDictionary<string, Outputs.OutputField> Fields;
         public readonly string Id;
         public readonly string Label;
+        public readonly ImmutableArray<Outputs.OutputField> References;
 
         [OutputConstructor]
         private OutputSection(
@@ -27,12 +28,15 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial.Outputs
 
             string id,
 
-            string label)
+            string label,
+
+            ImmutableArray<Outputs.OutputField> references)
         {
             Attachments = attachments;
             Fields = fields;
             Id = id;
             Label = label;
+            References = references;
         }
     }
 }

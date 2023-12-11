@@ -154,12 +154,15 @@ class OutputSection(dict):
                  fields: Mapping[str, 'outputs.OutputField'],
                  id: str,
                  label: str,
-                 attachments: Optional[Mapping[str, 'outputs.OutputAttachment']] = None):
+                 attachments: Optional[Mapping[str, 'outputs.OutputAttachment']] = None,
+                 references: Optional[Sequence['outputs.OutputField']] = None):
         pulumi.set(__self__, "fields", fields)
         pulumi.set(__self__, "id", id)
         pulumi.set(__self__, "label", label)
         if attachments is not None:
             pulumi.set(__self__, "attachments", attachments)
+        if references is not None:
+            pulumi.set(__self__, "references", references)
 
     @property
     @pulumi.getter
@@ -180,6 +183,11 @@ class OutputSection(dict):
     @pulumi.getter
     def attachments(self) -> Optional[Mapping[str, 'outputs.OutputAttachment']]:
         return pulumi.get(self, "attachments")
+
+    @property
+    @pulumi.getter
+    def references(self) -> Optional[Sequence['outputs.OutputField']]:
+        return pulumi.get(self, "references")
 
 
 @pulumi.output_type

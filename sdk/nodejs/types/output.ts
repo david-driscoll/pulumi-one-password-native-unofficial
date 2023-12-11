@@ -34,6 +34,7 @@ export interface OutputSection {
     fields: {[key: string]: outputs.OutputField};
     id: string;
     label: string;
+    references?: outputs.OutputField[];
 }
 
 export interface OutputUrl {

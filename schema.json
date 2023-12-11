@@ -9276,6 +9276,12 @@
                         "$ref": "#/types/one-password-native-unofficial:index:OutputAttachment"
                     }
                 },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/one-password-native-unofficial:index:OutputField"
+                    }
+                },
                 "id": {
                     "type": "string"
                 },

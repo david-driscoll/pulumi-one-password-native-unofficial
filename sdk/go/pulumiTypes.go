@@ -233,6 +233,26 @@ func (o OutputFieldOutput) Value() pulumi.StringOutput {
 	return o.ApplyT(func(v OutputField) string { return v.Value }).(pulumi.StringOutput)
 }
 
+type OutputFieldArrayOutput struct{ *pulumi.OutputState }
+
+func (OutputFieldArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]OutputField)(nil)).Elem()
+}
+
+func (o OutputFieldArrayOutput) ToOutputFieldArrayOutput() OutputFieldArrayOutput {
+	return o
+}
+
+func (o OutputFieldArrayOutput) ToOutputFieldArrayOutputWithContext(ctx context.Context) OutputFieldArrayOutput {
+	return o
+}
+
+func (o OutputFieldArrayOutput) Index(i pulumi.IntInput) OutputFieldOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) OutputField {
+		return vs[0].([]OutputField)[vs[1].(int)]
+	}).(OutputFieldOutput)
+}
+
 type OutputFieldMapOutput struct{ *pulumi.OutputState }
 
 func (OutputFieldMapOutput) ElementType() reflect.Type {
@@ -315,6 +335,7 @@ type OutputSection struct {
 	Fields      map[string]OutputField      `pulumi:"fields"`
 	Id          string                      `pulumi:"id"`
 	Label       string                      `pulumi:"label"`
+	References  []OutputField               `pulumi:"references"`
 }
 
 type OutputSectionOutput struct{ *pulumi.OutputState }
@@ -345,6 +366,10 @@ func (o OutputSectionOutput) Id() pulumi.StringOutput {
 
 func (o OutputSectionOutput) Label() pulumi.StringOutput {
 	return o.ApplyT(func(v OutputSection) string { return v.Label }).(pulumi.StringOutput)
+}
+
+func (o OutputSectionOutput) References() OutputFieldArrayOutput {
+	return o.ApplyT(func(v OutputSection) []OutputField { return v.References }).(OutputFieldArrayOutput)
 }
 
 type OutputSectionMapOutput struct{ *pulumi.OutputState }
@@ -746,6 +771,7 @@ func init() {
 	pulumi.RegisterOutputType(OutputAttachmentOutput{})
 	pulumi.RegisterOutputType(OutputAttachmentMapOutput{})
 	pulumi.RegisterOutputType(OutputFieldOutput{})
+	pulumi.RegisterOutputType(OutputFieldArrayOutput{})
 	pulumi.RegisterOutputType(OutputFieldMapOutput{})
 	pulumi.RegisterOutputType(OutputReferenceOutput{})
 	pulumi.RegisterOutputType(OutputReferenceArrayOutput{})
