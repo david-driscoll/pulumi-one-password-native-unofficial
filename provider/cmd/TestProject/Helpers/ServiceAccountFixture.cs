@@ -34,9 +34,16 @@ public class ServiceAccountFixture : IAsyncLifetime, IServerFixture
         {
             foreach (var id in provider.CreatedIds)
             {
-                await provider.Delete(new("", id, ImmutableDictionary<string, PropertyValue>.Empty.Add("vault", new(
-                    ImmutableDictionary<string, PropertyValue>.Empty.Add("id", new(Vault))
-                )), TimeSpan.MaxValue), CancellationToken.None);
+                try
+                {
+                    await provider.Delete(new("", id, ImmutableDictionary<string, PropertyValue>.Empty.Add("vault", new(
+                        ImmutableDictionary<string, PropertyValue>.Empty.Add("id", new(Vault))
+                    )), TimeSpan.MaxValue), CancellationToken.None);
+                }
+                catch
+                {
+                    // ignored to not break test
+                }
             }
         }
 
