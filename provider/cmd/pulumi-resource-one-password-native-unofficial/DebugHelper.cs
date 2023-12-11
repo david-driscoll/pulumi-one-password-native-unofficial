@@ -1,9 +1,6 @@
-using System.Diagnostics;
 using System.Net.Http.Headers;
 using GeneratedCode;
-using Humanizer;
 using Json.Patch;
-using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 using Refit;
 
 namespace pulumi_resource_one_password_native_unofficial;

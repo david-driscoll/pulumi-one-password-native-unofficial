@@ -6,15 +6,15 @@ using GeneratedCode;
 using pulumi_resource_one_password_native_unofficial;
 using Pulumi.Experimental.Provider;
 using Serilog;
-using File = GeneratedCode.File;
+// ReSharper disable NullableWarningSuppressionIsUsed
 
 namespace TestProject.Helpers;
 
 public class ConnectServerFixture : IAsyncLifetime, IServerFixture
 {
-    private IContainer _connectApi;
-    private IContainer _connectSync;
-    private HashSet<DelegatingProvider> _delegatingProviders = new();
+    private IContainer _connectApi= null!;
+    private IContainer _connectSync = null!;
+    private readonly HashSet<DelegatingProvider> _delegatingProviders = new();
     public string TemporaryDirectory { get; private set; } = "";
     public string Vault { get; private set; } = "";
     public I1PasswordConnect Connect => pulumi_resource_one_password_native_unofficial.Helpers.CreateConnectClient(ConnectHost.ToString(), ConnectToken);
@@ -37,7 +37,7 @@ public class ConnectServerFixture : IAsyncLifetime, IServerFixture
 
         _connectApi = new ContainerBuilder()
             .WithImage("1password/connect-api:latest")
-            .WithConnectJson(Environment.GetEnvironmentVariable("PULUMI_ONEPASSWORD_CONNECT_JSON"))
+            .WithConnectJson(Environment.GetEnvironmentVariable("PULUMI_ONEPASSWORD_CONNECT_JSON")!)
             .WithPortBinding(8080, true)
             .WithWaitStrategy(Wait.ForUnixContainer().UntilHttpRequestIsSucceeded(x => x.ForPath("/heartbeat").ForPort(8080)))
             .WithVolumeMount(volume, "/home/opuser/.op/data")
@@ -45,7 +45,7 @@ public class ConnectServerFixture : IAsyncLifetime, IServerFixture
 
         _connectSync = new ContainerBuilder()
             .WithImage("1password/connect-sync:latest")
-            .WithConnectJson(Environment.GetEnvironmentVariable("PULUMI_ONEPASSWORD_CONNECT_JSON"))
+            .WithConnectJson(Environment.GetEnvironmentVariable("PULUMI_ONEPASSWORD_CONNECT_JSON")!)
             .WithPortBinding(8080, true)
             .WithWaitStrategy(Wait.ForUnixContainer().UntilHttpRequestIsSucceeded(x => x.ForPath("/heartbeat").ForPort(8080)))
             .WithVolumeMount(volume, "/home/opuser/.op/data")
@@ -59,7 +59,7 @@ public class ConnectServerFixture : IAsyncLifetime, IServerFixture
             Port = _connectApi.GetMappedPublicPort(8080),
         }.Uri;
 
-        var health = await Connect.GetServerHealth();
+        await Connect.GetServerHealth();
 
         var vault = await Connect.GetVaults("")
             .ToAsyncEnumerable()
@@ -68,7 +68,7 @@ public class ConnectServerFixture : IAsyncLifetime, IServerFixture
         Vault = vault.Id;
     }
 
-    public Uri ConnectHost { get; private set; }
+    public Uri ConnectHost { get; private set; } = null!;
     public string ConnectToken => Environment.GetEnvironmentVariable("PULUMI_ONEPASSWORD_CONNECT_TOKEN") ?? "";
 
     public async Task DisposeAsync()
@@ -106,9 +106,9 @@ public class ConnectServerFixture : IAsyncLifetime, IServerFixture
         values.TryGetObject(out var configObject);
         configObject = configObject!.AddRange(additionalConfig ?? ImmutableDictionary<string, PropertyValue>.Empty);
 
-        var response = await provider.CheckConfig(new CheckRequest(ItemType.LoginItem, configObject, configObject, ImmutableArray<byte>.Empty),
+        _ = await provider.CheckConfig(new CheckRequest(ItemType.LoginItem, configObject, configObject, ImmutableArray<byte>.Empty),
             cancellationToken);
-        var configureResponse = await provider.Configure(new ConfigureRequest(ImmutableDictionary<string, string>.Empty, configObject, true, true),
+        _ = await provider.Configure(new ConfigureRequest(ImmutableDictionary<string, string>.Empty, configObject, true, true),
             cancellationToken);
 
         return provider;

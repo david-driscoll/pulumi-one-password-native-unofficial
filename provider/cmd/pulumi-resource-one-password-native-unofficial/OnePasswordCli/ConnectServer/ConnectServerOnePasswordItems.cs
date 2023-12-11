@@ -1,11 +1,7 @@
-﻿using System.Collections.Immutable;
-using System.Security.Cryptography;
-using GeneratedCode;
-using Humanizer;
-using Json.Pointer;
+﻿using GeneratedCode;
 using Refit;
 using Serilog;
-using File = GeneratedCode.File;
+#pragma warning disable CS9107 // Parameter is captured into the state of the enclosing type and its value is also passed to the base constructor. The value might be captured by the base class as well.
 
 namespace pulumi_resource_one_password_native_unofficial.OnePasswordCli.ConnectServer;
 
@@ -16,7 +12,7 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
 
     public async Task<Item.Response> Create(Item.CreateRequest request, TemplateMetadata.Template templateJson, CancellationToken cancellationToken = default)
     {
-        var (fields, attachments, sections) = templateJson.GetFieldsAndAttachments();
+        var (_, attachments, _) = templateJson.GetFieldsAndAttachments();
         if (attachments.Any())
         {
             throw new NotSupportedException("Attachments are not supported when using the Connect Server API");
@@ -30,7 +26,8 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
             result.Vault = new Vault2()
             {
                 Id = vaultId,
-                AdditionalProperties = new Dictionary<string, object>() { { "name", request.Vault ?? options.Vault } }
+                // ReSharper disable once NullableWarningSuppressionIsUsed
+                AdditionalProperties = new Dictionary<string, object>() { { "name", request.Vault ?? options.Vault! } }
             };
 
             return ConvertToItemResponse(result);
@@ -45,7 +42,7 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
     public async Task<Item.Response> Edit(Item.EditRequest request, TemplateMetadata.Template templateJson,
         CancellationToken cancellationToken = default)
     {
-        var (fields, attachments, sections) = templateJson.GetFieldsAndAttachments();
+        var (_, attachments, _) = templateJson.GetFieldsAndAttachments();
         if (attachments.Any())
         {
             throw new NotSupportedException("Attachments are not supported when using the Connect Server API");
@@ -83,7 +80,8 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
             result.Vault = new Vault2()
             {
                 Id = vaultId,
-                AdditionalProperties = new Dictionary<string, object>() { { "name", request.Vault ?? options.Vault } }
+                // ReSharper disable once NullableWarningSuppressionIsUsed
+                AdditionalProperties = new Dictionary<string, object>() { { "name", request.Vault ?? options.Vault! } }
             };
             return ConvertToItemResponse(result);
         }
@@ -107,9 +105,10 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
         result.Vault = new Vault2()
         {
             Id = vaultId,
-            AdditionalProperties = new Dictionary<string, object>() { { "name", request.Vault ?? options.Vault } }
+            // ReSharper disable once NullableWarningSuppressionIsUsed
+            AdditionalProperties = new Dictionary<string, object>() { { "name", request.Vault ?? options.Vault! } }
         };
-        return ConvertToItemResponse(result!);
+        return ConvertToItemResponse(result);
     }
 
     public async Task Delete(Item.DeleteRequest request, CancellationToken cancellationToken = default)

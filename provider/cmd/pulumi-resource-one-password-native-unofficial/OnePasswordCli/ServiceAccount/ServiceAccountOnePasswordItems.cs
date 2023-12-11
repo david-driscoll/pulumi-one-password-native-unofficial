@@ -2,13 +2,8 @@
 using System.Reactive.Disposables;
 using System.Text.Json;
 using CliWrap;
-using CliWrap.Buffered;
-using CliWrap.Exceptions;
-using Polly;
-using Polly.Fallback;
-using Polly.Retry;
-using Pulumi;
 using Serilog;
+#pragma warning disable CS9107 // Parameter is captured into the state of the enclosing type and its value is also passed to the base constructor. The value might be captured by the base class as well.
 
 namespace pulumi_resource_one_password_native_unofficial.OnePasswordCli.ServiceAccount;
 
@@ -51,6 +46,7 @@ public class ServiceAccountOnePasswordItems(
                 cancellationToken
             );
 
+            // ReSharper disable once NullableWarningSuppressionIsUsed
             return JsonSerializer.Deserialize<Item.Response>(result.StandardOutput, SerializerOptions)!;
         }
         finally
@@ -92,6 +88,7 @@ public class ServiceAccountOnePasswordItems(
             );
             disposable.Dispose();
 
+            // ReSharper disable once NullableWarningSuppressionIsUsed
             return JsonSerializer.Deserialize<Item.Response>(result.StandardOutput, SerializerOptions)!;
         }
         finally
@@ -106,6 +103,7 @@ public class ServiceAccountOnePasswordItems(
         var tempDirectory = Directory.CreateTempSubdirectory("p1p");
         foreach (var attachment in attachments)
         {
+            // ReSharper disable once NullableWarningSuppressionIsUsed
             var filePath = await attachment.Asset.ResolveAssetPath(tempDirectory.FullName, attachment.Id!, cancellationToken);
             // Logger.Information("Attaching file {Id} {Path} exists: {Exists}", attachment.Id, filePath, File.Exists(filePath));
             var id = attachment is { Section: { Id: { Length: > 0 } section } } ? $"{section}.{attachment.Id}" : attachment.Id;

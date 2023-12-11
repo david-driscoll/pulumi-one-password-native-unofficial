@@ -1,25 +1,17 @@
-using System.Collections;
 using System.Collections.Immutable;
 using System.Net;
-using System.Reflection;
-using System.Reflection.Metadata;
-using FluentAssertions;
-using Microsoft.VisualStudio.TestPlatform.Utilities;
 using Polly;
-using Pulumi;
 using pulumi_resource_one_password_native_unofficial;
-using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 using Pulumi.Experimental.Provider;
 using Refit;
 using Rocket.Surgery.OnePasswordNativeUnofficial;
 using Rocket.Surgery.OnePasswordNativeUnofficial.Inputs;
 using Serilog;
 using Serilog.Core;
-using Serilog.Events;
 using TestProject.Helpers;
 using Xunit.Abstractions;
-using YamlDotNet.Serialization;
 using FieldType = Rocket.Surgery.OnePasswordNativeUnofficial.FieldType;
+// ReSharper disable NullableWarningSuppressionIsUsed
 
 namespace TestProject;
 
@@ -36,7 +28,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
         _fixture = fixture;
         _serverFixture = serverFixture;
         _logger = new LoggerConfiguration()
-            .WriteTo.TestOutput(output, LogEventLevel.Verbose)
+            .WriteTo.TestOutput(output)
             .CreateLogger();
         fixture.Connect(serverFixture);
     }
@@ -64,7 +56,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
                     },
                 }
             },
-            Tags = new string[] { "test-tag" }
+            Tags = new[] { "test-tag" }
         });
 
         var check = await provider.Check(new(data.Urn, data.Request, data.Request, ImmutableArray<byte>.Empty), CancellationToken.None);
@@ -99,13 +91,13 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
                     },
                 }
             },
-            Tags = new string[] { "test-tag" }
+            Tags = new[] { "test-tag" }
         });
 
         var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
 
         await Verify(create)
-            .AddScrubber(z => z.Replace(create.Id!, "[server-generated]"));
+            .AddIdScrubber(create.Id);
     }
 
     [Fact]
@@ -140,13 +132,13 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
                     },
                 }
             },
-            Tags = new string[] { "test-tag" }
+            Tags = new[] { "test-tag" }
         });
 
         var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
 
         await Verify(create)
-            .AddScrubber(z => z.Replace(create.Id!, "[server-generated]"));
+            .AddIdScrubber(create.Id);
     }
 
 
@@ -174,7 +166,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
                     },
                 }
             },
-            Tags = new string[] { "test-tag" }
+            Tags = new[] { "test-tag" }
         });
 
         var updateInput = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
@@ -196,7 +188,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
                     },
                 }
             },
-            Tags = new string[] { "test-tag", "another tag" }
+            Tags = new[] { "test-tag", "another tag" }
         });
 
         var create = await provider.Create(new CreateRequest(createInput.Urn, createInput.Request, TimeSpan.MaxValue, false), CancellationToken.None);
@@ -204,7 +196,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
         await Policy.Handle<ApiException>(exception => exception.StatusCode == HttpStatusCode.NotFound)
             .WaitAndRetryAsync(50, _ => TimeSpan.FromMicroseconds(100))
             .ExecuteAsync(() => _serverFixture.Connect.GetVaultItemById(
-                TemplateMetadata.GetObjectStringValue(TemplateMetadata.GetObjectValue(create.Properties.ToImmutableDictionary(), "vault"), "id"),
+                TemplateMetadata.GetObjectStringValue(TemplateMetadata.GetObjectValue(create.Properties!.ToImmutableDictionary(), "vault")!, "id"),
                 create.Id
             ));
 
@@ -213,7 +205,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
                 TimeSpan.MaxValue, ImmutableArray<string>.Empty, false), CancellationToken.None);
 
         await Verify(new { create, update })
-            .AddScrubber(z => z.Replace(create.Id!, "[server-generated]"));
+            .AddIdScrubber(create.Id);
     }
 
     [Fact]
@@ -248,13 +240,13 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
                     },
                 }
             },
-            Tags = new string[] { "test-tag" }
+            Tags = new[] { "test-tag" }
         });
 
         var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
 
         var diff = await provider.Diff(
-            new DiffRequest(data.Urn, create.Id, create.Properties.ToImmutableDictionary(), create.Properties.ToImmutableDictionary(),
+            new DiffRequest(data.Urn, create.Id!, create.Properties!.ToImmutableDictionary(), create.Properties!.ToImmutableDictionary(),
                 ImmutableArray<string>.Empty), CancellationToken.None);
 
 
@@ -285,7 +277,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
                     },
                 }
             },
-            Tags = new string[] { "test-tag" }
+            Tags = new[] { "test-tag" }
         });
 
         var data2 = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
@@ -307,13 +299,13 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
                     },
                 }
             },
-            Tags = new string[] { "test-tag" }
+            Tags = new[] { "test-tag" }
         });
 
         var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
 
         var diff = await provider.Diff(
-            new DiffRequest(data.Urn, create.Id, create.Properties.ToImmutableDictionary(), data2.Request, ImmutableArray<string>.Empty),
+            new DiffRequest(data.Urn, create.Id!, create.Properties!.ToImmutableDictionary(), data2.Request, ImmutableArray<string>.Empty),
             CancellationToken.None);
         await Verify(new { create, diff });
     }
@@ -335,8 +327,8 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
                 Symbols = true,
                 Letters = true
             },
-            Tags = new string[] { "test-tag" },
-            Urls = new UrlArgs[]
+            Tags = new[] { "test-tag" },
+            Urls = new[]
             {
                 new UrlArgs()
                 {
@@ -356,9 +348,8 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
         var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
 
         await Verify(create)
-            .AddScrubber(z => z.Replace(create.Id!, "[server-generated]"))
-            .AddScrubber(x => x.Replace(TemplateMetadata.GetObjectStringValue(create.Properties as IReadOnlyDictionary<string, PropertyValue>, "password"),
-                "[redacted,server-generated]"));
+            .AddIdScrubber(create.Id)
+            .AddPasswordScrubber(create.Properties);
     }
 
     [Fact]
@@ -377,8 +368,8 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
                 Symbols = true,
                 Letters = true
             },
-            Tags = new string[] { "test-tag" },
-            Urls = new UrlArgs[]
+            Tags = new[] { "test-tag" },
+            Urls = new[]
             {
                 new UrlArgs()
                 {
@@ -397,7 +388,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
 
         var loginItemResult = await provider.Create(new CreateRequest(loginItem.Urn, loginItem.Request, TimeSpan.MaxValue, false), CancellationToken.None);
 
-        var passwordItem = await _fixture.CreateRequestObject<PasswordItem, PasswordItemArgs>("mypassword", new()
+        _ = await _fixture.CreateRequestObject<PasswordItem, PasswordItemArgs>("mypassword", new()
         {
             Vault = "testing-pulumi",
             GeneratePassword = new PasswordRecipeArgs()
@@ -407,8 +398,8 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
                 Symbols = true,
                 Letters = true
             },
-            Tags = new string[] { "test-tag" },
-            Urls = new UrlArgs[]
+            Tags = new[] { "test-tag" },
+            Urls = new[]
             {
                 new UrlArgs()
                 {
@@ -438,14 +429,14 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
                 Symbols = true,
                 Letters = true
             },
-            Tags = new string[] { "test-tag" },
-            References = new ReferenceArgs[] { new ReferenceArgs() { ItemId = loginItemResult.Id! } },
+            Tags = new[] { "test-tag" },
+            References = new[] { new ReferenceArgs() { ItemId = loginItemResult.Id! } },
             Sections = new()
             {
                 ["mysection"] = new SectionArgs()
                 {
                     Label = "My Section",
-                    References = new ReferenceArgs[] { new ReferenceArgs() { ItemId = passwordItemResult.Id! } },
+                    References = new[] { new ReferenceArgs() { ItemId = passwordItemResult.Id! } },
                 }
             }
         });
@@ -453,9 +444,8 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
         var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
 
         await Verify(create)
-            .AddScrubber(z => z.Replace(create.Id!, "[server-generated]"))
-            .AddScrubber(x => x.Replace(TemplateMetadata.GetObjectStringValue(create.Properties as IReadOnlyDictionary<string, PropertyValue>, "password"),
-                "[redacted,server-generated]"));
+            .AddIdScrubber(create.Id)
+            .AddPasswordScrubber(create.Properties);
     }
 
 
@@ -475,15 +465,14 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
                 Symbols = true,
                 Letters = true
             },
-            Tags = new string[] { "test-tag" }
+            Tags = new[] { "test-tag" }
         });
 
         var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
 
         await Verify(create)
-            .AddScrubber(z => z.Replace(create.Id!, "[server-generated]"))
-            .AddScrubber(x => x.Replace(TemplateMetadata.GetObjectStringValue(create.Properties as IReadOnlyDictionary<string, PropertyValue>, "password"),
-                "[redacted,server-generated]"));
+            .AddIdScrubber(create.Id)
+            .AddPasswordScrubber(create.Properties);
     }
 
 
@@ -497,15 +486,14 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
             Vault = "testing-pulumi",
             Username = "me",
             GeneratePassword = true,
-            Tags = new string[] { "test-tag" }
+            Tags = new[] { "test-tag" }
         });
 
         var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
 
         await Verify(create)
-            .AddScrubber(z => z.Replace(create.Id!, "[server-generated]"))
-            .AddScrubber(x => x.Replace(TemplateMetadata.GetObjectStringValue(create.Properties as IReadOnlyDictionary<string, PropertyValue>, "password"),
-                "[redacted,server-generated]"));
+            .AddIdScrubber(create.Id)
+            .AddPasswordScrubber(create.Properties);
     }
 
     [Fact]

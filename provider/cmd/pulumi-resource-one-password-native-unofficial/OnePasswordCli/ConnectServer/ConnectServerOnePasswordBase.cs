@@ -1,9 +1,8 @@
 ﻿using System.Collections.Immutable;
-using System.Net.Http.Headers;
-using System.Text.Json;
 using GeneratedCode;
-using Refit;
 using Serilog;
+
+#pragma warning disable CS9107 // Parameter is captured into the state of the enclosing type and its value is also passed to the base constructor. The value might be captured by the base class as well.
 
 namespace pulumi_resource_one_password_native_unofficial.OnePasswordCli.ConnectServer;
 
@@ -14,7 +13,12 @@ public class ConnectServerOnePasswordBase(
     private protected readonly ILogger Logger = logger;
     private ImmutableDictionary<string, string> _vaultIds = ImmutableDictionary<string, string>.Empty.WithComparers(StringComparer.OrdinalIgnoreCase);
 
-    internal readonly I1PasswordConnect Connect = Helpers.CreateConnectClient(options.ConnectHost!, options.ConnectToken!);
+    internal readonly I1PasswordConnect Connect = Helpers.CreateConnectClient(
+        // ReSharper disable once NullableWarningSuppressionIsUsed
+        options.ConnectHost!,
+        // ReSharper disable once NullableWarningSuppressionIsUsed
+        options.ConnectToken!
+    );
 
     protected async Task<string> GetVaultUuid(string? name)
     {
@@ -35,7 +39,7 @@ public class ConnectServerOnePasswordBase(
 
     internal static FullItem ConvertToItemRequest(string vaultId, ItemRequestBase request, TemplateMetadata.Template templateJson)
     {
-        var (fields, attachments, sections) = templateJson.GetFieldsAndAttachments();
+        var (fields, _, sections) = templateJson.GetFieldsAndAttachments();
         return new FullItem()
         {
             Id = request is Item.EditRequest { Id: not null } editRequest
@@ -117,7 +121,7 @@ public class ConnectServerOnePasswordBase(
             {
                 Id = x.Id,
                 Label = x.Label,
-            }).ToImmutableArray()?? ImmutableArray<Item.Section>.Empty,
+            }).ToImmutableArray() ?? ImmutableArray<Item.Section>.Empty,
             Files = result.Files?.Select(x => new Item.File()
             {
                 Id = x.Id,

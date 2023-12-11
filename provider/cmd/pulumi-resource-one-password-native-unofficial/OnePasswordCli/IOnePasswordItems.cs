@@ -9,4 +9,4 @@ public interface IOnePasswordItems
     Task Delete(Item.DeleteRequest request, CancellationToken cancellationToken = default);
     IOnePasswordItemTemplates Templates { get; }
 }
-public interface IOnePasswordItemTemplates {}
+public interface IOnePasswordItemTemplates;

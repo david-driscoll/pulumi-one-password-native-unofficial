@@ -1,4 +1,6 @@
-﻿using Pulumi.Experimental.Provider;
+﻿using pulumi_resource_one_password_native_unofficial.Domain;
+using Pulumi.Experimental.Provider;
+// ReSharper disable NullableWarningSuppressionIsUsed
 
 namespace TestProject.Helpers;
 
@@ -15,7 +17,7 @@ class DictionaryPropertyValueConverter : WriteOnlyJsonConverter<IDictionary<stri
             writer.WritePropertyName(item.Key);
             if (ServerGeneratedFields.Contains(item.Key))
             {
-                writer.WriteValue(item.Key.Equals("title", StringComparison.OrdinalIgnoreCase) && item.Value.ToString().Length > 8 ? item.Value.ToString()[..^8] + "abcd1234" : "[redacted]");
+                writer.WriteValue(item.Key.Equals("title", StringComparison.OrdinalIgnoreCase) && item.Value.ToString()?.Length > 8 ? item.Value.ToString()?[..^8] + "abcd1234" : "[redacted]");
             }
             else
             {
@@ -27,17 +29,11 @@ class DictionaryPropertyValueConverter : WriteOnlyJsonConverter<IDictionary<stri
     }
 }
 
-class PropertyValueConverter : WriteOnlyJsonConverter<PropertyValue>
+class PropertyValueConverter : WriteOnlyJsonConverter<PropertyValue?>
 {
-    private readonly PropertyValueSerializer _serializer;
     private static readonly HashSet<string> ServerGeneratedFields = new(StringComparer.OrdinalIgnoreCase) { "id", "uuid", "reference", "title" };
 
-    public PropertyValueConverter()
-    {
-        _serializer = new PropertyValueSerializer();
-    }
-
-    public override void Write(VerifyJsonWriter writer, PropertyValue value)
+    public override void Write(VerifyJsonWriter writer, PropertyValue? value)
     {
         if (value is null)
         {
@@ -48,7 +44,7 @@ class PropertyValueConverter : WriteOnlyJsonConverter<PropertyValue>
         if (value.TryGetObject(out var @object))
         {
             writer.WriteStartObject();
-            foreach (var item in @object.OrderBy(z => z.Key))
+            foreach (var item in @object!.OrderBy(z => z.Key))
             {
                 writer.WritePropertyName(item.Key);
                 if (ServerGeneratedFields.Contains(item.Key))
@@ -87,7 +83,7 @@ class PropertyValueConverter : WriteOnlyJsonConverter<PropertyValue>
         }
         else if (value.TryGetOutput(out var @output))
         {
-            Write(writer, @output.Value);
+            Write(writer, @output.Value!);
         }
         else if (value.TryGetArchive(out var archive))
         {
@@ -97,7 +93,7 @@ class PropertyValueConverter : WriteOnlyJsonConverter<PropertyValue>
         {
             writer.WriteValue(AssetOrArchiveExtensions.HashAssetOrArchive(asset));
         }
-        else if (value.TryGetSecret(out var secret))
+        else if (value.TryGetSecret(out _))
         {
             writer.WriteValue("[secret]");
         }

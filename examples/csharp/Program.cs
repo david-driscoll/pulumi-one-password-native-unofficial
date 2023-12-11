@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.Xml;
-using Google.Protobuf.WellKnownTypes;
 using Pulumi;
 using Rocket.Surgery.OnePasswordNativeUnofficial;
 using Rocket.Surgery.OnePasswordNativeUnofficial.Inputs;
@@ -47,7 +45,7 @@ return await Deployment.RunAsync(() =>
                 // },
             }
         },
-        Tags = new string[] { "test-tag" }
+        Tags = new [] { "test-tag" }
     });
 
     // // TODO: Allow config values for the vault, tokens, etc.
@@ -122,7 +120,7 @@ return await Deployment.RunAsync(() =>
     login.Fields
         .Apply(z =>
         {
-            Log.Info(string.Join(", ", z.Keys) + string.Join(", ", z.Values.Select(z => z.Reference)));
+            Log.Info(string.Join(", ", z.Keys) + string.Join(", ", z.Values.Select(static z => z.Reference)));
             return z;
         })
         .Apply(z => z["username"].Reference)

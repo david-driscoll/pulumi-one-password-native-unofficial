@@ -1,7 +1,6 @@
-﻿using System.Collections.Frozen;
-using pulumi_resource_one_password_native_unofficial.OnePasswordCli.ServiceAccount;
+﻿using pulumi_resource_one_password_native_unofficial.OnePasswordCli.ServiceAccount;
 using Serilog;
-using File = GeneratedCode.File;
+#pragma warning disable CS9107 // Parameter is captured into the state of the enclosing type and its value is also passed to the base constructor. The value might be captured by the base class as well.
 
 namespace pulumi_resource_one_password_native_unofficial.OnePasswordCli.ConnectServer;
 
@@ -20,8 +19,9 @@ public class ConnectServerOnePassword(
     {
         try
         {
-            var connected = await Connect.GetHeartbeat();
-            return new WhoAmIResponse(options.ConnectHost, "CONNECT", "", "");
+            await Connect.GetHeartbeat();
+            // ReSharper disable once NullableWarningSuppressionIsUsed
+            return new WhoAmIResponse(options.ConnectHost!, "CONNECT", "", "");
         }
         catch (Exception e)
         {

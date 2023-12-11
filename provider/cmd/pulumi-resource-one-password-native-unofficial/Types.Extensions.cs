@@ -1,12 +1,11 @@
 using System.Collections.Immutable;
-using System.Globalization;
 using System.Text;
 using System.Text.Json.Serialization;
 using GeneratedCode;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 using Pulumi.Experimental.Provider;
-using Humanizer;
 using Pulumi;
+using pulumi_resource_one_password_native_unofficial.Domain;
 using File = System.IO.File;
 using Item = pulumi_resource_one_password_native_unofficial.OnePasswordCli.Item;
 
@@ -14,7 +13,6 @@ namespace pulumi_resource_one_password_native_unofficial;
 
 public static partial class TemplateMetadata
 {
-    private static ImmutableDictionary<string, ResourceType> ResourceTypesDictionary { get; } = ResourceTypes.ToImmutableDictionary(z => z.Urn);
     private static ImmutableDictionary<string, FunctionType> FunctionTypesDictionary { get; } = FunctionTypes.ToImmutableDictionary(z => z.Urn);
 
     public static ResourceType? GetResourceTypeFromUrn(string urn)

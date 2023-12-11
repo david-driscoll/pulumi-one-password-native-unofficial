@@ -2,21 +2,20 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Pulumi;
-using pulumi_resource_one_password_native_unofficial;
-using Pulumi.Automation;
 using Pulumi.Experimental.Provider;
 using TestProject.Helpers;
+// ReSharper disable NullableWarningSuppressionIsUsed
 
 namespace TestProject;
 
 public class PulumiFixture : IAsyncLifetime
 {
-    public string BackendUrl { get; private set; }
+    public string BackendUrl { get; private set; } = "";
     public string TemporaryDirectory { get; private set; } = "";
     public PropertyValueSerializer Serializer { get; } = new();
     public ImmutableDictionary<string, string?> EnvironmentVariables { get; private set; } = ImmutableDictionary<string, string?>.Empty;
 
-    public async Task InitializeAsync()
+    public Task InitializeAsync()
     {
         TemporaryDirectory = Path.Combine(Path.GetTempPath(), "pulumi", Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(TemporaryDirectory);
@@ -31,6 +30,7 @@ public class PulumiFixture : IAsyncLifetime
         EnvironmentVariables = EnvironmentVariables
             .Add("PULUMI_BACKEND_URL", BackendUrl)
             .Add("PULUMI_CONFIG_PASSPHRASE", "backup_password");
+        return Task.CompletedTask;
     }
 
     public void Connect(ConnectServerFixture connectServerFixture)
@@ -46,7 +46,7 @@ public class PulumiFixture : IAsyncLifetime
         return Task.CompletedTask;
     }
 
-    public string ResourcePath(string path, [CallerFilePath] string pathBase = null!)
+    public string ResourcePath(string path, [CallerFilePath] string? pathBase = null)
     {
         var dir = Path.GetDirectoryName(pathBase) ?? ".";
         return Path.Combine(dir, path);

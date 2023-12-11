@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using DiffEngine;
+// ReSharper disable NullableWarningSuppressionIsUsed
 
 namespace TestProject.Helpers;
 
@@ -10,9 +11,9 @@ public static class ModuleInitializer
     {
         string[] serverGeneratedFields = { "id:", "uuid:", "reference:", "title:" };
         VerifierSettings.ScrubLinesWithReplace(
-            replaceLine: _ =>
+            replaceLine: line =>
             {
-                if (_ is { Length: 26 })
+                if (line is { Length: 26 })
                 {
                     // might be a uuid
                     return "[server-generated]";
@@ -20,13 +21,13 @@ public static class ModuleInitializer
                 
                 foreach (var field in serverGeneratedFields)
                 {
-                    if (_.Contains(field, StringComparison.OrdinalIgnoreCase))
+                    if (line.Contains(field, StringComparison.OrdinalIgnoreCase))
                     {
-                        return _.Substring(0, _.IndexOf(field, StringComparison.OrdinalIgnoreCase) + field.Length) + " [server-generated]";
+                        return line.Substring(0, line.IndexOf(field, StringComparison.OrdinalIgnoreCase) + field.Length) + " [server-generated]";
                     }                    
                 }
 
-                return _;
+                return line;
             });
         VerifierSettings.AddExtraSettings(
             serializer =>

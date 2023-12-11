@@ -1,5 +1,4 @@
 ﻿using System.Collections.Immutable;
-using pulumi_resource_one_password_native_unofficial;
 using Pulumi.Experimental.Provider;
 using Serilog;
 

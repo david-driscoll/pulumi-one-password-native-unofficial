@@ -7,7 +7,6 @@ public record ArgsBuilder
 {
     private readonly ImmutableArray<string> _args;
     private const string KeyPrefix = "--";
-    private const string KeyValueSeparator = " ";
     private const string ArgsSeparator = " ";
     private const string ValueSeparator = ",";
 
@@ -32,7 +31,7 @@ public record ArgsBuilder
 
         return new ArgsBuilder(_args
             .Add($"{KeyPrefix}{key}")
-            .Add(escapeValue(arg))
+            .Add(EscapeValue(arg))
         );
     }
 
@@ -50,13 +49,14 @@ public record ArgsBuilder
 
     public ArgsBuilder Add(string key, IEnumerable<string> args)
     {
-        if (!args.Any())
+        var enumerable = args as string[] ?? args.ToArray();
+        if (!enumerable.Any())
         {
             return this;
         }
         return new ArgsBuilder(_args
             .Add($"{KeyPrefix}{key}")
-            .Add(escapeValue(string.Join(ValueSeparator, args)))
+            .Add(EscapeValue(string.Join(ValueSeparator, enumerable)))
         );
     }
 
@@ -72,5 +72,5 @@ public record ArgsBuilder
         return builder.ToString().TrimEnd();
     }
 
-    private string escapeValue(string? arg) => arg.IndexOf(' ', StringComparison.Ordinal) > -1 ? $"\"{arg}\"" : arg;
+    private string EscapeValue(string? arg) => arg.IndexOf(' ', StringComparison.Ordinal) > -1 ? $"\"{arg}\"" : arg;
 }

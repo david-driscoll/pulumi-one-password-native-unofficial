@@ -7,25 +7,18 @@ using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 using Serilog;
 using static pulumi_resource_one_password_native_unofficial.TemplateMetadata;
 using System.Text.Json.Serialization;
-using CliWrap.Exceptions;
 using Humanizer;
-using Polly;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli.ConnectServer;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli.ServiceAccount;
 
 namespace pulumi_resource_one_password_native_unofficial;
 
-public class OnePasswordProvider : Provider
+public class OnePasswordProvider(ILogger logger) : Provider
 {
-    private readonly ILogger _logger;
-    private IOnePassword _op;
+    // ReSharper disable once NullableWarningSuppressionIsUsed
+    private IOnePassword _op = null!;
 
-    public OnePasswordProvider(ILogger logger)
-    {
-        _logger = logger;
-    }
-
-    public async override Task<CheckResponse> Check(CheckRequest request, CancellationToken ct)
+    public override Task<CheckResponse> Check(CheckRequest request, CancellationToken ct)
     {
         try
         {
@@ -38,13 +31,13 @@ public class OnePasswordProvider : Provider
                 failures.Add(new CheckFailure("category", $"Category must be {resourceType.ItemName}"));
             }
 
-            if (_op?.Options?.Vault is null &&
+            if (_op.Options.Vault is null &&
                 (!request.NewInputs.TryGetValue("vault", out var vault) || !vault.TryGetString(out var v) || string.IsNullOrWhiteSpace(v)))
             {
                 failures.Add(new CheckFailure("vault", $"Vault must be set or a default provided to the provider"));
             }
 
-            return new CheckResponse { Inputs = request.NewInputs, Failures = failures };
+            return Task.FromResult(new CheckResponse { Inputs = request.NewInputs, Failures = failures });
         }
         catch (Exception e)
         {
@@ -58,7 +51,6 @@ public class OnePasswordProvider : Provider
         try
         {
             await Task.Yield();
-            List<CheckFailure> failures = new();
             if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
 
             // DebugHelper.WaitForDebugger();
@@ -90,7 +82,7 @@ public class OnePasswordProvider : Provider
                 Changes = diff.Any(),
                 DetailedDiff = diff.Aggregate(new Dictionary<string, PropertyDiff>(), (result, patchOperation) =>
                 {
-                    var diff = result[patchOperation.ToPropertyPath()] = new PropertyDiff()
+                    var propertyDiff = result[patchOperation.ToPropertyPath()] = new PropertyDiff()
                     {
                         InputDiff = true,
                         Kind = patchOperation.Op switch
@@ -103,12 +95,12 @@ public class OnePasswordProvider : Provider
                     };
                     if (replaces.Contains(patchOperation.Path.Segments[0].Value))
                     {
-                        diff.Kind = diff.Kind switch
+                        propertyDiff.Kind = propertyDiff.Kind switch
                         {
                             PropertyDiffKind.Add => PropertyDiffKind.AddReplace,
                             PropertyDiffKind.Delete => PropertyDiffKind.DeleteReplace,
                             PropertyDiffKind.Update => PropertyDiffKind.UpdateReplace,
-                            _ => diff.Kind
+                            _ => propertyDiff.Kind
                         };
                     }
 
@@ -170,7 +162,7 @@ public class OnePasswordProvider : Provider
             var news = resourceType.TransformInputs(ApplyDefaultInputs(resourceType, request.News, request.Olds));
             var olds = resourceType.TransformInputs(request.Olds);
 
-            var diff = olds.CreatePatch(news, new JsonSerializerOptions()
+            _ = olds.CreatePatch(news, new JsonSerializerOptions()
                 {
                     PropertyNameCaseInsensitive = true,
                     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -245,7 +237,7 @@ public class OnePasswordProvider : Provider
             return new() { Failures = failures, };
         }
 
-        var result = await _op.Vaults.Get(GetStringValue(inputs, "vault"));
+        var result = await _op.Vaults.Get(GetStringValue(inputs, "vault"), ct);
 
         return new() { Return = new Dictionary<string, PropertyValue> { { "name", new(result.Name) }, { "uuid", new(result.Id) } } };
     }
@@ -362,11 +354,11 @@ public class OnePasswordProvider : Provider
 
         if (options.IsConnectServer)
         {
-            _op = new ConnectServerOnePassword(options, _logger);
+            _op = new ConnectServerOnePassword(options, logger);
         }
         else
         {
-            _op = new ServiceAccountOnePassword(options, _logger);
+            _op = new ServiceAccountOnePassword(options, logger);
         }
 
         return new()

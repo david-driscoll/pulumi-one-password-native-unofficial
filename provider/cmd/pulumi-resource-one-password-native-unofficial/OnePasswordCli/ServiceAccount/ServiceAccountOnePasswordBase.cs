@@ -1,5 +1,4 @@
-﻿using System.Text;
-using System.Text.Json;
+﻿using System.Text.Json;
 using CliWrap;
 using CliWrap.Buffered;
 using CliWrap.Exceptions;
@@ -7,6 +6,7 @@ using Polly;
 using Polly.Fallback;
 using Polly.Retry;
 using Serilog;
+#pragma warning disable CS9107 // Parameter is captured into the state of the enclosing type and its value is also passed to the base constructor. The value might be captured by the base class as well.
 
 namespace pulumi_resource_one_password_native_unofficial.OnePasswordCli.ServiceAccount;
 
@@ -42,28 +42,28 @@ public abstract class ServiceAccountOnePasswordBase(
                 UseJitter = true
             }).Build();
 
-    protected ValueTask<BufferedCommandResult> ExecuteCommand(Command command, CancellationToken cancellationToken)
+    protected ValueTask<BufferedCommandResult> ExecuteCommand(Command runCommand, CancellationToken cancellationToken)
     {
         // Logger.Information("Executing command: {Command} {Input}", command.Arguments);
         return Policy.ExecuteAsync(
             static async (command, ct) => await command.ExecuteBufferedAsync(ct),
-            command.WithEnvironmentVariables(options.Apply),
+            runCommand.WithEnvironmentVariables(options.Apply),
             cancellationToken
         );
     }
 
-    protected ValueTask<BufferedCommandResult> ExecuteCommand(Command command, string standardInput, CancellationToken cancellationToken)
+    protected ValueTask<BufferedCommandResult> ExecuteCommand(Command runCommand, string standardInput, CancellationToken cancellationToken)
     {
         // Logger.Information("Executing command: {Command} - {Input}", command.Arguments, standardInput);
         return Policy.ExecuteAsync(
             static async (command, ct) => await command.ExecuteBufferedAsync(ct),
-            command.WithEnvironmentVariables(options.Apply).WithStandardInputPipe(PipeSource.FromString(standardInput)),
+            runCommand.WithEnvironmentVariables(options.Apply).WithStandardInputPipe(PipeSource.FromString(standardInput)),
             cancellationToken
         );
     }
 
-    protected ValueTask<BufferedCommandResult> ExecuteCommand(Command command, object standardInput, CancellationToken cancellationToken)
+    protected ValueTask<BufferedCommandResult> ExecuteCommand(Command runCommand, object standardInput, CancellationToken cancellationToken)
     {
-        return ExecuteCommand(command, JsonSerializer.Serialize(standardInput, SerializerOptions), cancellationToken);
+        return ExecuteCommand(runCommand, JsonSerializer.Serialize(standardInput, SerializerOptions), cancellationToken);
     }
 }

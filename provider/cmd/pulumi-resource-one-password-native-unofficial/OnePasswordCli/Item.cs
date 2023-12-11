@@ -25,13 +25,13 @@ public static class Item
         public bool Archive { get; init; }
     }
 
-    public record Response()
+    public record Response
     {
         public string Id { get; init; } = "";
         public string Title { get; init; } = "";
         public int? Version { get; init; }
         public required VaultResponse Vault { get; init; }
-        public string Category { get; init; }
+        public string Category { get; init; } = "";
         public string LastEditedBy { get; init; } = "";
         public DateTimeOffset CreatedAt { get; init; }
         public DateTimeOffset UpdatedAt { get; init; }
@@ -46,7 +46,8 @@ public static class Item
 
     public record Section
     {
-        public string Id { get; init; }
+        // ReSharper disable once NullableWarningSuppressionIsUsed
+        public string Id { get; init; } = null!;
         public string? Label { get; init; }
     }
 
@@ -87,7 +88,7 @@ public static class Item
         public string Name { get; init; } = null!;
     }
 
-    public record GetRequest()
+    public record GetRequest
     {
         public required string Id { get; init; }
         public string? Vault { get; init; }

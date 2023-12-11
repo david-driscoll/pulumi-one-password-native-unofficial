@@ -3,6 +3,8 @@ using pulumi_resource_one_password_native_unofficial;
 using Pulumi.Experimental.Provider;
 using Serilog;
 
+// ReSharper disable NullableWarningSuppressionIsUsed
+
 namespace TestProject.Helpers;
 
 public class ServiceAccountFixture : IAsyncLifetime, IServerFixture
@@ -10,7 +12,7 @@ public class ServiceAccountFixture : IAsyncLifetime, IServerFixture
     private HashSet<DelegatingProvider> _delegatingProviders = new();
     public string TemporaryDirectory { get; private set; } = "";
     public string Vault { get; private set; } = "testing-pulumi";
-    public string Token { get; set; }
+    public string Token { get; set; } = "";
 
     public Task InitializeAsync()
     {
@@ -58,10 +60,8 @@ public class ServiceAccountFixture : IAsyncLifetime, IServerFixture
         values.TryGetObject(out var configObject);
         configObject = configObject!.AddRange(additionalConfig ?? ImmutableDictionary<string, PropertyValue>.Empty);
 
-        var response = await provider.CheckConfig(new CheckRequest(ItemType.LoginItem, configObject, configObject, ImmutableArray<byte>.Empty),
-            cancellationToken);
-        var configureResponse = await provider.Configure(new ConfigureRequest(ImmutableDictionary<string, string>.Empty, configObject, true, true),
-            cancellationToken);
+        _ = await provider.CheckConfig(new CheckRequest(ItemType.LoginItem, configObject, configObject, ImmutableArray<byte>.Empty), cancellationToken);
+        _ = await provider.Configure(new ConfigureRequest(ImmutableDictionary<string, string>.Empty, configObject, true, true), cancellationToken);
 
         return provider;
     }

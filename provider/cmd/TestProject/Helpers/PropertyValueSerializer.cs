@@ -3,6 +3,8 @@ using System.Collections.Immutable;
 using System.Reflection;
 using Pulumi;
 using Pulumi.Experimental.Provider;
+// ReSharper disable NullableWarningSuppressionIsUsed
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
 
 namespace TestProject.Helpers;
 
@@ -241,7 +243,7 @@ public class PropertyValueSerializer
             var v = await (Task<object>)typeof(PropertyValueSerializer)
                 .GetMethod(nameof(ToObjectFromInput), BindingFlags.NonPublic | BindingFlags.Instance)!
                 .MakeGenericMethod(targetType.BaseType!.GenericTypeArguments)
-                .Invoke(this, new object[] { value });
+                .Invoke(this, new object[] { value })!;
 
             return await Serialize(v);
         }
@@ -251,7 +253,7 @@ public class PropertyValueSerializer
             var v = await (Task<object>)typeof(PropertyValueSerializer)
                 .GetMethod(nameof(ToObjectFromUnion), BindingFlags.NonPublic | BindingFlags.Instance)!
                 .MakeGenericMethod(targetType.GenericTypeArguments)
-                .Invoke(this, new object[] { value });
+                .Invoke(this, new object[] { value })!;
 
             return await Serialize(v);
         }
@@ -261,7 +263,7 @@ public class PropertyValueSerializer
             var v = await (Task<object>)typeof(PropertyValueSerializer)
                 .GetMethod(nameof(ToObjectFromInput), BindingFlags.NonPublic | BindingFlags.Instance)!
                 .MakeGenericMethod(targetType.GenericTypeArguments)
-                .Invoke(this, new object[] { value });
+                .Invoke(this, new object[] { value })!;
 
             return await Serialize(v);
         }
@@ -271,7 +273,7 @@ public class PropertyValueSerializer
             var v = await (Task<object>)typeof(PropertyValueSerializer)
                 .GetMethod(nameof(ToObjectFromOutput), BindingFlags.NonPublic | BindingFlags.Instance)!
                 .MakeGenericMethod(targetType.GenericTypeArguments)
-                .Invoke(this, new object[] { value });
+                .Invoke(this, new object[] { value })!;
 
             return await Serialize(v);
         }
@@ -341,26 +343,12 @@ public class PropertyValueSerializer
         return PropertyValue.Null;
     }
 
-
-    async Task<PropertyValue> ToArrayAsync<T>(IAsyncEnumerable<T> values)
-    {
-        var elements = ImmutableArray.CreateBuilder<PropertyValue>();
-
-        await foreach (var element in values)
-        {
-            var item = await Serialize(element);
-            elements.Add(item);
-        }
-
-        return new PropertyValue(elements.ToImmutableArray());
-    }
-
-    async Task<object> ToObjectFromOutput<T>(Output<T> output)
+    async Task<object?> ToObjectFromOutput<T>(Output<T> output)
     {
         return await output;
     }
 
-    Task<object> ToObjectFromInput<T>(Input<T> output)
+    Task<object?> ToObjectFromInput<T>(Input<T> output)
     {
         return ToObjectFromOutput(output.ToOutput());
     }
@@ -389,7 +377,8 @@ public class PropertyValueSerializer
             if (genericType == typeof(ImmutableArray<>))
             {
                 // create a dummy empty instance, int is irrelevant
-                var instance = ImmutableArray.Create<int>();
+                // ReSharper disable once EntityNameCapturedOnly.Local
+                ImmutableArray<int> instance;
                 // so that we can get the name of the property using the nameof operator, statically
                 var propertyName = nameof(instance.IsDefaultOrEmpty);
                 var isDefaultOrEmpty = concreteType.GetProperty(propertyName);
@@ -537,14 +526,14 @@ public class PropertyValueSerializer
                         var parameters = ctor.GetParameters();
                         return parameters.Length == 1 &&
                                parameters[0].ParameterType == typeof(Task<>).MakeGenericType(outputDataType);
-                    })!;
+                    });
 
             object CreateOutput(object? outputData)
             {
                 var fromResultMethod =
                     typeof(Task)
                         .GetMethod("FromResult")!
-                        .MakeGenericMethod(outputDataType)!;
+                        .MakeGenericMethod(outputDataType);
 
                 return createOutputMethod.Invoke(new[]
                 {
@@ -556,7 +545,7 @@ public class PropertyValueSerializer
             {
                 var newInputCtor =
                     typeof(Input<>)
-                        .MakeGenericType(elementType!)
+                        .MakeGenericType(elementType)
                         .GetConstructors(BindingFlags.NonPublic | BindingFlags.Instance)
                         .First(ctor =>
                         {
@@ -585,7 +574,7 @@ public class PropertyValueSerializer
 
             if (value.TryGetSecret(out var secretValue))
             {
-                if (secretValue.IsComputed)
+                if (secretValue!.IsComputed)
                 {
                     return unknownOutput;
                 }
@@ -601,7 +590,7 @@ public class PropertyValueSerializer
                     // }
 
                     var deserializedOutputValue = DeserializeValue(secretOutput.Value, elementType, path);
-                    var outputData = createOutputData.Invoke(new object?[]
+                    var outputData = createOutputData.Invoke(new[]
                     {
                         resources.ToImmutable(),
                         deserializedOutputValue,
@@ -614,7 +603,7 @@ public class PropertyValueSerializer
 
                 var deserializedValue = DeserializeValue(secretValue, elementType, path);
                 // Create OutputData<T>
-                var secretOutputData = createOutputData.Invoke(new object?[]
+                var secretOutputData = createOutputData.Invoke(new[]
                 {
                     ImmutableHashSet<Resource>.Empty, // resources
                     deserializedValue, // value
@@ -644,8 +633,8 @@ public class PropertyValueSerializer
                 //     resources.Add(new DependencyResource(dependencyUrn));
                 // }
 
-                var deserializedValue = DeserializeValue(innerOutputValue, elementType, path);
-                var outputData = createOutputData.Invoke(new object?[]
+                var deserializedValue = DeserializeValue(innerOutputValue!, elementType, path);
+                var outputData = createOutputData.Invoke(new[]
                 {
                     resources.ToImmutable(),
                     deserializedValue,
@@ -657,7 +646,7 @@ public class PropertyValueSerializer
             }
 
             var deserialized = DeserializeValue(value, elementType, path);
-            var outputDataValue = createOutputData.Invoke(new object?[]
+            var outputDataValue = createOutputData.Invoke(new[]
             {
                 ImmutableHashSet<Resource>.Empty,
                 deserialized,
@@ -913,7 +902,7 @@ public class PropertyValueSerializer
                         .First(methodInfo => methodInfo.Name == "Add" && methodInfo.GetParameters().Count() == 2);
 
                 var valueType = targetType.GenericTypeArguments[1];
-                foreach (var pair in values)
+                foreach (var pair in values!)
                 {
                     var elementPath = path.Append(pair.Key).ToArray();
                     var deserializedValue = DeserializeValue(pair.Value, valueType, elementPath);
@@ -949,7 +938,7 @@ public class PropertyValueSerializer
 
             if (value.TryGetObject(out var values))
             {
-                foreach (var pair in values)
+                foreach (var pair in values!)
                 {
                     var elementPath = path.Append(pair.Key).ToArray();
                     var deserializedValue = DeserializeValue(pair.Value, valueType, elementPath);
@@ -969,7 +958,7 @@ public class PropertyValueSerializer
         {
             if (value.TryGetObject(out var objectProperties))
             {
-                return DeserializeObject(objectProperties, targetType, path);
+                return DeserializeObject(objectProperties!, targetType, path);
             }
         }
 
