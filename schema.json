@@ -154,9 +154,7 @@
                     "onePasswordId": "hostname"
                 }
             },
-            "requiredInputs": [
-                "vault"
-            ],
+            "requiredInputs": [],
             "properties": {
                 "id": {
                     "type": "string",
@@ -427,9 +425,7 @@
                     "onePasswordId": "telephonePin"
                 }
             },
-            "requiredInputs": [
-                "vault"
-            ],
+            "requiredInputs": [],
             "properties": {
                 "id": {
                     "type": "string",
@@ -703,9 +699,7 @@
                     "onePasswordId": "validFrom"
                 }
             },
-            "requiredInputs": [
-                "vault"
-            ],
+            "requiredInputs": [],
             "properties": {
                 "id": {
                     "type": "string",
@@ -944,9 +938,7 @@
                     "onePasswordId": "password"
                 }
             },
-            "requiredInputs": [
-                "vault"
-            ],
+            "requiredInputs": [],
             "properties": {
                 "id": {
                     "type": "string",
@@ -1194,9 +1186,7 @@
                     "onePasswordId": "options"
                 }
             },
-            "requiredInputs": [
-                "vault"
-            ],
+            "requiredInputs": [],
             "properties": {
                 "id": {
                     "type": "string",
@@ -1427,9 +1417,7 @@
                     "const": "Document"
                 }
             },
-            "requiredInputs": [
-                "vault"
-            ],
+            "requiredInputs": [],
             "properties": {
                 "id": {
                     "type": "string",
@@ -1672,9 +1660,7 @@
                     "onePasswordId": "expiry_date"
                 }
             },
-            "requiredInputs": [
-                "vault"
-            ],
+            "requiredInputs": [],
             "properties": {
                 "id": {
                     "type": "string",
@@ -1967,9 +1953,7 @@
                     "onePasswordId": "pop_authentication"
                 }
             },
-            "requiredInputs": [
-                "vault"
-            ],
+            "requiredInputs": [],
             "properties": {
                 "id": {
                     "type": "string",
@@ -2210,9 +2194,7 @@
                     "refName": "one-password-native-unofficial:identity:internetDetailsSection"
                 }
             },
-            "requiredInputs": [
-                "vault"
-            ],
+            "requiredInputs": [],
             "properties": {
                 "id": {
                     "type": "string",
@@ -2410,9 +2392,7 @@
                     "default": "Item"
                 }
             },
-            "requiredInputs": [
-                "vault"
-            ],
+            "requiredInputs": [],
             "properties": {
                 "id": {
                     "type": "string",
@@ -2614,9 +2594,7 @@
                     ]
                 }
             },
-            "requiredInputs": [
-                "vault"
-            ],
+            "requiredInputs": [],
             "properties": {
                 "id": {
                     "type": "string",
@@ -2841,9 +2819,7 @@
                     "onePasswordId": "reason"
                 }
             },
-            "requiredInputs": [
-                "vault"
-            ],
+            "requiredInputs": [],
             "properties": {
                 "id": {
                     "type": "string",
@@ -3103,9 +3079,7 @@
                     "onePasswordId": "pin"
                 }
             },
-            "requiredInputs": [
-                "vault"
-            ],
+            "requiredInputs": [],
             "properties": {
                 "id": {
                     "type": "string",
@@ -3372,9 +3346,7 @@
                     "onePasswordId": "country"
                 }
             },
-            "requiredInputs": [
-                "vault"
-            ],
+            "requiredInputs": [],
             "properties": {
                 "id": {
                     "type": "string",
@@ -3659,9 +3631,7 @@
                     "onePasswordId": "expiry_date"
                 }
             },
-            "requiredInputs": [
-                "vault"
-            ],
+            "requiredInputs": [],
             "properties": {
                 "id": {
                     "type": "string",
@@ -3922,9 +3892,7 @@
                     ]
                 }
             },
-            "requiredInputs": [
-                "vault"
-            ],
+            "requiredInputs": [],
             "properties": {
                 "id": {
                     "type": "string",
@@ -4136,9 +4104,7 @@
                     "onePasswordId": "pin"
                 }
             },
-            "requiredInputs": [
-                "vault"
-            ],
+            "requiredInputs": [],
             "properties": {
                 "id": {
                     "type": "string",
@@ -4350,9 +4316,7 @@
                     "onePasswordId": "private_key"
                 }
             },
-            "requiredInputs": [
-                "vault"
-            ],
+            "requiredInputs": [],
             "properties": {
                 "id": {
                     "type": "string",
@@ -4535,9 +4499,7 @@
                     "const": "Secure Note"
                 }
             },
-            "requiredInputs": [
-                "vault"
-            ],
+            "requiredInputs": [],
             "properties": {
                 "id": {
                     "type": "string",
@@ -4740,9 +4702,7 @@
                     "onePasswordId": "password"
                 }
             },
-            "requiredInputs": [
-                "vault"
-            ],
+            "requiredInputs": [],
             "properties": {
                 "id": {
                     "type": "string",
@@ -4959,9 +4919,7 @@
                     "onePasswordId": "number"
                 }
             },
-            "requiredInputs": [
-                "vault"
-            ],
+            "requiredInputs": [],
             "properties": {
                 "id": {
                     "type": "string",
@@ -5174,9 +5132,7 @@
                     "onePasswordId": "reg_code"
                 }
             },
-            "requiredInputs": [
-                "vault"
-            ],
+            "requiredInputs": [],
             "properties": {
                 "id": {
                     "type": "string",
@@ -5428,9 +5384,7 @@
                     "onePasswordId": "disk_password"
                 }
             },
-            "requiredInputs": [
-                "vault"
-            ],
+            "requiredInputs": [],
             "properties": {
                 "id": {
                     "type": "string",
