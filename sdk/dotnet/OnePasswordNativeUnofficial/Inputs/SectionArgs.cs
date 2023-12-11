@@ -21,7 +21,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial.Inputs
             set => _attachments = value;
         }
 
-        [Input("fields", required: true)]
+        [Input("fields")]
         private InputMap<Inputs.FieldArgs>? _fields;
         public InputMap<Inputs.FieldArgs> Fields
         {

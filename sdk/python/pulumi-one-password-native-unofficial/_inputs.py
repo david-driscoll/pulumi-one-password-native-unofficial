@@ -130,26 +130,18 @@ class ReferenceArgs:
 @pulumi.input_type
 class SectionArgs:
     def __init__(__self__, *,
-                 fields: pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]],
                  attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
+                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
                  label: Optional[pulumi.Input[str]] = None,
                  references: Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]] = None):
-        pulumi.set(__self__, "fields", fields)
         if attachments is not None:
             pulumi.set(__self__, "attachments", attachments)
+        if fields is not None:
+            pulumi.set(__self__, "fields", fields)
         if label is not None:
             pulumi.set(__self__, "label", label)
         if references is not None:
             pulumi.set(__self__, "references", references)
-
-    @property
-    @pulumi.getter
-    def fields(self) -> pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]:
-        return pulumi.get(self, "fields")
-
-    @fields.setter
-    def fields(self, value: pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]):
-        pulumi.set(self, "fields", value)
 
     @property
     @pulumi.getter
@@ -159,6 +151,15 @@ class SectionArgs:
     @attachments.setter
     def attachments(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]]):
         pulumi.set(self, "attachments", value)
+
+    @property
+    @pulumi.getter
+    def fields(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]]:
+        return pulumi.get(self, "fields")
+
+    @fields.setter
+    def fields(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]]):
+        pulumi.set(self, "fields", value)
 
     @property
     @pulumi.getter

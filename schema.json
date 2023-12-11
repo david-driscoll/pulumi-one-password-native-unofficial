@@ -9321,9 +9321,7 @@
                 }
             },
             "type": "object",
-            "required": [
-                "fields"
-            ]
+            "required": []
         },
         "one-password-native-unofficial:index:OutputAttachment": {
             "properties": {
