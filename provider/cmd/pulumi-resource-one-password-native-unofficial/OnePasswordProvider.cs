@@ -200,9 +200,6 @@ public class OnePasswordProvider : Provider
     {
         try
         {
-            if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
-            // DebugHelper.WaitForDebugger();
-            var inputs = resourceType.TransformInputs(request.Properties);
             Log.Logger.Information("Deleting item {Id} {@Properties}", request.Id, request.Properties);
             await _op.Items.Delete(new(request.Id)
             {

@@ -5,6 +5,7 @@ using DotNet.Testcontainers.Containers;
 using GeneratedCode;
 using pulumi_resource_one_password_native_unofficial;
 using Pulumi.Experimental.Provider;
+using Serilog;
 using File = GeneratedCode.File;
 
 namespace TestProject.Helpers;
@@ -13,7 +14,7 @@ public class ConnectServerFixture : IAsyncLifetime, IServerFixture
 {
     private IContainer _connectApi;
     private IContainer _connectSync;
-    private HashSet<string> _existingItems;
+    private HashSet<DelegatingProvider> _delegatingProviders = new();
     public string TemporaryDirectory { get; private set; } = "";
     public string Vault { get; private set; } = "";
     public I1PasswordConnect Connect => pulumi_resource_one_password_native_unofficial.Helpers.CreateConnectClient(ConnectHost.ToString(), ConnectToken);
@@ -33,7 +34,7 @@ public class ConnectServerFixture : IAsyncLifetime, IServerFixture
         TemporaryDirectory = Path.Combine(Path.GetTempPath(), "connect", Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(TemporaryDirectory);
         var volume = new VolumeBuilder().WithName("data").WithCleanUp(true).Build();
-        
+
         _connectApi = new ContainerBuilder()
             .WithImage("1password/connect-api:latest")
             .WithConnectJson(Environment.GetEnvironmentVariable("PULUMI_ONEPASSWORD_CONNECT_JSON"))
@@ -64,12 +65,6 @@ public class ConnectServerFixture : IAsyncLifetime, IServerFixture
             .ToAsyncEnumerable()
             .SelectMany(z => z.ToAsyncEnumerable())
             .FirstAsync(z => z.Name == "testing-pulumi");
-
-        _existingItems = await Connect.GetVaultItems(vault.Id, "")
-            .ToAsyncEnumerable()
-            .SelectMany(z => z.ToAsyncEnumerable())
-            .Select(z => z.Id)
-            .ToHashSetAsync(StringComparer.OrdinalIgnoreCase);
         Vault = vault.Id;
     }
 
@@ -78,14 +73,16 @@ public class ConnectServerFixture : IAsyncLifetime, IServerFixture
 
     public async Task DisposeAsync()
     {
-        // await foreach (var item in Connect.GetVaultItems(Vault, "")
-        //                    .ToAsyncEnumerable()
-        //                    .SelectMany(z => z.ToAsyncEnumerable())
-        //                    // .Where(z => !_existingItems.Contains(z.Id))
-        //               )
-        // {
-        //     await Connect.DeleteVaultItem(Vault, item.Id);
-        // }
+        foreach (var provider in _delegatingProviders)
+        {
+            foreach (var id in provider.CreatedIds)
+            {
+                await provider.Delete(new("", id, ImmutableDictionary<string, PropertyValue>.Empty.Add("vault", new(
+                    ImmutableDictionary<string, PropertyValue>.Empty.Add("id", new(Vault))
+                )), TimeSpan.MaxValue), CancellationToken.None);
+                await Task.Delay(200);
+            }
+        }
 
         Directory.Delete(TemporaryDirectory, true);
         await _connectApi.DisposeAsync();
@@ -93,11 +90,16 @@ public class ConnectServerFixture : IAsyncLifetime, IServerFixture
     }
 
     private static readonly PropertyValueSerializer Serializer = new();
-    public async Task ConfigureProvider(OnePasswordProvider provider, ImmutableDictionary<string, PropertyValue>? additionalConfig = default, CancellationToken cancellationToken = default)
+
+    public async Task<Provider> ConfigureProvider(ILogger logger, ImmutableDictionary<string, PropertyValue>? additionalConfig = default,
+        CancellationToken cancellationToken = default)
     {
+        var provider = new DelegatingProvider(new OnePasswordProvider(logger));
+        _delegatingProviders.Add(provider);
+
         var config = new
         {
-            connectHost = new PropertyValue(new PropertyValue(ConnectHost.ToString())), 
+            connectHost = new PropertyValue(new PropertyValue(ConnectHost.ToString())),
             connectToken = new PropertyValue(new PropertyValue(ConnectToken))
         };
         var values = await Serializer.Serialize(config);
@@ -108,6 +110,8 @@ public class ConnectServerFixture : IAsyncLifetime, IServerFixture
             cancellationToken);
         var configureResponse = await provider.Configure(new ConfigureRequest(ImmutableDictionary<string, string>.Empty, configObject, true, true),
             cancellationToken);
+
+        return provider;
     }
 
     [CollectionDefinition("Connect collection")]
@@ -117,7 +121,6 @@ public class ConnectServerFixture : IAsyncLifetime, IServerFixture
         // to be the place to apply [CollectionDefinition] and all the
         // ICollectionFixture<> interfaces.
     }
-    
 }
 
 public static class ExtensionMethods
@@ -134,4 +137,4 @@ public static class ExtensionMethods
             return builder.WithResourceMapping(Encoding.UTF8.GetBytes(json), "/home/opuser/.op/1password-credentials.json");
         }
     }
-} 
+}

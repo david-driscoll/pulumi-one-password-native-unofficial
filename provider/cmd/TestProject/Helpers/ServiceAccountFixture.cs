@@ -1,12 +1,13 @@
 ﻿using System.Collections.Immutable;
 using pulumi_resource_one_password_native_unofficial;
 using Pulumi.Experimental.Provider;
+using Serilog;
 
 namespace TestProject.Helpers;
 
 public class ServiceAccountFixture : IAsyncLifetime, IServerFixture
 {
-    private HashSet<string> _existingItems;
+    private HashSet<DelegatingProvider> _delegatingProviders = new();
     public string TemporaryDirectory { get; private set; } = "";
     public string Vault { get; private set; } = "testing-pulumi";
     public string Token { get; set; }
@@ -27,20 +28,28 @@ public class ServiceAccountFixture : IAsyncLifetime, IServerFixture
 
     public async Task DisposeAsync()
     {
-        // await foreach (var item in Connect.GetVaultItems(Vault, "")
-        //                    .ToAsyncEnumerable()
-        //                    .SelectMany(z => z.ToAsyncEnumerable())
-        //                    // .Where(z => !_existingItems.Contains(z.Id))
-        //               )
-        // {
-        //     await Connect.DeleteVaultItem(Vault, item.Id);
-        // }
+        foreach (var provider in _delegatingProviders)
+        {
+            foreach (var id in provider.CreatedIds)
+            {
+                await provider.Delete(new("", id, ImmutableDictionary<string, PropertyValue>.Empty.Add("vault", new(
+                    ImmutableDictionary<string, PropertyValue>.Empty.Add("id", new(Vault))
+                )), TimeSpan.MaxValue), CancellationToken.None);
+                await Task.Delay(200);
+            }
+        }
 
         Directory.Delete(TemporaryDirectory, true);
     }
+
     private static readonly PropertyValueSerializer Serializer = new();
-    public async Task ConfigureProvider(OnePasswordProvider provider, ImmutableDictionary<string, PropertyValue>? additionalConfig = default, CancellationToken cancellationToken = default)
+
+    public async Task<Provider> ConfigureProvider(ILogger logger, ImmutableDictionary<string, PropertyValue>? additionalConfig = default,
+        CancellationToken cancellationToken = default)
     {
+        var provider = new DelegatingProvider(new OnePasswordProvider(logger));
+        _delegatingProviders.Add(provider);
+
         var config = new
         {
             serviceAccountToken = new PropertyValue(new PropertyValue(Token))
@@ -53,6 +62,8 @@ public class ServiceAccountFixture : IAsyncLifetime, IServerFixture
             cancellationToken);
         var configureResponse = await provider.Configure(new ConfigureRequest(ImmutableDictionary<string, string>.Empty, configObject, true, true),
             cancellationToken);
+
+        return provider;
     }
 
 

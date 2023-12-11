@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Pulumi;
+using pulumi_resource_one_password_native_unofficial;
 using Pulumi.Automation;
 using Pulumi.Experimental.Provider;
 using TestProject.Helpers;
@@ -14,7 +15,6 @@ public class PulumiFixture : IAsyncLifetime
     public string TemporaryDirectory { get; private set; } = "";
     public PropertyValueSerializer Serializer { get; } = new();
     public ImmutableDictionary<string, string?> EnvironmentVariables { get; private set; } = ImmutableDictionary<string, string?>.Empty;
-
 
     public async Task InitializeAsync()
     {

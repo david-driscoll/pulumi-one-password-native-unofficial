@@ -41,9 +41,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
     [Fact]
     public async Task Should_Create_Login_Item()
     {
-        var provider = new OnePasswordProvider(_logger);
-
-        await _serverFixture.ConfigureProvider(provider);
+        var provider = await _serverFixture.ConfigureProvider(_logger);
 
         var data = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
         {
@@ -85,9 +83,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
     [Fact]
     public async Task Should_Update_Login_Item()
     {
-        var provider = new OnePasswordProvider(_logger);
-
-        await _serverFixture.ConfigureProvider(provider);
+        var provider = await _serverFixture.ConfigureProvider(_logger);
 
         var createInput = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
         {
@@ -147,10 +143,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
     [Fact]
     public async Task Should_Diff_Login_Item()
     {
-        var provider = new OnePasswordProvider(_logger);
-        var serializer = new PropertyValueSerializer();
-
-        await _serverFixture.ConfigureProvider(provider);
+        var provider = await _serverFixture.ConfigureProvider(_logger);
 
         var data = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
         {
@@ -195,10 +188,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
     [Fact]
     public async Task Should_Diff_Login_Item_With_Differences()
     {
-        var provider = new OnePasswordProvider(_logger);
-        var serializer = new PropertyValueSerializer();
-
-        await _serverFixture.ConfigureProvider(provider);
+        var provider = await _serverFixture.ConfigureProvider(_logger);
 
         var data = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
         {
@@ -256,9 +246,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
     [Fact]
     public async Task Should_Set_Urls()
     {
-        var provider = new OnePasswordProvider(_logger);
-
-        await _serverFixture.ConfigureProvider(provider);
+        var provider = await _serverFixture.ConfigureProvider(_logger);
 
         var data = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
         {
@@ -300,9 +288,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
     [Fact]
     public async Task Should_Set_References()
     {
-        var provider = new OnePasswordProvider(_logger);
-
-        await _serverFixture.ConfigureProvider(provider);
+        var provider = await _serverFixture.ConfigureProvider(_logger);
 
         var loginItem = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
         {
@@ -335,7 +321,37 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
 
         var loginItemResult = await provider.Create(new CreateRequest(loginItem.Urn, loginItem.Request, TimeSpan.MaxValue, false), CancellationToken.None);
 
-        var data = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
+        var passwordItem = await _fixture.CreateRequestObject<PasswordItem, PasswordItemArgs>("mypassword", new()
+        {
+            Vault = "testing-pulumi",
+            GeneratePassword = new PasswordRecipeArgs()
+            {
+                Digits = true,
+                Length = 40,
+                Symbols = true,
+                Letters = true
+            },
+            Tags = new string[] { "test-tag" },
+            Urls = new UrlArgs[]
+            {
+                new UrlArgs()
+                {
+                    Href = "http://notlocalhost.com",
+                    Label = "Some really cool place",
+                    Primary = false
+                },
+                new UrlArgs()
+                {
+                    Href = "http://notaplace.com",
+                    Label = "Not as cool a place",
+                    Primary = true
+                }
+            }
+        });
+
+        var passwordItemResult = await provider.Create(new CreateRequest(loginItem.Urn, loginItem.Request, TimeSpan.MaxValue, false), CancellationToken.None);
+
+        var data = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myreference", new()
         {
             Vault = "testing-pulumi",
             Username = "me",
@@ -353,7 +369,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
                 ["mysection"] = new SectionArgs()
                 {
                     Label = "My Section",
-                    References = new ReferenceArgs[] { new ReferenceArgs() { ItemId = loginItemResult.Id! } },
+                    References = new ReferenceArgs[] { new ReferenceArgs() { ItemId = passwordItemResult.Id! } },
                 }
             }
         });
@@ -370,9 +386,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
     [Fact]
     public async Task Should_Generate_Password()
     {
-        var provider = new OnePasswordProvider(_logger);
-
-        await _serverFixture.ConfigureProvider(provider);
+        var provider = await _serverFixture.ConfigureProvider(_logger);
 
         var data = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
         {
@@ -400,9 +414,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
     [Fact]
     public async Task Should_Generate_Random_Password()
     {
-        var provider = new OnePasswordProvider(_logger);
-
-        await _serverFixture.ConfigureProvider(provider);
+        var provider = await _serverFixture.ConfigureProvider(_logger);
 
         var data = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
         {
