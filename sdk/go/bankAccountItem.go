@@ -7,7 +7,6 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
 	"github.com/pulumi/pulumi-onepassword/sdk/go/onepassword/bankaccount"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
@@ -44,12 +43,9 @@ type BankAccountItem struct {
 func NewBankAccountItem(ctx *pulumi.Context,
 	name string, args *BankAccountItemArgs, opts ...pulumi.ResourceOption) (*BankAccountItem, error) {
 	if args == nil {
-		return nil, errors.New("missing one or more required arguments")
+		args = &BankAccountItemArgs{}
 	}
 
-	if args.Vault == nil {
-		return nil, errors.New("invalid value for required argument 'Vault'")
-	}
 	args.Category = pulumi.StringPtr("Bank Account")
 	if args.Pin != nil {
 		args.Pin = pulumi.ToSecret(args.Pin).(pulumi.StringPtrOutput)
@@ -120,7 +116,7 @@ type bankAccountItemArgs struct {
 	Type  *string `pulumi:"type"`
 	Urls  []Url   `pulumi:"urls"`
 	// The UUID of the vault the item is in.
-	Vault string `pulumi:"vault"`
+	Vault *string `pulumi:"vault"`
 }
 
 // The set of arguments for constructing a BankAccountItem resource.
@@ -147,7 +143,7 @@ type BankAccountItemArgs struct {
 	Type  pulumi.StringPtrInput
 	Urls  UrlArrayInput
 	// The UUID of the vault the item is in.
-	Vault pulumi.StringInput
+	Vault pulumi.StringPtrInput
 }
 
 func (BankAccountItemArgs) ElementType() reflect.Type {

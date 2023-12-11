@@ -61,7 +61,7 @@ export class DocumentItem extends pulumi.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: DocumentItemArgs, opts?: pulumi.CustomResourceOptions)
+    constructor(name: string, args?: DocumentItemArgs, opts?: pulumi.CustomResourceOptions)
     constructor(name: string, argsOrState?: DocumentItemArgs | DocumentItemState, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
@@ -70,9 +70,6 @@ export class DocumentItem extends pulumi.CustomResource {
             resourceInputs["vault"] = state ? state.vault : undefined;
         } else {
             const args = argsOrState as DocumentItemArgs | undefined;
-            if ((!args || args.vault === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'vault'");
-            }
             resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "Document";
             resourceInputs["fields"] = args ? args.fields : undefined;
@@ -124,5 +121,5 @@ export interface DocumentItemArgs {
     /**
      * The UUID of the vault the item is in.
      */
-    vault: pulumi.Input<string>;
+    vault?: pulumi.Input<string>;
 }

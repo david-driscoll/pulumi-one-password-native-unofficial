@@ -86,7 +86,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public EmailAccountItem(string name, EmailAccountItemArgs args, CustomResourceOptions? options = null)
+        public EmailAccountItem(string name, EmailAccountItemArgs? args = null, CustomResourceOptions? options = null)
             : base("one-password-native-unofficial:index:EmailAccountItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
@@ -96,7 +96,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         {
         }
 
-        private static EmailAccountItemArgs MakeArgs(EmailAccountItemArgs args)
+        private static EmailAccountItemArgs? MakeArgs(EmailAccountItemArgs? args)
         {
             args ??= new EmailAccountItemArgs();
             args.Category = "Email Account";
@@ -247,7 +247,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// The UUID of the vault the item is in.
         /// </summary>
         [Input("vault")]
-        public Input<string> Vault { get; set; } = null!;
+        public Input<string>? Vault { get; set; }
 
         public EmailAccountItemArgs()
         {
@@ -259,7 +259,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// <summary>
         /// The UUID of the vault the item is in.
         /// </summary>
-        [Input("vault")]
+        [Input("vault", required: true)]
         public Input<string> Vault { get; set; } = null!;
 
         public EmailAccountItemState()

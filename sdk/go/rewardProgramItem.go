@@ -7,7 +7,6 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
 	"github.com/pulumi/pulumi-onepassword/sdk/go/onepassword/rewardprogram"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
@@ -40,12 +39,9 @@ type RewardProgramItem struct {
 func NewRewardProgramItem(ctx *pulumi.Context,
 	name string, args *RewardProgramItemArgs, opts ...pulumi.ResourceOption) (*RewardProgramItem, error) {
 	if args == nil {
-		return nil, errors.New("missing one or more required arguments")
+		args = &RewardProgramItemArgs{}
 	}
 
-	if args.Vault == nil {
-		return nil, errors.New("invalid value for required argument 'Vault'")
-	}
 	args.Category = pulumi.StringPtr("Reward Program")
 	if args.Pin != nil {
 		args.Pin = pulumi.ToSecret(args.Pin).(pulumi.StringPtrOutput)
@@ -112,7 +108,7 @@ type rewardProgramItemArgs struct {
 	Title *string `pulumi:"title"`
 	Urls  []Url   `pulumi:"urls"`
 	// The UUID of the vault the item is in.
-	Vault string `pulumi:"vault"`
+	Vault *string `pulumi:"vault"`
 }
 
 // The set of arguments for constructing a RewardProgramItem resource.
@@ -135,7 +131,7 @@ type RewardProgramItemArgs struct {
 	Title pulumi.StringPtrInput
 	Urls  UrlArrayInput
 	// The UUID of the vault the item is in.
-	Vault pulumi.StringInput
+	Vault pulumi.StringPtrInput
 }
 
 func (RewardProgramItemArgs) ElementType() reflect.Type {

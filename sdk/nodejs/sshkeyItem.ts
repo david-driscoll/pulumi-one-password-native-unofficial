@@ -62,7 +62,7 @@ export class SSHKeyItem extends pulumi.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: SSHKeyItemArgs, opts?: pulumi.CustomResourceOptions)
+    constructor(name: string, args?: SSHKeyItemArgs, opts?: pulumi.CustomResourceOptions)
     constructor(name: string, argsOrState?: SSHKeyItemArgs | SSHKeyItemState, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
@@ -71,9 +71,6 @@ export class SSHKeyItem extends pulumi.CustomResource {
             resourceInputs["vault"] = state ? state.vault : undefined;
         } else {
             const args = argsOrState as SSHKeyItemArgs | undefined;
-            if ((!args || args.vault === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'vault'");
-            }
             resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["category"] = "SSH Key";
             resourceInputs["fields"] = args ? args.fields : undefined;
@@ -127,5 +124,5 @@ export interface SSHKeyItemArgs {
     /**
      * The UUID of the vault the item is in.
      */
-    vault: pulumi.Input<string>;
+    vault?: pulumi.Input<string>;
 }

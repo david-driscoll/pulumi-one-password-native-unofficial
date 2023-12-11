@@ -70,7 +70,7 @@ export class EmailAccountItem extends pulumi.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: EmailAccountItemArgs, opts?: pulumi.CustomResourceOptions)
+    constructor(name: string, args?: EmailAccountItemArgs, opts?: pulumi.CustomResourceOptions)
     constructor(name: string, argsOrState?: EmailAccountItemArgs | EmailAccountItemState, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
@@ -79,9 +79,6 @@ export class EmailAccountItem extends pulumi.CustomResource {
             resourceInputs["vault"] = state ? state.vault : undefined;
         } else {
             const args = argsOrState as EmailAccountItemArgs | undefined;
-            if ((!args || args.vault === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'vault'");
-            }
             resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["authMethod"] = args ? args.authMethod : undefined;
             resourceInputs["category"] = "Email Account";
@@ -151,5 +148,5 @@ export interface EmailAccountItemArgs {
     /**
      * The UUID of the vault the item is in.
      */
-    vault: pulumi.Input<string>;
+    vault?: pulumi.Input<string>;
 }

@@ -74,7 +74,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public RewardProgramItem(string name, RewardProgramItemArgs args, CustomResourceOptions? options = null)
+        public RewardProgramItem(string name, RewardProgramItemArgs? args = null, CustomResourceOptions? options = null)
             : base("one-password-native-unofficial:index:RewardProgramItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
@@ -84,7 +84,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         {
         }
 
-        private static RewardProgramItemArgs MakeArgs(RewardProgramItemArgs args)
+        private static RewardProgramItemArgs? MakeArgs(RewardProgramItemArgs? args)
         {
             args ??= new RewardProgramItemArgs();
             args.Category = "Reward Program";
@@ -222,7 +222,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// The UUID of the vault the item is in.
         /// </summary>
         [Input("vault")]
-        public Input<string> Vault { get; set; } = null!;
+        public Input<string>? Vault { get; set; }
 
         public RewardProgramItemArgs()
         {
@@ -234,7 +234,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// <summary>
         /// The UUID of the vault the item is in.
         /// </summary>
-        [Input("vault")]
+        [Input("vault", required: true)]
         public Input<string> Vault { get; set; } = null!;
 
         public RewardProgramItemState()

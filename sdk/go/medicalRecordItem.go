@@ -7,7 +7,6 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
 	"github.com/pulumi/pulumi-onepassword/sdk/go/onepassword/medicalrecord"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
@@ -41,12 +40,9 @@ type MedicalRecordItem struct {
 func NewMedicalRecordItem(ctx *pulumi.Context,
 	name string, args *MedicalRecordItemArgs, opts ...pulumi.ResourceOption) (*MedicalRecordItem, error) {
 	if args == nil {
-		return nil, errors.New("missing one or more required arguments")
+		args = &MedicalRecordItemArgs{}
 	}
 
-	if args.Vault == nil {
-		return nil, errors.New("invalid value for required argument 'Vault'")
-	}
 	args.Category = pulumi.StringPtr("Medical Record")
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"attachments",
@@ -110,7 +106,7 @@ type medicalRecordItemArgs struct {
 	Title *string `pulumi:"title"`
 	Urls  []Url   `pulumi:"urls"`
 	// The UUID of the vault the item is in.
-	Vault string `pulumi:"vault"`
+	Vault *string `pulumi:"vault"`
 }
 
 // The set of arguments for constructing a MedicalRecordItem resource.
@@ -134,7 +130,7 @@ type MedicalRecordItemArgs struct {
 	Title pulumi.StringPtrInput
 	Urls  UrlArrayInput
 	// The UUID of the vault the item is in.
-	Vault pulumi.StringInput
+	Vault pulumi.StringPtrInput
 }
 
 func (MedicalRecordItemArgs) ElementType() reflect.Type {

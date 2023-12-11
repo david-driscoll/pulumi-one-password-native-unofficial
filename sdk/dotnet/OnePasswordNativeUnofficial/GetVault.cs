@@ -27,7 +27,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// <summary>
         /// The vault to get information of.  Can be either the name or the UUID.
         /// </summary>
-        [Input("vault")]
+        [Input("vault", required: true)]
         public string Vault { get; set; } = null!;
 
         public GetVaultArgs()
@@ -40,7 +40,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// <summary>
         /// The vault to get information of.  Can be either the name or the UUID.
         /// </summary>
-        [Input("vault")]
+        [Input("vault", required: true)]
         public Input<string> Vault { get; set; } = null!;
 
         public GetVaultInvokeArgs()

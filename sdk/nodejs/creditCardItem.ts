@@ -69,7 +69,7 @@ export class CreditCardItem extends pulumi.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: CreditCardItemArgs, opts?: pulumi.CustomResourceOptions)
+    constructor(name: string, args?: CreditCardItemArgs, opts?: pulumi.CustomResourceOptions)
     constructor(name: string, argsOrState?: CreditCardItemArgs | CreditCardItemState, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
@@ -78,9 +78,6 @@ export class CreditCardItem extends pulumi.CustomResource {
             resourceInputs["vault"] = state ? state.vault : undefined;
         } else {
             const args = argsOrState as CreditCardItemArgs | undefined;
-            if ((!args || args.vault === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'vault'");
-            }
             resourceInputs["additionalDetails"] = args ? args.additionalDetails : undefined;
             resourceInputs["attachments"] = args ? args.attachments : undefined;
             resourceInputs["cardholderName"] = args ? args.cardholderName : undefined;
@@ -147,6 +144,6 @@ export interface CreditCardItemArgs {
     /**
      * The UUID of the vault the item is in.
      */
-    vault: pulumi.Input<string>;
+    vault?: pulumi.Input<string>;
     verificationNumber?: pulumi.Input<string>;
 }

@@ -80,7 +80,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public OutdoorLicenseItem(string name, OutdoorLicenseItemArgs args, CustomResourceOptions? options = null)
+        public OutdoorLicenseItem(string name, OutdoorLicenseItemArgs? args = null, CustomResourceOptions? options = null)
             : base("one-password-native-unofficial:index:OutdoorLicenseItem", name, MakeArgs(args), MakeResourceOptions(options, ""))
         {
         }
@@ -90,7 +90,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         {
         }
 
-        private static OutdoorLicenseItemArgs MakeArgs(OutdoorLicenseItemArgs args)
+        private static OutdoorLicenseItemArgs? MakeArgs(OutdoorLicenseItemArgs? args)
         {
             args ??= new OutdoorLicenseItemArgs();
             args.Category = "Outdoor License";
@@ -224,7 +224,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// The UUID of the vault the item is in.
         /// </summary>
         [Input("vault")]
-        public Input<string> Vault { get; set; } = null!;
+        public Input<string>? Vault { get; set; }
 
         public OutdoorLicenseItemArgs()
         {
@@ -236,7 +236,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// <summary>
         /// The UUID of the vault the item is in.
         /// </summary>
-        [Input("vault")]
+        [Input("vault", required: true)]
         public Input<string> Vault { get; set; } = null!;
 
         public OutdoorLicenseItemState()

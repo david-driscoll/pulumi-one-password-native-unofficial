@@ -7,7 +7,6 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -41,12 +40,9 @@ type OutdoorLicenseItem struct {
 func NewOutdoorLicenseItem(ctx *pulumi.Context,
 	name string, args *OutdoorLicenseItemArgs, opts ...pulumi.ResourceOption) (*OutdoorLicenseItem, error) {
 	if args == nil {
-		return nil, errors.New("missing one or more required arguments")
+		args = &OutdoorLicenseItemArgs{}
 	}
 
-	if args.Vault == nil {
-		return nil, errors.New("invalid value for required argument 'Vault'")
-	}
 	args.Category = pulumi.StringPtr("Outdoor License")
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"attachments",
@@ -111,7 +107,7 @@ type outdoorLicenseItemArgs struct {
 	Urls      []Url   `pulumi:"urls"`
 	ValidFrom *string `pulumi:"validFrom"`
 	// The UUID of the vault the item is in.
-	Vault string `pulumi:"vault"`
+	Vault *string `pulumi:"vault"`
 }
 
 // The set of arguments for constructing a OutdoorLicenseItem resource.
@@ -136,7 +132,7 @@ type OutdoorLicenseItemArgs struct {
 	Urls      UrlArrayInput
 	ValidFrom pulumi.StringPtrInput
 	// The UUID of the vault the item is in.
-	Vault pulumi.StringInput
+	Vault pulumi.StringPtrInput
 }
 
 func (OutdoorLicenseItemArgs) ElementType() reflect.Type {

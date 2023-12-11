@@ -17,7 +17,6 @@ __all__ = ['CreditCardItemArgs', 'CreditCardItem']
 @pulumi.input_type
 class CreditCardItemArgs:
     def __init__(__self__, *,
-                 vault: pulumi.Input[str],
                  additional_details: Optional[pulumi.Input['_creditcard.AdditionalDetailsSectionArgs']] = None,
                  attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  cardholder_name: Optional[pulumi.Input[str]] = None,
@@ -34,15 +33,15 @@ class CreditCardItemArgs:
                  type: Optional[pulumi.Input[str]] = None,
                  urls: Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]] = None,
                  valid_from: Optional[pulumi.Input[str]] = None,
+                 vault: Optional[pulumi.Input[str]] = None,
                  verification_number: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a CreditCardItem resource.
-        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         :param pulumi.Input[str] category: The category of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
+        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         """
-        pulumi.set(__self__, "vault", vault)
         if additional_details is not None:
             pulumi.set(__self__, "additional_details", additional_details)
         if attachments is not None:
@@ -75,20 +74,10 @@ class CreditCardItemArgs:
             pulumi.set(__self__, "urls", urls)
         if valid_from is not None:
             pulumi.set(__self__, "valid_from", valid_from)
+        if vault is not None:
+            pulumi.set(__self__, "vault", vault)
         if verification_number is not None:
             pulumi.set(__self__, "verification_number", verification_number)
-
-    @property
-    @pulumi.getter
-    def vault(self) -> pulumi.Input[str]:
-        """
-        The UUID of the vault the item is in.
-        """
-        return pulumi.get(self, "vault")
-
-    @vault.setter
-    def vault(self, value: pulumi.Input[str]):
-        pulumi.set(self, "vault", value)
 
     @property
     @pulumi.getter(name="additionalDetails")
@@ -244,6 +233,18 @@ class CreditCardItemArgs:
         pulumi.set(self, "valid_from", value)
 
     @property
+    @pulumi.getter
+    def vault(self) -> Optional[pulumi.Input[str]]:
+        """
+        The UUID of the vault the item is in.
+        """
+        return pulumi.get(self, "vault")
+
+    @vault.setter
+    def vault(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "vault", value)
+
+    @property
     @pulumi.getter(name="verificationNumber")
     def verification_number(self) -> Optional[pulumi.Input[str]]:
         return pulumi.get(self, "verification_number")
@@ -313,7 +314,7 @@ class CreditCardItem(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: CreditCardItemArgs,
+                 args: Optional[CreditCardItemArgs] = None,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create a CreditCardItem resource with the given unique name, props, and options.
@@ -380,8 +381,6 @@ class CreditCardItem(pulumi.CustomResource):
             __props__.__dict__["type"] = type
             __props__.__dict__["urls"] = urls
             __props__.__dict__["valid_from"] = valid_from
-            if vault is None and not opts.urn:
-                raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
             __props__.__dict__["verification_number"] = None if verification_number is None else pulumi.Output.secret(verification_number)
             __props__.__dict__["id"] = None

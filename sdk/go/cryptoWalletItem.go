@@ -7,7 +7,6 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
 	"github.com/pulumi/pulumi-onepassword/sdk/go/onepassword/cryptowallet"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
@@ -38,12 +37,9 @@ type CryptoWalletItem struct {
 func NewCryptoWalletItem(ctx *pulumi.Context,
 	name string, args *CryptoWalletItemArgs, opts ...pulumi.ResourceOption) (*CryptoWalletItem, error) {
 	if args == nil {
-		return nil, errors.New("missing one or more required arguments")
+		args = &CryptoWalletItemArgs{}
 	}
 
-	if args.Vault == nil {
-		return nil, errors.New("invalid value for required argument 'Vault'")
-	}
 	args.Category = pulumi.StringPtr("Crypto Wallet")
 	if args.Password != nil {
 		args.Password = pulumi.ToSecret(args.Password).(pulumi.StringPtrOutput)
@@ -111,7 +107,7 @@ type cryptoWalletItemArgs struct {
 	Title *string `pulumi:"title"`
 	Urls  []Url   `pulumi:"urls"`
 	// The UUID of the vault the item is in.
-	Vault  string                      `pulumi:"vault"`
+	Vault  *string                     `pulumi:"vault"`
 	Wallet *cryptowallet.WalletSection `pulumi:"wallet"`
 }
 
@@ -132,7 +128,7 @@ type CryptoWalletItemArgs struct {
 	Title pulumi.StringPtrInput
 	Urls  UrlArrayInput
 	// The UUID of the vault the item is in.
-	Vault  pulumi.StringInput
+	Vault  pulumi.StringPtrInput
 	Wallet cryptowallet.WalletSectionPtrInput
 }
 

@@ -7,7 +7,6 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -42,12 +41,9 @@ type WirelessRouterItem struct {
 func NewWirelessRouterItem(ctx *pulumi.Context,
 	name string, args *WirelessRouterItemArgs, opts ...pulumi.ResourceOption) (*WirelessRouterItem, error) {
 	if args == nil {
-		return nil, errors.New("missing one or more required arguments")
+		args = &WirelessRouterItemArgs{}
 	}
 
-	if args.Vault == nil {
-		return nil, errors.New("invalid value for required argument 'Vault'")
-	}
 	args.Category = pulumi.StringPtr("Wireless Router")
 	if args.AttachedStoragePassword != nil {
 		args.AttachedStoragePassword = pulumi.ToSecret(args.AttachedStoragePassword).(pulumi.StringPtrOutput)
@@ -123,7 +119,7 @@ type wirelessRouterItemArgs struct {
 	Title *string `pulumi:"title"`
 	Urls  []Url   `pulumi:"urls"`
 	// The UUID of the vault the item is in.
-	Vault                   string  `pulumi:"vault"`
+	Vault                   *string `pulumi:"vault"`
 	WirelessNetworkPassword *string `pulumi:"wirelessNetworkPassword"`
 	WirelessSecurity        *string `pulumi:"wirelessSecurity"`
 }
@@ -149,7 +145,7 @@ type WirelessRouterItemArgs struct {
 	Title pulumi.StringPtrInput
 	Urls  UrlArrayInput
 	// The UUID of the vault the item is in.
-	Vault                   pulumi.StringInput
+	Vault                   pulumi.StringPtrInput
 	WirelessNetworkPassword pulumi.StringPtrInput
 	WirelessSecurity        pulumi.StringPtrInput
 }

@@ -17,7 +17,6 @@ __all__ = ['RewardProgramItemArgs', 'RewardProgramItem']
 @pulumi.input_type
 class RewardProgramItemArgs:
     def __init__(__self__, *,
-                 vault: pulumi.Input[str],
                  attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  company_name: Optional[pulumi.Input[str]] = None,
@@ -31,15 +30,15 @@ class RewardProgramItemArgs:
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input['SectionArgs']]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
-                 urls: Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]] = None):
+                 urls: Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]] = None,
+                 vault: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a RewardProgramItem resource.
-        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         :param pulumi.Input[str] category: The category of the vault the item is in.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: An array of strings of the tags assigned to the item.
         :param pulumi.Input[str] title: The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
+        :param pulumi.Input[str] vault: The UUID of the vault the item is in.
         """
-        pulumi.set(__self__, "vault", vault)
         if attachments is not None:
             pulumi.set(__self__, "attachments", attachments)
         if category is not None:
@@ -68,18 +67,8 @@ class RewardProgramItemArgs:
             pulumi.set(__self__, "title", title)
         if urls is not None:
             pulumi.set(__self__, "urls", urls)
-
-    @property
-    @pulumi.getter
-    def vault(self) -> pulumi.Input[str]:
-        """
-        The UUID of the vault the item is in.
-        """
-        return pulumi.get(self, "vault")
-
-    @vault.setter
-    def vault(self, value: pulumi.Input[str]):
-        pulumi.set(self, "vault", value)
+        if vault is not None:
+            pulumi.set(__self__, "vault", vault)
 
     @property
     @pulumi.getter
@@ -216,6 +205,18 @@ class RewardProgramItemArgs:
     def urls(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['UrlArgs']]]]):
         pulumi.set(self, "urls", value)
 
+    @property
+    @pulumi.getter
+    def vault(self) -> Optional[pulumi.Input[str]]:
+        """
+        The UUID of the vault the item is in.
+        """
+        return pulumi.get(self, "vault")
+
+    @vault.setter
+    def vault(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "vault", value)
+
 
 @pulumi.input_type
 class _RewardProgramItemState:
@@ -274,7 +275,7 @@ class RewardProgramItem(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: RewardProgramItemArgs,
+                 args: Optional[RewardProgramItemArgs] = None,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create a RewardProgramItem resource with the given unique name, props, and options.
@@ -336,8 +337,6 @@ class RewardProgramItem(pulumi.CustomResource):
             __props__.__dict__["tags"] = tags
             __props__.__dict__["title"] = title
             __props__.__dict__["urls"] = urls
-            if vault is None and not opts.urn:
-                raise TypeError("Missing required property 'vault'")
             __props__.__dict__["vault"] = vault
             __props__.__dict__["id"] = None
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["attachments", "fields", "pin", "sections"])
