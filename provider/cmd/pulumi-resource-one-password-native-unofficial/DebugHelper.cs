@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using System.Net.Http.Headers;
 using GeneratedCode;
+using Humanizer;
+using Json.Patch;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 using Refit;
 
@@ -25,6 +27,10 @@ public static class DebugHelper
 
 public static class Helpers
 {
+    public static string ToPropertyPath(this PatchOperation operation)
+    {
+        return string.Join(".", operation.Path.ToString().Split('/', StringSplitOptions.RemoveEmptyEntries).Select(z => z.Camelize()));
+    }
     public static I1PasswordConnect CreateConnectClient(string url, string token)
     {
         return RestService.For<I1PasswordConnect>(url, new RefitSettings()

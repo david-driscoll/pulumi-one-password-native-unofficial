@@ -76,6 +76,126 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
     }
 
     [Fact]
+    public async Task Should_Diff_Login_Item()
+    {
+        var provider = new OnePasswordProvider(_logger);
+        var serializer = new PropertyValueSerializer();
+
+        await _serverFixture.ConfigureProvider(provider);
+
+        var data = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
+        {
+            Vault = "testing-pulumi",
+            Username = "me",
+            // Password = "secret1234",
+            Fields = new()
+            {
+                ["password"] = new FieldArgs()
+                {
+                    Value = "secret1234",
+                    Type = FieldType.Concealed
+                }
+            },
+            Sections = new()
+            {
+                ["mysection"] = new SectionArgs()
+                {
+                    Fields = new()
+                    {
+                        ["password2"] = new FieldArgs()
+                        {
+                            Value = "secret1235!",
+                            Type = FieldType.Concealed
+                        }
+                    },
+                }
+            },
+            Tags = new string[] { "test-tag" }
+        });
+
+        var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
+        
+        var diff = await provider.Diff(new DiffRequest(data.Urn, create.Id, create.Properties.ToImmutableDictionary(), create.Properties.ToImmutableDictionary(),  ImmutableArray<string>.Empty), CancellationToken.None);
+
+
+        await Verify(new { create, diff });
+    }
+
+    [Fact]
+    public async Task Should_Diff_Login_Item_With_Differences()
+    {
+        var provider = new OnePasswordProvider(_logger);
+        var serializer = new PropertyValueSerializer();
+
+        await _serverFixture.ConfigureProvider(provider);
+
+        var data = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
+        {
+            Vault = "testing-pulumi",
+            Username = "me",
+            // Password = "secret1234",
+            Fields = new()
+            {
+                ["password"] = new FieldArgs()
+                {
+                    Value = "secret1234",
+                    Type = FieldType.Concealed
+                }
+            },
+            Sections = new()
+            {
+                ["mysection"] = new SectionArgs()
+                {
+                    Fields = new()
+                    {
+                        ["password2"] = new FieldArgs()
+                        {
+                            Value = "secret1235!",
+                            Type = FieldType.Concealed
+                        }
+                    },
+                }
+            },
+            Tags = new string[] { "test-tag" }
+        });
+
+        var data2 = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
+        {
+            Vault = "testing-pulumi",
+            Username = "me2",
+            // Password = "secret1234",
+            Fields = new()
+            {
+                ["password"] = new FieldArgs()
+                {
+                    Value = "secret1234",
+                    Type = FieldType.Concealed
+                }
+            },
+            Sections = new()
+            {
+                ["mysection"] = new SectionArgs()
+                {
+                    Fields = new()
+                    {
+                        ["password2"] = new FieldArgs()
+                        {
+                            Value = "secret1235!",
+                            Type = FieldType.Concealed
+                        }
+                    },
+                }
+            },
+            Tags = new string[] { "test-tag" }
+        });
+
+        var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
+        
+        var diff = await provider.Diff(new DiffRequest(data.Urn, create.Id, create.Properties.ToImmutableDictionary(), data2.Request,  ImmutableArray<string>.Empty), CancellationToken.None);
+        await Verify(new { create, diff });
+    }
+
+    [Fact]
     public async Task Should_Create_Login_Item_With_Attachments()
     {
         var provider = new OnePasswordProvider(_logger);
@@ -129,6 +249,81 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
 
 
         await Verify(create)
+            .AddScrubber(z => z.Replace(create.Id!, "[server-generated]"));
+    }
+
+    [Fact]
+    public async Task Should_Update_Login_Item()
+    {
+        var provider = new OnePasswordProvider(_logger);
+
+        await _serverFixture.ConfigureProvider(provider);
+
+        var createInput = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
+        {
+            Vault = "testing-pulumi",
+            Username = "me",
+            // Password = "secret1234",
+            Fields = new()
+            {
+                ["password"] = new FieldArgs()
+                {
+                    Value = "secret1234",
+                    Type = FieldType.Concealed
+                }
+            },
+            Sections = new()
+            {
+                ["mysection"] = new SectionArgs()
+                {
+                    Fields = new()
+                    {
+                        ["password2"] = new FieldArgs()
+                        {
+                            Value = "secret1235!",
+                            Type = FieldType.Concealed
+                        }
+                    },
+                }
+            },
+            Tags = new string[] { "test-tag" }
+        });
+        
+        var updateInput = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
+        {
+            Vault = "testing-pulumi",
+            Username = "me2",
+            // Password = "secret1234",
+            Fields = new()
+            {
+                ["password"] = new FieldArgs()
+                {
+                    Value = "secret12344",
+                    Type = FieldType.Concealed
+                }
+            },
+            Sections = new()
+            {
+                ["mysection"] = new SectionArgs()
+                {
+                    Fields = new()
+                    {
+                        ["password2"] = new FieldArgs()
+                        {
+                            Value = "secret1235!",
+                            Type = FieldType.Concealed
+                        }
+                    },
+                }
+            },
+            Tags = new string[] { "test-tag", "another-tag" }
+        });
+
+        var create = await provider.Create(new CreateRequest(createInput.Urn, createInput.Request, TimeSpan.MaxValue, false), CancellationToken.None);
+        
+        var update = await provider.Update(new UpdateRequest(updateInput.Urn, create.Id!,create.Properties!.ToImmutableDictionary(), updateInput.Request.ToImmutableDictionary(), TimeSpan.MaxValue, ImmutableArray<string>.Empty, false), CancellationToken.None);
+
+        await Verify(new { create, update })
             .AddScrubber(z => z.Replace(create.Id!, "[server-generated]"));
     }
     

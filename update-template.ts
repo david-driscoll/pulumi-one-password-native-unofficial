@@ -734,7 +734,7 @@ ${templates.map(template => {
             Urls = urls,
             Tags = tags,
             Vault = vault,
-            Fields = fields.ToImmutableArray()
+            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)
         });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsTo${template.name.replace(/ /g, '')}(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)

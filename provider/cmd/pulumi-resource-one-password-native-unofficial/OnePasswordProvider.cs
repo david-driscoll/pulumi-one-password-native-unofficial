@@ -7,6 +7,7 @@ using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 using Serilog;
 using static pulumi_resource_one_password_native_unofficial.TemplateMetadata;
 using System.Text.Json.Serialization;
+using Humanizer;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli.ConnectServer;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli.ServiceAccount;
 
@@ -58,15 +59,9 @@ public class OnePasswordProvider : Provider
             List<CheckFailure> failures = new();
             if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
 
-            request.NewInputs.TryAdd("category", new(resourceType.Urn == ItemType.Item ? "Secure Note" : resourceType.ItemName));
-            if (request.OldState.TryGetValue("title", out var property) && property.TryGetString(out var p))
-            {
-                request.NewInputs.TryAdd("title", new(p!));
-            }
-
             // DebugHelper.WaitForDebugger();
 
-            var news = resourceType.TransformInputs(request.NewInputs);
+            var news = resourceType.TransformInputs(ApplyDefaultInputs(resourceType, request.NewInputs, request.OldState));
             var olds = resourceType.TransformInputs(request.OldState);
 
             var diff = olds.CreatePatch(news, new JsonSerializerOptions()
@@ -76,7 +71,7 @@ public class OnePasswordProvider : Provider
                 })
                 .Operations;
 
-            var replaces = new List<string>();
+            var replaces = new HashSet<string>();
             if (resourceType.ItemName == "Item" &&
                 diff.Any(z => z.Path.Segments.Length == 1 && z.Op == OperationType.Replace && z.Path.Segments[0].Value.Equals("category")))
             {
@@ -93,7 +88,7 @@ public class OnePasswordProvider : Provider
                 Changes = diff.Any(),
                 DetailedDiff = diff.Aggregate(new Dictionary<string, PropertyDiff>(), (result, patchOperation) =>
                 {
-                    var diff = result[patchOperation.Path.ToString()] = new PropertyDiff()
+                    var diff = result[patchOperation.ToPropertyPath()] = new PropertyDiff()
                     {
                         InputDiff = true,
                         Kind = patchOperation.Op switch
@@ -104,7 +99,7 @@ public class OnePasswordProvider : Provider
                             _ => PropertyDiffKind.Update,
                         },
                     };
-                    if (replaces.Contains(patchOperation.Path.Segments[0].Value))
+                    if (replaces.Contains(patchOperation.Path.Segments[0].Value.Camelize()))
                     {
                         diff.Kind = diff.Kind switch
                         {
@@ -117,10 +112,10 @@ public class OnePasswordProvider : Provider
 
                     return result;
                 }),
-                DeleteBeforeReplace = true,
-                Replaces = replaces,
-                Stables = resourceType.ItemName == "Item" ? ["uuid"] : ["uuid", "category"],
-                Diffs = diff.Select(z => z.Path.Segments[0].Value).ToList(),
+                DeleteBeforeReplace = false,
+                Replaces = replaces.ToList(),
+                Stables = resourceType.ItemName.Equals("Item", StringComparison.OrdinalIgnoreCase) ? ["uuid"] : ["uuid", "category"],
+                Diffs = diff.Select(z => z.Path.Segments[0].Value.Camelize()).Distinct().ToList(),
             };
         }
         catch (Exception e)
@@ -138,10 +133,11 @@ public class OnePasswordProvider : Provider
             // DebugHelper.WaitForDebugger();
 
 
-            var news = resourceType.TransformInputs(request.Properties);
+            var news = resourceType.TransformInputs(ApplyDefaultInputs(resourceType, request.Properties));
 
-            var response = await _op.Items.Create(new(news.Category)
+            var response = await _op.Items.Create(new()
             {
+                Category = news.Category,
                 Title = news.Title ?? Helpers.NewUniqueName(Helpers.GetNameFromUrn(request.Urn)),
                 Vault = news.Vault,
                 Tags = news.Tags,
@@ -169,7 +165,15 @@ public class OnePasswordProvider : Provider
             if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
             // DebugHelper.WaitForDebugger();
 
-            var news = resourceType.TransformInputs(request.News);
+            var news = resourceType.TransformInputs(ApplyDefaultInputs(resourceType, request.News, request.Olds));
+            var olds = resourceType.TransformInputs(request.Olds);
+
+            var diff = olds.CreatePatch(news, new JsonSerializerOptions()
+                {
+                    PropertyNameCaseInsensitive = true,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+                })
+                .Operations;
 
             var response = await _op.Items.Edit(new()
             {
@@ -226,6 +230,8 @@ public class OnePasswordProvider : Provider
             _ => GetItem(functionType, request.Args, ct)
         };
     }
+    
+    
 
     private async Task<InvokeResponse> GetVault(FunctionType functionType, ImmutableDictionary<string, PropertyValue> inputs, CancellationToken ct)
     {
@@ -266,6 +272,31 @@ public class OnePasswordProvider : Provider
         var response = await _op.Items.Get(new() { Vault = GetStringValue(inputs, "vault"), Id = GetStringValue(inputs, "id")! }, ct);
 
         return new() { Return = functionType.TransformOutputs(response) };
+    }
+
+    private static ImmutableDictionary<string, PropertyValue> ApplyDefaultInputs(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> requestNews)
+    {
+        if (GetObjectStringValue(requestNews, "notes") is null)
+        {
+            requestNews = requestNews.Remove("notes").Add("notes", new (""));
+        }
+
+        if (GetObjectStringValue(requestNews, "category") is not { Length: > 0 })
+        {
+            requestNews = requestNews.Remove("category").Add("category", new(resourceType.Urn == ItemType.Item ? "Secure Note" : resourceType.ItemName));
+        }
+
+        return requestNews;
+    }
+
+    private static ImmutableDictionary<string, PropertyValue> ApplyDefaultInputs(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> requestNews, ImmutableDictionary<string, PropertyValue>? oldState)
+    {
+        if (GetObjectStringValue(requestNews, "title") is not { Length: > 0 })
+        {
+            requestNews = requestNews.Remove("title").Add("title", oldState["title"]);
+        }
+
+        return ApplyDefaultInputs(resourceType, requestNews);
     }
 
     private async Task<InvokeResponse> Inject(FunctionType functionType, ImmutableDictionary<string, PropertyValue> inputs, CancellationToken ct)

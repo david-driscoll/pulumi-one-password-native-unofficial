@@ -231,7 +231,7 @@ public static partial class TemplateMetadata
             Urls = urls,
             Tags = tags,
             Vault = vault,
-            Fields = fields.ToImmutableArray()
+            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)
         });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsToAPICredential(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
@@ -600,7 +600,7 @@ public static partial class TemplateMetadata
             Urls = urls,
             Tags = tags,
             Vault = vault,
-            Fields = fields.ToImmutableArray()
+            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)
         });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsToBankAccount(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
@@ -1146,7 +1146,7 @@ public static partial class TemplateMetadata
             Urls = urls,
             Tags = tags,
             Vault = vault,
-            Fields = fields.ToImmutableArray()
+            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)
         });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsToCreditCard(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
@@ -1396,7 +1396,7 @@ public static partial class TemplateMetadata
             Urls = urls,
             Tags = tags,
             Vault = vault,
-            Fields = fields.ToImmutableArray()
+            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)
         });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsToCryptoWallet(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
@@ -1711,7 +1711,7 @@ public static partial class TemplateMetadata
             Urls = urls,
             Tags = tags,
             Vault = vault,
-            Fields = fields.ToImmutableArray()
+            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)
         });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsToDatabase(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
@@ -1834,7 +1834,7 @@ public static partial class TemplateMetadata
             Urls = urls,
             Tags = tags,
             Vault = vault,
-            Fields = fields.ToImmutableArray()
+            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)
         });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsToDocument(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
@@ -2180,7 +2180,7 @@ public static partial class TemplateMetadata
             Urls = urls,
             Tags = tags,
             Vault = vault,
-            Fields = fields.ToImmutableArray()
+            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)
         });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsToDriverLicense(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
@@ -2759,7 +2759,7 @@ public static partial class TemplateMetadata
             Urls = urls,
             Tags = tags,
             Vault = vault,
-            Fields = fields.ToImmutableArray()
+            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)
         });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsToEmailAccount(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
@@ -3588,7 +3588,7 @@ public static partial class TemplateMetadata
             Urls = urls,
             Tags = tags,
             Vault = vault,
-            Fields = fields.ToImmutableArray()
+            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)
         });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsToIdentity(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
@@ -3823,7 +3823,7 @@ public static partial class TemplateMetadata
             Urls = urls,
             Tags = tags,
             Vault = vault,
-            Fields = fields.ToImmutableArray()
+            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)
         });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsToItem(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
@@ -3935,7 +3935,7 @@ public static partial class TemplateMetadata
             Urls = urls,
             Tags = tags,
             Vault = vault,
-            Fields = fields.ToImmutableArray()
+            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)
         });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsToLogin(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
@@ -4217,7 +4217,7 @@ public static partial class TemplateMetadata
             Urls = urls,
             Tags = tags,
             Vault = vault,
-            Fields = fields.ToImmutableArray()
+            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)
         });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsToMedicalRecord(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
@@ -4541,7 +4541,7 @@ public static partial class TemplateMetadata
             Urls = urls,
             Tags = tags,
             Vault = vault,
-            Fields = fields.ToImmutableArray()
+            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)
         });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsToMembership(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
@@ -4839,7 +4839,7 @@ public static partial class TemplateMetadata
             Urls = urls,
             Tags = tags,
             Vault = vault,
-            Fields = fields.ToImmutableArray()
+            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)
         });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsToOutdoorLicense(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
@@ -5234,7 +5234,7 @@ public static partial class TemplateMetadata
             Urls = urls,
             Tags = tags,
             Vault = vault,
-            Fields = fields.ToImmutableArray()
+            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)
         });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsToPassport(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
@@ -5397,7 +5397,7 @@ public static partial class TemplateMetadata
             Urls = urls,
             Tags = tags,
             Vault = vault,
-            Fields = fields.ToImmutableArray()
+            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)
         });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsToPassword(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
@@ -5698,7 +5698,7 @@ public static partial class TemplateMetadata
             Urls = urls,
             Tags = tags,
             Vault = vault,
-            Fields = fields.ToImmutableArray()
+            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)
         });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsToRewardProgram(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
@@ -5847,7 +5847,7 @@ public static partial class TemplateMetadata
             Urls = urls,
             Tags = tags,
             Vault = vault,
-            Fields = fields.ToImmutableArray()
+            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)
         });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsToSSHKey(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
@@ -5914,7 +5914,7 @@ public static partial class TemplateMetadata
             Urls = urls,
             Tags = tags,
             Vault = vault,
-            Fields = fields.ToImmutableArray()
+            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)
         });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsToSecureNote(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
@@ -6234,7 +6234,7 @@ public static partial class TemplateMetadata
             Urls = urls,
             Tags = tags,
             Vault = vault,
-            Fields = fields.ToImmutableArray()
+            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)
         });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsToServer(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
@@ -6416,7 +6416,7 @@ public static partial class TemplateMetadata
             Urls = urls,
             Tags = tags,
             Vault = vault,
-            Fields = fields.ToImmutableArray()
+            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)
         });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsToSocialSecurityNumber(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
@@ -6828,7 +6828,7 @@ public static partial class TemplateMetadata
             Urls = urls,
             Tags = tags,
             Vault = vault,
-            Fields = fields.ToImmutableArray()
+            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)
         });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsToSoftwareLicense(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
@@ -7187,7 +7187,7 @@ public static partial class TemplateMetadata
             Urls = urls,
             Tags = tags,
             Vault = vault,
-            Fields = fields.ToImmutableArray()
+            Fields = fields.ToImmutableDictionary(z => z.Id!, z => z)
         });
     }
     public static ImmutableDictionary<string, PropertyValue> TransformOutputsToWirelessRouter(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)

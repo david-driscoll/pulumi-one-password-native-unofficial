@@ -33,6 +33,62 @@ public class ConnectServerOnePasswordBase(
         return _vaultIds.TryGetValue(name, out id) ? id : throw new KeyNotFoundException($"vault {name} not found");
     }
 
+    internal static FullItem ConvertToItemRequest(string vaultId, ItemRequestBase request, TemplateMetadata.Template templateJson)
+    {
+        var (fields, attachments, sections) = templateJson.GetFieldsAndAttachments();
+        return new FullItem()
+        {
+            Id = request is Item.EditRequest { Id: not null } editRequest
+                ? editRequest.Id
+                : null,
+            Category = Enum.TryParse<ItemCategory>(request.Category, true, out var category)
+                ? category
+                : ItemCategory.SECURE_NOTE,
+            Vault = new Vault2() { Id = vaultId },
+            Title = request.Title,
+            Urls = request.Urls.Select(x => new Urls()
+            {
+                Label = x.Label,
+                Href = x.Href,
+                Primary = x.Primary,
+            }).ToList(),
+            Tags = request.Tags,
+            Fields = fields.Select(z => new Field()
+            {
+                Id = z.Id,
+                Type = Enum.TryParse<FieldType>(z.Type, true, out var type)
+                    ? type
+                    : FieldType.STRING,
+                Value = z.Value,
+                Purpose = Enum.TryParse<FieldPurpose>(z.Purpose, true, out var purpose)
+                    ? purpose
+                    : FieldPurpose.Empty,
+                Section = z.Section is not null
+                    ? new()
+                    {
+                        Id = z.Section.Id,
+                        AdditionalProperties = new Dictionary<string, object>() { { "label", z.Section.Label } }
+                    }
+                    : null,
+                Label = z.Label,
+                // Entropy = ,
+                Generate = purpose == FieldPurpose.PASSWORD && request.GeneratePassword is not null,
+                Recipe = purpose == FieldPurpose.PASSWORD && request is { GeneratePassword: { Length: > 0 } or { CharacterSets.Length: > 0 } }
+                    ? new GeneratorRecipe()
+                    {
+                        Length = request.GeneratePassword?.Length ?? 32,
+                        CharacterSets = request.GeneratePassword?.CharacterSets
+                    }
+                    : null,
+            }).ToList(),
+            Sections = sections.Select(z => new Sections()
+            {
+                Id = z.Id,
+                AdditionalProperties = new Dictionary<string, object>() { { "label", z.Label } }
+            }).ToList(),
+        };
+    }
+
     internal static Item.Response ConvertToItemResponse(FullItem result)
     {
         return new Item.Response()
@@ -49,21 +105,7 @@ public class ConnectServerOnePasswordBase(
             LastEditedBy = result.LastEditedBy,
             CreatedAt = result.CreatedAt,
             UpdatedAt = result.UpdatedAt,
-            Fields = result.Fields?.Select(x => new Item.Field()
-            {
-                Id = x.Id,
-                Label = x.Label,
-                Type = x.Type.ToString(),
-                Purpose = x.Purpose.ToString(),
-                Section = x.Section is not null
-                    ? new Item.Section()
-                    {
-                        Id = x.Section.Id,
-                        Label = x.Section.AdditionalProperties.GetValue<string>("label"),
-                    }
-                    : null,
-                Value = x.Value,
-            }).ToImmutableArray() ?? ImmutableArray<Item.Field>.Empty,
+            Fields = result.Fields?.Select(x => CreateField(x: x)).ToImmutableArray() ?? ImmutableArray<Item.Field>.Empty,
             Tags = result.Tags?.ToImmutableArray() ?? ImmutableArray<string>.Empty,
             Urls = result.Urls?.Select(x => new Item.Url()
             {
@@ -90,5 +132,26 @@ public class ConnectServerOnePasswordBase(
                     : null,
             }).ToImmutableArray() ?? ImmutableArray<Item.File>.Empty,
         };
+
+        Item.Field CreateField(Field x)
+        {
+            var purpose = x.Purpose == FieldPurpose.Empty ? null : x.Purpose.ToString();
+            var type = x.Type.ToString();
+            return new Item.Field()
+            {
+                Id = x.Id,
+                Label = x.Label,
+                Type = type,
+                Purpose = purpose,
+                Section = x.Section is not null
+                    ? new Item.Section()
+                    {
+                        Id = x.Section.Id,
+                        Label = x.Section.AdditionalProperties.GetValue<string>("label"),
+                    }
+                    : null,
+                Value = x.Value,
+            };
+        }
     }
 }

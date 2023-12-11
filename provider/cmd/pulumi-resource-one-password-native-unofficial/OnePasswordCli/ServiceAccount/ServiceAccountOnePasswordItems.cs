@@ -48,14 +48,14 @@ public class ServiceAccountOnePasswordItems(
         return JsonSerializer.Deserialize<Item.Response>(result.StandardOutput, SerializerOptions)!;
     }
 
-    public async Task<Item.Response> Edit(Item.EditRequest request, TemplateMetadata.Template templateJson, CancellationToken cancellationToken = default)
+    public async Task<Item.Response> Edit(Item.EditRequest request, TemplateMetadata.Template templateJson,
+        CancellationToken cancellationToken = default)
     {
         var (_, attachments, _) = templateJson.GetFieldsAndAttachments();
 
         var args = ArgsBuilder
                 .Add("edit")
                 .Add(request.Id)
-                .Add("-")
                 .Add("favorite", request.Favorite)
                 .Add("title", request.Title)
                 .Add("tags", request.Tags)
@@ -67,6 +67,8 @@ public class ServiceAccountOnePasswordItems(
             var r = recipe is { Length: > 0 } or { CharacterSets.Length: > 0 } ? "=" + recipe : "";
             args = args.Add($"--generate-password{ r }");
         }
+        
+        // TODO: Update this to use assignments for the differences
 
         (args, var disposable) = await AttachFiles(args, attachments, cancellationToken);
 

@@ -1,6 +1,9 @@
 ﻿using System.Collections.Immutable;
 using System.Security.Cryptography;
 using GeneratedCode;
+using Humanizer;
+using Json.Pointer;
+using Refit;
 using Serilog;
 using File = GeneratedCode.File;
 
@@ -22,55 +25,13 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
         try
         {
             var vaultId = await GetVaultUuid(request.Vault ?? options.Vault);
-            var result = await Connect.CreateVaultItem(vaultId, new FullItem()
+            var result = await Connect.CreateVaultItem(vaultId, ConvertToItemRequest(vaultId, request, templateJson));
+
+            result.Vault = new Vault2()
             {
-                Category = Enum.TryParse<ItemCategory>(request.Category, true, out var category)
-                    ? category
-                    : throw new ArgumentException($"Could not find category {request.Category}"),
-                Title = request.Title,
-                Urls = request.Urls.Select(x => new Urls()
-                {
-                    Label = x.Label,
-                    Href = x.Href,
-                    Primary = x.Primary,
-                }).ToList(),
-                Tags = request.Tags,
-                Fields = fields.Select(z => new Field()
-                    {
-                        Id = z.Id,
-                        Type = Enum.TryParse<FieldType>(z.Type, true, out var type)
-                            ? type
-                            : FieldType.STRING,
-                        Value = z.Value,
-                        Purpose = Enum.TryParse<FieldPurpose>(z.Purpose, true, out var purpose)
-                            ? purpose
-                            : FieldPurpose.Empty,
-                        Section = z.Section is not null
-                            ? new()
-                            {
-                                Id = z.Section.Id,
-                                AdditionalProperties = new Dictionary<string, object>() { { "label", z.Section.Label } }
-                            }
-                            : null,
-                        Label = z.Label,
-                        // Entropy = ,
-                        // Generate = ,
-                        Generate = purpose == FieldPurpose.PASSWORD && request.GeneratePassword is not null,
-                        Recipe = purpose == FieldPurpose.PASSWORD && request is { GeneratePassword: { Length: > 0 } or { CharacterSets.Length: > 0 } }
-                            ? new GeneratorRecipe()
-                            {
-                                Length = request.GeneratePassword?.Length ?? 32,
-                                CharacterSets = request.GeneratePassword?.CharacterSets
-                            }
-                            : null,
-                    })
-                    .ToList(),
-                Sections = sections.Select(z => new Sections()
-                {
-                    Id = z.Id,
-                    AdditionalProperties = new Dictionary<string, object>() { { "label", z.Label } }
-                }).ToList(),
-            });
+                Id = vaultId,
+                AdditionalProperties = new Dictionary<string, object>() { { "name", request.Vault ?? options.Vault } }
+            };
 
             return ConvertToItemResponse(result);
         }
@@ -81,7 +42,8 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
         }
     }
 
-    public async Task<Item.Response> Edit(Item.EditRequest request, TemplateMetadata.Template templateJson, CancellationToken cancellationToken = default)
+    public async Task<Item.Response> Edit(Item.EditRequest request, TemplateMetadata.Template templateJson,
+        CancellationToken cancellationToken = default)
     {
         var (fields, attachments, sections) = templateJson.GetFieldsAndAttachments();
         if (attachments.Any())
@@ -92,47 +54,43 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
         try
         {
             var vaultId = await GetVaultUuid(request.Vault ?? options.Vault);
-            var result = await Connect.UpdateVaultItem(vaultId, request.Id, new FullItem()
+            // var requestInput = ConvertToItemRequest(vaultId, request, templateJson);
+            var existingItem = await Connect.GetVaultItemById(vaultId, request.Id);
+            existingItem.Tags = request.Tags;
+            existingItem.Title = request.Title;
+            existingItem.Urls = request.Urls.Select(x => new Urls()
             {
-                Vault = new Vault2() { Id = vaultId },
-                Title = request.Title,
-                Urls = request.Urls.Select(x => new Urls()
-                {
-                    Label = x.Label,
-                    Href = x.Href,
-                    Primary = x.Primary,
-                }).ToList(),
-                Tags = request.Tags,
-                Fields = fields.Select(z => new Field()
-                {
-                    Id = z.Id,
-                    Type = Enum.TryParse<FieldType>(z.Type, true, out var type)
-                        ? type
-                        : FieldType.STRING,
-                    Value = z.Value,
-                    Purpose = Enum.TryParse<FieldPurpose>(z.Purpose, true, out var purpose)
-                        ? purpose
-                        : FieldPurpose.Empty,
-                    Section = z.Section is not null
-                        ? new()
-                        {
-                            Id = z.Section.Id,
-                            AdditionalProperties = new Dictionary<string, object>() { { "label", z.Section.Label } }
-                        }
-                        : null,
-                    Label = z.Label,
-                    // Entropy = ,
-                    // Generate = ,
-                    // Recipe = ,
-                }).ToList(),
-                Sections = sections.Select(z => new Sections()
-                {
-                    Id = z.Id,
-                    AdditionalProperties = new Dictionary<string, object>() { { "label", z.Label } }
-                }).ToList(),
-            });
+                Label = x.Label,
+                Href = x.Href,
+                Primary = x.Primary,
+            }).ToList();
+            foreach (var (field, templateField) in existingItem.Fields.Join(templateJson.Fields, x => x.Id, x => x.Id, (x, y) => (x, y)))
+            {
+                field.Value = templateField.Value;
+                field.Label = templateField.Label;
+                field.Type = Enum.TryParse<FieldType>(templateField.Type, true, out var type)
+                    ? type
+                    : FieldType.STRING;
+            }
 
+            foreach (var (section, templateSection) in existingItem.Sections.Join(templateJson.Sections, x => x.Id, x => x.Id, (x, y) => (x, y)))
+            {
+                section.Label = templateSection.Label;
+            }
+
+            var result = await Connect.UpdateVaultItem(vaultId, request.Id, existingItem);
+
+            result.Vault = new Vault2()
+            {
+                Id = vaultId,
+                AdditionalProperties = new Dictionary<string, object>() { { "name", request.Vault ?? options.Vault } }
+            };
             return ConvertToItemResponse(result);
+        }
+        catch (ApiException e)
+        {
+            Logger.Error(e, "Error editing item {Content}", e.Content);
+            throw;
         }
         catch (Exception e)
         {
@@ -145,6 +103,12 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
     {
         var vaultId = await GetVaultUuid(request.Vault ?? options.Vault);
         var result = await Connect.GetVaultItemById(vaultId, request.Id);
+
+        result.Vault = new Vault2()
+        {
+            Id = vaultId,
+            AdditionalProperties = new Dictionary<string, object>() { { "name", request.Vault ?? options.Vault } }
+        };
         return ConvertToItemResponse(result!);
     }
 

@@ -133,17 +133,19 @@ public static partial class TemplateMetadata
     {
         if (root.TryGetValue("generatePassword", out var gp))
         {
-            inputs = inputs with
+            if (!inputs.Fields.TryGetValue("password", out var passwordField))
             {
-                Fields = inputs.Fields.Add(new TemplateField()
+                passwordField = new TemplateField()
                 {
                     Value = null!,
                     Label = "password",
                     Type = "CONCEALED",
                     Id = "password",
                     Purpose = "PASSWORD",
-                })
-            };
+                };
+                inputs = inputs with { Fields = inputs.Fields.Add("password", passwordField) };
+            }
+
             if (gp.TryGetBool(out var b) && b)
             {
                 inputs = inputs with { GeneratePassword = new PasswordGeneratorRecipe() };
@@ -154,14 +156,17 @@ public static partial class TemplateMetadata
                 {
                     GeneratePassword = new PasswordGeneratorRecipe()
                     {
-                        Length = GetObjectNumberValue(obj, "length") ?? 32,
+                        Length = GetObjectNumberValue(obj, "length"),
                     }
                 };
                 if (GetObjectBoolValue(obj, "digits") ?? false)
                 {
                     inputs = inputs with
                     {
-                        GeneratePassword = inputs.GeneratePassword with { CharacterSets = (inputs.GeneratePassword.CharacterSets ?? ImmutableArray<CharacterSets>.Empty).Add(CharacterSets.DIGITS) }
+                        GeneratePassword = inputs.GeneratePassword with
+                        {
+                            CharacterSets = (inputs.GeneratePassword.CharacterSets ?? ImmutableArray<CharacterSets>.Empty).Add(CharacterSets.DIGITS)
+                        }
                     };
                 }
 
@@ -169,7 +174,10 @@ public static partial class TemplateMetadata
                 {
                     inputs = inputs with
                     {
-                        GeneratePassword = inputs.GeneratePassword with { CharacterSets = (inputs.GeneratePassword.CharacterSets ?? ImmutableArray<CharacterSets>.Empty).Add(CharacterSets.LETTERS) }
+                        GeneratePassword = inputs.GeneratePassword with
+                        {
+                            CharacterSets = (inputs.GeneratePassword.CharacterSets ?? ImmutableArray<CharacterSets>.Empty).Add(CharacterSets.LETTERS)
+                        }
                     };
                 }
 
@@ -177,7 +185,10 @@ public static partial class TemplateMetadata
                 {
                     inputs = inputs with
                     {
-                        GeneratePassword = inputs.GeneratePassword with { CharacterSets = (inputs.GeneratePassword.CharacterSets ?? ImmutableArray<CharacterSets>.Empty).Add(CharacterSets.SYMBOLS) }
+                        GeneratePassword = inputs.GeneratePassword with
+                        {
+                            CharacterSets = (inputs.GeneratePassword.CharacterSets ?? ImmutableArray<CharacterSets>.Empty).Add(CharacterSets.SYMBOLS)
+                        }
                     };
                 }
             }
@@ -207,17 +218,17 @@ public static partial class TemplateMetadata
     )
     {
         DebugHelper.WaitForDebugger();
-        item = item with
-        {
-            Fields = item.Fields
-                .GroupBy(z => z.Id)
-                .Select(z =>
-                {
-                    var field = z.First();
-                    return z.Aggregate(field, (field, next) => field with { Value = field.Value ?? next.Value });
-                })
-                .ToImmutableArray()
-        };
+        // item = item with
+        // {
+        //     Fields = item.Fields
+        //         .GroupBy(z => z.Id)
+        //         .Select(z =>
+        //         {
+        //             var field = z.First();
+        //             return z.Aggregate(field, (field, next) => field with { Value = field.Value ?? next.Value });
+        //         })
+        //         .ToImmutableArray()
+        // };
 
         outputs.Add("id", new PropertyValue(item.Id));
         outputs.Add("category", new PropertyValue(resourceType.ItemName));
@@ -242,7 +253,7 @@ public static partial class TemplateMetadata
         var fields = item.Fields
             .Where(z => !z.Type.Equals("REFERENCE", StringComparison.OrdinalIgnoreCase))
             .Where(z => z.Section is null)
-            .Select(field => new KeyValuePair<string, PropertyValue>(field.Id, new(CreateField(item, field))))
+            .Select(field => new KeyValuePair<string, PropertyValue>(field.Id, new(CreateField(inputs, item, field))))
             .ToArray();
 
         var attachments = item.Files
@@ -252,7 +263,7 @@ public static partial class TemplateMetadata
 
         var references = item.Fields
             .Where(z => z.Type.Equals("REFERENCE", StringComparison.OrdinalIgnoreCase))
-            .Select(field => new PropertyValue(CreateField(item, field)));
+            .Select(field => new PropertyValue(CreateField(inputs, item, field)));
 
         var sections = item.Fields.Where(z => z.Section is not null).Select(z => z.Section)
             .Concat(item.Files.Where(z => z.Section is not null).Select(z => z.Section))
@@ -279,7 +290,7 @@ public static partial class TemplateMetadata
                                             .Where(z => !z.Type.Equals("REFERENCE", StringComparison.OrdinalIgnoreCase))
                                             .Where(z => z.Section is not null)
                                             .Where(z => z.Section?.Id == section.Id)
-                                            .Select(field => new KeyValuePair<string, PropertyValue>(field.Id, new(CreateField(item, field))))
+                                            .Select(field => new KeyValuePair<string, PropertyValue>(field.Id, new(CreateField(inputs, item, field))))
                                     )))
                                 .Add("attachments", new(ImmutableDictionary.Create<string, PropertyValue>()
                                     .AddRange(
@@ -291,13 +302,49 @@ public static partial class TemplateMetadata
                         ))))
         ));
 
-        static ImmutableDictionary<string, PropertyValue> CreateField(Item.Response item, Item.Field field)
+        static ImmutableDictionary<string, PropertyValue> CreateField(ImmutableDictionary<string, PropertyValue> inputs, Item.Response item, Item.Field field)
         {
+            var purpose = field.Purpose;
+            var type = field.Type;
+            {
+                if (field is { Section.Id: not null }
+                    && GetSection(inputs, field.Section.Id) is { Count: > 0 } section
+                    && field.Id is { Length: > 0 }
+                    && GetField(section, field.Id) is { Count: > 0 } fieldInput
+                    && GetObjectStringValue(fieldInput, "purpose") is { Length: > 0 } inputPurpose)
+                {
+                    purpose = inputPurpose;
+                }
+                if (field.Id is { Length: > 0 }
+                    && GetField(inputs, field.Id) is { Count: > 0 } sfieldInput
+                    && GetObjectStringValue(sfieldInput, "purpose") is { Length: > 0 } sinputPurpose)
+                {
+                    purpose = sinputPurpose;
+                }
+            }
+
+            {
+                if (field is { Section.Id: not null }
+                    && GetSection(inputs, field.Section.Id) is { Count: > 0 } section
+                    && field.Id is { Length: > 0 }
+                    && GetField(section, field.Id) is { Count: > 0 } sfieldInput
+                    && GetObjectStringValue(sfieldInput, "type") is { Length: > 0 } sinputType)
+                {
+                    type = sinputType;
+                }
+                if (field.Id is { Length: > 0 }
+                    && GetField(inputs, field.Id) is { Count: > 0 } fieldInput
+                    && GetObjectStringValue(fieldInput, "type") is { Length: > 0 } inputType)
+                {
+                    type = inputType;
+                }
+            }
+
             return ImmutableDictionary.Create<string, PropertyValue>()
                 .Add("id", field.Id is null ? PropertyValue.Null : new(field.Id))
                 .Add("value", field.Value is null ? PropertyValue.Null : new(field.Value))
-                .Add("purpose", field.Purpose is null ? PropertyValue.Null : new(field.Purpose))
-                .Add("type", field.Purpose is null ? PropertyValue.Null : new(field.Type))
+                .Add("purpose", purpose is null ? PropertyValue.Null : new(purpose))
+                .Add("type", new(type))
                 .Add("label", field.Label is null ? PropertyValue.Null : new(field.Label))
                 .Add("reference", new(MakeReference(item, field)));
         }
@@ -380,6 +427,7 @@ public static partial class TemplateMetadata
         string? value = GetObjectStringValue(data, "value");
         string? type = GetObjectStringValue(data, "type");
         string? label = GetObjectStringValue(data, "label") ?? id;
+        string? purpose = GetObjectStringValue(data, "purpose");
         // if (id is not null && section is not null)
         // {
         //     id = $"{section.Id}.{id}";
@@ -402,6 +450,7 @@ public static partial class TemplateMetadata
             Value = value ?? "",
             Label = label,
             Type = type,
+            Purpose = purpose,
             Section = section
         };
     }
@@ -638,7 +687,7 @@ public static partial class TemplateMetadata
     {
         public string? Title { get; init; }
         public required string Category { get; init; }
-        public required ImmutableArray<TemplateField> Fields { get; init; } = ImmutableArray<TemplateField>.Empty;
+        public required ImmutableDictionary<string, TemplateField> Fields { get; init; } = ImmutableDictionary<string, TemplateField>.Empty;
         public required ImmutableArray<Item.Url> Urls { get; init; } = ImmutableArray<Item.Url>.Empty;
         public required ImmutableArray<string> Tags { get; init; } = ImmutableArray<string>.Empty;
         public string? Vault { get; init; }
@@ -648,7 +697,7 @@ public static partial class TemplateMetadata
         {
             return new Template()
             {
-                Fields = inputs.Fields,
+                Fields = inputs.Fields.Values.ToImmutableArray(),
                 Urls = inputs.Urls.Select(z => new TemplateUrl() { Href = z.Href, Label = z.Label, Primary = z.Primary }).ToImmutableArray(),
             };
         }

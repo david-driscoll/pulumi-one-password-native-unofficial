@@ -6,11 +6,10 @@ namespace pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 
 public static class Item
 {
-    public record CreateRequest(string Category) : ItemRequestBase
+    public record CreateRequest : ItemRequestBase
     {
         public bool DryRun { get; init; }
         public bool Favorite { get; init; }
-        public ImmutableArray<Url> Urls { get; init; } = ImmutableArray<Url>.Empty;
     }
 
     public record EditRequest : ItemRequestBase
@@ -18,7 +17,6 @@ public static class Item
         public required string Id { get; init; }
         public bool DryRun { get; init; }
         public bool Favorite { get; init; }
-        public ImmutableArray<Url> Urls { get; init; } = ImmutableArray<Url>.Empty;
     }
 
     public record DeleteRequest(string Id)

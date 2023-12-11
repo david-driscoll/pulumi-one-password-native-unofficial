@@ -19,7 +19,7 @@
         purpose: PASSWORD,
         reference: [redacted],
         type: CONCEALED,
-        value: null
+        value: secret1234
       },
       username: {
         id: [redacted],
@@ -32,7 +32,7 @@
     },
     id: [redacted],
     notes: ,
-    password: null,
+    password: secret1234,
     references: [],
     sections: {
       mysection: {
@@ -41,7 +41,7 @@
           password2: {
             id: [redacted],
             label: password2,
-            purpose: Empty,
+            purpose: null,
             reference: [redacted],
             type: CONCEALED,
             value: secret1235!
@@ -59,7 +59,7 @@
     username: me,
     vault: {
       id: [redacted],
-      name: 
+      name: testing-pulumi
     }
   }
 }
