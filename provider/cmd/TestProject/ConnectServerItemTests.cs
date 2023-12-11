@@ -1,6 +1,8 @@
 using System.Collections.Immutable;
 using System.Net;
+using FluentAssertions;
 using Polly;
+using Pulumi;
 using pulumi_resource_one_password_native_unofficial;
 using Pulumi.Experimental.Provider;
 using Refit;
@@ -101,6 +103,55 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
     }
 
     [Fact]
+    public async Task Should_Throw_When_Attachments_Are_Used()
+    {
+        var provider = await _serverFixture.ConfigureProvider(_logger);
+
+        var data = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("testlogin", new()
+        {
+            Vault = "testing-pulumi",
+            Username = "me",
+            Attachments = new()
+            {
+                ["my-attachment"] = new StringAsset("this is an attachment"),  // ["package.json"] = new FileAsset("./Pulumi.yaml")
+            },
+            // Password = "secret1234",
+            Fields = new()
+            {
+                ["password"] = new FieldArgs()
+                {
+                    Value = "secret1234",
+                    Type = FieldType.Concealed
+                }
+            },
+            Sections = new()
+            {
+                ["mysection"] = new SectionArgs()
+                {
+                    Fields = new()
+                    {
+                        ["password2"] = new FieldArgs()
+                        {
+                            Value = "secret1235!",
+                            Type = FieldType.Concealed
+                        }
+                    },
+                    Attachments = new()
+                    {
+                        ["my-different-attachment"] = new StringAsset("this is my different attachment"),
+                        // currently there is no way to have a period escaped via the cli
+                        // ["package.json"] = new FileAsset("./Pulumi.yaml")
+                    },
+                }
+            },
+            Tags = new string[] { "test-tag" }
+        });
+
+        Func<Task> action = () => provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
+        await action.Should().ThrowAsync<NotSupportedException>();
+    }
+    
+    [Fact]
     public async Task Should_Create_Login_Item()
     {
         var provider = await _serverFixture.ConfigureProvider(_logger);
@@ -194,7 +245,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
         var create = await provider.Create(new CreateRequest(createInput.Urn, createInput.Request, TimeSpan.MaxValue, false), CancellationToken.None);
 
         await Policy.Handle<ApiException>(exception => exception.StatusCode == HttpStatusCode.NotFound)
-            .WaitAndRetryAsync(50, _ => TimeSpan.FromMicroseconds(100))
+            .WaitAndRetryAsync(50, _ => TimeSpan.FromMilliseconds(100))
             .ExecuteAsync(() => _serverFixture.Connect.GetVaultItemById(
                 TemplateMetadata.GetObjectStringValue(TemplateMetadata.GetObjectValue(create.Properties!.ToImmutableDictionary(), "vault")!, "id"),
                 create.Id
