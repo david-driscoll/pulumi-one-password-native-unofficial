@@ -22,3 +22,6 @@ ci-scripts/
 # schema for the provider GetSchema gRPC request
 /provider/cmd/pulumi-resource-*/schema.json
 **/out.txt
+
+*.DotSettings.user
+
