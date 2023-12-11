@@ -20,7 +20,7 @@ public abstract class ServiceAccountOnePasswordBase(
 
     protected Task<BufferedCommandResult> ExecuteCommand(Command command, CancellationToken cancellationToken)
     {
-        Logger.Information("Executing command: {Command} {Input}", command.Arguments);
+        // Logger.Information("Executing command: {Command} {Input}", command.Arguments);
         return command
             .WithEnvironmentVariables(options.Apply)
             .ExecuteBufferedAsync(cancellationToken);
@@ -28,7 +28,7 @@ public abstract class ServiceAccountOnePasswordBase(
 
     protected Task<BufferedCommandResult> ExecuteCommand(Command command, string standardInput, CancellationToken cancellationToken)
     {
-        Logger.Information("Executing command: {Command} - {Input}", command.Arguments, standardInput);
+        // Logger.Information("Executing command: {Command} - {Input}", command.Arguments, standardInput);
         return command
             .WithEnvironmentVariables(options.Apply)
             .WithStandardInputPipe(PipeSource.FromString(standardInput))

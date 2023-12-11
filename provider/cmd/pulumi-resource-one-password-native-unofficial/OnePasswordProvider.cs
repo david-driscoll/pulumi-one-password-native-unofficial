@@ -7,7 +7,9 @@ using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 using Serilog;
 using static pulumi_resource_one_password_native_unofficial.TemplateMetadata;
 using System.Text.Json.Serialization;
+using CliWrap.Exceptions;
 using Humanizer;
+using Polly;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli.ConnectServer;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli.ServiceAccount;
 
@@ -134,7 +136,7 @@ public class OnePasswordProvider : Provider
 
 
             var news = resourceType.TransformInputs(ApplyDefaultInputs(resourceType, request.Properties));
-
+            
             var response = await _op.Items.Create(new()
             {
                 Category = news.Category,
@@ -200,7 +202,7 @@ public class OnePasswordProvider : Provider
     {
         try
         {
-            Log.Logger.Information("Deleting item {Id} {@Properties}", request.Id, request.Properties);
+            // Log.Logger.Information("Deleting item {Id} {@Properties}", request.Id, request.Properties);
             await _op.Items.Delete(new(request.Id)
             {
                 Vault = GetObjectStringValue(GetObjectValue(request.Properties, "vault") ?? PropertyValue.Null, "id")

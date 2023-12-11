@@ -2,6 +2,8 @@
 using System.Reactive.Disposables;
 using System.Text.Json;
 using CliWrap;
+using CliWrap.Exceptions;
+using Polly;
 using Pulumi;
 using Serilog;
 
@@ -34,16 +36,19 @@ public class ServiceAccountOnePasswordItems(
         if (request is { GeneratePassword: { } recipe })
         {
             var r = recipe is { Length: > 0 } or { CharacterSets.Length: > 0 } ? "=" + recipe : "";
-            args = args.Add($"--generate-password{ r }");
+            args = args.Add($"--generate-password{r}");
         }
 
         (args, var disposable) = await AttachFiles(args, attachments, cancellationToken);
 
-        var result = await ExecuteCommand(
-            Command.WithArguments(args.Build()),
-            templateJson,
-            cancellationToken
-        );
+        var result = await Policy.Handle<CommandExecutionException>(exception => exception.Message.Contains("(409) (Conflict)"))
+            .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)))
+            .ExecuteAsync(() => ExecuteCommand(
+                Command.WithArguments(args.Build()),
+                templateJson,
+                cancellationToken
+            ));
+        disposable.Dispose();
 
         return JsonSerializer.Deserialize<Item.Response>(result.StandardOutput, SerializerOptions)!;
     }
@@ -65,18 +70,21 @@ public class ServiceAccountOnePasswordItems(
         if (request is { GeneratePassword: { } recipe })
         {
             var r = recipe is { Length: > 0 } or { CharacterSets.Length: > 0 } ? "=" + recipe : "";
-            args = args.Add($"--generate-password{ r }");
+            args = args.Add($"--generate-password{r}");
         }
-        
+
         // TODO: Update this to use assignments for the differences
 
         (args, var disposable) = await AttachFiles(args, attachments, cancellationToken);
 
-        var result = await ExecuteCommand(
-            Command.WithArguments(args.Build()),
-            templateJson,
-            cancellationToken
-        );
+        var result = await Policy.Handle<CommandExecutionException>(exception => exception.Message.Contains("(409) (Conflict)"))
+            .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)))
+            .ExecuteAsync(() => ExecuteCommand(
+                Command.WithArguments(args.Build()),
+                templateJson,
+                cancellationToken
+            ));
+        disposable.Dispose();
 
         return JsonSerializer.Deserialize<Item.Response>(result.StandardOutput, SerializerOptions)!;
     }
@@ -88,12 +96,12 @@ public class ServiceAccountOnePasswordItems(
         foreach (var attachment in attachments)
         {
             var filePath = await attachment.Asset.ResolveAssetPath(tempDirectory.FullName, attachment.Id!, cancellationToken);
-            Logger.Information("Attaching file {Id} {Path} exists: {Exists}", attachment.Id, filePath, File.Exists(filePath));
+            // Logger.Information("Attaching file {Id} {Path} exists: {Exists}", attachment.Id, filePath, File.Exists(filePath));
             var id = attachment is { Section: { Id: { Length: > 0 } section } } ? $"{section}.{attachment.Id}" : attachment.Id;
             args = args.Add($"\"{id}[file]={filePath}\"");
         }
 
-        return (args, Disposable.Empty);
+        return (args, Disposable.Create(tempDirectory.FullName, (s) => Directory.Delete(s, true)));
     }
 
     public async Task<Item.Response> Get(Item.GetRequest request, CancellationToken cancellationToken = default)
