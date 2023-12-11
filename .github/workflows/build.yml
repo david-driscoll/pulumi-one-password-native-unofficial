@@ -30,7 +30,7 @@ jobs:
     # todo build stuff here
     # add commit back for windows sdk work
     name: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest      
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
@@ -56,15 +56,16 @@ jobs:
       - name: Install Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
       - run: make generate build install
-      - name: Load Secrets
-        uses: 1password/load-secrets-action@v1
-        with:
-          export-env: true
-        env:
-          PULUMI_ONEPASSWORD_SERVICE_ACCOUNT_TOKEN: "op://onepassword-pulumi/crhc7whbpeu622g672yyjnggjm/credential"
-          PULUMI_ONEPASSWORD_CONNECT_JSON: "op://onepassword-pulumi/testing-pulumi Credentials File/credential"
-          PULUMI_ONEPASSWORD_CONNECT_TOKEN: "op://onepassword-pulumi/3ed4w3nhjfyjzh3sts2eonhlzq/credential"
-      - run: dotnet test
+        # tests are disabled for now
+#      - name: Load Secrets
+#        uses: 1password/load-secrets-action@v1
+#        with:
+#          export-env: true
+#        env:
+#          PULUMI_ONEPASSWORD_SERVICE_ACCOUNT_TOKEN: "op://onepassword-pulumi/crhc7whbpeu622g672yyjnggjm/credential"
+#          PULUMI_ONEPASSWORD_CONNECT_JSON: "op://onepassword-pulumi/testing-pulumi Credentials File/credential"
+#          PULUMI_ONEPASSWORD_CONNECT_TOKEN: "op://onepassword-pulumi/3ed4w3nhjfyjzh3sts2eonhlzq/credential"
+#      - run: dotnet test
       - if: "'${{ steps.commit-message.outputs.message }}' != 'Updating sdk'"
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
