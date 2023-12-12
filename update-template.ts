@@ -847,7 +847,7 @@ function getFieldType(field: Field) {
         id: field.id,
         secret: false,
         default: field.value,
-        type: field.type == 'DATE' ? 'date' : 'string',
+        type: 'string',
         kind: field.type,
         langauge: {
             csharp: {
