@@ -13,12 +13,14 @@ public class ConnectServerOnePasswordBase(
     private protected readonly ILogger Logger = logger;
     private ImmutableDictionary<string, string> _vaultIds = ImmutableDictionary<string, string>.Empty.WithComparers(StringComparer.OrdinalIgnoreCase);
 
-    internal readonly I1PasswordConnect Connect = Helpers.CreateConnectClient(
+    private readonly Lazy<I1PasswordConnect> _connect = new(() => Helpers.CreateConnectClient(
         // ReSharper disable once NullableWarningSuppressionIsUsed
         options.ConnectHost!,
         // ReSharper disable once NullableWarningSuppressionIsUsed
         options.ConnectToken!
-    );
+    )); 
+
+    internal I1PasswordConnect Connect => _connect.Value;
 
     protected async Task<string> GetVaultUuid(string? name)
     {
