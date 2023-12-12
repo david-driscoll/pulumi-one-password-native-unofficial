@@ -25,7 +25,7 @@ public static partial class TemplateMetadata
     {
         return CollectionExtensions.GetValueOrDefault(FunctionTypesDictionary, urn);
     }
-    
+
     private static string Type(string urn)
     {
         var parts = urn.Split("::");
@@ -58,6 +58,80 @@ public static partial class TemplateMetadata
         public ImmutableDictionary<string, PropertyValue> TransformOutputs(Item.Response item, ImmutableDictionary<string, PropertyValue>? inputs)
         {
             return TransformItemToOutputs(this, item, inputs);
+        }
+
+        public ImmutableDictionary<string, PropertyValue> TransformOutputs(Inputs item, ImmutableDictionary<string, PropertyValue>? inputs)
+        {
+            var response = new Item.Response()
+            {
+                Vault = new Item.VaultResponse()
+                {
+                    Id = null,
+                    Name = item.Vault,
+                },
+                Category = item.Category,
+                Title = item.Title,
+                Urls = item.Urls.Select(z => new Item.Url()
+                {
+                    Href = z.Href,
+                    Primary = z.Primary,
+                    Label = z.Label,
+                }).ToImmutableArray(),
+                Sections = item.Fields
+                    .Select(z => z.Value.Section).Where(z => z is not null).Distinct(z => z.Id).Select(z => new Item.Section()
+                    {
+                        Id = z!.Id,
+                        Label = z.Label,
+                    }).ToImmutableArray(),
+                Fields = item.Fields
+                    .Where(z => !string.Equals(z.Value.Type, "FILE", StringComparison.OrdinalIgnoreCase))
+                    .Select(z => new Item.Field()
+                    {
+                        Id = z.Value.Id,
+                        Label = z.Value.Label,
+                        Type = z.Value.Type!,
+                        Purpose = z.Value.Purpose,
+                        Section = z.Value.Section is null
+                            ? null
+                            : new Item.Section()
+                            {
+                                Id = z.Value.Section.Id!,
+                                Label = z.Value.Section.Label,
+                            },
+                        Value = z.Value.Value,
+                    }).ToImmutableArray(),
+                Files = item.Fields
+                    .Where(z => string.Equals(z.Value.Type, "FILE", StringComparison.OrdinalIgnoreCase))
+                    .Select(z => new Item.File()
+                    {
+                        Id = z.Value.Id ?? z.Key,
+                        Name = z.Value.Label ?? z.Key,
+                        Section = z.Value.Section is null
+                            ? null
+                            : new Item.Section()
+                            {
+                                Id = z.Value.Section.Id!,
+                                Label = z.Value.Section.Label,
+                            },
+                    }).ToImmutableArray(),
+            };
+
+            var result = TransformItemToOutputs(this, response, inputs);
+            var vault = GetObjectValue(result, "vault");
+            if (vault is { Type: PropertyValueType.Object })
+            {
+                result = result.SetItem("vault", new PropertyValue(ImmutableDictionary.Create<string, PropertyValue>()
+                    .Add("id", PropertyValue.Computed)
+                    .Add("name", item.Vault is null ? PropertyValue.Null : new PropertyValue(item.Vault))
+                ));
+            }
+
+            if (GetObjectStringValue(result, "title") is not { Length: > 0 })
+            {
+                result = result.SetItem("title", PropertyValue.Computed);
+            }
+
+            return result;
         }
     }
 
@@ -303,14 +377,14 @@ public static partial class TemplateMetadata
                                             .Where(z => z.Section?.Id == section.Id)
                                             .Select(field => new KeyValuePair<string, PropertyValue>(field.Id!, new(CreateField(inputs, item, field))))
                                     )))
-                                .Add("references", new (ImmutableArray.Create<PropertyValue>()
+                                .Add("references", new(ImmutableArray.Create<PropertyValue>()
                                     .AddRange(
                                         item.Fields
                                             .Where(z => z.Type.Equals("REFERENCE", StringComparison.OrdinalIgnoreCase))
                                             .Where(z => z.Section is not null)
                                             .Where(z => z.Section?.Id == section.Id)
                                             .Select(field => new PropertyValue(CreateField(inputs, item, field))))
-                                    ))
+                                ))
                                 .Add("attachments", new(ImmutableDictionary.Create<string, PropertyValue>()
                                     .AddRange(
                                         item.Files
@@ -335,6 +409,7 @@ public static partial class TemplateMetadata
                 {
                     purpose = inputPurpose;
                 }
+
                 if (field.Id is { Length: > 0 }
                     && inputs is not null
                     && GetField(inputs, field.Id) is { Count: > 0 } sfieldInput
@@ -354,6 +429,7 @@ public static partial class TemplateMetadata
                 {
                     type = sinputType;
                 }
+
                 if (field.Id is { Length: > 0 }
                     && inputs is not null
                     && GetField(inputs, field.Id) is { Count: > 0 } fieldInput
@@ -571,7 +647,7 @@ public static partial class TemplateMetadata
                 if (fieldsAlreadyAdded.Contains(attachment.Id)) continue;
                 yield return attachment;
             }
-            
+
             foreach (var field in AssignReferences(data, templateSection))
             {
                 if (fieldsAlreadyAdded.Contains(field.Id)) continue;

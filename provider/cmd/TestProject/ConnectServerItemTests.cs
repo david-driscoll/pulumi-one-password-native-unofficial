@@ -1,7 +1,9 @@
 using System.Collections.Immutable;
 using System.Net;
 using FluentAssertions;
+using GeneratedCode;
 using Polly;
+using Polly.Retry;
 using Pulumi;
 using pulumi_resource_one_password_native_unofficial;
 using Pulumi.Experimental.Provider;
@@ -192,9 +194,124 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
             .AddIdScrubber(create.Id);
     }
 
-
     [Fact]
     public async Task Should_Update_Login_Item()
+    {
+        var provider = await _serverFixture.ConfigureProvider(_logger);
+
+        var createInput = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
+        {
+            Vault = "testing-pulumi",
+            Username = "me",
+            Password = "secret1234",
+            Sections = new()
+            {
+                ["mysection"] = new SectionArgs()
+                {
+                    Fields = new()
+                    {
+                        ["password2"] = new FieldArgs()
+                        {
+                            Value = "secret1235!",
+                            Type = FieldType.Concealed
+                        }
+                    },
+                }
+            },
+            Tags = new[] { "test-tag" }
+        });
+
+        var updateInput = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
+        {
+            Vault = "testing-pulumi",
+            Username = "me2",
+            Password = "secret12344",
+            Sections = new()
+            {
+                ["mysection"] = new SectionArgs()
+                {
+                    Fields = new()
+                    {
+                        ["password2"] = new FieldArgs()
+                        {
+                            Value = "secrtet1235!",
+                            Type = FieldType.Concealed
+                        }
+                    },
+                }
+            },
+            Tags = new[] { "test-tag", "another tag" }
+        });
+
+        var create = await provider.Create(new CreateRequest(createInput.Urn, createInput.Request, TimeSpan.MaxValue, false), CancellationToken.None);
+
+        var pipeline = new ResiliencePipelineBuilder<FullItem>()
+            .AddRetry(new RetryStrategyOptions<FullItem>()
+            {
+                BackoffType = DelayBackoffType.Linear,
+                MaxRetryAttempts = 50,
+                Delay = TimeSpan.FromMilliseconds(100),
+                UseJitter = true,
+                ShouldHandle = arguments => ValueTask.FromResult(arguments.Outcome.Exception is ApiException { StatusCode: HttpStatusCode.NotFound }),
+            })
+            .Build();
+            
+        await pipeline.ExecuteAsync(static async (c, ct) => await c.Connect.GetVaultItemById(
+            TemplateMetadata.GetObjectStringValue(TemplateMetadata.GetObjectValue(c.create.Properties!.ToImmutableDictionary(), "vault")!, "id"),
+            c.create.Id
+        ), (_serverFixture.Connect, create), CancellationToken.None);
+
+        var update = await provider.Update(
+            new UpdateRequest(updateInput.Urn, create.Id!, create.Properties!.ToImmutableDictionary(), updateInput.Request.ToImmutableDictionary(),
+                TimeSpan.MaxValue, ImmutableArray<string>.Empty, false), CancellationToken.None);
+
+        await Verify(new { create, update })
+            .AddIdScrubber(create.Id);
+    }
+
+    
+    [Fact]
+    public async Task Should_Support_Create_Preview_Login_Item()
+    {
+        var provider = await _serverFixture.ConfigureProvider(_logger);
+
+        var data = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
+        {
+            Vault = "testing-pulumi",
+            Username = "me",
+            // Password = "secret1234",
+            Fields = new()
+            {
+                ["password"] = new FieldArgs()
+                {
+                    Value = "secret1234",
+                    Type = FieldType.Concealed
+                }
+            },
+            Sections = new()
+            {
+                ["mysection"] = new SectionArgs()
+                {
+                    Fields = new()
+                    {
+                        ["password2"] = new FieldArgs()
+                        {
+                            Value = "secret1235!",
+                            Type = FieldType.Concealed
+                        }
+                    },
+                }
+            },
+            Tags = new[] { "test-tag" }
+        });
+
+        var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, true), CancellationToken.None);
+
+        await Verify(create)
+            .AddIdScrubber(create.Id);
+    }
+    [Fact]
+    public async Task Should_Support_Update_Preview_Login_Item()
     {
         var provider = await _serverFixture.ConfigureProvider(_logger);
 
@@ -253,11 +370,12 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
 
         var update = await provider.Update(
             new UpdateRequest(updateInput.Urn, create.Id!, create.Properties!.ToImmutableDictionary(), updateInput.Request.ToImmutableDictionary(),
-                TimeSpan.MaxValue, ImmutableArray<string>.Empty, false), CancellationToken.None);
+                TimeSpan.MaxValue, ImmutableArray<string>.Empty, true), CancellationToken.None);
 
         await Verify(new { create, update })
             .AddIdScrubber(create.Id);
     }
+
 
     [Fact]
     public async Task Should_Diff_Login_Item()

@@ -128,7 +128,16 @@ public class OnePasswordProvider(ILogger logger) : Provider
 
 
             var news = resourceType.TransformInputs(ApplyDefaultInputs(resourceType, request.Properties));
-            
+
+            if (request.Preview)
+            {
+                return new CreateResponse()
+                {
+                    Id = null,
+                    Properties = resourceType.TransformOutputs(news, request.Properties),
+                };
+            }
+
             var response = await _op.Items.Create(new()
             {
                 Category = news.Category,
@@ -138,7 +147,7 @@ public class OnePasswordProvider(ILogger logger) : Provider
                 Urls = news.Urls,
                 GeneratePassword = news.GeneratePassword,
             }, news, ct);
-
+                
             return new CreateResponse()
             {
                 Id = response.Id,
@@ -168,6 +177,14 @@ public class OnePasswordProvider(ILogger logger) : Provider
                     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
                 })
                 .Operations;
+
+            if (request.Preview)
+            {
+                return new UpdateResponse()
+                {
+                    Properties = resourceType.TransformOutputs(news, request.News),
+                };
+            }
 
             var response = await _op.Items.Edit(new()
             {

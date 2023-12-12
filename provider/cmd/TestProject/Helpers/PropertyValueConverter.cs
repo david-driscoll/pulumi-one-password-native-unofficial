@@ -1,5 +1,6 @@
 ﻿using pulumi_resource_one_password_native_unofficial.Domain;
 using Pulumi.Experimental.Provider;
+
 // ReSharper disable NullableWarningSuppressionIsUsed
 
 namespace TestProject.Helpers;
@@ -7,7 +8,6 @@ namespace TestProject.Helpers;
 class DictionaryPropertyValueConverter : WriteOnlyJsonConverter<IDictionary<string, PropertyValue>>
 {
     private readonly PropertyValueConverter _converter = new();
-    private static readonly HashSet<string> ServerGeneratedFields = new(StringComparer.OrdinalIgnoreCase) { "id", "uuid", "reference", "title" };
 
     public override void Write(VerifyJsonWriter writer, IDictionary<string, PropertyValue> value)
     {
@@ -15,14 +15,7 @@ class DictionaryPropertyValueConverter : WriteOnlyJsonConverter<IDictionary<stri
         foreach (var item in value.OrderBy(z => z.Key))
         {
             writer.WritePropertyName(item.Key);
-            if (ServerGeneratedFields.Contains(item.Key))
-            {
-                writer.WriteValue(item.Key.Equals("title", StringComparison.OrdinalIgnoreCase) && item.Value.ToString()?.Length > 8 ? item.Value.ToString()?[..^8] + "abcd1234" : "[redacted]");
-            }
-            else
-            {
-                _converter.Write(writer, item.Value);
-            }
+            _converter.Write(writer, item.Value, item.Key);
         }
 
         writer.WriteEndObject();
@@ -34,6 +27,11 @@ class PropertyValueConverter : WriteOnlyJsonConverter<PropertyValue?>
     private static readonly HashSet<string> ServerGeneratedFields = new(StringComparer.OrdinalIgnoreCase) { "id", "uuid", "reference", "title" };
 
     public override void Write(VerifyJsonWriter writer, PropertyValue? value)
+    {
+        Write(writer, value, null);
+    }
+
+    internal void Write(VerifyJsonWriter writer, PropertyValue? value, string? parentProperty)
     {
         if (value is null)
         {
@@ -47,14 +45,7 @@ class PropertyValueConverter : WriteOnlyJsonConverter<PropertyValue?>
             foreach (var item in @object!.OrderBy(z => z.Key))
             {
                 writer.WritePropertyName(item.Key);
-                if (ServerGeneratedFields.Contains(item.Key))
-                {
-                    writer.WriteValue(item.Key.Equals("title", StringComparison.OrdinalIgnoreCase) ? item.Key[..^8] : "[redacted]");
-                }
-                else
-                {
-                    Write(writer, item.Value);
-                }
+                Write(writer, item.Value, item.Key);
             }
 
             writer.WriteEndObject();
@@ -69,17 +60,17 @@ class PropertyValueConverter : WriteOnlyJsonConverter<PropertyValue?>
 
             writer.WriteEndArray();
         }
-        else if (value.TryGetString(out var @string))
+        else if (value.TryGetSecret(out _))
         {
-            writer.WriteValue(@string);
+            writer.WriteValue("[secret]");
         }
-        else if (value.TryGetNumber(out var number))
+        else if (value.IsNull)
         {
-            writer.WriteValue(number);
+            writer.WriteNull();
         }
-        else if (value.TryGetBool(out var boolean))
+        else if (value.IsComputed)
         {
-            writer.WriteValue(boolean);
+            writer.WriteValue("[computed]");
         }
         else if (value.TryGetOutput(out var @output))
         {
@@ -93,17 +84,26 @@ class PropertyValueConverter : WriteOnlyJsonConverter<PropertyValue?>
         {
             writer.WriteValue(AssetOrArchiveExtensions.HashAssetOrArchive(asset));
         }
-        else if (value.TryGetSecret(out _))
+        else if (value.TryGetString(out var @string))
         {
-            writer.WriteValue("[secret]");
+            if (@parentProperty is not null && ServerGeneratedFields.Contains(@parentProperty))
+            {
+                writer.WriteValue(@parentProperty.Equals("title", StringComparison.OrdinalIgnoreCase) && @string is { Length: > 8 }
+                    ? @string[..^8] + "abcd1234"
+                    : "[redacted]");
+            }
+            else
+            {
+                writer.WriteValue(@string);
+            }
         }
-        else if (value.IsNull)
+        else if (value.TryGetNumber(out var number))
         {
-            writer.WriteNull();
+            writer.WriteValue(number);
         }
-        else if (value.IsComputed)
+        else if (value.TryGetBool(out var boolean))
         {
-            writer.WriteValue("[computed]");
+            writer.WriteValue(boolean);
         }
         else
         {
