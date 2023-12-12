@@ -404,7 +404,7 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
                 Letters = true
             },
             Tags = new[] { "test-tag" },
-            Urls = new[]
+            Urls = new()
             {
                 new UrlArgs()
                 {
@@ -446,14 +446,9 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
                 Letters = true
             },
             Tags = new[] { "test-tag" },
-            Urls = new[]
+            Urls = new()
             {
-                new UrlArgs()
-                {
-                    Href = "http://notlocalhost.com",
-                    Label = "Some really cool place",
-                    Primary = false
-                },
+                "http://notlocalhost.com",
                 new UrlArgs()
                 {
                     Href = "http://notaplace.com",
@@ -476,14 +471,9 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
                 Letters = true
             },
             Tags = new[] { "test-tag" },
-            Urls = new[]
+            Urls = new()
             {
-                new UrlArgs()
-                {
-                    Href = "http://notlocalhost.com",
-                    Label = "Some really cool place",
-                    Primary = false
-                },
+                "http://notlocalhost.com",
                 new UrlArgs()
                 {
                     Href = "http://notaplace.com",

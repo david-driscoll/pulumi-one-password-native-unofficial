@@ -15,6 +15,7 @@ using Serilog.Core;
 using TestProject.Helpers;
 using Xunit.Abstractions;
 using FieldType = Rocket.Surgery.OnePasswordNativeUnofficial.FieldType;
+
 // ReSharper disable NullableWarningSuppressionIsUsed
 
 namespace TestProject;
@@ -115,7 +116,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
             Username = "me",
             Attachments = new()
             {
-                ["my-attachment"] = new StringAsset("this is an attachment"),  // ["package.json"] = new FileAsset("./Pulumi.yaml")
+                ["my-attachment"] = new StringAsset("this is an attachment"), // ["package.json"] = new FileAsset("./Pulumi.yaml")
             },
             // Password = "secret1234",
             Fields = new()
@@ -152,7 +153,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
         Func<Task> action = () => provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
         await action.Should().ThrowAsync<NotSupportedException>();
     }
-    
+
     [Fact]
     public async Task Should_Create_Login_Item()
     {
@@ -255,7 +256,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
                 ShouldHandle = arguments => ValueTask.FromResult(arguments.Outcome.Exception is ApiException { StatusCode: HttpStatusCode.NotFound }),
             })
             .Build();
-            
+
         await pipeline.ExecuteAsync(static async (c, ct) => await c.Connect.GetVaultItemById(
             TemplateMetadata.GetObjectStringValue(TemplateMetadata.GetObjectValue(c.create.Properties!.ToImmutableDictionary(), "vault")!, "id"),
             c.create.Id
@@ -269,7 +270,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
             .AddIdScrubber(create.Id);
     }
 
-    
+
     [Fact]
     public async Task Should_Support_Create_Preview_Login_Item()
     {
@@ -310,6 +311,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
         await Verify(create)
             .AddIdScrubber(create.Id);
     }
+
     [Fact]
     public async Task Should_Support_Update_Preview_Login_Item()
     {
@@ -497,14 +499,10 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
                 Letters = true
             },
             Tags = new[] { "test-tag" },
-            Urls = new[]
+            Urls = new()
             {
-                new UrlArgs()
-                {
-                    Href = "http://notlocalhost.com",
-                    Label = "Some really cool place",
-                    Primary = false
-                },
+                
+                "http://notlocalhost.com",
                 new UrlArgs()
                 {
                     Href = "http://notaplace.com",
@@ -538,14 +536,9 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
                 Letters = true
             },
             Tags = new[] { "test-tag" },
-            Urls = new[]
+            Urls = new()
             {
-                new UrlArgs()
-                {
-                    Href = "http://notlocalhost.com",
-                    Label = "Some really cool place",
-                    Primary = false
-                },
+                "http://notlocalhost.com",
                 new UrlArgs()
                 {
                     Href = "http://notaplace.com",
@@ -568,14 +561,9 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
                 Letters = true
             },
             Tags = new[] { "test-tag" },
-            Urls = new[]
+            Urls = new()
             {
-                new UrlArgs()
-                {
-                    Href = "http://notlocalhost.com",
-                    Label = "Some really cool place",
-                    Primary = false
-                },
+                "http://notlocalhost.com",
                 new UrlArgs()
                 {
                     Href = "http://notaplace.com",
@@ -723,6 +711,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
 
         await Verify(result);
     }
+
     [Fact]
     public async Task Should_Work_With_ApiCredentialItems()
     {
@@ -745,7 +734,10 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
             }
         });
 
-        var create = await provider.Create(new CreateRequest("urn:pulumi:dev::Syndicates.Infrastructure::resources$one-password-native-unofficial:index:APICredentialItem::credential with spaces", data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
+        var create = await provider.Create(
+            new CreateRequest(
+                "urn:pulumi:dev::Syndicates.Infrastructure::resources$one-password-native-unofficial:index:APICredentialItem::credential with spaces",
+                data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
 
         await Verify(create)
             .AddIdScrubber(create.Id)
