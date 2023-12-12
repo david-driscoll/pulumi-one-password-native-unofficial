@@ -566,7 +566,6 @@ for (const template of templates) {
                 purpose: fieldInfo.purpose,
                 kind: fieldInfo.kind,
                 onePasswordId: fieldInfo.id,
-                language: fieldInfo.langauge
             }
             if (fieldInfo.default) {
                 sectionProperties[fieldInfo.name].default = fieldInfo.default
@@ -582,7 +581,6 @@ for (const template of templates) {
                 purpose: fieldInfo.purpose,
                 kind: fieldInfo.kind,
                 onePasswordId: fieldInfo.id,
-                language: fieldInfo.langauge
             }
             if (fieldInfo.purpose === 'PASSWORD' && fieldInfo.name === 'password') {
                 currentResource.inputProperties['generatePassword'] = {
@@ -596,7 +594,6 @@ for (const template of templates) {
                 purpose: fieldInfo.purpose,
                 kind: fieldInfo.kind,
                 onePasswordId: fieldInfo.id,
-                language: fieldInfo.langauge
             }
             currentFunction.outputs.properties[fieldInfo.name] = {
                 type: fieldInfo.type,
@@ -604,7 +601,6 @@ for (const template of templates) {
                 purpose: fieldInfo.purpose,
                 kind: fieldInfo.kind,
                 onePasswordId: fieldInfo.id,
-                language: fieldInfo.langauge
             }
             if (fieldInfo.default) {
                 currentResource.inputProperties[fieldInfo.name].default = fieldInfo.default
@@ -853,11 +849,6 @@ function getFieldType(field: Field) {
         default: field.value,
         type: 'string',
         kind: field.type,
-        langauge: {
-            csharp: {
-                name: field.type == 'DATE' ? 'DateOnly' : 'string',
-            }
-        },
         purpose: (field as any).purpose as FieldPurpose
     };
 
