@@ -661,6 +661,7 @@ export const PropertyPaths: Record<string, [field: string, section?: string][]> 
 
 writeFileSync('./provider/cmd/pulumi-resource-one-password-native-unofficial/Types.cs', `
 using System.Collections.Immutable;
+using pulumi_resource_one_password_native_unofficial.Domain;
 
 namespace pulumi_resource_one_password_native_unofficial;
 public static class ItemType
@@ -691,6 +692,7 @@ public static partial class TemplateMetadata
 `)
 
 writeFileSync('./provider/cmd/pulumi-resource-one-password-native-unofficial/Types.Transforms.cs', `using System.Collections.Immutable;
+using pulumi_resource_one_password_native_unofficial.Domain;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 using Pulumi.Experimental.Provider;
 
@@ -710,26 +712,7 @@ ${templates.map(template => {
             inputMethods.push(templateGetTemplateField(field));
             outputMethods.push(outputsGetOutputField(field));
         }
-
-        // UsernameField | PasswordField | OtpField | NotesField | GenericField
     }
-    /*
-
-
-        {
-            if (GetField(item, "myfield") is { } field)
-            {
-                // TODO date properties, etc.
-                outputs.Add(field.Id, new PropertyValue(field.Value));
-            }
-        }*/
-
-    /*
-    Urls = urls.Order().ToImmutableArray(),
-    Tags = tags.Order().ToImmutableArray(),
-    Vault = vault,
-    Fields = fields.OrderBy(z => z.Id).ThenBy(z => z.Section?.Id).ToImmutableArray()
-    */
     return `
     public static Inputs TransformInputsTo${template.name.replace(/ /g, '')}(IPulumiItemType resourceType, ImmutableDictionary<string, PropertyValue> values)
     {
@@ -767,7 +750,7 @@ ${templates.map(template => {
 // GetSection(values, "info") is {} section && GetField(section, "notes") is {} field
 function templateGetTemplateField(field: Field, fieldName?: string) {
     return `    {
-        if (values.TryGetValue("${fieldName ?? field.id}", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("${fieldName ?? field.id}", out var templateField) && TryGetTemplateValue("${field.type}", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -789,9 +772,8 @@ function templateGetTemplateField(field: Field, fieldName?: string) {
 function outputsGetOutputField(field: Field, fieldName?: string) {
     return `    {
         if (GetField(template, "${fieldName ?? field.id}"${field.section?.id ? `, "${field.section?.id}"` : ''}) is { } field)
-        {
-            // TODO date properties, etc.
-            ${field.section?.id ? `AddFieldToSection(outputs, "${field.section?.id}", "${fieldName ?? field.id}", new PropertyValue(field.Value));` : `outputs.Add("${fieldName ?? field.id}", new PropertyValue(field.Value))`};
+        {            
+            ${field.section?.id ? `AddFieldToSection(outputs, "${field.section?.id}", "${fieldName ?? field.id}", GetOutputPropertyValue(field));` : `outputs.Add("${fieldName ?? field.id}", GetOutputPropertyValue(field))`};
         }
     }`
 }
@@ -865,8 +847,13 @@ function getFieldType(field: Field) {
         id: field.id,
         secret: false,
         default: field.value,
-        type: 'string',
+        type: field.type == 'DATE' ? 'date' : 'string',
         kind: field.type,
+        langauge: {
+            csharp: {
+                name: field.type == 'DATE' ? 'DateOnly' : 'string',
+            }
+        },
         purpose: (field as any).purpose as FieldPurpose
     };
 

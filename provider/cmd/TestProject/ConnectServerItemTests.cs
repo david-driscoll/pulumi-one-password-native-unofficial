@@ -9,12 +9,16 @@ using pulumi_resource_one_password_native_unofficial;
 using Pulumi.Experimental.Provider;
 using Refit;
 using Rocket.Surgery.OnePasswordNativeUnofficial;
+using Rocket.Surgery.OnePasswordNativeUnofficial.CreditCard.Inputs;
+using Rocket.Surgery.OnePasswordNativeUnofficial.CreditCard.Outputs;
 using Rocket.Surgery.OnePasswordNativeUnofficial.Inputs;
 using Serilog;
 using Serilog.Core;
 using TestProject.Helpers;
 using Xunit.Abstractions;
 using FieldType = Rocket.Surgery.OnePasswordNativeUnofficial.FieldType;
+using Item = Rocket.Surgery.OnePasswordNativeUnofficial.Item;
+using TemplateMetadata = pulumi_resource_one_password_native_unofficial.TemplateMetadata;
 
 // ReSharper disable NullableWarningSuppressionIsUsed
 
@@ -152,6 +156,165 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
 
         Func<Task> action = () => provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
         await action.Should().ThrowAsync<NotSupportedException>();
+    }
+
+    [Fact]
+    public async Task Should_Handle_Date_Fields()
+    {
+        var data = await _fixture.CreateRequestObject<APICredentialItem, APICredentialItemArgs>("myapi", new()
+        {
+            Vault = "testing-pulumi",
+            Expires = "2021-10-10",
+            Fields = new ()
+            {
+                ["customDate"] = new FieldArgs()
+                {
+                    Type = FieldType.Date,
+                    Value = "2021-10-10"
+                }
+            }
+        });
+        var provider = await _serverFixture.ConfigureProvider(_logger);
+        
+        var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
+
+        await Verify(create)
+            .AddIdScrubber(create.Id);
+    }
+
+    [Fact]
+    public async Task Should_Handle_MonthYear_Fields()
+    {
+        var data = await _fixture.CreateRequestObject<MembershipItem, MembershipItemArgs>("myapi", new()
+        {
+            Vault = "testing-pulumi",
+            ExpiryDate = "2021-10",
+            Fields = new InputMap<FieldArgs>()
+            {
+                ["customMonthYear"] = new FieldArgs()
+                {
+                    Type = FieldType.MonthYear,
+                    Value = "2021-10"
+                }
+            }
+        });
+        var provider = await _serverFixture.ConfigureProvider(_logger);
+        
+        var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
+
+        await Verify(create)
+            .AddIdScrubber(create.Id);
+    }
+
+    [Fact]
+    public async Task Should_Handle_Number_Fields()
+    {
+        throw new NotImplementedException();
+        // var provider = await _serverFixture.ConfigureProvider(_logger);
+        //
+        // var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
+        //
+        // await Verify(create)
+        //     .AddIdScrubber(create.Id);
+    }
+
+    [Fact]
+    public async Task Should_Handle_Complex_Items()
+    {
+        var item = await _fixture.CreateRequestObject<Item, ItemArgs>("Infrastructure Collection", new()
+            {
+                Vault = "testing-pulumi",
+                Fields = new()
+                         {
+                             ["resourceGroup"] = new FieldArgs()
+                                                 {
+                                                     Label = "Resource Group",
+                                                     Type = FieldType.String,
+                                                     Value = "my resource group",
+                                                 },
+                         },
+                Sections = new()
+                           {
+                               ["acr"] = new SectionArgs()
+                                         {
+                                             Label = "Azure Container Registry",
+                                             Fields = new()
+                                                      {
+                                                          ["name"] = new FieldArgs()
+                                                                     {
+                                                                         Label = "Name",
+                                                                         Type = FieldType.String,
+                                                                         Value = "my registry",
+                                                                     },
+                                                          ["hostname"] = new FieldArgs()
+                                                                         {
+                                                                             Label = "Hostname",
+                                                                             Type = FieldType.String,
+                                                                             Value = "login server",
+                                                                         },
+                                                      }
+                                         },
+                               ["acrPull"] = new SectionArgs()
+                                             {
+                                                 Label = "Acr Pull Token",
+        
+                                                 Fields = new()
+                                                          {
+                                                              ["username"] = new FieldArgs()
+                                                                             {
+                                                                                 Label = "Name",
+                                                                                 Type = FieldType.String,
+                                                                                 Value = "username",
+                                                                             },
+                                                              ["password"] = new FieldArgs()
+                                                                             {
+                                                                                 Label = "Password",
+                                                                                 Type = FieldType.Concealed,
+                                                                                 Value = "password",
+                                                                             },
+                                                              ["hostname"] = new FieldArgs()
+                                                                             {
+                                                                                 Label = "Hostname",
+                                                                                 Type = FieldType.String,
+                                                                                 Value = "login server",
+                                                                             },
+                                                          }
+                                             },
+                               ["acrPush"] = new SectionArgs()
+                                             {
+                                                 Label = "Acr Push Token",
+        
+                                                 Fields = new()
+                                                          {
+                                                              ["username"] = new FieldArgs()
+                                                                             {
+                                                                                 Label = "Name",
+                                                                                 Type = FieldType.String,
+                                                                                 Value = "username",
+                                                                             },
+                                                              ["password"] = new FieldArgs()
+                                                                             {
+                                                                                 Label = "Password",
+                                                                                 Type = FieldType.Concealed,
+                                                                                 Value = "password",
+                                                                             },
+                                                              ["hostname"] = new FieldArgs()
+                                                                             {
+                                                                                 Label = "Hostname",
+                                                                                 Type = FieldType.String,
+                                                                                 Value = "login server",
+                                                                             },
+                                                          }
+                                             }
+                           }
+                    }
+        );
+        var provider = await _serverFixture.ConfigureProvider(_logger);
+        
+        var create = await provider.Create(new CreateRequest(item.Urn, item.Request, TimeSpan.MaxValue, false), CancellationToken.None);
+
+        await Verify(create)
+            .AddIdScrubber(create.Id);
     }
 
     [Fact]

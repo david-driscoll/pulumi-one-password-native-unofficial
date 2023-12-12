@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using GeneratedCode;
+using pulumi_resource_one_password_native_unofficial.Domain;
 using Refit;
 using Serilog;
 using File = GeneratedCode.File;
@@ -13,9 +14,9 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
 {
     private readonly Lazy<IOnePasswordItemTemplates> _templates = new(() => new ConnectServerOnePasswordItemTemplates(options, logger));
 
-    public async Task<Item.Response> Create(Item.CreateRequest request, TemplateMetadata.Template templateJson, CancellationToken cancellationToken = default)
+    public async Task<Item.Response> Create(Item.CreateRequest request, Template templateJson, CancellationToken cancellationToken = default)
     {
-        var (_, attachments, _) = templateJson.GetFieldsAndAttachments();
+        var (_, attachments, _) = templateJson.PrepareFieldsAndAttachments();
         if (attachments.Any())
         {
             throw new NotSupportedException("Attachments are not supported when using the Connect Server API");
@@ -35,6 +36,11 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
 
             return ConvertToItemResponse(result);
         }
+        catch (ApiException e)
+        {
+            Logger.Error(e, "Error editing item {Content}", e.Content);
+            throw;
+        }
         catch (Exception e)
         {
             Logger.Error(e, "Error creating item");
@@ -42,10 +48,9 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
         }
     }
 
-    public async Task<Item.Response> Edit(Item.EditRequest request, TemplateMetadata.Template templateJson,
-        CancellationToken cancellationToken = default)
+    public async Task<Item.Response> Edit(Item.EditRequest request, Template templateJson, CancellationToken cancellationToken = default)
     {
-        var (_, attachments, _) = templateJson.GetFieldsAndAttachments();
+        var (_, attachments, _) = templateJson.PrepareFieldsAndAttachments();
         if (attachments.Any())
         {
             throw new NotSupportedException("Attachments are not supported when using the Connect Server API");
@@ -59,7 +64,7 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
             existingItem.Sections ??= new List<Sections>();
             existingItem.Fields ??= new List<Field>();
             existingItem.Files ??= new List<File>();
-            
+
             existingItem.Tags = request.Tags;
             existingItem.Title = request.Title;
             existingItem.Urls = request.Urls.Select(x => new Urls()
@@ -128,6 +133,16 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
         catch (ApiException e) when (e.StatusCode is HttpStatusCode.NotFound)
         {
             Logger.Warning(e, "Item {Id} not found", request.Id);
+        }
+        catch (ApiException e)
+        {
+            Logger.Error(e, "Error deleting item {Content}", e.Content);
+            throw;
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e, "Error deleting item");
+            throw;
         }
     }
 

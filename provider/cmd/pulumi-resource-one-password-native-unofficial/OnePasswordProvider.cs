@@ -23,7 +23,7 @@ public class OnePasswordProvider(ILogger logger) : Provider
         try
         {
             List<CheckFailure> failures = new();
-            if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
+            if (TemplateMetadata.GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
 
             if (resourceType.Urn != ItemType.Item && request.NewInputs.TryGetValue("category", out var category) && category.TryGetString(out var c) &&
                 c != resourceType.ItemName)
@@ -51,7 +51,7 @@ public class OnePasswordProvider(ILogger logger) : Provider
         try
         {
             await Task.Yield();
-            if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
+            if (TemplateMetadata.GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
 
             // DebugHelper.WaitForDebugger();
 
@@ -123,7 +123,7 @@ public class OnePasswordProvider(ILogger logger) : Provider
     {
         try
         {
-            if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
+            if (TemplateMetadata.GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
             // DebugHelper.WaitForDebugger();
 
 
@@ -165,7 +165,7 @@ public class OnePasswordProvider(ILogger logger) : Provider
     {
         try
         {
-            if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
+            if (TemplateMetadata.GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
             // DebugHelper.WaitForDebugger();
 
             var news = resourceType.TransformInputs(ApplyDefaultInputs(resourceType, request.News, request.Olds));
@@ -304,7 +304,7 @@ public class OnePasswordProvider(ILogger logger) : Provider
     {
         if (GetObjectStringValue(requestNews, "title") is not { Length: > 0 })
         {
-            requestNews = requestNews.Remove("title").Add("title", oldState["title"]);
+            requestNews = requestNews.Remove("title").Add("title", oldState?.GetProperty("title") ?? PropertyValue.Null);
         }
 
         return ApplyDefaultInputs(resourceType, requestNews);

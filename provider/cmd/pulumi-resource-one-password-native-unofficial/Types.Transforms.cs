@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using pulumi_resource_one_password_native_unofficial.Domain;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 using Pulumi.Experimental.Provider;
 
@@ -16,7 +17,7 @@ public static partial class TemplateMetadata
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
-        if (values.TryGetValue("notes", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("notes", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -42,7 +43,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("username", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("username", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -68,7 +69,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("credential", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("credential", out var templateField) && TryGetTemplateValue("CONCEALED", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -94,7 +95,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("type", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("type", out var templateField) && TryGetTemplateValue("MENU", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -120,7 +121,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("filename", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("filename", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -146,7 +147,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("validFrom", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("validFrom", out var templateField) && TryGetTemplateValue("DATE", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -172,7 +173,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("expires", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("expires", out var templateField) && TryGetTemplateValue("DATE", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -198,7 +199,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("hostname", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("hostname", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -239,58 +240,50 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("notes", new PropertyValue(field.Value));
+        {            
+            outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "username") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("username", new PropertyValue(field.Value));
+        {            
+            outputs.Add("username", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "credential") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("credential", new PropertyValue(field.Value));
+        {            
+            outputs.Add("credential", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "type") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("type", new PropertyValue(field.Value));
+        {            
+            outputs.Add("type", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "filename") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("filename", new PropertyValue(field.Value));
+        {            
+            outputs.Add("filename", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "validFrom") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("validFrom", new PropertyValue(field.Value));
+        {            
+            outputs.Add("validFrom", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "expires") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("expires", new PropertyValue(field.Value));
+        {            
+            outputs.Add("expires", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "hostname") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("hostname", new PropertyValue(field.Value));
+        {            
+            outputs.Add("hostname", GetOutputPropertyValue(field));
         }
     }
         return outputs.ToImmutableDictionary();
@@ -306,7 +299,7 @@ public static partial class TemplateMetadata
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
-        if (values.TryGetValue("notes", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("notes", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -332,7 +325,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("bankName", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("bankName", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -358,7 +351,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("owner", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("owner", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -384,7 +377,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("accountType", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("accountType", out var templateField) && TryGetTemplateValue("MENU", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -410,7 +403,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("routingNo", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("routingNo", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -436,7 +429,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("accountNo", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("accountNo", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -462,7 +455,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("swift", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("swift", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -488,7 +481,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("iban", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("iban", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -514,7 +507,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("telephonePin", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("telephonePin", out var templateField) && TryGetTemplateValue("CONCEALED", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -540,7 +533,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("branchPhone", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("branchPhone", out var templateField) && TryGetTemplateValue("PHONE", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -566,7 +559,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("branchAddress", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("branchAddress", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -607,79 +600,68 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("notes", new PropertyValue(field.Value));
+        {            
+            outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "bankName") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("bankName", new PropertyValue(field.Value));
+        {            
+            outputs.Add("bankName", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "owner") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("owner", new PropertyValue(field.Value));
+        {            
+            outputs.Add("owner", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "accountType") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("accountType", new PropertyValue(field.Value));
+        {            
+            outputs.Add("accountType", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "routingNo") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("routingNo", new PropertyValue(field.Value));
+        {            
+            outputs.Add("routingNo", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "accountNo") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("accountNo", new PropertyValue(field.Value));
+        {            
+            outputs.Add("accountNo", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "swift") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("swift", new PropertyValue(field.Value));
+        {            
+            outputs.Add("swift", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "iban") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("iban", new PropertyValue(field.Value));
+        {            
+            outputs.Add("iban", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "telephonePin") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("telephonePin", new PropertyValue(field.Value));
+        {            
+            outputs.Add("telephonePin", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "branchPhone", "branchInfo") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "branchInfo", "branchPhone", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "branchInfo", "branchPhone", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "branchAddress", "branchInfo") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "branchInfo", "branchAddress", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "branchInfo", "branchAddress", GetOutputPropertyValue(field));;
         }
     }
         return outputs.ToImmutableDictionary();
@@ -695,7 +677,7 @@ public static partial class TemplateMetadata
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
-        if (values.TryGetValue("notes", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("notes", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -721,7 +703,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("cardholder", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("cardholder", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -747,7 +729,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("type", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("type", out var templateField) && TryGetTemplateValue("CREDIT_CARD_TYPE", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -773,7 +755,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("ccnum", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("ccnum", out var templateField) && TryGetTemplateValue("CREDIT_CARD_NUMBER", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -799,7 +781,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("cvv", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("cvv", out var templateField) && TryGetTemplateValue("CONCEALED", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -825,7 +807,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("expiry", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("expiry", out var templateField) && TryGetTemplateValue("MONTH_YEAR", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -851,7 +833,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("validFrom", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("validFrom", out var templateField) && TryGetTemplateValue("MONTH_YEAR", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -877,7 +859,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("bank", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("bank", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -903,7 +885,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("phoneLocal", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("phoneLocal", out var templateField) && TryGetTemplateValue("PHONE", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -929,7 +911,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("phoneTollFree", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("phoneTollFree", out var templateField) && TryGetTemplateValue("PHONE", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -955,7 +937,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("phoneIntl", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("phoneIntl", out var templateField) && TryGetTemplateValue("PHONE", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -981,7 +963,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("website", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("website", out var templateField) && TryGetTemplateValue("URL", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1007,7 +989,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("pin", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("pin", out var templateField) && TryGetTemplateValue("CONCEALED", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1033,7 +1015,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("creditLimit", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("creditLimit", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1059,7 +1041,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("cashLimit", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("cashLimit", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1085,7 +1067,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("interest", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("interest", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1111,7 +1093,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("issuenumber", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("issuenumber", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1152,121 +1134,104 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("notes", new PropertyValue(field.Value));
+        {            
+            outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "cardholder") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("cardholder", new PropertyValue(field.Value));
+        {            
+            outputs.Add("cardholder", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "type") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("type", new PropertyValue(field.Value));
+        {            
+            outputs.Add("type", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "ccnum") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("ccnum", new PropertyValue(field.Value));
+        {            
+            outputs.Add("ccnum", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "cvv") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("cvv", new PropertyValue(field.Value));
+        {            
+            outputs.Add("cvv", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "expiry") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("expiry", new PropertyValue(field.Value));
+        {            
+            outputs.Add("expiry", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "validFrom") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("validFrom", new PropertyValue(field.Value));
+        {            
+            outputs.Add("validFrom", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "bank", "contactInfo") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "contactInfo", "bank", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "contactInfo", "bank", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "phoneLocal", "contactInfo") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "contactInfo", "phoneLocal", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "contactInfo", "phoneLocal", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "phoneTollFree", "contactInfo") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "contactInfo", "phoneTollFree", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "contactInfo", "phoneTollFree", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "phoneIntl", "contactInfo") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "contactInfo", "phoneIntl", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "contactInfo", "phoneIntl", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "website", "contactInfo") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "contactInfo", "website", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "contactInfo", "website", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "pin", "details") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "details", "pin", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "details", "pin", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "creditLimit", "details") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "details", "creditLimit", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "details", "creditLimit", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "cashLimit", "details") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "details", "cashLimit", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "details", "cashLimit", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "interest", "details") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "details", "interest", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "details", "interest", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "issuenumber", "details") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "details", "issuenumber", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "details", "issuenumber", GetOutputPropertyValue(field));;
         }
     }
         return outputs.ToImmutableDictionary();
@@ -1282,7 +1247,7 @@ public static partial class TemplateMetadata
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
-        if (values.TryGetValue("notes", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("notes", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1308,7 +1273,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("recoveryPhrase", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("recoveryPhrase", out var templateField) && TryGetTemplateValue("CONCEALED", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1334,7 +1299,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("password", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("password", out var templateField) && TryGetTemplateValue("CONCEALED", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1360,7 +1325,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("walletAddress", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("walletAddress", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1401,30 +1366,26 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("notes", new PropertyValue(field.Value));
+        {            
+            outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "recoveryPhrase") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("recoveryPhrase", new PropertyValue(field.Value));
+        {            
+            outputs.Add("recoveryPhrase", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "password") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("password", new PropertyValue(field.Value));
+        {            
+            outputs.Add("password", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "walletAddress", "wallet") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "wallet", "walletAddress", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "wallet", "walletAddress", GetOutputPropertyValue(field));;
         }
     }
         return outputs.ToImmutableDictionary();
@@ -1440,7 +1401,7 @@ public static partial class TemplateMetadata
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
-        if (values.TryGetValue("notes", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("notes", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1466,7 +1427,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("database_type", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("database_type", out var templateField) && TryGetTemplateValue("MENU", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1492,7 +1453,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("hostname", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("hostname", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1518,7 +1479,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("port", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("port", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1544,7 +1505,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("database", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("database", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1570,7 +1531,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("username", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("username", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1596,7 +1557,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("password", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("password", out var templateField) && TryGetTemplateValue("CONCEALED", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1622,7 +1583,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("sid", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("sid", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1648,7 +1609,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("alias", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("alias", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1674,7 +1635,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("options", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("options", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1715,72 +1676,62 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("notes", new PropertyValue(field.Value));
+        {            
+            outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "database_type") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("database_type", new PropertyValue(field.Value));
+        {            
+            outputs.Add("database_type", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "hostname") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("hostname", new PropertyValue(field.Value));
+        {            
+            outputs.Add("hostname", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "port") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("port", new PropertyValue(field.Value));
+        {            
+            outputs.Add("port", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "database") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("database", new PropertyValue(field.Value));
+        {            
+            outputs.Add("database", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "username") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("username", new PropertyValue(field.Value));
+        {            
+            outputs.Add("username", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "password") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("password", new PropertyValue(field.Value));
+        {            
+            outputs.Add("password", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "sid") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("sid", new PropertyValue(field.Value));
+        {            
+            outputs.Add("sid", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "alias") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("alias", new PropertyValue(field.Value));
+        {            
+            outputs.Add("alias", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "options") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("options", new PropertyValue(field.Value));
+        {            
+            outputs.Add("options", GetOutputPropertyValue(field));
         }
     }
         return outputs.ToImmutableDictionary();
@@ -1796,7 +1747,7 @@ public static partial class TemplateMetadata
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
-        if (values.TryGetValue("notes", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("notes", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1837,9 +1788,8 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("notes", new PropertyValue(field.Value));
+        {            
+            outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
         return outputs.ToImmutableDictionary();
@@ -1855,7 +1805,7 @@ public static partial class TemplateMetadata
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
-        if (values.TryGetValue("notes", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("notes", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1881,7 +1831,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("fullname", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("fullname", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1907,7 +1857,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("address", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("address", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1933,7 +1883,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("birthdate", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("birthdate", out var templateField) && TryGetTemplateValue("DATE", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1959,7 +1909,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("gender", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("gender", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -1985,7 +1935,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("height", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("height", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2011,7 +1961,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("number", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("number", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2037,7 +1987,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("class", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("class", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2063,7 +2013,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("conditions", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("conditions", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2089,7 +2039,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("state", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("state", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2115,7 +2065,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("country", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("country", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2141,7 +2091,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("expiry_date", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("expiry_date", out var templateField) && TryGetTemplateValue("MONTH_YEAR", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2182,86 +2132,74 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("notes", new PropertyValue(field.Value));
+        {            
+            outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "fullname") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("fullname", new PropertyValue(field.Value));
+        {            
+            outputs.Add("fullname", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "address") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("address", new PropertyValue(field.Value));
+        {            
+            outputs.Add("address", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "birthdate") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("birthdate", new PropertyValue(field.Value));
+        {            
+            outputs.Add("birthdate", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "gender") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("gender", new PropertyValue(field.Value));
+        {            
+            outputs.Add("gender", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "height") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("height", new PropertyValue(field.Value));
+        {            
+            outputs.Add("height", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "number") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("number", new PropertyValue(field.Value));
+        {            
+            outputs.Add("number", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "class") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("class", new PropertyValue(field.Value));
+        {            
+            outputs.Add("class", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "conditions") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("conditions", new PropertyValue(field.Value));
+        {            
+            outputs.Add("conditions", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "state") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("state", new PropertyValue(field.Value));
+        {            
+            outputs.Add("state", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "country") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("country", new PropertyValue(field.Value));
+        {            
+            outputs.Add("country", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "expiry_date") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("expiry_date", new PropertyValue(field.Value));
+        {            
+            outputs.Add("expiry_date", GetOutputPropertyValue(field));
         }
     }
         return outputs.ToImmutableDictionary();
@@ -2277,7 +2215,7 @@ public static partial class TemplateMetadata
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
-        if (values.TryGetValue("notes", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("notes", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2303,7 +2241,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("pop_type", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("pop_type", out var templateField) && TryGetTemplateValue("MENU", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2329,7 +2267,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("pop_username", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("pop_username", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2355,7 +2293,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("pop_server", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("pop_server", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2381,7 +2319,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("pop_port", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("pop_port", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2407,7 +2345,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("pop_password", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("pop_password", out var templateField) && TryGetTemplateValue("CONCEALED", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2433,7 +2371,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("pop_security", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("pop_security", out var templateField) && TryGetTemplateValue("MENU", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2459,7 +2397,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("pop_authentication", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("pop_authentication", out var templateField) && TryGetTemplateValue("MENU", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2485,7 +2423,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("smtp_server", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("smtp_server", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2511,7 +2449,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("smtp_port", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("smtp_port", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2537,7 +2475,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("smtp_username", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("smtp_username", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2563,7 +2501,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("smtp_password", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("smtp_password", out var templateField) && TryGetTemplateValue("CONCEALED", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2589,7 +2527,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("smtp_security", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("smtp_security", out var templateField) && TryGetTemplateValue("MENU", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2615,7 +2553,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("smtp_authentication", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("smtp_authentication", out var templateField) && TryGetTemplateValue("MENU", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2641,7 +2579,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("provider", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("provider", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2667,7 +2605,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("provider_website", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("provider_website", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2693,7 +2631,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("phone_local", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("phone_local", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2719,7 +2657,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("phone_tollfree", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("phone_tollfree", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2760,128 +2698,110 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("notes", new PropertyValue(field.Value));
+        {            
+            outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "pop_type") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("pop_type", new PropertyValue(field.Value));
+        {            
+            outputs.Add("pop_type", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "pop_username") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("pop_username", new PropertyValue(field.Value));
+        {            
+            outputs.Add("pop_username", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "pop_server") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("pop_server", new PropertyValue(field.Value));
+        {            
+            outputs.Add("pop_server", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "pop_port") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("pop_port", new PropertyValue(field.Value));
+        {            
+            outputs.Add("pop_port", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "pop_password") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("pop_password", new PropertyValue(field.Value));
+        {            
+            outputs.Add("pop_password", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "pop_security") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("pop_security", new PropertyValue(field.Value));
+        {            
+            outputs.Add("pop_security", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "pop_authentication") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("pop_authentication", new PropertyValue(field.Value));
+        {            
+            outputs.Add("pop_authentication", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "smtp_server", "SMTP") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "SMTP", "smtp_server", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "SMTP", "smtp_server", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "smtp_port", "SMTP") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "SMTP", "smtp_port", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "SMTP", "smtp_port", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "smtp_username", "SMTP") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "SMTP", "smtp_username", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "SMTP", "smtp_username", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "smtp_password", "SMTP") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "SMTP", "smtp_password", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "SMTP", "smtp_password", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "smtp_security", "SMTP") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "SMTP", "smtp_security", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "SMTP", "smtp_security", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "smtp_authentication", "SMTP") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "SMTP", "smtp_authentication", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "SMTP", "smtp_authentication", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "provider", "Contact Information") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "Contact Information", "provider", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "Contact Information", "provider", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "provider_website", "Contact Information") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "Contact Information", "provider_website", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "Contact Information", "provider_website", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "phone_local", "Contact Information") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "Contact Information", "phone_local", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "Contact Information", "phone_local", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "phone_tollfree", "Contact Information") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "Contact Information", "phone_tollfree", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "Contact Information", "phone_tollfree", GetOutputPropertyValue(field));;
         }
     }
         return outputs.ToImmutableDictionary();
@@ -2897,7 +2817,7 @@ public static partial class TemplateMetadata
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
-        if (values.TryGetValue("notes", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("notes", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2923,7 +2843,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("firstname", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("firstname", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2949,7 +2869,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("initial", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("initial", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -2975,7 +2895,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("lastname", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("lastname", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3001,7 +2921,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("gender", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("gender", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3027,7 +2947,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("birthdate", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("birthdate", out var templateField) && TryGetTemplateValue("DATE", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3053,7 +2973,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("occupation", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("occupation", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3079,7 +2999,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("company", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("company", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3105,7 +3025,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("department", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("department", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3131,7 +3051,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("jobtitle", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("jobtitle", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3157,7 +3077,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("address", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("address", out var templateField) && TryGetTemplateValue("ADDRESS", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3183,7 +3103,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("defphone", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("defphone", out var templateField) && TryGetTemplateValue("PHONE", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3209,7 +3129,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("homephone", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("homephone", out var templateField) && TryGetTemplateValue("PHONE", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3235,7 +3155,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("cellphone", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("cellphone", out var templateField) && TryGetTemplateValue("PHONE", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3261,7 +3181,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("busphone", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("busphone", out var templateField) && TryGetTemplateValue("PHONE", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3287,7 +3207,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("username", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("username", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3313,7 +3233,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("reminderq", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("reminderq", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3339,7 +3259,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("remindera", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("remindera", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3365,7 +3285,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("email", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("email", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3391,7 +3311,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("website", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("website", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3417,7 +3337,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("icq", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("icq", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3443,7 +3363,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("skype", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("skype", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3469,7 +3389,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("aim", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("aim", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3495,7 +3415,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("yahoo", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("yahoo", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3521,7 +3441,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("msn", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("msn", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3547,7 +3467,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("forumsig", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("forumsig", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3588,184 +3508,158 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("notes", new PropertyValue(field.Value));
+        {            
+            outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "firstname", "name") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "name", "firstname", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "name", "firstname", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "initial", "name") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "name", "initial", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "name", "initial", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "lastname", "name") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "name", "lastname", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "name", "lastname", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "gender", "name") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "name", "gender", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "name", "gender", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "birthdate", "name") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "name", "birthdate", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "name", "birthdate", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "occupation", "name") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "name", "occupation", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "name", "occupation", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "company", "name") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "name", "company", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "name", "company", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "department", "name") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "name", "department", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "name", "department", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "jobtitle", "name") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "name", "jobtitle", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "name", "jobtitle", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "address", "address") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "address", "address", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "address", "address", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "defphone", "address") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "address", "defphone", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "address", "defphone", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "homephone", "address") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "address", "homephone", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "address", "homephone", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "cellphone", "address") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "address", "cellphone", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "address", "cellphone", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "busphone", "address") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "address", "busphone", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "address", "busphone", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "username", "internet") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "internet", "username", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "internet", "username", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "reminderq", "internet") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "internet", "reminderq", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "internet", "reminderq", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "remindera", "internet") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "internet", "remindera", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "internet", "remindera", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "email", "internet") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "internet", "email", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "internet", "email", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "website", "internet") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "internet", "website", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "internet", "website", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "icq", "internet") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "internet", "icq", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "internet", "icq", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "skype", "internet") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "internet", "skype", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "internet", "skype", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "aim", "internet") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "internet", "aim", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "internet", "aim", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "yahoo", "internet") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "internet", "yahoo", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "internet", "yahoo", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "msn", "internet") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "internet", "msn", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "internet", "msn", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "forumsig", "internet") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "internet", "forumsig", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "internet", "forumsig", GetOutputPropertyValue(field));;
         }
     }
         return outputs.ToImmutableDictionary();
@@ -3781,7 +3675,7 @@ public static partial class TemplateMetadata
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
-        if (values.TryGetValue("notes", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("notes", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3822,9 +3716,8 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("notes", new PropertyValue(field.Value));
+        {            
+            outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
         return outputs.ToImmutableDictionary();
@@ -3840,7 +3733,7 @@ public static partial class TemplateMetadata
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
-        if (values.TryGetValue("username", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("username", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3866,7 +3759,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("password", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("password", out var templateField) && TryGetTemplateValue("CONCEALED", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3892,7 +3785,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("notes", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("notes", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3933,23 +3826,20 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "username") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("username", new PropertyValue(field.Value));
+        {            
+            outputs.Add("username", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "password") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("password", new PropertyValue(field.Value));
+        {            
+            outputs.Add("password", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "notes") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("notes", new PropertyValue(field.Value));
+        {            
+            outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
         return outputs.ToImmutableDictionary();
@@ -3965,7 +3855,7 @@ public static partial class TemplateMetadata
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
-        if (values.TryGetValue("notes", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("notes", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -3991,7 +3881,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("date", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("date", out var templateField) && TryGetTemplateValue("DATE", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4017,7 +3907,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("location", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("location", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4043,7 +3933,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("healthcareprofessional", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("healthcareprofessional", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4069,7 +3959,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("patient", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("patient", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4095,7 +3985,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("reason", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("reason", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4121,7 +4011,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("medication", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("medication", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4147,7 +4037,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("dosage", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("dosage", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4173,7 +4063,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("notes", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("notes", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4214,65 +4104,56 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("notes", new PropertyValue(field.Value));
+        {            
+            outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "date") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("date", new PropertyValue(field.Value));
+        {            
+            outputs.Add("date", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "location") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("location", new PropertyValue(field.Value));
+        {            
+            outputs.Add("location", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "healthcareprofessional") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("healthcareprofessional", new PropertyValue(field.Value));
+        {            
+            outputs.Add("healthcareprofessional", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "patient") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("patient", new PropertyValue(field.Value));
+        {            
+            outputs.Add("patient", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "reason") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("reason", new PropertyValue(field.Value));
+        {            
+            outputs.Add("reason", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "medication", "medication") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "medication", "medication", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "medication", "medication", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "dosage", "medication") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "medication", "dosage", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "medication", "dosage", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "notes", "medication") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "medication", "notes", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "medication", "notes", GetOutputPropertyValue(field));;
         }
     }
         return outputs.ToImmutableDictionary();
@@ -4288,7 +4169,7 @@ public static partial class TemplateMetadata
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
-        if (values.TryGetValue("notes", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("notes", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4314,7 +4195,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("org_name", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("org_name", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4340,7 +4221,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("website", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("website", out var templateField) && TryGetTemplateValue("URL", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4366,7 +4247,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("phone", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("phone", out var templateField) && TryGetTemplateValue("PHONE", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4392,7 +4273,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("member_name", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("member_name", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4418,7 +4299,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("member_since", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("member_since", out var templateField) && TryGetTemplateValue("MONTH_YEAR", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4444,7 +4325,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("expiry_date", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("expiry_date", out var templateField) && TryGetTemplateValue("MONTH_YEAR", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4470,7 +4351,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("membership_no", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("membership_no", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4496,7 +4377,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("pin", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("pin", out var templateField) && TryGetTemplateValue("CONCEALED", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4537,65 +4418,56 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("notes", new PropertyValue(field.Value));
+        {            
+            outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "org_name") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("org_name", new PropertyValue(field.Value));
+        {            
+            outputs.Add("org_name", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "website") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("website", new PropertyValue(field.Value));
+        {            
+            outputs.Add("website", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "phone") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("phone", new PropertyValue(field.Value));
+        {            
+            outputs.Add("phone", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "member_name") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("member_name", new PropertyValue(field.Value));
+        {            
+            outputs.Add("member_name", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "member_since") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("member_since", new PropertyValue(field.Value));
+        {            
+            outputs.Add("member_since", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "expiry_date") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("expiry_date", new PropertyValue(field.Value));
+        {            
+            outputs.Add("expiry_date", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "membership_no") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("membership_no", new PropertyValue(field.Value));
+        {            
+            outputs.Add("membership_no", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "pin") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("pin", new PropertyValue(field.Value));
+        {            
+            outputs.Add("pin", GetOutputPropertyValue(field));
         }
     }
         return outputs.ToImmutableDictionary();
@@ -4611,7 +4483,7 @@ public static partial class TemplateMetadata
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
-        if (values.TryGetValue("notes", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("notes", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4637,7 +4509,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("name", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("name", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4663,7 +4535,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("valid_from", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("valid_from", out var templateField) && TryGetTemplateValue("DATE", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4689,7 +4561,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("expires", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("expires", out var templateField) && TryGetTemplateValue("DATE", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4715,7 +4587,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("game", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("game", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4741,7 +4613,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("quota", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("quota", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4767,7 +4639,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("state", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("state", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4793,7 +4665,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("country", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("country", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4834,58 +4706,50 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("notes", new PropertyValue(field.Value));
+        {            
+            outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "name") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("name", new PropertyValue(field.Value));
+        {            
+            outputs.Add("name", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "valid_from") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("valid_from", new PropertyValue(field.Value));
+        {            
+            outputs.Add("valid_from", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "expires") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("expires", new PropertyValue(field.Value));
+        {            
+            outputs.Add("expires", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "game") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("game", new PropertyValue(field.Value));
+        {            
+            outputs.Add("game", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "quota") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("quota", new PropertyValue(field.Value));
+        {            
+            outputs.Add("quota", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "state") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("state", new PropertyValue(field.Value));
+        {            
+            outputs.Add("state", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "country") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("country", new PropertyValue(field.Value));
+        {            
+            outputs.Add("country", GetOutputPropertyValue(field));
         }
     }
         return outputs.ToImmutableDictionary();
@@ -4901,7 +4765,7 @@ public static partial class TemplateMetadata
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
-        if (values.TryGetValue("notes", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("notes", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4927,7 +4791,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("type", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("type", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4953,7 +4817,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("issuing_country", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("issuing_country", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -4979,7 +4843,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("number", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("number", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5005,7 +4869,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("fullname", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("fullname", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5031,7 +4895,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("gender", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("gender", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5057,7 +4921,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("nationality", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("nationality", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5083,7 +4947,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("issuing_authority", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("issuing_authority", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5109,7 +4973,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("birthdate", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("birthdate", out var templateField) && TryGetTemplateValue("DATE", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5135,7 +4999,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("birthplace", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("birthplace", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5161,7 +5025,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("issue_date", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("issue_date", out var templateField) && TryGetTemplateValue("DATE", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5187,7 +5051,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("expiry_date", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("expiry_date", out var templateField) && TryGetTemplateValue("DATE", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5228,86 +5092,74 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("notes", new PropertyValue(field.Value));
+        {            
+            outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "type") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("type", new PropertyValue(field.Value));
+        {            
+            outputs.Add("type", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "issuing_country") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("issuing_country", new PropertyValue(field.Value));
+        {            
+            outputs.Add("issuing_country", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "number") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("number", new PropertyValue(field.Value));
+        {            
+            outputs.Add("number", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "fullname") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("fullname", new PropertyValue(field.Value));
+        {            
+            outputs.Add("fullname", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "gender") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("gender", new PropertyValue(field.Value));
+        {            
+            outputs.Add("gender", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "nationality") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("nationality", new PropertyValue(field.Value));
+        {            
+            outputs.Add("nationality", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "issuing_authority") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("issuing_authority", new PropertyValue(field.Value));
+        {            
+            outputs.Add("issuing_authority", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "birthdate") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("birthdate", new PropertyValue(field.Value));
+        {            
+            outputs.Add("birthdate", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "birthplace") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("birthplace", new PropertyValue(field.Value));
+        {            
+            outputs.Add("birthplace", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "issue_date") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("issue_date", new PropertyValue(field.Value));
+        {            
+            outputs.Add("issue_date", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "expiry_date") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("expiry_date", new PropertyValue(field.Value));
+        {            
+            outputs.Add("expiry_date", GetOutputPropertyValue(field));
         }
     }
         return outputs.ToImmutableDictionary();
@@ -5323,7 +5175,7 @@ public static partial class TemplateMetadata
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
-        if (values.TryGetValue("password", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("password", out var templateField) && TryGetTemplateValue("CONCEALED", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5349,7 +5201,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("notes", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("notes", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5390,16 +5242,14 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "password") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("password", new PropertyValue(field.Value));
+        {            
+            outputs.Add("password", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "notes") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("notes", new PropertyValue(field.Value));
+        {            
+            outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
         return outputs.ToImmutableDictionary();
@@ -5415,7 +5265,7 @@ public static partial class TemplateMetadata
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
-        if (values.TryGetValue("notes", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("notes", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5441,7 +5291,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("company_name", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("company_name", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5467,7 +5317,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("member_name", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("member_name", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5493,7 +5343,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("membership_no", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("membership_no", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5519,7 +5369,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("pin", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("pin", out var templateField) && TryGetTemplateValue("CONCEALED", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5545,7 +5395,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("additional_no", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("additional_no", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5571,7 +5421,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("member_since", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("member_since", out var templateField) && TryGetTemplateValue("MONTH_YEAR", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5597,7 +5447,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("customer_service_phone", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("customer_service_phone", out var templateField) && TryGetTemplateValue("PHONE", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5623,7 +5473,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("reservations_phone", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("reservations_phone", out var templateField) && TryGetTemplateValue("PHONE", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5649,7 +5499,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("website", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("website", out var templateField) && TryGetTemplateValue("URL", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5690,72 +5540,62 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("notes", new PropertyValue(field.Value));
+        {            
+            outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "company_name") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("company_name", new PropertyValue(field.Value));
+        {            
+            outputs.Add("company_name", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "member_name") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("member_name", new PropertyValue(field.Value));
+        {            
+            outputs.Add("member_name", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "membership_no") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("membership_no", new PropertyValue(field.Value));
+        {            
+            outputs.Add("membership_no", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "pin") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("pin", new PropertyValue(field.Value));
+        {            
+            outputs.Add("pin", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "additional_no", "extra") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "extra", "additional_no", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "extra", "additional_no", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "member_since", "extra") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "extra", "member_since", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "extra", "member_since", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "customer_service_phone", "extra") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "extra", "customer_service_phone", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "extra", "customer_service_phone", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "reservations_phone", "extra") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "extra", "reservations_phone", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "extra", "reservations_phone", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "website", "extra") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "extra", "website", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "extra", "website", GetOutputPropertyValue(field));;
         }
     }
         return outputs.ToImmutableDictionary();
@@ -5771,7 +5611,7 @@ public static partial class TemplateMetadata
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
-        if (values.TryGetValue("notes", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("notes", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5797,7 +5637,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("private_key", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("private_key", out var templateField) && TryGetTemplateValue("SSHKEY", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5838,16 +5678,14 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("notes", new PropertyValue(field.Value));
+        {            
+            outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "private_key") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("private_key", new PropertyValue(field.Value));
+        {            
+            outputs.Add("private_key", GetOutputPropertyValue(field));
         }
     }
         return outputs.ToImmutableDictionary();
@@ -5863,7 +5701,7 @@ public static partial class TemplateMetadata
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
-        if (values.TryGetValue("notes", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("notes", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5904,9 +5742,8 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("notes", new PropertyValue(field.Value));
+        {            
+            outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
         return outputs.ToImmutableDictionary();
@@ -5922,7 +5759,7 @@ public static partial class TemplateMetadata
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
-        if (values.TryGetValue("notes", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("notes", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5948,7 +5785,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("url", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("url", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -5974,7 +5811,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("username", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("username", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6000,7 +5837,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("password", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("password", out var templateField) && TryGetTemplateValue("CONCEALED", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6026,7 +5863,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("admin_console_url", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("admin_console_url", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6052,7 +5889,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("admin_console_username", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("admin_console_username", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6078,7 +5915,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("admin_console_password", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("admin_console_password", out var templateField) && TryGetTemplateValue("CONCEALED", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6104,7 +5941,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("name", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("name", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6130,7 +5967,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("website", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("website", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6156,7 +5993,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("support_contact_url", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("support_contact_url", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6182,7 +6019,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("support_contact_phone", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("support_contact_phone", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6223,79 +6060,68 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("notes", new PropertyValue(field.Value));
+        {            
+            outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "url") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("url", new PropertyValue(field.Value));
+        {            
+            outputs.Add("url", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "username") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("username", new PropertyValue(field.Value));
+        {            
+            outputs.Add("username", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "password") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("password", new PropertyValue(field.Value));
+        {            
+            outputs.Add("password", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "admin_console_url", "admin_console") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "admin_console", "admin_console_url", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "admin_console", "admin_console_url", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "admin_console_username", "admin_console") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "admin_console", "admin_console_username", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "admin_console", "admin_console_username", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "admin_console_password", "admin_console") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "admin_console", "admin_console_password", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "admin_console", "admin_console_password", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "name", "hosting_provider_details") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "hosting_provider_details", "name", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "hosting_provider_details", "name", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "website", "hosting_provider_details") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "hosting_provider_details", "website", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "hosting_provider_details", "website", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "support_contact_url", "hosting_provider_details") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "hosting_provider_details", "support_contact_url", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "hosting_provider_details", "support_contact_url", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "support_contact_phone", "hosting_provider_details") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "hosting_provider_details", "support_contact_phone", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "hosting_provider_details", "support_contact_phone", GetOutputPropertyValue(field));;
         }
     }
         return outputs.ToImmutableDictionary();
@@ -6311,7 +6137,7 @@ public static partial class TemplateMetadata
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
-        if (values.TryGetValue("notes", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("notes", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6337,7 +6163,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("name", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("name", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6363,7 +6189,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("number", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("number", out var templateField) && TryGetTemplateValue("CONCEALED", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6404,23 +6230,20 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("notes", new PropertyValue(field.Value));
+        {            
+            outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "name") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("name", new PropertyValue(field.Value));
+        {            
+            outputs.Add("name", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "number") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("number", new PropertyValue(field.Value));
+        {            
+            outputs.Add("number", GetOutputPropertyValue(field));
         }
     }
         return outputs.ToImmutableDictionary();
@@ -6436,7 +6259,7 @@ public static partial class TemplateMetadata
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
-        if (values.TryGetValue("notes", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("notes", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6462,7 +6285,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("product_version", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("product_version", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6488,7 +6311,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("reg_code", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("reg_code", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6514,7 +6337,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("reg_name", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("reg_name", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6540,7 +6363,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("reg_email", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("reg_email", out var templateField) && TryGetTemplateValue("EMAIL", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6566,7 +6389,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("company", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("company", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6592,7 +6415,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("download_link", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("download_link", out var templateField) && TryGetTemplateValue("URL", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6618,7 +6441,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("publisher_name", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("publisher_name", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6644,7 +6467,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("publisher_website", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("publisher_website", out var templateField) && TryGetTemplateValue("URL", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6670,7 +6493,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("retail_price", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("retail_price", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6696,7 +6519,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("support_email", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("support_email", out var templateField) && TryGetTemplateValue("EMAIL", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6722,7 +6545,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("order_date", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("order_date", out var templateField) && TryGetTemplateValue("DATE", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6748,7 +6571,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("order_number", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("order_number", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6774,7 +6597,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("order_total", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("order_total", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6815,100 +6638,86 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("notes", new PropertyValue(field.Value));
+        {            
+            outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "product_version") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("product_version", new PropertyValue(field.Value));
+        {            
+            outputs.Add("product_version", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "reg_code") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("reg_code", new PropertyValue(field.Value));
+        {            
+            outputs.Add("reg_code", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "reg_name", "customer") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "customer", "reg_name", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "customer", "reg_name", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "reg_email", "customer") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "customer", "reg_email", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "customer", "reg_email", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "company", "customer") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "customer", "company", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "customer", "company", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "download_link", "publisher") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "publisher", "download_link", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "publisher", "download_link", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "publisher_name", "publisher") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "publisher", "publisher_name", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "publisher", "publisher_name", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "publisher_website", "publisher") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "publisher", "publisher_website", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "publisher", "publisher_website", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "retail_price", "publisher") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "publisher", "retail_price", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "publisher", "retail_price", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "support_email", "publisher") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "publisher", "support_email", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "publisher", "support_email", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "order_date", "order") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "order", "order_date", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "order", "order_date", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "order_number", "order") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "order", "order_number", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "order", "order_number", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "order_total", "order") is { } field)
-        {
-            // TODO date properties, etc.
-            AddFieldToSection(outputs, "order", "order_total", new PropertyValue(field.Value));;
+        {            
+            AddFieldToSection(outputs, "order", "order_total", GetOutputPropertyValue(field));;
         }
     }
         return outputs.ToImmutableDictionary();
@@ -6924,7 +6733,7 @@ public static partial class TemplateMetadata
         var tags = GetArrayValues(values, "tags");
         var fields = new List<TemplateField>();
             {
-        if (values.TryGetValue("notes", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("notes", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6950,7 +6759,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("name", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("name", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -6976,7 +6785,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("password", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("password", out var templateField) && TryGetTemplateValue("CONCEALED", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -7002,7 +6811,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("server", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("server", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -7028,7 +6837,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("airport_id", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("airport_id", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -7054,7 +6863,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("network_name", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("network_name", out var templateField) && TryGetTemplateValue("STRING", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -7080,7 +6889,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("wireless_security", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("wireless_security", out var templateField) && TryGetTemplateValue("MENU", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -7106,7 +6915,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("wireless_password", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("wireless_password", out var templateField) && TryGetTemplateValue("CONCEALED", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -7132,7 +6941,7 @@ public static partial class TemplateMetadata
         }
     }
     {
-        if (values.TryGetValue("disk_password", out var templateField) && templateField.TryGetString(out var templateValue))
+        if (values.TryGetValue("disk_password", out var templateField) && TryGetTemplateValue("CONCEALED", templateField, out var templateValue))
         {
             fields.Add(new TemplateField()
             {
@@ -7173,65 +6982,56 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("notes", new PropertyValue(field.Value));
+        {            
+            outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "name") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("name", new PropertyValue(field.Value));
+        {            
+            outputs.Add("name", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "password") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("password", new PropertyValue(field.Value));
+        {            
+            outputs.Add("password", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "server") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("server", new PropertyValue(field.Value));
+        {            
+            outputs.Add("server", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "airport_id") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("airport_id", new PropertyValue(field.Value));
+        {            
+            outputs.Add("airport_id", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "network_name") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("network_name", new PropertyValue(field.Value));
+        {            
+            outputs.Add("network_name", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "wireless_security") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("wireless_security", new PropertyValue(field.Value));
+        {            
+            outputs.Add("wireless_security", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "wireless_password") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("wireless_password", new PropertyValue(field.Value));
+        {            
+            outputs.Add("wireless_password", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "disk_password") is { } field)
-        {
-            // TODO date properties, etc.
-            outputs.Add("disk_password", new PropertyValue(field.Value));
+        {            
+            outputs.Add("disk_password", GetOutputPropertyValue(field));
         }
     }
         return outputs.ToImmutableDictionary();

@@ -1,0 +1,126 @@
+﻿{
+  Id: [server-generated],
+  Properties: {
+    attachments: {},
+    category: Item,
+    defaultVault: false,
+    fields: {
+      notesPlain: {
+        id: [redacted],
+        label: notesPlain,
+        purpose: NOTES,
+        reference: [redacted],
+        type: STRING,
+        value: null
+      },
+      resourceGroup: {
+        id: [redacted],
+        label: Resource Group,
+        purpose: null,
+        reference: [redacted],
+        type: STRING,
+        value: my resource group
+      }
+    },
+    id: [redacted],
+    notes: ,
+    references: [],
+    sections: {
+      Acr Pull Token: {
+        attachments: {},
+        fields: {
+          hostname: {
+            id: [redacted],
+            label: Hostname,
+            purpose: null,
+            reference: [redacted],
+            type: STRING,
+            value: login server
+          },
+          password: {
+            id: [redacted],
+            label: Password,
+            purpose: null,
+            reference: [redacted],
+            type: CONCEALED,
+            value: password
+          },
+          username: {
+            id: [redacted],
+            label: Name,
+            purpose: null,
+            reference: [redacted],
+            type: STRING,
+            value: username
+          }
+        },
+        id: [redacted],
+        label: Acr Pull Token,
+        references: []
+      },
+      Acr Push Token: {
+        attachments: {},
+        fields: {
+          hostname: {
+            id: [redacted],
+            label: Hostname,
+            purpose: null,
+            reference: [redacted],
+            type: STRING,
+            value: login server
+          },
+          password: {
+            id: [redacted],
+            label: Password,
+            purpose: null,
+            reference: [redacted],
+            type: CONCEALED,
+            value: password
+          },
+          username: {
+            id: [redacted],
+            label: Name,
+            purpose: null,
+            reference: [redacted],
+            type: STRING,
+            value: username
+          }
+        },
+        id: [redacted],
+        label: Acr Push Token,
+        references: []
+      },
+      Azure Container Registry: {
+        attachments: {},
+        fields: {
+          hostname: {
+            id: [redacted],
+            label: Hostname,
+            purpose: null,
+            reference: [redacted],
+            type: STRING,
+            value: login server
+          },
+          name: {
+            id: [redacted],
+            label: Name,
+            purpose: null,
+            reference: [redacted],
+            type: STRING,
+            value: my registry
+          }
+        },
+        id: [redacted],
+        label: Azure Container Registry,
+        references: []
+      }
+    },
+    tags: [],
+    title: Infrastructure Collectionabcd1234,
+    urls: [],
+    vault: {
+      id: [redacted],
+      name: testing-pulumi
+    }
+  }
+}

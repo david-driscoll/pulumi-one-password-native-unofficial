@@ -1,5 +1,6 @@
 
 using System.Collections.Immutable;
+using pulumi_resource_one_password_native_unofficial.Domain;
 
 namespace pulumi_resource_one_password_native_unofficial;
 public static class ItemType

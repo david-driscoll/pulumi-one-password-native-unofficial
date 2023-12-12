@@ -1,8 +1,11 @@
 ﻿using System.Collections.Immutable;
 using System.Reactive.Disposables;
+using System.Security.Cryptography;
 using System.Text.Json;
 using CliWrap;
+using pulumi_resource_one_password_native_unofficial.Domain;
 using Serilog;
+
 #pragma warning disable CS9107 // Parameter is captured into the state of the enclosing type and its value is also passed to the base constructor. The value might be captured by the base class as well.
 
 namespace pulumi_resource_one_password_native_unofficial.OnePasswordCli.ServiceAccount;
@@ -17,9 +20,9 @@ public class ServiceAccountOnePasswordItems(
 {
     private readonly Lazy<ServiceAccountOnePasswordItemTemplates> _templates = new(() => new(command, argsBuilder, options, logger, serializerOptions));
 
-    public async Task<Item.Response> Create(Item.CreateRequest request, TemplateMetadata.Template templateJson, CancellationToken cancellationToken = default)
+    public async Task<Item.Response> Create(Item.CreateRequest request, Template templateJson, CancellationToken cancellationToken = default)
     {
-        var (_, attachments, _) = templateJson.GetFieldsAndAttachments();
+        var (fields, attachments, _) = templateJson.PrepareFieldsAndAttachments();
 
         var args = ArgsBuilder
                 .Add("create")
@@ -37,12 +40,21 @@ public class ServiceAccountOnePasswordItems(
             args = args.Add($"--generate-password{r}");
         }
 
+        templateJson = templateJson with
+        {
+            Fields = templateJson.Fields.Select(z => z with { Value = TemplateMetadata.Get1PasswordUnixString(z) }).ToImmutableArray()
+        };
+        
         (args, var disposable) = await AttachFiles(args, attachments, cancellationToken);
         try
         {
             var result = await ExecuteCommand(
                 Command.WithArguments(args.Build()),
-                templateJson,
+                new 
+                {
+                    Fields = fields,
+                    Urls = templateJson.Urls
+                },
                 cancellationToken
             );
 
@@ -55,10 +67,9 @@ public class ServiceAccountOnePasswordItems(
         }
     }
 
-    public async Task<Item.Response> Edit(Item.EditRequest request, TemplateMetadata.Template templateJson,
-        CancellationToken cancellationToken = default)
+    public async Task<Item.Response> Edit(Item.EditRequest request, Template templateJson, CancellationToken cancellationToken = default)
     {
-        var (_, attachments, _) = templateJson.GetFieldsAndAttachments();
+        var (fields, attachments, _) = templateJson.PrepareFieldsAndAttachments();
 
         var args = ArgsBuilder
                 .Add("edit")
@@ -69,6 +80,7 @@ public class ServiceAccountOnePasswordItems(
                 .Add("vault", request.Vault ?? options.Vault)
                 .Add("dry-run", request.DryRun)
             ;
+
         if (request is { GeneratePassword: { } recipe })
         {
             var r = recipe is { Length: > 0 } or { CharacterSets.Length: > 0 } ? "=" + recipe : "";
@@ -83,7 +95,11 @@ public class ServiceAccountOnePasswordItems(
         {
             var result = await ExecuteCommand(
                 Command.WithArguments(args.Build()),
-                templateJson,
+                new 
+                {
+                    Fields = fields,
+                    Urls = templateJson.Urls
+                },
                 cancellationToken
             );
             disposable.Dispose();
@@ -98,7 +114,7 @@ public class ServiceAccountOnePasswordItems(
     }
 
     private async Task<(ArgsBuilder args, IDisposable disposable)> AttachFiles(ArgsBuilder args,
-        ImmutableArray<TemplateMetadata.TemplateAttachment> attachments, CancellationToken cancellationToken = default)
+        ImmutableArray<TemplateAttachment> attachments, CancellationToken cancellationToken = default)
     {
         var tempDirectory = Directory.CreateTempSubdirectory("p1p");
         foreach (var attachment in attachments)
