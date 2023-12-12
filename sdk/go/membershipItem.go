@@ -109,8 +109,8 @@ type membershipItemArgs struct {
 	Tags      []string `pulumi:"tags"`
 	Telephone *string  `pulumi:"telephone"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-	Title *string `pulumi:"title"`
-	Urls  []Url   `pulumi:"urls"`
+	Title *string       `pulumi:"title"`
+	Urls  []interface{} `pulumi:"urls"`
 	// The UUID of the vault the item is in.
 	Vault   *string `pulumi:"vault"`
 	Website *string `pulumi:"website"`
@@ -136,7 +136,7 @@ type MembershipItemArgs struct {
 	Telephone pulumi.StringPtrInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput
-	Urls  UrlArrayInput
+	Urls  pulumi.ArrayInput
 	// The UUID of the vault the item is in.
 	Vault   pulumi.StringPtrInput
 	Website pulumi.StringPtrInput

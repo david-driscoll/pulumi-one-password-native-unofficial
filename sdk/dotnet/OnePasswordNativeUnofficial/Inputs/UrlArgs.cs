@@ -24,6 +24,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial.Inputs
 
         public UrlArgs()
         {
+            Primary = false;
         }
     }
 }

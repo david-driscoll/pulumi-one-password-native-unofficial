@@ -104,10 +104,10 @@ type serverItemArgs struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-	Title    *string `pulumi:"title"`
-	Url      *string `pulumi:"url"`
-	Urls     []Url   `pulumi:"urls"`
-	Username *string `pulumi:"username"`
+	Title    *string       `pulumi:"title"`
+	Url      *string       `pulumi:"url"`
+	Urls     []interface{} `pulumi:"urls"`
+	Username *string       `pulumi:"username"`
 	// The UUID of the vault the item is in.
 	Vault *string `pulumi:"vault"`
 }
@@ -129,7 +129,7 @@ type ServerItemArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title    pulumi.StringPtrInput
 	Url      pulumi.StringPtrInput
-	Urls     UrlArrayInput
+	Urls     pulumi.ArrayInput
 	Username pulumi.StringPtrInput
 	// The UUID of the vault the item is in.
 	Vault pulumi.StringPtrInput

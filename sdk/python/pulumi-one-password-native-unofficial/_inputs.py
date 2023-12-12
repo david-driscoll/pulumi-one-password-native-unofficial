@@ -187,6 +187,8 @@ class UrlArgs:
                  primary: pulumi.Input[bool],
                  label: Optional[pulumi.Input[str]] = None):
         pulumi.set(__self__, "href", href)
+        if primary is None:
+            primary = False
         pulumi.set(__self__, "primary", primary)
         if label is not None:
             pulumi.set(__self__, "label", label)

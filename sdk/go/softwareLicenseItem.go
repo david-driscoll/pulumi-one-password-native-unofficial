@@ -100,8 +100,8 @@ type softwareLicenseItemArgs struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-	Title *string `pulumi:"title"`
-	Urls  []Url   `pulumi:"urls"`
+	Title *string       `pulumi:"title"`
+	Urls  []interface{} `pulumi:"urls"`
 	// The UUID of the vault the item is in.
 	Vault   *string `pulumi:"vault"`
 	Version *string `pulumi:"version"`
@@ -124,7 +124,7 @@ type SoftwareLicenseItemArgs struct {
 	Tags pulumi.StringArrayInput
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title pulumi.StringPtrInput
-	Urls  UrlArrayInput
+	Urls  pulumi.ArrayInput
 	// The UUID of the vault the item is in.
 	Vault   pulumi.StringPtrInput
 	Version pulumi.StringPtrInput

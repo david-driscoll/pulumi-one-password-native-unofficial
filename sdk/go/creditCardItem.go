@@ -109,10 +109,10 @@ type creditCardItemArgs struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
-	Title     *string `pulumi:"title"`
-	Type      *string `pulumi:"type"`
-	Urls      []Url   `pulumi:"urls"`
-	ValidFrom *string `pulumi:"validFrom"`
+	Title     *string       `pulumi:"title"`
+	Type      *string       `pulumi:"type"`
+	Urls      []interface{} `pulumi:"urls"`
+	ValidFrom *string       `pulumi:"validFrom"`
 	// The UUID of the vault the item is in.
 	Vault              *string `pulumi:"vault"`
 	VerificationNumber *string `pulumi:"verificationNumber"`
@@ -137,7 +137,7 @@ type CreditCardItemArgs struct {
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
 	Title     pulumi.StringPtrInput
 	Type      pulumi.StringPtrInput
-	Urls      UrlArrayInput
+	Urls      pulumi.ArrayInput
 	ValidFrom pulumi.StringPtrInput
 	// The UUID of the vault the item is in.
 	Vault              pulumi.StringPtrInput

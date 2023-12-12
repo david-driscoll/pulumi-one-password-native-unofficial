@@ -44,6 +44,15 @@ export interface UrlArgs {
     label?: pulumi.Input<string>;
     primary: pulumi.Input<boolean>;
 }
+/**
+ * urlArgsProvideDefaults sets the appropriate defaults for UrlArgs
+ */
+export function urlArgsProvideDefaults(val: UrlArgs): UrlArgs {
+    return {
+        ...val,
+        primary: (val.primary) ?? false,
+    };
+}
 export namespace bankAccount {
     export interface BranchInformationSectionArgs {
         address?: pulumi.Input<string>;

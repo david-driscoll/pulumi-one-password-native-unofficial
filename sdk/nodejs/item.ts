@@ -114,7 +114,7 @@ export interface ItemArgs {
      * The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
      */
     title?: pulumi.Input<string>;
-    urls?: pulumi.Input<pulumi.Input<inputs.UrlArgs>[]>;
+    urls?: pulumi.Input<pulumi.Input<inputs.UrlArgs | string>[]>;
     /**
      * The UUID of the vault the item is in.
      */
