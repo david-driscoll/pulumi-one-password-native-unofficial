@@ -236,7 +236,7 @@ schema.types = {
     "one-password-native-unofficial:index:Url": {
         "properties": {
             "label": {"type": "string"},
-            "primary": {"type": "boolean"},
+            "primary": {"type": "boolean", default: false},
             "href": {"type": "string"},
         },
         "type": "object",
@@ -452,13 +452,22 @@ for (const template of templates) {
     };
     currentResource.inputProperties['urls'] = {
         "type": "array",
-        items: {"$ref": "#/types/one-password-native-unofficial:index:Url"}
-    },
-        currentResource.inputProperties['vault'] = {
-            "type": "string",
-            "description": "The UUID of the vault the item is in.\n",
-            "willReplaceOnChanges": true
-        };
+        items: {
+            oneOf: [
+                {
+                    "$ref": "#/types/one-password-native-unofficial:index:Url"
+                },
+                {
+                    "type": "string"
+                }
+            ]
+        }
+    };
+    currentResource.inputProperties['vault'] = {
+        "type": "string",
+        "description": "The UUID of the vault the item is in.\n",
+        "willReplaceOnChanges": true
+    };
     currentResource.stateInputs = {
         properties: {
             vault: Object.assign({}, currentResource.inputProperties['vault'])
