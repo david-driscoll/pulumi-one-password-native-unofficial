@@ -2,6 +2,7 @@
 using GeneratedCode;
 using Refit;
 using Serilog;
+using File = GeneratedCode.File;
 
 #pragma warning disable CS9107 // Parameter is captured into the state of the enclosing type and its value is also passed to the base constructor. The value might be captured by the base class as well.
 
@@ -55,6 +56,10 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
             var vaultId = await GetVaultUuid(request.Vault ?? options.Vault);
             // var requestInput = ConvertToItemRequest(vaultId, request, templateJson);
             var existingItem = await Connect.GetVaultItemById(vaultId, request.Id);
+            existingItem.Sections ??= new List<Sections>();
+            existingItem.Fields ??= new List<Field>();
+            existingItem.Files ??= new List<File>();
+            
             existingItem.Tags = request.Tags;
             existingItem.Title = request.Title;
             existingItem.Urls = request.Urls.Select(x => new Urls()
