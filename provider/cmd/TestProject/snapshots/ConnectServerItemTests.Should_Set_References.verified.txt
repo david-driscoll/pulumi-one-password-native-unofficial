@@ -65,7 +65,18 @@
       test-tag
     ],
     title: myreferenceabcd1234,
-    urls: [],
+    urls: [
+      {
+        href: http://notaplace.com,
+        label: Not as cool a place,
+        primary: true
+      },
+      {
+        href: http://notlocalhost.com,
+        label: null,
+        primary: false
+      }
+    ],
     username: me,
     vault: {
       id: [redacted],

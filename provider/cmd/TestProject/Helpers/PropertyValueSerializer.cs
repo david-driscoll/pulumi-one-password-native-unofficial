@@ -251,6 +251,16 @@ public class PropertyValueSerializer
         if (targetType.IsGenericType && targetType.GetGenericTypeDefinition() == typeof(InputUnion<,>))
         {
             var v = await (Task<object>)typeof(PropertyValueSerializer)
+                .GetMethod(nameof(ToObjectFromInputUnion), BindingFlags.NonPublic | BindingFlags.Instance)!
+                .MakeGenericMethod(targetType.GenericTypeArguments)
+                .Invoke(this, new object[] { value })!;
+
+            return await Serialize(v);
+        }
+
+        if (targetType.IsGenericType && targetType.GetGenericTypeDefinition() == typeof(Union<,>))
+        {
+            var v = await (Task<object>)typeof(PropertyValueSerializer)
                 .GetMethod(nameof(ToObjectFromUnion), BindingFlags.NonPublic | BindingFlags.Instance)!
                 .MakeGenericMethod(targetType.GenericTypeArguments)
                 .Invoke(this, new object[] { value })!;
@@ -353,10 +363,15 @@ public class PropertyValueSerializer
         return ToObjectFromOutput(output.ToOutput());
     }
 
-    async Task<object> ToObjectFromUnion<T1, T2>(InputUnion<T1, T2> output)
+    async Task<object> ToObjectFromInputUnion<T1, T2>(InputUnion<T1, T2> output)
     {
         var result = await output;
         return result.Value;
+    }
+
+    Task<object> ToObjectFromUnion<T1, T2>(Union<T1, T2> output)
+    {
+        return Task.FromResult(output.Value);
     }
 
     /// <summary>

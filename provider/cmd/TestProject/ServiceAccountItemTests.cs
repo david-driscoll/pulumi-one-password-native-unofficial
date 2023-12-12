@@ -570,7 +570,7 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
 
         var result = await provider.Invoke(new InvokeRequest(
             ItemType.GetAttachment,
-            ImmutableDictionary<string, PropertyValue>.Empty.Add("reference", new("op://testing-pulumi/67gg5pap6mncp6h2wjvpukc3cu/add more/my-attachment")
+            ImmutableDictionary<string, PropertyValue>.Empty.Add("reference", new("op://testing-pulumi/TestItem/add more/my-attachment")
             )), CancellationToken.None);
 
         await Verify(result);

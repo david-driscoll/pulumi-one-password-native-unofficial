@@ -47,7 +47,7 @@
       },
       {
         href: http://notlocalhost.com,
-        label: Some really cool place,
+        label: null,
         primary: false
       }
     ],

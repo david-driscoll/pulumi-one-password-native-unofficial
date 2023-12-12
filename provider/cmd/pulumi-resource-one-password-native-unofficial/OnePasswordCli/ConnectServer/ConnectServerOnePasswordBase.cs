@@ -22,7 +22,11 @@ public class ConnectServerOnePasswordBase(
 
     protected async Task<string> GetVaultUuid(string? name)
     {
-        if (_vaultIds.TryGetValue(name ?? "", out var id))
+        if (name is null)
+        {
+            throw new KeyNotFoundException("vault name is null");
+        }
+        if (_vaultIds.TryGetValue(name, out var id))
         {
             return id;
         }
@@ -34,7 +38,7 @@ public class ConnectServerOnePasswordBase(
             _vaultIds = _vaultIds.Add(vault.Name, vault.Id);
         }
 
-        return _vaultIds.TryGetValue(name ?? "", out id) ? id : throw new KeyNotFoundException($"vault {name} not found");
+        return _vaultIds.TryGetValue(name, out id) ? id : throw new KeyNotFoundException($"vault {name} not found");
     }
 
     internal static FullItem ConvertToItemRequest(string vaultId, ItemRequestBase request, TemplateMetadata.Template templateJson)
