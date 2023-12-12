@@ -3414,7 +3414,7 @@
                     "onePasswordId": "valid_from"
                 },
                 "expires": {
-                    "type": "date",
+                    "type": "string",
                     "secret": false,
                     "kind": "DATE",
                     "onePasswordId": "expires"
