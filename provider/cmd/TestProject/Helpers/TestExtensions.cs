@@ -1,8 +1,8 @@
 ﻿using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
 using Pulumi;
-using pulumi_resource_one_password_native_unofficial;
 using Pulumi.Experimental.Provider;
+using TemplateMetadata = pulumi_resource_one_password_native_unofficial.TemplateMetadata;
 
 // ReSharper disable NullableWarningSuppressionIsUsed
 

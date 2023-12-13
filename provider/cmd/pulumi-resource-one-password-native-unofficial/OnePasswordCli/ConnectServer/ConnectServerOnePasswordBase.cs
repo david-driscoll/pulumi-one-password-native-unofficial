@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using GeneratedCode;
+using pulumi_resource_one_password_native_unofficial.Domain;
 using Serilog;
 
 #pragma warning disable CS9107 // Parameter is captured into the state of the enclosing type and its value is also passed to the base constructor. The value might be captured by the base class as well.
@@ -43,9 +44,9 @@ public class ConnectServerOnePasswordBase(
         return _vaultIds.TryGetValue(name, out id) ? id : throw new KeyNotFoundException($"vault {name} not found");
     }
 
-    internal static FullItem ConvertToItemRequest(string vaultId, ItemRequestBase request, TemplateMetadata.Template templateJson)
+    internal static FullItem ConvertToItemRequest(string vaultId, ItemRequestBase request, Template templateJson)
     {
-        var (fields, _, sections) = templateJson.GetFieldsAndAttachments();
+        var (fields, _, sections, _) = templateJson.PrepareFieldsAndAttachments();
         return new FullItem()
         {
             Id = request is Item.EditRequest { Id: not null } editRequest
@@ -90,7 +91,8 @@ public class ConnectServerOnePasswordBase(
                         CharacterSets = request.GeneratePassword?.CharacterSets
                     }
                     : null,
-            }).ToList(),
+            })
+                .ToList(),
             Sections = sections.Select(z => new Sections()
             {
                 Id = z.Id,

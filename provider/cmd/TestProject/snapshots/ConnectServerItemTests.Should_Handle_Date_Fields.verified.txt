@@ -1,0 +1,46 @@
+﻿{
+  Id: [server-generated],
+  Properties: {
+    attachments: {},
+    category: API Credential,
+    defaultVault: false,
+    expires: 2021-10-10,
+    fields: {
+      customDate: {
+        id: [redacted],
+        label: customDate,
+        purpose: null,
+        reference: [redacted],
+        type: DATE,
+        value: 2021-10-10
+      },
+      expires: {
+        id: [redacted],
+        label: expires,
+        purpose: null,
+        reference: [redacted],
+        type: DATE,
+        value: 2021-10-10
+      },
+      notesPlain: {
+        id: [redacted],
+        label: notesPlain,
+        purpose: NOTES,
+        reference: [redacted],
+        type: STRING,
+        value: null
+      }
+    },
+    id: [redacted],
+    notes: ,
+    references: [],
+    sections: {},
+    tags: [],
+    title: myapiabcd1234,
+    urls: [],
+    vault: {
+      id: [redacted],
+      name: testing-pulumi
+    }
+  }
+}

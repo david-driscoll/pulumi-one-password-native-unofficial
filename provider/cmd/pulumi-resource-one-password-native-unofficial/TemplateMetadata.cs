@@ -1,29 +1,33 @@
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
+using System.Globalization;
 using System.Text;
-using System.Text.Json.Serialization;
 using GeneratedCode;
-using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
-using Pulumi.Experimental.Provider;
 using Pulumi;
 using pulumi_resource_one_password_native_unofficial.Domain;
+using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
+using Pulumi.Experimental.Provider;
 using File = System.IO.File;
 using Item = pulumi_resource_one_password_native_unofficial.OnePasswordCli.Item;
+using ResourceType = pulumi_resource_one_password_native_unofficial.Domain.ResourceType;
 
 namespace pulumi_resource_one_password_native_unofficial;
 
 public static partial class TemplateMetadata
 {
-    private static ImmutableDictionary<string, ResourceType> ResourceTypesDictionary { get; } = ResourceTypes.ToImmutableDictionary(z => z.Urn);
-    private static ImmutableDictionary<string, FunctionType> FunctionTypesDictionary { get; } = FunctionTypes.ToImmutableDictionary(z => z.Urn);
+    private static readonly Lazy<ImmutableDictionary<string, ResourceType>>
+        ResourceTypesDictionary = new(() => ResourceTypes.ToImmutableDictionary(z => z.Urn));
+
+    private static readonly Lazy<ImmutableDictionary<string, FunctionType>>
+        FunctionTypesDictionary = new(() => FunctionTypes.ToImmutableDictionary(z => z.Urn));
 
     public static ResourceType? GetResourceTypeFromUrn(string urn)
     {
-        return CollectionExtensions.GetValueOrDefault(ResourceTypesDictionary, Type(urn));
+        return CollectionExtensions.GetValueOrDefault(ResourceTypesDictionary.Value, Type(urn));
     }
 
     public static FunctionType? GetFunctionType(string urn)
     {
-        return CollectionExtensions.GetValueOrDefault(FunctionTypesDictionary, urn);
+        return CollectionExtensions.GetValueOrDefault(FunctionTypesDictionary.Value, urn);
     }
 
     private static string Type(string urn)
@@ -33,122 +37,6 @@ public static partial class TemplateMetadata
         return typeParts[^1];
     }
 
-    public interface IPulumiItemType
-    {
-        string Urn { get; }
-        string ItemName { get; }
-        string ItemCategory { get; }
-        ImmutableArray<(string field, string? section)> Fields { get; }
-    }
-
-    public record ResourceType(
-        string Urn,
-        string ItemName,
-        string ItemCategory,
-        TransformInputs TransformInputsToTemplate,
-        TransformOutputs TransformItemToOutputs,
-        ImmutableArray<(string field, string? section)> Fields
-    ) : IPulumiItemType
-    {
-        public Inputs TransformInputs(ImmutableDictionary<string, PropertyValue> properties)
-        {
-            return TransformInputsToTemplate(this, properties);
-        }
-
-        public ImmutableDictionary<string, PropertyValue> TransformOutputs(Item.Response item, ImmutableDictionary<string, PropertyValue>? inputs)
-        {
-            return TransformItemToOutputs(this, item, inputs);
-        }
-
-        public ImmutableDictionary<string, PropertyValue> TransformOutputs(Inputs item, ImmutableDictionary<string, PropertyValue>? inputs)
-        {
-            var response = new Item.Response()
-            {
-                Vault = new Item.VaultResponse()
-                {
-                    Id = null,
-                    Name = item.Vault,
-                },
-                Category = item.Category,
-                Title = item.Title,
-                Urls = item.Urls.Select(z => new Item.Url()
-                {
-                    Href = z.Href,
-                    Primary = z.Primary,
-                    Label = z.Label,
-                }).ToImmutableArray(),
-                Sections = item.Fields
-                    .Select(z => z.Value.Section).Where(z => z is not null).Distinct(z => z.Id).Select(z => new Item.Section()
-                    {
-                        Id = z!.Id,
-                        Label = z.Label,
-                    }).ToImmutableArray(),
-                Fields = item.Fields
-                    .Where(z => !string.Equals(z.Value.Type, "FILE", StringComparison.OrdinalIgnoreCase))
-                    .Select(z => new Item.Field()
-                    {
-                        Id = z.Value.Id,
-                        Label = z.Value.Label,
-                        Type = z.Value.Type!,
-                        Purpose = z.Value.Purpose,
-                        Section = z.Value.Section is null
-                            ? null
-                            : new Item.Section()
-                            {
-                                Id = z.Value.Section.Id!,
-                                Label = z.Value.Section.Label,
-                            },
-                        Value = z.Value.Value,
-                    }).ToImmutableArray(),
-                Files = item.Fields
-                    .Where(z => string.Equals(z.Value.Type, "FILE", StringComparison.OrdinalIgnoreCase))
-                    .Select(z => new Item.File()
-                    {
-                        Id = z.Value.Id ?? z.Key,
-                        Name = z.Value.Label ?? z.Key,
-                        Section = z.Value.Section is null
-                            ? null
-                            : new Item.Section()
-                            {
-                                Id = z.Value.Section.Id!,
-                                Label = z.Value.Section.Label,
-                            },
-                    }).ToImmutableArray(),
-            };
-
-            var result = TransformItemToOutputs(this, response, inputs);
-            var vault = GetObjectValue(result, "vault");
-            if (vault is { Type: PropertyValueType.Object })
-            {
-                result = result.SetItem("vault", new PropertyValue(ImmutableDictionary.Create<string, PropertyValue>()
-                    .Add("id", PropertyValue.Computed)
-                    .Add("name", item.Vault is null ? PropertyValue.Null : new PropertyValue(item.Vault))
-                ));
-            }
-
-            if (GetObjectStringValue(result, "title") is not { Length: > 0 })
-            {
-                result = result.SetItem("title", PropertyValue.Computed);
-            }
-
-            return result;
-        }
-    }
-
-    public record FunctionType(
-        string Urn,
-        string ItemName,
-        string ItemCategory,
-        TransformOutputs TransformItemToOutputs,
-        ImmutableArray<(string field, string? section)> Fields
-    ) : IPulumiItemType
-    {
-        public ImmutableDictionary<string, PropertyValue> TransformOutputs(Item.Response item)
-        {
-            return TransformItemToOutputs(this, item, null);
-        }
-    }
-
     public delegate Inputs TransformInputs(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> properties);
 
     public delegate ImmutableDictionary<string, PropertyValue> TransformOutputs(IPulumiItemType resourceType, Item.Response template,
@@ -156,7 +44,11 @@ public static partial class TemplateMetadata
 
     public static string? GetStringValue(ImmutableDictionary<string, PropertyValue> values, string fieldName)
     {
-        return values.TryGetValue(fieldName, out var f) && f.TryUnwrap(out f) && f.TryGetString(out var field) ? field : null;
+        return values.TryGetValue(fieldName, out var f)
+               && f.TryUnwrap(out f)
+               && f.TryGetString(out var field)
+            ? field
+            : null;
     }
 
     public static string? GetVaultName(ImmutableDictionary<string, PropertyValue> values)
@@ -164,8 +56,11 @@ public static partial class TemplateMetadata
         if (GetBoolValue(values, "defaultVault")) return null;
         if (values.TryGetValue("vault", out var v))
         {
-            if (v.Type == PropertyValueType.String) return v.TryGetString(out var va) ? va : null;
-            if (v.Type == PropertyValueType.Object) return v.TryGetObject(out var vault) ? GetStringValue(vault, "name") : null;
+            return v.TryGetString(out var va)
+                ? va
+                : v.TryGetObject(out var vault)
+                    ? GetStringValue(vault, "name")
+                    : null;
         }
 
         return null;
@@ -213,8 +108,14 @@ public static partial class TemplateMetadata
     {
         inputs = inputs with
         {
-            Fields = fields.ToImmutableDictionary(z => z.Id ?? z.Label!, z => z)
+            Fields = fields.ToImmutableDictionary(getFieldId, z => z)
         };
+
+        static string getFieldId(TemplateField id)
+        {
+            return id is { Section.Id: { Length: > 0 } sectionId } ? $"{sectionId}.{id.Id ?? id.Label!}" : id.Id ?? id.Label!;
+        }
+
         if (root.TryGetValue("generatePassword", out var gp))
         {
             if (!inputs.Fields.TryGetValue("password", out var passwordField))
@@ -302,6 +203,16 @@ public static partial class TemplateMetadata
     )
     {
         DebugHelper.WaitForDebugger();
+        {
+            var existingFields = item.Fields;
+            item = item with
+            {
+                Fields = item.Fields
+                    .Where(z => !(z.Id?.EndsWith("_iso") == true && existingFields.FirstOrDefault(x => x.Id + "_iso" == z.Id) is
+                        { Type: "DATE" or "MONTH_YEAR" }))
+                    .ToImmutableArray()
+            };
+        }
         // item = item with
         // {
         //     Fields = item.Fields
@@ -441,7 +352,7 @@ public static partial class TemplateMetadata
 
             return ImmutableDictionary.Create<string, PropertyValue>()
                 .Add("id", field.Id is null ? PropertyValue.Null : new(field.Id))
-                .Add("value", field.Value is null ? PropertyValue.Null : new(field.Value))
+                .Add("value", GetOutputPropertyValue(field))
                 .Add("purpose", purpose is null ? PropertyValue.Null : new(purpose))
                 .Add("type", new(type))
                 .Add("label", field.Label is null ? PropertyValue.Null : new(field.Label))
@@ -475,6 +386,88 @@ public static partial class TemplateMetadata
                 .Add("asset", new PropertyValue(asset))
                 .Add("reference", new(MakeReference(item, file)));
         }
+    }
+
+    internal static bool TryGetTemplateValue(string type, PropertyValue? propertyValue, out string templateValue)
+    {
+        if (propertyValue is null)
+        {
+            templateValue = "";
+            return false;
+        }
+
+        if (Enum.TryParse<FieldType>(type, out var fieldType))
+        {
+            if (GetNumberValue(propertyValue) is { } numberValue)
+            {
+                if (fieldType == FieldType.DATE)
+                {
+                    templateValue = DateOnly.FromDateTime(DateTimeOffset.FromUnixTimeSeconds(numberValue).UtcDateTime).ToString("O");
+                    return true;
+                }
+
+                if (fieldType == FieldType.MONTH_YEAR)
+                {
+                    templateValue = DateOnly.FromDateTime(DateTimeOffset.FromUnixTimeSeconds(numberValue).UtcDateTime).ToString("yyyy-MM");
+                    return true;
+                }
+            }
+        }
+
+        return propertyValue.TryGetString(out templateValue!);
+
+        static int? GetNumberValue(PropertyValue value)
+        {
+            if (value.TryGetNumber(out var number))
+            {
+                return Convert.ToInt32(number);
+            }
+
+            if (value.TryGetString(out var s) && int.TryParse(s, out var i))
+            {
+                return i;
+            }
+
+            return null;
+        }
+    }
+
+    internal static PropertyValue GetOutputPropertyValue(Item.Field field)
+    {
+        if (Enum.TryParse<FieldType>(field.Type, out var fieldType) && field.Value is not null)
+        {
+            return fieldType switch
+            {
+                FieldType.DATE => new PropertyValue(DateOnly.FromDateTime(DateTimeOffset.FromUnixTimeSeconds(int.TryParse(field.Value, out var number) ? number : 0).DateTime).ToString("O")),
+                FieldType.MONTH_YEAR => new PropertyValue(DateOnly.ParseExact(field.Value, ["yyyy-MM", "yyyy/MM", "yyyyMM"], CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces).ToString("yyyy-MM")),
+                _ => new PropertyValue(field.Value)
+            };
+        }
+
+        return field.Value is null ? PropertyValue.Null : new PropertyValue(field.Value);
+    }
+
+    internal static DateOnly? Get1PasswordDayOnly(TemplateField field)
+    {
+        return Enum.TryParse<FieldType>(field.Type, out var fieldType)
+               && field.Value is not null
+               && fieldType is FieldType.DATE or FieldType.MONTH_YEAR
+               && DateOnly.TryParseExact(field.Value, ["O", "yyyy-MM", "yyyy/MM"], CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out var dateOnly)
+            ? dateOnly
+            : null;
+    }
+
+    internal static string? Get1PasswordUnixString(TemplateField field)
+    {
+        if (Get1PasswordDayOnly(field) is not { } dateOnly) return field.Value;
+        if (Enum.TryParse<FieldType>(field.Type, out var fieldType)
+            && field.Value is not null
+            && fieldType is FieldType.MONTH_YEAR)
+        {
+            return dateOnly.ToString("yyyy/MM");
+        }
+
+        return new DateTimeOffset(dateOnly, TimeOnly.FromTimeSpan(TimeSpan.FromHours(12)), DateTimeOffset.Now.Offset).ToUnixTimeSeconds().ToString();
     }
 
     private static string MakeReference(Item.Response item, Item.Field field)
@@ -740,25 +733,6 @@ public static partial class TemplateMetadata
         return !v.TryGetObject(out var field) ? null : field;
     }
 
-    public record Template
-    {
-        public required ImmutableArray<TemplateField> Fields { get; init; } = ImmutableArray<TemplateField>.Empty;
-        public required ImmutableArray<TemplateUrl> Urls { get; init; } = ImmutableArray<TemplateUrl>.Empty;
-        // public required ImmutableArray<TemplateFile> Files { get; init; } = ImmutableArray<TemplateField>.Empty;
-
-        public ImmutableArray<TemplateSection> Sections =>
-            Fields.Where(z => z.Section is not null).GroupBy(z => z.Section?.Id).Select(z => z.First().Section).ToImmutableArray();
-
-        public (ImmutableArray<TemplateField> fields, ImmutableArray<TemplateAttachment> attachments, ImmutableArray<TemplateSection> sections)
-            GetFieldsAndAttachments()
-        {
-            var fields = Fields.Where(x => x is not TemplateAttachment).ToImmutableArray();
-            var attachments = Fields.OfType<TemplateAttachment>().ToImmutableArray();
-            return (fields, attachments, Sections);
-        }
-    }
-
-
     public static async Task<string> ResolveAssetPath(this AssetOrArchive asset, string tempDirectory, string fileName, CancellationToken cancellationToken)
     {
         if (asset is FileAsset fileAsset)
@@ -801,107 +775,4 @@ public static partial class TemplateMetadata
 
         throw new($"Asset {asset.GetType().FullName} not supported!");
     }
-
-    public record Inputs
-    {
-        public string? Title { get; init; }
-        public required string Category { get; init; }
-        public ImmutableDictionary<string, TemplateField> Fields { get; init; } = ImmutableDictionary<string, TemplateField>.Empty;
-        public ImmutableArray<Item.Url> Urls { get; init; } = ImmutableArray<Item.Url>.Empty;
-        public ImmutableArray<string> Tags { get; init; } = ImmutableArray<string>.Empty;
-        public string? Vault { get; init; }
-        public PasswordGeneratorRecipe? GeneratePassword { get; init; }
-
-        public static implicit operator Template(Inputs inputs)
-        {
-            return new Template()
-            {
-                Fields = inputs.Fields.Values.ToImmutableArray(),
-                Urls = inputs.Urls.Select(z => new TemplateUrl() { Href = z.Href, Label = z.Label, Primary = z.Primary }).ToImmutableArray(),
-            };
-        }
-    }
-
-    public class TemplateSection
-    {
-        public string? Id { get; init; }
-        public required string Label { get; init; }
-    }
-
-    public record TemplateField
-    {
-        public string? Id { get; init; }
-        public string? Label { get; init; }
-        public string? Type { get; init; }
-        public string? Purpose { get; init; }
-        public TemplateSection? Section { get; init; }
-        public required string Value { get; set; }
-    }
-
-    public record TemplateUrl
-    {
-        public string? Label { get; init; }
-        public bool Primary { get; init; }
-        public string Href { get; init; } = "";
-    }
-
-    public record TemplateAttachment : TemplateField
-    {
-        [JsonIgnore] public required AssetOrArchive Asset { get; init; }
-    }
-}
-
-internal static class Constants
-{
-    /// <summary>
-    /// Unknown values are encoded as a distinguished string value.
-    /// </summary>
-    public const string UnknownValue = "04da6b54-80e4-46f7-96ec-b56ff0331ba9";
-
-    /// <summary>
-    /// SpecialSigKey is sometimes used to encode type identity inside of a map. See sdk/go/common/resource/properties.go.
-    /// </summary>
-    public const string SpecialSigKey = "4dabf18193072939515e22adb298388d";
-
-    /// <summary>
-    /// SpecialAssetSig is a randomly assigned hash used to identify assets in maps. See sdk/go/common/resource/asset.go.
-    /// </summary>
-    public const string SpecialAssetSig = "c44067f5952c0a294b673a41bacd8c17";
-
-    /// <summary>
-    /// SpecialArchiveSig is a randomly assigned hash used to identify archives in maps. See sdk/go/common/resource/asset.go.
-    /// </summary>
-    public const string SpecialArchiveSig = "0def7320c3a5731c473e5ecbe6d01bc7";
-
-    /// <summary>
-    /// SpecialSecretSig is a randomly assigned hash used to identify secrets in maps. See sdk/go/common/resource/properties.go.
-    /// </summary>
-    public const string SpecialSecretSig = "1b47061264138c4ac30d75fd1eb44270";
-
-    /// <summary>
-    /// SpecialResourceSig is a randomly assigned hash used to identify resources in maps. See sdk/go/common/resource/properties.go.
-    /// </summary>
-    public const string SpecialResourceSig = "5cf8f73096256a8f31e491e813e4eb8e";
-
-    /// <summary>
-    /// SpecialOutputValueSig is a randomly assigned hash used to identify outputs in maps. See sdk/go/common/resource/properties.go.
-    /// </summary>
-    public const string SpecialOutputValueSig = "d0e6a833031e9bbcd3f4e8bde6ca49a4";
-
-    public const string SecretName = "secret";
-    public const string ValueName = "value";
-    public const string DependenciesName = "dependencies";
-
-    public const string AssetTextName = "text";
-    public const string ArchiveAssetsName = "assets";
-
-    public const string AssetOrArchivePathName = "path";
-    public const string AssetOrArchiveUriName = "uri";
-
-    public const string ResourceUrnName = "urn";
-    public const string ResourceIdName = "id";
-    public const string ResourceVersionName = "packageVersion";
-
-    public const string IdPropertyName = "id";
-    public const string UrnPropertyName = "urn";
 }
