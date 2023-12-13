@@ -829,13 +829,13 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
                 Letters = true
             },
             Tags = new[] { "test-tag" },
-            References = new[] { new ReferenceArgs() { ItemId = loginItemResult.Id! } },
+            References = new[] { loginItemResult.Id! },
             Sections = new()
             {
                 ["mysection"] = new SectionArgs()
                 {
                     Label = "My Section",
-                    References = new[] { new ReferenceArgs() { ItemId = passwordItemResult.Id! } },
+                    References = new[] { passwordItemResult.Id! },
                 }
             },
             Urls = new()

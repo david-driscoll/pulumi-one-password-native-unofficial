@@ -19,11 +19,7 @@ return await Deployment.RunAsync(() =>
         // Password = "secret1234",
         Fields = new()
         {
-            ["password"] = new FieldArgs()
-            {
-                Value = "secret1234",
-                Type = FieldType.Concealed
-            }
+            { "password", new FieldArgs() { Value = "secret1234", Type = FieldType.Concealed } }
         },
         Sections = new()
         {
@@ -45,7 +41,7 @@ return await Deployment.RunAsync(() =>
                 // },
             }
         },
-        Tags = new [] { "test-tag" }
+        Tags = new[] { "test-tag" }
     });
 
     // // TODO: Allow config values for the vault, tokens, etc.

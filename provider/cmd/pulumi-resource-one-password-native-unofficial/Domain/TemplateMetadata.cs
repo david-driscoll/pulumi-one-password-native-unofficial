@@ -518,20 +518,18 @@ public static partial class TemplateMetadata
 
         foreach (var field in fields)
         {
-            if (!field.TryGetObject(out var data)) continue;
+            if (!field.TryGetString(out var data)) continue;
             yield return CreateReferenceTemplateField(data, null, section);
         }
     }
 
-    public static TemplateField CreateReferenceTemplateField(ImmutableDictionary<string, PropertyValue> data, string? id, TemplateSection? section = null)
+    public static TemplateField CreateReferenceTemplateField(string itemId, string? id, TemplateSection? section = null)
     {
-        var itemId = GetObjectStringValue(data, "itemId");
-        var label = GetObjectStringValue(data, "label");
         return new TemplateField()
         {
             Id = id ?? itemId,
-            Value = itemId!,
-            Label = label ?? itemId,
+            Value = itemId,
+            Label = itemId,
             Type = "REFERENCE",
             Section = section,
         };
