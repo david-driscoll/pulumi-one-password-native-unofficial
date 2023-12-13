@@ -1,0 +1,64 @@
+﻿{
+  Id: [server-generated],
+  Properties: {
+    attachments: {},
+    category: Secure Note,
+    defaultVault: false,
+    fields: {
+      notesPlain: {
+        id: [redacted],
+        label: notesPlain,
+        purpose: NOTES,
+        reference: [redacted],
+        type: STRING,
+        value: null
+      },
+      password: {
+        id: [redacted],
+        label: password,
+        purpose: null,
+        reference: [redacted],
+        type: CONCEALED,
+        value: mypassword
+      },
+      username: {
+        id: [redacted],
+        label: username,
+        purpose: null,
+        reference: [redacted],
+        type: STRING,
+        value: myusername
+      }
+    },
+    id: [redacted],
+    notes: ,
+    references: [],
+    sections: {
+      mysection: {
+        attachments: {},
+        fields: {
+          password2: {
+            id: [redacted],
+            label: password2,
+            purpose: null,
+            reference: [redacted],
+            type: CONCEALED,
+            value: secret1235!
+          }
+        },
+        id: [redacted],
+        label: mysection,
+        references: []
+      }
+    },
+    tags: [
+      test-tag
+    ],
+    title: myitemabcd1234,
+    urls: [],
+    vault: {
+      id: [redacted],
+      name: testing-pulumi
+    }
+  }
+}

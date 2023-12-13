@@ -3,14 +3,12 @@ using System.Globalization;
 using System.Text;
 using GeneratedCode;
 using Pulumi;
-using pulumi_resource_one_password_native_unofficial.Domain;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 using Pulumi.Experimental.Provider;
 using File = System.IO.File;
 using Item = pulumi_resource_one_password_native_unofficial.OnePasswordCli.Item;
-using ResourceType = pulumi_resource_one_password_native_unofficial.Domain.ResourceType;
 
-namespace pulumi_resource_one_password_native_unofficial;
+namespace pulumi_resource_one_password_native_unofficial.Domain;
 
 public static partial class TemplateMetadata
 {
@@ -226,7 +224,10 @@ public static partial class TemplateMetadata
         // };
 
         outputs.Add("id", new PropertyValue(item.Id));
-        outputs.Add("category", new PropertyValue(resourceType.ItemName));
+        outputs.Add("category",
+            new PropertyValue(resourceType.InputCategory == "Item"
+                ? GetObjectStringValue(inputs, "category") ?? resourceType.InputCategory
+                : resourceType.InputCategory));
         outputs.Add("title", new PropertyValue(item.Title));
         outputs.Add("notes", new PropertyValue(GetField(item, "notesPlain")?.Value ?? ""));
         outputs.Add("defaultVault", new PropertyValue(inputs?.ContainsKey("vault") != true));
@@ -276,34 +277,39 @@ public static partial class TemplateMetadata
                 .AddRange(
                     sections
                         // ReSharper disable once NullableWarningSuppressionIsUsed
-                        .Select(section => new KeyValuePair<string, PropertyValue>((section!.Id), new(
-                            ImmutableDictionary.Create<string, PropertyValue>()
-                                .Add("id", new(section.Id))
-                                .Add("label", new(section.Label ?? section.Id))
-                                .Add("fields", new(ImmutableDictionary.Create<string, PropertyValue>()
-                                    .AddRange(
-                                        item.Fields
-                                            .Where(z => !z.Type.Equals("REFERENCE", StringComparison.OrdinalIgnoreCase))
-                                            .Where(z => z.Section is not null)
-                                            .Where(z => z.Section?.Id == section.Id)
-                                            .Select(field => new KeyValuePair<string, PropertyValue>(field.Id!, new(CreateField(inputs, item, field))))
-                                    )))
-                                .Add("references", new(ImmutableArray.Create<PropertyValue>()
-                                    .AddRange(
-                                        item.Fields
-                                            .Where(z => z.Type.Equals("REFERENCE", StringComparison.OrdinalIgnoreCase))
-                                            .Where(z => z.Section is not null)
-                                            .Where(z => z.Section?.Id == section.Id)
-                                            .Select(field => new PropertyValue(CreateField(inputs, item, field))))
-                                ))
-                                .Add("attachments", new(ImmutableDictionary.Create<string, PropertyValue>()
-                                    .AddRange(
-                                        item.Files
-                                            .Where(z => z.Section is not null)
-                                            .Where(z => z.Section?.Id == section.Id)
-                                            .Select(file => new KeyValuePair<string, PropertyValue>(file.Name, new(CreateAttachment(inputs, item, file))))
-                                    )))
-                        ))))
+                        .Select(section =>
+                        {
+                            return new KeyValuePair<string, PropertyValue>((section.Id), new(
+                                ImmutableDictionary.Create<string, PropertyValue>()
+                                    .Add("id", new(section.Id))
+                                    .Add("label", new(section.Label ?? section.Id))
+                                    .Add("fields", new(ImmutableDictionary.Create<string, PropertyValue>()
+                                        .AddRange(
+                                            item.Fields
+                                                .Where(z => !z.Type.Equals("REFERENCE", StringComparison.OrdinalIgnoreCase))
+                                                .Where(z => z.Section is not null)
+                                                .Where(z => z.Section?.Id == section.Id)
+                                                .Select(field => new KeyValuePair<string, PropertyValue>(field.Id!,
+                                                    new(CreateField(inputs, item, field))))
+                                        )))
+                                    .Add("references", new(ImmutableArray.Create<PropertyValue>()
+                                        .AddRange(
+                                            item.Fields
+                                                .Where(z => z.Type.Equals("REFERENCE", StringComparison.OrdinalIgnoreCase))
+                                                .Where(z => z.Section is not null)
+                                                .Where(z => z.Section?.Id == section.Id)
+                                                .Select(field => new PropertyValue(CreateField(inputs, item, field))))
+                                    ))
+                                    .Add("attachments", new(ImmutableDictionary.Create<string, PropertyValue>()
+                                        .AddRange(
+                                            item.Files
+                                                .Where(z => z.Section is not null)
+                                                .Where(z => z.Section?.Id == section.Id)
+                                                .Select(file => new KeyValuePair<string, PropertyValue>(file.Name,
+                                                    new(CreateAttachment(inputs, item, file))))
+                                        )))
+                            ));
+                        }))
         ));
 
         static ImmutableDictionary<string, PropertyValue> CreateField(ImmutableDictionary<string, PropertyValue>? inputs, Item.Response item, Item.Field field)
@@ -364,17 +370,16 @@ public static partial class TemplateMetadata
         {
             // DebugHelper.WaitForDebugger();
             string? hash = null;
-            PropertyValue? asset = null;
-            if (file is { Section.Id: { } } && inputs is not null)
+            PropertyValue? a = null;
+            if (inputs is not null && file is { Section.Id: { } } && GetSection(inputs, file.Section.Id) is {} section && GetAttachment(section, file.Name) is {} asset)
             {
-                var section = GetSection(inputs, file.Section.Id);
-                asset = GetAttachment(section!, file.Name);
                 hash = AssetOrArchiveExtensions.HashAssetOrArchive(asset);
+                a = asset;
             }
-            else if (inputs is not null)
+            else if (inputs is not null && GetAttachment(inputs, file.Name) is {} asset2)
             {
-                asset = GetAttachment(inputs, file.Name);
-                hash = AssetOrArchiveExtensions.HashAssetOrArchive(asset);
+                hash = AssetOrArchiveExtensions.HashAssetOrArchive(asset2);
+                a = asset2;
             }
 
             return ImmutableDictionary.Create<string, PropertyValue>()
@@ -382,8 +387,8 @@ public static partial class TemplateMetadata
                 .Add("name", new(file.Name))
                 .Add("size", new(file.Size))
                 // have to get from the input fields.
-                .Add("hash", new(hash))
-                .Add("asset", new PropertyValue(asset))
+                .Add("hash", hash is { Length: > 0 } ? new(hash) : PropertyValue.Null)
+                .Add("asset", a is {} ? a : PropertyValue.Null)
                 .Add("reference", new(MakeReference(item, file)));
         }
     }
@@ -438,8 +443,11 @@ public static partial class TemplateMetadata
         {
             return fieldType switch
             {
-                FieldType.DATE => new PropertyValue(DateOnly.FromDateTime(DateTimeOffset.FromUnixTimeSeconds(int.TryParse(field.Value, out var number) ? number : 0).DateTime).ToString("O")),
-                FieldType.MONTH_YEAR => new PropertyValue(DateOnly.ParseExact(field.Value, ["yyyy-MM", "yyyy/MM", "yyyyMM"], CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces).ToString("yyyy-MM")),
+                FieldType.DATE => new PropertyValue(DateOnly
+                    .FromDateTime(DateTimeOffset.FromUnixTimeSeconds(int.TryParse(field.Value, out var number) ? number : 0).DateTime).ToString("O")),
+                FieldType.MONTH_YEAR => new PropertyValue(DateOnly
+                    .ParseExact(field.Value, ["yyyy-MM", "yyyy/MM", "yyyyMM"], CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces)
+                    .ToString("yyyy-MM")),
                 _ => new PropertyValue(field.Value)
             };
         }
@@ -452,7 +460,8 @@ public static partial class TemplateMetadata
         return Enum.TryParse<FieldType>(field.Type, out var fieldType)
                && field.Value is not null
                && fieldType is FieldType.DATE or FieldType.MONTH_YEAR
-               && DateOnly.TryParseExact(field.Value, ["O", "yyyy-MM", "yyyy/MM"], CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out var dateOnly)
+               && DateOnly.TryParseExact(field.Value, ["O", "yyyy-MM", "yyyy/MM"], CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces,
+                   out var dateOnly)
             ? dateOnly
             : null;
     }

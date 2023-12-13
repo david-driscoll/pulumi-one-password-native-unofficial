@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using pulumi_resource_one_password_native_unofficial;
+using pulumi_resource_one_password_native_unofficial.Domain;
 using Pulumi.Experimental.Provider;
 using Serilog;
 
@@ -67,7 +68,7 @@ public class ServiceAccountFixture : IAsyncLifetime, IServerFixture
         values.TryGetObject(out var configObject);
         configObject = configObject!.AddRange(additionalConfig ?? ImmutableDictionary<string, PropertyValue>.Empty);
 
-        _ = await provider.CheckConfig(new CheckRequest(ItemType.LoginItem, configObject, configObject, ImmutableArray<byte>.Empty), cancellationToken);
+        _ = await provider.CheckConfig(new CheckRequest(ResourceType.Login.Urn, configObject, configObject, ImmutableArray<byte>.Empty), cancellationToken);
         _ = await provider.Configure(new ConfigureRequest(ImmutableDictionary<string, string>.Empty, configObject, true, true), cancellationToken);
 
         return provider;

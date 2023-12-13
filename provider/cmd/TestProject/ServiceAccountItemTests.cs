@@ -1,6 +1,7 @@
 ﻿using System.Collections.Immutable;
 using Pulumi;
 using pulumi_resource_one_password_native_unofficial;
+using pulumi_resource_one_password_native_unofficial.Domain;
 using Pulumi.Experimental.Provider;
 using Rocket.Surgery.OnePasswordNativeUnofficial;
 using Rocket.Surgery.OnePasswordNativeUnofficial.Inputs;
@@ -8,6 +9,7 @@ using Serilog;
 using Serilog.Core;
 using TestProject.Helpers;
 using Xunit.Abstractions;
+using TemplateMetadata = pulumi_resource_one_password_native_unofficial.Domain.TemplateMetadata;
 
 // ReSharper disable NullableWarningSuppressionIsUsed
 
@@ -29,6 +31,95 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
             .WriteTo.TestOutput(output)
             .CreateLogger();
         fixture.ServiceAccount(serviceAccountFixture);
+    }
+
+    [SkippableFact(typeof(TimeoutException))]
+    public async Task Should_Allow_Any_Category_On_Item()
+    {
+        var provider = await _serverFixture.ConfigureProvider(_logger);
+
+        var data = await _fixture.CreateRequestObject<Item, ItemArgs>("myitem", new()
+        {
+            Vault = "testing-pulumi",
+            Category = ResourceType.DriverLicense.InputCategory,
+            Fields = new ()
+            {
+                ["username"] = new FieldArgs()
+                {
+                    Type = FieldType.String,
+                    Value = "myusername"
+                },
+                ["password"] = new FieldArgs()
+                {
+                    Type = FieldType.Concealed,
+                    Value = "mypassword"
+                }
+            },
+            Sections = new()
+            {
+                ["mysection"] = new SectionArgs()
+                {
+                    Fields = new()
+                    {
+                        ["password2"] = new FieldArgs()
+                        {
+                            Value = "secret1235!",
+                            Type = FieldType.Concealed
+                        }
+                    },
+                }
+            },
+            Tags = new[] { "test-tag" }
+        });
+        
+        var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
+
+        await Verify(create)
+            .AddIdScrubber(create.Id);
+    }
+
+    [SkippableFact(typeof(TimeoutException))]
+    public async Task Should_Default_The_Category_On_Item_To_Secure_Note()
+    {
+        var provider = await _serverFixture.ConfigureProvider(_logger);
+
+        var data = await _fixture.CreateRequestObject<Item, ItemArgs>("myitem", new()
+        {
+            Vault = "testing-pulumi",
+            Fields = new ()
+            {
+                ["username"] = new FieldArgs()
+                {
+                    Type = FieldType.String,
+                    Value = "myusername"
+                },
+                ["password"] = new FieldArgs()
+                {
+                    Type = FieldType.Concealed,
+                    Value = "mypassword"
+                }
+            },
+            Sections = new()
+            {
+                ["mysection"] = new SectionArgs()
+                {
+                    Fields = new()
+                    {
+                        ["password2"] = new FieldArgs()
+                        {
+                            Value = "secret1235!",
+                            Type = FieldType.Concealed
+                        }
+                    },
+                }
+            },
+            Tags = new[] { "test-tag" }
+        });
+        
+        var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
+
+        await Verify(create)
+            .AddIdScrubber(create.Id);
     }
 
     [SkippableFact(typeof(TimeoutException))]
@@ -569,7 +660,7 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
         var provider = await _serverFixture.ConfigureProvider(_logger);
 
         var result = await provider.Invoke(new InvokeRequest(
-            ItemType.GetAttachment,
+            FunctionType.GetAttachment.Urn,
             ImmutableDictionary<string, PropertyValue>.Empty.Add("reference", new("op://testing-pulumi/TestItem/add more/my-attachment")
             )), CancellationToken.None);
 
@@ -582,7 +673,7 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
         var provider = await _serverFixture.ConfigureProvider(_logger);
 
         var result = await provider.Invoke(new InvokeRequest(
-                ItemType.GetItem,
+                FunctionType.GetItem.Urn,
                 ImmutableDictionary<string, PropertyValue>.Empty
                     .Add("id", new("67gg5pap6mncp6h2wjvpukc3cu"))
                     .Add("vault", new("testing-pulumi"))
@@ -598,7 +689,7 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
         var provider = await _serverFixture.ConfigureProvider(_logger);
 
         var result = await provider.Invoke(new InvokeRequest(
-                ItemType.Read,
+                FunctionType.Read.Urn,
                 ImmutableDictionary<string, PropertyValue>.Empty.Add("reference", new("op://testing-pulumi/TestItem/password"))),
             CancellationToken.None);
 
@@ -611,7 +702,7 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
         var provider = await _serverFixture.ConfigureProvider(_logger);
 
         var result = await provider.Invoke(new InvokeRequest(
-                ItemType.Inject,
+                FunctionType.Inject.Urn,
                 ImmutableDictionary<string, PropertyValue>.Empty.Add("template", new(
                     $"""
                      MyPassword: op://testing-pulumi/TestItem/password

@@ -2,7 +2,7 @@
   Id: [server-generated],
   Properties: {
     attachments: {},
-    category: Item,
+    category: Secure Note,
     defaultVault: false,
     fields: {
       notesPlain: {

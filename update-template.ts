@@ -630,73 +630,61 @@ schema.resources[`one-password-native-unofficial:index:Item`].inputProperties['c
 
 writeFileSync('./schema.json', JSON.stringify(schema, null, 4))
 
-writeFileSync('./provider/cmd/pulumi-resource-one-password-native-unofficial/types.ts', `
-export const ItemType = {
-${Object.keys(schema.resources)
-    .concat(Object.keys(schema.functions))
-    .map(z => `"${last(z.split(':'))}": "${z}"`).join(',\n')}
-} as const;
-export const ItemTypeNames = {
-${templates.map(z => `"${(z as any).resourceName}": "${z.name}"`)
-    .concat(
-        templates.map(z => `"${(z as any).functionName}": "${z.name}"`)
-    )
-    .concat([
-        `"one-password-native-unofficial:index:GetVault": "Vault"`,
-        `"one-password-native-unofficial:index:GetSecretReference": "Secret Reference"`,
-        `"one-password-native-unofficial:index:GetAttachment": "Attachment"`,
-        `"one-password-native-unofficial:index:Read": "Read"`,
-        `"one-password-native-unofficial:index:Inject": "Inject"`,
-    ])
-    .join(',\n')}
-} as const;
-export const ResourceTypes = [${Object.keys(schema.resources).map(z => `"${z}"`).join(', ')}] as const;
-export const FunctionTypes = [${Object.keys(schema.functions).map(z => `"${z}"`).join(', ')}] as const;
-export const PropertyPaths: Record<string, [field: string, section?: string][]> = {
-    ${Object.entries(resourcePropPaths)
-    .concat(Object.entries(functionPropPaths))
-    .map((v) => `"${v[0]}": ${JSON.stringify(v[1])}`).join(',\n')}
-}
-`)
-
-writeFileSync('./provider/cmd/pulumi-resource-one-password-native-unofficial/Types.cs', `
+writeFileSync('./provider/cmd/pulumi-resource-one-password-native-unofficial/Domain/Types.cs', `
 using System.Collections.Immutable;
-using pulumi_resource_one_password_native_unofficial.Domain;
+using pulumi_resource_one_password_native_unofficial;
 
-namespace pulumi_resource_one_password_native_unofficial;
-public static class ItemType
+// ReSharper disable once CheckNamespace
+namespace pulumi_resource_one_password_native_unofficial.Domain;
+
+public partial record ResourceType
 {
-    ${Object.keys(schema.resources)
-    .concat(Object.keys(schema.functions))
-    .map(z => `public static string ${last(z.split(':'))} { get; } = "${z}";`).join('\n')}
+    ${templates
+    .filter(z => !!z.resourceName)
+    .map(template => {
+        return `public static ResourceType ${template.name.replace(/ /g, '')} { get; } = new("${template.resourceName}", "${template.name === 'Item' ? 'Secure Note' : template.name}", "${template.templateSchema.category}", TemplateMetadata.TransformInputsTo${template.name.replace(/ /g, '')}, TemplateMetadata.TransformOutputsTo${template.name.replace(/ /g, '')});`;
+    }).join('\n')}
 }
+
+public partial record FunctionType
+{
+    ${templates
+    .filter(z => !!z.functionName)
+    .map(template => {
+        return `public static FunctionType Get${template.name.replace(/ /g, '')} { get; } = new("${template.functionName}", "${template.name === 'Item' ? 'Secure Note' : template.name}", "${template.templateSchema.category}", TemplateMetadata.TransformOutputsTo${template.name.replace(/ /g, '')});`;
+    }).join('\n')}
+}
+
+
 public static partial class TemplateMetadata
 {
     private static ImmutableArray<ResourceType> ResourceTypes = [
         ${templates
     .filter(z => !!z.resourceName)
     .map(template => {
-        var properties = resourcePropPaths[template.resourceName!];
-        const fields = properties.map(z => `("${z[0]}", ${z[1] ? ('"' + z[1] + '"') : "null"})`).join(', ');
-        return `new("${template.resourceName}", "${template.name}", "${template.templateSchema.category}", TransformInputsTo${template.name.replace(/ /g, '')}, TransformOutputsTo${template.name.replace(/ /g, '')}, [${fields}])`;
+        return `ResourceType.${template.name.replace(/ /g, '')}`;
     }).join(',\n')}];
     private static ImmutableArray<FunctionType> FunctionTypes = [
         ${templates
     .filter(z => !!z.functionName)
     .map(template => {
-        var properties = functionPropPaths[template.functionName!];
-        const fields = properties.map(z => `("${z[0]}", ${z[1] ? ('"' + z[1] + '"') : "null"})`).join(', ');
-        return `new("${template.functionName}", "${template.name}", "${template.templateSchema.category}", TransformOutputsTo${template.name.replace(/ /g, '')}, [${fields}])`;
-    }).join(',\n')}];
+        return `FunctionType.Get${template.name.replace(/ /g, '')}`;
+    }).join(',\n')},
+    FunctionType.GetVault,
+    FunctionType.GetSecretReference,
+    FunctionType.Read,
+    FunctionType.Inject,
+    FunctionType.GetAttachment,
+    ];
 }
 `)
 
-writeFileSync('./provider/cmd/pulumi-resource-one-password-native-unofficial/Types.Transforms.cs', `using System.Collections.Immutable;
-using pulumi_resource_one_password_native_unofficial.Domain;
+writeFileSync('./provider/cmd/pulumi-resource-one-password-native-unofficial/Domain/Types.Transforms.cs', `using System.Collections.Immutable;
+using pulumi_resource_one_password_native_unofficial;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 using Pulumi.Experimental.Provider;
 
-namespace pulumi_resource_one_password_native_unofficial;
+namespace pulumi_resource_one_password_native_unofficial.Domain;
 
 public static partial class TemplateMetadata
 {
@@ -727,7 +715,7 @@ ${templates.map(template => {
         return AssignOtherInputs(values, fields, new Inputs()
         {
             Title = title,
-            Category = ${template.name === 'Item' ? 'category' : 'resourceType.ItemName'},
+            Category = ${template.name === 'Item' ? 'category ?? resourceType.InputCategory' : 'resourceType.InputCategory'},
             Urls = urls,
             Tags = tags,
             Vault = vault,

@@ -5,7 +5,7 @@ using Pulumi.Experimental.Provider;
 using pulumi_resource_one_password_native_unofficial.Domain;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 using Serilog;
-using static pulumi_resource_one_password_native_unofficial.TemplateMetadata;
+using static pulumi_resource_one_password_native_unofficial.Domain.TemplateMetadata;
 using System.Text.Json.Serialization;
 using Humanizer;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli.ConnectServer;
@@ -23,12 +23,14 @@ public class OnePasswordProvider(ILogger logger) : Provider
         try
         {
             List<CheckFailure> failures = new();
-            if (TemplateMetadata.GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
+            if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
 
-            if (resourceType.Urn != ItemType.Item && request.NewInputs.TryGetValue("category", out var category) && category.TryGetString(out var c) &&
-                c != resourceType.ItemName)
+            if (resourceType != ResourceType.Item
+                && request.NewInputs.TryGetValue("category", out var category)
+                && category.TryGetString(out var c)
+                && c != resourceType.InputCategory)
             {
-                failures.Add(new CheckFailure("category", $"Category must be {resourceType.ItemName}"));
+                failures.Add(new CheckFailure("category", $"Category must be {resourceType.InputCategory}"));
             }
 
             if (_op.Options.Vault is null &&
@@ -51,7 +53,7 @@ public class OnePasswordProvider(ILogger logger) : Provider
         try
         {
             await Task.Yield();
-            if (TemplateMetadata.GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
+            if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
 
             // DebugHelper.WaitForDebugger();
 
@@ -66,7 +68,7 @@ public class OnePasswordProvider(ILogger logger) : Provider
                 .Operations;
 
             var replaces = new HashSet<string>();
-            if (resourceType.ItemName == "Item" &&
+            if (resourceType.InputCategory == "Item" &&
                 diff.Any(z => z.Path.Segments.Length == 1 && z.Op == OperationType.Replace && z.Path.Segments[0].Value.Equals("category")))
             {
                 replaces.Add("category");
@@ -108,7 +110,7 @@ public class OnePasswordProvider(ILogger logger) : Provider
                 }),
                 DeleteBeforeReplace = false,
                 Replaces = replaces.ToList(),
-                Stables = resourceType.ItemName.Equals("Item", StringComparison.OrdinalIgnoreCase) ? ["uuid"] : ["uuid", "category"],
+                Stables = resourceType.InputCategory.Equals("Item", StringComparison.OrdinalIgnoreCase) ? ["uuid"] : ["uuid", "category"],
                 Diffs = diff.Select(z => z.Path.Segments[0].Value.Camelize()).Distinct().ToList(),
             };
         }
@@ -123,7 +125,7 @@ public class OnePasswordProvider(ILogger logger) : Provider
     {
         try
         {
-            if (TemplateMetadata.GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
+            if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
             // DebugHelper.WaitForDebugger();
 
 
@@ -147,7 +149,7 @@ public class OnePasswordProvider(ILogger logger) : Provider
                 Urls = news.Urls,
                 GeneratePassword = news.GeneratePassword,
             }, news, ct);
-                
+
             return new CreateResponse()
             {
                 Id = response.Id,
@@ -165,7 +167,7 @@ public class OnePasswordProvider(ILogger logger) : Provider
     {
         try
         {
-            if (TemplateMetadata.GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
+            if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
             // DebugHelper.WaitForDebugger();
 
             var news = resourceType.TransformInputs(ApplyDefaultInputs(resourceType, request.News, request.Olds));
@@ -291,9 +293,17 @@ public class OnePasswordProvider(ILogger logger) : Provider
             requestNews = requestNews.Remove("notes").Add("notes", new(""));
         }
 
-        if (GetObjectStringValue(requestNews, "category") is not { Length: > 0 })
+        if (GetObjectStringValue(requestNews, "category") is { Length: > 0 } category && resourceType == ResourceType.Item && category == "Item")
         {
-            requestNews = requestNews.Remove("category").Add("category", new(resourceType.Urn == ItemType.Item ? "Secure Note" : resourceType.ItemName));
+            requestNews = requestNews
+                .Remove("category")
+                .Add("category", new(resourceType.InputCategory));
+        }
+        else if (GetObjectStringValue(requestNews, "category") is not { Length: > 0 })
+        {
+            requestNews = requestNews
+                .Remove("category")
+                .Add("category", new(resourceType == ResourceType.Item ? ResourceType.SecureNote.InputCategory : resourceType.InputCategory));
         }
 
         return requestNews;

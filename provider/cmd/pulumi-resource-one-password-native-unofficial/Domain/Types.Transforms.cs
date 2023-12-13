@@ -1,9 +1,9 @@
 using System.Collections.Immutable;
-using pulumi_resource_one_password_native_unofficial.Domain;
+using pulumi_resource_one_password_native_unofficial;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 using Pulumi.Experimental.Provider;
 
-namespace pulumi_resource_one_password_native_unofficial;
+namespace pulumi_resource_one_password_native_unofficial.Domain;
 
 public static partial class TemplateMetadata
 {
@@ -228,7 +228,7 @@ public static partial class TemplateMetadata
         return AssignOtherInputs(values, fields, new Inputs()
         {
             Title = title,
-            Category = resourceType.ItemName,
+            Category = resourceType.InputCategory,
             Urls = urls,
             Tags = tags,
             Vault = vault,
@@ -588,7 +588,7 @@ public static partial class TemplateMetadata
         return AssignOtherInputs(values, fields, new Inputs()
         {
             Title = title,
-            Category = resourceType.ItemName,
+            Category = resourceType.InputCategory,
             Urls = urls,
             Tags = tags,
             Vault = vault,
@@ -1122,7 +1122,7 @@ public static partial class TemplateMetadata
         return AssignOtherInputs(values, fields, new Inputs()
         {
             Title = title,
-            Category = resourceType.ItemName,
+            Category = resourceType.InputCategory,
             Urls = urls,
             Tags = tags,
             Vault = vault,
@@ -1354,7 +1354,7 @@ public static partial class TemplateMetadata
         return AssignOtherInputs(values, fields, new Inputs()
         {
             Title = title,
-            Category = resourceType.ItemName,
+            Category = resourceType.InputCategory,
             Urls = urls,
             Tags = tags,
             Vault = vault,
@@ -1664,7 +1664,7 @@ public static partial class TemplateMetadata
         return AssignOtherInputs(values, fields, new Inputs()
         {
             Title = title,
-            Category = resourceType.ItemName,
+            Category = resourceType.InputCategory,
             Urls = urls,
             Tags = tags,
             Vault = vault,
@@ -1776,7 +1776,7 @@ public static partial class TemplateMetadata
         return AssignOtherInputs(values, fields, new Inputs()
         {
             Title = title,
-            Category = resourceType.ItemName,
+            Category = resourceType.InputCategory,
             Urls = urls,
             Tags = tags,
             Vault = vault,
@@ -2120,7 +2120,7 @@ public static partial class TemplateMetadata
         return AssignOtherInputs(values, fields, new Inputs()
         {
             Title = title,
-            Category = resourceType.ItemName,
+            Category = resourceType.InputCategory,
             Urls = urls,
             Tags = tags,
             Vault = vault,
@@ -2686,7 +2686,7 @@ public static partial class TemplateMetadata
         return AssignOtherInputs(values, fields, new Inputs()
         {
             Title = title,
-            Category = resourceType.ItemName,
+            Category = resourceType.InputCategory,
             Urls = urls,
             Tags = tags,
             Vault = vault,
@@ -3496,7 +3496,7 @@ public static partial class TemplateMetadata
         return AssignOtherInputs(values, fields, new Inputs()
         {
             Title = title,
-            Category = resourceType.ItemName,
+            Category = resourceType.InputCategory,
             Urls = urls,
             Tags = tags,
             Vault = vault,
@@ -3704,7 +3704,7 @@ public static partial class TemplateMetadata
         return AssignOtherInputs(values, fields, new Inputs()
         {
             Title = title,
-            Category = category,
+            Category = category ?? resourceType.InputCategory,
             Urls = urls,
             Tags = tags,
             Vault = vault,
@@ -3814,7 +3814,7 @@ public static partial class TemplateMetadata
         return AssignOtherInputs(values, fields, new Inputs()
         {
             Title = title,
-            Category = resourceType.ItemName,
+            Category = resourceType.InputCategory,
             Urls = urls,
             Tags = tags,
             Vault = vault,
@@ -4092,7 +4092,7 @@ public static partial class TemplateMetadata
         return AssignOtherInputs(values, fields, new Inputs()
         {
             Title = title,
-            Category = resourceType.ItemName,
+            Category = resourceType.InputCategory,
             Urls = urls,
             Tags = tags,
             Vault = vault,
@@ -4406,7 +4406,7 @@ public static partial class TemplateMetadata
         return AssignOtherInputs(values, fields, new Inputs()
         {
             Title = title,
-            Category = resourceType.ItemName,
+            Category = resourceType.InputCategory,
             Urls = urls,
             Tags = tags,
             Vault = vault,
@@ -4694,7 +4694,7 @@ public static partial class TemplateMetadata
         return AssignOtherInputs(values, fields, new Inputs()
         {
             Title = title,
-            Category = resourceType.ItemName,
+            Category = resourceType.InputCategory,
             Urls = urls,
             Tags = tags,
             Vault = vault,
@@ -5080,7 +5080,7 @@ public static partial class TemplateMetadata
         return AssignOtherInputs(values, fields, new Inputs()
         {
             Title = title,
-            Category = resourceType.ItemName,
+            Category = resourceType.InputCategory,
             Urls = urls,
             Tags = tags,
             Vault = vault,
@@ -5230,7 +5230,7 @@ public static partial class TemplateMetadata
         return AssignOtherInputs(values, fields, new Inputs()
         {
             Title = title,
-            Category = resourceType.ItemName,
+            Category = resourceType.InputCategory,
             Urls = urls,
             Tags = tags,
             Vault = vault,
@@ -5528,7 +5528,7 @@ public static partial class TemplateMetadata
         return AssignOtherInputs(values, fields, new Inputs()
         {
             Title = title,
-            Category = resourceType.ItemName,
+            Category = resourceType.InputCategory,
             Urls = urls,
             Tags = tags,
             Vault = vault,
@@ -5666,7 +5666,7 @@ public static partial class TemplateMetadata
         return AssignOtherInputs(values, fields, new Inputs()
         {
             Title = title,
-            Category = resourceType.ItemName,
+            Category = resourceType.InputCategory,
             Urls = urls,
             Tags = tags,
             Vault = vault,
@@ -5730,7 +5730,7 @@ public static partial class TemplateMetadata
         return AssignOtherInputs(values, fields, new Inputs()
         {
             Title = title,
-            Category = resourceType.ItemName,
+            Category = resourceType.InputCategory,
             Urls = urls,
             Tags = tags,
             Vault = vault,
@@ -6048,7 +6048,7 @@ public static partial class TemplateMetadata
         return AssignOtherInputs(values, fields, new Inputs()
         {
             Title = title,
-            Category = resourceType.ItemName,
+            Category = resourceType.InputCategory,
             Urls = urls,
             Tags = tags,
             Vault = vault,
@@ -6218,7 +6218,7 @@ public static partial class TemplateMetadata
         return AssignOtherInputs(values, fields, new Inputs()
         {
             Title = title,
-            Category = resourceType.ItemName,
+            Category = resourceType.InputCategory,
             Urls = urls,
             Tags = tags,
             Vault = vault,
@@ -6626,7 +6626,7 @@ public static partial class TemplateMetadata
         return AssignOtherInputs(values, fields, new Inputs()
         {
             Title = title,
-            Category = resourceType.ItemName,
+            Category = resourceType.InputCategory,
             Urls = urls,
             Tags = tags,
             Vault = vault,
@@ -6970,7 +6970,7 @@ public static partial class TemplateMetadata
         return AssignOtherInputs(values, fields, new Inputs()
         {
             Title = title,
-            Category = resourceType.ItemName,
+            Category = resourceType.InputCategory,
             Urls = urls,
             Tags = tags,
             Vault = vault,
