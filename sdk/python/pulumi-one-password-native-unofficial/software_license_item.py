@@ -20,7 +20,7 @@ class SoftwareLicenseItemArgs:
                  attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  customer: Optional[pulumi.Input['_softwarelicense.CustomerSectionArgs']] = None,
-                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union['FieldArgs', str]]]]] = None,
+                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
                  license_key: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  order: Optional[pulumi.Input['_softwarelicense.OrderSectionArgs']] = None,
@@ -102,11 +102,11 @@ class SoftwareLicenseItemArgs:
 
     @property
     @pulumi.getter
-    def fields(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union['FieldArgs', str]]]]]:
+    def fields(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]]:
         return pulumi.get(self, "fields")
 
     @fields.setter
-    def fields(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union['FieldArgs', str]]]]]):
+    def fields(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]]):
         pulumi.set(self, "fields", value)
 
     @property
@@ -249,7 +249,7 @@ class SoftwareLicenseItem(pulumi.CustomResource):
                  attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  customer: Optional[pulumi.Input[pulumi.InputType['_softwarelicense.CustomerSectionArgs']]] = None,
-                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.InputType['FieldArgs'], str]]]]] = None,
+                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  license_key: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  order: Optional[pulumi.Input[pulumi.InputType['_softwarelicense.OrderSectionArgs']]] = None,
@@ -297,7 +297,7 @@ class SoftwareLicenseItem(pulumi.CustomResource):
                  attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  customer: Optional[pulumi.Input[pulumi.InputType['_softwarelicense.CustomerSectionArgs']]] = None,
-                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.InputType['FieldArgs'], str]]]]] = None,
+                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  license_key: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  order: Optional[pulumi.Input[pulumi.InputType['_softwarelicense.OrderSectionArgs']]] = None,

@@ -90,7 +90,7 @@ type softwareLicenseItemArgs struct {
 	// The category of the vault the item is in.
 	Category   *string                           `pulumi:"category"`
 	Customer   *softwarelicense.CustomerSection  `pulumi:"customer"`
-	Fields     map[string]interface{}            `pulumi:"fields"`
+	Fields     map[string]Field                  `pulumi:"fields"`
 	LicenseKey *string                           `pulumi:"licenseKey"`
 	Notes      *string                           `pulumi:"notes"`
 	Order      *softwarelicense.OrderSection     `pulumi:"order"`
@@ -113,7 +113,7 @@ type SoftwareLicenseItemArgs struct {
 	// The category of the vault the item is in.
 	Category   pulumi.StringPtrInput
 	Customer   softwarelicense.CustomerSectionPtrInput
-	Fields     pulumi.MapInput
+	Fields     FieldMapInput
 	LicenseKey pulumi.StringPtrInput
 	Notes      pulumi.StringPtrInput
 	Order      softwarelicense.OrderSectionPtrInput

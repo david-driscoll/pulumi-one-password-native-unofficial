@@ -125,7 +125,7 @@ export interface CreditCardItemArgs {
     category?: pulumi.Input<"Credit Card">;
     contactInformation?: pulumi.Input<inputs.creditCard.ContactInformationSectionArgs>;
     expiryDate?: pulumi.Input<string>;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     notes?: pulumi.Input<string>;
     number?: pulumi.Input<string>;
     references?: pulumi.Input<pulumi.Input<string>[]>;

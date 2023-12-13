@@ -20,7 +20,7 @@ class APICredentialItemArgs:
                  category: Optional[pulumi.Input[str]] = None,
                  credential: Optional[pulumi.Input[str]] = None,
                  expires: Optional[pulumi.Input[str]] = None,
-                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union['FieldArgs', str]]]]] = None,
+                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
                  filename: Optional[pulumi.Input[str]] = None,
                  hostname: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
@@ -116,11 +116,11 @@ class APICredentialItemArgs:
 
     @property
     @pulumi.getter
-    def fields(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union['FieldArgs', str]]]]]:
+    def fields(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]]:
         return pulumi.get(self, "fields")
 
     @fields.setter
-    def fields(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union['FieldArgs', str]]]]]):
+    def fields(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]]):
         pulumi.set(self, "fields", value)
 
     @property
@@ -273,7 +273,7 @@ class APICredentialItem(pulumi.CustomResource):
                  category: Optional[pulumi.Input[str]] = None,
                  credential: Optional[pulumi.Input[str]] = None,
                  expires: Optional[pulumi.Input[str]] = None,
-                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.InputType['FieldArgs'], str]]]]] = None,
+                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  filename: Optional[pulumi.Input[str]] = None,
                  hostname: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
@@ -323,7 +323,7 @@ class APICredentialItem(pulumi.CustomResource):
                  category: Optional[pulumi.Input[str]] = None,
                  credential: Optional[pulumi.Input[str]] = None,
                  expires: Optional[pulumi.Input[str]] = None,
-                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.InputType['FieldArgs'], str]]]]] = None,
+                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  filename: Optional[pulumi.Input[str]] = None,
                  hostname: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,

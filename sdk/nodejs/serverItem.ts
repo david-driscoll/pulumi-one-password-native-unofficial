@@ -116,7 +116,7 @@ export interface ServerItemArgs {
      * The category of the vault the item is in.
      */
     category?: pulumi.Input<"Server">;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     hostingProvider?: pulumi.Input<inputs.server.HostingProviderSectionArgs>;
     notes?: pulumi.Input<string>;
     password?: pulumi.Input<string>;

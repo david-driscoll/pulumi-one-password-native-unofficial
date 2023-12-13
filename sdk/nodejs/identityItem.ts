@@ -112,7 +112,7 @@ export interface IdentityItemArgs {
      * The category of the vault the item is in.
      */
     category?: pulumi.Input<"Identity">;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     identification?: pulumi.Input<inputs.identity.IdentificationSectionArgs>;
     internetDetails?: pulumi.Input<inputs.identity.InternetDetailsSectionArgs>;
     notes?: pulumi.Input<string>;

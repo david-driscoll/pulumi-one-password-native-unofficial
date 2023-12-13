@@ -22,7 +22,7 @@ class BankAccountItemArgs:
                  bank_name: Optional[pulumi.Input[str]] = None,
                  branch_information: Optional[pulumi.Input['_bankaccount.BranchInformationSectionArgs']] = None,
                  category: Optional[pulumi.Input[str]] = None,
-                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union['FieldArgs', str]]]]] = None,
+                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
                  iban: Optional[pulumi.Input[str]] = None,
                  name_on_account: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
@@ -132,11 +132,11 @@ class BankAccountItemArgs:
 
     @property
     @pulumi.getter
-    def fields(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union['FieldArgs', str]]]]]:
+    def fields(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]]:
         return pulumi.get(self, "fields")
 
     @fields.setter
-    def fields(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union['FieldArgs', str]]]]]):
+    def fields(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]]):
         pulumi.set(self, "fields", value)
 
     @property
@@ -299,7 +299,7 @@ class BankAccountItem(pulumi.CustomResource):
                  bank_name: Optional[pulumi.Input[str]] = None,
                  branch_information: Optional[pulumi.Input[pulumi.InputType['_bankaccount.BranchInformationSectionArgs']]] = None,
                  category: Optional[pulumi.Input[str]] = None,
-                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.InputType['FieldArgs'], str]]]]] = None,
+                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  iban: Optional[pulumi.Input[str]] = None,
                  name_on_account: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
@@ -351,7 +351,7 @@ class BankAccountItem(pulumi.CustomResource):
                  bank_name: Optional[pulumi.Input[str]] = None,
                  branch_information: Optional[pulumi.Input[pulumi.InputType['_bankaccount.BranchInformationSectionArgs']]] = None,
                  category: Optional[pulumi.Input[str]] = None,
-                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.InputType['FieldArgs'], str]]]]] = None,
+                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
                  iban: Optional[pulumi.Input[str]] = None,
                  name_on_account: Optional[pulumi.Input[str]] = None,
                  notes: Optional[pulumi.Input[str]] = None,

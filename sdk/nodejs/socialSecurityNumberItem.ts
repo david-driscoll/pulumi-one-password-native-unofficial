@@ -109,7 +109,7 @@ export interface SocialSecurityNumberItemArgs {
      * The category of the vault the item is in.
      */
     category?: pulumi.Input<"Social Security Number">;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     name?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
     number?: pulumi.Input<string>;

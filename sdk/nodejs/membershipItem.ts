@@ -122,7 +122,7 @@ export interface MembershipItemArgs {
      */
     category?: pulumi.Input<"Membership">;
     expiryDate?: pulumi.Input<string>;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     group?: pulumi.Input<string>;
     memberId?: pulumi.Input<string>;
     memberName?: pulumi.Input<string>;

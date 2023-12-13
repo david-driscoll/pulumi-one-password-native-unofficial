@@ -148,10 +148,10 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         public Input<Rocket.Surgery.OnePasswordNativeUnofficial.SoftwareLicense.Inputs.CustomerSectionArgs>? Customer { get; set; }
 
         [Input("fields")]
-        private InputMap<Union<Inputs.FieldArgs, string>>? _fields;
-        public InputMap<Union<Inputs.FieldArgs, string>> Fields
+        private InputMap<Inputs.FieldArgs>? _fields;
+        public InputMap<Inputs.FieldArgs> Fields
         {
-            get => _fields ?? (_fields = new InputMap<Union<Inputs.FieldArgs, string>>());
+            get => _fields ?? (_fields = new InputMap<Inputs.FieldArgs>());
             set => _fields = value;
         }
 

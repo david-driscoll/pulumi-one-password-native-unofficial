@@ -95,7 +95,7 @@ type serverItemArgs struct {
 	Attachments  map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
 	Category        *string                        `pulumi:"category"`
-	Fields          map[string]interface{}         `pulumi:"fields"`
+	Fields          map[string]Field               `pulumi:"fields"`
 	HostingProvider *server.HostingProviderSection `pulumi:"hostingProvider"`
 	Notes           *string                        `pulumi:"notes"`
 	Password        *string                        `pulumi:"password"`
@@ -118,7 +118,7 @@ type ServerItemArgs struct {
 	Attachments  pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
 	Category        pulumi.StringPtrInput
-	Fields          pulumi.MapInput
+	Fields          FieldMapInput
 	HostingProvider server.HostingProviderSectionPtrInput
 	Notes           pulumi.StringPtrInput
 	Password        pulumi.StringPtrInput

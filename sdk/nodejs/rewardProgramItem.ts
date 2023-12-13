@@ -116,7 +116,7 @@ export interface RewardProgramItemArgs {
      */
     category?: pulumi.Input<"Reward Program">;
     companyName?: pulumi.Input<string>;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     memberId?: pulumi.Input<string>;
     memberName?: pulumi.Input<string>;
     moreInformation?: pulumi.Input<inputs.rewardProgram.MoreInformationSectionArgs>;

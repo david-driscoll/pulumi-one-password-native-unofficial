@@ -105,7 +105,7 @@ export interface SecureNoteItemArgs {
      * The category of the vault the item is in.
      */
     category?: pulumi.Input<"Secure Note">;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     notes?: pulumi.Input<string>;
     references?: pulumi.Input<pulumi.Input<string>[]>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;

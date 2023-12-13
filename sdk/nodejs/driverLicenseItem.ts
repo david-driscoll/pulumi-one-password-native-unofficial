@@ -132,7 +132,7 @@ export interface DriverLicenseItemArgs {
     country?: pulumi.Input<string>;
     dateOfBirth?: pulumi.Input<string>;
     expiryDate?: pulumi.Input<string>;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     fullName?: pulumi.Input<string>;
     gender?: pulumi.Input<string>;
     height?: pulumi.Input<string>;

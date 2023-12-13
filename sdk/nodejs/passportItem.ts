@@ -129,7 +129,7 @@ export interface PassportItemArgs {
     category?: pulumi.Input<"Passport">;
     dateOfBirth?: pulumi.Input<string>;
     expiryDate?: pulumi.Input<string>;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     fullName?: pulumi.Input<string>;
     gender?: pulumi.Input<string>;
     issuedOn?: pulumi.Input<string>;

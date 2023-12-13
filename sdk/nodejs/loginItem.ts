@@ -110,7 +110,7 @@ export interface LoginItemArgs {
      * The category of the vault the item is in.
      */
     category?: pulumi.Input<"Login">;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     generatePassword?: pulumi.Input<boolean | inputs.PasswordRecipeArgs>;
     notes?: pulumi.Input<string>;
     password?: pulumi.Input<string>;

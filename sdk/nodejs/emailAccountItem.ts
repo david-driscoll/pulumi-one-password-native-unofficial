@@ -125,7 +125,7 @@ export interface EmailAccountItemArgs {
      */
     category?: pulumi.Input<"Email Account">;
     contactInformation?: pulumi.Input<inputs.emailAccount.ContactInformationSectionArgs>;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     notes?: pulumi.Input<string>;
     password?: pulumi.Input<string>;
     portNumber?: pulumi.Input<string>;

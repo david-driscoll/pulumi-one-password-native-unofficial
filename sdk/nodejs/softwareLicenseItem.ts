@@ -116,7 +116,7 @@ export interface SoftwareLicenseItemArgs {
      */
     category?: pulumi.Input<"Software License">;
     customer?: pulumi.Input<inputs.softwareLicense.CustomerSectionArgs>;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     licenseKey?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
     order?: pulumi.Input<inputs.softwareLicense.OrderSectionArgs>;

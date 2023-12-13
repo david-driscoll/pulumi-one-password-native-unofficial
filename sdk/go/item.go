@@ -84,7 +84,7 @@ func (ItemState) ElementType() reflect.Type {
 type itemArgs struct {
 	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	Category    *string                          `pulumi:"category"`
-	Fields      map[string]interface{}           `pulumi:"fields"`
+	Fields      map[string]Field                 `pulumi:"fields"`
 	Notes       *string                          `pulumi:"notes"`
 	References  []string                         `pulumi:"references"`
 	Sections    map[string]Section               `pulumi:"sections"`
@@ -101,7 +101,7 @@ type itemArgs struct {
 type ItemArgs struct {
 	Attachments pulumi.AssetOrArchiveMapInput
 	Category    pulumi.StringPtrInput
-	Fields      pulumi.MapInput
+	Fields      FieldMapInput
 	Notes       pulumi.StringPtrInput
 	References  pulumi.StringArrayInput
 	Sections    SectionMapInput

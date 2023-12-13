@@ -441,14 +441,7 @@ for (const template of templates) {
     currentResource.inputProperties['fields'] = {
         "type": "object",
         "additionalProperties": {
-            oneOf: [
-                {
-                    "$ref": "#/types/one-password-native-unofficial:index:Field"
-                },
-                {
-                    "type": "string"
-                }
-            ]
+            "$ref": "#/types/one-password-native-unofficial:index:Field"
         }
     };
     currentResource.inputProperties['attachments'] = {

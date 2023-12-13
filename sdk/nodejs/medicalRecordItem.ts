@@ -118,7 +118,7 @@ export interface MedicalRecordItemArgs {
      */
     category?: pulumi.Input<"Medical Record">;
     date?: pulumi.Input<string>;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     healthcareProfessional?: pulumi.Input<string>;
     location?: pulumi.Input<string>;
     medication?: pulumi.Input<inputs.medicalRecord.MedicationSectionArgs>;

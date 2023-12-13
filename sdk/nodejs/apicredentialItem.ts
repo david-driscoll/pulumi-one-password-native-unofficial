@@ -121,7 +121,7 @@ export interface APICredentialItemArgs {
     category?: pulumi.Input<"API Credential">;
     credential?: pulumi.Input<string>;
     expires?: pulumi.Input<string>;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     filename?: pulumi.Input<string>;
     hostname?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;

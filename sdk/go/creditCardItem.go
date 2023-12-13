@@ -101,7 +101,7 @@ type creditCardItemArgs struct {
 	Category           *string                               `pulumi:"category"`
 	ContactInformation *creditcard.ContactInformationSection `pulumi:"contactInformation"`
 	ExpiryDate         *string                               `pulumi:"expiryDate"`
-	Fields             map[string]interface{}                `pulumi:"fields"`
+	Fields             map[string]Field                      `pulumi:"fields"`
 	Notes              *string                               `pulumi:"notes"`
 	Number             *string                               `pulumi:"number"`
 	References         []string                              `pulumi:"references"`
@@ -127,7 +127,7 @@ type CreditCardItemArgs struct {
 	Category           pulumi.StringPtrInput
 	ContactInformation creditcard.ContactInformationSectionPtrInput
 	ExpiryDate         pulumi.StringPtrInput
-	Fields             pulumi.MapInput
+	Fields             FieldMapInput
 	Notes              pulumi.StringPtrInput
 	Number             pulumi.StringPtrInput
 	References         pulumi.StringArrayInput

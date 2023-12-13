@@ -125,7 +125,7 @@ export interface WirelessRouterItemArgs {
      * The category of the vault the item is in.
      */
     category?: pulumi.Input<"Wireless Router">;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     networkName?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
     references?: pulumi.Input<pulumi.Input<string>[]>;

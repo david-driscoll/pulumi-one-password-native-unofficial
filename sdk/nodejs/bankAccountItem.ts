@@ -126,7 +126,7 @@ export interface BankAccountItemArgs {
      * The category of the vault the item is in.
      */
     category?: pulumi.Input<"Bank Account">;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     iban?: pulumi.Input<string>;
     nameOnAccount?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;

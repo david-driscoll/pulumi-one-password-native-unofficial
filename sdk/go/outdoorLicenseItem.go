@@ -90,16 +90,16 @@ type outdoorLicenseItemArgs struct {
 	ApprovedWildlife *string                          `pulumi:"approvedWildlife"`
 	Attachments      map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
-	Category     *string                `pulumi:"category"`
-	Country      *string                `pulumi:"country"`
-	Expires      *string                `pulumi:"expires"`
-	Fields       map[string]interface{} `pulumi:"fields"`
-	FullName     *string                `pulumi:"fullName"`
-	MaximumQuota *string                `pulumi:"maximumQuota"`
-	Notes        *string                `pulumi:"notes"`
-	References   []string               `pulumi:"references"`
-	Sections     map[string]Section     `pulumi:"sections"`
-	State        *string                `pulumi:"state"`
+	Category     *string            `pulumi:"category"`
+	Country      *string            `pulumi:"country"`
+	Expires      *string            `pulumi:"expires"`
+	Fields       map[string]Field   `pulumi:"fields"`
+	FullName     *string            `pulumi:"fullName"`
+	MaximumQuota *string            `pulumi:"maximumQuota"`
+	Notes        *string            `pulumi:"notes"`
+	References   []string           `pulumi:"references"`
+	Sections     map[string]Section `pulumi:"sections"`
+	State        *string            `pulumi:"state"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -118,7 +118,7 @@ type OutdoorLicenseItemArgs struct {
 	Category     pulumi.StringPtrInput
 	Country      pulumi.StringPtrInput
 	Expires      pulumi.StringPtrInput
-	Fields       pulumi.MapInput
+	Fields       FieldMapInput
 	FullName     pulumi.StringPtrInput
 	MaximumQuota pulumi.StringPtrInput
 	Notes        pulumi.StringPtrInput

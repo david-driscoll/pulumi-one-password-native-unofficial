@@ -88,7 +88,7 @@ type identityItemArgs struct {
 	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
 	Category        *string                          `pulumi:"category"`
-	Fields          map[string]interface{}           `pulumi:"fields"`
+	Fields          map[string]Field                 `pulumi:"fields"`
 	Identification  *identity.IdentificationSection  `pulumi:"identification"`
 	InternetDetails *identity.InternetDetailsSection `pulumi:"internetDetails"`
 	Notes           *string                          `pulumi:"notes"`
@@ -109,7 +109,7 @@ type IdentityItemArgs struct {
 	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
 	Category        pulumi.StringPtrInput
-	Fields          pulumi.MapInput
+	Fields          FieldMapInput
 	Identification  identity.IdentificationSectionPtrInput
 	InternetDetails identity.InternetDetailsSectionPtrInput
 	Notes           pulumi.StringPtrInput

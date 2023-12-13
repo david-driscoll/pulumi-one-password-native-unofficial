@@ -126,7 +126,7 @@ export interface DatabaseItemArgs {
     category?: pulumi.Input<"Database">;
     connectionOptions?: pulumi.Input<string>;
     database?: pulumi.Input<string>;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
     notes?: pulumi.Input<string>;
     password?: pulumi.Input<string>;
     port?: pulumi.Input<string>;

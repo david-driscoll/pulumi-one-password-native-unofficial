@@ -94,7 +94,7 @@ type rewardProgramItemArgs struct {
 	// The category of the vault the item is in.
 	Category        *string                               `pulumi:"category"`
 	CompanyName     *string                               `pulumi:"companyName"`
-	Fields          map[string]interface{}                `pulumi:"fields"`
+	Fields          map[string]Field                      `pulumi:"fields"`
 	MemberId        *string                               `pulumi:"memberId"`
 	MemberName      *string                               `pulumi:"memberName"`
 	MoreInformation *rewardprogram.MoreInformationSection `pulumi:"moreInformation"`
@@ -117,7 +117,7 @@ type RewardProgramItemArgs struct {
 	// The category of the vault the item is in.
 	Category        pulumi.StringPtrInput
 	CompanyName     pulumi.StringPtrInput
-	Fields          pulumi.MapInput
+	Fields          FieldMapInput
 	MemberId        pulumi.StringPtrInput
 	MemberName      pulumi.StringPtrInput
 	MoreInformation rewardprogram.MoreInformationSectionPtrInput

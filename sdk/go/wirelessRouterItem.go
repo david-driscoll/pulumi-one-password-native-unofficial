@@ -106,13 +106,13 @@ type wirelessRouterItemArgs struct {
 	BaseStationName         *string                          `pulumi:"baseStationName"`
 	BaseStationPassword     *string                          `pulumi:"baseStationPassword"`
 	// The category of the vault the item is in.
-	Category        *string                `pulumi:"category"`
-	Fields          map[string]interface{} `pulumi:"fields"`
-	NetworkName     *string                `pulumi:"networkName"`
-	Notes           *string                `pulumi:"notes"`
-	References      []string               `pulumi:"references"`
-	Sections        map[string]Section     `pulumi:"sections"`
-	ServerIpAddress *string                `pulumi:"serverIpAddress"`
+	Category        *string            `pulumi:"category"`
+	Fields          map[string]Field   `pulumi:"fields"`
+	NetworkName     *string            `pulumi:"networkName"`
+	Notes           *string            `pulumi:"notes"`
+	References      []string           `pulumi:"references"`
+	Sections        map[string]Section `pulumi:"sections"`
+	ServerIpAddress *string            `pulumi:"serverIpAddress"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -133,7 +133,7 @@ type WirelessRouterItemArgs struct {
 	BaseStationPassword     pulumi.StringPtrInput
 	// The category of the vault the item is in.
 	Category        pulumi.StringPtrInput
-	Fields          pulumi.MapInput
+	Fields          FieldMapInput
 	NetworkName     pulumi.StringPtrInput
 	Notes           pulumi.StringPtrInput
 	References      pulumi.StringArrayInput

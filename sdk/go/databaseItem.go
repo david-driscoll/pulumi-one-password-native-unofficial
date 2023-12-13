@@ -96,17 +96,17 @@ type databaseItemArgs struct {
 	Alias       *string                          `pulumi:"alias"`
 	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
-	Category          *string                `pulumi:"category"`
-	ConnectionOptions *string                `pulumi:"connectionOptions"`
-	Database          *string                `pulumi:"database"`
-	Fields            map[string]interface{} `pulumi:"fields"`
-	Notes             *string                `pulumi:"notes"`
-	Password          *string                `pulumi:"password"`
-	Port              *string                `pulumi:"port"`
-	References        []string               `pulumi:"references"`
-	Sections          map[string]Section     `pulumi:"sections"`
-	Server            *string                `pulumi:"server"`
-	Sid               *string                `pulumi:"sid"`
+	Category          *string            `pulumi:"category"`
+	ConnectionOptions *string            `pulumi:"connectionOptions"`
+	Database          *string            `pulumi:"database"`
+	Fields            map[string]Field   `pulumi:"fields"`
+	Notes             *string            `pulumi:"notes"`
+	Password          *string            `pulumi:"password"`
+	Port              *string            `pulumi:"port"`
+	References        []string           `pulumi:"references"`
+	Sections          map[string]Section `pulumi:"sections"`
+	Server            *string            `pulumi:"server"`
+	Sid               *string            `pulumi:"sid"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -126,7 +126,7 @@ type DatabaseItemArgs struct {
 	Category          pulumi.StringPtrInput
 	ConnectionOptions pulumi.StringPtrInput
 	Database          pulumi.StringPtrInput
-	Fields            pulumi.MapInput
+	Fields            FieldMapInput
 	Notes             pulumi.StringPtrInput
 	Password          pulumi.StringPtrInput
 	Port              pulumi.StringPtrInput
