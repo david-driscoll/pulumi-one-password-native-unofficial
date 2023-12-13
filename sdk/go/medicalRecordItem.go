@@ -91,14 +91,14 @@ type medicalRecordItemArgs struct {
 	// The category of the vault the item is in.
 	Category               *string                          `pulumi:"category"`
 	Date                   *string                          `pulumi:"date"`
-	Fields                 map[string]Field                 `pulumi:"fields"`
+	Fields                 map[string]interface{}           `pulumi:"fields"`
 	HealthcareProfessional *string                          `pulumi:"healthcareProfessional"`
 	Location               *string                          `pulumi:"location"`
 	Medication             *medicalrecord.MedicationSection `pulumi:"medication"`
 	Notes                  *string                          `pulumi:"notes"`
 	Patient                *string                          `pulumi:"patient"`
 	ReasonForVisit         *string                          `pulumi:"reasonForVisit"`
-	References             []Reference                      `pulumi:"references"`
+	References             []string                         `pulumi:"references"`
 	Sections               map[string]Section               `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
@@ -115,14 +115,14 @@ type MedicalRecordItemArgs struct {
 	// The category of the vault the item is in.
 	Category               pulumi.StringPtrInput
 	Date                   pulumi.StringPtrInput
-	Fields                 FieldMapInput
+	Fields                 pulumi.MapInput
 	HealthcareProfessional pulumi.StringPtrInput
 	Location               pulumi.StringPtrInput
 	Medication             medicalrecord.MedicationSectionPtrInput
 	Notes                  pulumi.StringPtrInput
 	Patient                pulumi.StringPtrInput
 	ReasonForVisit         pulumi.StringPtrInput
-	References             ReferenceArrayInput
+	References             pulumi.StringArrayInput
 	Sections               SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput

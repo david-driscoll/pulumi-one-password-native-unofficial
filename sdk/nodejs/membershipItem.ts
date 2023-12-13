@@ -122,14 +122,14 @@ export interface MembershipItemArgs {
      */
     category?: pulumi.Input<"Membership">;
     expiryDate?: pulumi.Input<string>;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
     group?: pulumi.Input<string>;
     memberId?: pulumi.Input<string>;
     memberName?: pulumi.Input<string>;
     memberSince?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
     pin?: pulumi.Input<string>;
-    references?: pulumi.Input<pulumi.Input<inputs.ReferenceArgs>[]>;
+    references?: pulumi.Input<pulumi.Input<string>[]>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     /**
      * An array of strings of the tags assigned to the item.

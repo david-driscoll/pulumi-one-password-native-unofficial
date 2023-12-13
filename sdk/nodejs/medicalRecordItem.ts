@@ -118,14 +118,14 @@ export interface MedicalRecordItemArgs {
      */
     category?: pulumi.Input<"Medical Record">;
     date?: pulumi.Input<string>;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
     healthcareProfessional?: pulumi.Input<string>;
     location?: pulumi.Input<string>;
     medication?: pulumi.Input<inputs.medicalRecord.MedicationSectionArgs>;
     notes?: pulumi.Input<string>;
     patient?: pulumi.Input<string>;
     reasonForVisit?: pulumi.Input<string>;
-    references?: pulumi.Input<pulumi.Input<inputs.ReferenceArgs>[]>;
+    references?: pulumi.Input<pulumi.Input<string>[]>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     /**
      * An array of strings of the tags assigned to the item.

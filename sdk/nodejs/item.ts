@@ -102,9 +102,9 @@ export interface ItemState {
 export interface ItemArgs {
     attachments?: pulumi.Input<{[key: string]: pulumi.Input<pulumi.asset.Asset | pulumi.asset.Archive>}>;
     category?: pulumi.Input<enums.Category | string>;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
     notes?: pulumi.Input<string>;
-    references?: pulumi.Input<pulumi.Input<inputs.ReferenceArgs>[]>;
+    references?: pulumi.Input<pulumi.Input<string>[]>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     /**
      * An array of strings of the tags assigned to the item.

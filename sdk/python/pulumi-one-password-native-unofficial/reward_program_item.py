@@ -20,13 +20,13 @@ class RewardProgramItemArgs:
                  attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  company_name: Optional[pulumi.Input[str]] = None,
-                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
+                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union['FieldArgs', str]]]]] = None,
                  member_id: Optional[pulumi.Input[str]] = None,
                  member_name: Optional[pulumi.Input[str]] = None,
                  more_information: Optional[pulumi.Input['_rewardprogram.MoreInformationSectionArgs']] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  pin: Optional[pulumi.Input[str]] = None,
-                 references: Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input['SectionArgs']]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
@@ -102,11 +102,11 @@ class RewardProgramItemArgs:
 
     @property
     @pulumi.getter
-    def fields(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]]:
+    def fields(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union['FieldArgs', str]]]]]:
         return pulumi.get(self, "fields")
 
     @fields.setter
-    def fields(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]]):
+    def fields(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union['FieldArgs', str]]]]]):
         pulumi.set(self, "fields", value)
 
     @property
@@ -156,11 +156,11 @@ class RewardProgramItemArgs:
 
     @property
     @pulumi.getter
-    def references(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]]:
+    def references(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
         return pulumi.get(self, "references")
 
     @references.setter
-    def references(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]]):
+    def references(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
         pulumi.set(self, "references", value)
 
     @property
@@ -249,13 +249,13 @@ class RewardProgramItem(pulumi.CustomResource):
                  attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  company_name: Optional[pulumi.Input[str]] = None,
-                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
+                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.InputType['FieldArgs'], str]]]]] = None,
                  member_id: Optional[pulumi.Input[str]] = None,
                  member_name: Optional[pulumi.Input[str]] = None,
                  more_information: Optional[pulumi.Input[pulumi.InputType['_rewardprogram.MoreInformationSectionArgs']]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  pin: Optional[pulumi.Input[str]] = None,
-                 references: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ReferenceArgs']]]]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
@@ -297,13 +297,13 @@ class RewardProgramItem(pulumi.CustomResource):
                  attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  company_name: Optional[pulumi.Input[str]] = None,
-                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
+                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.InputType['FieldArgs'], str]]]]] = None,
                  member_id: Optional[pulumi.Input[str]] = None,
                  member_name: Optional[pulumi.Input[str]] = None,
                  more_information: Optional[pulumi.Input[pulumi.InputType['_rewardprogram.MoreInformationSectionArgs']]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  pin: Optional[pulumi.Input[str]] = None,
-                 references: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ReferenceArgs']]]]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,

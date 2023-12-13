@@ -99,16 +99,16 @@ type bankAccountItemArgs struct {
 	BankName          *string                               `pulumi:"bankName"`
 	BranchInformation *bankaccount.BranchInformationSection `pulumi:"branchInformation"`
 	// The category of the vault the item is in.
-	Category      *string            `pulumi:"category"`
-	Fields        map[string]Field   `pulumi:"fields"`
-	Iban          *string            `pulumi:"iban"`
-	NameOnAccount *string            `pulumi:"nameOnAccount"`
-	Notes         *string            `pulumi:"notes"`
-	Pin           *string            `pulumi:"pin"`
-	References    []Reference        `pulumi:"references"`
-	RoutingNumber *string            `pulumi:"routingNumber"`
-	Sections      map[string]Section `pulumi:"sections"`
-	Swift         *string            `pulumi:"swift"`
+	Category      *string                `pulumi:"category"`
+	Fields        map[string]interface{} `pulumi:"fields"`
+	Iban          *string                `pulumi:"iban"`
+	NameOnAccount *string                `pulumi:"nameOnAccount"`
+	Notes         *string                `pulumi:"notes"`
+	Pin           *string                `pulumi:"pin"`
+	References    []string               `pulumi:"references"`
+	RoutingNumber *string                `pulumi:"routingNumber"`
+	Sections      map[string]Section     `pulumi:"sections"`
+	Swift         *string                `pulumi:"swift"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -127,12 +127,12 @@ type BankAccountItemArgs struct {
 	BranchInformation bankaccount.BranchInformationSectionPtrInput
 	// The category of the vault the item is in.
 	Category      pulumi.StringPtrInput
-	Fields        FieldMapInput
+	Fields        pulumi.MapInput
 	Iban          pulumi.StringPtrInput
 	NameOnAccount pulumi.StringPtrInput
 	Notes         pulumi.StringPtrInput
 	Pin           pulumi.StringPtrInput
-	References    ReferenceArrayInput
+	References    pulumi.StringArrayInput
 	RoutingNumber pulumi.StringPtrInput
 	Sections      SectionMapInput
 	Swift         pulumi.StringPtrInput

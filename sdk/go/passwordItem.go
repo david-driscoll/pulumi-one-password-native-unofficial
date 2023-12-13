@@ -87,13 +87,13 @@ func (PasswordItemState) ElementType() reflect.Type {
 type passwordItemArgs struct {
 	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
-	Category         *string            `pulumi:"category"`
-	Fields           map[string]Field   `pulumi:"fields"`
-	GeneratePassword interface{}        `pulumi:"generatePassword"`
-	Notes            *string            `pulumi:"notes"`
-	Password         *string            `pulumi:"password"`
-	References       []Reference        `pulumi:"references"`
-	Sections         map[string]Section `pulumi:"sections"`
+	Category         *string                `pulumi:"category"`
+	Fields           map[string]interface{} `pulumi:"fields"`
+	GeneratePassword interface{}            `pulumi:"generatePassword"`
+	Notes            *string                `pulumi:"notes"`
+	Password         *string                `pulumi:"password"`
+	References       []string               `pulumi:"references"`
+	Sections         map[string]Section     `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -108,11 +108,11 @@ type PasswordItemArgs struct {
 	Attachments pulumi.AssetOrArchiveMapInput
 	// The category of the vault the item is in.
 	Category         pulumi.StringPtrInput
-	Fields           FieldMapInput
+	Fields           pulumi.MapInput
 	GeneratePassword pulumi.Input
 	Notes            pulumi.StringPtrInput
 	Password         pulumi.StringPtrInput
-	References       ReferenceArrayInput
+	References       pulumi.StringArrayInput
 	Sections         SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput

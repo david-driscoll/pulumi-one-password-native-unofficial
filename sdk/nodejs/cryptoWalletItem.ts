@@ -111,11 +111,11 @@ export interface CryptoWalletItemArgs {
      * The category of the vault the item is in.
      */
     category?: pulumi.Input<"Crypto Wallet">;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
     notes?: pulumi.Input<string>;
     password?: pulumi.Input<string>;
     recoveryPhrase?: pulumi.Input<string>;
-    references?: pulumi.Input<pulumi.Input<inputs.ReferenceArgs>[]>;
+    references?: pulumi.Input<pulumi.Input<string>[]>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     /**
      * An array of strings of the tags assigned to the item.

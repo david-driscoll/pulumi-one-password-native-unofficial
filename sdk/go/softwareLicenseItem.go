@@ -90,12 +90,12 @@ type softwareLicenseItemArgs struct {
 	// The category of the vault the item is in.
 	Category   *string                           `pulumi:"category"`
 	Customer   *softwarelicense.CustomerSection  `pulumi:"customer"`
-	Fields     map[string]Field                  `pulumi:"fields"`
+	Fields     map[string]interface{}            `pulumi:"fields"`
 	LicenseKey *string                           `pulumi:"licenseKey"`
 	Notes      *string                           `pulumi:"notes"`
 	Order      *softwarelicense.OrderSection     `pulumi:"order"`
 	Publisher  *softwarelicense.PublisherSection `pulumi:"publisher"`
-	References []Reference                       `pulumi:"references"`
+	References []string                          `pulumi:"references"`
 	Sections   map[string]Section                `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
@@ -113,12 +113,12 @@ type SoftwareLicenseItemArgs struct {
 	// The category of the vault the item is in.
 	Category   pulumi.StringPtrInput
 	Customer   softwarelicense.CustomerSectionPtrInput
-	Fields     FieldMapInput
+	Fields     pulumi.MapInput
 	LicenseKey pulumi.StringPtrInput
 	Notes      pulumi.StringPtrInput
 	Order      softwarelicense.OrderSectionPtrInput
 	Publisher  softwarelicense.PublisherSectionPtrInput
-	References ReferenceArrayInput
+	References pulumi.StringArrayInput
 	Sections   SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput

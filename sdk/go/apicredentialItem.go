@@ -93,15 +93,15 @@ func (APICredentialItemState) ElementType() reflect.Type {
 type apicredentialItemArgs struct {
 	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
-	Category   *string            `pulumi:"category"`
-	Credential *string            `pulumi:"credential"`
-	Expires    *string            `pulumi:"expires"`
-	Fields     map[string]Field   `pulumi:"fields"`
-	Filename   *string            `pulumi:"filename"`
-	Hostname   *string            `pulumi:"hostname"`
-	Notes      *string            `pulumi:"notes"`
-	References []Reference        `pulumi:"references"`
-	Sections   map[string]Section `pulumi:"sections"`
+	Category   *string                `pulumi:"category"`
+	Credential *string                `pulumi:"credential"`
+	Expires    *string                `pulumi:"expires"`
+	Fields     map[string]interface{} `pulumi:"fields"`
+	Filename   *string                `pulumi:"filename"`
+	Hostname   *string                `pulumi:"hostname"`
+	Notes      *string                `pulumi:"notes"`
+	References []string               `pulumi:"references"`
+	Sections   map[string]Section     `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item to retrieve. This field will be populated with the title of the item if the item it looked up by its UUID.
@@ -121,11 +121,11 @@ type APICredentialItemArgs struct {
 	Category   pulumi.StringPtrInput
 	Credential pulumi.StringPtrInput
 	Expires    pulumi.StringPtrInput
-	Fields     FieldMapInput
+	Fields     pulumi.MapInput
 	Filename   pulumi.StringPtrInput
 	Hostname   pulumi.StringPtrInput
 	Notes      pulumi.StringPtrInput
-	References ReferenceArrayInput
+	References pulumi.StringArrayInput
 	Sections   SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput

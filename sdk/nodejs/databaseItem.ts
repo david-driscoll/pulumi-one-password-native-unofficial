@@ -126,11 +126,11 @@ export interface DatabaseItemArgs {
     category?: pulumi.Input<"Database">;
     connectionOptions?: pulumi.Input<string>;
     database?: pulumi.Input<string>;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
     notes?: pulumi.Input<string>;
     password?: pulumi.Input<string>;
     port?: pulumi.Input<string>;
-    references?: pulumi.Input<pulumi.Input<inputs.ReferenceArgs>[]>;
+    references?: pulumi.Input<pulumi.Input<string>[]>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     server?: pulumi.Input<string>;
     sid?: pulumi.Input<string>;

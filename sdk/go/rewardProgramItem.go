@@ -94,13 +94,13 @@ type rewardProgramItemArgs struct {
 	// The category of the vault the item is in.
 	Category        *string                               `pulumi:"category"`
 	CompanyName     *string                               `pulumi:"companyName"`
-	Fields          map[string]Field                      `pulumi:"fields"`
+	Fields          map[string]interface{}                `pulumi:"fields"`
 	MemberId        *string                               `pulumi:"memberId"`
 	MemberName      *string                               `pulumi:"memberName"`
 	MoreInformation *rewardprogram.MoreInformationSection `pulumi:"moreInformation"`
 	Notes           *string                               `pulumi:"notes"`
 	Pin             *string                               `pulumi:"pin"`
-	References      []Reference                           `pulumi:"references"`
+	References      []string                              `pulumi:"references"`
 	Sections        map[string]Section                    `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
@@ -117,13 +117,13 @@ type RewardProgramItemArgs struct {
 	// The category of the vault the item is in.
 	Category        pulumi.StringPtrInput
 	CompanyName     pulumi.StringPtrInput
-	Fields          FieldMapInput
+	Fields          pulumi.MapInput
 	MemberId        pulumi.StringPtrInput
 	MemberName      pulumi.StringPtrInput
 	MoreInformation rewardprogram.MoreInformationSectionPtrInput
 	Notes           pulumi.StringPtrInput
 	Pin             pulumi.StringPtrInput
-	References      ReferenceArrayInput
+	References      pulumi.StringArrayInput
 	Sections        SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayInput

@@ -79,7 +79,14 @@
                 "fields": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Field"
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/one-password-native-unofficial:index:Field"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
                     }
                 },
                 "attachments": {
@@ -91,7 +98,7 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                        "type": "string"
                     }
                 },
                 "urls": {
@@ -347,7 +354,14 @@
                 "fields": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Field"
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/one-password-native-unofficial:index:Field"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
                     }
                 },
                 "attachments": {
@@ -359,7 +373,7 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                        "type": "string"
                     }
                 },
                 "urls": {
@@ -636,7 +650,14 @@
                 "fields": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Field"
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/one-password-native-unofficial:index:Field"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
                     }
                 },
                 "attachments": {
@@ -648,7 +669,7 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                        "type": "string"
                     }
                 },
                 "urls": {
@@ -910,7 +931,14 @@
                 "fields": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Field"
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/one-password-native-unofficial:index:Field"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
                     }
                 },
                 "attachments": {
@@ -922,7 +950,7 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                        "type": "string"
                     }
                 },
                 "urls": {
@@ -1127,7 +1155,14 @@
                 "fields": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Field"
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/one-password-native-unofficial:index:Field"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
                     }
                 },
                 "attachments": {
@@ -1139,7 +1174,7 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                        "type": "string"
                     }
                 },
                 "urls": {
@@ -1419,7 +1454,14 @@
                 "fields": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Field"
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/one-password-native-unofficial:index:Field"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
                     }
                 },
                 "attachments": {
@@ -1431,7 +1473,7 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                        "type": "string"
                     }
                 },
                 "urls": {
@@ -1603,7 +1645,14 @@
                 "fields": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Field"
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/one-password-native-unofficial:index:Field"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
                     }
                 },
                 "attachments": {
@@ -1615,7 +1664,7 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                        "type": "string"
                     }
                 },
                 "urls": {
@@ -1919,7 +1968,14 @@
                 "fields": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Field"
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/one-password-native-unofficial:index:Field"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
                     }
                 },
                 "attachments": {
@@ -1931,7 +1987,7 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                        "type": "string"
                     }
                 },
                 "urls": {
@@ -2205,7 +2261,14 @@
                 "fields": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Field"
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/one-password-native-unofficial:index:Field"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
                     }
                 },
                 "attachments": {
@@ -2217,7 +2280,7 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                        "type": "string"
                     }
                 },
                 "urls": {
@@ -2416,7 +2479,14 @@
                 "fields": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Field"
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/one-password-native-unofficial:index:Field"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
                     }
                 },
                 "attachments": {
@@ -2428,7 +2498,7 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                        "type": "string"
                     }
                 },
                 "urls": {
@@ -2606,7 +2676,14 @@
                 "fields": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Field"
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/one-password-native-unofficial:index:Field"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
                     }
                 },
                 "attachments": {
@@ -2618,7 +2695,7 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                        "type": "string"
                     }
                 },
                 "urls": {
@@ -2829,7 +2906,14 @@
                 "fields": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Field"
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/one-password-native-unofficial:index:Field"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
                     }
                 },
                 "attachments": {
@@ -2841,7 +2925,7 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                        "type": "string"
                     }
                 },
                 "urls": {
@@ -3082,7 +3166,14 @@
                 "fields": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Field"
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/one-password-native-unofficial:index:Field"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
                     }
                 },
                 "attachments": {
@@ -3094,7 +3185,7 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                        "type": "string"
                     }
                 },
                 "urls": {
@@ -3362,7 +3453,14 @@
                 "fields": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Field"
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/one-password-native-unofficial:index:Field"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
                     }
                 },
                 "attachments": {
@@ -3374,7 +3472,7 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                        "type": "string"
                     }
                 },
                 "urls": {
@@ -3630,7 +3728,14 @@
                 "fields": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Field"
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/one-password-native-unofficial:index:Field"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
                     }
                 },
                 "attachments": {
@@ -3642,7 +3747,7 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                        "type": "string"
                     }
                 },
                 "urls": {
@@ -3946,7 +4051,14 @@
                 "fields": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Field"
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/one-password-native-unofficial:index:Field"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
                     }
                 },
                 "attachments": {
@@ -3958,7 +4070,7 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                        "type": "string"
                     }
                 },
                 "urls": {
@@ -4155,7 +4267,14 @@
                 "fields": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Field"
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/one-password-native-unofficial:index:Field"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
                     }
                 },
                 "attachments": {
@@ -4167,7 +4286,7 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                        "type": "string"
                     }
                 },
                 "urls": {
@@ -4396,7 +4515,14 @@
                 "fields": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Field"
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/one-password-native-unofficial:index:Field"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
                     }
                 },
                 "attachments": {
@@ -4408,7 +4534,7 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                        "type": "string"
                     }
                 },
                 "urls": {
@@ -4592,7 +4718,14 @@
                 "fields": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Field"
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/one-password-native-unofficial:index:Field"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
                     }
                 },
                 "attachments": {
@@ -4604,7 +4737,7 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                        "type": "string"
                     }
                 },
                 "urls": {
@@ -4776,7 +4909,14 @@
                 "fields": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Field"
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/one-password-native-unofficial:index:Field"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
                     }
                 },
                 "attachments": {
@@ -4788,7 +4928,7 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                        "type": "string"
                     }
                 },
                 "urls": {
@@ -5014,7 +5154,14 @@
                 "fields": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Field"
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/one-password-native-unofficial:index:Field"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
                     }
                 },
                 "attachments": {
@@ -5026,7 +5173,7 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                        "type": "string"
                     }
                 },
                 "urls": {
@@ -5222,7 +5369,14 @@
                 "fields": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Field"
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/one-password-native-unofficial:index:Field"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
                     }
                 },
                 "attachments": {
@@ -5234,7 +5388,7 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                        "type": "string"
                     }
                 },
                 "urls": {
@@ -5457,7 +5611,14 @@
                 "fields": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Field"
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/one-password-native-unofficial:index:Field"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
                     }
                 },
                 "attachments": {
@@ -5469,7 +5630,7 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                        "type": "string"
                     }
                 },
                 "urls": {

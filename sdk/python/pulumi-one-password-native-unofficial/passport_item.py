@@ -20,7 +20,7 @@ class PassportItemArgs:
                  category: Optional[pulumi.Input[str]] = None,
                  date_of_birth: Optional[pulumi.Input[str]] = None,
                  expiry_date: Optional[pulumi.Input[str]] = None,
-                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
+                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union['FieldArgs', str]]]]] = None,
                  full_name: Optional[pulumi.Input[str]] = None,
                  gender: Optional[pulumi.Input[str]] = None,
                  issued_on: Optional[pulumi.Input[str]] = None,
@@ -30,7 +30,7 @@ class PassportItemArgs:
                  notes: Optional[pulumi.Input[str]] = None,
                  number: Optional[pulumi.Input[str]] = None,
                  place_of_birth: Optional[pulumi.Input[str]] = None,
-                 references: Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input['SectionArgs']]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
@@ -128,11 +128,11 @@ class PassportItemArgs:
 
     @property
     @pulumi.getter
-    def fields(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]]:
+    def fields(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union['FieldArgs', str]]]]]:
         return pulumi.get(self, "fields")
 
     @fields.setter
-    def fields(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]]):
+    def fields(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union['FieldArgs', str]]]]]):
         pulumi.set(self, "fields", value)
 
     @property
@@ -218,11 +218,11 @@ class PassportItemArgs:
 
     @property
     @pulumi.getter
-    def references(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]]:
+    def references(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
         return pulumi.get(self, "references")
 
     @references.setter
-    def references(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]]):
+    def references(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
         pulumi.set(self, "references", value)
 
     @property
@@ -321,7 +321,7 @@ class PassportItem(pulumi.CustomResource):
                  category: Optional[pulumi.Input[str]] = None,
                  date_of_birth: Optional[pulumi.Input[str]] = None,
                  expiry_date: Optional[pulumi.Input[str]] = None,
-                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
+                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.InputType['FieldArgs'], str]]]]] = None,
                  full_name: Optional[pulumi.Input[str]] = None,
                  gender: Optional[pulumi.Input[str]] = None,
                  issued_on: Optional[pulumi.Input[str]] = None,
@@ -331,7 +331,7 @@ class PassportItem(pulumi.CustomResource):
                  notes: Optional[pulumi.Input[str]] = None,
                  number: Optional[pulumi.Input[str]] = None,
                  place_of_birth: Optional[pulumi.Input[str]] = None,
-                 references: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ReferenceArgs']]]]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,
@@ -375,7 +375,7 @@ class PassportItem(pulumi.CustomResource):
                  category: Optional[pulumi.Input[str]] = None,
                  date_of_birth: Optional[pulumi.Input[str]] = None,
                  expiry_date: Optional[pulumi.Input[str]] = None,
-                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
+                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.InputType['FieldArgs'], str]]]]] = None,
                  full_name: Optional[pulumi.Input[str]] = None,
                  gender: Optional[pulumi.Input[str]] = None,
                  issued_on: Optional[pulumi.Input[str]] = None,
@@ -385,7 +385,7 @@ class PassportItem(pulumi.CustomResource):
                  notes: Optional[pulumi.Input[str]] = None,
                  number: Optional[pulumi.Input[str]] = None,
                  place_of_birth: Optional[pulumi.Input[str]] = None,
-                 references: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ReferenceArgs']]]]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  title: Optional[pulumi.Input[str]] = None,

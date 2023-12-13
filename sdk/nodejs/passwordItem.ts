@@ -108,11 +108,11 @@ export interface PasswordItemArgs {
      * The category of the vault the item is in.
      */
     category?: pulumi.Input<"Password">;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
     generatePassword?: pulumi.Input<boolean | inputs.PasswordRecipeArgs>;
     notes?: pulumi.Input<string>;
     password?: pulumi.Input<string>;
-    references?: pulumi.Input<pulumi.Input<inputs.ReferenceArgs>[]>;
+    references?: pulumi.Input<pulumi.Input<string>[]>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     /**
      * An array of strings of the tags assigned to the item.

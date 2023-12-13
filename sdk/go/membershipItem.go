@@ -94,17 +94,17 @@ func (MembershipItemState) ElementType() reflect.Type {
 type membershipItemArgs struct {
 	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	// The category of the vault the item is in.
-	Category    *string            `pulumi:"category"`
-	ExpiryDate  *string            `pulumi:"expiryDate"`
-	Fields      map[string]Field   `pulumi:"fields"`
-	Group       *string            `pulumi:"group"`
-	MemberId    *string            `pulumi:"memberId"`
-	MemberName  *string            `pulumi:"memberName"`
-	MemberSince *string            `pulumi:"memberSince"`
-	Notes       *string            `pulumi:"notes"`
-	Pin         *string            `pulumi:"pin"`
-	References  []Reference        `pulumi:"references"`
-	Sections    map[string]Section `pulumi:"sections"`
+	Category    *string                `pulumi:"category"`
+	ExpiryDate  *string                `pulumi:"expiryDate"`
+	Fields      map[string]interface{} `pulumi:"fields"`
+	Group       *string                `pulumi:"group"`
+	MemberId    *string                `pulumi:"memberId"`
+	MemberName  *string                `pulumi:"memberName"`
+	MemberSince *string                `pulumi:"memberSince"`
+	Notes       *string                `pulumi:"notes"`
+	Pin         *string                `pulumi:"pin"`
+	References  []string               `pulumi:"references"`
+	Sections    map[string]Section     `pulumi:"sections"`
 	// An array of strings of the tags assigned to the item.
 	Tags      []string `pulumi:"tags"`
 	Telephone *string  `pulumi:"telephone"`
@@ -122,14 +122,14 @@ type MembershipItemArgs struct {
 	// The category of the vault the item is in.
 	Category    pulumi.StringPtrInput
 	ExpiryDate  pulumi.StringPtrInput
-	Fields      FieldMapInput
+	Fields      pulumi.MapInput
 	Group       pulumi.StringPtrInput
 	MemberId    pulumi.StringPtrInput
 	MemberName  pulumi.StringPtrInput
 	MemberSince pulumi.StringPtrInput
 	Notes       pulumi.StringPtrInput
 	Pin         pulumi.StringPtrInput
-	References  ReferenceArrayInput
+	References  pulumi.StringArrayInput
 	Sections    SectionMapInput
 	// An array of strings of the tags assigned to the item.
 	Tags      pulumi.StringArrayInput

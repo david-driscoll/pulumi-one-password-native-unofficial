@@ -100,11 +100,11 @@ type emailAccountItemArgs struct {
 	// The category of the vault the item is in.
 	Category           *string                                 `pulumi:"category"`
 	ContactInformation *emailaccount.ContactInformationSection `pulumi:"contactInformation"`
-	Fields             map[string]Field                        `pulumi:"fields"`
+	Fields             map[string]interface{}                  `pulumi:"fields"`
 	Notes              *string                                 `pulumi:"notes"`
 	Password           *string                                 `pulumi:"password"`
 	PortNumber         *string                                 `pulumi:"portNumber"`
-	References         []Reference                             `pulumi:"references"`
+	References         []string                                `pulumi:"references"`
 	Sections           map[string]Section                      `pulumi:"sections"`
 	Security           *string                                 `pulumi:"security"`
 	Server             *string                                 `pulumi:"server"`
@@ -127,11 +127,11 @@ type EmailAccountItemArgs struct {
 	// The category of the vault the item is in.
 	Category           pulumi.StringPtrInput
 	ContactInformation emailaccount.ContactInformationSectionPtrInput
-	Fields             FieldMapInput
+	Fields             pulumi.MapInput
 	Notes              pulumi.StringPtrInput
 	Password           pulumi.StringPtrInput
 	PortNumber         pulumi.StringPtrInput
-	References         ReferenceArrayInput
+	References         pulumi.StringArrayInput
 	Sections           SectionMapInput
 	Security           pulumi.StringPtrInput
 	Server             pulumi.StringPtrInput

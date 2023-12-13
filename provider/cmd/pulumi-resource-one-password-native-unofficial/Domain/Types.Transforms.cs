@@ -240,49 +240,49 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {            
+        {
             outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "username") is { } field)
-        {            
+        {
             outputs.Add("username", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "credential") is { } field)
-        {            
+        {
             outputs.Add("credential", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "type") is { } field)
-        {            
+        {
             outputs.Add("type", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "filename") is { } field)
-        {            
+        {
             outputs.Add("filename", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "validFrom") is { } field)
-        {            
+        {
             outputs.Add("validFrom", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "expires") is { } field)
-        {            
+        {
             outputs.Add("expires", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "hostname") is { } field)
-        {            
+        {
             outputs.Add("hostname", GetOutputPropertyValue(field));
         }
     }
@@ -600,67 +600,67 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {            
+        {
             outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "bankName") is { } field)
-        {            
+        {
             outputs.Add("bankName", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "owner") is { } field)
-        {            
+        {
             outputs.Add("owner", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "accountType") is { } field)
-        {            
+        {
             outputs.Add("accountType", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "routingNo") is { } field)
-        {            
+        {
             outputs.Add("routingNo", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "accountNo") is { } field)
-        {            
+        {
             outputs.Add("accountNo", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "swift") is { } field)
-        {            
+        {
             outputs.Add("swift", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "iban") is { } field)
-        {            
+        {
             outputs.Add("iban", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "telephonePin") is { } field)
-        {            
+        {
             outputs.Add("telephonePin", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "branchPhone", "branchInfo") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "branchInfo", "branchPhone", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "branchAddress", "branchInfo") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "branchInfo", "branchAddress", GetOutputPropertyValue(field));;
         }
     }
@@ -1134,103 +1134,103 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {            
+        {
             outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "cardholder") is { } field)
-        {            
+        {
             outputs.Add("cardholder", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "type") is { } field)
-        {            
+        {
             outputs.Add("type", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "ccnum") is { } field)
-        {            
+        {
             outputs.Add("ccnum", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "cvv") is { } field)
-        {            
+        {
             outputs.Add("cvv", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "expiry") is { } field)
-        {            
+        {
             outputs.Add("expiry", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "validFrom") is { } field)
-        {            
+        {
             outputs.Add("validFrom", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "bank", "contactInfo") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "contactInfo", "bank", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "phoneLocal", "contactInfo") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "contactInfo", "phoneLocal", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "phoneTollFree", "contactInfo") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "contactInfo", "phoneTollFree", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "phoneIntl", "contactInfo") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "contactInfo", "phoneIntl", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "website", "contactInfo") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "contactInfo", "website", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "pin", "details") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "details", "pin", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "creditLimit", "details") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "details", "creditLimit", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "cashLimit", "details") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "details", "cashLimit", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "interest", "details") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "details", "interest", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "issuenumber", "details") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "details", "issuenumber", GetOutputPropertyValue(field));;
         }
     }
@@ -1366,25 +1366,25 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {            
+        {
             outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "recoveryPhrase") is { } field)
-        {            
+        {
             outputs.Add("recoveryPhrase", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "password") is { } field)
-        {            
+        {
             outputs.Add("password", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "walletAddress", "wallet") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "wallet", "walletAddress", GetOutputPropertyValue(field));;
         }
     }
@@ -1676,61 +1676,61 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {            
+        {
             outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "database_type") is { } field)
-        {            
+        {
             outputs.Add("database_type", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "hostname") is { } field)
-        {            
+        {
             outputs.Add("hostname", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "port") is { } field)
-        {            
+        {
             outputs.Add("port", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "database") is { } field)
-        {            
+        {
             outputs.Add("database", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "username") is { } field)
-        {            
+        {
             outputs.Add("username", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "password") is { } field)
-        {            
+        {
             outputs.Add("password", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "sid") is { } field)
-        {            
+        {
             outputs.Add("sid", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "alias") is { } field)
-        {            
+        {
             outputs.Add("alias", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "options") is { } field)
-        {            
+        {
             outputs.Add("options", GetOutputPropertyValue(field));
         }
     }
@@ -1788,7 +1788,7 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {            
+        {
             outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
@@ -2132,73 +2132,73 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {            
+        {
             outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "fullname") is { } field)
-        {            
+        {
             outputs.Add("fullname", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "address") is { } field)
-        {            
+        {
             outputs.Add("address", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "birthdate") is { } field)
-        {            
+        {
             outputs.Add("birthdate", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "gender") is { } field)
-        {            
+        {
             outputs.Add("gender", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "height") is { } field)
-        {            
+        {
             outputs.Add("height", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "number") is { } field)
-        {            
+        {
             outputs.Add("number", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "class") is { } field)
-        {            
+        {
             outputs.Add("class", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "conditions") is { } field)
-        {            
+        {
             outputs.Add("conditions", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "state") is { } field)
-        {            
+        {
             outputs.Add("state", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "country") is { } field)
-        {            
+        {
             outputs.Add("country", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "expiry_date") is { } field)
-        {            
+        {
             outputs.Add("expiry_date", GetOutputPropertyValue(field));
         }
     }
@@ -2698,109 +2698,109 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {            
+        {
             outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "pop_type") is { } field)
-        {            
+        {
             outputs.Add("pop_type", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "pop_username") is { } field)
-        {            
+        {
             outputs.Add("pop_username", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "pop_server") is { } field)
-        {            
+        {
             outputs.Add("pop_server", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "pop_port") is { } field)
-        {            
+        {
             outputs.Add("pop_port", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "pop_password") is { } field)
-        {            
+        {
             outputs.Add("pop_password", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "pop_security") is { } field)
-        {            
+        {
             outputs.Add("pop_security", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "pop_authentication") is { } field)
-        {            
+        {
             outputs.Add("pop_authentication", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "smtp_server", "SMTP") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "SMTP", "smtp_server", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "smtp_port", "SMTP") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "SMTP", "smtp_port", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "smtp_username", "SMTP") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "SMTP", "smtp_username", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "smtp_password", "SMTP") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "SMTP", "smtp_password", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "smtp_security", "SMTP") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "SMTP", "smtp_security", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "smtp_authentication", "SMTP") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "SMTP", "smtp_authentication", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "provider", "Contact Information") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "Contact Information", "provider", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "provider_website", "Contact Information") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "Contact Information", "provider_website", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "phone_local", "Contact Information") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "Contact Information", "phone_local", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "phone_tollfree", "Contact Information") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "Contact Information", "phone_tollfree", GetOutputPropertyValue(field));;
         }
     }
@@ -3508,157 +3508,157 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {            
+        {
             outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "firstname", "name") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "name", "firstname", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "initial", "name") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "name", "initial", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "lastname", "name") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "name", "lastname", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "gender", "name") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "name", "gender", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "birthdate", "name") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "name", "birthdate", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "occupation", "name") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "name", "occupation", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "company", "name") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "name", "company", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "department", "name") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "name", "department", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "jobtitle", "name") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "name", "jobtitle", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "address", "address") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "address", "address", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "defphone", "address") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "address", "defphone", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "homephone", "address") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "address", "homephone", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "cellphone", "address") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "address", "cellphone", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "busphone", "address") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "address", "busphone", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "username", "internet") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "internet", "username", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "reminderq", "internet") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "internet", "reminderq", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "remindera", "internet") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "internet", "remindera", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "email", "internet") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "internet", "email", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "website", "internet") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "internet", "website", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "icq", "internet") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "internet", "icq", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "skype", "internet") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "internet", "skype", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "aim", "internet") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "internet", "aim", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "yahoo", "internet") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "internet", "yahoo", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "msn", "internet") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "internet", "msn", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "forumsig", "internet") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "internet", "forumsig", GetOutputPropertyValue(field));;
         }
     }
@@ -3716,7 +3716,7 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {            
+        {
             outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
@@ -3826,19 +3826,19 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "username") is { } field)
-        {            
+        {
             outputs.Add("username", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "password") is { } field)
-        {            
+        {
             outputs.Add("password", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "notes") is { } field)
-        {            
+        {
             outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
@@ -4104,55 +4104,55 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {            
+        {
             outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "date") is { } field)
-        {            
+        {
             outputs.Add("date", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "location") is { } field)
-        {            
+        {
             outputs.Add("location", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "healthcareprofessional") is { } field)
-        {            
+        {
             outputs.Add("healthcareprofessional", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "patient") is { } field)
-        {            
+        {
             outputs.Add("patient", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "reason") is { } field)
-        {            
+        {
             outputs.Add("reason", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "medication", "medication") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "medication", "medication", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "dosage", "medication") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "medication", "dosage", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "notes", "medication") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "medication", "notes", GetOutputPropertyValue(field));;
         }
     }
@@ -4418,55 +4418,55 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {            
+        {
             outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "org_name") is { } field)
-        {            
+        {
             outputs.Add("org_name", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "website") is { } field)
-        {            
+        {
             outputs.Add("website", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "phone") is { } field)
-        {            
+        {
             outputs.Add("phone", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "member_name") is { } field)
-        {            
+        {
             outputs.Add("member_name", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "member_since") is { } field)
-        {            
+        {
             outputs.Add("member_since", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "expiry_date") is { } field)
-        {            
+        {
             outputs.Add("expiry_date", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "membership_no") is { } field)
-        {            
+        {
             outputs.Add("membership_no", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "pin") is { } field)
-        {            
+        {
             outputs.Add("pin", GetOutputPropertyValue(field));
         }
     }
@@ -4706,49 +4706,49 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {            
+        {
             outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "name") is { } field)
-        {            
+        {
             outputs.Add("name", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "valid_from") is { } field)
-        {            
+        {
             outputs.Add("valid_from", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "expires") is { } field)
-        {            
+        {
             outputs.Add("expires", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "game") is { } field)
-        {            
+        {
             outputs.Add("game", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "quota") is { } field)
-        {            
+        {
             outputs.Add("quota", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "state") is { } field)
-        {            
+        {
             outputs.Add("state", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "country") is { } field)
-        {            
+        {
             outputs.Add("country", GetOutputPropertyValue(field));
         }
     }
@@ -5092,73 +5092,73 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {            
+        {
             outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "type") is { } field)
-        {            
+        {
             outputs.Add("type", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "issuing_country") is { } field)
-        {            
+        {
             outputs.Add("issuing_country", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "number") is { } field)
-        {            
+        {
             outputs.Add("number", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "fullname") is { } field)
-        {            
+        {
             outputs.Add("fullname", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "gender") is { } field)
-        {            
+        {
             outputs.Add("gender", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "nationality") is { } field)
-        {            
+        {
             outputs.Add("nationality", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "issuing_authority") is { } field)
-        {            
+        {
             outputs.Add("issuing_authority", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "birthdate") is { } field)
-        {            
+        {
             outputs.Add("birthdate", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "birthplace") is { } field)
-        {            
+        {
             outputs.Add("birthplace", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "issue_date") is { } field)
-        {            
+        {
             outputs.Add("issue_date", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "expiry_date") is { } field)
-        {            
+        {
             outputs.Add("expiry_date", GetOutputPropertyValue(field));
         }
     }
@@ -5242,13 +5242,13 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "password") is { } field)
-        {            
+        {
             outputs.Add("password", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "notes") is { } field)
-        {            
+        {
             outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
@@ -5540,61 +5540,61 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {            
+        {
             outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "company_name") is { } field)
-        {            
+        {
             outputs.Add("company_name", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "member_name") is { } field)
-        {            
+        {
             outputs.Add("member_name", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "membership_no") is { } field)
-        {            
+        {
             outputs.Add("membership_no", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "pin") is { } field)
-        {            
+        {
             outputs.Add("pin", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "additional_no", "extra") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "extra", "additional_no", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "member_since", "extra") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "extra", "member_since", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "customer_service_phone", "extra") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "extra", "customer_service_phone", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "reservations_phone", "extra") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "extra", "reservations_phone", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "website", "extra") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "extra", "website", GetOutputPropertyValue(field));;
         }
     }
@@ -5678,13 +5678,13 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {            
+        {
             outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "private_key") is { } field)
-        {            
+        {
             outputs.Add("private_key", GetOutputPropertyValue(field));
         }
     }
@@ -5742,7 +5742,7 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {            
+        {
             outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
@@ -6060,67 +6060,67 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {            
+        {
             outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "url") is { } field)
-        {            
+        {
             outputs.Add("url", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "username") is { } field)
-        {            
+        {
             outputs.Add("username", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "password") is { } field)
-        {            
+        {
             outputs.Add("password", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "admin_console_url", "admin_console") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "admin_console", "admin_console_url", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "admin_console_username", "admin_console") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "admin_console", "admin_console_username", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "admin_console_password", "admin_console") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "admin_console", "admin_console_password", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "name", "hosting_provider_details") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "hosting_provider_details", "name", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "website", "hosting_provider_details") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "hosting_provider_details", "website", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "support_contact_url", "hosting_provider_details") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "hosting_provider_details", "support_contact_url", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "support_contact_phone", "hosting_provider_details") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "hosting_provider_details", "support_contact_phone", GetOutputPropertyValue(field));;
         }
     }
@@ -6230,19 +6230,19 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {            
+        {
             outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "name") is { } field)
-        {            
+        {
             outputs.Add("name", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "number") is { } field)
-        {            
+        {
             outputs.Add("number", GetOutputPropertyValue(field));
         }
     }
@@ -6638,85 +6638,85 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {            
+        {
             outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "product_version") is { } field)
-        {            
+        {
             outputs.Add("product_version", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "reg_code") is { } field)
-        {            
+        {
             outputs.Add("reg_code", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "reg_name", "customer") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "customer", "reg_name", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "reg_email", "customer") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "customer", "reg_email", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "company", "customer") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "customer", "company", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "download_link", "publisher") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "publisher", "download_link", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "publisher_name", "publisher") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "publisher", "publisher_name", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "publisher_website", "publisher") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "publisher", "publisher_website", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "retail_price", "publisher") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "publisher", "retail_price", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "support_email", "publisher") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "publisher", "support_email", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "order_date", "order") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "order", "order_date", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "order_number", "order") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "order", "order_number", GetOutputPropertyValue(field));;
         }
     }
     {
         if (GetField(template, "order_total", "order") is { } field)
-        {            
+        {
             AddFieldToSection(outputs, "order", "order_total", GetOutputPropertyValue(field));;
         }
     }
@@ -6982,55 +6982,55 @@ public static partial class TemplateMetadata
         AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
-        {            
+        {
             outputs.Add("notes", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "name") is { } field)
-        {            
+        {
             outputs.Add("name", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "password") is { } field)
-        {            
+        {
             outputs.Add("password", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "server") is { } field)
-        {            
+        {
             outputs.Add("server", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "airport_id") is { } field)
-        {            
+        {
             outputs.Add("airport_id", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "network_name") is { } field)
-        {            
+        {
             outputs.Add("network_name", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "wireless_security") is { } field)
-        {            
+        {
             outputs.Add("wireless_security", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "wireless_password") is { } field)
-        {            
+        {
             outputs.Add("wireless_password", GetOutputPropertyValue(field));
         }
     }
     {
         if (GetField(template, "disk_password") is { } field)
-        {            
+        {
             outputs.Add("disk_password", GetOutputPropertyValue(field));
         }
     }

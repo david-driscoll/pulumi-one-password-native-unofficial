@@ -122,11 +122,11 @@ export interface OutdoorLicenseItemArgs {
     category?: pulumi.Input<"Outdoor License">;
     country?: pulumi.Input<string>;
     expires?: pulumi.Input<string>;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
     fullName?: pulumi.Input<string>;
     maximumQuota?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
-    references?: pulumi.Input<pulumi.Input<inputs.ReferenceArgs>[]>;
+    references?: pulumi.Input<pulumi.Input<string>[]>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     state?: pulumi.Input<string>;
     /**

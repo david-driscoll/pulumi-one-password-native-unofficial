@@ -116,13 +116,13 @@ export interface RewardProgramItemArgs {
      */
     category?: pulumi.Input<"Reward Program">;
     companyName?: pulumi.Input<string>;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
     memberId?: pulumi.Input<string>;
     memberName?: pulumi.Input<string>;
     moreInformation?: pulumi.Input<inputs.rewardProgram.MoreInformationSectionArgs>;
     notes?: pulumi.Input<string>;
     pin?: pulumi.Input<string>;
-    references?: pulumi.Input<pulumi.Input<inputs.ReferenceArgs>[]>;
+    references?: pulumi.Input<pulumi.Input<string>[]>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     /**
      * An array of strings of the tags assigned to the item.

@@ -116,12 +116,12 @@ export interface SoftwareLicenseItemArgs {
      */
     category?: pulumi.Input<"Software License">;
     customer?: pulumi.Input<inputs.softwareLicense.CustomerSectionArgs>;
-    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs>}>;
+    fields?: pulumi.Input<{[key: string]: pulumi.Input<inputs.FieldArgs | string>}>;
     licenseKey?: pulumi.Input<string>;
     notes?: pulumi.Input<string>;
     order?: pulumi.Input<inputs.softwareLicense.OrderSectionArgs>;
     publisher?: pulumi.Input<inputs.softwareLicense.PublisherSectionArgs>;
-    references?: pulumi.Input<pulumi.Input<inputs.ReferenceArgs>[]>;
+    references?: pulumi.Input<pulumi.Input<string>[]>;
     sections?: pulumi.Input<{[key: string]: pulumi.Input<inputs.SectionArgs>}>;
     /**
      * An array of strings of the tags assigned to the item.

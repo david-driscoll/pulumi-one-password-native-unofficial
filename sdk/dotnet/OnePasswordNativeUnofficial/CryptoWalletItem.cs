@@ -141,10 +141,10 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         public Input<string>? Category { get; set; }
 
         [Input("fields")]
-        private InputMap<Inputs.FieldArgs>? _fields;
-        public InputMap<Inputs.FieldArgs> Fields
+        private InputMap<Union<Inputs.FieldArgs, string>>? _fields;
+        public InputMap<Union<Inputs.FieldArgs, string>> Fields
         {
-            get => _fields ?? (_fields = new InputMap<Inputs.FieldArgs>());
+            get => _fields ?? (_fields = new InputMap<Union<Inputs.FieldArgs, string>>());
             set => _fields = value;
         }
 
@@ -176,10 +176,10 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         }
 
         [Input("references")]
-        private InputList<Inputs.ReferenceArgs>? _references;
-        public InputList<Inputs.ReferenceArgs> References
+        private InputList<string>? _references;
+        public InputList<string> References
         {
-            get => _references ?? (_references = new InputList<Inputs.ReferenceArgs>());
+            get => _references ?? (_references = new InputList<string>());
             set => _references = value;
         }
 

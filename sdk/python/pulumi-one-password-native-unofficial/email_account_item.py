@@ -21,11 +21,11 @@ class EmailAccountItemArgs:
                  auth_method: Optional[pulumi.Input[str]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  contact_information: Optional[pulumi.Input['_emailaccount.ContactInformationSectionArgs']] = None,
-                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
+                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union['FieldArgs', str]]]]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  password: Optional[pulumi.Input[str]] = None,
                  port_number: Optional[pulumi.Input[str]] = None,
-                 references: Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input['SectionArgs']]]] = None,
                  security: Optional[pulumi.Input[str]] = None,
                  server: Optional[pulumi.Input[str]] = None,
@@ -123,11 +123,11 @@ class EmailAccountItemArgs:
 
     @property
     @pulumi.getter
-    def fields(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]]:
+    def fields(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Union['FieldArgs', str]]]]]:
         return pulumi.get(self, "fields")
 
     @fields.setter
-    def fields(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]]):
+    def fields(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union['FieldArgs', str]]]]]):
         pulumi.set(self, "fields", value)
 
     @property
@@ -159,11 +159,11 @@ class EmailAccountItemArgs:
 
     @property
     @pulumi.getter
-    def references(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]]:
+    def references(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
         return pulumi.get(self, "references")
 
     @references.setter
-    def references(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]]):
+    def references(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
         pulumi.set(self, "references", value)
 
     @property
@@ -298,11 +298,11 @@ class EmailAccountItem(pulumi.CustomResource):
                  auth_method: Optional[pulumi.Input[str]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  contact_information: Optional[pulumi.Input[pulumi.InputType['_emailaccount.ContactInformationSectionArgs']]] = None,
-                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
+                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.InputType['FieldArgs'], str]]]]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  password: Optional[pulumi.Input[str]] = None,
                  port_number: Optional[pulumi.Input[str]] = None,
-                 references: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ReferenceArgs']]]]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  security: Optional[pulumi.Input[str]] = None,
                  server: Optional[pulumi.Input[str]] = None,
@@ -350,11 +350,11 @@ class EmailAccountItem(pulumi.CustomResource):
                  auth_method: Optional[pulumi.Input[str]] = None,
                  category: Optional[pulumi.Input[str]] = None,
                  contact_information: Optional[pulumi.Input[pulumi.InputType['_emailaccount.ContactInformationSectionArgs']]] = None,
-                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['FieldArgs']]]]] = None,
+                 fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.InputType['FieldArgs'], str]]]]] = None,
                  notes: Optional[pulumi.Input[str]] = None,
                  password: Optional[pulumi.Input[str]] = None,
                  port_number: Optional[pulumi.Input[str]] = None,
-                 references: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ReferenceArgs']]]]] = None,
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  sections: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['SectionArgs']]]]] = None,
                  security: Optional[pulumi.Input[str]] = None,
                  server: Optional[pulumi.Input[str]] = None,
