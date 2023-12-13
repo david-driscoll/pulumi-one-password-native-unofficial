@@ -26,7 +26,31 @@
     notes: ,
     references: [],
     sections: {
-      Acr Pull Token: {
+      acr: {
+        attachments: {},
+        fields: {
+          hostname: {
+            id: [redacted],
+            label: Hostname,
+            purpose: null,
+            reference: [redacted],
+            type: STRING,
+            value: login server
+          },
+          name: {
+            id: [redacted],
+            label: Name,
+            purpose: null,
+            reference: [redacted],
+            type: STRING,
+            value: my registry
+          }
+        },
+        id: [redacted],
+        label: Azure Container Registry,
+        references: []
+      },
+      acrPull: {
         attachments: {},
         fields: {
           hostname: {
@@ -58,7 +82,7 @@
         label: Acr Pull Token,
         references: []
       },
-      Acr Push Token: {
+      acrPush: {
         attachments: {},
         fields: {
           hostname: {
@@ -88,30 +112,6 @@
         },
         id: [redacted],
         label: Acr Push Token,
-        references: []
-      },
-      Azure Container Registry: {
-        attachments: {},
-        fields: {
-          hostname: {
-            id: [redacted],
-            label: Hostname,
-            purpose: null,
-            reference: [redacted],
-            type: STRING,
-            value: login server
-          },
-          name: {
-            id: [redacted],
-            label: Name,
-            purpose: null,
-            reference: [redacted],
-            type: STRING,
-            value: my registry
-          }
-        },
-        id: [redacted],
-        label: Azure Container Registry,
         references: []
       }
     },

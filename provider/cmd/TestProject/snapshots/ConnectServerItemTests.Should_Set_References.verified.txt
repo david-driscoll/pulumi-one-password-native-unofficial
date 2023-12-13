@@ -44,7 +44,7 @@
       }
     ],
     sections: {
-      My Section: {
+      mysection: {
         attachments: {},
         fields: {},
         id: [redacted],

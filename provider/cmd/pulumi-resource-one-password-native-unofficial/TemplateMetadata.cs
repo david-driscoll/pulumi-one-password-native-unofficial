@@ -276,7 +276,7 @@ public static partial class TemplateMetadata
                 .AddRange(
                     sections
                         // ReSharper disable once NullableWarningSuppressionIsUsed
-                        .Select(section => new KeyValuePair<string, PropertyValue>((section!.Label ?? section.Id), new(
+                        .Select(section => new KeyValuePair<string, PropertyValue>((section!.Id), new(
                             ImmutableDictionary.Create<string, PropertyValue>()
                                 .Add("id", new(section.Id))
                                 .Add("label", new(section.Label ?? section.Id))
