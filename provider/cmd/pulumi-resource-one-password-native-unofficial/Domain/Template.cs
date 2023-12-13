@@ -15,8 +15,12 @@ public record Template
             .Select(z => z.First().Section)
             .ToImmutableArray();
 
-    public (ImmutableArray<TemplateField> fields, ImmutableArray<TemplateAttachment> attachments, ImmutableArray<TemplateSection> sections)
-        PrepareFieldsAndAttachments()
+    public (
+        ImmutableArray<TemplateField> fields,
+        ImmutableArray<TemplateAttachment> attachments,
+        ImmutableArray<TemplateSection> sections,
+        Template template
+        ) PrepareFieldsAndAttachments()
     {
         var fields = Fields
             .Where(x => x is not TemplateAttachment)
@@ -30,7 +34,7 @@ public record Template
             )
             .ToImmutableArray();
         var attachments = Fields.OfType<TemplateAttachment>().ToImmutableArray();
-        return (fields, attachments, Sections);
+        return (fields, attachments, Sections, this with { Fields = fields });
 
         static IEnumerable<TemplateField> EnsureDateFieldsHaveBackingValues(TemplateField templateField)
         {

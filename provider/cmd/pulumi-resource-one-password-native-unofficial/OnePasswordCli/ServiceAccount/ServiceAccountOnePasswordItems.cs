@@ -22,7 +22,7 @@ public class ServiceAccountOnePasswordItems(
 
     public async Task<Item.Response> Create(Item.CreateRequest request, Template templateJson, CancellationToken cancellationToken = default)
     {
-        var (fields, attachments, _) = templateJson.PrepareFieldsAndAttachments();
+        (_, var attachments, _, templateJson) = templateJson.PrepareFieldsAndAttachments();
 
         var args = ArgsBuilder
                 .Add("create")
@@ -39,22 +39,12 @@ public class ServiceAccountOnePasswordItems(
             var r = recipe is { Length: > 0 } or { CharacterSets.Length: > 0 } ? "=" + recipe : "";
             args = args.Add($"--generate-password{r}");
         }
-
-        templateJson = templateJson with
-        {
-            Fields = templateJson.Fields.Select(z => z with { Value = TemplateMetadata.Get1PasswordUnixString(z) }).ToImmutableArray()
-        };
-        
         (args, var disposable) = await AttachFiles(args, attachments, cancellationToken);
         try
         {
             var result = await ExecuteCommand(
                 Command.WithArguments(args.Build()),
-                new 
-                {
-                    Fields = fields,
-                    Urls = templateJson.Urls
-                },
+                templateJson,
                 cancellationToken
             );
 
@@ -69,7 +59,7 @@ public class ServiceAccountOnePasswordItems(
 
     public async Task<Item.Response> Edit(Item.EditRequest request, Template templateJson, CancellationToken cancellationToken = default)
     {
-        var (fields, attachments, _) = templateJson.PrepareFieldsAndAttachments();
+        (_, var attachments, _, templateJson) = templateJson.PrepareFieldsAndAttachments();
 
         var args = ArgsBuilder
                 .Add("edit")
@@ -95,11 +85,7 @@ public class ServiceAccountOnePasswordItems(
         {
             var result = await ExecuteCommand(
                 Command.WithArguments(args.Build()),
-                new 
-                {
-                    Fields = fields,
-                    Urls = templateJson.Urls
-                },
+                templateJson,
                 cancellationToken
             );
             disposable.Dispose();

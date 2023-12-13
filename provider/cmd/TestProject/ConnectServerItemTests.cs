@@ -207,18 +207,6 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
     }
 
     [Fact]
-    public async Task Should_Handle_Number_Fields()
-    {
-        throw new NotImplementedException();
-        // var provider = await _serverFixture.ConfigureProvider(_logger);
-        //
-        // var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
-        //
-        // await Verify(create)
-        //     .AddIdScrubber(create.Id);
-    }
-
-    [Fact]
     public async Task Should_Handle_Complex_Items()
     {
         var item = await _fixture.CreateRequestObject<Item, ItemArgs>("Infrastructure Collection", new()

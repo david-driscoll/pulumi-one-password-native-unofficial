@@ -46,7 +46,7 @@ public class ConnectServerOnePasswordBase(
 
     internal static FullItem ConvertToItemRequest(string vaultId, ItemRequestBase request, Template templateJson)
     {
-        var (fields, _, sections) = templateJson.PrepareFieldsAndAttachments();
+        var (fields, _, sections, _) = templateJson.PrepareFieldsAndAttachments();
         return new FullItem()
         {
             Id = request is Item.EditRequest { Id: not null } editRequest

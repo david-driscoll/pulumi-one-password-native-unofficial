@@ -16,7 +16,7 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
 
     public async Task<Item.Response> Create(Item.CreateRequest request, Template templateJson, CancellationToken cancellationToken = default)
     {
-        var (_, attachments, _) = templateJson.PrepareFieldsAndAttachments();
+        var (_, attachments, _, _) = templateJson.PrepareFieldsAndAttachments();
         if (attachments.Any())
         {
             throw new NotSupportedException("Attachments are not supported when using the Connect Server API");
@@ -50,7 +50,7 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
 
     public async Task<Item.Response> Edit(Item.EditRequest request, Template templateJson, CancellationToken cancellationToken = default)
     {
-        var (_, attachments, _) = templateJson.PrepareFieldsAndAttachments();
+        var (_, attachments, _, _) = templateJson.PrepareFieldsAndAttachments();
         if (attachments.Any())
         {
             throw new NotSupportedException("Attachments are not supported when using the Connect Server API");
