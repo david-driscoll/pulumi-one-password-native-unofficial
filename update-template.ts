@@ -214,7 +214,7 @@ schema.types = {
             },
             'references': {
                 "type": "array",
-                "items": { "$ref": "#/types/one-password-native-unofficial:index:Reference" },
+                "items": { "type": "string" },
             },
             "label": {
                 "type": "string"

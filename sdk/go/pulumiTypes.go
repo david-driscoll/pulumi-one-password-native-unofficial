@@ -455,101 +455,11 @@ type Reference struct {
 	ItemId string `pulumi:"itemId"`
 }
 
-// ReferenceInput is an input type that accepts ReferenceArgs and ReferenceOutput values.
-// You can construct a concrete instance of `ReferenceInput` via:
-//
-//	ReferenceArgs{...}
-type ReferenceInput interface {
-	pulumi.Input
-
-	ToReferenceOutput() ReferenceOutput
-	ToReferenceOutputWithContext(context.Context) ReferenceOutput
-}
-
-type ReferenceArgs struct {
-	ItemId pulumi.StringInput `pulumi:"itemId"`
-}
-
-func (ReferenceArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*Reference)(nil)).Elem()
-}
-
-func (i ReferenceArgs) ToReferenceOutput() ReferenceOutput {
-	return i.ToReferenceOutputWithContext(context.Background())
-}
-
-func (i ReferenceArgs) ToReferenceOutputWithContext(ctx context.Context) ReferenceOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(ReferenceOutput)
-}
-
-// ReferenceArrayInput is an input type that accepts ReferenceArray and ReferenceArrayOutput values.
-// You can construct a concrete instance of `ReferenceArrayInput` via:
-//
-//	ReferenceArray{ ReferenceArgs{...} }
-type ReferenceArrayInput interface {
-	pulumi.Input
-
-	ToReferenceArrayOutput() ReferenceArrayOutput
-	ToReferenceArrayOutputWithContext(context.Context) ReferenceArrayOutput
-}
-
-type ReferenceArray []ReferenceInput
-
-func (ReferenceArray) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]Reference)(nil)).Elem()
-}
-
-func (i ReferenceArray) ToReferenceArrayOutput() ReferenceArrayOutput {
-	return i.ToReferenceArrayOutputWithContext(context.Background())
-}
-
-func (i ReferenceArray) ToReferenceArrayOutputWithContext(ctx context.Context) ReferenceArrayOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(ReferenceArrayOutput)
-}
-
-type ReferenceOutput struct{ *pulumi.OutputState }
-
-func (ReferenceOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*Reference)(nil)).Elem()
-}
-
-func (o ReferenceOutput) ToReferenceOutput() ReferenceOutput {
-	return o
-}
-
-func (o ReferenceOutput) ToReferenceOutputWithContext(ctx context.Context) ReferenceOutput {
-	return o
-}
-
-func (o ReferenceOutput) ItemId() pulumi.StringOutput {
-	return o.ApplyT(func(v Reference) string { return v.ItemId }).(pulumi.StringOutput)
-}
-
-type ReferenceArrayOutput struct{ *pulumi.OutputState }
-
-func (ReferenceArrayOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]Reference)(nil)).Elem()
-}
-
-func (o ReferenceArrayOutput) ToReferenceArrayOutput() ReferenceArrayOutput {
-	return o
-}
-
-func (o ReferenceArrayOutput) ToReferenceArrayOutputWithContext(ctx context.Context) ReferenceArrayOutput {
-	return o
-}
-
-func (o ReferenceArrayOutput) Index(i pulumi.IntInput) ReferenceOutput {
-	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Reference {
-		return vs[0].([]Reference)[vs[1].(int)]
-	}).(ReferenceOutput)
-}
-
 type Section struct {
 	Attachments map[string]pulumi.AssetOrArchive `pulumi:"attachments"`
 	Fields      map[string]Field                 `pulumi:"fields"`
 	Label       *string                          `pulumi:"label"`
-	References  []Reference                      `pulumi:"references"`
+	References  []string                         `pulumi:"references"`
 }
 
 // SectionInput is an input type that accepts SectionArgs and SectionOutput values.
@@ -567,7 +477,7 @@ type SectionArgs struct {
 	Attachments pulumi.AssetOrArchiveMapInput `pulumi:"attachments"`
 	Fields      FieldMapInput                 `pulumi:"fields"`
 	Label       pulumi.StringPtrInput         `pulumi:"label"`
-	References  ReferenceArrayInput           `pulumi:"references"`
+	References  pulumi.StringArrayInput       `pulumi:"references"`
 }
 
 func (SectionArgs) ElementType() reflect.Type {
@@ -633,8 +543,8 @@ func (o SectionOutput) Label() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v Section) *string { return v.Label }).(pulumi.StringPtrOutput)
 }
 
-func (o SectionOutput) References() ReferenceArrayOutput {
-	return o.ApplyT(func(v Section) []Reference { return v.References }).(ReferenceArrayOutput)
+func (o SectionOutput) References() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v Section) []string { return v.References }).(pulumi.StringArrayOutput)
 }
 
 type SectionMapOutput struct{ *pulumi.OutputState }
@@ -677,8 +587,6 @@ func (val *Url) Defaults() *Url {
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*FieldInput)(nil)).Elem(), FieldArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FieldMapInput)(nil)).Elem(), FieldMap{})
-	pulumi.RegisterInputType(reflect.TypeOf((*ReferenceInput)(nil)).Elem(), ReferenceArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*ReferenceArrayInput)(nil)).Elem(), ReferenceArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SectionInput)(nil)).Elem(), SectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SectionMapInput)(nil)).Elem(), SectionMap{})
 	pulumi.RegisterOutputType(FieldOutput{})
@@ -694,8 +602,6 @@ func init() {
 	pulumi.RegisterOutputType(OutputSectionMapOutput{})
 	pulumi.RegisterOutputType(OutputUrlOutput{})
 	pulumi.RegisterOutputType(OutputUrlArrayOutput{})
-	pulumi.RegisterOutputType(ReferenceOutput{})
-	pulumi.RegisterOutputType(ReferenceArrayOutput{})
 	pulumi.RegisterOutputType(SectionOutput{})
 	pulumi.RegisterOutputType(SectionMapOutput{})
 }

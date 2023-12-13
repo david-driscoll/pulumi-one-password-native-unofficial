@@ -9428,7 +9428,7 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/one-password-native-unofficial:index:Reference"
+                        "type": "string"
                     }
                 },
                 "label": {

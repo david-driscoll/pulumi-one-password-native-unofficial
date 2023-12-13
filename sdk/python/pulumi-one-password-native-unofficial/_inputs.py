@@ -12,7 +12,6 @@ from ._enums import *
 __all__ = [
     'FieldArgs',
     'PasswordRecipeArgs',
-    'ReferenceArgs',
     'SectionArgs',
     'UrlArgs',
 ]
@@ -112,28 +111,12 @@ class PasswordRecipeArgs:
 
 
 @pulumi.input_type
-class ReferenceArgs:
-    def __init__(__self__, *,
-                 item_id: pulumi.Input[str]):
-        pulumi.set(__self__, "item_id", item_id)
-
-    @property
-    @pulumi.getter(name="itemId")
-    def item_id(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "item_id")
-
-    @item_id.setter
-    def item_id(self, value: pulumi.Input[str]):
-        pulumi.set(self, "item_id", value)
-
-
-@pulumi.input_type
 class SectionArgs:
     def __init__(__self__, *,
                  attachments: Optional[pulumi.Input[Mapping[str, pulumi.Input[Union[pulumi.Asset, pulumi.Archive]]]]] = None,
                  fields: Optional[pulumi.Input[Mapping[str, pulumi.Input['FieldArgs']]]] = None,
                  label: Optional[pulumi.Input[str]] = None,
-                 references: Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]] = None):
+                 references: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
         if attachments is not None:
             pulumi.set(__self__, "attachments", attachments)
         if fields is not None:
@@ -172,11 +155,11 @@ class SectionArgs:
 
     @property
     @pulumi.getter
-    def references(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]]:
+    def references(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
         return pulumi.get(self, "references")
 
     @references.setter
-    def references(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['ReferenceArgs']]]]):
+    def references(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
         pulumi.set(self, "references", value)
 
 

@@ -33,10 +33,10 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial.Inputs
         public Input<string>? Label { get; set; }
 
         [Input("references")]
-        private InputList<Inputs.ReferenceArgs>? _references;
-        public InputList<Inputs.ReferenceArgs> References
+        private InputList<string>? _references;
+        public InputList<string> References
         {
-            get => _references ?? (_references = new InputList<Inputs.ReferenceArgs>());
+            get => _references ?? (_references = new InputList<string>());
             set => _references = value;
         }
 
