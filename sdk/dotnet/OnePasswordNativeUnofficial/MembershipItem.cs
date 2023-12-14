@@ -74,7 +74,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         public Output<ImmutableArray<Outputs.OutputUrl>> Urls { get; private set; } = null!;
 
         [Output("vault")]
-        public Output<ImmutableDictionary<string, string>> Vault { get; private set; } = null!;
+        public Output<Outputs.OutputVault> Vault { get; private set; } = null!;
 
         [Output("website")]
         public Output<string?> Website { get; private set; } = null!;

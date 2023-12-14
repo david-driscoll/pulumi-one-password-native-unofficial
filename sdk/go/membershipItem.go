@@ -33,7 +33,7 @@ type MembershipItem struct {
 	// The title of the item.
 	Title   pulumi.StringOutput    `pulumi:"title"`
 	Urls    OutputUrlArrayOutput   `pulumi:"urls"`
-	Vault   pulumi.StringMapOutput `pulumi:"vault"`
+	Vault   OutputVaultOutput      `pulumi:"vault"`
 	Website pulumi.StringPtrOutput `pulumi:"website"`
 }
 

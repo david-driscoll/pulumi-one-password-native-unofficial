@@ -45,12 +45,12 @@ type GetAPICredentialResult struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title     string            `pulumi:"title"`
-	Type      *string           `pulumi:"type"`
-	Urls      []OutputUrl       `pulumi:"urls"`
-	Username  *string           `pulumi:"username"`
-	ValidFrom *string           `pulumi:"validFrom"`
-	Vault     map[string]string `pulumi:"vault"`
+	Title     string      `pulumi:"title"`
+	Type      *string     `pulumi:"type"`
+	Urls      []OutputUrl `pulumi:"urls"`
+	Username  *string     `pulumi:"username"`
+	ValidFrom *string     `pulumi:"validFrom"`
+	Vault     OutputVault `pulumi:"vault"`
 }
 
 func GetAPICredentialOutput(ctx *pulumi.Context, args GetAPICredentialOutputArgs, opts ...pulumi.InvokeOption) GetAPICredentialResultOutput {
@@ -164,8 +164,8 @@ func (o GetAPICredentialResultOutput) ValidFrom() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetAPICredentialResult) *string { return v.ValidFrom }).(pulumi.StringPtrOutput)
 }
 
-func (o GetAPICredentialResultOutput) Vault() pulumi.StringMapOutput {
-	return o.ApplyT(func(v GetAPICredentialResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
+func (o GetAPICredentialResultOutput) Vault() OutputVaultOutput {
+	return o.ApplyT(func(v GetAPICredentialResult) OutputVault { return v.Vault }).(OutputVaultOutput)
 }
 
 func init() {

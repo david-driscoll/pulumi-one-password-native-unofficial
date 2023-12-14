@@ -50,10 +50,10 @@ type GetBankAccountResult struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title string            `pulumi:"title"`
-	Type  *string           `pulumi:"type"`
-	Urls  []OutputUrl       `pulumi:"urls"`
-	Vault map[string]string `pulumi:"vault"`
+	Title string      `pulumi:"title"`
+	Type  *string     `pulumi:"type"`
+	Urls  []OutputUrl `pulumi:"urls"`
+	Vault OutputVault `pulumi:"vault"`
 }
 
 func GetBankAccountOutput(ctx *pulumi.Context, args GetBankAccountOutputArgs, opts ...pulumi.InvokeOption) GetBankAccountResultOutput {
@@ -175,8 +175,8 @@ func (o GetBankAccountResultOutput) Urls() OutputUrlArrayOutput {
 	return o.ApplyT(func(v GetBankAccountResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
 }
 
-func (o GetBankAccountResultOutput) Vault() pulumi.StringMapOutput {
-	return o.ApplyT(func(v GetBankAccountResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
+func (o GetBankAccountResultOutput) Vault() OutputVaultOutput {
+	return o.ApplyT(func(v GetBankAccountResult) OutputVault { return v.Vault }).(OutputVaultOutput)
 }
 
 func init() {

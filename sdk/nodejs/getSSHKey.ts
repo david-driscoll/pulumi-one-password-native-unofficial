@@ -54,7 +54,7 @@ export interface GetSSHKeyResult {
      */
     readonly title: string;
     readonly urls?: outputs.OutputUrl[];
-    readonly vault: {[key: string]: string};
+    readonly vault: outputs.OutputVault;
 }
 
 export function getSSHKeyOutput(args: GetSSHKeyOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetSSHKeyResult> {

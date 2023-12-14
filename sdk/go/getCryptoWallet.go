@@ -46,7 +46,7 @@ type GetCryptoWalletResult struct {
 	// The title of the item.
 	Title  string                      `pulumi:"title"`
 	Urls   []OutputUrl                 `pulumi:"urls"`
-	Vault  map[string]string           `pulumi:"vault"`
+	Vault  OutputVault                 `pulumi:"vault"`
 	Wallet *cryptowallet.WalletSection `pulumi:"wallet"`
 }
 
@@ -141,8 +141,8 @@ func (o GetCryptoWalletResultOutput) Urls() OutputUrlArrayOutput {
 	return o.ApplyT(func(v GetCryptoWalletResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
 }
 
-func (o GetCryptoWalletResultOutput) Vault() pulumi.StringMapOutput {
-	return o.ApplyT(func(v GetCryptoWalletResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
+func (o GetCryptoWalletResultOutput) Vault() OutputVaultOutput {
+	return o.ApplyT(func(v GetCryptoWalletResult) OutputVault { return v.Vault }).(OutputVaultOutput)
 }
 
 func (o GetCryptoWalletResultOutput) Wallet() cryptowallet.WalletSectionPtrOutput {

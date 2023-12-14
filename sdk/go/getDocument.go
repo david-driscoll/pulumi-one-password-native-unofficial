@@ -41,9 +41,9 @@ type GetDocumentResult struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title string            `pulumi:"title"`
-	Urls  []OutputUrl       `pulumi:"urls"`
-	Vault map[string]string `pulumi:"vault"`
+	Title string      `pulumi:"title"`
+	Urls  []OutputUrl `pulumi:"urls"`
+	Vault OutputVault `pulumi:"vault"`
 }
 
 func GetDocumentOutput(ctx *pulumi.Context, args GetDocumentOutputArgs, opts ...pulumi.InvokeOption) GetDocumentResultOutput {
@@ -129,8 +129,8 @@ func (o GetDocumentResultOutput) Urls() OutputUrlArrayOutput {
 	return o.ApplyT(func(v GetDocumentResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
 }
 
-func (o GetDocumentResultOutput) Vault() pulumi.StringMapOutput {
-	return o.ApplyT(func(v GetDocumentResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
+func (o GetDocumentResultOutput) Vault() OutputVaultOutput {
+	return o.ApplyT(func(v GetDocumentResult) OutputVault { return v.Vault }).(OutputVaultOutput)
 }
 
 func init() {

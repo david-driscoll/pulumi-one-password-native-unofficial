@@ -47,9 +47,9 @@ type GetRewardProgramResult struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title string            `pulumi:"title"`
-	Urls  []OutputUrl       `pulumi:"urls"`
-	Vault map[string]string `pulumi:"vault"`
+	Title string      `pulumi:"title"`
+	Urls  []OutputUrl `pulumi:"urls"`
+	Vault OutputVault `pulumi:"vault"`
 }
 
 func GetRewardProgramOutput(ctx *pulumi.Context, args GetRewardProgramOutputArgs, opts ...pulumi.InvokeOption) GetRewardProgramResultOutput {
@@ -155,8 +155,8 @@ func (o GetRewardProgramResultOutput) Urls() OutputUrlArrayOutput {
 	return o.ApplyT(func(v GetRewardProgramResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
 }
 
-func (o GetRewardProgramResultOutput) Vault() pulumi.StringMapOutput {
-	return o.ApplyT(func(v GetRewardProgramResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
+func (o GetRewardProgramResultOutput) Vault() OutputVaultOutput {
+	return o.ApplyT(func(v GetRewardProgramResult) OutputVault { return v.Vault }).(OutputVaultOutput)
 }
 
 func init() {

@@ -29,7 +29,7 @@ type CryptoWalletItem struct {
 	// The title of the item.
 	Title  pulumi.StringOutput                 `pulumi:"title"`
 	Urls   OutputUrlArrayOutput                `pulumi:"urls"`
-	Vault  pulumi.StringMapOutput              `pulumi:"vault"`
+	Vault  OutputVaultOutput                   `pulumi:"vault"`
 	Wallet cryptowallet.WalletSectionPtrOutput `pulumi:"wallet"`
 }
 

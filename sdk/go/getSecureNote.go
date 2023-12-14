@@ -41,9 +41,9 @@ type GetSecureNoteResult struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title string            `pulumi:"title"`
-	Urls  []OutputUrl       `pulumi:"urls"`
-	Vault map[string]string `pulumi:"vault"`
+	Title string      `pulumi:"title"`
+	Urls  []OutputUrl `pulumi:"urls"`
+	Vault OutputVault `pulumi:"vault"`
 }
 
 func GetSecureNoteOutput(ctx *pulumi.Context, args GetSecureNoteOutputArgs, opts ...pulumi.InvokeOption) GetSecureNoteResultOutput {
@@ -129,8 +129,8 @@ func (o GetSecureNoteResultOutput) Urls() OutputUrlArrayOutput {
 	return o.ApplyT(func(v GetSecureNoteResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
 }
 
-func (o GetSecureNoteResultOutput) Vault() pulumi.StringMapOutput {
-	return o.ApplyT(func(v GetSecureNoteResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
+func (o GetSecureNoteResultOutput) Vault() OutputVaultOutput {
+	return o.ApplyT(func(v GetSecureNoteResult) OutputVault { return v.Vault }).(OutputVaultOutput)
 }
 
 func init() {

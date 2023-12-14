@@ -47,12 +47,12 @@ type GetCreditCardResult struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title              string            `pulumi:"title"`
-	Type               *string           `pulumi:"type"`
-	Urls               []OutputUrl       `pulumi:"urls"`
-	ValidFrom          *string           `pulumi:"validFrom"`
-	Vault              map[string]string `pulumi:"vault"`
-	VerificationNumber *string           `pulumi:"verificationNumber"`
+	Title              string      `pulumi:"title"`
+	Type               *string     `pulumi:"type"`
+	Urls               []OutputUrl `pulumi:"urls"`
+	ValidFrom          *string     `pulumi:"validFrom"`
+	Vault              OutputVault `pulumi:"vault"`
+	VerificationNumber *string     `pulumi:"verificationNumber"`
 }
 
 func GetCreditCardOutput(ctx *pulumi.Context, args GetCreditCardOutputArgs, opts ...pulumi.InvokeOption) GetCreditCardResultOutput {
@@ -166,8 +166,8 @@ func (o GetCreditCardResultOutput) ValidFrom() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetCreditCardResult) *string { return v.ValidFrom }).(pulumi.StringPtrOutput)
 }
 
-func (o GetCreditCardResultOutput) Vault() pulumi.StringMapOutput {
-	return o.ApplyT(func(v GetCreditCardResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
+func (o GetCreditCardResultOutput) Vault() OutputVaultOutput {
+	return o.ApplyT(func(v GetCreditCardResult) OutputVault { return v.Vault }).(OutputVaultOutput)
 }
 
 func (o GetCreditCardResultOutput) VerificationNumber() pulumi.StringPtrOutput {

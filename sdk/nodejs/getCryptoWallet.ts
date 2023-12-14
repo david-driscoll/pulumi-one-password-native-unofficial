@@ -55,7 +55,7 @@ export interface GetCryptoWalletResult {
      */
     readonly title: string;
     readonly urls?: outputs.OutputUrl[];
-    readonly vault: {[key: string]: string};
+    readonly vault: outputs.OutputVault;
     readonly wallet?: outputs.cryptoWallet.WalletSection;
 }
 

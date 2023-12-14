@@ -46,10 +46,10 @@ type GetSoftwareLicenseResult struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title   string            `pulumi:"title"`
-	Urls    []OutputUrl       `pulumi:"urls"`
-	Vault   map[string]string `pulumi:"vault"`
-	Version *string           `pulumi:"version"`
+	Title   string      `pulumi:"title"`
+	Urls    []OutputUrl `pulumi:"urls"`
+	Vault   OutputVault `pulumi:"vault"`
+	Version *string     `pulumi:"version"`
 }
 
 func GetSoftwareLicenseOutput(ctx *pulumi.Context, args GetSoftwareLicenseOutputArgs, opts ...pulumi.InvokeOption) GetSoftwareLicenseResultOutput {
@@ -151,8 +151,8 @@ func (o GetSoftwareLicenseResultOutput) Urls() OutputUrlArrayOutput {
 	return o.ApplyT(func(v GetSoftwareLicenseResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
 }
 
-func (o GetSoftwareLicenseResultOutput) Vault() pulumi.StringMapOutput {
-	return o.ApplyT(func(v GetSoftwareLicenseResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
+func (o GetSoftwareLicenseResultOutput) Vault() OutputVaultOutput {
+	return o.ApplyT(func(v GetSoftwareLicenseResult) OutputVault { return v.Vault }).(OutputVaultOutput)
 }
 
 func (o GetSoftwareLicenseResultOutput) Version() pulumi.StringPtrOutput {

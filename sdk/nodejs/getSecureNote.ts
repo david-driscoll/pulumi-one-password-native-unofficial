@@ -53,7 +53,7 @@ export interface GetSecureNoteResult {
      */
     readonly title: string;
     readonly urls?: outputs.OutputUrl[];
-    readonly vault: {[key: string]: string};
+    readonly vault: outputs.OutputVault;
 }
 
 export function getSecureNoteOutput(args: GetSecureNoteOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetSecureNoteResult> {

@@ -34,7 +34,7 @@ type CreditCardItem struct {
 	Type               pulumi.StringPtrOutput `pulumi:"type"`
 	Urls               OutputUrlArrayOutput   `pulumi:"urls"`
 	ValidFrom          pulumi.StringPtrOutput `pulumi:"validFrom"`
-	Vault              pulumi.StringMapOutput `pulumi:"vault"`
+	Vault              OutputVaultOutput      `pulumi:"vault"`
 	VerificationNumber pulumi.StringPtrOutput `pulumi:"verificationNumber"`
 }
 

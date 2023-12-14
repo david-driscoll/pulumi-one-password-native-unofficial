@@ -43,6 +43,11 @@ export interface OutputUrl {
     primary: boolean;
 }
 
+export interface OutputVault {
+    id: string;
+    name: string;
+}
+
 export namespace bankAccount {
     export interface BranchInformationSection {
         address?: string;

@@ -64,7 +64,7 @@ export interface GetPassportResult {
     readonly title: string;
     readonly type?: string;
     readonly urls?: outputs.OutputUrl[];
-    readonly vault: {[key: string]: string};
+    readonly vault: outputs.OutputVault;
 }
 
 export function getPassportOutput(args: GetPassportOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetPassportResult> {

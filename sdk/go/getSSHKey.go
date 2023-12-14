@@ -42,9 +42,9 @@ type GetSSHKeyResult struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title string            `pulumi:"title"`
-	Urls  []OutputUrl       `pulumi:"urls"`
-	Vault map[string]string `pulumi:"vault"`
+	Title string      `pulumi:"title"`
+	Urls  []OutputUrl `pulumi:"urls"`
+	Vault OutputVault `pulumi:"vault"`
 }
 
 func GetSSHKeyOutput(ctx *pulumi.Context, args GetSSHKeyOutputArgs, opts ...pulumi.InvokeOption) GetSSHKeyResultOutput {
@@ -134,8 +134,8 @@ func (o GetSSHKeyResultOutput) Urls() OutputUrlArrayOutput {
 	return o.ApplyT(func(v GetSSHKeyResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
 }
 
-func (o GetSSHKeyResultOutput) Vault() pulumi.StringMapOutput {
-	return o.ApplyT(func(v GetSSHKeyResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
+func (o GetSSHKeyResultOutput) Vault() OutputVaultOutput {
+	return o.ApplyT(func(v GetSSHKeyResult) OutputVault { return v.Vault }).(OutputVaultOutput)
 }
 
 func init() {

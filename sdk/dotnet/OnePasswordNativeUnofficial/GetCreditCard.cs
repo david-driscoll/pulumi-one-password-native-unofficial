@@ -100,7 +100,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         public readonly string? Type;
         public readonly ImmutableArray<Outputs.OutputUrl> Urls;
         public readonly string? ValidFrom;
-        public readonly ImmutableDictionary<string, string> Vault;
+        public readonly Outputs.OutputVault Vault;
         public readonly string? VerificationNumber;
 
         [OutputConstructor]
@@ -139,7 +139,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
 
             string? validFrom,
 
-            ImmutableDictionary<string, string> vault,
+            Outputs.OutputVault vault,
 
             string? verificationNumber)
         {

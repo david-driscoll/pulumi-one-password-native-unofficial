@@ -42,10 +42,10 @@ type GetLoginResult struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title    string            `pulumi:"title"`
-	Urls     []OutputUrl       `pulumi:"urls"`
-	Username *string           `pulumi:"username"`
-	Vault    map[string]string `pulumi:"vault"`
+	Title    string      `pulumi:"title"`
+	Urls     []OutputUrl `pulumi:"urls"`
+	Username *string     `pulumi:"username"`
+	Vault    OutputVault `pulumi:"vault"`
 }
 
 func GetLoginOutput(ctx *pulumi.Context, args GetLoginOutputArgs, opts ...pulumi.InvokeOption) GetLoginResultOutput {
@@ -139,8 +139,8 @@ func (o GetLoginResultOutput) Username() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetLoginResult) *string { return v.Username }).(pulumi.StringPtrOutput)
 }
 
-func (o GetLoginResultOutput) Vault() pulumi.StringMapOutput {
-	return o.ApplyT(func(v GetLoginResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
+func (o GetLoginResultOutput) Vault() OutputVaultOutput {
+	return o.ApplyT(func(v GetLoginResult) OutputVault { return v.Vault }).(OutputVaultOutput)
 }
 
 func init() {

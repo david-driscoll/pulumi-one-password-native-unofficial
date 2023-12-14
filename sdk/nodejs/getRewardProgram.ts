@@ -58,7 +58,7 @@ export interface GetRewardProgramResult {
      */
     readonly title: string;
     readonly urls?: outputs.OutputUrl[];
-    readonly vault: {[key: string]: string};
+    readonly vault: outputs.OutputVault;
 }
 
 export function getRewardProgramOutput(args: GetRewardProgramOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetRewardProgramResult> {

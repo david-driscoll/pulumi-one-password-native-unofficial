@@ -45,11 +45,11 @@ type GetServerResult struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title    string            `pulumi:"title"`
-	Url      *string           `pulumi:"url"`
-	Urls     []OutputUrl       `pulumi:"urls"`
-	Username *string           `pulumi:"username"`
-	Vault    map[string]string `pulumi:"vault"`
+	Title    string      `pulumi:"title"`
+	Url      *string     `pulumi:"url"`
+	Urls     []OutputUrl `pulumi:"urls"`
+	Username *string     `pulumi:"username"`
+	Vault    OutputVault `pulumi:"vault"`
 }
 
 func GetServerOutput(ctx *pulumi.Context, args GetServerOutputArgs, opts ...pulumi.InvokeOption) GetServerResultOutput {
@@ -155,8 +155,8 @@ func (o GetServerResultOutput) Username() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetServerResult) *string { return v.Username }).(pulumi.StringPtrOutput)
 }
 
-func (o GetServerResultOutput) Vault() pulumi.StringMapOutput {
-	return o.ApplyT(func(v GetServerResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
+func (o GetServerResultOutput) Vault() OutputVaultOutput {
+	return o.ApplyT(func(v GetServerResult) OutputVault { return v.Vault }).(OutputVaultOutput)
 }
 
 func init() {

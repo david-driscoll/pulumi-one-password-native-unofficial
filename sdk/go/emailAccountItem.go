@@ -36,7 +36,7 @@ type EmailAccountItem struct {
 	Type     pulumi.StringPtrOutput `pulumi:"type"`
 	Urls     OutputUrlArrayOutput   `pulumi:"urls"`
 	Username pulumi.StringPtrOutput `pulumi:"username"`
-	Vault    pulumi.StringMapOutput `pulumi:"vault"`
+	Vault    OutputVaultOutput      `pulumi:"vault"`
 }
 
 // NewEmailAccountItem registers a new resource with the given unique name, arguments, and options.

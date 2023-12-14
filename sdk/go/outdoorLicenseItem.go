@@ -33,7 +33,7 @@ type OutdoorLicenseItem struct {
 	Title     pulumi.StringOutput    `pulumi:"title"`
 	Urls      OutputUrlArrayOutput   `pulumi:"urls"`
 	ValidFrom pulumi.StringPtrOutput `pulumi:"validFrom"`
-	Vault     pulumi.StringMapOutput `pulumi:"vault"`
+	Vault     OutputVaultOutput      `pulumi:"vault"`
 }
 
 // NewOutdoorLicenseItem registers a new resource with the given unique name, arguments, and options.

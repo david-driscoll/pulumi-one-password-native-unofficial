@@ -16,6 +16,7 @@ __all__ = [
     'OutputReference',
     'OutputSection',
     'OutputUrl',
+    'OutputVault',
 ]
 
 @pulumi.output_type
@@ -215,5 +216,24 @@ class OutputUrl(dict):
     @pulumi.getter
     def label(self) -> Optional[str]:
         return pulumi.get(self, "label")
+
+
+@pulumi.output_type
+class OutputVault(dict):
+    def __init__(__self__, *,
+                 id: str,
+                 name: str):
+        pulumi.set(__self__, "id", id)
+        pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def id(self) -> str:
+        return pulumi.get(self, "id")
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        return pulumi.get(self, "name")
 
 

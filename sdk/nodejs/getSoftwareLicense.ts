@@ -57,7 +57,7 @@ export interface GetSoftwareLicenseResult {
      */
     readonly title: string;
     readonly urls?: outputs.OutputUrl[];
-    readonly vault: {[key: string]: string};
+    readonly vault: outputs.OutputVault;
     readonly version?: string;
 }
 

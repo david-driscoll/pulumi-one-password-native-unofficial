@@ -48,10 +48,10 @@ type GetMembershipResult struct {
 	Tags      []string `pulumi:"tags"`
 	Telephone *string  `pulumi:"telephone"`
 	// The title of the item.
-	Title   string            `pulumi:"title"`
-	Urls    []OutputUrl       `pulumi:"urls"`
-	Vault   map[string]string `pulumi:"vault"`
-	Website *string           `pulumi:"website"`
+	Title   string      `pulumi:"title"`
+	Urls    []OutputUrl `pulumi:"urls"`
+	Vault   OutputVault `pulumi:"vault"`
+	Website *string     `pulumi:"website"`
 }
 
 func GetMembershipOutput(ctx *pulumi.Context, args GetMembershipOutputArgs, opts ...pulumi.InvokeOption) GetMembershipResultOutput {
@@ -165,8 +165,8 @@ func (o GetMembershipResultOutput) Urls() OutputUrlArrayOutput {
 	return o.ApplyT(func(v GetMembershipResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
 }
 
-func (o GetMembershipResultOutput) Vault() pulumi.StringMapOutput {
-	return o.ApplyT(func(v GetMembershipResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
+func (o GetMembershipResultOutput) Vault() OutputVaultOutput {
+	return o.ApplyT(func(v GetMembershipResult) OutputVault { return v.Vault }).(OutputVaultOutput)
 }
 
 func (o GetMembershipResultOutput) Website() pulumi.StringPtrOutput {

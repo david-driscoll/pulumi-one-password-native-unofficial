@@ -422,7 +422,7 @@ class CryptoWalletItem(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def vault(self) -> pulumi.Output[Mapping[str, str]]:
+    def vault(self) -> pulumi.Output['outputs.OutputVault']:
         return pulumi.get(self, "vault")
 
     @property

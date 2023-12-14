@@ -444,6 +444,33 @@ func (o OutputUrlArrayOutput) Index(i pulumi.IntInput) OutputUrlOutput {
 	}).(OutputUrlOutput)
 }
 
+type OutputVault struct {
+	Id   string `pulumi:"id"`
+	Name string `pulumi:"name"`
+}
+
+type OutputVaultOutput struct{ *pulumi.OutputState }
+
+func (OutputVaultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*OutputVault)(nil)).Elem()
+}
+
+func (o OutputVaultOutput) ToOutputVaultOutput() OutputVaultOutput {
+	return o
+}
+
+func (o OutputVaultOutput) ToOutputVaultOutputWithContext(ctx context.Context) OutputVaultOutput {
+	return o
+}
+
+func (o OutputVaultOutput) Id() pulumi.StringOutput {
+	return o.ApplyT(func(v OutputVault) string { return v.Id }).(pulumi.StringOutput)
+}
+
+func (o OutputVaultOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v OutputVault) string { return v.Name }).(pulumi.StringOutput)
+}
+
 type PasswordRecipe struct {
 	Digits  *bool `pulumi:"digits"`
 	Length  int   `pulumi:"length"`
@@ -602,6 +629,7 @@ func init() {
 	pulumi.RegisterOutputType(OutputSectionMapOutput{})
 	pulumi.RegisterOutputType(OutputUrlOutput{})
 	pulumi.RegisterOutputType(OutputUrlArrayOutput{})
+	pulumi.RegisterOutputType(OutputVaultOutput{})
 	pulumi.RegisterOutputType(SectionOutput{})
 	pulumi.RegisterOutputType(SectionMapOutput{})
 }

@@ -59,7 +59,7 @@ export interface GetMedicalRecordResult {
      */
     readonly title: string;
     readonly urls?: outputs.OutputUrl[];
-    readonly vault: {[key: string]: string};
+    readonly vault: outputs.OutputVault;
 }
 
 export function getMedicalRecordOutput(args: GetMedicalRecordOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetMedicalRecordResult> {

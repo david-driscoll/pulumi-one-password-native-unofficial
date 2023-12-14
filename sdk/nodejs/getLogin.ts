@@ -55,7 +55,7 @@ export interface GetLoginResult {
     readonly title: string;
     readonly urls?: outputs.OutputUrl[];
     readonly username?: string;
-    readonly vault: {[key: string]: string};
+    readonly vault: outputs.OutputVault;
 }
 
 export function getLoginOutput(args: GetLoginOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetLoginResult> {

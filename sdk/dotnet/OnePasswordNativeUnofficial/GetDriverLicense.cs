@@ -104,7 +104,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// </summary>
         public readonly string Title;
         public readonly ImmutableArray<Outputs.OutputUrl> Urls;
-        public readonly ImmutableDictionary<string, string> Vault;
+        public readonly Outputs.OutputVault Vault;
 
         [OutputConstructor]
         private GetDriverLicenseResult(
@@ -150,7 +150,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
 
             ImmutableArray<Outputs.OutputUrl> urls,
 
-            ImmutableDictionary<string, string> vault)
+            Outputs.OutputVault vault)
         {
             Address = address;
             Attachments = attachments;

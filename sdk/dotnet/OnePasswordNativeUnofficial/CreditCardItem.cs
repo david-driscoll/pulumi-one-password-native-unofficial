@@ -74,7 +74,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         public Output<string?> ValidFrom { get; private set; } = null!;
 
         [Output("vault")]
-        public Output<ImmutableDictionary<string, string>> Vault { get; private set; } = null!;
+        public Output<Outputs.OutputVault> Vault { get; private set; } = null!;
 
         [Output("verificationNumber")]
         public Output<string?> VerificationNumber { get; private set; } = null!;

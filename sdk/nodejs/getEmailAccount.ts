@@ -62,7 +62,7 @@ export interface GetEmailAccountResult {
     readonly type?: string;
     readonly urls?: outputs.OutputUrl[];
     readonly username?: string;
-    readonly vault: {[key: string]: string};
+    readonly vault: outputs.OutputVault;
 }
 
 export function getEmailAccountOutput(args: GetEmailAccountOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetEmailAccountResult> {

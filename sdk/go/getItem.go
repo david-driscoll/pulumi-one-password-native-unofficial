@@ -41,9 +41,9 @@ type LookupItemResult struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title string            `pulumi:"title"`
-	Urls  []OutputUrl       `pulumi:"urls"`
-	Vault map[string]string `pulumi:"vault"`
+	Title string      `pulumi:"title"`
+	Urls  []OutputUrl `pulumi:"urls"`
+	Vault OutputVault `pulumi:"vault"`
 }
 
 func LookupItemOutput(ctx *pulumi.Context, args LookupItemOutputArgs, opts ...pulumi.InvokeOption) LookupItemResultOutput {
@@ -129,8 +129,8 @@ func (o LookupItemResultOutput) Urls() OutputUrlArrayOutput {
 	return o.ApplyT(func(v LookupItemResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
 }
 
-func (o LookupItemResultOutput) Vault() pulumi.StringMapOutput {
-	return o.ApplyT(func(v LookupItemResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
+func (o LookupItemResultOutput) Vault() OutputVaultOutput {
+	return o.ApplyT(func(v LookupItemResult) OutputVault { return v.Vault }).(OutputVaultOutput)
 }
 
 func init() {

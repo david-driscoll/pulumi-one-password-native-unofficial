@@ -57,7 +57,7 @@ export class RewardProgramItem extends pulumi.CustomResource {
      */
     public readonly title!: pulumi.Output<string>;
     public readonly urls!: pulumi.Output<outputs.OutputUrl[] | undefined>;
-    public readonly vault!: pulumi.Output<{[key: string]: string}>;
+    public readonly vault!: pulumi.Output<outputs.OutputVault>;
 
     /**
      * Create a RewardProgramItem resource with the given unique name, arguments, and options.

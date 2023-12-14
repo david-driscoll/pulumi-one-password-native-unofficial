@@ -95,7 +95,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// </summary>
         public readonly string Title;
         public readonly ImmutableArray<Outputs.OutputUrl> Urls;
-        public readonly ImmutableDictionary<string, string> Vault;
+        public readonly Outputs.OutputVault Vault;
         public readonly Rocket.Surgery.OnePasswordNativeUnofficial.CryptoWallet.Outputs.WalletSection? Wallet;
 
         [OutputConstructor]
@@ -124,7 +124,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
 
             ImmutableArray<Outputs.OutputUrl> urls,
 
-            ImmutableDictionary<string, string> vault,
+            Outputs.OutputVault vault,
 
             Rocket.Surgery.OnePasswordNativeUnofficial.CryptoWallet.Outputs.WalletSection? wallet)
         {

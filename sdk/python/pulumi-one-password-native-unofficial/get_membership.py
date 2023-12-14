@@ -174,7 +174,7 @@ class GetMembershipResult:
 
     @property
     @pulumi.getter
-    def vault(self) -> Mapping[str, str]:
+    def vault(self) -> 'outputs.OutputVault':
         return pulumi.get(self, "vault")
 
     @property

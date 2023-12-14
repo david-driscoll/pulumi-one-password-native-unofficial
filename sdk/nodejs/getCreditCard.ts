@@ -60,7 +60,7 @@ export interface GetCreditCardResult {
     readonly type?: string;
     readonly urls?: outputs.OutputUrl[];
     readonly validFrom?: string;
-    readonly vault: {[key: string]: string};
+    readonly vault: outputs.OutputVault;
     readonly verificationNumber?: string;
 }
 

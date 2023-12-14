@@ -100,7 +100,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         public readonly string Title;
         public readonly ImmutableArray<Outputs.OutputUrl> Urls;
         public readonly string? ValidFrom;
-        public readonly ImmutableDictionary<string, string> Vault;
+        public readonly Outputs.OutputVault Vault;
 
         [OutputConstructor]
         private GetOutdoorLicenseResult(
@@ -138,7 +138,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
 
             string? validFrom,
 
-            ImmutableDictionary<string, string> vault)
+            Outputs.OutputVault vault)
         {
             ApprovedWildlife = approvedWildlife;
             Attachments = attachments;

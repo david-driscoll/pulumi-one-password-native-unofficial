@@ -53,7 +53,7 @@ export interface GetDocumentResult {
      */
     readonly title: string;
     readonly urls?: outputs.OutputUrl[];
-    readonly vault: {[key: string]: string};
+    readonly vault: outputs.OutputVault;
 }
 
 export function getDocumentOutput(args: GetDocumentOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetDocumentResult> {

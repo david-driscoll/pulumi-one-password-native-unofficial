@@ -95,7 +95,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         public readonly string Title;
         public readonly ImmutableArray<Outputs.OutputUrl> Urls;
         public readonly string? Username;
-        public readonly ImmutableDictionary<string, string> Vault;
+        public readonly Outputs.OutputVault Vault;
 
         [OutputConstructor]
         private GetLoginResult(
@@ -123,7 +123,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
 
             string? username,
 
-            ImmutableDictionary<string, string> vault)
+            Outputs.OutputVault vault)
         {
             Attachments = attachments;
             Category = category;

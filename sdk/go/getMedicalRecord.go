@@ -48,9 +48,9 @@ type GetMedicalRecordResult struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title string            `pulumi:"title"`
-	Urls  []OutputUrl       `pulumi:"urls"`
-	Vault map[string]string `pulumi:"vault"`
+	Title string      `pulumi:"title"`
+	Urls  []OutputUrl `pulumi:"urls"`
+	Vault OutputVault `pulumi:"vault"`
 }
 
 func GetMedicalRecordOutput(ctx *pulumi.Context, args GetMedicalRecordOutputArgs, opts ...pulumi.InvokeOption) GetMedicalRecordResultOutput {
@@ -160,8 +160,8 @@ func (o GetMedicalRecordResultOutput) Urls() OutputUrlArrayOutput {
 	return o.ApplyT(func(v GetMedicalRecordResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
 }
 
-func (o GetMedicalRecordResultOutput) Vault() pulumi.StringMapOutput {
-	return o.ApplyT(func(v GetMedicalRecordResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
+func (o GetMedicalRecordResultOutput) Vault() OutputVaultOutput {
+	return o.ApplyT(func(v GetMedicalRecordResult) OutputVault { return v.Vault }).(OutputVaultOutput)
 }
 
 func init() {

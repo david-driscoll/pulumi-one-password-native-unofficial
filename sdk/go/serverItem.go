@@ -32,7 +32,7 @@ type ServerItem struct {
 	Url      pulumi.StringPtrOutput `pulumi:"url"`
 	Urls     OutputUrlArrayOutput   `pulumi:"urls"`
 	Username pulumi.StringPtrOutput `pulumi:"username"`
-	Vault    pulumi.StringMapOutput `pulumi:"vault"`
+	Vault    OutputVaultOutput      `pulumi:"vault"`
 }
 
 // NewServerItem registers a new resource with the given unique name, arguments, and options.

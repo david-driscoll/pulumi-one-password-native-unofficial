@@ -47,11 +47,11 @@ type GetWirelessRouterResult struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title                   string            `pulumi:"title"`
-	Urls                    []OutputUrl       `pulumi:"urls"`
-	Vault                   map[string]string `pulumi:"vault"`
-	WirelessNetworkPassword *string           `pulumi:"wirelessNetworkPassword"`
-	WirelessSecurity        *string           `pulumi:"wirelessSecurity"`
+	Title                   string      `pulumi:"title"`
+	Urls                    []OutputUrl `pulumi:"urls"`
+	Vault                   OutputVault `pulumi:"vault"`
+	WirelessNetworkPassword *string     `pulumi:"wirelessNetworkPassword"`
+	WirelessSecurity        *string     `pulumi:"wirelessSecurity"`
 }
 
 func GetWirelessRouterOutput(ctx *pulumi.Context, args GetWirelessRouterOutputArgs, opts ...pulumi.InvokeOption) GetWirelessRouterResultOutput {
@@ -161,8 +161,8 @@ func (o GetWirelessRouterResultOutput) Urls() OutputUrlArrayOutput {
 	return o.ApplyT(func(v GetWirelessRouterResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
 }
 
-func (o GetWirelessRouterResultOutput) Vault() pulumi.StringMapOutput {
-	return o.ApplyT(func(v GetWirelessRouterResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
+func (o GetWirelessRouterResultOutput) Vault() OutputVaultOutput {
+	return o.ApplyT(func(v GetWirelessRouterResult) OutputVault { return v.Vault }).(OutputVaultOutput)
 }
 
 func (o GetWirelessRouterResultOutput) WirelessNetworkPassword() pulumi.StringPtrOutput {

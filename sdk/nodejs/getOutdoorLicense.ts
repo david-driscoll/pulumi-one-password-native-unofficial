@@ -60,7 +60,7 @@ export interface GetOutdoorLicenseResult {
     readonly title: string;
     readonly urls?: outputs.OutputUrl[];
     readonly validFrom?: string;
-    readonly vault: {[key: string]: string};
+    readonly vault: outputs.OutputVault;
 }
 
 export function getOutdoorLicenseOutput(args: GetOutdoorLicenseOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetOutdoorLicenseResult> {

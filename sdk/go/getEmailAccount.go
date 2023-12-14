@@ -49,11 +49,11 @@ type GetEmailAccountResult struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title    string            `pulumi:"title"`
-	Type     *string           `pulumi:"type"`
-	Urls     []OutputUrl       `pulumi:"urls"`
-	Username *string           `pulumi:"username"`
-	Vault    map[string]string `pulumi:"vault"`
+	Title    string      `pulumi:"title"`
+	Type     *string     `pulumi:"type"`
+	Urls     []OutputUrl `pulumi:"urls"`
+	Username *string     `pulumi:"username"`
+	Vault    OutputVault `pulumi:"vault"`
 }
 
 func GetEmailAccountOutput(ctx *pulumi.Context, args GetEmailAccountOutputArgs, opts ...pulumi.InvokeOption) GetEmailAccountResultOutput {
@@ -175,8 +175,8 @@ func (o GetEmailAccountResultOutput) Username() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetEmailAccountResult) *string { return v.Username }).(pulumi.StringPtrOutput)
 }
 
-func (o GetEmailAccountResultOutput) Vault() pulumi.StringMapOutput {
-	return o.ApplyT(func(v GetEmailAccountResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
+func (o GetEmailAccountResultOutput) Vault() OutputVaultOutput {
+	return o.ApplyT(func(v GetEmailAccountResult) OutputVault { return v.Vault }).(OutputVaultOutput)
 }
 
 func init() {

@@ -60,7 +60,7 @@ export interface GetAPICredentialResult {
     readonly urls?: outputs.OutputUrl[];
     readonly username?: string;
     readonly validFrom?: string;
-    readonly vault: {[key: string]: string};
+    readonly vault: outputs.OutputVault;
 }
 
 export function getAPICredentialOutput(args: GetAPICredentialOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetAPICredentialResult> {

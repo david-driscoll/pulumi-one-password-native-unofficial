@@ -47,10 +47,10 @@ type GetOutdoorLicenseResult struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title     string            `pulumi:"title"`
-	Urls      []OutputUrl       `pulumi:"urls"`
-	ValidFrom *string           `pulumi:"validFrom"`
-	Vault     map[string]string `pulumi:"vault"`
+	Title     string      `pulumi:"title"`
+	Urls      []OutputUrl `pulumi:"urls"`
+	ValidFrom *string     `pulumi:"validFrom"`
+	Vault     OutputVault `pulumi:"vault"`
 }
 
 func GetOutdoorLicenseOutput(ctx *pulumi.Context, args GetOutdoorLicenseOutputArgs, opts ...pulumi.InvokeOption) GetOutdoorLicenseResultOutput {
@@ -164,8 +164,8 @@ func (o GetOutdoorLicenseResultOutput) ValidFrom() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetOutdoorLicenseResult) *string { return v.ValidFrom }).(pulumi.StringPtrOutput)
 }
 
-func (o GetOutdoorLicenseResultOutput) Vault() pulumi.StringMapOutput {
-	return o.ApplyT(func(v GetOutdoorLicenseResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
+func (o GetOutdoorLicenseResultOutput) Vault() OutputVaultOutput {
+	return o.ApplyT(func(v GetOutdoorLicenseResult) OutputVault { return v.Vault }).(OutputVaultOutput)
 }
 
 func init() {

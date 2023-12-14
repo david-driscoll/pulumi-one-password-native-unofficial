@@ -62,7 +62,7 @@ export interface GetDatabaseResult {
     readonly type?: string;
     readonly urls?: outputs.OutputUrl[];
     readonly username?: string;
-    readonly vault: {[key: string]: string};
+    readonly vault: outputs.OutputVault;
 }
 
 export function getDatabaseOutput(args: GetDatabaseOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetDatabaseResult> {

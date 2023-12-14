@@ -43,9 +43,9 @@ type GetSocialSecurityNumberResult struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title string            `pulumi:"title"`
-	Urls  []OutputUrl       `pulumi:"urls"`
-	Vault map[string]string `pulumi:"vault"`
+	Title string      `pulumi:"title"`
+	Urls  []OutputUrl `pulumi:"urls"`
+	Vault OutputVault `pulumi:"vault"`
 }
 
 func GetSocialSecurityNumberOutput(ctx *pulumi.Context, args GetSocialSecurityNumberOutputArgs, opts ...pulumi.InvokeOption) GetSocialSecurityNumberResultOutput {
@@ -139,8 +139,8 @@ func (o GetSocialSecurityNumberResultOutput) Urls() OutputUrlArrayOutput {
 	return o.ApplyT(func(v GetSocialSecurityNumberResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
 }
 
-func (o GetSocialSecurityNumberResultOutput) Vault() pulumi.StringMapOutput {
-	return o.ApplyT(func(v GetSocialSecurityNumberResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
+func (o GetSocialSecurityNumberResultOutput) Vault() OutputVaultOutput {
+	return o.ApplyT(func(v GetSocialSecurityNumberResult) OutputVault { return v.Vault }).(OutputVaultOutput)
 }
 
 func init() {

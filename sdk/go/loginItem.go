@@ -28,7 +28,7 @@ type LoginItem struct {
 	Title    pulumi.StringOutput    `pulumi:"title"`
 	Urls     OutputUrlArrayOutput   `pulumi:"urls"`
 	Username pulumi.StringPtrOutput `pulumi:"username"`
-	Vault    pulumi.StringMapOutput `pulumi:"vault"`
+	Vault    OutputVaultOutput      `pulumi:"vault"`
 }
 
 // NewLoginItem registers a new resource with the given unique name, arguments, and options.

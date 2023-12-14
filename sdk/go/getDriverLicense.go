@@ -52,9 +52,9 @@ type GetDriverLicenseResult struct {
 	// An array of strings of the tags assigned to the item.
 	Tags []string `pulumi:"tags"`
 	// The title of the item.
-	Title string            `pulumi:"title"`
-	Urls  []OutputUrl       `pulumi:"urls"`
-	Vault map[string]string `pulumi:"vault"`
+	Title string      `pulumi:"title"`
+	Urls  []OutputUrl `pulumi:"urls"`
+	Vault OutputVault `pulumi:"vault"`
 }
 
 func GetDriverLicenseOutput(ctx *pulumi.Context, args GetDriverLicenseOutputArgs, opts ...pulumi.InvokeOption) GetDriverLicenseResultOutput {
@@ -184,8 +184,8 @@ func (o GetDriverLicenseResultOutput) Urls() OutputUrlArrayOutput {
 	return o.ApplyT(func(v GetDriverLicenseResult) []OutputUrl { return v.Urls }).(OutputUrlArrayOutput)
 }
 
-func (o GetDriverLicenseResultOutput) Vault() pulumi.StringMapOutput {
-	return o.ApplyT(func(v GetDriverLicenseResult) map[string]string { return v.Vault }).(pulumi.StringMapOutput)
+func (o GetDriverLicenseResultOutput) Vault() OutputVaultOutput {
+	return o.ApplyT(func(v GetDriverLicenseResult) OutputVault { return v.Vault }).(OutputVaultOutput)
 }
 
 func init() {

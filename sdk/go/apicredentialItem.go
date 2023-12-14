@@ -33,7 +33,7 @@ type APICredentialItem struct {
 	Urls      OutputUrlArrayOutput   `pulumi:"urls"`
 	Username  pulumi.StringPtrOutput `pulumi:"username"`
 	ValidFrom pulumi.StringPtrOutput `pulumi:"validFrom"`
-	Vault     pulumi.StringMapOutput `pulumi:"vault"`
+	Vault     OutputVaultOutput      `pulumi:"vault"`
 }
 
 // NewAPICredentialItem registers a new resource with the given unique name, arguments, and options.

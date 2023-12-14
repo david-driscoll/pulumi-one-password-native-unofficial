@@ -36,7 +36,7 @@ type BankAccountItem struct {
 	Title pulumi.StringOutput    `pulumi:"title"`
 	Type  pulumi.StringPtrOutput `pulumi:"type"`
 	Urls  OutputUrlArrayOutput   `pulumi:"urls"`
-	Vault pulumi.StringMapOutput `pulumi:"vault"`
+	Vault OutputVaultOutput      `pulumi:"vault"`
 }
 
 // NewBankAccountItem registers a new resource with the given unique name, arguments, and options.

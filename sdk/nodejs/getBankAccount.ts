@@ -62,7 +62,7 @@ export interface GetBankAccountResult {
     readonly title: string;
     readonly type?: string;
     readonly urls?: outputs.OutputUrl[];
-    readonly vault: {[key: string]: string};
+    readonly vault: outputs.OutputVault;
 }
 
 export function getBankAccountOutput(args: GetBankAccountOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetBankAccountResult> {

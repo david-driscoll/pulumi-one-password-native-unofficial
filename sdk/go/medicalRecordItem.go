@@ -31,9 +31,9 @@ type MedicalRecordItem struct {
 	// An array of strings of the tags assigned to the item.
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// The title of the item.
-	Title pulumi.StringOutput    `pulumi:"title"`
-	Urls  OutputUrlArrayOutput   `pulumi:"urls"`
-	Vault pulumi.StringMapOutput `pulumi:"vault"`
+	Title pulumi.StringOutput  `pulumi:"title"`
+	Urls  OutputUrlArrayOutput `pulumi:"urls"`
+	Vault OutputVaultOutput    `pulumi:"vault"`
 }
 
 // NewMedicalRecordItem registers a new resource with the given unique name, arguments, and options.

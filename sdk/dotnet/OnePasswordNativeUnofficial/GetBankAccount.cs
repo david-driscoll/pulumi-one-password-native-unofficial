@@ -102,7 +102,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         public readonly string Title;
         public readonly string? Type;
         public readonly ImmutableArray<Outputs.OutputUrl> Urls;
-        public readonly ImmutableDictionary<string, string> Vault;
+        public readonly Outputs.OutputVault Vault;
 
         [OutputConstructor]
         private GetBankAccountResult(
@@ -144,7 +144,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
 
             ImmutableArray<Outputs.OutputUrl> urls,
 
-            ImmutableDictionary<string, string> vault)
+            Outputs.OutputVault vault)
         {
             AccountNumber = accountNumber;
             Attachments = attachments;
