@@ -262,6 +262,21 @@ schema.types = {
             "itemId"
         ]
     },
+    "one-password-native-unofficial:index:OutputVault": {
+        "properties": {
+            "id": {
+                "type": "string"
+            },
+            "name": {
+                "type": "string"
+            }
+        },
+        "type": "object",
+        "required": [
+            "id",
+            "name"
+        ]
+    },
     "one-password-native-unofficial:index:OutputReference": {
         "properties": {
             "id": {
@@ -885,18 +900,7 @@ function applyDefaultOutputProperties(item: any) {
         },
         ['vault']: {
             "type": "object",
-            required: ['name', 'id'],
-            properties: {
-                name: {
-
-                    "type": "string",
-                    "description": "The name of the vault item is in.\n"
-                },
-                ['id']: {
-                    "type": "string",
-                    "description": "The UUID of the vault the item is in.\n"
-                },
-            }
+            "additionalProperties": { "$ref": "#/types/one-password-native-unofficial:index:OutputVault" },
         },
         ['sections']: {
             "type": "object",
