@@ -151,7 +151,7 @@ public class ConnectServerOnePasswordBase(
             var type = x.Type.ToString();
             return new Item.Field()
             {
-                Id = x.Id is { Length: 26 } ? x.Label ?? x.Id : x.Id,
+                Id = x.Id,
                 Label = x.Label,
                 Type = type,
                 Purpose = purpose,

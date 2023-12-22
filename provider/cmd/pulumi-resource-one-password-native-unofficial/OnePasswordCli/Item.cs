@@ -54,11 +54,14 @@ public static class Item
     public record Field
     {
         public string? Id { get; init; }
+        public string Key => (Id is { Length: 26 } ? Reference is not null ? Reference.Substring(Reference.LastIndexOf('/') + 1) : Label : Id) ?? "";
+
         public string? Label { get; init; }
         public required string Type { get; init; }
         public string? Purpose { get; init; }
         public Section? Section { get; init; }
         public string? Value { get; init; }
+        public string? Reference { get; init; }
         [JsonExtensionData] public Dictionary<string, JsonElement>? ExtensionData { get; init; }
     }
 

@@ -11,6 +11,22 @@
         reference: [redacted],
         type: STRING,
         value: null
+      },
+      password: {
+        id: [redacted],
+        label: password,
+        purpose: null,
+        reference: [redacted],
+        type: CONCEALED,
+        value: my great password
+      },
+      text: {
+        id: [redacted],
+        label: text,
+        purpose: null,
+        reference: [redacted],
+        type: STRING,
+        value: this is a config value
       }
     },
     id: [redacted],
