@@ -510,13 +510,18 @@ public static partial class TemplateMetadata
         if (!root.TryGetValue("fields", out var f)) yield break;
         if (!f.TryUnwrap(out f)) yield break;
         if (!f.TryGetObject(out var fields)) yield break;
+        
 
         // "add more" behaves like a hidden section in the UI, you can't have a header or
         //   anything, so it's not clear that these are going to land into the section bucket instead of the fields bucket
         //   So we add any fields from the "add more" section to the fields bucket if they are not already set.
         if (GetSection(root, "add more") is { } sectionFields)
         {
-            fields = fields.AddRange(sectionFields.Where(z => !fields.ContainsKey(z.Key)));
+            foreach (var field in sectionFields.Where(z => !fields.ContainsKey(z.Key)))
+            {
+                if (fields.ContainsKey(field.Key)) continue;
+                fields = fields.Add(field.Key, field.Value);
+            }
         }
 
         var fieldsAlreadyAdded = values.Select(z => z.Id).ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
