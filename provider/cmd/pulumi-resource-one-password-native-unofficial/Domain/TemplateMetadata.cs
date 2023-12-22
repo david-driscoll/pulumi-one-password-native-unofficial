@@ -248,13 +248,20 @@ public static partial class TemplateMetadata
         );
         var fields = item.Fields
             .Where(z => !z.Type.Equals("REFERENCE", StringComparison.OrdinalIgnoreCase))
-            .Where(z => z.Section is null || z is { Section.Id: "add more" })
+            .Where(z => z.Section is null)
+            .Concat(item.Fields
+                .Where(z => !z.Type.Equals("REFERENCE", StringComparison.OrdinalIgnoreCase))
+                .Where(z => z is { Section.Id: "add more" })
+            )
             .Select(field => new KeyValuePair<string, PropertyValue>(field.Key, new(CreateField(inputs, item, field))))
             .DistinctBy(z => z.Key)
             .ToArray();
 
         var attachments = item.Files
             .Where(z => z.Section is null)
+            .Concat(item.Files
+                .Where(z => z is { Section.Id: "add more" })
+            )
             .Select(file => new KeyValuePair<string, PropertyValue>(file.Name, new(CreateAttachment(inputs, item, file))))
             .DistinctBy(z => z.Key)
             .ToArray();
@@ -374,12 +381,13 @@ public static partial class TemplateMetadata
             // DebugHelper.WaitForDebugger();
             string? hash = null;
             PropertyValue? a = null;
-            if (inputs is not null && file is { Section.Id: { } } && GetSection(inputs, file.Section.Id) is {} section && GetAttachment(section, file.Name) is {} asset)
+            if (inputs is not null && file is { Section.Id: { } } && GetSection(inputs, file.Section.Id) is { } section &&
+                GetAttachment(section, file.Name) is { } asset)
             {
                 hash = AssetOrArchiveExtensions.HashAssetOrArchive(asset);
                 a = asset;
             }
-            else if (inputs is not null && GetAttachment(inputs, file.Name) is {} asset2)
+            else if (inputs is not null && GetAttachment(inputs, file.Name) is { } asset2)
             {
                 hash = AssetOrArchiveExtensions.HashAssetOrArchive(asset2);
                 a = asset2;
@@ -391,7 +399,7 @@ public static partial class TemplateMetadata
                 .Add("size", new(file.Size))
                 // have to get from the input fields.
                 .Add("hash", hash is { Length: > 0 } ? new(hash) : PropertyValue.Null)
-                .Add("asset", a is {} ? a : PropertyValue.Null)
+                .Add("asset", a is { } ? a : PropertyValue.Null)
                 .Add("reference", new(MakeReference(item, file)));
         }
     }

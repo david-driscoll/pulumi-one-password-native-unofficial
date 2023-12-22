@@ -1,6 +1,15 @@
 ﻿{
   Return: {
-    attachments: {},
+    attachments: {
+      my-attachment: {
+        asset: null,
+        hash: null,
+        id: [redacted],
+        name: my-attachment,
+        reference: [redacted],
+        size: 21.0
+      }
+    },
     category: Secure Note,
     defaultVault: true,
     fields: {
