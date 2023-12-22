@@ -1,6 +1,15 @@
 ﻿{
   Return: {
-    attachments: {},
+    attachments: {
+      my-attachment: {
+        asset: null,
+        hash: null,
+        id: [redacted],
+        name: my-attachment,
+        reference: [redacted],
+        size: 21.0
+      }
+    },
     category: Secure Note,
     defaultVault: true,
     fields: {
@@ -11,6 +20,22 @@
         reference: [redacted],
         type: STRING,
         value: null
+      },
+      password: {
+        id: [redacted],
+        label: password,
+        purpose: null,
+        reference: [redacted],
+        type: CONCEALED,
+        value: my great password
+      },
+      text: {
+        id: [redacted],
+        label: text,
+        purpose: null,
+        reference: [redacted],
+        type: STRING,
+        value: this is a config value
       }
     },
     id: [redacted],

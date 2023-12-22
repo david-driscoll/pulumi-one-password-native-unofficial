@@ -684,6 +684,22 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
     }
 
     [SkippableFact(typeof(TimeoutException))]
+    public async Task Should_Handle_Add_More_Section_With_Some_Grace()
+    {
+        var provider = await _serverFixture.ConfigureProvider(_logger);
+
+        var result = await provider.Invoke(new InvokeRequest(
+                FunctionType.GetAPICredential.Urn,
+                ImmutableDictionary<string, PropertyValue>.Empty
+                    .Add("id", new("yzxwebilecnb2w532bfwvmvvzq"))
+                    .Add("vault", new("testing-pulumi"))
+            ),
+            CancellationToken.None);
+
+        await Verify(result);
+    }
+
+    [SkippableFact(typeof(TimeoutException))]
     public async Task Should_Be_Able_To_Read_A_Reference()
     {
         var provider = await _serverFixture.ConfigureProvider(_logger);
