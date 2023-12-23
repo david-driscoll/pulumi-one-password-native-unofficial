@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Globalization;
 using System.Text.Json;
 using Json.Patch;
 using Pulumi.Experimental.Provider;
@@ -8,8 +9,13 @@ using Serilog;
 using static pulumi_resource_one_password_native_unofficial.Domain.TemplateMetadata;
 using System.Text.Json.Serialization;
 using Humanizer;
+using Microsoft.Extensions.Logging;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli.ConnectServer;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli.ServiceAccount;
+using Serilog.Context;
+using Serilog.Core.Enrichers;
+using Exception = System.Exception;
+using ILogger = Serilog.ILogger;
 
 namespace pulumi_resource_one_password_native_unofficial;
 
@@ -20,6 +26,7 @@ public class OnePasswordProvider(ILogger logger) : Provider
 
     public override Task<CheckResponse> Check(CheckRequest request, CancellationToken ct)
     {
+        using var _ = LogContext.Push(new PropertyEnricher("Urn", request.Urn));
         try
         {
             List<CheckFailure> failures = new();
@@ -50,10 +57,12 @@ public class OnePasswordProvider(ILogger logger) : Provider
 
     public override async Task<DiffResponse> Diff(DiffRequest request, CancellationToken ct)
     {
+        using var _ = LogContext.Push(new PropertyEnricher("Urn", request.Urn));
         try
         {
             await Task.Yield();
             if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
+            Log.Logger.Debug("Diffing item {Urn}", request.Urn);
 
             // DebugHelper.WaitForDebugger();
 
@@ -123,9 +132,11 @@ public class OnePasswordProvider(ILogger logger) : Provider
 
     public override async Task<CreateResponse> Create(CreateRequest request, CancellationToken ct)
     {
+        using var _ = LogContext.Push(new PropertyEnricher("Urn", request.Urn));
         try
         {
             if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
+            Log.Logger.Debug("Creating item {Urn}", request.Urn);
             // DebugHelper.WaitForDebugger();
 
 
@@ -165,21 +176,14 @@ public class OnePasswordProvider(ILogger logger) : Provider
 
     public override async Task<UpdateResponse> Update(UpdateRequest request, CancellationToken ct)
     {
+        using var _ = LogContext.Push(new PropertyEnricher("Urn", request.Urn));
         try
         {
             if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
-            // DebugHelper.WaitForDebugger();
+            Log.Logger.Debug("Updating item {Id} [{Urn}]", request.Id, request.Urn);
+            Log.Logger.Debug("Diffing item [{Urn}]", request.Urn);
 
             var news = resourceType.TransformInputs(ApplyDefaultInputs(resourceType, request.News, request.Olds));
-            var olds = resourceType.TransformInputs(request.Olds);
-
-            _ = olds.CreatePatch(news, new JsonSerializerOptions()
-                {
-                    PropertyNameCaseInsensitive = true,
-                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
-                })
-                .Operations;
-
             if (request.Preview)
             {
                 return new UpdateResponse()
@@ -211,9 +215,10 @@ public class OnePasswordProvider(ILogger logger) : Provider
 
     public override async Task Delete(DeleteRequest request, CancellationToken ct)
     {
+        using var _ = LogContext.Push(new PropertyEnricher("Urn", request.Urn));
+        Log.Logger.Debug("Deleting item {Id} [{Urn}]", request.Id, request.Urn);
         try
         {
-            // Log.Logger.Information("Deleting item {Id} {@Properties}", request.Id, request.Properties);
             await _op.Items.Delete(new(request.Id)
             {
                 Vault = GetObjectStringValue(GetObjectValue(request.Properties, "vault") ?? PropertyValue.Null, "id")
@@ -232,6 +237,8 @@ public class OnePasswordProvider(ILogger logger) : Provider
 
     public override Task<InvokeResponse> Invoke(InvokeRequest request, CancellationToken ct)
     {
+        using var _ = LogContext.Push(new PropertyEnricher("Urn", request.Tok));
+        Log.Logger.Debug("Invoking function [{Tok}]", request.Tok);
         return request.Tok switch
         {
             "one-password-native-unofficial:index:GetVault" => GetVault(request.Args, ct),
@@ -358,10 +365,43 @@ public class OnePasswordProvider(ILogger logger) : Provider
 
     public override async Task<ReadResponse> Read(ReadRequest request, CancellationToken ct)
     {
+        using var _ = LogContext.Push(new PropertyEnricher("Urn", request.Urn));
         if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
-        // DebugHelper.WaitForDebugger();
+        Log.Logger.Debug("Reading item {Id} [{Urn}]", request.Id, request.Urn);
 
-        var response = await _op.Items.Get(new() { Id = GetStringValue(request.Inputs, "id"), Vault = GetStringValue(request.Inputs, "vault") }, ct);
+        if (request.Id is { Length: > 0 } && request.Id.StartsWith("op://", StringComparison.OrdinalIgnoreCase))
+        {
+            Log.Error("Importing items is not yet supported.");
+            throw new NotImplementedException("Importing items is not yet supported.");
+            // var uri = new Uri(request.Id);
+            // var refreshResult = await _op.Items.Get(new() { Id = uri.AbsolutePath.Trim('/'), Vault = uri.Host }, ct);
+            // var outputs = resourceType.TransformOutputs(refreshResult, null);
+            // Getting the "inputs" correct is super difficult.
+            // var inputs = resourceType.ReduceOutputs(refreshResult, null);
+            //
+            // return new()
+            // {
+            //     Id = refreshResult.Id,
+            //     Properties = outputs,
+            //     Inputs = inputs
+            // };
+
+        }
+        
+        // as per https://github.com/pulumi/pulumi/blob/485718f533389a971e9dcccf77599809954c1241/developer-docs/providers/implementers-guide.md#read
+        // if properties is populated, it's a read.
+        // TODO: Import, however import will require a format like 
+        if (request.Properties is { Count: > 0 })
+        {
+            var refreshResult = await _op.Items.Get(new() { Id = GetStringValue(request.Properties, "id")!, Vault = GetVaultName(request.Properties) }, ct);
+            return new()
+            {
+                Id = refreshResult.Id,
+                Properties = resourceType.TransformOutputs(refreshResult, null),
+            };
+        }
+
+        var response = await _op.Items.Get(new() { Id = GetStringValue(request.Inputs, "id")!, Vault = GetStringValue(request.Inputs, "vault") }, ct);
         return new()
         {
             Id = response.Id,
@@ -376,6 +416,7 @@ public class OnePasswordProvider(ILogger logger) : Provider
 
     public override async Task<ConfigureResponse> Configure(ConfigureRequest request, CancellationToken ct)
     {
+        Log.Logger.Debug("Configure Args: {@Args} Variables: {@Variables}", request.Args.Keys, request.Variables.Keys);
         await Task.Yield();
         var options = ConfigExtensions.ConvertToConfig(request.Args);
 
@@ -399,6 +440,8 @@ public class OnePasswordProvider(ILogger logger) : Provider
 
     public override async Task<CheckResponse> CheckConfig(CheckRequest request, CancellationToken ct)
     {
+        using var _ = LogContext.Push(new PropertyEnricher("Urn", request.Urn));
+        Log.Logger.Debug("Checking config [{Urn}]", request.Urn);
         await Task.Yield();
         var failures = new List<CheckFailure>();
 
@@ -426,6 +469,8 @@ public class OnePasswordProvider(ILogger logger) : Provider
 
     public override async Task<DiffResponse> DiffConfig(DiffRequest request, CancellationToken ct)
     {
+        using var _ = LogContext.Push(new PropertyEnricher("Urn", request.Urn));
+        Log.Logger.Debug("Diffing config {Id} [{Urn}]", request.Id, request.Urn);
         await Task.Yield();
 
         var olds = ConfigExtensions.ConvertToConfig(request.OldState);

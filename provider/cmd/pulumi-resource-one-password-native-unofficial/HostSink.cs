@@ -18,12 +18,12 @@ class HostSink : ILogEventSink
     public async void Emit(LogEvent logEvent)
     {
         var message = logEvent.RenderMessage(_formatProvider);
-        // var urnString = "pulumi:providers:one-password-native-unofficial";
-        // if (logEvent.Properties.TryGetValue("Urn", out var urn) || logEvent.Properties.TryGetValue("urn", out urn))
-        // {
-        //     urnString = urn.ToString(null, _formatProvider);
-        // }
-        // await _host.LogAsync(new(GetLogSeverity(logEvent.Level), message, urnString)).ConfigureAwait(false);
+        var urnString = "";
+        if (logEvent.Properties.TryGetValue("Urn", out var urn) || logEvent.Properties.TryGetValue("urn", out urn))
+        {
+            urnString = urn.ToString(null, _formatProvider);
+        }
+        await _host.LogAsync(new(GetLogSeverity(logEvent.Level), message, urnString)).ConfigureAwait(false);
         // _host.LogAsync(new(GetLogSeverity(logEvent.Level), message, "")).Wait();
     }
 

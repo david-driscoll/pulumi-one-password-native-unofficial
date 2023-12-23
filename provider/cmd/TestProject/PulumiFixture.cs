@@ -17,7 +17,8 @@ public class PulumiFixture : IAsyncLifetime
 
     public Task InitializeAsync()
     {
-        TemporaryDirectory = Path.Combine(Path.GetTempPath(), "pulumi", Guid.NewGuid().ToString("N"));
+        DirectoryName = Guid.NewGuid().ToString("N");
+        TemporaryDirectory = Path.Combine(Path.GetTempPath(), "pulumi", DirectoryName);
         Directory.CreateDirectory(TemporaryDirectory);
         Directory.CreateDirectory(Path.Combine(TemporaryDirectory, "backend-dir"));
 
@@ -32,6 +33,8 @@ public class PulumiFixture : IAsyncLifetime
             .Add("PULUMI_CONFIG_PASSPHRASE", "backup_password");
         return Task.CompletedTask;
     }
+
+    public string DirectoryName { get; set; }
 
     public void Connect(ConnectServerFixture connectServerFixture)
     {

@@ -37,8 +37,12 @@ public static partial class TemplateMetadata
 
     public delegate Inputs TransformInputs(ResourceType resourceType, ImmutableDictionary<string, PropertyValue> properties);
 
-    public delegate ImmutableDictionary<string, PropertyValue> TransformOutputs(IPulumiItemType resourceType, Item.Response template,
-        ImmutableDictionary<string, PropertyValue>? inputs);
+    public delegate ImmutableDictionary<string, PropertyValue> TransformOutputs(
+        ImmutableDictionary<string, PropertyValue>.Builder outputs,
+        IPulumiItemType resourceType,
+        Item.Response template,
+        ImmutableDictionary<string, PropertyValue>? inputs
+    );
 
     public static string? GetStringValue(ImmutableDictionary<string, PropertyValue> values, string fieldName)
     {
@@ -510,7 +514,7 @@ public static partial class TemplateMetadata
         if (!root.TryGetValue("fields", out var f)) yield break;
         if (!f.TryUnwrap(out f)) yield break;
         if (!f.TryGetObject(out var fields)) yield break;
-        
+
 
         // "add more" behaves like a hidden section in the UI, you can't have a header or
         //   anything, so it's not clear that these are going to land into the section bucket instead of the fields bucket

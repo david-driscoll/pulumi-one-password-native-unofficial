@@ -1,0 +1,27 @@
+﻿{
+  StandardOutput:
+Refreshing (csharp):
+
+ ~  pulumi:pulumi:Stack [server-generated]-csharp refreshing (0s) 
+    pulumi:pulumi:Stack [server-generated]-csharp running 
+ ~  one-password-native-unofficial:index:Item item refreshing (0s) 
+ ~  one-password-native-unofficial:index:Item item updated (0.0s) [diff: ~defaultVault]
+    pulumi:pulumi:Stack [server-generated]-csharp  
+Resources:
+    ~ 1 updated
+    1 unchanged
+
+Duration: 1s
+
+,
+  Summary: {
+    Kind: Refresh,
+    Message: ,
+    Result: Succeeded,
+    Version: 0,
+    ResourceChanges: {
+      Same: 1,
+      Update: 1
+    }
+  }
+}

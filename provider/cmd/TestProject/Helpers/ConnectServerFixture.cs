@@ -33,7 +33,8 @@ public class ConnectServerFixture : IAsyncLifetime, IServerFixture
             throw new Exception("PULUMI_ONEPASSWORD_CONNECT_TOKEN is not set");
         }
 
-        TemporaryDirectory = Path.Combine(Path.GetTempPath(), "connect", Guid.NewGuid().ToString("N"));
+        DirectoryName = Guid.NewGuid().ToString("N");
+        TemporaryDirectory = Path.Combine(Path.GetTempPath(), "connect", DirectoryName);
         Directory.CreateDirectory(TemporaryDirectory);
         var volume = new VolumeBuilder().WithName("data").WithCleanUp(true).Build();
 
@@ -69,6 +70,8 @@ public class ConnectServerFixture : IAsyncLifetime, IServerFixture
             .FirstAsync(z => z.Name == "testing-pulumi");
         Vault = vault.Id;
     }
+
+    public string DirectoryName { get; set; }
 
     public Uri ConnectHost { get; private set; } = null!;
     public string ConnectToken => Environment.GetEnvironmentVariable("PULUMI_ONEPASSWORD_CONNECT_TOKEN") ?? "";
