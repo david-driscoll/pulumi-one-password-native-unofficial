@@ -234,10 +234,8 @@ public static partial class TemplateMetadata
             Vault = vault,
         });
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToAPICredential(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToAPICredential(ImmutableDictionary<string, PropertyValue>.Builder outputs, IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {
-        var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
         {
@@ -594,10 +592,8 @@ public static partial class TemplateMetadata
             Vault = vault,
         });
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToBankAccount(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToBankAccount(ImmutableDictionary<string, PropertyValue>.Builder outputs, IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {
-        var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
         {
@@ -1128,10 +1124,8 @@ public static partial class TemplateMetadata
             Vault = vault,
         });
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToCreditCard(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToCreditCard(ImmutableDictionary<string, PropertyValue>.Builder outputs, IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {
-        var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
         {
@@ -1360,10 +1354,8 @@ public static partial class TemplateMetadata
             Vault = vault,
         });
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToCryptoWallet(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToCryptoWallet(ImmutableDictionary<string, PropertyValue>.Builder outputs, IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {
-        var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
         {
@@ -1670,10 +1662,8 @@ public static partial class TemplateMetadata
             Vault = vault,
         });
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToDatabase(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToDatabase(ImmutableDictionary<string, PropertyValue>.Builder outputs, IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {
-        var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
         {
@@ -1782,10 +1772,8 @@ public static partial class TemplateMetadata
             Vault = vault,
         });
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToDocument(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToDocument(ImmutableDictionary<string, PropertyValue>.Builder outputs, IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {
-        var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
         {
@@ -2126,10 +2114,8 @@ public static partial class TemplateMetadata
             Vault = vault,
         });
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToDriverLicense(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToDriverLicense(ImmutableDictionary<string, PropertyValue>.Builder outputs, IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {
-        var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
         {
@@ -2692,10 +2678,8 @@ public static partial class TemplateMetadata
             Vault = vault,
         });
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToEmailAccount(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToEmailAccount(ImmutableDictionary<string, PropertyValue>.Builder outputs, IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {
-        var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
         {
@@ -3502,10 +3486,8 @@ public static partial class TemplateMetadata
             Vault = vault,
         });
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToIdentity(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToIdentity(ImmutableDictionary<string, PropertyValue>.Builder outputs, IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {
-        var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
         {
@@ -3710,10 +3692,8 @@ public static partial class TemplateMetadata
             Vault = vault,
         });
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToItem(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToItem(ImmutableDictionary<string, PropertyValue>.Builder outputs, IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {
-        var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
         {
@@ -3820,10 +3800,8 @@ public static partial class TemplateMetadata
             Vault = vault,
         });
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToLogin(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToLogin(ImmutableDictionary<string, PropertyValue>.Builder outputs, IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {
-        var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "username") is { } field)
         {
@@ -4098,10 +4076,8 @@ public static partial class TemplateMetadata
             Vault = vault,
         });
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToMedicalRecord(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToMedicalRecord(ImmutableDictionary<string, PropertyValue>.Builder outputs, IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {
-        var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
         {
@@ -4412,10 +4388,8 @@ public static partial class TemplateMetadata
             Vault = vault,
         });
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToMembership(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToMembership(ImmutableDictionary<string, PropertyValue>.Builder outputs, IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {
-        var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
         {
@@ -4700,10 +4674,8 @@ public static partial class TemplateMetadata
             Vault = vault,
         });
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToOutdoorLicense(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToOutdoorLicense(ImmutableDictionary<string, PropertyValue>.Builder outputs, IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {
-        var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
         {
@@ -5086,10 +5058,8 @@ public static partial class TemplateMetadata
             Vault = vault,
         });
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToPassport(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToPassport(ImmutableDictionary<string, PropertyValue>.Builder outputs, IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {
-        var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
         {
@@ -5236,10 +5206,8 @@ public static partial class TemplateMetadata
             Vault = vault,
         });
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToPassword(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToPassword(ImmutableDictionary<string, PropertyValue>.Builder outputs, IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {
-        var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "password") is { } field)
         {
@@ -5534,10 +5502,8 @@ public static partial class TemplateMetadata
             Vault = vault,
         });
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToRewardProgram(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToRewardProgram(ImmutableDictionary<string, PropertyValue>.Builder outputs, IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {
-        var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
         {
@@ -5672,10 +5638,8 @@ public static partial class TemplateMetadata
             Vault = vault,
         });
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToSSHKey(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToSSHKey(ImmutableDictionary<string, PropertyValue>.Builder outputs, IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {
-        var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
         {
@@ -5736,10 +5700,8 @@ public static partial class TemplateMetadata
             Vault = vault,
         });
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToSecureNote(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToSecureNote(ImmutableDictionary<string, PropertyValue>.Builder outputs, IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {
-        var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
         {
@@ -6054,10 +6016,8 @@ public static partial class TemplateMetadata
             Vault = vault,
         });
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToServer(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToServer(ImmutableDictionary<string, PropertyValue>.Builder outputs, IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {
-        var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
         {
@@ -6224,10 +6184,8 @@ public static partial class TemplateMetadata
             Vault = vault,
         });
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToSocialSecurityNumber(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToSocialSecurityNumber(ImmutableDictionary<string, PropertyValue>.Builder outputs, IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {
-        var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
         {
@@ -6632,10 +6590,8 @@ public static partial class TemplateMetadata
             Vault = vault,
         });
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToSoftwareLicense(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToSoftwareLicense(ImmutableDictionary<string, PropertyValue>.Builder outputs, IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {
-        var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
         {
@@ -6976,10 +6932,8 @@ public static partial class TemplateMetadata
             Vault = vault,
         });
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToWirelessRouter(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsToWirelessRouter(ImmutableDictionary<string, PropertyValue>.Builder outputs, IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {
-        var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        AssignCommonOutputs(outputs, resourceType, template, inputs);
             {
         if (GetField(template, "notes") is { } field)
         {

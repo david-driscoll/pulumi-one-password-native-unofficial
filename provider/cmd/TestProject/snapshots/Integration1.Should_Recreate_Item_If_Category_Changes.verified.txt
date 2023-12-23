@@ -16,7 +16,6 @@ Resources:
 Duration: 1s
 
 ,
-  StandardError: ,
   Summary: {
     Message: ,
     Result: Succeeded,

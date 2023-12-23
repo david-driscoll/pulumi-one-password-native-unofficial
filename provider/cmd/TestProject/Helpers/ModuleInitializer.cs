@@ -34,6 +34,7 @@ public static class ModuleInitializer
             });
         VerifierSettings.IgnoreMember<UpdateSummary>(nameof(UpdateSummary.Config));
         VerifierSettings.IgnoreMember<UpdateSummary>(nameof(UpdateSummary.Environment));
+        VerifierSettings.IgnoreMember(nameof(UpdateResult.StandardError));
         VerifierSettings.IgnoreMembersWithType<DateTimeOffset>();
         // regex to capture and remove the time in this string
         // one-password-native-unofficial:index:LoginItem login updated (0.30s) 

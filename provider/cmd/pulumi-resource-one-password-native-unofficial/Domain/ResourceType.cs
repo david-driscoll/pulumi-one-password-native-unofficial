@@ -17,10 +17,18 @@ public partial record ResourceType(
     {
         return TransformInputsToTemplate(this, properties);
     }
-
+    
+    // public ImmutableDictionary<string, PropertyValue> ReduceOutputs(Item.Response item, ImmutableDictionary<string, PropertyValue>? inputs)
+    // {
+    //     var outputs = TransformItemToOutputs(ImmutableDictionary.CreateBuilder<string, PropertyValue>(), this, item, inputs).ToBuilder();
+    //     TemplateMetadata.AssignCommonOutputs(outputs, this, item, inputs);
+    //     return outputs.ToImmutable();
+    // }
     public ImmutableDictionary<string, PropertyValue> TransformOutputs(Item.Response item, ImmutableDictionary<string, PropertyValue>? inputs)
     {
-        return TransformItemToOutputs(this, item, inputs);
+        var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
+        TemplateMetadata.AssignCommonOutputs(outputs, this, item, inputs);
+        return TransformItemToOutputs(outputs, this, item, inputs);
     }
 
     public ImmutableDictionary<string, PropertyValue> TransformOutputs(Inputs item, ImmutableDictionary<string, PropertyValue>? inputs)
@@ -79,7 +87,7 @@ public partial record ResourceType(
                 }).ToImmutableArray(),
         };
 
-        var result = TransformItemToOutputs(this, response, inputs);
+        var result = TransformOutputs(response, inputs);
         var vault = result.GetStringProperty("vault.name");
         result = result.SetItem("vault", new PropertyValue(ImmutableDictionary.Create<string, PropertyValue>()
             .Add("id", PropertyValue.Computed)

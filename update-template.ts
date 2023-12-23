@@ -738,10 +738,8 @@ ${templates.map(template => {
             Vault = vault,
         });
     }
-    public static ImmutableDictionary<string, PropertyValue> TransformOutputsTo${template.name.replace(/ /g, '')}(IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
+    public static ImmutableDictionary<string, PropertyValue> TransformOutputsTo${template.name.replace(/ /g, '')}(ImmutableDictionary<string, PropertyValue>.Builder outputs, IPulumiItemType resourceType, Item.Response template, ImmutableDictionary<string, PropertyValue>? inputs)
     {
-        var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        AssignCommonOutputs(outputs, resourceType, template, inputs);
         ${outputMethods.join('\n')}
         return outputs.ToImmutableDictionary();
     }

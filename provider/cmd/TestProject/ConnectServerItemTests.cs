@@ -41,6 +41,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
         _logger = new LoggerConfiguration()
             .WriteTo.TestOutput(output)
             .CreateLogger();
+        Serilog.Log.Logger = _logger;
         fixture.Connect(serverFixture);
     }
 
@@ -52,7 +53,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
         var data = await _fixture.CreateRequestObject<Item, ItemArgs>("myitem", new()
         {
             Vault = "testing-pulumi",
-            Fields = new ()
+            Fields = new()
             {
                 ["username"] = new FieldArgs()
                 {
@@ -81,7 +82,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
             },
             Tags = new[] { "test-tag" }
         });
-        
+
         var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
 
         await Verify(create)
@@ -97,7 +98,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
         {
             Vault = "testing-pulumi",
             Category = ResourceType.DriverLicense.InputCategory,
-            Fields = new ()
+            Fields = new()
             {
                 ["username"] = new FieldArgs()
                 {
@@ -126,7 +127,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
             },
             Tags = new[] { "test-tag" }
         });
-        
+
         var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
 
         await Verify(create)
@@ -256,7 +257,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
         {
             Vault = "testing-pulumi",
             Expires = "2021-10-10",
-            Fields = new ()
+            Fields = new()
             {
                 ["customDate"] = new FieldArgs()
                 {
@@ -266,7 +267,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
             }
         });
         var provider = await _serverFixture.ConfigureProvider(_logger);
-        
+
         var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
 
         await Verify(create)
@@ -290,7 +291,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
             }
         });
         var provider = await _serverFixture.ConfigureProvider(_logger);
-        
+
         var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
 
         await Verify(create)
@@ -304,92 +305,92 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
             {
                 Vault = "testing-pulumi",
                 Fields = new()
-                         {
-                             ["resourceGroup"] = new FieldArgs()
-                                                 {
-                                                     Label = "Resource Group",
-                                                     Type = FieldType.String,
-                                                     Value = "my resource group",
-                                                 },
-                         },
+                {
+                    ["resourceGroup"] = new FieldArgs()
+                    {
+                        Label = "Resource Group",
+                        Type = FieldType.String,
+                        Value = "my resource group",
+                    },
+                },
                 Sections = new()
-                           {
-                               ["acr"] = new SectionArgs()
-                                         {
-                                             Label = "Azure Container Registry",
-                                             Fields = new()
-                                                      {
-                                                          ["name"] = new FieldArgs()
-                                                                     {
-                                                                         Label = "Name",
-                                                                         Type = FieldType.String,
-                                                                         Value = "my registry",
-                                                                     },
-                                                          ["hostname"] = new FieldArgs()
-                                                                         {
-                                                                             Label = "Hostname",
-                                                                             Type = FieldType.String,
-                                                                             Value = "login server",
-                                                                         },
-                                                      }
-                                         },
-                               ["acrPull"] = new SectionArgs()
-                                             {
-                                                 Label = "Acr Pull Token",
-        
-                                                 Fields = new()
-                                                          {
-                                                              ["username"] = new FieldArgs()
-                                                                             {
-                                                                                 Label = "Name",
-                                                                                 Type = FieldType.String,
-                                                                                 Value = "username",
-                                                                             },
-                                                              ["password"] = new FieldArgs()
-                                                                             {
-                                                                                 Label = "Password",
-                                                                                 Type = FieldType.Concealed,
-                                                                                 Value = "password",
-                                                                             },
-                                                              ["hostname"] = new FieldArgs()
-                                                                             {
-                                                                                 Label = "Hostname",
-                                                                                 Type = FieldType.String,
-                                                                                 Value = "login server",
-                                                                             },
-                                                          }
-                                             },
-                               ["acrPush"] = new SectionArgs()
-                                             {
-                                                 Label = "Acr Push Token",
-        
-                                                 Fields = new()
-                                                          {
-                                                              ["username"] = new FieldArgs()
-                                                                             {
-                                                                                 Label = "Name",
-                                                                                 Type = FieldType.String,
-                                                                                 Value = "username",
-                                                                             },
-                                                              ["password"] = new FieldArgs()
-                                                                             {
-                                                                                 Label = "Password",
-                                                                                 Type = FieldType.Concealed,
-                                                                                 Value = "password",
-                                                                             },
-                                                              ["hostname"] = new FieldArgs()
-                                                                             {
-                                                                                 Label = "Hostname",
-                                                                                 Type = FieldType.String,
-                                                                                 Value = "login server",
-                                                                             },
-                                                          }
-                                             }
-                           }
+                {
+                    ["acr"] = new SectionArgs()
+                    {
+                        Label = "Azure Container Registry",
+                        Fields = new()
+                        {
+                            ["name"] = new FieldArgs()
+                            {
+                                Label = "Name",
+                                Type = FieldType.String,
+                                Value = "my registry",
+                            },
+                            ["hostname"] = new FieldArgs()
+                            {
+                                Label = "Hostname",
+                                Type = FieldType.String,
+                                Value = "login server",
+                            },
+                        }
+                    },
+                    ["acrPull"] = new SectionArgs()
+                    {
+                        Label = "Acr Pull Token",
+
+                        Fields = new()
+                        {
+                            ["username"] = new FieldArgs()
+                            {
+                                Label = "Name",
+                                Type = FieldType.String,
+                                Value = "username",
+                            },
+                            ["password"] = new FieldArgs()
+                            {
+                                Label = "Password",
+                                Type = FieldType.Concealed,
+                                Value = "password",
+                            },
+                            ["hostname"] = new FieldArgs()
+                            {
+                                Label = "Hostname",
+                                Type = FieldType.String,
+                                Value = "login server",
+                            },
+                        }
+                    },
+                    ["acrPush"] = new SectionArgs()
+                    {
+                        Label = "Acr Push Token",
+
+                        Fields = new()
+                        {
+                            ["username"] = new FieldArgs()
+                            {
+                                Label = "Name",
+                                Type = FieldType.String,
+                                Value = "username",
+                            },
+                            ["password"] = new FieldArgs()
+                            {
+                                Label = "Password",
+                                Type = FieldType.Concealed,
+                                Value = "password",
+                            },
+                            ["hostname"] = new FieldArgs()
+                            {
+                                Label = "Hostname",
+                                Type = FieldType.String,
+                                Value = "login server",
+                            },
+                        }
                     }
+                }
+            }
         );
         var provider = await _serverFixture.ConfigureProvider(_logger);
-        
+
         var create = await provider.Create(new CreateRequest(item.Urn, item.Request, TimeSpan.MaxValue, false), CancellationToken.None);
 
         await Verify(create)
@@ -434,6 +435,159 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
         var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
 
         await Verify(create)
+            .AddIdScrubber(create.Id);
+    }
+
+    [Fact]
+    public async Task Should_Read_Login_Item()
+    {
+        var provider = await _serverFixture.ConfigureProvider(_logger);
+
+        var data = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
+        {
+            Vault = "testing-pulumi",
+            Username = "me",
+            // Password = "secret1234",
+            Fields = new()
+            {
+                ["password"] = new FieldArgs()
+                {
+                    Value = "secret1234",
+                    Type = FieldType.Concealed
+                }
+            },
+            Sections = new()
+            {
+                ["mysection"] = new SectionArgs()
+                {
+                    Fields = new()
+                    {
+                        ["password2"] = new FieldArgs()
+                        {
+                            Value = "secret1235!",
+                            Type = FieldType.Concealed
+                        }
+                    },
+                }
+            },
+            Tags = new[] { "test-tag" }
+        });
+
+        var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
+
+        await EnsureItemIsCreated(create: create);
+
+        var read = await provider.Read(new ReadRequest(
+            data.Urn,
+            string.Empty,
+            ImmutableDictionary<string, PropertyValue>.Empty,
+            ImmutableDictionary<string, PropertyValue>.Empty
+                .Add("id", new(create.Id))
+                .Add("vault", new(TemplateMetadata.GetVaultName(
+                    create.Properties.ToImmutableDictionary(z => z.Key, z => z.Value))
+                ))
+        ), CancellationToken.None);
+
+        await Verify(read)
+            .AddIdScrubber(create.Id);
+    }
+
+    [Fact]
+    public async Task Should_Import_Login_Item()
+    {
+        var provider = await _serverFixture.ConfigureProvider(_logger);
+
+        var data = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
+        {
+            Vault = "testing-pulumi",
+            Username = "me",
+            // Password = "secret1234",
+            Fields = new()
+            {
+                ["password"] = new FieldArgs()
+                {
+                    Value = "secret1234",
+                    Type = FieldType.Concealed
+                }
+            },
+            Sections = new()
+            {
+                ["mysection"] = new SectionArgs()
+                {
+                    Fields = new()
+                    {
+                        ["password2"] = new FieldArgs()
+                        {
+                            Value = "secret1235!",
+                            Type = FieldType.Concealed
+                        }
+                    },
+                }
+            },
+            Tags = new[] { "test-tag" }
+        });
+
+        var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
+
+        await EnsureItemIsCreated(create: create);
+        
+        Func<Task> action = () => provider.Read(new ReadRequest(
+            data.Urn,
+            $"op://{TemplateMetadata.GetVaultName(create.Properties.ToImmutableDictionary())}/{create.Id}",
+            ImmutableDictionary<string, PropertyValue>.Empty,
+            ImmutableDictionary<string, PropertyValue>.Empty
+        ), CancellationToken.None);
+        await action.Should().ThrowAsync<NotImplementedException>();
+    }
+
+
+    [Fact]
+    public async Task Should_Refresh_Login_Item()
+    {
+        var provider = await _serverFixture.ConfigureProvider(_logger);
+
+        var data = await _fixture.CreateRequestObject<LoginItem, LoginItemArgs>("myitem", new()
+        {
+            Vault = "testing-pulumi",
+            Username = "me",
+            // Password = "secret1234",
+            Fields = new()
+            {
+                ["password"] = new FieldArgs()
+                {
+                    Value = "secret1234",
+                    Type = FieldType.Concealed
+                }
+            },
+            Sections = new()
+            {
+                ["mysection"] = new SectionArgs()
+                {
+                    Fields = new()
+                    {
+                        ["password2"] = new FieldArgs()
+                        {
+                            Value = "secret1235!",
+                            Type = FieldType.Concealed
+                        }
+                    },
+                }
+            },
+            Tags = new[] { "test-tag" }
+        });
+
+        var create = await provider.Create(new CreateRequest(data.Urn, data.Request, TimeSpan.MaxValue, false), CancellationToken.None);
+
+        await EnsureItemIsCreated(create: create);
+
+        var read = await provider.Read(new ReadRequest(
+            data.Urn,
+            string.Empty,
+            create.Properties!.ToImmutableDictionary(),
+            ImmutableDictionary<string, PropertyValue>.Empty
+        ), CancellationToken.None);
+
+        await Verify(read)
             .AddIdScrubber(create.Id);
     }
 
@@ -488,6 +642,19 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
 
         var create = await provider.Create(new CreateRequest(createInput.Urn, createInput.Request, TimeSpan.MaxValue, false), CancellationToken.None);
 
+        await EnsureItemIsCreated(create: create);
+
+        var update = await provider.Update(
+            new UpdateRequest(updateInput.Urn, create.Id!, create.Properties!.ToImmutableDictionary(), updateInput.Request.ToImmutableDictionary(),
+                TimeSpan.MaxValue, ImmutableArray<string>.Empty, false), CancellationToken.None);
+
+        await Verify(new { create, update })
+            .AddIdScrubber(create.Id);
+    }
+
+    private async Task EnsureItemIsCreated(CreateResponse create)
+    {
+        var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
         var pipeline = new ResiliencePipelineBuilder<FullItem>()
             .AddRetry(new RetryStrategyOptions<FullItem>()
             {
@@ -502,14 +669,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
         await pipeline.ExecuteAsync(static async (c, ct) => await c.Connect.GetVaultItemById(
             TemplateMetadata.GetObjectStringValue(TemplateMetadata.GetObjectValue(c.create.Properties!.ToImmutableDictionary(), "vault")!, "id"),
             c.create.Id
-        ), (_serverFixture.Connect, create), CancellationToken.None);
-
-        var update = await provider.Update(
-            new UpdateRequest(updateInput.Urn, create.Id!, create.Properties!.ToImmutableDictionary(), updateInput.Request.ToImmutableDictionary(),
-                TimeSpan.MaxValue, ImmutableArray<string>.Empty, false), CancellationToken.None);
-
-        await Verify(new { create, update })
-            .AddIdScrubber(create.Id);
+        ), (_serverFixture.Connect, create), cts.Token);
     }
 
 
@@ -743,7 +903,6 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
             Tags = new[] { "test-tag" },
             Urls = new()
             {
-                
                 "http://notlocalhost.com",
                 new UrlArgs()
                 {

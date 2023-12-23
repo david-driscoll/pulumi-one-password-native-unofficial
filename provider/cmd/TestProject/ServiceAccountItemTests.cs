@@ -30,6 +30,7 @@ public class ServiceAccountItemTests : IClassFixture<PulumiFixture>
         _logger = new LoggerConfiguration()
             .WriteTo.TestOutput(output)
             .CreateLogger();
+        Serilog.Log.Logger = _logger;
         fixture.ServiceAccount(serviceAccountFixture);
     }
 
