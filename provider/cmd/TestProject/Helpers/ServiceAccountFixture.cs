@@ -22,11 +22,14 @@ public class ServiceAccountFixture : IAsyncLifetime, IServerFixture
             throw new Exception("PULUMI_ONEPASSWORD_SERVICE_ACCOUNT_TOKEN is not set");
         }
 
-        TemporaryDirectory = Path.Combine(Path.GetTempPath(), "service-account", Guid.NewGuid().ToString("N"));
+        DirectoryName = Guid.NewGuid().ToString("N");
+        TemporaryDirectory = Path.Combine(Path.GetTempPath(), "service-account", DirectoryName);
         Directory.CreateDirectory(TemporaryDirectory);
         Token = Environment.GetEnvironmentVariable("PULUMI_ONEPASSWORD_SERVICE_ACCOUNT_TOKEN")!;
         return Task.CompletedTask;
     }
+
+    public string DirectoryName { get; set; }
 
 
     public async Task DisposeAsync()

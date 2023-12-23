@@ -10,6 +10,8 @@ using System.Text.Json.Serialization;
 using Humanizer;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli.ConnectServer;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli.ServiceAccount;
+using Serilog.Context;
+using Serilog.Core.Enrichers;
 
 namespace pulumi_resource_one_password_native_unofficial;
 
@@ -359,9 +361,23 @@ public class OnePasswordProvider(ILogger logger) : Provider
     public override async Task<ReadResponse> Read(ReadRequest request, CancellationToken ct)
     {
         if (GetResourceTypeFromUrn(request.Urn) is not { } resourceType) throw new Exception($"unknown resource type {request.Urn}");
+        using var _ = LogContext.Push(new PropertyEnricher("Urn", request.Urn));
+        
+        // as per https://github.com/pulumi/pulumi/blob/485718f533389a971e9dcccf77599809954c1241/developer-docs/providers/implementers-guide.md#read
+        // if properties is populated, it's a read.
+        // TODO: Import, however import will require a format like 
+        if (request.Properties is { Count: > 0 })
+        {
+            var refreshResult = await _op.Items.Get(new() { Id = GetStringValue(request.Properties, "id")!, Vault = GetVaultName(request.Properties) }, ct);
+            return new()
+            {
+                Id = refreshResult.Id,
+                Properties = resourceType.TransformOutputs(refreshResult, null),
+            };
+        }
         // DebugHelper.WaitForDebugger();
 
-        var response = await _op.Items.Get(new() { Id = GetStringValue(request.Inputs, "id"), Vault = GetStringValue(request.Inputs, "vault") }, ct);
+        var response = await _op.Items.Get(new() { Id = GetStringValue(request.Inputs, "id")!, Vault = GetStringValue(request.Inputs, "vault") }, ct);
         return new()
         {
             Id = response.Id,

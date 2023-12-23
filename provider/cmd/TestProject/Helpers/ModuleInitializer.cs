@@ -1,6 +1,8 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using DiffEngine;
+using Pulumi.Automation;
+
 // ReSharper disable NullableWarningSuppressionIsUsed
 
 namespace TestProject.Helpers;
@@ -19,17 +21,26 @@ public static class ModuleInitializer
                 {
                     return "[server-generated]";
                 }
-                
+
                 foreach (var field in serverGeneratedFields)
                 {
                     if (line.Contains(field, StringComparison.OrdinalIgnoreCase))
                     {
                         return line.Substring(0, line.IndexOf(field, StringComparison.OrdinalIgnoreCase) + field.Length) + " [server-generated]";
-                    }                    
+                    }
                 }
 
                 return line;
             });
+        VerifierSettings.IgnoreMember<UpdateSummary>(nameof(UpdateSummary.Config));
+        VerifierSettings.IgnoreMember<UpdateSummary>(nameof(UpdateSummary.Environment));
+        VerifierSettings.IgnoreMembersWithType<DateTimeOffset>();
+        // regex to capture and remove the time in this string
+        // one-password-native-unofficial:index:LoginItem login updated (0.30s) 
+
+        var pattern = new Regex(@" \(\d+\.\d+s\)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        var pattern2 = new Regex(@" \(\d+s\)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        VerifierSettings.ScrubLinesWithReplace(replaceLine: s => string.IsNullOrWhiteSpace(s) ? s : pattern2.Replace(pattern.Replace(s, " (0.0s)"), " (0s)"));
         VerifierSettings.AddExtraSettings(
             serializer =>
             {

@@ -21,7 +21,7 @@ public class Integration1 : IClassFixture<PulumiFixture>
         _serverFixture = serverFixture;
         fixture.Connect(_serverFixture);
     }
-
+    
     [Fact]
     public async Task Should_Recreate_Item_If_Category_Changes()
     {
@@ -107,9 +107,7 @@ public class Integration1 : IClassFixture<PulumiFixture>
                     EnvironmentVariables = _fixture.EnvironmentVariables,
                     Program = programUpdate,
                 });
-            var up = await stack.UpAsync(new UpOptions()
-            {
-            });
+            await Verify(await stack.UpAsync()).AddIdScrubber(name);
         }
     }
 
@@ -158,9 +156,10 @@ public class Integration1 : IClassFixture<PulumiFixture>
             });
         await stack.SetConfigAsync("one-password-native-unofficial:connectHost", new(_serverFixture.ConnectHost.ToString(), false));
         await stack.SetConfigAsync("one-password-native-unofficial:connectToken", new(_serverFixture.ConnectToken, true));
-        var config = await stack.GetAllConfigAsync();
-        var up = await stack.UpAsync();
-        var u2 = await stack.UpAsync();
+        
+await stack.GetAllConfigAsync();
+        await stack.UpAsync();
+        await Verify(await stack.UpAsync()).AddIdScrubber(name);
         await stack.DestroyAsync();
     }
 
@@ -229,7 +228,7 @@ public class Integration1 : IClassFixture<PulumiFixture>
             await stack.SetConfigAsync("one-password-native-unofficial:connectToken", new(_serverFixture.ConnectToken, true));
             var config = await stack.GetAllConfigAsync();
             // var refreshConfig = await stack.RefreshConfigAsync();
-            var up = await stack.UpAsync();
+            var up = await stack.UpAsync(new UpOptions());
         }
         {
             var stack = await LocalWorkspace.CreateOrSelectStackAsync(
@@ -238,9 +237,7 @@ public class Integration1 : IClassFixture<PulumiFixture>
                     EnvironmentVariables = _fixture.EnvironmentVariables,
                     Program = programUpdate,
                 });
-            var up = await stack.UpAsync(new UpOptions()
-            {
-            });
+            await Verify(await stack.UpAsync()).AddIdScrubber(name);
         }
         // await stack.DestroyAsync(new ()
         // {
@@ -248,6 +245,88 @@ public class Integration1 : IClassFixture<PulumiFixture>
         //     Tracing = "7"
         // });
     }
+
+    [Fact]
+    public async Task Should_Refresh_Items()
+    {
+        var program = PulumiFn.Create(() =>
+        {
+            var login = new Item("item", new()
+            {
+                Title = "Test Item",
+                Category = ResourceType.Membership.InputCategory,
+                Fields = new InputMap<FieldArgs>()
+                {
+                    ["user"] = new FieldArgs()
+                    {
+                        Value = "abcd"
+                    }
+                },
+                Tags = new string[] { "Test Tag" },
+                Vault = "testing-pulumi",
+                Urls = new()
+                {
+                    "http://notlocalhost.com",
+                },
+                Notes = "this is a note"
+            });
+        });
+        var programUpdate = PulumiFn.Create(() =>
+        {
+            var login = new LoginItem("item", new()
+            {
+                Title = "Test Item",
+                Category = ResourceType.DriverLicense.InputCategory,
+                Fields = new InputMap<FieldArgs>()
+                {
+                    ["user"] = new FieldArgs()
+                    {
+                        Value = "abcd"
+                    }
+                },
+                Tags = new string[] { "Test Tag" },
+                Vault = "testing-pulumi",
+                Urls = new()
+                {
+                    "http://notlocalhost.com",
+                },
+                Notes = "this is a note"
+            });
+        });
+
+        var name = Guid.NewGuid().ToString("N");
+
+        var yaml = $"""
+                    name: {name}
+                    runtime: dotnet
+                    description: A minimal C# Pulumi program
+                    plugins:
+                      providers:
+                        - name: one-password-native-unofficial
+                          path: {GetPulumiPluginExeLocation()}
+                    """;
+
+
+        var workDir = Path.Combine(_serverFixture.TemporaryDirectory, name, "workdir");
+        Directory.CreateDirectory(workDir);
+        await File.WriteAllTextAsync(Path.Combine(workDir, "Pulumi.yaml"), yaml);
+
+        {
+            var stack = await LocalWorkspace.CreateStackAsync(
+                new LocalProgramArgs("csharp", workDir)
+                {
+                    EnvironmentVariables = _fixture.EnvironmentVariables,
+                    Program = program,
+                });
+            await stack.SetConfigAsync("one-password-native-unofficial:connectHost", new(_serverFixture.ConnectHost.ToString(), false));
+            await stack.SetConfigAsync("one-password-native-unofficial:connectToken", new(_serverFixture.ConnectToken, true));
+            // var refreshConfig = await stack.RefreshConfigAsync();
+            var up = await stack.UpAsync();
+            
+            var refresh = await Verify(await stack.RefreshAsync()).AddIdScrubber(name);
+        }
+    }
+
 
     private static string GetPulumiPluginExeLocation([CallerFilePath] string callerFilePath = null!)
     {

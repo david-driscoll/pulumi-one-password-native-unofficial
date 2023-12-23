@@ -1,0 +1,30 @@
+﻿{
+  StandardOutput:
+Updating (csharp):
+
+    pulumi:pulumi:Stack [server-generated]-csharp running 
+ +  one-password-native-unofficial:index:LoginItem item creating (0s) 
+ +  one-password-native-unofficial:index:LoginItem item created (0.0s) 
+ -  one-password-native-unofficial:index:Item item deleting (0s) 
+ -  one-password-native-unofficial:index:Item item deleted (0.0s) 
+    pulumi:pulumi:Stack [server-generated]-csharp  
+Resources:
+    + 1 created
+    - 1 deleted
+    2 changes. 1 unchanged
+
+Duration: 1s
+
+,
+  StandardError: ,
+  Summary: {
+    Message: ,
+    Result: Succeeded,
+    Version: 0,
+    ResourceChanges: {
+      Same: 1,
+      Create: 1,
+      Delete: 1
+    }
+  }
+}
