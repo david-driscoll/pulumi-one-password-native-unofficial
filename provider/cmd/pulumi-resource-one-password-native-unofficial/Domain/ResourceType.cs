@@ -49,7 +49,10 @@ public partial record ResourceType(
                 Label = z.Label,
             }).ToImmutableArray(),
             Sections = item.Fields
-                .Select(z => z.Value.Section).Where(z => z is not null).Distinct(z => z.Id).Select(z => new Item.Section()
+                .Select(z => z.Value.Section)
+                .Where(z => z is not null)
+                .Distinct(z => z.Id)
+                .Select(z => new Item.Section()
                 {
                     Id = z!.Id,
                     Label = z.Label,
@@ -91,7 +94,7 @@ public partial record ResourceType(
         var vault = result.GetStringProperty("vault.name");
         result = result.SetItem("vault", new PropertyValue(ImmutableDictionary.Create<string, PropertyValue>()
             .Add("id", PropertyValue.Computed)
-            .Add("name", item.Vault is null ? PropertyValue.Computed : new PropertyValue(result.GetStringProperty("vault.name")))
+            .Add("name", vault is null ? PropertyValue.Computed : new PropertyValue(vault))
         ));
 
         if (result.GetStringProperty("title") is not { Length: > 0 })

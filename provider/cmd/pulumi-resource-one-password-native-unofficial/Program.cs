@@ -13,8 +13,9 @@ using Serilog;
 await Provider.Serve(args, null, host =>
 {
     Log.Logger = new LoggerConfiguration()
-        .WriteTo.Sink(new HostSink(host))
-        //.WriteTo.Console()
+        // .MinimumLevel.Verbose()
+        //.WriteTo.Sink(new HostSink(host))
+        .WriteTo.Console()
         .Enrich.FromLogContext()
         .CreateLogger();
     return new OnePasswordProvider(Log.Logger);

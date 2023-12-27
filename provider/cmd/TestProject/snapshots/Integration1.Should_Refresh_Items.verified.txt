@@ -11,7 +11,7 @@ Resources:
     ~ 1 updated
     1 unchanged
 
-Duration: 1s
+Duration: 0s
 
 ,
   Summary: {

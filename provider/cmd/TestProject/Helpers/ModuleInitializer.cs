@@ -41,7 +41,20 @@ public static class ModuleInitializer
 
         var pattern = new Regex(@" \(\d+\.\d+s\)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         var pattern2 = new Regex(@" \(\d+s\)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        VerifierSettings.ScrubLinesWithReplace(replaceLine: s => string.IsNullOrWhiteSpace(s) ? s : pattern2.Replace(pattern.Replace(s, " (0.0s)"), " (0s)"));
+        var pattern3 = new Regex(@": \d+\.\d+s", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        var pattern4 = new Regex(@": \d+s", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        Func<Regex, string, Func<string, string>> factory = (regex, replacement) => s => regex.Replace(s, replacement);
+        var patterns = new Func<string, string> []
+        {
+            factory(pattern, " (0.0s)"), 
+            factory(pattern2, " (0s)"), 
+                factory(pattern3, ": 0.0s"), 
+                    factory(pattern4, ": 0s")
+        };
+        VerifierSettings.ScrubLinesWithReplace(replaceLine: s => 
+            string.IsNullOrWhiteSpace(s)
+                ? s 
+                : patterns.Aggregate(s, (current, pattern) => pattern(current)));
         VerifierSettings.AddExtraSettings(
             serializer =>
             {

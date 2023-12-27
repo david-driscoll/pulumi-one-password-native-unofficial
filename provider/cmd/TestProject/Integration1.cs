@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.ExceptionServices;
 using System.Text.Json;
 using CliWrap;
+using FluentAssertions;
 using GeneratedCode;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
@@ -156,9 +157,73 @@ public class Integration1 : IClassFixture<PulumiFixture>, IAsyncLifetime
         var stack = await CreateStack("csharp", program);
 
         await stack.GetAllConfigAsync();
-        await stack.UpAsync();
         await Verify(await stack.UpAsync()).AddIdScrubber(_name);
         await stack.DestroyAsync();
+    }
+
+
+    [Fact]
+    public async Task Should_Be_Able_To_Use_Username_Password_From_Login_Item()
+    {
+        var program = PulumiFn.Create(() =>
+        {
+            var login = new LoginItem("login", new()
+            {
+                Title = "Test Login",
+                Username = "myusername",
+                Password = "mypassword",
+                Tags = new string[] { "Test Tag" },
+                Vault = "testing-pulumi",
+                Urls = new()
+                {
+                    "http://notlocalhost.com",
+                },
+                Notes = "this is a note"
+            });
+
+            login.Username.Apply(z => z.Should().Be("myusername"));
+            login.Fields.Apply(z => z["username"].Value.Should().Be("myusername"));
+            login.Password.Apply(z => z.Should().Be("mypassword"));
+            login.Fields.Apply(z => z["password"].Value.Should().Be("mypassword"));
+        });
+
+        var stack = await CreateStack("csharp", program);
+
+        await stack.GetAllConfigAsync();
+        await Verify(await stack.UpAsync()).AddIdScrubber(_name);
+        await stack.DestroyAsync();
+    }
+
+
+    [Fact]
+    public async Task Should_Be_Able_To_Use_Username_Password_From_Login_Item_During_Preview()
+    {
+        var program = PulumiFn.Create(() =>
+        {
+            var login = new LoginItem("login", new()
+            {
+                Title = "Test Login",
+                Username = "myusername",
+                Password = "mypassword",
+                Tags = new string[] { "Test Tag" },
+                Vault = "testing-pulumi",
+                Urls = new()
+                {
+                    "http://notlocalhost.com",
+                },
+                Notes = "this is a note"
+            });
+
+            login.Username.Apply(z => z.Should().Be("myusername"));
+            login.Fields.Apply(z => z["username"].Value.Should().Be("myusername"));
+            login.Password.Apply(z => z.Should().Be("mypassword"));
+            login.Fields.Apply(z => z["password"].Value.Should().Be("mypassword"));
+        });
+
+        var stack = await CreateStack("csharp", program);
+
+        await stack.GetAllConfigAsync();
+        await Verify(await stack.PreviewAsync()).AddIdScrubber(_name);
     }
 
     [Fact]

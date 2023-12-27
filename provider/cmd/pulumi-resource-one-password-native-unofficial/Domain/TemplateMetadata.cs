@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
 using GeneratedCode;
@@ -408,7 +409,7 @@ public static partial class TemplateMetadata
         }
     }
 
-    internal static bool TryGetTemplateValue(string type, PropertyValue? propertyValue, out string templateValue)
+    internal static bool TryGetTemplateValue(string type, PropertyValue? propertyValue, [NotNullWhen(true)] out string? templateValue)
     {
         if (propertyValue is null)
         {
@@ -434,18 +435,39 @@ public static partial class TemplateMetadata
             }
         }
 
-        return propertyValue.TryGetString(out templateValue!);
+        templateValue = GetStringValue(propertyValue);
+        return templateValue is { };
 
         static int? GetNumberValue(PropertyValue value)
         {
+            if (value.TryGetSecret(out var secret))
+            {
+                return GetNumberValue(secret);
+            }
+            
             if (value.TryGetNumber(out var number))
             {
                 return Convert.ToInt32(number);
             }
 
-            if (value.TryGetString(out var s) && int.TryParse(s, out var i))
+            if (GetStringValue(value) is { Length: >0 } s && int.TryParse(s, out var i))
             {
                 return i;
+            }
+
+            return null;
+        }
+
+        static string? GetStringValue(PropertyValue value)
+        {
+            if (value.TryGetSecret(out var secret))
+            {
+                return GetStringValue(secret!);
+            }
+            
+            if (value.TryGetString(out var s))
+            {
+                return s;
             }
 
             return null;
