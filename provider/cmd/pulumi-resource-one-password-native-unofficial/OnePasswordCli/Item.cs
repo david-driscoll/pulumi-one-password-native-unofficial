@@ -67,7 +67,7 @@ public static class Item
 
     public record File
     {
-        public string Id { get; init; } = "";
+        public string? Id { get; init; }
         public string Name { get; init; } = "";
         public int Size { get; init; }
         public string ContentPath { get; init; } = "";

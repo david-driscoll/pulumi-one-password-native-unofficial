@@ -14,7 +14,7 @@ public partial record FunctionType(
     public ImmutableDictionary<string, PropertyValue> TransformOutputs(Item.Response item)
     {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        TemplateMetadata.AssignCommonOutputs(outputs, this, item, null);
+        TemplateMetadata.AssignCommonOutputs(outputs, this, item, null, false);
         return TransformItemToOutputs(outputs, this, item, null);
     }
     

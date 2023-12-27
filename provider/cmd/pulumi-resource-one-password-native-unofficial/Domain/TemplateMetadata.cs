@@ -202,7 +202,8 @@ public static partial class TemplateMetadata
         ImmutableDictionary<string, PropertyValue>.Builder outputs,
         IPulumiItemType resourceType,
         Item.Response item,
-        ImmutableDictionary<string, PropertyValue>? inputs
+        ImmutableDictionary<string, PropertyValue>? inputs,
+        bool isPreview
     )
     {
         DebugHelper.WaitForDebugger();
@@ -258,7 +259,7 @@ public static partial class TemplateMetadata
                 .Where(z => !z.Type.Equals("REFERENCE", StringComparison.OrdinalIgnoreCase))
                 .Where(z => z is { Section.Id: "add more" })
             )
-            .Select(field => new KeyValuePair<string, PropertyValue>(field.Key, new(CreateField(inputs, item, field))))
+            .Select(field => new KeyValuePair<string, PropertyValue>(field.Key, new(CreateField(inputs, item, field, isPreview))))
             .DistinctBy(z => z.Key)
             .ToArray();
 
@@ -267,14 +268,14 @@ public static partial class TemplateMetadata
             .Concat(item.Files
                 .Where(z => z is { Section.Id: "add more" })
             )
-            .Select(file => new KeyValuePair<string, PropertyValue>(file.Name, new(CreateAttachment(inputs, item, file))))
+            .Select(file => new KeyValuePair<string, PropertyValue>(file.Name, new(CreateAttachment(inputs, item, file, isPreview))))
             .DistinctBy(z => z.Key)
             .ToArray();
 
         var references = item.Fields
             .Where(z => z.Type.Equals("REFERENCE", StringComparison.OrdinalIgnoreCase))
             .Where(z => z.Section is null)
-            .Select(field => new PropertyValue(CreateField(inputs, item, field)));
+            .Select(field => new PropertyValue(CreateField(inputs, item, field, isPreview)));
 
         var sections = item.Fields.Where(z => z.Section is not null).Select(z => z.Section)
             .Concat(item.Files.Where(z => z.Section is not null).Select(z => z.Section))
@@ -303,7 +304,7 @@ public static partial class TemplateMetadata
                                                 .Where(z => !z.Type.Equals("REFERENCE", StringComparison.OrdinalIgnoreCase))
                                                 .Where(z => z.Section is not null)
                                                 .Where(z => z.Section?.Id == section.Id)
-                                                .Select(field => new KeyValuePair<string, PropertyValue>(field.Key, new(CreateField(inputs, item, field))))
+                                                .Select(field => new KeyValuePair<string, PropertyValue>(field.Key, new(CreateField(inputs, item, field, isPreview))))
                                                 .DistinctBy(z => z.Key)
                                         )))
                                     .Add("references", new(ImmutableArray.Create<PropertyValue>()
@@ -312,7 +313,7 @@ public static partial class TemplateMetadata
                                                 .Where(z => z.Type.Equals("REFERENCE", StringComparison.OrdinalIgnoreCase))
                                                 .Where(z => z.Section is not null)
                                                 .Where(z => z.Section?.Id == section.Id)
-                                                .Select(field => new PropertyValue(CreateField(inputs, item, field))))
+                                                .Select(field => new PropertyValue(CreateField(inputs, item, field, isPreview))))
                                     ))
                                     .Add("attachments", new(ImmutableDictionary.Create<string, PropertyValue>()
                                         .AddRange(
@@ -320,14 +321,14 @@ public static partial class TemplateMetadata
                                                 .Where(z => z.Section is not null)
                                                 .Where(z => z.Section?.Id == section.Id)
                                                 .Select(file => new KeyValuePair<string, PropertyValue>(file.Name,
-                                                    new(CreateAttachment(inputs, item, file))))
+                                                    new(CreateAttachment(inputs, item, file, isPreview))))
                                                 .DistinctBy(z => z.Key)
                                         )))
                             ));
                         }))
         ));
 
-        static ImmutableDictionary<string, PropertyValue> CreateField(ImmutableDictionary<string, PropertyValue>? inputs, Item.Response item, Item.Field field)
+        static ImmutableDictionary<string, PropertyValue> CreateField(ImmutableDictionary<string, PropertyValue>? inputs, Item.Response item, Item.Field field, bool isPreview)
         {
             var purpose = field.Purpose;
             var type = field.Type;
@@ -372,16 +373,16 @@ public static partial class TemplateMetadata
             }
 
             return ImmutableDictionary.Create<string, PropertyValue>()
-                .Add("id", field.Id is null ? PropertyValue.Null : new(field.Id))
+                .Add("id", isPreview ? PropertyValue.Computed : field.Id is null ? PropertyValue.Null : new(field.Id))
                 .Add("value", GetOutputPropertyValue(field))
                 .Add("purpose", purpose is null ? PropertyValue.Null : new(purpose))
                 .Add("type", new(type))
                 .Add("label", field.Label is null ? PropertyValue.Null : new(field.Label))
-                .Add("reference", new(MakeReference(item, field)));
+                .Add("reference", isPreview ? PropertyValue.Computed : new(MakeReference(item, field)));
         }
 
         static ImmutableDictionary<string, PropertyValue> CreateAttachment(ImmutableDictionary<string, PropertyValue>? inputs, Item.Response item,
-            Item.File file)
+            Item.File file, bool isPreview)
         {
             // DebugHelper.WaitForDebugger();
             string? hash = null;
@@ -399,13 +400,13 @@ public static partial class TemplateMetadata
             }
 
             return ImmutableDictionary.Create<string, PropertyValue>()
-                .Add("id", new(file.Id))
+                .Add("id", isPreview ? PropertyValue.Computed : file.Id is null ? PropertyValue.Null : new(file.Id))
                 .Add("name", new(file.Name))
                 .Add("size", new(file.Size))
                 // have to get from the input fields.
                 .Add("hash", hash is { Length: > 0 } ? new(hash) : PropertyValue.Null)
                 .Add("asset", a is { } ? a : PropertyValue.Null)
-                .Add("reference", new(MakeReference(item, file)));
+                .Add("reference", isPreview ? PropertyValue.Computed : new(MakeReference(item, file)));
         }
     }
 

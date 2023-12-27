@@ -6,7 +6,6 @@ Updating (csharp):
  +  one-password-native-unofficial:index:LoginItem item creating (0s) 
  +  one-password-native-unofficial:index:LoginItem item created (0.0s) 
  -  one-password-native-unofficial:index:Item item deleting (0s) 
-@ updating....
  -  one-password-native-unofficial:index:Item item deleted (0.0s) 
     pulumi:pulumi:Stack [server-generated]-csharp  
 Resources:

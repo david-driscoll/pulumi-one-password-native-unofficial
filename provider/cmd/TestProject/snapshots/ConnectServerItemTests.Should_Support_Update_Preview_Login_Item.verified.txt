@@ -72,26 +72,26 @@
       defaultVault: false,
       fields: {
         notesPlain: {
-          id: [redacted],
+          id: [computed],
           label: notesPlain,
           purpose: NOTES,
-          reference: [redacted],
+          reference: [computed],
           type: STRING,
           value: 
         },
         password: {
-          id: [redacted],
+          id: [computed],
           label: password,
           purpose: PASSWORD,
-          reference: [redacted],
+          reference: [computed],
           type: CONCEALED,
           value: secret12344
         },
         username: {
-          id: [redacted],
+          id: [computed],
           label: username,
           purpose: USERNAME,
-          reference: [redacted],
+          reference: [computed],
           type: STRING,
           value: me2
         }
@@ -105,10 +105,10 @@
           attachments: {},
           fields: {
             password2: {
-              id: [redacted],
+              id: [computed],
               label: password2,
               purpose: null,
-              reference: [redacted],
+              reference: [computed],
               type: CONCEALED,
               value: secrtet1235!
             }

@@ -227,6 +227,72 @@ public class Integration1 : IClassFixture<PulumiFixture>, IAsyncLifetime
     }
 
     [Fact]
+    public async Task Should_Be_Able_To_Use_Username_Password_From_ApiCredential()
+    {
+        var program = PulumiFn.Create(() =>
+        {
+            var login = new APICredentialItem("login", new()
+            {
+                Title = "Test Login",
+                Username = "myusername",
+                Credential = "mypassword",
+                Tags = new string[] { "Test Tag" },
+                Vault = "testing-pulumi",
+                Urls = new()
+                {
+                    "http://notlocalhost.com",
+                },
+                Notes = "this is a note"
+            });
+
+            login.Username.Apply(z => z.Should().Be("myusername"));
+            login.Fields.Apply(z => z["username"].Value.Should().Be("myusername"));
+            login.Credential.Apply(z => z.Should().Be("mypassword"));
+            login.Fields.Apply(z => z["credential"].Value.Should().Be("mypassword"));
+            login.Fields.Apply(z => z["credential"].Reference.Should().NotBeNull());
+        });
+
+        var stack = await CreateStack("csharp", program);
+
+        await stack.GetAllConfigAsync();
+        await Verify(await stack.UpAsync()).AddIdScrubber(_name);
+        await stack.DestroyAsync();
+    }
+
+
+    [Fact]
+    public async Task Should_Be_Able_To_Use_Username_Password_From_ApiCredential_During_Preview()
+    {
+        var program = PulumiFn.Create(() =>
+        {
+            var login = new APICredentialItem("login", new()
+            {
+                Title = "Test Login",
+                Username = "myusername",
+                Credential = "mypassword",
+                Tags = new string[] { "Test Tag" },
+                Vault = "testing-pulumi",
+                Urls = new()
+                {
+                    "http://notlocalhost.com",
+                },
+                Notes = "this is a note"
+            });
+
+            login.Username.Apply(z => z.Should().Be("myusername"));
+            login.Fields.Apply(z => z["username"].Value.Should().Be("myusername"));
+            login.Credential.Apply(z => z.Should().Be("mypassword"));
+            login.Fields.Apply(z => z["credential"].Value.Should().Be("mypassword"));
+            login.Fields.Apply(z => z["credential"].Reference.Should().NotBeNull());
+        });
+
+        var stack = await CreateStack("csharp", program);
+
+        await stack.GetAllConfigAsync();
+        await Verify(await stack.PreviewAsync()).AddIdScrubber(_name);
+    }
+
+    [Fact]
     public async Task Should_Update_Login_Item()
     {
         var program = PulumiFn.Create(() =>

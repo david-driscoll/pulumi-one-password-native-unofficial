@@ -24,10 +24,10 @@ public partial record ResourceType(
     //     TemplateMetadata.AssignCommonOutputs(outputs, this, item, inputs);
     //     return outputs.ToImmutable();
     // }
-    public ImmutableDictionary<string, PropertyValue> TransformOutputs(Item.Response item, ImmutableDictionary<string, PropertyValue>? inputs)
+    public ImmutableDictionary<string, PropertyValue> TransformOutputs(Item.Response item, ImmutableDictionary<string, PropertyValue>? inputs, bool isPreview = false)
     {
         var outputs = ImmutableDictionary.CreateBuilder<string, PropertyValue>();
-        TemplateMetadata.AssignCommonOutputs(outputs, this, item, inputs);
+        TemplateMetadata.AssignCommonOutputs(outputs, this, item, inputs, isPreview);
         return TransformItemToOutputs(outputs, this, item, inputs);
     }
 
@@ -90,7 +90,7 @@ public partial record ResourceType(
                 }).ToImmutableArray(),
         };
 
-        var result = TransformOutputs(response, inputs);
+        var result = TransformOutputs(response, inputs, true);
         var vault = result.GetStringProperty("vault.name");
         result = result.SetItem("vault", new PropertyValue(ImmutableDictionary.Create<string, PropertyValue>()
             .Add("id", PropertyValue.Computed)
