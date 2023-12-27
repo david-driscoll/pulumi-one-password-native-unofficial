@@ -47,7 +47,15 @@ env:
 jobs:
   publish_binary:
     name: publish
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        runs-on:
+          - macos-latest
+          - ubuntu-latest
+        nodeversion:
+          - 18.x
+    runs-on: ${{matrix.runs-on}}
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
@@ -86,17 +94,22 @@ jobs:
       - name: Create Provider Binaries
         run: make dist
       - name: Create GH Release
+        if: matrix.runs-on == 'ubuntu-latest'
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            dist/*.tar.gz
+            dist/*win-*.tar.gz
+            dist/*linux-*.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    strategy:
-      fail-fast: true
-      matrix:
-        nodeversion:
-          - 18.x
+      - name: Create GH Release
+        if: matrix.runs-on == 'macos-latest'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            dist/*darwin-*.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   publish_sdk:
     name: Publish SDKs
     runs-on: ubuntu-latest
