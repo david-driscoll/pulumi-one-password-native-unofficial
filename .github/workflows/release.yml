@@ -98,7 +98,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            dist/*win-*.tar.gz
+            dist/*windows-*.tar.gz
             dist/*linux-*.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
