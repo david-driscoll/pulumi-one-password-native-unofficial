@@ -1,4 +1,4 @@
-VERSION         := 0.0.23
+VERSION         := 0.0.24
 
 PACK            := one-password-native-unofficial
 PROJECT         := david-driscoll/pulumi-one-password-native-unofficial
