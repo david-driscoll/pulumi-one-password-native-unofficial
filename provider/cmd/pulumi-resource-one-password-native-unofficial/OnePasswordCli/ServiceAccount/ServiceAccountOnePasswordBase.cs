@@ -42,11 +42,41 @@ public abstract class ServiceAccountOnePasswordBase(
                 UseJitter = true
             }).Build();
 
+    private protected ResiliencePipeline<CommandResult> UnbufferedPolicy { get; } =
+        new ResiliencePipelineBuilder<CommandResult>()
+            .AddFallback(new FallbackStrategyOptions<CommandResult>()
+            {
+                ShouldHandle = arguments =>
+                    ValueTask.FromResult(arguments.Outcome.Exception is CommandExecutionException exception && exception.Message.Contains("(429)")),
+                FallbackAction = arguments => arguments.Outcome.Exception is CommandExecutionException exception
+                    ? ValueTask.FromResult(Outcome.FromException<CommandResult>(new TimeoutException(exception.Message)))
+                    : ValueTask.FromResult(Outcome.FromException<CommandResult>(new TimeoutException("Unknown error")))
+            })
+            .AddRetry(new RetryStrategyOptions<CommandResult>()
+            {
+                Delay = TimeSpan.FromSeconds(1),
+                MaxRetryAttempts = 5,
+                BackoffType = DelayBackoffType.Exponential,
+                ShouldHandle = arguments =>
+                    ValueTask.FromResult(arguments.Outcome.Exception is CommandExecutionException e && e.Message.Contains("(409)")),
+                UseJitter = true
+            }).Build();
+
     protected ValueTask<BufferedCommandResult> ExecuteCommand(Command runCommand, CancellationToken cancellationToken)
     {
         // Logger.Information("Executing command: {Command} {Input}", command.Arguments);
         return Policy.ExecuteAsync(
             static async (command, ct) => await command.ExecuteBufferedAsync(ct),
+            runCommand.WithEnvironmentVariables(options.Apply),
+            cancellationToken
+        );
+    }
+
+    protected ValueTask<CommandResult> ExecuteUnbufferedCommand(Command runCommand, CancellationToken cancellationToken)
+    {
+        // Logger.Information("Executing command: {Command} {Input}", command.Arguments);
+        return UnbufferedPolicy.ExecuteAsync(
+            static async (command, ct) => await command.ExecuteAsync(ct),
             runCommand.WithEnvironmentVariables(options.Apply),
             cancellationToken
         );

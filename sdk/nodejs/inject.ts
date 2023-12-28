@@ -26,7 +26,7 @@ export interface InjectArgs {
  * The result template with secrets replaced
  */
 export interface InjectResult {
-    readonly result?: string;
+    readonly result: string;
 }
 
 export function injectOutput(args: InjectOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<InjectResult> {

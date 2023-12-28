@@ -1,7 +1,16 @@
 using System.Collections.Immutable;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using FluentAssertions;
 using GeneratedCode;
+using Org.BouncyCastle.Asn1.X509;
+using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Crypto.Generators;
+using Org.BouncyCastle.Crypto.Operators;
+using Org.BouncyCastle.Crypto.Prng;
+using Org.BouncyCastle.Math;
+using Org.BouncyCastle.Security;
+using Org.BouncyCastle.X509;
 using Polly;
 using Polly.Retry;
 using Pulumi;
@@ -1064,7 +1073,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
             .AddPasswordScrubber(create.Properties);
     }
 
-    [Fact(Skip = "unreliable")]
+    [Fact]
     public async Task Should_Be_Able_To_Get_Attachments()
     {
         var provider = await _serverFixture.ConfigureProvider(_logger);
@@ -1107,6 +1116,21 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
             CancellationToken.None);
 
         await Verify(result);
+    }
+
+    [Fact]
+    public async Task Should_Be_Able_To_Read_A_Pfx_File()
+    {
+        var provider = await _serverFixture.ConfigureProvider(_logger);
+
+        var result = await provider.Invoke(new InvokeRequest(
+                FunctionType.ReadBase64.Urn,
+                ImmutableDictionary<string, PropertyValue>.Empty.Add("reference", new("op://testing-pulumi/PfxTest/fred.pfx"))),
+            CancellationToken.None);
+
+        var data = Convert.FromBase64String(TemplateMetadata.GetStringValue(result.Return.ToImmutableDictionary(z => z.Key, z => z.Value), "base64"));
+        var cert = new X509Certificate2(data, "apples");
+        await Verify(new { cert.Thumbprint, cert.FriendlyName, cert.SerialNumber, cert.Subject });
     }
 
     [Fact]

@@ -26,7 +26,10 @@ export interface ReadArgs {
  * The resolved reference value
  */
 export interface ReadResult {
-    readonly value?: string;
+    /**
+     * The read value
+     */
+    readonly value: string;
 }
 
 export function readOutput(args: ReadOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<ReadResult> {

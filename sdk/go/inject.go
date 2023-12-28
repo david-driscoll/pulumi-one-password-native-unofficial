@@ -27,7 +27,7 @@ type InjectArgs struct {
 
 // The result template with secrets replaced
 type InjectResult struct {
-	Result *string `pulumi:"result"`
+	Result string `pulumi:"result"`
 }
 
 func InjectOutput(ctx *pulumi.Context, args InjectOutputArgs, opts ...pulumi.InvokeOption) InjectResultOutput {
@@ -67,8 +67,8 @@ func (o InjectResultOutput) ToInjectResultOutputWithContext(ctx context.Context)
 	return o
 }
 
-func (o InjectResultOutput) Result() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v InjectResult) *string { return v.Result }).(pulumi.StringPtrOutput)
+func (o InjectResultOutput) Result() pulumi.StringOutput {
+	return o.ApplyT(func(v InjectResult) string { return v.Result }).(pulumi.StringOutput)
 }
 
 func init() {

@@ -26,7 +26,10 @@ export interface GetSecretReferenceArgs {
  * The resolved reference value
  */
 export interface GetSecretReferenceResult {
-    readonly value?: string;
+    /**
+     * The read value
+     */
+    readonly value: string;
 }
 
 export function getSecretReferenceOutput(args: GetSecretReferenceOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetSecretReferenceResult> {

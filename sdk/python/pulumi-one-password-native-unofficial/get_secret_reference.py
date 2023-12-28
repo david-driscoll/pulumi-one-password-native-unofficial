@@ -27,7 +27,10 @@ class GetSecretReferenceResult:
 
     @property
     @pulumi.getter
-    def value(self) -> Optional[str]:
+    def value(self) -> str:
+        """
+        The read value
+        """
         return pulumi.get(self, "value")
 
 

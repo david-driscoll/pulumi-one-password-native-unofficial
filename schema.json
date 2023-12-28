@@ -5514,7 +5514,11 @@
                         "type": "string",
                         "description": "The UUID of the vault to retrieve. This field will be populated with the UUID of the vault if the vault it looked up by its name.\n"
                     }
-                }
+                },
+                "required": [
+                    "name",
+                    "id"
+                ]
             }
         },
         "one-password-native-unofficial:index:GetSecretReference": {
@@ -5533,9 +5537,13 @@
                 "properties": {
                     "value": {
                         "type": "string",
-                        "secret": true
+                        "secret": true,
+                        "description": "The read value"
                     }
                 },
+                "required": [
+                    "value"
+                ],
                 "description": "The resolved reference value"
             }
         },
@@ -5555,9 +5563,13 @@
                 "properties": {
                     "value": {
                         "type": "string",
-                        "secret": true
+                        "secret": true,
+                        "description": "The read value"
                     }
                 },
+                "required": [
+                    "value"
+                ],
                 "description": "The resolved reference value"
             }
         },
@@ -5580,6 +5592,9 @@
                         "secret": true
                     }
                 },
+                "required": [
+                    "result"
+                ],
                 "description": "The result template with secrets replaced"
             }
         },
@@ -5597,12 +5612,41 @@
             },
             "outputs": {
                 "properties": {
-                    "value": {
+                    "base64": {
                         "type": "string",
-                        "secret": true
+                        "secret": true,
+                        "description": "The read value as a base64 encoded string"
                     }
                 },
+                "required": [
+                    "base64"
+                ],
                 "description": "The attachment"
+            }
+        },
+        "one-password-native-unofficial:index:ReadBase64": {
+            "inputs": {
+                "properties": {
+                    "reference": {
+                        "type": "string",
+                        "description": "The 1Password secret reference path to the attachment.  eg: op://vault/item/[section]/file \n"
+                    }
+                },
+                "required": [
+                    "reference"
+                ]
+            },
+            "outputs": {
+                "properties": {
+                    "base64": {
+                        "type": "string",
+                        "secret": true,
+                        "description": "The read value as a base64 encoded string"
+                    }
+                },
+                "required": [
+                    "base64"
+                ]
             }
         },
         "one-password-native-unofficial:index:GetAPICredential": {

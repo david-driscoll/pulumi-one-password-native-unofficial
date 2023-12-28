@@ -27,7 +27,8 @@ type GetAttachmentArgs struct {
 
 // The attachment
 type GetAttachmentResult struct {
-	Value *string `pulumi:"value"`
+	// The read value as a base64 encoded string
+	Base64 string `pulumi:"base64"`
 }
 
 func GetAttachmentOutput(ctx *pulumi.Context, args GetAttachmentOutputArgs, opts ...pulumi.InvokeOption) GetAttachmentResultOutput {
@@ -67,8 +68,9 @@ func (o GetAttachmentResultOutput) ToGetAttachmentResultOutputWithContext(ctx co
 	return o
 }
 
-func (o GetAttachmentResultOutput) Value() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetAttachmentResult) *string { return v.Value }).(pulumi.StringPtrOutput)
+// The read value as a base64 encoded string
+func (o GetAttachmentResultOutput) Base64() pulumi.StringOutput {
+	return o.ApplyT(func(v GetAttachmentResult) string { return v.Base64 }).(pulumi.StringOutput)
 }
 
 func init() {

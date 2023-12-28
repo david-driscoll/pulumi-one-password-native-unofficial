@@ -61,6 +61,7 @@
         "passwordItem.ts",
         "provider.ts",
         "read.ts",
+        "readBase64.ts",
         "rewardProgramItem.ts",
         "secureNoteItem.ts",
         "serverItem.ts",

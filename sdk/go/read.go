@@ -27,7 +27,8 @@ type ReadArgs struct {
 
 // The resolved reference value
 type ReadResult struct {
-	Value *string `pulumi:"value"`
+	// The read value
+	Value string `pulumi:"value"`
 }
 
 func ReadOutput(ctx *pulumi.Context, args ReadOutputArgs, opts ...pulumi.InvokeOption) ReadResultOutput {
@@ -67,8 +68,9 @@ func (o ReadResultOutput) ToReadResultOutputWithContext(ctx context.Context) Rea
 	return o
 }
 
-func (o ReadResultOutput) Value() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v ReadResult) *string { return v.Value }).(pulumi.StringPtrOutput)
+// The read value
+func (o ReadResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v ReadResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 func init() {

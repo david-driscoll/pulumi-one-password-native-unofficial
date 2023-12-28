@@ -27,7 +27,7 @@ class GetVaultResult:
 
     @property
     @pulumi.getter
-    def id(self) -> Optional[str]:
+    def id(self) -> str:
         """
         The UUID of the vault to retrieve. This field will be populated with the UUID of the vault if the vault it looked up by its name.
         """
@@ -35,7 +35,7 @@ class GetVaultResult:
 
     @property
     @pulumi.getter
-    def name(self) -> Optional[str]:
+    def name(self) -> str:
         """
         The name of the vault to retrieve. This field will be populated with the name of the vault if the vault it looked up by its UUID.
         """

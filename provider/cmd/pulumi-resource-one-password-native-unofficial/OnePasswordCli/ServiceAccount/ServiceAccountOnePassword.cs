@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using CliWrap;
 using Serilog;
@@ -40,14 +41,19 @@ public class ServiceAccountOnePassword : ServiceAccountOnePasswordBase, IOnePass
         return JsonSerializer.Deserialize<WhoAmIResponse>(result.StandardOutput)!;
     }
 
-    public async Task<string> Read(string reference, CancellationToken cancellationToken = default)
+    public async Task<byte[]> Read(string reference, CancellationToken cancellationToken = default)
     {
-        var result = await ExecuteCommand(
-            Command.WithArguments(ArgsBuilder.Add("read").Add($"\"{reference.Trim('\"')}\"").Build()),
+        var memoryStream = new MemoryStream();
+        var errorResult = new StringBuilder();
+        var result = await ExecuteUnbufferedCommand(
+            Command
+                .WithArguments(ArgsBuilder.Add("read").Add($"\"{reference.Trim('\"')}\"").Build())
+                .WithStandardOutputPipe(PipeTarget.ToStream(memoryStream))
+                .WithStandardErrorPipe(PipeTarget.ToStringBuilder(errorResult)),
             cancellationToken
         );
-        if (result.ExitCode != 0) throw new Exception(result.StandardError);
-        return result.StandardOutput.TrimEnd();
+        if (result.ExitCode != 0) throw new Exception(errorResult.ToString());
+        return memoryStream.ToArray();
     }
 
     public async Task<string> Inject(string template, CancellationToken cancellationToken = default)

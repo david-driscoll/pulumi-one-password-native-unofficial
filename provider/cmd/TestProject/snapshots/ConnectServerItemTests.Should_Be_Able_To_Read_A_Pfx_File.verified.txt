@@ -1,0 +1,6 @@
+﻿{
+  Thumbprint: CA70CB6F83F4BADFBDCBEF67B40A07B6280E6991,
+  FriendlyName: ,
+  SerialNumber: 00FCA689,
+  Subject: CN=fred, E=fred@home, O=Test, L=Edinburgh, S=Lothian, C=US
+}

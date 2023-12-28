@@ -6,6 +6,6 @@ public interface IOnePassword
     IOnePasswordItems Items { get; }
     IOnePasswordVaults Vaults { get; }
     Task<WhoAmIResponse> WhoAmI(CancellationToken cancellationToken = default);
-    Task<string> Read(string reference, CancellationToken cancellationToken = default);
+    Task<byte[]> Read(string reference, CancellationToken cancellationToken = default);
     Task<string> Inject(string template, CancellationToken cancellationToken = default);
 }

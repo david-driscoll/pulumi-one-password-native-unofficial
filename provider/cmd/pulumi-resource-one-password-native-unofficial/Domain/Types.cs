@@ -115,5 +115,6 @@ FunctionType.GetWirelessRouter,
     FunctionType.Read,
     FunctionType.Inject,
     FunctionType.GetAttachment,
+    FunctionType.ReadBase64,
     ];
 }

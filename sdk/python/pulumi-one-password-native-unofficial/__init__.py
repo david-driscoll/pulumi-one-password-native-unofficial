@@ -51,6 +51,7 @@ from .passport_item import *
 from .password_item import *
 from .provider import *
 from .read import *
+from .read_base64 import *
 from .reward_program_item import *
 from .secure_note_item import *
 from .server_item import *

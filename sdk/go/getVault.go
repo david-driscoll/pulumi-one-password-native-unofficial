@@ -28,9 +28,9 @@ type GetVaultArgs struct {
 
 type GetVaultResult struct {
 	// The UUID of the vault to retrieve. This field will be populated with the UUID of the vault if the vault it looked up by its name.
-	Id *string `pulumi:"id"`
+	Id string `pulumi:"id"`
 	// The name of the vault to retrieve. This field will be populated with the name of the vault if the vault it looked up by its UUID.
-	Name *string `pulumi:"name"`
+	Name string `pulumi:"name"`
 }
 
 func GetVaultOutput(ctx *pulumi.Context, args GetVaultOutputArgs, opts ...pulumi.InvokeOption) GetVaultResultOutput {
@@ -70,13 +70,13 @@ func (o GetVaultResultOutput) ToGetVaultResultOutputWithContext(ctx context.Cont
 }
 
 // The UUID of the vault to retrieve. This field will be populated with the UUID of the vault if the vault it looked up by its name.
-func (o GetVaultResultOutput) Id() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetVaultResult) *string { return v.Id }).(pulumi.StringPtrOutput)
+func (o GetVaultResultOutput) Id() pulumi.StringOutput {
+	return o.ApplyT(func(v GetVaultResult) string { return v.Id }).(pulumi.StringOutput)
 }
 
 // The name of the vault to retrieve. This field will be populated with the name of the vault if the vault it looked up by its UUID.
-func (o GetVaultResultOutput) Name() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetVaultResult) *string { return v.Name }).(pulumi.StringPtrOutput)
+func (o GetVaultResultOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetVaultResult) string { return v.Name }).(pulumi.StringOutput)
 }
 
 func init() {

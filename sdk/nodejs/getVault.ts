@@ -29,11 +29,11 @@ export interface GetVaultResult {
     /**
      * The UUID of the vault to retrieve. This field will be populated with the UUID of the vault if the vault it looked up by its name.
      */
-    readonly id?: string;
+    readonly id: string;
     /**
      * The name of the vault to retrieve. This field will be populated with the name of the vault if the vault it looked up by its UUID.
      */
-    readonly name?: string;
+    readonly name: string;
 }
 
 export function getVaultOutput(args: GetVaultOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetVaultResult> {

@@ -27,7 +27,7 @@ class InjectResult:
 
     @property
     @pulumi.getter
-    def result(self) -> Optional[str]:
+    def result(self) -> str:
         return pulumi.get(self, "result")
 
 

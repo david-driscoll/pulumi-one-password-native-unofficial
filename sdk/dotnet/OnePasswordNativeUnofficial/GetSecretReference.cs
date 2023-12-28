@@ -50,10 +50,13 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
     [OutputType]
     public sealed class GetSecretReferenceResult
     {
-        public readonly string? Value;
+        /// <summary>
+        /// The read value
+        /// </summary>
+        public readonly string Value;
 
         [OutputConstructor]
-        private GetSecretReferenceResult(string? value)
+        private GetSecretReferenceResult(string value)
         {
             Value = value;
         }

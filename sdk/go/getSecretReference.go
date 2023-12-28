@@ -27,7 +27,8 @@ type GetSecretReferenceArgs struct {
 
 // The resolved reference value
 type GetSecretReferenceResult struct {
-	Value *string `pulumi:"value"`
+	// The read value
+	Value string `pulumi:"value"`
 }
 
 func GetSecretReferenceOutput(ctx *pulumi.Context, args GetSecretReferenceOutputArgs, opts ...pulumi.InvokeOption) GetSecretReferenceResultOutput {
@@ -67,8 +68,9 @@ func (o GetSecretReferenceResultOutput) ToGetSecretReferenceResultOutputWithCont
 	return o
 }
 
-func (o GetSecretReferenceResultOutput) Value() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetSecretReferenceResult) *string { return v.Value }).(pulumi.StringPtrOutput)
+// The read value
+func (o GetSecretReferenceResultOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSecretReferenceResult) string { return v.Value }).(pulumi.StringOutput)
 }
 
 func init() {

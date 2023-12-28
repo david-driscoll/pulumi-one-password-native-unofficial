@@ -43,6 +43,11 @@ public partial record FunctionType(
         "GetAttachment",
         "",
         (_, _, _, _) => ImmutableDictionary<string, PropertyValue>.Empty);
+    public static FunctionType ReadBase64 { get; } = new(
+        "one-password-native-unofficial:index:ReadBase64",
+        "ReadBase64",
+        "",
+        (_, _, _, _) => ImmutableDictionary<string, PropertyValue>.Empty);
 
     public virtual bool Equals(FunctionType? other)
     {

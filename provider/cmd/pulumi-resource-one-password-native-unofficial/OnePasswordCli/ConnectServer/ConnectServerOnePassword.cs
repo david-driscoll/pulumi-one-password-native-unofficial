@@ -31,7 +31,7 @@ public class ConnectServerOnePassword(
     }
 
 
-    public Task<string> Read(string reference, CancellationToken cancellationToken = default)
+    public Task<byte[]> Read(string reference, CancellationToken cancellationToken = default)
     {
         return _cli.Value.Read(reference, cancellationToken);
     }

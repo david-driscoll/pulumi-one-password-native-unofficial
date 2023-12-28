@@ -4,39 +4,36 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
-export function getAttachment(args: GetAttachmentArgs, opts?: pulumi.InvokeOptions): Promise<GetAttachmentResult> {
+export function readBase64(args: ReadBase64Args, opts?: pulumi.InvokeOptions): Promise<ReadBase64Result> {
     if (!opts) {
         opts = {}
     }
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-    return pulumi.runtime.invoke("one-password-native-unofficial:index:GetAttachment", {
+    return pulumi.runtime.invoke("one-password-native-unofficial:index:ReadBase64", {
         "reference": args.reference,
     }, opts);
 }
 
-export interface GetAttachmentArgs {
+export interface ReadBase64Args {
     /**
      * The 1Password secret reference path to the attachment.  eg: op://vault/item/[section]/file 
      */
     reference: string;
 }
 
-/**
- * The attachment
- */
-export interface GetAttachmentResult {
+export interface ReadBase64Result {
     /**
      * The read value as a base64 encoded string
      */
     readonly base64: string;
 }
 
-export function getAttachmentOutput(args: GetAttachmentOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetAttachmentResult> {
-    return pulumi.output(args).apply(a => getAttachment(a, opts))
+export function readBase64Output(args: ReadBase64OutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<ReadBase64Result> {
+    return pulumi.output(args).apply(a => readBase64(a, opts))
 }
 
-export interface GetAttachmentOutputArgs {
+export interface ReadBase64OutputArgs {
     /**
      * The 1Password secret reference path to the attachment.  eg: op://vault/item/[section]/file 
      */

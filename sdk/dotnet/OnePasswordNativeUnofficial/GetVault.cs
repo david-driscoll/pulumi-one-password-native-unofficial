@@ -59,17 +59,17 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         /// <summary>
         /// The UUID of the vault to retrieve. This field will be populated with the UUID of the vault if the vault it looked up by its name.
         /// </summary>
-        public readonly string? Id;
+        public readonly string Id;
         /// <summary>
         /// The name of the vault to retrieve. This field will be populated with the name of the vault if the vault it looked up by its UUID.
         /// </summary>
-        public readonly string? Name;
+        public readonly string Name;
 
         [OutputConstructor]
         private GetVaultResult(
-            string? id,
+            string id,
 
-            string? name)
+            string name)
         {
             Id = id;
             Name = name;

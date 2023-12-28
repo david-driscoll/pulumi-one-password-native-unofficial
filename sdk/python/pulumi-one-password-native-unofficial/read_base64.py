@@ -9,17 +9,14 @@ from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = [
-    'GetAttachmentResult',
-    'AwaitableGetAttachmentResult',
-    'get_attachment',
-    'get_attachment_output',
+    'ReadBase64Result',
+    'AwaitableReadBase64Result',
+    'read_base64',
+    'read_base64_output',
 ]
 
 @pulumi.output_type
-class GetAttachmentResult:
-    """
-    The attachment
-    """
+class ReadBase64Result:
     def __init__(__self__, base64=None):
         if base64 and not isinstance(base64, str):
             raise TypeError("Expected argument 'base64' to be a str")
@@ -34,17 +31,17 @@ class GetAttachmentResult:
         return pulumi.get(self, "base64")
 
 
-class AwaitableGetAttachmentResult(GetAttachmentResult):
+class AwaitableReadBase64Result(ReadBase64Result):
     # pylint: disable=using-constant-test
     def __await__(self):
         if False:
             yield self
-        return GetAttachmentResult(
+        return ReadBase64Result(
             base64=self.base64)
 
 
-def get_attachment(reference: Optional[str] = None,
-                   opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetAttachmentResult:
+def read_base64(reference: Optional[str] = None,
+                opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableReadBase64Result:
     """
     Use this data source to access information about an existing resource.
 
@@ -58,15 +55,15 @@ def get_attachment(reference: Optional[str] = None,
         opts.version = _utilities.get_version()
         if opts.plugin_download_url is None:
             opts.plugin_download_url = _utilities.get_plugin_download_url()
-    __ret__ = pulumi.runtime.invoke('one-password-native-unofficial:index:GetAttachment', __args__, opts=opts, typ=GetAttachmentResult).value
+    __ret__ = pulumi.runtime.invoke('one-password-native-unofficial:index:ReadBase64', __args__, opts=opts, typ=ReadBase64Result).value
 
-    return AwaitableGetAttachmentResult(
+    return AwaitableReadBase64Result(
         base64=__ret__.base64)
 
 
-@_utilities.lift_output_func(get_attachment)
-def get_attachment_output(reference: Optional[pulumi.Input[str]] = None,
-                          opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetAttachmentResult]:
+@_utilities.lift_output_func(read_base64)
+def read_base64_output(reference: Optional[pulumi.Input[str]] = None,
+                       opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[ReadBase64Result]:
     """
     Use this data source to access information about an existing resource.
 

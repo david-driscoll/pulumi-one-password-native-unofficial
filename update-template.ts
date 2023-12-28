@@ -75,7 +75,8 @@ schema.functions = {
                     "type": "string",
                     "description": "The UUID of the vault to retrieve. This field will be populated with the UUID of the vault if the vault it looked up by its name.\n"
                 }
-            }
+            },
+            required: ['name', 'id']
         }
     },
     "one-password-native-unofficial:index:GetSecretReference": {
@@ -92,9 +93,11 @@ schema.functions = {
             "properties": {
                 "value": {
                     "type": "string",
-                    "secret": true
+                    "secret": true,
+                    "description": "The read value"
                 }
             },
+            required: ['value'],
             "description": "The resolved reference value"
         }
     },
@@ -112,9 +115,11 @@ schema.functions = {
             "properties": {
                 "value": {
                     "type": "string",
-                    "secret": true
+                    "secret": true,
+                    "description": "The read value"
                 }
             },
+            required: ['value'],
             "description": "The resolved reference value"
         }
     },
@@ -135,6 +140,7 @@ schema.functions = {
                     "secret": true
                 }
             },
+            required: ['result'],
             "description": "The result template with secrets replaced"
         }
     },
@@ -150,12 +156,35 @@ schema.functions = {
         },
         outputs: {
             "properties": {
-                "value": {
+                "base64": {
                     "type": "string",
-                    "secret": true
+                    "secret": true,
+                    "description": "The read value as a base64 encoded string"
                 }
             },
+            required: ['base64'],
             "description": "The attachment"
+        }
+    },
+    "one-password-native-unofficial:index:ReadBase64": {
+        inputs: {
+            properties: {
+                "reference": {
+                    "type": "string",
+                    "description": "The 1Password secret reference path to the attachment.  eg: op://vault/item/[section]/file \n"
+                },
+            },
+            required: ['reference']
+        },
+        outputs: {
+            "properties": {
+                "base64": {
+                    "type": "string",
+                    "secret": true,
+                    "description": "The read value as a base64 encoded string"
+                }
+            },
+            required: ['base64']
         }
     }
 }
@@ -692,6 +721,7 @@ public static partial class TemplateMetadata
     FunctionType.Read,
     FunctionType.Inject,
     FunctionType.GetAttachment,
+    FunctionType.ReadBase64,
     ];
 }
 `)

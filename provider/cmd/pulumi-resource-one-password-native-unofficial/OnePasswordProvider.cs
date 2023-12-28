@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Globalization;
+using System.Text;
 using System.Text.Json;
 using Json.Patch;
 using Pulumi.Experimental.Provider;
@@ -243,8 +244,8 @@ public class OnePasswordProvider(ILogger logger) : Provider
         {
             "one-password-native-unofficial:index:GetVault" => GetVault(request.Args, ct),
             "one-password-native-unofficial:index:Inject" => Inject(request.Args, ct),
-            "one-password-native-unofficial:index:GetSecretReference" or "one-password-native-unofficial:index:Read"
-                or "one-password-native-unofficial:index:GetAttachment" => Read(request.Args, ct),
+            "one-password-native-unofficial:index:GetSecretReference" or "one-password-native-unofficial:index:Read" => Read(request.Args, ct),
+            "one-password-native-unofficial:index:GetAttachment" or "one-password-native-unofficial:index:ReadBase64" => ReadBase64(request.Args, ct),
             _ => GetItem(request.Tok, request.Args, ct)
         };
     }
@@ -345,6 +346,28 @@ public class OnePasswordProvider(ILogger logger) : Provider
         return new() { Return = ImmutableDictionary.Create<string, PropertyValue>().Add("result", new(response)) };
     }
 
+    private async Task<InvokeResponse> ReadBase64(ImmutableDictionary<string, PropertyValue> inputs, CancellationToken ct)
+    {
+        var failures = new List<CheckFailure>();
+        if (!inputs.ContainsKey("reference"))
+        {
+            failures.Add(new CheckFailure("reference", "Must give a secret reference to get"));
+        }
+
+        if (failures.Count > 0)
+        {
+            return new() { Failures = failures, };
+        }
+
+        var value = await _op.Read(GetStringValue(inputs, "reference")!, ct);
+
+        return new()
+        {
+            Return = ImmutableDictionary.Create<string, PropertyValue>()
+                .Add("base64", new(Convert.ToBase64String(value)))
+        };
+    }
+
     private async Task<InvokeResponse> Read(ImmutableDictionary<string, PropertyValue> inputs, CancellationToken ct)
     {
         var failures = new List<CheckFailure>();
@@ -360,7 +383,11 @@ public class OnePasswordProvider(ILogger logger) : Provider
 
         var value = await _op.Read(GetStringValue(inputs, "reference")!, ct);
 
-        return new() { Return = ImmutableDictionary.Create<string, PropertyValue>().Add("value", new(value)) };
+        return new()
+        {
+            Return = ImmutableDictionary.Create<string, PropertyValue>()
+                .Add("value", new(Encoding.UTF8.GetString(value)))
+        };
     }
 
     public override async Task<ReadResponse> Read(ReadRequest request, CancellationToken ct)
@@ -385,9 +412,8 @@ public class OnePasswordProvider(ILogger logger) : Provider
             //     Properties = outputs,
             //     Inputs = inputs
             // };
-
         }
-        
+
         // as per https://github.com/pulumi/pulumi/blob/485718f533389a971e9dcccf77599809954c1241/developer-docs/providers/implementers-guide.md#read
         // if properties is populated, it's a read.
         // TODO: Import, however import will require a format like 

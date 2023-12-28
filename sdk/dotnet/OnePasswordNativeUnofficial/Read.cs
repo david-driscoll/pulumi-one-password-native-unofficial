@@ -50,10 +50,13 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
     [OutputType]
     public sealed class ReadResult
     {
-        public readonly string? Value;
+        /// <summary>
+        /// The read value
+        /// </summary>
+        public readonly string Value;
 
         [OutputConstructor]
-        private ReadResult(string? value)
+        private ReadResult(string value)
         {
             Value = value;
         }

@@ -50,6 +50,7 @@ export * from "./passportItem";
 export * from "./passwordItem";
 export * from "./provider";
 export * from "./read";
+export * from "./readBase64";
 export * from "./rewardProgramItem";
 export * from "./secureNoteItem";
 export * from "./serverItem";

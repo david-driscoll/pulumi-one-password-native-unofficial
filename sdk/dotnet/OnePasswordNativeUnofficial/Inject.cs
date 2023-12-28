@@ -50,10 +50,10 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
     [OutputType]
     public sealed class InjectResult
     {
-        public readonly string? Result;
+        public readonly string Result;
 
         [OutputConstructor]
-        private InjectResult(string? result)
+        private InjectResult(string result)
         {
             Result = result;
         }

@@ -10,17 +10,17 @@ using Pulumi;
 
 namespace Rocket.Surgery.OnePasswordNativeUnofficial
 {
-    public static class GetAttachment
+    public static class ReadBase64
     {
-        public static Task<GetAttachmentResult> InvokeAsync(GetAttachmentArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.InvokeAsync<GetAttachmentResult>("one-password-native-unofficial:index:GetAttachment", args ?? new GetAttachmentArgs(), options.WithDefaults());
+        public static Task<ReadBase64Result> InvokeAsync(ReadBase64Args args, InvokeOptions? options = null)
+            => Pulumi.Deployment.Instance.InvokeAsync<ReadBase64Result>("one-password-native-unofficial:index:ReadBase64", args ?? new ReadBase64Args(), options.WithDefaults());
 
-        public static Output<GetAttachmentResult> Invoke(GetAttachmentInvokeArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.Invoke<GetAttachmentResult>("one-password-native-unofficial:index:GetAttachment", args ?? new GetAttachmentInvokeArgs(), options.WithDefaults());
+        public static Output<ReadBase64Result> Invoke(ReadBase64InvokeArgs args, InvokeOptions? options = null)
+            => Pulumi.Deployment.Instance.Invoke<ReadBase64Result>("one-password-native-unofficial:index:ReadBase64", args ?? new ReadBase64InvokeArgs(), options.WithDefaults());
     }
 
 
-    public sealed class GetAttachmentArgs : Pulumi.InvokeArgs
+    public sealed class ReadBase64Args : Pulumi.InvokeArgs
     {
         /// <summary>
         /// The 1Password secret reference path to the attachment.  eg: op://vault/item/[section]/file 
@@ -28,12 +28,12 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         [Input("reference", required: true)]
         public string Reference { get; set; } = null!;
 
-        public GetAttachmentArgs()
+        public ReadBase64Args()
         {
         }
     }
 
-    public sealed class GetAttachmentInvokeArgs : Pulumi.InvokeArgs
+    public sealed class ReadBase64InvokeArgs : Pulumi.InvokeArgs
     {
         /// <summary>
         /// The 1Password secret reference path to the attachment.  eg: op://vault/item/[section]/file 
@@ -41,14 +41,14 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         [Input("reference", required: true)]
         public Input<string> Reference { get; set; } = null!;
 
-        public GetAttachmentInvokeArgs()
+        public ReadBase64InvokeArgs()
         {
         }
     }
 
 
     [OutputType]
-    public sealed class GetAttachmentResult
+    public sealed class ReadBase64Result
     {
         /// <summary>
         /// The read value as a base64 encoded string
@@ -56,7 +56,7 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
         public readonly string Base64;
 
         [OutputConstructor]
-        private GetAttachmentResult(string base64)
+        private ReadBase64Result(string base64)
         {
             Base64 = base64;
         }
