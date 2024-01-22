@@ -1,0 +1,113 @@
+﻿{
+  Return: {
+    attachments: {},
+    category: API Credential,
+    defaultVault: true,
+    fields: {
+      fingerprint: {
+        id: [redacted],
+        label: fingerprint,
+        purpose: null,
+        reference: [redacted],
+        type: STRING,
+        value: SHA256:b2OrDU5f+L8RVJG9SHlpDSFyB3vuyDsVhrxM2II7xp4
+      },
+      key_type: {
+        id: [redacted],
+        label: key type,
+        purpose: null,
+        reference: [redacted],
+        type: STRING,
+        value: rsa
+      },
+      notesPlain: {
+        id: [redacted],
+        label: notesPlain,
+        purpose: NOTES,
+        reference: [redacted],
+        type: STRING,
+        value: null
+      },
+      private_key: {
+        id: [redacted],
+        label: private key,
+        purpose: null,
+        reference: [redacted],
+        type: SSHKEY,
+        value:
+-----BEGIN PRIVATE KEY-----
+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
+Jv+XMup59WsPyPi+HqQdXneIalsBEw==
+-----END PRIVATE KEY-----
+
+      },
+      public_key: {
+        id: [redacted],
+        label: public key,
+        purpose: null,
+        reference: [redacted],
+        type: STRING,
+        value: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCq+v8/Orz+Feq6sDc0OYXhX9+Gq6WatlwB3Pd/eZGACQqx7iXBUxfe2zGET8S/JdSoieqvoH7tbydTC/1M6nQGmwy59NdY5jguvIbiMOcNrQOI2tlKn8aUEwpaffL9MhHhOxkRxX4rSfaoMWHX66Ro2+t+fV8U4hxz+GMY0M35MQ6Fa65OQFz6H3sEvaKnRJ6UvrSk6u+JV9jFOi6mUgb+DTRnFe0TDhK4AJCnsLYbfRCI+y6jkVRSTUOr3WV7khHco667tYmLsGVYx6cRto0kvTUWn8DQu1JPH2SxJTYOfMNDfNNF6zVGnTh/d+wHBNyj/E34KA8PD1UzWfapnXlHuBaNSX+gmZc0Otpq8pUCmQK2f/kyZjroK5NgGQaKLO/4G0FNFw87wCj3pOXhIMqXpxLzlCBZ825n5vgeW6EMI06xGU0P/ZXOUmak+s6geLSWvIiOCAXx/djeq/WuOy9fbWMzTR1x1Z3ZMuF40VQYRzt4h1bCCA5Mj3Jl+7Rh93tKxl3qmobnbjYOIuyfAh9cHVKgHDmNwx65+v6+QTwBc4KQOyUMUkpVls4JYsc/X1U7aSrPQLsmXRBqxx1Q3po1iSccV7jwxmbtqOUxpesu9tZeichKjQ+Ql61B2iZpgzGSbe//+CHBIRdMxTG01Xbr8U879uKpEBts2MOp/05L8w==
+      }
+    },
+    id: [redacted],
+    notes: ,
+    references: [],
+    sections: {},
+    tags: [],
+    title: SSHKeyabcd1234,
+    urls: [],
+    vault: {
+      id: [redacted],
+      name: testing-pulumi
+    }
+  }
+}

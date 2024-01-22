@@ -2,6 +2,7 @@
 using GeneratedCode;
 using pulumi_resource_one_password_native_unofficial.Domain;
 using Refit;
+using Rocket.Surgery.OnePasswordNativeUnofficial;
 using Serilog;
 using File = GeneratedCode.File;
 
@@ -38,12 +39,12 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
         }
         catch (ApiException e)
         {
-            Logger.Error(e, "Error editing item {Content}", e.Content);
+            Logger.Error(e, "Error creating item {Name} {Content} {Error} {StackTrace}", request.Title, e.Content, e.Message, e.StackTrace);
             throw;
         }
         catch (Exception e)
         {
-            Logger.Error(e, "Error creating item");
+            Logger.Error(e, "Error creating item {Name} {Error} {StackTrace}", request.Title, e.Message, e.StackTrace);
             throw;
         }
     }
@@ -77,9 +78,7 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
             {
                 field.Value = templateField.Value;
                 field.Label = templateField.Label;
-                field.Type = Enum.TryParse<FieldType>(templateField.Type, true, out var type)
-                    ? type
-                    : FieldType.STRING;
+                field.Type = (FieldType)templateField.Type;
             }
 
             foreach (var (section, templateSection) in existingItem.Sections.Join(templateJson.Sections, x => x.Id, x => x.Id, (x, y) => (x, y)))
@@ -99,28 +98,41 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
         }
         catch (ApiException e)
         {
-            Logger.Error(e, "Error editing item {Content}", e.Content);
+            Logger.Error(e, "Error editing item {Name}@{RequestId} {Content} {Error} {StackTrace}", request.Title, request.Id, e.Content, e.Message, e.StackTrace);
             throw;
         }
         catch (Exception e)
         {
-            Logger.Error(e, "Error editing item");
+            Logger.Error(e, "Error editing item {Name}@{RequestId} {Error} {StackTrace}", request.Title, request.Id, e.Message, e.StackTrace);
             throw;
         }
     }
 
     public async Task<Item.Response> Get(Item.GetRequest request, CancellationToken cancellationToken = default)
     {
-        var vaultId = await GetVaultUuid(request.Vault ?? options.Vault);
-        var result = await Connect.GetVaultItemById(vaultId, request.Id);
-
-        result.Vault = new Vault2()
+        try
         {
-            Id = vaultId,
-            // ReSharper disable once NullableWarningSuppressionIsUsed
-            AdditionalProperties = new Dictionary<string, object>() { { "name", request.Vault ?? options.Vault! } }
-        };
-        return ConvertToItemResponse(result);
+            var vaultId = await GetVaultUuid(request.Vault ?? options.Vault);
+            var result = await Connect.GetVaultItemById(vaultId, request.Id);
+
+            result.Vault = new Vault2()
+            {
+                Id = vaultId,
+                // ReSharper disable once NullableWarningSuppressionIsUsed
+                AdditionalProperties = new Dictionary<string, object>() { { "name", request.Vault ?? options.Vault! } }
+            };
+            return ConvertToItemResponse(result);
+        }
+        catch (ApiException e)
+        {
+            Logger.Error(e, "Error getting item {RequestId}${Vault} {Content} {Error} {StackTrace}", request.Id, request.Vault, e.Content, e.Message, e.StackTrace);
+            throw;
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e, "Error getting item {RequestId}${Vault} {Error} {StackTrace}", request.Id, request.Vault, e.Message, e.StackTrace);
+            throw;
+        }
     }
 
     public async Task Delete(Item.DeleteRequest request, CancellationToken cancellationToken = default)
@@ -136,12 +148,12 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
         }
         catch (ApiException e)
         {
-            Logger.Error(e, "Error deleting item {Content}", e.Content);
+            Logger.Error(e, "Error deleting item {RequestId} {Content} {Error} {StackTrace}", request.Id, e.Content, e.Message, e.StackTrace);
             throw;
         }
         catch (Exception e)
         {
-            Logger.Error(e, "Error deleting item");
+            Logger.Error(e, "Error deleting item {RequestId} {Error} {StackTrace}", request.Id, e.Message, e.StackTrace);
             throw;
         }
     }

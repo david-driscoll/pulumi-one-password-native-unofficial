@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using GeneratedCode;
+using Rocket.Surgery.OnePasswordNativeUnofficial;
 
 namespace pulumi_resource_one_password_native_unofficial.Domain;
 
@@ -28,7 +29,7 @@ public record Template
             .Concat(
                 // This is so we can keep present the accurate value of the field in the 1password app
                 Fields
-                    .Where(z => Enum.TryParse<FieldType>(z.Type, true, out var type) && type is FieldType.DATE or FieldType.MONTH_YEAR)
+                    .Where(z => (FieldType)z.Type == FieldType.Date || (FieldType)z.Type == FieldType.MonthYear)
                     .Where(z => TemplateMetadata.Get1PasswordDayOnly(z) is not null)
                     .SelectMany(EnsureDateFieldsHaveBackingValues)
             )
@@ -38,17 +39,17 @@ public record Template
 
         static IEnumerable<TemplateField> EnsureDateFieldsHaveBackingValues(TemplateField templateField)
         {
-            if (Enum.TryParse<FieldType>(templateField.Type, true, out var type) && type is FieldType.DATE or FieldType.MONTH_YEAR &&
+            if (((FieldType)templateField.Type == FieldType.Date || (FieldType)templateField.Type == FieldType.MonthYear) &&
                 TemplateMetadata.Get1PasswordDayOnly(templateField) is { } dateOnly)
             {
                 yield return new TemplateField()
                 {
                     Id = templateField.Id + "_iso",
                     Label = templateField.Label + " (ISO)",
-                    Type = FieldType.STRING.ToString(),
+                    Type = (string)FieldType.String,
                     Purpose = templateField.Purpose,
                     Section = templateField.Section,
-                    Value = dateOnly.ToString(type == FieldType.DATE ? "yyyy-MM-dd" : "yyyy-MM")
+                    Value = dateOnly.ToString((FieldType)templateField.Type == FieldType.Date ? "yyyy-MM-dd" : "yyyy-MM")
                 };
             }
         }

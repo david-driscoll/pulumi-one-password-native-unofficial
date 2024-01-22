@@ -1,7 +1,11 @@
 using System.Net.Http.Headers;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using GeneratedCode;
 using Json.Patch;
 using Refit;
+using Rocket.Surgery.OnePasswordNativeUnofficial;
+using Serilog.Core;
 
 namespace pulumi_resource_one_password_native_unofficial;
 
@@ -22,6 +26,19 @@ public static class DebugHelper
     }
 }
 
+class FieldTypeConverter : JsonConverter<FieldType>
+{
+    public override FieldType Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        return (FieldType)reader.GetString();
+    }
+
+    public override void Write(Utf8JsonWriter writer, FieldType value, JsonSerializerOptions options)
+    {
+        writer.WriteStringValue((string)value);
+    }
+}
+
 public static class Helpers
 {
     public static string ToPropertyPath(this PatchOperation operation)
@@ -30,10 +47,22 @@ public static class Helpers
     }
     public static I1PasswordConnect CreateConnectClient(string url, string token)
     {
-        return RestService.For<I1PasswordConnect>(url, new RefitSettings()
+        var settings = new RefitSettings()
         {
-            HttpMessageHandlerFactory = () => new AuthHeaderHandler(token) { InnerHandler = new HttpClientHandler() }
-        });
+            HttpMessageHandlerFactory = () => new AuthHeaderHandler(token) { InnerHandler = new HttpClientHandler() },
+        };
+
+        var starterFactory = new DefaultApiExceptionFactory(settings).CreateAsync;
+        settings.ExceptionFactory = async message =>
+        {
+            if (!message.IsSuccessStatusCode)
+            {
+                Serilog.Log.Logger.Error("Http Exception: {ReasonPhrase}: {Message}", message.ReasonPhrase, await message.Content.ReadAsStringAsync());
+            }
+
+            return await starterFactory(message);
+        };
+        return RestService.For<I1PasswordConnect>(url, settings);
     }
 
     class AuthHeaderHandler : DelegatingHandler

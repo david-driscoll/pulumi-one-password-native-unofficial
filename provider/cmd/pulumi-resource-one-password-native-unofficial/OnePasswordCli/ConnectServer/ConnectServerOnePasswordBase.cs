@@ -1,7 +1,9 @@
 ﻿using System.Collections.Immutable;
 using GeneratedCode;
 using pulumi_resource_one_password_native_unofficial.Domain;
+using Rocket.Surgery.OnePasswordNativeUnofficial;
 using Serilog;
+using FieldPurpose = GeneratedCode.FieldPurpose;
 
 #pragma warning disable CS9107 // Parameter is captured into the state of the enclosing type and its value is also passed to the base constructor. The value might be captured by the base class as well.
 
@@ -67,9 +69,7 @@ public class ConnectServerOnePasswordBase(
             Fields = fields.Select(z => new Field()
             {
                 Id = z.Id,
-                Type = Enum.TryParse<FieldType>(z.Type, true, out var type)
-                    ? type
-                    : FieldType.STRING,
+                Type = (FieldType)z.Type,
                 Value = z.Value,
                 Purpose = Enum.TryParse<FieldPurpose>(z.Purpose, true, out var purpose)
                     ? purpose

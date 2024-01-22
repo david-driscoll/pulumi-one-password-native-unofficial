@@ -238,7 +238,7 @@ public class OnePasswordProvider(ILogger logger) : Provider
 
     public override Task<InvokeResponse> Invoke(InvokeRequest request, CancellationToken ct)
     {
-        using var _ = LogContext.Push(new PropertyEnricher("Urn", request.Tok));
+        // using var _ = LogContext.Push(new PropertyEnricher("Urn", request.Tok));
         Log.Logger.Debug("Invoking function [{Tok}]", request.Tok);
         return request.Tok switch
         {

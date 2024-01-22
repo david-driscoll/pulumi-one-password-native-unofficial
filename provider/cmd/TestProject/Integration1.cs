@@ -25,7 +25,6 @@ using Serilog.Extensions.Logging;
 using TestProject.Helpers;
 using Xunit.Abstractions;
 using FieldPurpose = GeneratedCode.FieldPurpose;
-using FieldType = GeneratedCode.FieldType;
 using File = System.IO.File;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 using Item = Rocket.Surgery.OnePasswordNativeUnofficial.Item;

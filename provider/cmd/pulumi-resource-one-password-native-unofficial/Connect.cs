@@ -7,6 +7,8 @@ using Refit;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using pulumi_resource_one_password_native_unofficial;
+using Rocket.Surgery.OnePasswordNativeUnofficial;
 
 namespace GeneratedCode
 {
@@ -447,8 +449,8 @@ namespace GeneratedCode
 
         [JsonIgnore(Condition = JsonIgnoreCondition.Never)]   
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        public FieldType Type { get; set; } = GeneratedCode.FieldType.STRING;
+        [JsonConverter(typeof(FieldTypeConverter))]
+        public FieldType Type { get; set; } = FieldType.String;
 
         /// <summary>
         /// Some item types, Login and Password, have fields used for autofill. This property indicates that purpose and is required for some item types.
@@ -909,42 +911,6 @@ namespace GeneratedCode
             get { return _additionalProperties ?? (_additionalProperties = new Dictionary<string, object>()); }
             set { _additionalProperties = value; }
         }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))")]
-    public enum FieldType
-    {
-
-        [System.Runtime.Serialization.EnumMember(Value = @"STRING")]
-        STRING = 0,
-
-        [System.Runtime.Serialization.EnumMember(Value = @"EMAIL")]
-        EMAIL = 1,
-
-        [System.Runtime.Serialization.EnumMember(Value = @"CONCEALED")]
-        CONCEALED = 2,
-
-        [System.Runtime.Serialization.EnumMember(Value = @"URL")]
-        URL = 3,
-
-        [System.Runtime.Serialization.EnumMember(Value = @"TOTP")]
-        TOTP = 4,
-
-        [System.Runtime.Serialization.EnumMember(Value = @"DATE")]
-        DATE = 5,
-
-        [System.Runtime.Serialization.EnumMember(Value = @"MONTH_YEAR")]
-        MONTH_YEAR = 6,
-
-        [System.Runtime.Serialization.EnumMember(Value = @"MENU")]
-        MENU = 7,
-
-        [System.Runtime.Serialization.EnumMember(Value = @"FILE")]
-        FILE = 8,
-
-        [System.Runtime.Serialization.EnumMember(Value = @"REFERENCE")]
-        REFERENCE = 9,
 
     }
 

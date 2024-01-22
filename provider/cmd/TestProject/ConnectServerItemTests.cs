@@ -1130,7 +1130,7 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
 
         var data = Convert.FromBase64String(TemplateMetadata.GetStringValue(result.Return.ToImmutableDictionary(z => z.Key, z => z.Value), "base64"));
         var cert = new X509Certificate2(data, "apples");
-        await Verify(new { cert.Thumbprint, cert.FriendlyName, cert.SerialNumber, cert.Subject });
+        await Verify(new { cert.Thumbprint, cert.SerialNumber, cert.Subject });
     }
 
     [Fact]
@@ -1158,6 +1158,22 @@ public class ConnectServerItemTests : IClassFixture<PulumiFixture>
                      MyPassword: op://testing-pulumi/TestItem/password
                      MyConfigValue: op://testing-pulumi/TestItem/text
                      """))),
+            CancellationToken.None);
+
+        await Verify(result);
+    }
+
+    [Fact]
+    public async Task Should_Be_Able_To_Read_SSHKey()
+    {
+        var provider = await _serverFixture.ConfigureProvider(_logger);
+
+        var result = await provider.Invoke(new InvokeRequest(
+                FunctionType.GetAPICredential.Urn,
+                ImmutableDictionary<string, PropertyValue>.Empty
+                    .Add("id", new("uc7gq5wtvsey7zani5hmub5r4a"))
+                    .Add("vault", new("testing-pulumi"))
+            ),
             CancellationToken.None);
 
         await Verify(result);

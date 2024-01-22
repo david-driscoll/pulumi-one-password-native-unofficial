@@ -6,6 +6,7 @@ using GeneratedCode;
 using Pulumi;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 using Pulumi.Experimental.Provider;
+using Rocket.Surgery.OnePasswordNativeUnofficial;
 using File = System.IO.File;
 using Item = pulumi_resource_one_password_native_unofficial.OnePasswordCli.Item;
 
@@ -418,21 +419,19 @@ public static partial class TemplateMetadata
             return false;
         }
 
-        if (Enum.TryParse<FieldType>(type, out var fieldType))
+        if (GetNumberValue(propertyValue) is { } numberValue)
         {
-            if (GetNumberValue(propertyValue) is { } numberValue)
+            var fieldType = (FieldType)type;
+            if (fieldType == FieldType.Date)
             {
-                if (fieldType == FieldType.DATE)
-                {
-                    templateValue = DateOnly.FromDateTime(DateTimeOffset.FromUnixTimeSeconds(numberValue).UtcDateTime).ToString("O");
-                    return true;
-                }
+                templateValue = DateOnly.FromDateTime(DateTimeOffset.FromUnixTimeSeconds(numberValue).UtcDateTime).ToString("O");
+                return true;
+            }
 
-                if (fieldType == FieldType.MONTH_YEAR)
-                {
-                    templateValue = DateOnly.FromDateTime(DateTimeOffset.FromUnixTimeSeconds(numberValue).UtcDateTime).ToString("yyyy-MM");
-                    return true;
-                }
+            if (fieldType == FieldType.MonthYear)
+            {
+                templateValue = DateOnly.FromDateTime(DateTimeOffset.FromUnixTimeSeconds(numberValue).UtcDateTime).ToString("yyyy-MM");
+                return true;
             }
         }
 
@@ -477,17 +476,18 @@ public static partial class TemplateMetadata
 
     internal static PropertyValue GetOutputPropertyValue(Item.Field field)
     {
-        if (Enum.TryParse<FieldType>(field.Type, out var fieldType) && field.Value is not null)
+        if (field.Value is not null)
         {
-            return fieldType switch
-            {
-                FieldType.DATE => new PropertyValue(DateOnly
-                    .FromDateTime(DateTimeOffset.FromUnixTimeSeconds(int.TryParse(field.Value, out var number) ? number : 0).DateTime).ToString("O")),
-                FieldType.MONTH_YEAR => new PropertyValue(DateOnly
+            var fieldType = (FieldType)field.Type;
+            if (fieldType == FieldType.Date)
+                return new PropertyValue(DateOnly
+                    .FromDateTime(DateTimeOffset.FromUnixTimeSeconds(int.TryParse(field.Value, out var number) ? number : 0).DateTime)
+                    .ToString("O"));
+            if (fieldType == FieldType.MonthYear)
+                return new PropertyValue(DateOnly
                     .ParseExact(field.Value, ["yyyy-MM", "yyyy/MM", "yyyyMM"], CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces)
-                    .ToString("yyyy-MM")),
-                _ => new PropertyValue(field.Value)
-            };
+                    .ToString("yyyy-MM"));
+            return new PropertyValue(field.Value);
         }
 
         return field.Value is null ? PropertyValue.Null : new PropertyValue(field.Value);
@@ -495,9 +495,8 @@ public static partial class TemplateMetadata
 
     internal static DateOnly? Get1PasswordDayOnly(TemplateField field)
     {
-        return Enum.TryParse<FieldType>(field.Type, out var fieldType)
-               && field.Value is not null
-               && fieldType is FieldType.DATE or FieldType.MONTH_YEAR
+        return field.Value is not null
+               && ((FieldType)field.Type == FieldType.Date || (FieldType)field.Type == FieldType.MonthYear)
                && DateOnly.TryParseExact(field.Value, ["O", "yyyy-MM", "yyyy/MM"], CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces,
                    out var dateOnly)
             ? dateOnly
@@ -507,9 +506,7 @@ public static partial class TemplateMetadata
     internal static string? Get1PasswordUnixString(TemplateField field)
     {
         if (Get1PasswordDayOnly(field) is not { } dateOnly) return field.Value;
-        if (Enum.TryParse<FieldType>(field.Type, out var fieldType)
-            && field.Value is not null
-            && fieldType is FieldType.MONTH_YEAR)
+        if (field.Value is not null && (FieldType)field.Type == FieldType.MonthYear)
         {
             return dateOnly.ToString("yyyy/MM");
         }
