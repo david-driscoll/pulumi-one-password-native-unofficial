@@ -6,7 +6,6 @@ using GeneratedCode;
 using Pulumi;
 using pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 using Pulumi.Experimental.Provider;
-using Rocket.Surgery.OnePasswordNativeUnofficial;
 using File = System.IO.File;
 using Item = pulumi_resource_one_password_native_unofficial.OnePasswordCli.Item;
 
@@ -411,7 +410,7 @@ public static partial class TemplateMetadata
         }
     }
 
-    internal static bool TryGetTemplateValue(string type, PropertyValue? propertyValue, [NotNullWhen(true)] out string? templateValue)
+    internal static bool TryGetTemplateValue(TemplateFieldType type, PropertyValue? propertyValue, [NotNullWhen(true)] out string? templateValue)
     {
         if (propertyValue is null)
         {
@@ -421,14 +420,13 @@ public static partial class TemplateMetadata
 
         if (GetNumberValue(propertyValue) is { } numberValue)
         {
-            var fieldType = (FieldType)type;
-            if (fieldType == FieldType.Date)
+            if (type == TemplateFieldType.Date)
             {
                 templateValue = DateOnly.FromDateTime(DateTimeOffset.FromUnixTimeSeconds(numberValue).UtcDateTime).ToString("O");
                 return true;
             }
 
-            if (fieldType == FieldType.MonthYear)
+            if (type == TemplateFieldType.MonthYear)
             {
                 templateValue = DateOnly.FromDateTime(DateTimeOffset.FromUnixTimeSeconds(numberValue).UtcDateTime).ToString("yyyy-MM");
                 return true;
@@ -478,12 +476,12 @@ public static partial class TemplateMetadata
     {
         if (field.Value is not null)
         {
-            var fieldType = (FieldType)field.Type;
-            if (fieldType == FieldType.Date)
+            var fieldType = field.Type;
+            if (fieldType == TemplateFieldType.Date)
                 return new PropertyValue(DateOnly
                     .FromDateTime(DateTimeOffset.FromUnixTimeSeconds(int.TryParse(field.Value, out var number) ? number : 0).DateTime)
                     .ToString("O"));
-            if (fieldType == FieldType.MonthYear)
+            if (fieldType == TemplateFieldType.MonthYear)
                 return new PropertyValue(DateOnly
                     .ParseExact(field.Value, ["yyyy-MM", "yyyy/MM", "yyyyMM"], CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces)
                     .ToString("yyyy-MM"));
@@ -496,7 +494,7 @@ public static partial class TemplateMetadata
     internal static DateOnly? Get1PasswordDayOnly(TemplateField field)
     {
         return field.Value is not null
-               && ((FieldType)field.Type == FieldType.Date || (FieldType)field.Type == FieldType.MonthYear)
+               && (field.Type == TemplateFieldType.Date || field.Type == TemplateFieldType.MonthYear)
                && DateOnly.TryParseExact(field.Value, ["O", "yyyy-MM", "yyyy/MM"], CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces,
                    out var dateOnly)
             ? dateOnly
@@ -506,7 +504,7 @@ public static partial class TemplateMetadata
     internal static string? Get1PasswordUnixString(TemplateField field)
     {
         if (Get1PasswordDayOnly(field) is not { } dateOnly) return field.Value;
-        if (field.Value is not null && (FieldType)field.Type == FieldType.MonthYear)
+        if (field.Value is not null && field.Type == TemplateFieldType.MonthYear)
         {
             return dateOnly.ToString("yyyy/MM");
         }
@@ -623,7 +621,7 @@ public static partial class TemplateMetadata
         if (!root.TryGetValue("attachments", out var f)) yield break;
         if (!f.TryUnwrap(out f)) yield break;
         if (!f.TryGetObject(out var attachments)) yield break;
-        var filesAlreadyAdded = values.Where(z => z.Type?.Equals("file", StringComparison.OrdinalIgnoreCase) == true)
+        var filesAlreadyAdded = values.Where(z => z.Type == TemplateFieldType.File)
             .Select(z => z.Id)
             .ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
         // might need to be done through assignments?

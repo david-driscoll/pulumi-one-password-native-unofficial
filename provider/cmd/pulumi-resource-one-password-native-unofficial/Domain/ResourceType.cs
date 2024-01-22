@@ -58,12 +58,12 @@ public partial record ResourceType(
                     Label = z.Label,
                 }).ToImmutableArray(),
             Fields = item.Fields
-                .Where(z => !string.Equals(z.Value.Type, "FILE", StringComparison.OrdinalIgnoreCase))
+                .Where(z => TemplateFieldType.File != z.Value.Type)
                 .Select(z => new Item.Field()
                 {
                     Id = z.Value.Id,
                     Label = z.Value.Label,
-                    Type = z.Value.Type!,
+                    Type = (string)z.Value.Type,
                     Purpose = z.Value.Purpose,
                     Section = z.Value.Section is null
                         ? null
@@ -75,7 +75,7 @@ public partial record ResourceType(
                     Value = z.Value.Value,
                 }).ToImmutableArray(),
             Files = item.Fields
-                .Where(z => string.Equals(z.Value.Type, "FILE", StringComparison.OrdinalIgnoreCase))
+                .Where(z => z.Value.Type==TemplateFieldType.File)
                 .Select(z => new Item.File()
                 {
                     Id = z.Value.Id ?? z.Key,

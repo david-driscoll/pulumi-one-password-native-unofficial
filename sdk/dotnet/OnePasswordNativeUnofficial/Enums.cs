@@ -121,8 +121,6 @@ namespace Rocket.Surgery.OnePasswordNativeUnofficial
 
         public static explicit operator string(FieldType value) => value._value;
 
-        public static explicit operator FieldType(string? value) => string.IsNullOrEmpty(value) ? String : new FieldType(value);
-
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object? obj) => obj is FieldType other && Equals(other);
         public bool Equals(FieldType other) => string.Equals(_value, other._value, StringComparison.Ordinal);

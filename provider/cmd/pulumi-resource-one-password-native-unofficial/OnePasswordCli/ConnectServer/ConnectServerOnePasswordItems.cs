@@ -2,7 +2,6 @@
 using GeneratedCode;
 using pulumi_resource_one_password_native_unofficial.Domain;
 using Refit;
-using Rocket.Surgery.OnePasswordNativeUnofficial;
 using Serilog;
 using File = GeneratedCode.File;
 
@@ -78,7 +77,7 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
             {
                 field.Value = templateField.Value;
                 field.Label = templateField.Label;
-                field.Type = (FieldType)templateField.Type;
+                field.Type = templateField.Type;
             }
 
             foreach (var (section, templateSection) in existingItem.Sections.Join(templateJson.Sections, x => x.Id, x => x.Id, (x, y) => (x, y)))

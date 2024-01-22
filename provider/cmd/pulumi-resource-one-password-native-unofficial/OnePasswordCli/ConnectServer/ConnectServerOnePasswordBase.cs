@@ -1,7 +1,6 @@
 ﻿using System.Collections.Immutable;
 using GeneratedCode;
 using pulumi_resource_one_password_native_unofficial.Domain;
-using Rocket.Surgery.OnePasswordNativeUnofficial;
 using Serilog;
 using FieldPurpose = GeneratedCode.FieldPurpose;
 
@@ -69,7 +68,7 @@ public class ConnectServerOnePasswordBase(
             Fields = fields.Select(z => new Field()
             {
                 Id = z.Id,
-                Type = (FieldType)z.Type,
+                Type = z.Type,
                 Value = z.Value,
                 Purpose = Enum.TryParse<FieldPurpose>(z.Purpose, true, out var purpose)
                     ? purpose

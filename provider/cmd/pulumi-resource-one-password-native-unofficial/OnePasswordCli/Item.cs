@@ -1,6 +1,7 @@
 ﻿using System.Collections.Immutable;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using pulumi_resource_one_password_native_unofficial.Domain;
 
 namespace pulumi_resource_one_password_native_unofficial.OnePasswordCli;
 

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using pulumi_resource_one_password_native_unofficial;
-using Rocket.Surgery.OnePasswordNativeUnofficial;
+using pulumi_resource_one_password_native_unofficial.Domain;
 
 namespace GeneratedCode
 {
@@ -450,7 +450,7 @@ namespace GeneratedCode
         [JsonIgnore(Condition = JsonIgnoreCondition.Never)]   
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         [JsonConverter(typeof(FieldTypeConverter))]
-        public FieldType Type { get; set; } = FieldType.String;
+        public TemplateFieldType Type { get; set; } = "STRING";
 
         /// <summary>
         /// Some item types, Login and Password, have fields used for autofill. This property indicates that purpose and is required for some item types.

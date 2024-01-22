@@ -3,8 +3,8 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using GeneratedCode;
 using Json.Patch;
+using pulumi_resource_one_password_native_unofficial.Domain;
 using Refit;
-using Rocket.Surgery.OnePasswordNativeUnofficial;
 using Serilog.Core;
 
 namespace pulumi_resource_one_password_native_unofficial;
@@ -26,14 +26,14 @@ public static class DebugHelper
     }
 }
 
-class FieldTypeConverter : JsonConverter<FieldType>
+class FieldTypeConverter : JsonConverter<TemplateFieldType>
 {
-    public override FieldType Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override TemplateFieldType Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        return (FieldType)reader.GetString();
+        return reader.GetString();
     }
 
-    public override void Write(Utf8JsonWriter writer, FieldType value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, TemplateFieldType value, JsonSerializerOptions options)
     {
         writer.WriteStringValue((string)value);
     }
