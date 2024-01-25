@@ -1,6 +1,8 @@
 ﻿using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
+using GeneratedCode;
 using Pulumi;
+using Pulumi.Automation;
 using Pulumi.Experimental.Provider;
 using TemplateMetadata = pulumi_resource_one_password_native_unofficial.Domain.TemplateMetadata;
 
@@ -72,4 +74,12 @@ public static class TestExtensions
         );
         return tcs.Task;
     }
+
+    public static async Task<VaultResult> WithVaultItem(this Task<UpResult> result, ConnectServerFixture serverFixture)
+    {
+        var r = await result;
+        return new(r, await serverFixture.Connect.GetVaultItemById((string)r.Outputs["vaultId"].Value, (string)r.Outputs["id"].Value));
+    }
+
+    public record VaultResult(UpResult Result, FullItem Item);
 }

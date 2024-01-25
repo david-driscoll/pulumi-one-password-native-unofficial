@@ -73,17 +73,22 @@ public class ConnectServerOnePasswordItems(OnePasswordOptions options, ILogger l
                 Href = x.Href,
                 Primary = x.Primary,
             }).ToList();
-            foreach (var (field, templateField) in existingItem.Fields.Join(templateJson.Fields, x => x.Id, x => x.Id, (x, y) => (x, y)))
-            {
-                field.Value = templateField.Value;
-                field.Label = templateField.Label;
-                field.Type = templateField.Type;
-            }
 
-            foreach (var (section, templateSection) in existingItem.Sections.Join(templateJson.Sections, x => x.Id, x => x.Id, (x, y) => (x, y)))
+            existingItem.Fields = templateJson.Fields.Select(z => new Field()
             {
-                section.Label = templateSection.Label;
-            }
+                Id = z.Id,
+                Label = z.Label,
+                Type = z.Type,
+                Value = z.Value,
+                Purpose = Enum.TryParse<FieldPurpose>(z.Purpose, true, out var purpose) ? purpose : FieldPurpose.Empty,
+                Section = z.Section is not null ? new() { Id = z.Section.Id! } : null,
+            }).ToList();
+
+            existingItem.Sections = templateJson.Sections.Select(z => new Sections()
+            {
+                Id = z.Id,
+                Label = z.Label,
+            }).ToList();
 
             var result = await Connect.UpdateVaultItem(vaultId, request.Id, existingItem);
 

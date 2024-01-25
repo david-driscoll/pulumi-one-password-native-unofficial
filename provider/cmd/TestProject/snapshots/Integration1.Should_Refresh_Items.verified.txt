@@ -7,6 +7,10 @@ Refreshing (csharp):
  ~  one-password-native-unofficial:index:Item item refreshing (0s) 
  ~  one-password-native-unofficial:index:Item item updated (0.0s) [diff: ~defaultVault]
     pulumi:pulumi:Stack [server-generated]-csharp  
+Outputs:
+    id     : "[server-generated]"
+    vaultId: [server-generated]
+
 Resources:
     ~ 1 updated
     1 unchanged

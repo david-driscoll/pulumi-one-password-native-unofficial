@@ -14,19 +14,16 @@
 Updating (csharp):
 
     pulumi:pulumi:Stack [server-generated]-csharp running 
- +  one-password-native-unofficial:index:LoginItem item creating (0s) 
- +  one-password-native-unofficial:index:LoginItem item created (0.0s) 
- -  one-password-native-unofficial:index:Item item deleting (0s) 
- -  one-password-native-unofficial:index:Item item deleted (0.0s) 
+ ~  one-password-native-unofficial:index:LoginItem login updating (0s) [diff: ]
+ ~  one-password-native-unofficial:index:LoginItem login updated (0.0s) [diff: ]
     pulumi:pulumi:Stack [server-generated]-csharp  
 Outputs:
-  ~ id     : "[server-generated]" => "[server-generated]"
+    id     : "[server-generated]"
     vaultId: [server-generated]
 
 Resources:
-    + 1 created
-    - 1 deleted
-    2 changes. 1 unchanged
+    ~ 1 updated
+    1 unchanged
 
 Duration: 0s
 
@@ -37,18 +34,24 @@ Duration: 0s
       Version: 0,
       ResourceChanges: {
         Same: 1,
-        Create: 1,
-        Delete: 1
+        Update: 1
       }
     }
   },
   Item: {
+    Sections: [
+      {
+        Id: backup,
+        Label: My Backup
+      }
+    ],
     Fields: [
       {
         Id: username,
         Type: {},
         Purpose: USERNAME,
         Label: username,
+        Value: myusername,
         Generate: false
       },
       {
@@ -56,6 +59,7 @@ Duration: 0s
         Type: {},
         Purpose: PASSWORD,
         Label: password,
+        Value: mypassword,
         Generate: false,
         AdditionalProperties: {
           passwordDetails: {
@@ -72,15 +76,21 @@ Duration: 0s
         Generate: false
       },
       {
-        Id: user,
+        Id: myfield,
+        Section: {
+          Id: backup,
+          AdditionalProperties: {
+            label: My Backup
+          }
+        },
         Type: {},
-        Label: user,
-        Value: abcd,
+        Label: myfield,
+        Value: 1234,
         Generate: false
       }
     ],
     Id: [server-generated],
-    Title: Test Item,
+    Title: Test Login,
     Vault: {
       Id: [server-generated],
       AdditionalProperties: {
@@ -97,10 +107,10 @@ Duration: 0s
     Tags: [
       Test Tag
     ],
-    Version: 1,
+    Version: 2,
     LastEditedBy: [server-generated],
     AdditionalProperties: {
-      additionalInformation: —
+      additionalInformation: myusername
     }
   }
 }

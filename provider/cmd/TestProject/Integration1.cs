@@ -82,7 +82,6 @@ public class Integration1 : IClassFixture<PulumiFixture>, IAsyncLifetime
     {
         var program = PulumiFn.Create(() =>
         {
-            
             var login = new Item("item", new()
             {
                 Title = "Test Item",
@@ -102,6 +101,12 @@ public class Integration1 : IClassFixture<PulumiFixture>, IAsyncLifetime
                 },
                 Notes = "this is a note"
             });
+
+            return new Dictionary<string, object?>()
+            {
+                ["id"] = login.Id,
+                ["vaultId"] = login.Vault.Apply(z => z.Id)
+            };
         });
         var programUpdate = PulumiFn.Create(() =>
         {
@@ -124,12 +129,18 @@ public class Integration1 : IClassFixture<PulumiFixture>, IAsyncLifetime
                 },
                 Notes = "this is a note"
             });
+
+            return new Dictionary<string, object?>()
+            {
+                ["id"] = login.Id,
+                ["vaultId"] = login.Vault.Apply(z => z.Id)
+            };
         });
 
         {
             var stack = await CreateStack("csharp", program);
             await stack.UpAsync();
-            await ScrubVerify(stack.UpAsync(programUpdate));
+            await ScrubVerify(stack.UpAsync(programUpdate).WithVaultItem(_serverFixture));
         }
     }
 
@@ -151,12 +162,18 @@ public class Integration1 : IClassFixture<PulumiFixture>, IAsyncLifetime
                 },
                 Notes = "this is a note"
             });
+
+            return new Dictionary<string, object?>()
+            {
+                ["id"] = login.Id,
+                ["vaultId"] = login.Vault.Apply(z => z.Id)
+            };
         });
 
         var stack = await CreateStack("csharp", program);
 
         await stack.GetAllConfigAsync();
-        await Verify(await stack.UpAsync()).AddIdScrubber(_name);
+        await ScrubVerify(stack.UpAsync().WithVaultItem(_serverFixture));
         await stack.DestroyAsync();
     }
 
@@ -177,19 +194,37 @@ public class Integration1 : IClassFixture<PulumiFixture>, IAsyncLifetime
                 {
                     "http://notlocalhost.com",
                 },
-                Notes = "this is a note"
+                Notes = "this is a note",
+                Sections = new InputMap<SectionArgs>()
+                {
+                    ["backup"] = new SectionArgs()
+                    {
+                        Label = "My Backup",
+                        Fields = new InputMap<FieldArgs>()
+                        {
+                            ["myfield"] = new FieldArgs() { Value = "1234" }
+                        }
+                    }
+                }
             });
 
             login.Username.Apply(z => z.Should().Be("myusername"));
             login.Fields.Apply(z => z["username"].Value.Should().Be("myusername"));
             login.Password.Apply(z => z.Should().Be("mypassword"));
             login.Fields.Apply(z => z["password"].Value.Should().Be("mypassword"));
+            login.Sections.Apply(z => z["backup"].Fields["myfield"].Reference.Should().NotBeNull());
+
+            return new Dictionary<string, object?>()
+            {
+                ["id"] = login.Id,
+                ["vaultId"] = login.Vault.Apply(z => z.Id)
+            };
         });
 
         var stack = await CreateStack("csharp", program);
 
         await stack.GetAllConfigAsync();
-        await Verify(await stack.UpAsync()).AddIdScrubber(_name);
+        await ScrubVerify(stack.UpAsync().WithVaultItem(_serverFixture));
         await stack.DestroyAsync();
     }
 
@@ -210,19 +245,37 @@ public class Integration1 : IClassFixture<PulumiFixture>, IAsyncLifetime
                 {
                     "http://notlocalhost.com",
                 },
-                Notes = "this is a note"
+                Notes = "this is a note",
+                Sections = new InputMap<SectionArgs>()
+                {
+                    ["backup"] = new SectionArgs()
+                    {
+                        Label = "My Backup",
+                        Fields = new InputMap<FieldArgs>()
+                        {
+                            ["myfield"] = new FieldArgs() { Value = "1234" }
+                        }
+                    }
+                }
             });
 
             login.Username.Apply(z => z.Should().Be("myusername"));
             login.Fields.Apply(z => z["username"].Value.Should().Be("myusername"));
             login.Password.Apply(z => z.Should().Be("mypassword"));
             login.Fields.Apply(z => z["password"].Value.Should().Be("mypassword"));
+            login.Sections.Apply(z => z["backup"].Fields["myfield"].Reference.Should().NotBeNull());
+
+            return new Dictionary<string, object?>()
+            {
+                ["id"] = login.Id,
+                ["vaultId"] = login.Vault.Apply(z => z.Id)
+            };
         });
 
         var stack = await CreateStack("csharp", program);
 
         await stack.GetAllConfigAsync();
-        await Verify(await stack.PreviewAsync()).AddIdScrubber(_name);
+        await ScrubVerify(stack.PreviewAsync());
     }
 
     [Fact]
@@ -241,7 +294,18 @@ public class Integration1 : IClassFixture<PulumiFixture>, IAsyncLifetime
                 {
                     "http://notlocalhost.com",
                 },
-                Notes = "this is a note"
+                Notes = "this is a note",
+                Sections = new InputMap<SectionArgs>()
+                {
+                    ["backup"] = new SectionArgs()
+                    {
+                        Label = "My Backup",
+                        Fields = new InputMap<FieldArgs>()
+                        {
+                            ["myfield"] = new FieldArgs() { Value = "1234" }
+                        }
+                    }
+                }
             });
 
             login.Username.Apply(z => z.Should().Be("myusername"));
@@ -249,12 +313,19 @@ public class Integration1 : IClassFixture<PulumiFixture>, IAsyncLifetime
             login.Credential.Apply(z => z.Should().Be("mypassword"));
             login.Fields.Apply(z => z["credential"].Value.Should().Be("mypassword"));
             login.Fields.Apply(z => z["credential"].Reference.Should().NotBeNull());
+            login.Sections.Apply(z => z["backup"].Fields["myfield"].Reference.Should().NotBeNull());
+
+            return new Dictionary<string, object?>()
+            {
+                ["id"] = login.Id,
+                ["vaultId"] = login.Vault.Apply(z => z.Id)
+            };
         });
 
         var stack = await CreateStack("csharp", program);
 
         await stack.GetAllConfigAsync();
-        await Verify(await stack.UpAsync()).AddIdScrubber(_name);
+        await ScrubVerify( stack.UpAsync().WithVaultItem(_serverFixture));
         await stack.DestroyAsync();
     }
 
@@ -275,7 +346,18 @@ public class Integration1 : IClassFixture<PulumiFixture>, IAsyncLifetime
                 {
                     "http://notlocalhost.com",
                 },
-                Notes = "this is a note"
+                Notes = "this is a note",
+                Sections = new InputMap<SectionArgs>()
+                {
+                    ["backup"] = new SectionArgs()
+                    {
+                        Label = "My Backup",
+                        Fields = new InputMap<FieldArgs>()
+                        {
+                            ["myfield"] = new FieldArgs() { Value = "1234" }
+                        }
+                    }
+                }
             });
 
             login.Username.Apply(z => z.Should().Be("myusername"));
@@ -283,12 +365,19 @@ public class Integration1 : IClassFixture<PulumiFixture>, IAsyncLifetime
             login.Credential.Apply(z => z.Should().Be("mypassword"));
             login.Fields.Apply(z => z["credential"].Value.Should().Be("mypassword"));
             login.Fields.Apply(z => z["credential"].Reference.Should().NotBeNull());
+            login.Sections.Apply(z => z["backup"].Fields["myfield"].Reference.Should().NotBeNull());
+
+            return new Dictionary<string, object?>()
+            {
+                ["id"] = login.Id,
+                ["vaultId"] = login.Vault.Apply(z => z.Id)
+            };
         });
 
         var stack = await CreateStack("csharp", program);
 
         await stack.GetAllConfigAsync();
-        await Verify(await stack.PreviewAsync()).AddIdScrubber(_name);
+        await ScrubVerify( stack.PreviewAsync());
     }
 
     [Fact]
@@ -309,6 +398,12 @@ public class Integration1 : IClassFixture<PulumiFixture>, IAsyncLifetime
                 },
                 Notes = "this is a note"
             });
+
+            return new Dictionary<string, object?>()
+            {
+                ["id"] = login.Id,
+                ["vaultId"] = login.Vault.Apply(z => z.Id)
+            };
         });
         var programUpdate = PulumiFn.Create(() =>
         {
@@ -326,12 +421,85 @@ public class Integration1 : IClassFixture<PulumiFixture>, IAsyncLifetime
                 },
                 Notes = "this was a note"
             });
+
+            return new Dictionary<string, object?>()
+            {
+                ["id"] = login.Id,
+                ["vaultId"] = login.Vault.Apply(z => z.Id)
+            };
         });
 
         {
             var stack = await CreateStack("csharp", program);
             await stack.UpAsync();
-            await Verify(await stack.UpAsync(programUpdate)).AddIdScrubber(_name);
+            await ScrubVerify( stack.UpAsync(programUpdate).WithVaultItem(_serverFixture));
+        }
+    }
+
+
+    [Fact]
+    public async Task Should_Update_Login_Item_Adding_A_New_Section()
+    {
+        var program = PulumiFn.Create(() =>
+        {
+            var login = new LoginItem("login", new()
+            {
+                Title = "Test Login",
+                Username = "myusername",
+                Password = "mypassword",
+                Tags = new string[] { "Test Tag" },
+                Vault = "testing-pulumi",
+                Urls = new()
+                {
+                    "http://notlocalhost.com",
+                },
+                Notes = "this is a note"
+            });
+
+            return new Dictionary<string, object?>()
+            {
+                ["id"] = login.Id,
+                ["vaultId"] = login.Vault.Apply(z => z.Id)
+            };
+        });
+        var programUpdate = PulumiFn.Create(() =>
+        {
+            var login = new LoginItem("login", new()
+            {
+                Title = "Test Login",
+                Username = "myusername",
+                Password = "mypassword",
+                Tags = new string[] { "Test Tag" },
+                Vault = "testing-pulumi",
+                Urls = new()
+                {
+                    "http://notlocalhost.com",
+                },
+                Notes = "this is a note",
+                Sections = new InputMap<SectionArgs>()
+                {
+                    ["backup"] = new SectionArgs()
+                    {
+                        Label = "My Backup",
+                        Fields = new InputMap<FieldArgs>()
+                        {
+                            ["myfield"] = new FieldArgs() { Value = "1234" }
+                        }
+                    }
+                }
+            });
+
+            return new Dictionary<string, object?>()
+            {
+                ["id"] = login.Id,
+                ["vaultId"] = login.Vault.Apply(z => z.Id)
+            };
+        });
+
+        {
+            var stack = await CreateStack("csharp", program);
+            await stack.UpAsync();
+            await ScrubVerify( stack.UpAsync(programUpdate).WithVaultItem(_serverFixture));
         }
     }
 
@@ -359,6 +527,12 @@ public class Integration1 : IClassFixture<PulumiFixture>, IAsyncLifetime
                 },
                 Notes = "this is a note"
             });
+
+            return new Dictionary<string, object?>()
+            {
+                ["id"] = login.Id,
+                ["vaultId"] = login.Vault.Apply(z => z.Id)
+            };
         });
 
         {
@@ -366,7 +540,7 @@ public class Integration1 : IClassFixture<PulumiFixture>, IAsyncLifetime
 
             await stack.UpAsync();
 
-            await Verify(await stack.RefreshAsync()).AddIdScrubber(_name);
+            await ScrubVerify( stack.RefreshAsync());
         }
     }
 
@@ -389,6 +563,12 @@ public class Integration1 : IClassFixture<PulumiFixture>, IAsyncLifetime
             {
                 ImportId = $"op://testing-pulumi/5elecsqms2qxrd67ohyyek4xmy"
             });
+
+            return new Dictionary<string, object?>()
+            {
+                ["id"] = login.Id,
+                ["vaultId"] = login.Vault.Apply(z => z.Id)
+            };
         });
 
         {

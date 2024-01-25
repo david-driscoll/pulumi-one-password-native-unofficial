@@ -14,12 +14,17 @@ public static class ModuleInitializer
     {
         string[] serverGeneratedFields = { "id:", "uuid:", "reference:", "title:" };
         var regex = new Regex(@"^[\da-z]{26}$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        var regex2 = new Regex(@"""[\da-z]{26}""", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         VerifierSettings.ScrubLinesWithReplace(
             replaceLine: line =>
             {
                 if (regex.IsMatch(line))
                 {
                     return "[server-generated]";
+                }
+                if (regex2.IsMatch(line))
+                {
+                    line = regex2.Replace(line, @"""[server-generated]""");
                 }
 
                 foreach (var field in serverGeneratedFields)
